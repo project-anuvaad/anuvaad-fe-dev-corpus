@@ -1,0 +1,5 @@
+{
+  "ignorePath": ".prettierignore",
+  "printWidth": 150,
+  "prettier/prettier": [true, { "singleQuote": true, "tabWidth": 4 }]
+}
