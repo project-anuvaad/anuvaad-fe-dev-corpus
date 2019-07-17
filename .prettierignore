@@ -1,0 +1,6 @@
+**/package*.json
+**/*.md
+dist/
+public/
+.prettierrc
+.eslintrc
