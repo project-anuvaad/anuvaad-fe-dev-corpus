@@ -13,6 +13,7 @@
 		"docx": "^5.0.0-rc4",
 		"docx2html": "^1.1.0",
 		"draft-js": "^0.10.5",
+		"express": "^4.17.1",
 		"history": "^4.7.2",
 		"html-docx-js": "^0.3.1",
 		"material-ui": "^0.20.1",
