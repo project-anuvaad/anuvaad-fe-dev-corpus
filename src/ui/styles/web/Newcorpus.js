@@ -46,21 +46,27 @@ typography:{
 
 button: {
   justifyContent: 'center',
-  left: theme.spacing.unit*25,
-  marginBottom:'15%',
+  left: theme.spacing.unit*12,
+  marginBottom:'2%',
   marginTop:'5%'
+  ,
+  width:'220px'
 },
 buttons: {
   justifyContent: 'center',
-  left: theme.spacing.unit*30,
-  marginBottom:'15%',
-  marginTop:'5%'
+  left: theme.spacing.unit*16,
+  marginBottom:'2%',
+  marginTop:'5%',
+  width:'220px'
 },
 
   paper: {
     padding: 25,
+    marginTop:'20px',
     overflow: 'auto',
-    width: 'auto%'
+    width: 'auto%',
+    
+    height:'65%'
   },
   buttonsDiv: {
     textAlign: 'center',

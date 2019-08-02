@@ -17,17 +17,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { CSVLink, CSVDownload } from "react-csv";
-import AddIcon from '@material-ui/icons/FileDownload';
+
 import SaveIcon from '@material-ui/icons/CheckCircle';
 import Input from "@material-ui/core/Input";
 
-
-const csvData = [
-    ["firstname", "lastname", "email"],
-    ["Ahmed", "Tomi", "ah@smthing.co.com"],
-    ["Raed", "Labes", "rl@smthing.co.com"],
-    ["Yezzi", "Min l3b", "ymin@cocococo.com"]
-];
 
 
 class Corpus extends React.Component {
@@ -202,15 +195,7 @@ class Corpus extends React.Component {
                         (row.alignment_accuracy === 'BLEU\n' ? <span style={{ width: '35px', height: '35px',borderRadius:'50%',display: 'inline-block', backgroundColor:'yellow'}}>    </span>
                         :null)}
             </TableCell>
-                    {/* <TableCell align="right">
-                        {row.isEditable ? <SaveIcon style={{ cursor: 'pointer' }} onClick={() => {
-                            this.handleSaveButton(index)
-                        }} /> :
-                            <EditIcon style={{ cursor: 'pointer' }} onClick={() => {
-                                this.handleEditButton(index)
-                            }} />
-                        }
-                    </TableCell> */}
+                    
                 </TableRow>
             ))}
         </TableBody>
@@ -233,7 +218,7 @@ class Corpus extends React.Component {
                         >
                             <Grid item xs={2} sm={2} lg={1} xl={1} style={{marginRight: '0%'}}>
                                 <Button variant="extendedFab" color="primary" aria-label="Add" onClick={this.handleDownload.bind(this)}>
-                                    <AddIcon /> Download
+                                     Download
                                 </Button>
                             </Grid>
                         </Grid>

@@ -18,9 +18,9 @@ import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Input from "@material-ui/core/Input";
 import history from "../../../web.history";
 import Snackbar from "@material-ui/core/Snackbar";
-
-
-
+import {DropzoneArea} from 'material-ui-dropzone';
+import Select from '../../components/web/common/Select';
+import Stepper from "../../components/web/common/Stepper";
 
 
 
@@ -37,26 +37,26 @@ class Newcorpus extends React.Component {
             hindi_score: [],
             english_score: [],
             file: {},
+            
             corpus_type: 'single',
-            hindiFile: {},
-            englishFile: {},
+            hindiFile: [],
+            englishFile:[],
             comment:'',
             open: false,
             message:'Created corpus scuccessfully',
-            token: false
+            token: false,
+            activeStep: 0,
+            val:0
             
         }
     }
 
-    componentDidMount() {
-        this.setState({
-            hindi: [],
-            english: [],
-            hindi_score: [],
-            english_score: [],
-            file: {}
-        })
-    }
+  
+
+   
+
+
+    
 
     componentDidUpdate(prevProps) {
         if (prevProps.apistatus.progress !== this.props.apistatus.progress) {
@@ -68,6 +68,8 @@ class Newcorpus extends React.Component {
 
           
         }
+    
+
 
     handleTextChange(key, event) {
         this.setState({
@@ -75,9 +77,10 @@ class Newcorpus extends React.Component {
         })
     }
 
-    handleChange = event => {
+    handleSelectChange = event => {
+        console.log(event.target.name,event.target.value)
         this.setState({ [event.target.name]: event.target.value });
-    };
+      };
 
     handleFileChange = (e) => {
         if (e.target.files[0]) {
@@ -95,21 +98,93 @@ class Newcorpus extends React.Component {
         }
     }
 
-    handleSubmit() {
-        const isValid=this.validate();
-        if(isValid){
-        const { APITransport } = this.props;
-        const apiObj = new CreateCorpus(this.state.file, this.state.hindiFile, this.state.englishFile, this.state.corpus_type, this.state.add_name, this.state.domain,this.state.comment);
-        APITransport(apiObj); 
+    handleSource = (files) => {
+      console.log("source",typeof(files))
+      this.setState({
+        englishFile: files
+      });
+    }
+
+    handleTarget = (files) => {
+      console.log("target",files)
+      this.setState({
+        hindiFile: files
+      });
+      
+    }
+
+
+    getStepContent=(stepIndex)=> {
+        console.log(stepIndex)
+        switch (stepIndex) {
+          case 0:
+            return <div>
+            <Grid container spacing={4} >
+            <Grid item xs={8} sm={8} lg={8} xl={8}>
+          <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '12%', paddingTop: '14%' }} >Please select source language :</Typography>
+        
+        </Grid>
+        <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
+            <Select id={"outlined-age-simple"} MenuItemValues={['English']} handleChange={this.handleSelectChange} value={this.state.english} name="english" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
+            </Grid>
+            </Grid><br/>
+            {this.state.val>1 ?
+            <DropzoneArea 
+        onDrop={this.handleSource} showPreviewsInDropzone={true} style={{marginTop:'0%'}} acceptedFiles={['.docx']} dropzoneText="Please Add/Drop docx file here" filesLimit={1}
+        ></DropzoneArea>:''
+            }
+            
+            <DropzoneArea 
+        onDrop={this.handleSource} showPreviewsInDropzone={true} style={{marginTop:'0%'}} acceptedFiles={['.docx']} dropzoneText="Please Add/Drop docx file here" filesLimit={1}
+        ></DropzoneArea>
+                </div>
+            
+            
+          case 1: 
+            return <div>
+            <Grid container spacing={4} >
+            <Grid item xs={8} sm={8} lg={8} xl={8}>
+          <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '5%', paddingTop: '14%' }} >Please select Target language :</Typography>
+        
+        </Grid>
+        <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
+            <Select id={"outlined-age-simple"} MenuItemValues={["Tamil"]} handleChange={this.handleSelectChange} value={this.state.hindi} name="hindi" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
+            </Grid>
+            </Grid><br/>
+            <DropzoneArea Dropzoneiles=""
+        onDrop={this.handleTarget} id="source" showPreviewsInDropzone={true} acceptedFiles={['.docx']} dropzoneText="Please Add/Drop docx file here" filesLimit={2}
+        ></DropzoneArea>
+                </div>;
+  
+          case 2: 
+              
+            return <div ><FormControl fullWidth>
+            <InputLabel htmlFor="Add Name">Name*</InputLabel>
+            <Input id="name" required  onChange={(event) => {this.handleTextChange('add_name', event)}} />
+            <div style={{color:'red'}}>{this.state.nameError}</div>
+            </FormControl>
+        
+        <FormControl fullWidth>
+            <InputLabel htmlFor="Domain">Domain*</InputLabel>
+            <Input id="domain"  onChange={(event) => {this.handleTextChange('domain', event)}} />
+            <div style={{color:'red'}}>{this.state.domainError}</div>
+        </FormControl>
+        <FormControl fullWidth>
+            <InputLabel htmlFor="Comment">Comment*</InputLabel>
+            <Input id="comment"  onChange={(event) => {this.handleTextChange('comment', event)}} />
+            <div style={{color:'red'}}>{this.state.commentError}</div>
+        </FormControl>
+    </div>;
+          default:
+            return 'Try Again !!!';
         }
     }
     
       validate=()=>{
+          
         let nameError="";
         let domainError="";
         let commentError="";
-        let hindiError="";
-        let englishError="";
         if(!this.state.add_name){
             nameError="Name shouldn't be empty"
         }
@@ -119,17 +194,10 @@ class Newcorpus extends React.Component {
         if(!this.state.comment){
             commentError="Comment Shouldn't be empty"
         }
-        if(!this.state.hindiFile.name){
-            hindiError="Please attach hindi file"
-        }
-        if(!this.state.englishFile.name){
-            englishError="Please attach english file"
-        }
-
         this.setState({
-            nameError, domainError, commentError,hindiError,englishError
+            nameError, domainError, commentError
         })
-          if(nameError || domainError || commentError||hindiError||englishError){   
+          if(nameError || domainError || commentError){   
           }
           else{
           return true;
@@ -137,52 +205,70 @@ class Newcorpus extends React.Component {
 
       }
 
+      
+    
+      handleNext = () => {
+        this.setState(state => ({
+          activeStep: state.activeStep + 1,
+        }));
+      };
+    
+      handleBack = () => {
+        if(this.state.activeStep===0){
+          history.push(`${process.env.PUBLIC_URL}/corpus`)
+        }
+
+        else{
+          this.setState(state => ({
+            activeStep: state.activeStep - 1,
+          }));
+        }
+          
+      };
+    
+      handleSubmit() {
+        console.log("file",this.state.file, "hindifile",this.state.hindiFile,"eng", this.state.englishFile, this.state.corpus_type, this.state.add_name, this.state.domain,this.state.comment)
+        const isValid=this.validate();
+        if(isValid){
+        const { APITransport } = this.props;
+        const apiObj = new CreateCorpus(this.state.file, this.state.hindiFile, this.state.englishFile, this.state.corpus_type, this.state.add_name, this.state.domain,this.state.comment);
+        APITransport(apiObj);
+        this.setState({showLoader:true}) 
+        }
+    }
+
     render() {
+
       const { classes } = this.props;
         return (
               <div className={classes.CorpusContainer}>
-                {this.state.token ? < CircularProgress/> :
+                
                 <Paper className={classes.paper} elevation={2}>
-                <Typography gutterBottom variant="title" component="h2">
+                <Typography gutterBottom variant="title" component="h2" style={{marginLeft:'35%'}}>
                     Create Corpus List
                 </Typography>
-                    <form method="post">
+                <Stepper steps={["Add Source file",'Add target file','Add file details']} activeStep={this.state.activeStep} alternativeLabel></Stepper>
+                    
 
-                      <FormControl fullWidth>
-                        <InputLabel htmlFor="Add Name">Name*</InputLabel>
-                        <Input id="name" required className={classes.textField} onChange={(event) => {this.handleTextChange('add_name', event)}} />
-                        <div style={{color:'red'}}>{this.state.nameError}</div>
-                        </FormControl>
-                        
-                        <FormControl fullWidth>
-                          <InputLabel htmlFor="Domain">Domain*</InputLabel>
-                        <Input id="domain" className={classes.textField} onChange={(event) => {this.handleTextChange('domain', event)}} />
-                        <div style={{color:'red'}}>{this.state.domainError}</div>
-                        </FormControl>
-                        <FormControl fullWidth>
-                          <InputLabel htmlFor="Comment">Comment*</InputLabel>
-                        <Input id="comment" className={classes.textField} onChange={(event) => {this.handleTextChange('comment', event)}} />
-                        <div style={{color:'red'}}>{this.state.commentError}</div>
-                        </FormControl><br/><br/><br/>
-
-                        <Grid item xs={12} sm={12} lg={12} xl={12}>
-                            <label>Hindi</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="file" className={classes.textField} name="hindiFile" onChange={this.handleMultiFileChange.bind(this)} accept=".pdf" />
-                            <div style={{color:'red'}}>{this.state.hindiError}</div>
-                        </Grid><br/><br/>
-
-                        <Grid item xs={12} sm={12} lg={12} xl={12}>
-                            <label>English</label>&nbsp;&nbsp;&nbsp;
-                            <input type="file" name="englishFile" className={classes.textField} onChange={this.handleMultiFileChange.bind(this)} accept=".pdf" />
-                            <div style={{color:'red'}}>{this.state.englishError}</div>
-                        </Grid><br/><br/>
-                          <Grid item xs={6} sm={6} lg={6} xl={6}>
-                            <Button variant="contained" color="primary" className={classes.button} onClick={()=>{history.push(`${process.env.PUBLIC_URL}/corpus`)}}> Cancel </Button>
-                            <Button variant="contained" color="primary" className={classes.buttons}onClick={this.handleSubmit.bind(this)}> Create Corpus</Button>
-                        </Grid>
+                    {this.state.activeStep === 3 ? (
+          <div>
+            <Typography >All steps completed</Typography>
+            
+          </div>
+        ) : (
+          <div>
+            <Typography >{this.getStepContent(this.state.activeStep)}</Typography>
+            </div>
+        )}
+<form method="post">
+                          
                   </form>
+                  
+                            <Button variant="contained" color="primary" className={classes.button} onClick={this.handleBack}> {this.state.activeStep === 0 ? "Cancel": "Back"} </Button>
+                            <Button variant="contained" color="primary" className={classes.buttons} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) :this.handleNext}> {this.state.activeStep === 2 ? 'Create Corpus' :"Next"}</Button>
+                        
                 </Paper>
-                }
+                
                 <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}>
                             <MySnackbarContentWrapper
                                 onClose={this.handleClose}

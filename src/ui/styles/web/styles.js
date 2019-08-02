@@ -3,7 +3,7 @@ const drawerWidth = 240;
 
 const GlobalStyles = theme => ({
   container: {
-    margin: '5em 0em 1em 5em',
+    margin: '5em 0em 1em 3em',
     width: '100%',
     background: theme.palette.background.default,
     fontFamily: theme.typography.fontFamily,
@@ -29,7 +29,7 @@ const GlobalStyles = theme => ({
   appBarShift: {
 
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: `calc(100% - ${drawerWidth+43}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
@@ -51,6 +51,64 @@ const GlobalStyles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
+  },
+  buttonLeft:{
+                
+    marginLeft:'230px',
+    marginTop: "17%",
+    height:'12%',
+    position: "fixed",
+    backgroundColor:'#335995'
+    
+  },
+  buttonRight:{
+        marginLeft:'-50px',
+        marginTop: "19%",
+        position: "fixed",
+        height:'12%',
+        backgroundColor:'#335995'
+  },
+
+
+
+  editButton:{
+    width:"70%"
+  },
+  hide: {
+    display: "none"
+  },
+  drawer: {
+    width: '140px',
+    flexShrink: 0
+  },
+  drawerPaper: {
+    
+    width: '282px',
+    backgroundColor:'#335995'
+    
+  },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    padding: "0 8px",
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end"
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing.unit * 3,
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    marginLeft: -drawerWidth
+  },
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen
+    }),
+    marginLeft: 0
   },
   drawerPaperClose: {
     overflowX: 'hidden',
