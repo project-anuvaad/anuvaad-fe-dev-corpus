@@ -11,6 +11,9 @@ import AutoML from "../../../flux/actions/apis/auto_ml";
 import NMT from "../../../flux/actions/apis/nmt";
 import NMTSP from "../../../flux/actions/apis/nmtsp";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import { white, blueGrey50,darkBlack } from "material-ui/styles/colors"
 
 
 class Dashboard extends React.Component {
@@ -21,7 +24,8 @@ class Dashboard extends React.Component {
       apiCalled: false,
       autoMlText: '',
       nmtText: [],
-      nmtTextSP: []
+      nmtTextSP: [],
+      tocken: false
     }
   }
 
@@ -56,6 +60,13 @@ class Dashboard extends React.Component {
       [key]: event.target.value
     })
   }
+  handleClear() {
+    console.log('clear')
+    this.setState({
+      text:'',
+      autoMlText:''
+    })
+  }
 
   handleSubmit() {
     const { APITransport, NMTApi, NMTSPApi } = this.props;
@@ -78,12 +89,15 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
+        <Paper style={{marginLeft:'25%',width:'50%',marginTop:'5%'}}>
+        <Typography variant="h5" style={{ color: darkBlack, background:blueGrey50, paddingLeft:'40%', paddingBottom:'12px',paddingTop:'8px'}} >Translator</Typography>
         <Grid container spacing={24} style={{ padding: 24 }}>
           <Grid item xs={12} sm={12} lg={12} xl={12}>
             <TextField
+            value={this.state.text}
               id="standard-multiline-static"
               label="English Sentence"
-              style={{ width: '70%' }}
+              style={{ width: '100%' }}
               multiline
               margin="normal"
               onChange={(event) => {
@@ -91,22 +105,31 @@ class Dashboard extends React.Component {
               }}
             />
           </Grid>
-
-          <Grid item xs={9} sm={6} lg={3} xl={3}>
+               
+          <Grid item xs={9} sm={6} lg={2} xl={2}>
+            
             <Button variant="contained" color="primary" onClick={this.handleSubmit.bind(this)}>
               Submit
             </Button>
-          </Grid>
+            </Grid>
+            <Grid item xs={9} sm={6} lg={3} xl={3}>
+            <Button variant="contained" color="primary" onClick={this.handleClear.bind(this)}>
+              Clear
+            </Button>
+           
+            </Grid>
         </Grid>
-        <Grid container spacing={24} style={{ padding: 24 }}>
-          <Grid item xs={9} sm={6} lg={6} xl={6}>
-            {this.props.apistatus.progress ? <CircularProgress /> : <NewOrders title="Google" data={[this.state.autoMlText]} />}
-          </Grid>
-          <Grid item xs={9} sm={6} lg={6} xl={6}>
-            {this.props.apistatus.progress ? <CircularProgress /> : <NewOrders title="Aanuvada Model" data={this.state.nmtText} />}
-          </Grid>
-        </Grid>
-
+        {this.state.autoMlText && 
+        <div>
+        
+          
+            <NewOrders title="Google" data={[this.state.autoMlText]} />
+          
+          
+            <NewOrders title="Aanuvada Model" data={this.state.nmtText} />
+            </div>
+        }
+        </Paper>
       </div>
     );
   }

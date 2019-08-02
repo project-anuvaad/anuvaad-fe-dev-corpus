@@ -24,6 +24,7 @@ export default class CreateCorpus extends API {
 
     processResponse(res) {
         super.processResponse(res)
+        console.log("sdsfs",res)
         if (res.data) {
             this.corpus_data = res.data;
         }
@@ -35,7 +36,7 @@ export default class CreateCorpus extends API {
 
     getFormData() {
         const formData = new FormData();
-        console.log(this.add_name);
+        console.log('hindi', this.hindiFile,'english', this.englishFile);
         console.log(this.comment);
 
             formData.append('hindi', this.hindiFile);
