@@ -32,8 +32,8 @@ class Newcorpus extends React.Component {
             doamin:'',
             text: '',
             apiCalled: false,
-            hindi: [],
-            english: [],
+            hindi: '',
+            english: '',
             hindi_score: [],
             english_score: [],
             file: {},
@@ -46,7 +46,8 @@ class Newcorpus extends React.Component {
             message:'Created corpus scuccessfully',
             token: false,
             activeStep: 0,
-            val:0
+            val:0,
+            warning:''
             
         }
     }
@@ -113,7 +114,6 @@ class Newcorpus extends React.Component {
       
     }
 
-
     getStepContent=(stepIndex)=> {
         console.log(stepIndex)
         switch (stepIndex) {
@@ -159,7 +159,7 @@ class Newcorpus extends React.Component {
           case 2: 
               
             return <div ><FormControl fullWidth>
-            <InputLabel htmlFor="Add Name">Name*</InputLabel>
+            <InputLabel htmlFor="Add Name">Output filename*</InputLabel>
             <Input id="name" required  onChange={(event) => {this.handleTextChange('add_name', event)}} />
             <div style={{color:'red'}}>{this.state.nameError}</div>
             </FormControl>
@@ -208,9 +208,21 @@ class Newcorpus extends React.Component {
       
     
       handleNext = () => {
+        console.log(this.state.englishFile.name)
+        if(this.state.activeStep===0 && this.state.englishFile.name && this.state.english){
         this.setState(state => ({
-          activeStep: state.activeStep + 1,
+          activeStep: 1,
+          warning:''
         }));
+      } else if (this.state.hindiFile.name  && this.state.hindi){
+        this.setState(state => ({
+          activeStep: 2,
+          warning:''
+        }));}
+      else{
+        this.setState({warning:" * Fields shouldn't be empty "})
+        
+      }
       };
     
       handleBack = () => {
@@ -266,7 +278,7 @@ class Newcorpus extends React.Component {
                   
                             <Button variant="contained" color="primary" className={classes.button} onClick={this.handleBack}> {this.state.activeStep === 0 ? "Cancel": "Back"} </Button>
                             <Button variant="contained" color="primary" className={classes.buttons} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) :this.handleNext}> {this.state.activeStep === 2 ? 'Create Corpus' :"Next"}</Button>
-                        
+                            <div style={{color:'red' , marginLeft:"30%"}}>{this.state.warning}</div>
                 </Paper>
                 
                 <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}>
