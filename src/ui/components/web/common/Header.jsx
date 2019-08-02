@@ -22,7 +22,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import SearchIcon from '@material-ui/icons/AddToQueue';
-import StarIcon from '@material-ui/icons/Star';
+import StarIcon from '@material-ui/icons/FiberNew';
 import SvgIcon from '@material-ui/icons/Accessibility';
 import LaunchIcon from '@material-ui/icons/Launch';
 import SendIcon from '@material-ui/icons/Send';
@@ -198,15 +198,15 @@ class Header extends React.Component {
 								)}
 							/>
 						</ListItem>
-						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/corpus`)}}>
+						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/newcorpus`)}}>
 							<ListItemIcon>
-								<SendIcon style={{ color: 'white' }} />
+								<StarIcon style={{ color: 'white' }} />
 							</ListItemIcon>
 							<ListItemText
 								disableTypography
 								primary={(
 									<Typography type="body2" style={{ color: '#FFFFFF' }}>
-										Corpus List
+										Corpus
           							</Typography>
 								)}
 							/>
@@ -219,7 +219,7 @@ class Header extends React.Component {
 								disableTypography
 								primary={(
 									<Typography type="body2" style={{ color: '#FFFFFF' }}>
-										Translated Files
+										Corpus List
           							</Typography>
 								)}
 							/>
