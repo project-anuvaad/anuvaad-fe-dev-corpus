@@ -4,7 +4,9 @@ import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
 import Login from "./ui/containers/web/Login";
+import Logout from "./ui/containers/web/Logout";
 import Layout from "./ui/containers/web/Layout";
+import Callback from "./ui/containers/web/Callback";
 
 import NotFound from "./ui/containers/web/NotFound";
 
@@ -14,6 +16,7 @@ import Translations from "./ui/containers/web/Translations";
 import newcorpus from "./ui/containers/web/Newcorpus";
 import Corp from "./ui/containers/web/ViewCorpus";
 import history from "./web.history";
+import Home from "./ui/containers/web/Home";
 
 
 import Translate from "./ui/containers/web/Translate";
@@ -21,36 +24,35 @@ import ViewTranslations from "./ui/containers/web/ViewTranslations";
 import DashboardTamil from "./ui/containers/web/DashboardTamil";
 
 const PrivateRoute = ({ component: Component, authenticate, ...rest }) => (
-  <Route {...rest} render={props => (authenticate ? <Layout component={Component} {...props} /> : <Redirect to={{ pathname: "/" }} />)} />
+  <Route {...rest} render={props => (authenticate() ? <Layout component={Component} {...props} /> : <Redirect to={{ pathname: "/" }} />)} />
 );
 
 class AppRoutes extends React.Component {
   authenticateUser = () => {
-    const { user } = this.props;
     const token = localStorage.getItem("token");
-    // if (user.token || token) {
+    console.log(token)
+    if (token) {
       return true;
-    // }
-    // return false;
-  };
+    }
+    return false;
+  }
 
   render() {
     return (
       <Router history={history} basename={'/dev'}>
         <div>
           <Switch>
-            <Route exact path={`${process.env.PUBLIC_URL}/`} component={Login} />
-           
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard-tamil`} component={DashboardTamil} authenticate={this.authenticateUser()} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`} component={Corpus} authenticate={this.authenticateUser()} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/view-translations/:basename`} component={ViewTranslations} authenticate={this.authenticateUser()} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/corpus`} component={Corp} authenticate={this.authenticateUser()} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/translations`} component={Translations} authenticate={this.authenticateUser()} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/translate`} component={Translate} authenticate={this.authenticateUser()} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/newcorpus`} component={newcorpus} authenticate={this.authenticateUser()} />
-           
-            
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser()} />
+            <Route exact path={`${process.env.PUBLIC_URL}/`} component={Home} />
+            <Route exact path={`${process.env.PUBLIC_URL}/callback`} component={Callback} />
+            <Route exact path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard-tamil`} component={DashboardTamil} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`} component={Corpus} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/view-translations/:basename`} component={ViewTranslations} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/corpus`} component={Corp} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/translations`} component={Translations} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/translate`} component={Translate} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/newcorpus`} component={newcorpus} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser} />
           </Switch>
         </div>
       </Router>
