@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import Filter from "@material-ui/icons/FilterList";
 import FetchSentences from "../../../flux/actions/apis/sentences";
-import UpdateSentences from "../../../flux/actions/apis/update_sentences";
+import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
 import Divider from '@material-ui/core/Divider';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -18,19 +18,9 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { CSVLink, CSVDownload } from "react-csv";
-import SaveIcon from '@material-ui/icons/Check';
-import Accept from '@material-ui/icons/Spellcheck';
-import Close from '@material-ui/icons/Close';
+import StarRatingComponent from 'react-star-rating-component';
 import TablePagination from "@material-ui/core/TablePagination";
-import EditIcon from '@material-ui/icons/Edit';
-import Input from "@material-ui/core/Input";
-import Pagination from "material-ui-flat-pagination";
-import Select from '../../components/web/common/Select';
-import Tooltip from '@material-ui/core/Tooltip';
-import TableFilter from 'react-table-filter';
-import UpdateSentencesStatus from "../../../flux/actions/apis/update-sentenses-status";
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+;
 
 class Corpus extends React.Component {
     constructor(props) {
@@ -90,9 +80,6 @@ class Corpus extends React.Component {
 
       };
 
-     
-
-
       handleSelectChange = event => {
         this.setState({ pageCount: event.target.value,page:0 });
             let api = new FetchSentences(this.props.match.params.basename,event.target.value,1,this.state.inputStatus)
@@ -116,10 +103,14 @@ class Corpus extends React.Component {
         }
     }
 
-    
-
-   
-
+    onStarClick(nextValue, prevValue, name) {
+        let sentences = this.state.sentences
+        console.log(sentences[name])
+        sentences[name].rating = nextValue
+        let api = new UpdateSentencesGrade(sentences[name])
+            this.props.APITransport(api);
+        this.setState({rating: nextValue});
+      }
 
 
     render() {
@@ -135,12 +126,15 @@ class Corpus extends React.Component {
                     <TableCell >
                         {row.translation}
                     </TableCell>
-                    
-                    
-
                     <TableCell >
                    
-                        <div >{row.status}</div>
+                    <StarRatingComponent 
+                        name={index}
+                        starCount={5}
+                        value={row.rating}
+                        onStarClick={this.onStarClick.bind(this)}
+                    />
+
                     </TableCell>
                     
                 </TableRow>
@@ -172,16 +166,16 @@ class Corpus extends React.Component {
                             <Paper >
 
                             <TablePagination
-        component="nav"
-        page={this.state.page}
-        rowsPerPageOptions={[5, 10, 25,50,100]}
-        rowsPerPage={this.state.pageCount}
-        count={this.state.count}
-        onChangePage={this.handleChangePage}
+                                component="nav"
+                                page={this.state.page}
+                                rowsPerPageOptions={[5, 10, 25,50,100]}
+                                rowsPerPage={this.state.pageCount}
+                                count={this.state.count}
+                                onChangePage={this.handleChangePage}
 
-        
-          onChangeRowsPerPage={this.handleSelectChange}
-      />
+                                
+                                onChangeRowsPerPage={this.handleSelectChange}
+                            />
 
 
                             <Divider/>

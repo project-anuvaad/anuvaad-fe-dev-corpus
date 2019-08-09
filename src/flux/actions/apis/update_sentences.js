@@ -26,7 +26,7 @@ export default class UpdateSentences extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/corpus/update-sentences`;
+        return `${super.apiEndPointAuto()}/app/update-sentences`;
     }
 
     getBody() {
@@ -37,6 +37,7 @@ export default class UpdateSentences extends API {
       getHeaders() {
     this.headers = {
       headers: {
+        'Authorization': 'Bearer '+decodeURI(localStorage.getItem('token')),
         "Content-Type": "application/json"
       }
     };

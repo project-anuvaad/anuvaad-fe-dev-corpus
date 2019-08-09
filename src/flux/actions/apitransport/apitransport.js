@@ -47,7 +47,7 @@ function error(err, api, dispatch) {
   if (api.errorMsg || api.errorMsg === null) {
     errorMsg = api.errorMsg === null ? "" : api.errorMsg;
   }
-  dispatch(apiStatusAsync(false, true, errorMsg,null, err.response.status === 401 ? true : false));
+  dispatch(apiStatusAsync(false, true, errorMsg,null, err.response && err.response.status === 401 ? true : false));
   if (typeof api.processNextErrorStep === "function") {
     api.processNextErrorStep();
   }
