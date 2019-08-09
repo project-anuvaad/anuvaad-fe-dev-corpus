@@ -56,7 +56,7 @@ class Login extends React.Component {
     if((email == 'aroop' || email =='ajitesh' || email == 'kd' || email =='vivek' )&& password =='test')
     {
       localStorage.setItem('token','123')
-      setTimeout(()=>{history.push(`${process.env.PUBLIC_URL}/dashboard`)}, 1000);
+      setTimeout(()=>{history.push(`${process.env.PUBLIC_URL}/corpus`)}, 1000);
     }
     else{
       alert('Wrong credentials')

@@ -4,12 +4,17 @@
 import API from "./api";
 import C from "../constants";
 
+
 export default class FetchSentences extends API {
-    constructor(basename, timeout = 200000) {
+    constructor(basename,pageCount,pageno,status="", timeout = 200000) {
         super("GET", timeout, false);
         this.basename = basename;
         this.sentences = null;
         this.type = C.FETCH_SENTENCES;
+        this.pagesize=pageCount;
+        this.pageno=pageno;
+        this.status=status;
+
     }
 
     toString() {
@@ -17,14 +22,20 @@ export default class FetchSentences extends API {
     }
 
     processResponse(res) {
+        console.log("res",res)
         super.processResponse(res);
-        if (res.data) {
-            this.sentences = res.data
+        if (res) {
+            this.sentences = res
         }
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/corpus/fetch-sentences?basename=${this.basename}`
+        console.log(this.status)
+        if(this.status.item==="ALL" || this.status==="" )
+        return `${super.apiEndPointAuto()}/app/fetch-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}`
+        else{
+            return `${super.apiEndPointAuto()}/app/fetch-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}&status=${this.status.item}`
+        }
     }
 
     getBody() {
@@ -32,10 +43,12 @@ export default class FetchSentences extends API {
     }
 
     getHeaders() {
-        this.headers = {
-            headers:{}
-        };
-        return this.headers;
+        return {
+            headers: {
+                'Authorization': 'Bearer '+decodeURI(localStorage.getItem('token')), 
+                "Content-Type": "application/json"
+            }
+        }
     }
 
     getPayload() {

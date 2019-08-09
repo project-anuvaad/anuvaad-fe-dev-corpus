@@ -1,6 +1,6 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
-import { white, grey900 } from "material-ui/styles/colors";
+import { white, blueGrey50,darkBlack } from "material-ui/styles/colors";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
 import { typography } from "material-ui/styles";
 import Typography from '@material-ui/core/Typography';
@@ -8,19 +8,21 @@ const NewOrders = props => {
   const { title, data } = props;
   const styles = {
     paper: {
-      backgroundColor: grey900,
+      backgroundColor: blueGrey50,
       // height: 150
     },
     div: {
       // height: 95,
-      padding: "5px 15px 0 15px"
+      padding: "5px 15px 0 15px",
+      color: darkBlack
     },
     header: {
       fontSize: 24,
       fontWeight: typography.fontWeightLight,
-      color: white,
-      backgroundColor: grey900,
-      padding: 10
+      color: darkBlack,
+      backgroundColor: blueGrey50,
+      padding: 10,
+      marginLeft:"55px"
     }
   };
 
@@ -31,7 +33,7 @@ const NewOrders = props => {
         <ResponsiveContainer>
           <div>
             {data.map((text)=>{
-              return <Typography variant="subtitle2" gutterBottom style={{ color: 'white' }}>
+              return <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"55px"}} >
               {text ? text : ' '}
       </Typography>
             })}

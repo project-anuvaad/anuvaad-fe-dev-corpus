@@ -16,19 +16,47 @@ const LoginStyles = theme => ({
     flexBasis: 200
   },
   loginContainer: {
-    minWidth: 320,
-maxWidth: 400,
+    minWidth: '15%',
+    maxWidth: '25%',
 
     height: 'auto',
     position: 'absolute',
     top: '20%',
-    left: 0,
-    right: 0,
-    margin: 'auto'
+    left: '32%',
+    
+    
+  },
+
+  signUpContainer: {
+    minWidth: '15%',
+    maxWidth: '25%',
+
+    height: 'auto',
+    
+    marginTop: '2%',
+    marginLeft: '32%',
+    
+    
   },
   paper: {
-    padding: 20,
-    overflow: 'auto'
+    width:'100%',
+    minWidth:'260px',
+    paddingLeft: '20%',
+    paddingRight: '20%',
+    paddingTop:'3%',
+    paddingBottom:'3%',
+    overflow: 'auto',
+    marginLeft:'0%'
+  },
+  paperSign: {
+    width:'100%',
+    paddingLeft: '20%',
+    paddingRight: '20%',
+    paddingTop:'3%',
+    paddingBottom:'3%',
+    overflow: 'auto',
+    marginLeft:'0%',
+    marginTop:'30%'
   },
   buttonsDiv: {
     textAlign: 'center',

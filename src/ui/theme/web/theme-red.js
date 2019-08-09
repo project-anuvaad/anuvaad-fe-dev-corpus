@@ -4,7 +4,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const themeRed = createMuiTheme({
   typography: {
     fontFamily: '"Gill Sans", sans-serif',
-    fontSize: '5rem'
+    fontSize: 'small'
   },
   palette: {
     primary: {
@@ -20,7 +20,7 @@ const themeRed = createMuiTheme({
       contrastText: '#FFFFFF'
     },
     background: {
-      default: '#FA8072'
+      default: 'blue'
     }
   },
   status: {

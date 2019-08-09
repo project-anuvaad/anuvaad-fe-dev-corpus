@@ -23,7 +23,7 @@ import editIcon from 'material-ui/svg-icons/image/edit';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Typography from '@material-ui/core/Typography';
 import { CSVLink, CSVDownload } from "react-csv";
-import AddIcon from '@material-ui/icons/FileDownload';
+
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/CheckCircle';
 import Input from "@material-ui/core/Input";

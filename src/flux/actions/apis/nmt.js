@@ -5,11 +5,12 @@ import API from "./api";
 import C from "../constants";
 
 export default class NMT extends API {
-    constructor(par, model, reverse, timeout = 200000) {
+    constructor(par, model, reverse,target, timeout = 200000) {
         super("POST", timeout, false);
         this.par = par;
-        this.model = model;
-        this.reverse = reverse
+        this.model = 2;
+        this.reverse = reverse;
+        this.target = target;;
         this.answers = null;
         this.type = C.NMT;
     }
@@ -34,10 +35,21 @@ export default class NMT extends API {
     }
 
     apiEndPoint() {
-        return this.reverse ? `http://52.40.71.62:3003/translator/translation_en` : `http://52.40.71.62:3003/translator/translation_hi`;
+        return this.target==='English' ?  `http://52.40.71.62:3003/translator/translation_hi`: `http://52.40.71.62:3003/translator/translation_en`;
     }
 
     getBody() {
+        if (this.target==='Tamil')
+    {
+        this.model=7
+      
+    }
+    else if(this.target==='Hindi'){
+        this.model=1
+    }
+    else{
+      this.model=2
+    }
         return [{
             "src": this.par, "id": this.model
         }]

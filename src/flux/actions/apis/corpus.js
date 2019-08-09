@@ -35,7 +35,7 @@ export default class CreateCorpus extends API {
 
     getFormData() {
         const formData = new FormData();
-        console.log(this.add_name);
+        console.log('hindi', this.hindiFile,'english', this.englishFile);
         console.log(this.comment);
 
             formData.append('hindi', this.hindiFile);

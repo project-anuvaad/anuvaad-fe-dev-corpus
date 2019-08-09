@@ -5,31 +5,47 @@ const themeDefault = createMuiTheme({
 
   typography: {
     fontFamily: '"Source Sans Pro", "Arial", sans-serif',
-    fontSize: '5rem'
+    fontSize: 16,
+    color:"inherit"
   },
   palette: {
     primary: {
-      light: '#282828',
-      main: '#282828',
-      dark: '#282828',
-      contrastText: '#FFFFFF'
+      light: '#1976d2',
+      main: '#1976d2',
+      dark: '1976d2',
+      contrastText: '#FFFFFF',
+      color:'inherit'
+
     },
     secondary: {
-      light: '#000000',
-      main: '#000000',
-      dark: '#000000',
+      light: '#09d6a1',
+      main: '#09d6a1',
+      dark: '09d6a1',
       contrastText: '#FFFFFF'
     },
     background: {
-      default: '#FFFFFF'
+      default: '#FFFFFF',
+      color:"inherit"
     }
   },
   status: {
     danger: 'orange'
   },
+
   drawer: {
-    default: '#696969'
-  }
+    default: '#1976d2',
+    color:'nherit'
+  },
+
+  Link:
+  {
+    fontFamily: '"Source Sans Pro", "Arial", sans-serif',
+    fontSize: 16,
+    color:"inherit"
+  },
+  
+
+  
 
 });
 
