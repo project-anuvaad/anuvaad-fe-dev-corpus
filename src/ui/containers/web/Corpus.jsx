@@ -27,7 +27,6 @@ import Input from "@material-ui/core/Input";
 import Pagination from "material-ui-flat-pagination";
 import Select from '../../components/web/common/Select';
 import Tooltip from '@material-ui/core/Tooltip';
-import TableFilter from 'react-table-filter';
 import UpdateSentencesStatus from "../../../flux/actions/apis/update-sentenses-status";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
