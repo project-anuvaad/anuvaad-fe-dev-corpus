@@ -9,14 +9,15 @@ function dispatchAPIAsync(api) {
   };
 }
 
-function apiStatusAsync(progress, errors, message, res = null) {
+function apiStatusAsync(progress, errors, message, res = null, unauthrized = false) {
   if (res === null || !(res.status && res.status.statusCode && res.status.statusCode !== 200 && res.status.statusCode !== 201)) {
     return {
       type: C.APISTATUS,
       payload: {
         progress,
         error: errors,
-        message: res && res.status && res.status.statusMessage ? res.status.statusMessage : message
+        message: res && res.status && res.status.statusMessage ? res.status.statusMessage : message,
+        unauthrized: unauthrized
       }
     };
   }
@@ -25,7 +26,8 @@ function apiStatusAsync(progress, errors, message, res = null) {
     payload: {
       progress,
       error: res.status.statusCode === 200 || res.status.statusCode === 201,
-      message: res.status.statusCode === 200 || res.status.statusCode === 201 ? message : res.status.errorMessage
+      message: res.status.statusCode === 200 || res.status.statusCode === 201 ? message : res.status.errorMessage,
+      unauthrized: unauthrized
     }
   };
 }
@@ -45,7 +47,7 @@ function error(err, api, dispatch) {
   if (api.errorMsg || api.errorMsg === null) {
     errorMsg = api.errorMsg === null ? "" : api.errorMsg;
   }
-  dispatch(apiStatusAsync(false, true, errorMsg));
+  dispatch(apiStatusAsync(false, true, errorMsg,null, err.response.status === 401 ? true : false));
   if (typeof api.processNextErrorStep === "function") {
     api.processNextErrorStep();
   }
@@ -111,11 +113,9 @@ export default function dispatchAPI(api) {
   return dispatch => {
     // console.log(api.apiEndPoint());
     dispatch(apiStatusAsync(true, false, ""));
-    console.log('1')
     axios
       .get(api.apiEndPoint(), api.getHeaders())
       .then(res => {
-        console.log(res)
         success(res, api, dispatch);
       })
       .catch(err => {
