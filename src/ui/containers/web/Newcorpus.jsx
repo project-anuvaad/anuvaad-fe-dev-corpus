@@ -21,7 +21,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import {DropzoneArea} from 'material-ui-dropzone';
 import Select from '../../components/web/common/Select';
 import Stepper from "../../components/web/common/Stepper";
-
+import { white, blueGrey50,darkBlack } from "material-ui/styles/colors"
 
 
 class Newcorpus extends React.Component {
@@ -43,7 +43,7 @@ class Newcorpus extends React.Component {
             englishFile:[],
             comment:'',
             open: false,
-            message:'Created corpus scuccessfully',
+            message:'Corpus added successfully',
             token: false,
             activeStep: 0,
             val:0,
@@ -51,13 +51,6 @@ class Newcorpus extends React.Component {
             
         }
     }
-
-  
-
-   
-
-
-    
 
     componentDidUpdate(prevProps) {
         if (prevProps.apistatus.progress !== this.props.apistatus.progress) {
@@ -256,9 +249,9 @@ class Newcorpus extends React.Component {
               <div className={classes.CorpusContainer}>
                 
                 <Paper className={classes.paper} elevation={2}>
-                <Typography gutterBottom variant="title" component="h2" style={{marginLeft:'35%'}}>
+                <Typography gutterBottom variant="title" component="h2" style={{marginTop:'-3.7%',paddingLeft:'35%',background:blueGrey50,paddingTop:'13px',paddingBottom:'13px',marginLeft:'-4%',marginRight:'-3.7%'}}>
                     Create Corpus List
-                </Typography>
+                </Typography><br/>
                 <Stepper steps={["Add Source file",'Add target file','Add file details']} activeStep={this.state.activeStep} alternativeLabel></Stepper>
                     
 

@@ -193,7 +193,7 @@ class Header extends React.Component {
 								disableTypography
 								primary={(
 									<Typography type="body2" style={{ color: '#FFFFFF'}}>
-										Translate (Eng to Tamil)
+										Translator
           							</Typography>
 								)}
 							/>

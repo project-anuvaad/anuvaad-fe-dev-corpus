@@ -4,12 +4,13 @@
 import API from "./api";
 import C from "../constants";
 
+
 export default class AutoML extends API {
-    constructor(text, reverse,tamil=false, timeout = 200000) {
+    constructor(text, source, target, timeout = 200000) {
         super("POST", timeout, false);
         this.text = text;
-        this.reverse = reverse;
-        this.tamil = tamil
+        this.source = source;
+        this.target = target
         this.type = C.AUTO_ML;
     }
 
@@ -20,6 +21,7 @@ export default class AutoML extends API {
     processResponse(res) {
         super.processResponse(res);
         this.answers = res
+        console.log(res)
         // if (res.token) {
         //     this.token = res.token;
         //     this.expires = res.expires;
@@ -31,7 +33,8 @@ export default class AutoML extends API {
     }
 
     apiEndPoint() {
-        return this.tamil ? `${super.apiEndPointAuto()}/auto/tamil` : (this.reverse ? `${super.apiEndPointAuto()}/auto/eng` : `${super.apiEndPointAuto()}/auto/hin`);
+        console.log(this.target,this.source)
+        return this.target==='Tamil' ? `${super.apiEndPointAuto()}/auto/tamil` : (this.target==='Hindi' ? `${super.apiEndPointAuto()}/auto/eng` :(this.target==='English'? `${super.apiEndPointAuto()}/auto/hin`:''));
     }
 
     getBody() {

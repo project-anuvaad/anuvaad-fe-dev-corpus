@@ -23,7 +23,7 @@ class SimpleSelect extends React.Component {
           <form>
             <FormControl>
               <Select
-                style={{minWidth: 120}}
+                style={{minWidth: 120,align:'right'}}
                 value={value}
                 onChange={handleChange}
                 input={
