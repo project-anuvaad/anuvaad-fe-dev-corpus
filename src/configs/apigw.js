@@ -6,9 +6,9 @@ const configs = {
     RETURN_TO:'returnTo='+window.location.protocol + '//' + window.location.hostname + (window.location.port ? (':' + window.location.port) : '')+'/callback',
     RESPONSE_TYPE: 'response_type=token&scope=view',
     //Test
-    CLIENT_ID: 'client_id=6d810055-185e-4799-baba-c78693da6134',
+    // CLIENT_ID: 'client_id=6d810055-185e-4799-baba-c78693da6134',
     //Prod
-    // CLIENT_ID: 'client_id=fc7ed37f-546a-41d3-b0f4-96e6ab8274bf',
+    CLIENT_ID: 'client_id=a5c43a83-e94c-4810-8fbf-543af7452a6e',
     REDIRECT_URI: 'redirect_uri='+window.location.protocol + '//' + window.location.hostname + (window.location.port ? (':' + window.location.port) : '')+'/callback',
     
 };
