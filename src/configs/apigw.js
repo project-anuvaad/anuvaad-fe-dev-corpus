@@ -4,11 +4,11 @@ const configs = {
     LOGOUT_ENDPOINT: 'logout',
     POST_LOGOUT_URL:'returnTo='+window.location.protocol + '//' + window.location.hostname + (window.location.port ? (':' + window.location.port) : ''),
     RETURN_TO:'returnTo='+window.location.protocol + '//' + window.location.hostname + (window.location.port ? (':' + window.location.port) : '')+'/dev/callback',
-    RESPONSE_TYPE: 'response_type=token&scope=view',
+    RESPONSE_TYPE: 'response_type=token',
     //Test
     // CLIENT_ID: 'client_id=6d810055-185e-4799-baba-c78693da6134',
     //Prod
-    CLIENT_ID: 'client_id=a5c43a83-e94c-4810-8fbf-543af7452a6e',
+    CLIENT_ID: 'client_id=55952c35-8387-4c56-8cf4-a3c1c63714eb',
     REDIRECT_URI: 'redirect_uri='+window.location.protocol + '//' + window.location.hostname + (window.location.port ? (':' + window.location.port) : '')+'/dev/callback',
     
 };
