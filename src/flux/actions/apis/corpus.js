@@ -24,7 +24,6 @@ export default class CreateCorpus extends API {
 
     processResponse(res) {
         super.processResponse(res)
-        console.log("sdsfs",res)
         if (res.data) {
             this.corpus_data = res.data;
         }

@@ -21,7 +21,8 @@ const NewOrders = props => {
       fontWeight: typography.fontWeightLight,
       color: darkBlack,
       backgroundColor: blueGrey50,
-      padding: 10
+      padding: 10,
+      marginLeft:"55px"
     }
   };
 
@@ -32,7 +33,7 @@ const NewOrders = props => {
         <ResponsiveContainer>
           <div>
             {data.map((text)=>{
-              return <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack}}>
+              return <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"55px"}} >
               {text ? text : ' '}
       </Typography>
             })}

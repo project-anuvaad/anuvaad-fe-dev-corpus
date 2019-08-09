@@ -28,7 +28,7 @@ const Newcorpus = theme => ({
     left: 0,
     right: 0,
     margin: 'auto',
-    
+    marginLeft:'24%',
     flexWrap: 'wrap',
   },
   createButton: {
