@@ -8,11 +8,21 @@ import Spinner from "../../components/web/common/Spinner";
 // import Theme from "../../theme/web/theme-red";
 import Theme from '../../theme/web/theme-default';
 import APITransport from "../../../flux/actions/apitransport/apitransport";
+import history from "../../../web.history";
+
 
 class App extends React.Component {
   renderSpinner() {
     if (this.props.apistatus.progress) {
       return <Spinner />;
+    }
+  }
+
+  componentDidUpdate(prevProps){
+    if(prevProps.apistatus !== this.props.apistatus){
+      if(this.props.apistatus.unauthrized){
+        history.push("/logout")
+      }
     }
   }
 

@@ -24,12 +24,13 @@ export default class FetchCorpus extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/corpus/fetch-corpus`
+        return `${super.apiEndPointAuto()}/app/fetch-corpus`
     }
 
     getHeaders() {
         return {
             headers: {
+                'Authorization': 'Bearer '+decodeURI(localStorage.getItem('token')), 
                 "Content-Type": "application/json"
             }
         }

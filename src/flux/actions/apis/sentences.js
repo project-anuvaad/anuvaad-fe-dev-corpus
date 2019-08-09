@@ -32,9 +32,9 @@ export default class FetchSentences extends API {
     apiEndPoint() {
         console.log(this.status)
         if(this.status.item==="ALL" || this.status==="" )
-        return `${super.apiEndPointAuto()}/corpus/fetch-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}`
+        return `${super.apiEndPointAuto()}/app/fetch-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}`
         else{
-            return `${super.apiEndPointAuto()}/corpus/fetch-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}&status=${this.status.item}`
+            return `${super.apiEndPointAuto()}/app/fetch-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}&status=${this.status.item}`
         }
     }
 
@@ -43,10 +43,12 @@ export default class FetchSentences extends API {
     }
 
     getHeaders() {
-        this.headers = {
-            headers:{}
-        };
-        return this.headers;
+        return {
+            headers: {
+                'Authorization': 'Bearer '+decodeURI(localStorage.getItem('token')), 
+                "Content-Type": "application/json"
+            }
+        }
     }
 
     getPayload() {
