@@ -22,6 +22,7 @@ import Home from "./ui/containers/web/Home";
 import Translate from "./ui/containers/web/Translate";
 import ViewTranslations from "./ui/containers/web/ViewTranslations";
 import DashboardTamil from "./ui/containers/web/DashboardTamil";
+import GradeViewCorpus from "./ui/containers/web/GradeViewCorpus";
 
 const PrivateRoute = ({ component: Component, authenticate, ...rest }) => (
   <Route {...rest} render={props => (authenticate() ? <Layout component={Component} {...props} /> : <Redirect to={{ pathname: "/" }} />)} />
@@ -49,6 +50,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`} component={Corpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-translations/:basename`} component={ViewTranslations} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/corpus`} component={Corp} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} component={GradeViewCorpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translations`} component={Translations} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translate`} component={Translate} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/newcorpus`} component={newcorpus} authenticate={this.authenticateUser} />

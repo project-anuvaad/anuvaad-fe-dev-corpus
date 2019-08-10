@@ -58,9 +58,7 @@ class Corpus extends React.Component {
             lock:false,
             anchorEl:'',
             inputStatus:'',
-            MenuItemValues:['ALL','ACCEPTED',"REJECTED","EDITED","PENDING","PROCESSING"]
-            
-            
+            MenuItemValues:['ALL','ACCEPTED',"REJECTED","EDITED","PENDING","PROCESSING"]  
         }
     }
 
@@ -338,6 +336,8 @@ class Corpus extends React.Component {
                                 <Table >
                                     <TableHead>
                                         <TableRow>
+                                            
+                                            
                                             <TableCell width="30%">Source</TableCell>
                                             <TableCell width="30%">Target</TableCell>
                                             <TableCell width="25%">Google Reference</TableCell>

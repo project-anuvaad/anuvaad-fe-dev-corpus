@@ -6,7 +6,7 @@ const configs = {
     RETURN_TO:'returnTo='+window.location.protocol + '//' + window.location.hostname + (window.location.port ? (':' + window.location.port) : '')+'/dev/callback',
     RESPONSE_TYPE: 'response_type=token',
     //Test
-    // CLIENT_ID: 'client_id=6d810055-185e-4799-baba-c78693da6134',
+    // CLIENT_ID: 'client_id=ef79a009-444e-4de4-90c4-52a17ec783f9',
     //Prod
     CLIENT_ID: 'client_id=55952c35-8387-4c56-8cf4-a3c1c63714eb',
     REDIRECT_URI: 'redirect_uri='+window.location.protocol + '//' + window.location.hostname + (window.location.port ? (':' + window.location.port) : '')+'/dev/callback',

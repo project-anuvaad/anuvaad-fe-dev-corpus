@@ -6,7 +6,7 @@ import { CommunicationStayCurrentLandscape } from "material-ui/svg-icons";
 export default class UpdateSentences extends API {
     constructor(updateSentence, timeout = 2000) {
         super('POST', timeout, false);
-        this.type = C.UPDATE_SENTENCE;
+        this.type = C.UPDATE_SENTENCE_DRADE;
         this.updateSentence = updateSentence;
         this.sentences=[]
         
@@ -17,7 +17,7 @@ export default class UpdateSentences extends API {
     }
 
     processResponse(res) {
-        console.log(res)
+        console.log("11111",res.data)
         CommunicationStayCurrentLandscape.log(res)
         super.processResponse(res)
         if (res.data) {
@@ -26,7 +26,7 @@ export default class UpdateSentences extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/app/update-sentences`;
+        return `${super.apiEndPointAuto()}/app/update-sentences-grade`;
     }
 
     getBody() {
