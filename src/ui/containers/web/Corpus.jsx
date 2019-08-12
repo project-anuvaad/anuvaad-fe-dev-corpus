@@ -25,7 +25,7 @@ import TablePagination from "@material-ui/core/TablePagination";
 import EditIcon from '@material-ui/icons/Edit';
 import Input from "@material-ui/core/Input";
 import Pagination from "material-ui-flat-pagination";
-import Select from '../../components/web/common/Select';
+import Select from '../../com:qponents/web/common/Select';
 import Tooltip from '@material-ui/core/Tooltip';
 import UpdateSentencesStatus from "../../../flux/actions/apis/update-sentenses-status";
 import Menu from '@material-ui/core/Menu';
