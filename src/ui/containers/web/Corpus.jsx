@@ -306,10 +306,14 @@ class Corpus extends React.Component {
 
                     <TableCell align="left">
                         {row.alignment_accuracy === 'GAPFILLER\n' || row.alignment_accuracy === 'GALECHURCH\n' ?
-                            'Less than 30%'
+                            '<30%'
                             :
-                            (row.alignment_accuracy === 'BLEU\n' ? '30% to 50%'
-                                : (row.alignment_accuracy && row.alignment_accuracy.indexOf('-') > 0 ? Math.round(100*(50+row.alignment_accuracy.split('\n')[0].split('-')[1]*100/2))/ 100 + '%': ''))}
+                            (row.alignment_accuracy === 'BLEU\n' ? '30%-60%'
+                                : 
+                                // (row.alignment_accuracy && row.alignment_accuracy.indexOf('-') > 0 ? Math.round(100*(50+row.alignment_accuracy.split('\n')[0].split('-')[1]*100/2))/ 100 + '%': '')
+                                '>60%'
+                                )
+                                }
                     </TableCell>
 
                     <TableCell>
