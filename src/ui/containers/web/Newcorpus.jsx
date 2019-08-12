@@ -123,12 +123,12 @@ class Newcorpus extends React.Component {
             </Grid><br/>
             {this.state.val>1 ?
             <DropzoneArea 
-        onDrop={this.handleSource} showPreviewsInDropzone={true} style={{marginTop:'0%'}} acceptedFiles={['.docx']} dropzoneText="Please Add/Drop docx file here" filesLimit={1}
+        onDrop={this.handleSource} showPreviewsInDropzone={true} style={{marginTop:'0%'}} acceptedFiles={['.pdf']} dropzoneText="Please Add/Drop pdf file here" filesLimit={1}
         ></DropzoneArea>:''
             }
             
             <DropzoneArea 
-        onDrop={this.handleSource} showPreviewsInDropzone={true} style={{marginTop:'0%'}} acceptedFiles={['.docx']} dropzoneText="Please Add/Drop docx file here" filesLimit={1}
+        onDrop={this.handleSource} showPreviewsInDropzone={true} style={{marginTop:'0%'}} acceptedFiles={['.pdf']} dropzoneText="Please Add/Drop pdf file here" filesLimit={1}
         ></DropzoneArea>
                 </div>
             
@@ -145,7 +145,7 @@ class Newcorpus extends React.Component {
             </Grid>
             </Grid><br/>
             <DropzoneArea Dropzoneiles=""
-        onDrop={this.handleTarget} id="source" showPreviewsInDropzone={true} acceptedFiles={['.docx']} dropzoneText="Please Add/Drop docx file here" filesLimit={2}
+        onDrop={this.handleTarget} id="source" showPreviewsInDropzone={true} acceptedFiles={['.pdf']} dropzoneText="Please Add/Drop pdf file here" filesLimit={2}
         ></DropzoneArea>
                 </div>;
   

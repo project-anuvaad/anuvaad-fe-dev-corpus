@@ -1,10 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-
+import ReadMoreAndLess from 'react-read-more-less';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import ReactCollapsingTable from 'react-collapsing-table'
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import Filter from "@material-ui/icons/FilterList";
 import FetchSentences from "../../../flux/actions/apis/sentences";
@@ -30,6 +30,14 @@ import Tooltip from '@material-ui/core/Tooltip';
 import UpdateSentencesStatus from "../../../flux/actions/apis/update-sentenses-status";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+var rows = [
+    { id: 1, firstName: 'Paul', lastName: 'Darragh', id: 1, firstName: 'Paul', lastName: 'Darragh'}
+  ]
+  var columns = [
+    { accessor: 'firstName', label: 'First Name', priorityLevel: 1, position: 1, minWidth: 150, },
+    { accessor: 'lastName', label: 'Last Name', priorityLevel: 2, position: 2, minWidth: 150, },
+  ]
+
 
 class Corpus extends React.Component {
     constructor(props) {
@@ -58,6 +66,7 @@ class Corpus extends React.Component {
             lock:false,
             anchorEl:'',
             inputStatus:'',
+            backColor:'Grey',
             MenuItemValues:['ALL','ACCEPTED',"REJECTED","EDITED","PENDING","PROCESSING"]  
         }
     }
@@ -119,6 +128,7 @@ class Corpus extends React.Component {
         }
         if (prevProps.sentences !== this.props.sentences) {
             this.setState({
+                
                 sentences: this.props.sentences.data,
                 sentenceCancel: this.props.sentences.data,
                 count:this.props.sentences.count
@@ -151,21 +161,19 @@ class Corpus extends React.Component {
     handleEditButton(index) {
         let sentences = this.state.sentences
         sentences[index].isEditable = true
-        
         console.log("type",typeof(sentences))
-        this.setState({
-            
-            sentences: sentences,
-            
+        this.setState({            
+            sentences: sentences,           
         })
-        
     }
 
     handleActionButton(index,action) {
         
-        let sentences = this.state.sentences
+        let sentences = this.state.sentences;
+        let color1=''
         sentences[index].isEditable = false
         sentences[index].status=action === "ACCEPTED" ? 'ACCEPTED':(action==='REJECTED'?'REJECTED':'')
+        this.setState({backColor:'green'})
         
         this.setState({
             
@@ -183,7 +191,7 @@ class Corpus extends React.Component {
         }
         else{
 
-
+            
         let api = new UpdateSentencesStatus(sentences[index])
             this.props.APITransport(api);
         }
@@ -218,13 +226,41 @@ class Corpus extends React.Component {
     }
 
     handleSelect(event){
-        console.log('sajjish')
         this.setState({ anchorEl: event.currentTarget });
       };
-
       handleClose = () => {
         this.setState({ anchorEl: null });
       };
+      handleColor(color){
+          let color1='grey'
+          console.log(color)
+           return color=='ACCEPTED' ? 'green' : (color=='EDITED'?'#2c6b96':(color=="REJECTED"?"red":(color=="PROCESSING"?'#f1de7f':(color=="PENDING"?'grey':''))))
+      }
+
+      colorValidate=(e,ocrValue)=>{
+        let splitRow;
+        let word;
+        let colorWord =[];
+        console.log(ocrValue)
+        if(ocrValue){
+        splitRow= e.split(' ')
+        for(word in ocrValue)
+            if(ocrValue[word]>=85){  
+             colorWord.push( <span><span>{splitRow[word]}</span><span>{" "}</span></span>)  
+            }
+
+            else if(ocrValue[word]>70 && ocrValue[word]<85){
+                colorWord.push( <span><span style={{ backgroundColor: 'yellow' }}>{splitRow[word]}</span><span>{" "}</span></span>)
+            }
+
+            else if(ocrValue[word]<=70){
+                colorWord.push( <span><span style={{ backgroundColor: 'red' }}>{splitRow[word]}</span><span>{" "}</span></span>)
+            }
+            return colorWord;
+        }  
+        return e;      
+               
+    }
 
 
 
@@ -232,31 +268,64 @@ class Corpus extends React.Component {
     render() {
         const CorpusDetails= <TableBody>
             {this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.map((row, index) => (
-                <TableRow key={index} >
-                    <TableCell component="th" scope="row">
-                        {row.isEditable ? <Input id="email" style={{width:'100%'}} multiline rowsMax="4" floatingLabelText="E-mail" value={row.source} onChange={(event) => { this.handleTextChange(event.target.value, index, 'source') }} /> :row.source}
+                <TableRow key={index} hover={true} selected={true} >
+                    <TableCell component="th" scope="row" whiteSpace= 'nowrap'>
+                        {row.isEditable ? <Input id="email" style={{width:'100%'}} multiline rowsMax="4" floatingLabelText="E-mail" value={row.source} onChange={(event) => { this.handleTextChange(event.target.value, index, 'source') }} /> :<ReadMoreAndLess
+                ref={this.ReadMore}
+                className="read-more-content"
+                charLimit={150}
+                readMoreText="Read more"
+                readLessText=""
+            >
+                {this.colorValidate(row.source,row.source_ocr_words)}
+            </ReadMoreAndLess>}
                     </TableCell>
                     <TableCell >
-                        {row.isEditable ? <Input id="email" style={{width:'100%'}} multiline rowsMax="4" floatingLabelText="E-mail" value={row.target} onChange={(event) => { this.handleTextChange(event.target.value, index, 'target') }}/> : row.target}
+                        {row.isEditable ? <Input id="email" style={{width:'100%'}} multiline rowsMax="4" floatingLabelText="E-mail" value={row.target} onChange={(event) => { this.handleTextChange(event.target.value, index, 'target') }}/> : <ReadMoreAndLess
+                ref={this.ReadMore}
+                className="read-more-content"
+                charLimit={150}
+                readMoreText="Read more"
+                readLessText=""
+            >
+                {this.colorValidate(row.target,row.target_ocr_words)}
+            </ReadMoreAndLess>}
                     </TableCell>
                     <TableCell >
-                        {row.translation}
+                    <ReadMoreAndLess
+                ref={this.ReadMore}
+                className="read-more-content"
+                charLimit={150}
+                readMoreText="Read more"
+                readLessText=""
+            >
+                 {row.translation}
+            </ReadMoreAndLess>
+                       
                     </TableCell>
+
+                    <TableCell align="left">
+                {row.alignment_accuracy === 'GAPFILLER\n' || row.alignment_accuracy === 'GALECHURCH\n' ? 
+                    <span variant="fab" style={{ width: '35px', height: '35px',borderRadius:'50%',display: 'inline-block', backgroundColor:'red'}}/> 
+                        : 
+                        (row.alignment_accuracy === 'BLEU\n' ? <span style={{ width: '35px', height: '35px',borderRadius:'50%',display: 'inline-block', backgroundColor:'yellow'}}>    </span>
+                        :null)}
+            </TableCell>
                     
                      <TableCell>
                         {row.isEditable ? <div> 
 
                             
                              
-                            <Tooltip title="Save" leaveDelay={0}><SaveIcon style={{ cursor: 'pointer',marginRight:'5px', color:'#335995', fontSize:'30px' }} onClick={() => {
+                            <Tooltip title="Save" leaveDelay={0}><SaveIcon style={{ cursor: 'pointer',marginRight:'5px', color:'green', fontSize:'30px' }} onClick={() => {
                             this.handleSaveButton(index)
                         }} /></Tooltip>
-                        <Tooltip title="Revert" leaveDelay={0}><Close style={{ cursor: 'pointer',marginRight:'5px' , color:'#335995'}} onClick={() => {
+                        <Tooltip title="Revert" leaveDelay={0}><Close style={{ cursor: 'pointer',marginRight:'5px' , color:'red'}} onClick={() => {
                             this.handleActionButton(index,'')
                         }} /></Tooltip> </div>:
                         <div style={{width:'95px'}}>
                             
-                            <Tooltip title="Accept" leaveDelay={0}><Accept style={{ cursor: 'pointer',marginRight:'5px' , color:"#335995"}} onClick={() => {
+                            <Tooltip title="Accept" leaveDelay={0}><Accept style={{ cursor: 'pointer',marginRight:'5px' , color:"green"}} onClick={() => {
                                 {this.state.lock ?'': this.handleActionButton(index,"ACCEPTED")}
                                 
                             }} />
@@ -264,7 +333,7 @@ class Corpus extends React.Component {
                             <Tooltip title="Edit" leaveDelay={0}><EditIcon style={{ cursor: 'pointer',marginRight:'5px' ,color:'#335995'}} onClick={() => {
                                 {this.state.lock ?'' : this.handleEditButton(index)}
                             }} /></Tooltip>
-                            <Tooltip title="Reject"><Close style={{ cursor: 'pointer',marginRight:'5px' , color:"#335995"}} onClick={() => {
+                            <Tooltip title="Reject" leaveDelay={0}><Close style={{ cursor: 'pointer',marginRight:'5px' , color:"red"}} onClick={() => {
                                 {this.state.lock ?'' :this.handleActionButton(index,"REJECTED")}
                             }} /></Tooltip>
                             </div>
@@ -273,10 +342,10 @@ class Corpus extends React.Component {
 
                     
                     <TableCell >
-
-
+                         
+                        
                    
-                        <div >{row.status}</div>
+                        <div style={{backgroundColor:this.handleColor(row.status), width:'105px',paddingTop:'7px',textAlign:'center',paddingBottom:'7px',color:'white'}}>{row.status}</div>
                     </TableCell>
                     
                 </TableRow>
@@ -292,6 +361,8 @@ class Corpus extends React.Component {
           open={Boolean(this.state.anchorEl)}
           onClose={this.handleClose}
         >
+
+
 
 {this.state.MenuItemValues.map((item) => (
                         <MenuItem value={item}  onClick={()=>{this.handleFilter({item})}}>{item}</MenuItem>
@@ -338,10 +409,10 @@ class Corpus extends React.Component {
                                         <TableRow>
                                             
                                             
-                                            <TableCell width="30%">Source</TableCell>
-                                            <TableCell width="30%">Target</TableCell>
-                                            <TableCell width="25%">Google Reference</TableCell>
-                                            
+                                            <TableCell width="27%">Source</TableCell>
+                                            <TableCell width="27%">Target</TableCell>
+                                            <TableCell width="27%">Machine translated reference </TableCell>
+                                            <TableCell align="right">Accuracy</TableCell>
                                             <TableCell width="10%">Action</TableCell>
                                             <TableCell width="10%"><div>Status <Filter onClick={(event) => {
                                 this.handleSelect(event)}}/></div></TableCell>
