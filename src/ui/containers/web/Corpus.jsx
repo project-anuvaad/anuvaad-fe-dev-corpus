@@ -249,11 +249,11 @@ class Corpus extends React.Component {
                 }
 
                 else if (ocrValue[word] > 70 && ocrValue[word] < 85) {
-                    colorWord.push(<span><span style={{ backgroundColor: 'yellow' }}>{splitRow[word]}</span><span>{" "}</span></span>)
+                    colorWord.push(<span><span style={{textDecoration:'Underline' ,textDecorationColor: 'blue',textDecorationStyle:'wavy'}}>{splitRow[word]}</span><span>{" "}</span></span>)
                 }
 
                 else if (ocrValue[word] <= 70) {
-                    colorWord.push(<span><span style={{ backgroundColor: 'red' }}>{splitRow[word]}</span><span>{" "}</span></span>)
+                    colorWord.push(<span><span style={{ textDecoration:'Underline',textDecorationColor: 'red',textDecorationStyle:'wavy'}}>{splitRow[word]}</span><span>{" "}</span></span>)
                 }
             }
             return colorWord;
@@ -268,7 +268,7 @@ class Corpus extends React.Component {
     render() {
         const CorpusDetails = <TableBody>
             {this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.map((row, index) => (
-                <TableRow key={index} hover={true} selected={true} >
+                <TableRow key={index} hover={true} >
                     <TableCell component="th" scope="row" whiteSpace='nowrap'>
                         {row.isEditable ? <Input id="email" style={{ width: '100%' }} multiline rowsMax="4" floatingLabelText="E-mail" value={row.source} onChange={(event) => { this.handleTextChange(event.target.value, index, 'source') }} /> : <ReadMoreAndLess
                             ref={this.ReadMore}
@@ -306,10 +306,14 @@ class Corpus extends React.Component {
 
                     <TableCell align="left">
                         {row.alignment_accuracy === 'GAPFILLER\n' || row.alignment_accuracy === 'GALECHURCH\n' ?
-                            <span variant="fab" style={{ width: '35px', height: '35px', borderRadius: '50%', display: 'inline-block', backgroundColor: 'red' }} />
+                            '<30%'
                             :
-                            (row.alignment_accuracy === 'BLEU\n' ? <span style={{ width: '35px', height: '35px', borderRadius: '50%', display: 'inline-block', backgroundColor: 'yellow' }}>    </span>
-                                : null)}
+                            (row.alignment_accuracy === 'BLEU\n' ? '30%-60%'
+                                : 
+                                // (row.alignment_accuracy && row.alignment_accuracy.indexOf('-') > 0 ? Math.round(100*(50+row.alignment_accuracy.split('\n')[0].split('-')[1]*100/2))/ 100 + '%': '')
+                                '>60%'
+                                )
+                                }
                     </TableCell>
 
                     <TableCell>
@@ -409,10 +413,10 @@ class Corpus extends React.Component {
                                     <TableRow>
 
 
-                                        <TableCell width="27%">Source</TableCell>
-                                        <TableCell width="27%">Target</TableCell>
+                                        <TableCell width="27%">Source Sentence</TableCell>
+                                        <TableCell width="27%">Target Sentence</TableCell>
                                         <TableCell width="27%">Machine translated reference </TableCell>
-                                        <TableCell align="right">Accuracy</TableCell>
+                                        <TableCell align="right">Alignment Accuracy</TableCell>
                                         <TableCell width="10%">Action</TableCell>
                                         <TableCell width="10%"><div>Status <Filter onClick={(event) => {
                                             this.handleSelect(event)
