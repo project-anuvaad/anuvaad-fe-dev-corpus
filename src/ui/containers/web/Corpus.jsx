@@ -327,13 +327,18 @@ class Corpus extends React.Component {
 
                     </TableCell> */}
 
-                    {/* <TableCell align="left">
+<TableCell align="left">
                         {row.alignment_accuracy === 'GAPFILLER\n' || row.alignment_accuracy === 'GALECHURCH\n' ?
-                            <span variant="fab" style={{ width: '35px', height: '35px', borderRadius: '50%', display: 'inline-block', backgroundColor: 'red' }} />
+                            '<30%'
                             :
-                            (row.alignment_accuracy === 'BLEU\n' ? <span style={{ width: '35px', height: '35px', borderRadius: '50%', display: 'inline-block', backgroundColor: 'yellow' }}>    </span>
-                                : null)}
-                    </TableCell> */}
+                            (row.alignment_accuracy === 'BLEU\n' ? '30%-60%'
+                                : 
+                                // (row.alignment_accuracy && row.alignment_accuracy.indexOf('-') > 0 ? Math.round(100*(50+row.alignment_accuracy.split('\n')[0].split('-')[1]*100/2))/ 100 + '%': '')
+                                '>60%'
+                                )
+                                }
+                    </TableCell>
+
 
                     <TableCell>
                         {row.isEditable ? <div>
