@@ -71,15 +71,6 @@ class Corp extends React.Component {
                  sort: true,
                 }
             },
-            {
-             name: "created_on",
-             label: "Timestamp",
-             options: {
-              filter: true,
-              sort: true,
-              sortDirection: 'desc'
-             }
-            },
 
             {
              name: "domain",
@@ -89,15 +80,16 @@ class Corp extends React.Component {
               sort: false,
              }
             },
-
             {
-             name: "comment",
-             label: "Comment",
-             options: {
-              filter: true,
-              sort: true,
-             }
-            },
+                name: "no_of_sentences",
+                label: "Sentences",
+                options: {
+                 filter: true,
+                 sort: true,
+                }
+               },
+
+            
 
             {
                 name: "status",
@@ -107,15 +99,26 @@ class Corp extends React.Component {
                  sort: true,
                 }
                },
-
+              
                {
-                   name: "no_of_sentences",
-                   label: "Sentences",
-                   options: {
-                    filter: true,
-                    sort: true,
-                   }
-                  },
+                name: "comment",
+                label: "Comment",
+                options: {
+                 filter: true,
+                 sort: true,
+                }
+               },
+               {
+                name: "created_on",
+                label: "Timestamp",
+                options: {
+                 filter: true,
+                 sort: true,
+                 sortDirection: 'desc'
+                }
+               },
+
+               
             {
                 name: "Action",
                 options: {
@@ -126,7 +129,7 @@ class Corp extends React.Component {
                         if(tableMeta.rowData){
                             return (
                                 <div style={{width:'90px'}}>
-                                     {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push(`${process.env.PUBLIC_URL}/parallel-corpus/`+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''} 
+                                     {tableMeta.rowData[4] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push(`${process.env.PUBLIC_URL}/parallel-corpus/`+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''} 
                                  </div>
                             );
                         }
