@@ -4,7 +4,6 @@ import ReadMoreAndLess from 'react-read-more-less';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ReactCollapsingTable from 'react-collapsing-table'
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import Filter from "@material-ui/icons/FilterList";
 import FetchSentences from "../../../flux/actions/apis/sentences";
@@ -24,20 +23,19 @@ import Close from '@material-ui/icons/Close';
 import TablePagination from "@material-ui/core/TablePagination";
 import EditIcon from '@material-ui/icons/Edit';
 import Input from "@material-ui/core/Input";
-import Pagination from "material-ui-flat-pagination";
-import Select from '../../components/web/common/Select';
 import Tooltip from '@material-ui/core/Tooltip';
 import UpdateSentencesStatus from "../../../flux/actions/apis/update-sentenses-status";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-var rows = [
-    { id: 1, firstName: 'Paul', lastName: 'Darragh', id: 1, firstName: 'Paul', lastName: 'Darragh' }
-]
-var columns = [
-    { accessor: 'firstName', label: 'First Name', priorityLevel: 1, position: 1, minWidth: 150, },
-    { accessor: 'lastName', label: 'Last Name', priorityLevel: 2, position: 2, minWidth: 150, },
-]
-
+import { white, blueGrey50,darkBlack } from "material-ui/styles/colors";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Collapse from '@material-ui/core/Collapse';
+import Button from "@material-ui/core/Button";
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 class Corpus extends React.Component {
     constructor(props) {
@@ -67,7 +65,10 @@ class Corpus extends React.Component {
             anchorEl: '',
             inputStatus: '',
             backColor: 'Grey',
-            MenuItemValues: ['ALL', 'ACCEPTED', "REJECTED", "EDITED", "PENDING", "PROCESSING"]
+            edited:true,
+            MenuItemValues: ['ALL', 'ACCEPTED', "REJECTED", "EDITED", "PENDING", "PROCESSING"],
+            openDialog:false,
+            openExpand:false
         }
     }
 
@@ -164,6 +165,7 @@ class Corpus extends React.Component {
         console.log("type", typeof (sentences))
         this.setState({
             sentences: sentences,
+            lock:true
         })
     }
 
@@ -204,9 +206,12 @@ class Corpus extends React.Component {
 
         let sentences = this.state.sentences
         console.log('value', sentences)
+        sentences[index].isdialog = false,
         sentences[index].isEditable = false,
             sentences[index].status = "EDITED"
         this.setState({
+            openExpand:false,
+            openDialog: false,
             lock: false,
             sentences: sentences,
 
@@ -218,6 +223,7 @@ class Corpus extends React.Component {
 
 
     handleTextChange(value, index, key) {
+        console.log('view clicked')
         let sentences = this.state.sentences
         sentences[index][key] = value
         this.setState({
@@ -229,7 +235,20 @@ class Corpus extends React.Component {
         this.setState({ anchorEl: event.currentTarget });
     };
     handleClose = () => {
-        this.setState({ anchorEl: null });
+       
+        this.setState({ anchorEl: null,openDialog: false });
+    };
+    handleDialogClose = (index) => {
+        let sentences = this.state.sentences
+        sentences[index].isdialog = false
+        this.setState({ openDialog: false,openExpand:false });
+    };
+
+    handleOpen = (index) => {
+        console.log("clicked")
+        let sentences = this.state.sentences
+        sentences[index].isdialog = true
+        this.setState({ openDialog: true });
     };
     handleColor(color) {
         let color1 = 'grey'
@@ -237,22 +256,22 @@ class Corpus extends React.Component {
         return color == 'ACCEPTED' ? 'green' : (color == 'EDITED' ? '#2c6b96' : (color == "REJECTED" ? "red" : (color == "PROCESSING" ? '#f1de7f' : (color == "PENDING" ? 'grey' : ''))))
     }
 
-    colorValidate = (e, ocrValue) => {
+    colorValidate = (e, ocrValue,status) => {
         let splitRow;
         let word;
         let colorWord = [];
-        if (ocrValue && ocrValue.length > 0) {
+        if (ocrValue && ocrValue.length > 0 && (status!="EDITED") && (status!="ACCEPTED")) {
             splitRow = e.split(' ')
             for (word in ocrValue) {
-                if (ocrValue[word] >= 85) {
+                if (ocrValue[word] >= 80) {
                     colorWord.push(<span><span>{splitRow[word]}</span><span>{" "}</span></span>)
                 }
 
-                else if (ocrValue[word] > 70 && ocrValue[word] < 85) {
+                else if (ocrValue[word] >= 60 && ocrValue[word] < 80) {
                     colorWord.push(<span><span style={{textDecoration:'Underline' ,textDecorationColor: 'blue',textDecorationStyle:'wavy'}}>{splitRow[word]}</span><span>{" "}</span></span>)
                 }
 
-                else if (ocrValue[word] <= 70) {
+                else if (ocrValue[word] < 60) {
                     colorWord.push(<span><span style={{ textDecoration:'Underline',textDecorationColor: 'red',textDecorationStyle:'wavy'}}>{splitRow[word]}</span><span>{" "}</span></span>)
                 }
             }
@@ -260,6 +279,10 @@ class Corpus extends React.Component {
         }
         return e;
 
+    }
+    handleClickExpand(event){
+        
+        this.setState({openExpand:event})
     }
 
 
@@ -273,25 +296,25 @@ class Corpus extends React.Component {
                         {row.isEditable ? <Input id="email" style={{ width: '100%' }} multiline rowsMax="4" floatingLabelText="E-mail" value={row.source} onChange={(event) => { this.handleTextChange(event.target.value, index, 'source') }} /> : <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
-                            charLimit={150}
+                            charLimit={300}
                             readMoreText="Read more"
                             readLessText=""
                         >
-                            {this.colorValidate(row.source, row.source_ocr_words)}
+                            {this.colorValidate(row.source, row.source_ocr_words,row.status)}
                         </ReadMoreAndLess>}
                     </TableCell>
                     <TableCell >
                         {row.isEditable ? <Input id="email" style={{ width: '100%' }} multiline rowsMax="4" floatingLabelText="E-mail" value={row.target} onChange={(event) => { this.handleTextChange(event.target.value, index, 'target') }} /> : <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
-                            charLimit={150}
+                            charLimit={300}
                             readMoreText="Read more"
                             readLessText=""
                         >
-                            {this.colorValidate(row.target, row.target_ocr_words)}
+                            {this.colorValidate(row.target, row.target_ocr_words,row.status)}
                         </ReadMoreAndLess>}
                     </TableCell>
-                    <TableCell >
+                    {/* <TableCell >
                         <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
@@ -299,12 +322,12 @@ class Corpus extends React.Component {
                             readMoreText="Read more"
                             readLessText=""
                         >
-                            {row.translation}
+                            
                         </ReadMoreAndLess>
 
-                    </TableCell>
+                    </TableCell> */}
 
-                    <TableCell align="left">
+<TableCell align="left">
                         {row.alignment_accuracy === 'GAPFILLER\n' || row.alignment_accuracy === 'GALECHURCH\n' ?
                             '<30%'
                             :
@@ -316,28 +339,86 @@ class Corpus extends React.Component {
                                 }
                     </TableCell>
 
+
                     <TableCell>
                         {row.isEditable ? <div>
 
 
 
-                            <Tooltip title="Save" leaveDelay={0}><SaveIcon style={{ cursor: 'pointer', marginRight: '5px', color: 'green', fontSize: '30px' }} onClick={() => {
-                                this.handleSaveButton(index)
+                            <Tooltip title="Save" disableTriggerFocus={true}><SaveIcon style={{ cursor: 'pointer', marginRight: '5px', color: 'green', fontSize: '30px' }} onClick={() => {
+                                { this.handleSaveButton(index)}
                             }} /></Tooltip>
-                            <Tooltip title="Revert" leaveDelay={0}><Close style={{ cursor: 'pointer', marginRight: '5px', color: 'red' }} onClick={() => {
+                            <Tooltip title="Revert" disableTriggerFocus={true}><Close style={{ cursor: 'pointer', marginRight: '5px', color: 'red' }} onClick={() => {
                                 this.handleActionButton(index, '')
                             }} /></Tooltip> </div> :
                             <div style={{ width: '95px' }}>
 
-                                <Tooltip title="Accept" leaveDelay={0}><Accept style={{ cursor: 'pointer', marginRight: '5px', color: "green" }} onClick={() => {
+                                <Tooltip title="Accept" disableTriggerFocus={true}><Accept style={{ cursor: 'pointer', marginRight: '5px', color: "green" }} onClick={() => {
                                     { this.state.lock ? '' : this.handleActionButton(index, "ACCEPTED") }
 
                                 }} />
                                 </Tooltip>
-                                <Tooltip title="Edit" leaveDelay={0}><EditIcon style={{ cursor: 'pointer', marginRight: '5px', color: '#335995' }} onClick={() => {
+                                <Tooltip title="Edit" disableTriggerFocus={true}><EditIcon style={{ cursor: 'pointer', marginRight: '5px', color: '#335995', fontSize: '30px' }} onClick={() => {
+                                     this.handleOpen(index) }}
+                             /></Tooltip>
+                                 {row.isdialog ?
+                        <Dialog
+                        open={this.state.openDialog}
+                        onClose={this.handleClose}
+                        disableBackdropClick
+                        disableEscapeKeyDown
+                        fullWidth
+                        aria-labelledby="form-dialog-title">
+                            <Typography variant="h5" style={{ color: darkBlack, background:blueGrey50, paddingLeft:'12%', paddingBottom:'12px',paddingTop:'8px'}} >Edit source and target sentence here</Typography>
+                        
+                            <DialogContent>
+                                <DialogContentText /><br/>
+                                <Typography variant="h6" gutterBottom>
+                                    Source Sentence:
+                                </Typography>
+                                <Paper style={{paddingTop:'12px',paddingLeft:'5px'}}>
+                                <div style={{color:"blue"}}>
+                                <Input id="email" style={{ width: '100%' }} multiline  floatingLabelText="E-mail" value={row.source} onChange={(event) => { this.handleTextChange(event.target.value, index, 'source') }}/></div></Paper><br/>
+                                <Typography variant="h6" gutterBottom>
+                                    Target Sentence:
+                                </Typography>
+
+                                <Paper style={{ paddingTop:'12px',paddingLeft:'5px'}}>
+                                    <Input id="email" style={{ width: '100%' }} multiline  floatingLabelText="E-mail" value={row.target} onChange={(event) => { this.handleTextChange(event.target.value, index, 'target') }}/>
+                                </Paper><br/>
+                                <Paper>
+                                    <div style={{background:"#D3D3D3",paddingBottom:'15px',paddingTop:'12px',paddingLeft:'5px'}}>
+                                    <div>
+                                    <Typography variant="h6" gutterBottom style={{}}>
+                                        Machine Translated Sentence(Reference)&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                        {this.state.openExpand ? <Tooltip title="Hide" disableTriggerFocus={true}><ExpandMore style={{color:'blue'}}onClick={() => {
+                                        this.handleClickExpand(false) }}/></Tooltip> : <Tooltip title="Expand" disableTriggerFocus={true}><ExpandLess style={{color:'blue'}} onClick={() => {
+                                        this.handleClickExpand(true) }}/></Tooltip>}
+                                    </Typography> </div>
+                                        
+                                    <Collapse in={this.state.openExpand} timeout="auto" unmountOnExit>
+                                        <span style={{ fontFamily: '"Source Sans Pro", "Arial", sans-serif'}}>{row.translation}</span>
+                                    </Collapse>
+
+
+                                    </div>
+                                </Paper>
+                                </DialogContent>
+                                <DialogActions style={{marginRight:'22px'}}>
+                                    <Button onClick={() => 
+                                                        { this.handleDialogClose(index)}} variant="contained" color="primary">
+                                    Cancel
+                                    </Button>
+                                    <Button variant="contained" color="primary" onClick={() => 
+                                                        { this.handleSaveButton(index)}}>
+                                    Save
+                                    </Button>
+                                </DialogActions>
+                    </Dialog>:''}
+                                {/* <Tooltip title="Edit" disableTriggerFocus={true}><EditIcon style={{ cursor: 'pointer', marginRight: '5px', color: '#335995' }} onClick={() => {
                                     { this.state.lock ? '' : this.handleEditButton(index) }
-                                }} /></Tooltip>
-                                <Tooltip title="Reject" leaveDelay={0}><Close style={{ cursor: 'pointer', marginRight: '5px', color: "red" }} onClick={() => {
+                                }} /></Tooltip> */}
+                                <Tooltip title="Reject" disableTriggerFocus={true}><Close style={{ cursor: 'pointer', marginRight: '5px', color: "red" }} onClick={() => {
                                     { this.state.lock ? '' : this.handleActionButton(index, "REJECTED") }
                                 }} /></Tooltip>
                             </div>
@@ -413,12 +494,12 @@ class Corpus extends React.Component {
                                     <TableRow>
 
 
-                                        <TableCell width="27%">Source Sentence</TableCell>
-                                        <TableCell width="27%">Target Sentence</TableCell>
-                                        <TableCell width="27%">Machine translated reference </TableCell>
-                                        <TableCell align="right">Alignment Accuracy</TableCell>
-                                        <TableCell width="10%">Action</TableCell>
-                                        <TableCell width="10%"><div>Status <Filter onClick={(event) => {
+                                        <TableCell width="40%">Source Sentence</TableCell>
+                                        <TableCell width="40%">Target Sentence</TableCell>
+                                        {/* <TableCell width="27%">Machine translated reference </TableCell> */}
+                                        <TableCell align="60px">Alignment Accuracy</TableCell>
+                                        <TableCell width="90px">Action</TableCell>
+                                        <TableCell width="100px"><div>Status <Filter onClick={(event) => {
                                             this.handleSelect(event)
                                         }} /></div></TableCell>
                                     </TableRow>
