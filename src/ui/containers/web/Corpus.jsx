@@ -143,6 +143,7 @@ class Corpus extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     };
 
+
     handleFileChange = (e) => {
         if (e.target.files[0]) {
             this.setState({
@@ -281,7 +282,6 @@ class Corpus extends React.Component {
 
     }
     handleClickExpand(event){
-        
         this.setState({openExpand:event})
     }
 
@@ -292,7 +292,7 @@ class Corpus extends React.Component {
         const CorpusDetails = <TableBody>
             {this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.map((row, index) => (
                 <TableRow key={index} hover={true} >
-                    <TableCell component="th" scope="row" whiteSpace='nowrap'>
+                    <TableCell component="th" scope="row" whiteSpace='nowrap' width="35%">
                         {row.isEditable ? <Input id="email" style={{ width: '100%' }} multiline rowsMax="4" floatingLabelText="E-mail" value={row.source} onChange={(event) => { this.handleTextChange(event.target.value, index, 'source') }} /> : <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
@@ -303,7 +303,7 @@ class Corpus extends React.Component {
                             {this.colorValidate(row.source, row.source_ocr_words,row.status)}
                         </ReadMoreAndLess>}
                     </TableCell>
-                    <TableCell >
+                    <TableCell width="35%">
                         {row.isEditable ? <Input id="email" style={{ width: '100%' }} multiline rowsMax="4" floatingLabelText="E-mail" value={row.target} onChange={(event) => { this.handleTextChange(event.target.value, index, 'target') }} /> : <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
@@ -314,37 +314,17 @@ class Corpus extends React.Component {
                             {this.colorValidate(row.target, row.target_ocr_words,row.status)}
                         </ReadMoreAndLess>}
                     </TableCell>
-                    {/* <TableCell >
-                        <ReadMoreAndLess
-                            ref={this.ReadMore}
-                            className="read-more-content"
-                            charLimit={150}
-                            readMoreText="Read more"
-                            readLessText=""
-                        >
-                            
-                        </ReadMoreAndLess>
 
-                    </TableCell> */}
-
-<TableCell align="left">
-                        {row.alignment_accuracy === 'GAPFILLER\n' || row.alignment_accuracy === 'GALECHURCH\n' ?
-                            '<30%'
-                            :
-                            (row.alignment_accuracy === 'BLEU\n' ? '30%-60%'
-                                : 
-                                // (row.alignment_accuracy && row.alignment_accuracy.indexOf('-') > 0 ? Math.round(100*(50+row.alignment_accuracy.split('\n')[0].split('-')[1]*100/2))/ 100 + '%': '')
-                                '>60%'
-                                )
-                                }
+                    <TableCell align="right" width="10%">
+                        {row.alignment_accuracy === 'GAPFILLER\n' || row.alignment_accuracy === 'GALECHURCH\n' ? 
+                            <span variant="fab" style={{ width: '35px', height: '35px',borderRadius:'50%',display: 'inline-block', backgroundColor:'red',marginRight:'50px'}}/> 
+                                : (row.alignment_accuracy === 'BLEU\n' ? <span style={{ width: '35px', height: '35px',borderRadius:'50%',display: 'inline-block',marginRight:'50px', backgroundColor:'yellow'}}>    </span>
+                                : <span style={{ width: '35px', height: '35px',borderRadius:'50%',display: 'inline-block', backgroundColor:'green',marginRight:'50px'}}>    </span>)}
                     </TableCell>
 
 
-                    <TableCell>
+                    <TableCell width="10%">
                         {row.isEditable ? <div>
-
-
-
                             <Tooltip title="Save" disableTriggerFocus={true}><SaveIcon style={{ cursor: 'pointer', marginRight: '5px', color: 'green', fontSize: '30px' }} onClick={() => {
                                 { this.handleSaveButton(index)}
                             }} /></Tooltip>
@@ -414,10 +394,8 @@ class Corpus extends React.Component {
                                     Save
                                     </Button>
                                 </DialogActions>
-                    </Dialog>:''}
-                                {/* <Tooltip title="Edit" disableTriggerFocus={true}><EditIcon style={{ cursor: 'pointer', marginRight: '5px', color: '#335995' }} onClick={() => {
-                                    { this.state.lock ? '' : this.handleEditButton(index) }
-                                }} /></Tooltip> */}
+                        </Dialog>:''}
+                                
                                 <Tooltip title="Reject" disableTriggerFocus={true}><Close style={{ cursor: 'pointer', marginRight: '5px', color: "red" }} onClick={() => {
                                     { this.state.lock ? '' : this.handleActionButton(index, "REJECTED") }
                                 }} /></Tooltip>
@@ -426,10 +404,7 @@ class Corpus extends React.Component {
                     </TableCell>
 
 
-                    <TableCell >
-
-
-
+                    <TableCell width="10%">
                         <div style={{ backgroundColor: this.handleColor(row.status), width: '105px', paddingTop: '7px', textAlign: 'center', paddingBottom: '7px', color: 'white' }}>{row.status}</div>
                     </TableCell>
 
@@ -494,12 +469,12 @@ class Corpus extends React.Component {
                                     <TableRow>
 
 
-                                        <TableCell width="40%">Source Sentence</TableCell>
-                                        <TableCell width="40%">Target Sentence</TableCell>
+                                        <TableCell width="35%">Source Sentence</TableCell>
+                                        <TableCell width="35%">Target Sentence</TableCell>
                                         {/* <TableCell width="27%">Machine translated reference </TableCell> */}
-                                        <TableCell align="60px">Alignment Accuracy</TableCell>
-                                        <TableCell width="90px">Action</TableCell>
-                                        <TableCell width="100px"><div>Status <Filter onClick={(event) => {
+                                        <TableCell width='10%' align="left">Alignment Accuracy</TableCell>
+                                        <TableCell width="10%">Action</TableCell>
+                                        <TableCell width="10%"><div>Status <Filter onClick={(event) => {
                                             this.handleSelect(event)
                                         }} /></div></TableCell>
                                     </TableRow>
