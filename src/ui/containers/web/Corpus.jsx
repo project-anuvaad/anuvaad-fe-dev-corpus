@@ -376,14 +376,14 @@ class Corpus extends React.Component {
                                 <Typography variant="h6" gutterBottom>
                                     Source Sentence:
                                 </Typography>
-                                <Paper >
+                                <Paper style={{paddingTop:'12px',paddingLeft:'5px'}}>
                                 <div style={{color:"blue"}}>
                                 <Input id="email" style={{ width: '100%' }} multiline  floatingLabelText="E-mail" value={row.source} onChange={(event) => { this.handleTextChange(event.target.value, index, 'source') }}/></div></Paper><br/>
                                 <Typography variant="h6" gutterBottom>
                                     Target Sentence:
                                 </Typography>
 
-                                <Paper>
+                                <Paper style={{ paddingTop:'12px',paddingLeft:'5px'}}>
                                     <Input id="email" style={{ width: '100%' }} multiline  floatingLabelText="E-mail" value={row.target} onChange={(event) => { this.handleTextChange(event.target.value, index, 'target') }}/>
                                 </Paper><br/>
                                 <Paper>
@@ -397,7 +397,7 @@ class Corpus extends React.Component {
                                     </Typography> </div>
                                         
                                     <Collapse in={this.state.openExpand} timeout="auto" unmountOnExit>
-                                        {row.translation}
+                                        <span style={{ fontFamily: '"Source Sans Pro", "Arial", sans-serif'}}>{row.translation}</span>
                                     </Collapse>
 
 
