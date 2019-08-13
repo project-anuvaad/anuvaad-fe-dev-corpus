@@ -497,8 +497,8 @@ class Corpus extends React.Component {
                                         <TableCell width="40%">Source Sentence</TableCell>
                                         <TableCell width="40%">Target Sentence</TableCell>
                                         {/* <TableCell width="27%">Machine translated reference </TableCell> */}
-                                        
-                                        <TableCell width="100px">Action</TableCell>
+                                        <TableCell align="60px">Alignment Accuracy</TableCell>
+                                        <TableCell width="90px">Action</TableCell>
                                         <TableCell width="100px"><div>Status <Filter onClick={(event) => {
                                             this.handleSelect(event)
                                         }} /></div></TableCell>
