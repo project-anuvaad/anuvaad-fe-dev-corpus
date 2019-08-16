@@ -33,7 +33,10 @@ export default class FetchSentences extends API {
 
     getHeaders() {
         this.headers = {
-            headers:{}
+            headers:{
+
+                'Authorization': 'Bearer '+decodeURI(localStorage.getItem('token'))
+            }
         };
         return this.headers;
     }

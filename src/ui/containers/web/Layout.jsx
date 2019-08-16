@@ -9,14 +9,24 @@ import Spinner from "../../components/web/common/Spinner";
 import Theme from '../../theme/web/theme-default';
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
-
+import UserAuth from "../../../flux/actions/apis/userprofile";
 
 class App extends React.Component {
+ 
   renderSpinner() {
     if (this.props.apistatus.progress) {
       return <Spinner />;
     }
   }
+
+  componentDidMount() {
+    console.log('layout')
+     
+        let api = new UserAuth()
+        this.props.APITransport(api);
+    
+
+}
 
   componentDidUpdate(prevProps){
     if(prevProps.apistatus !== this.props.apistatus){
@@ -24,6 +34,14 @@ class App extends React.Component {
         history.push("/logout")
       }
     }
+
+    if(prevProps.userProfile !== this.props.userProfile){
+      console.log(this.props.userProfile.isActive)
+      if(this.props.userProfile.isActive)
+      localStorage.setItem('userDetails',this.props.userProfile.firstname)
+      console.log( "local Storage",localStorage.getItem("userDetails"))
+    }
+    
   }
 
   render() {
@@ -45,7 +63,8 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.login,
-  apistatus: state.apistatus
+  apistatus: state.apistatus,
+  userProfile:state.userProfile
 });
 
 const mapDispatchToProps = dispatch =>

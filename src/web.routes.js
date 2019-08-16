@@ -31,6 +31,7 @@ const PrivateRoute = ({ component: Component, authenticate, ...rest }) => (
 class AppRoutes extends React.Component {
   authenticateUser = () => {
     const token = localStorage.getItem("token");
+    
     console.log(token)
     if (token) {
       return true;
@@ -39,6 +40,7 @@ class AppRoutes extends React.Component {
   }
 
   render() {
+    const userDetails = localStorage.getItem("userDetails");
     return (
       <Router history={history} basename={'/dev'}>
         <div>
@@ -47,7 +49,7 @@ class AppRoutes extends React.Component {
             <Route exact path={`${process.env.PUBLIC_URL}/callback`} component={Callback} />
             <Route exact path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard-tamil`} component={DashboardTamil} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`} component={Corpus} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`} component={userDetails=='sajish'?GradeViewCorpus:Corpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-translations/:basename`} component={ViewTranslations} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/corpus`} component={Corp} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} component={GradeViewCorpus} authenticate={this.authenticateUser} />

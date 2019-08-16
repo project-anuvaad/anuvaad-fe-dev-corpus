@@ -26,42 +26,19 @@ class Corpus extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            text: '',
+            
             apiCalled: false,
-            hindi: [],
-            english: [],
-            hindi_score: [],
-            english_score: [],
-            file: {},
-            corpus_type: 'single',
-            hindiFile: {},
-            englishFile: {},
             sentences: [],
-            download: false,
-            downloadData:[],
             pageCount:5,
             status:'',
-            AcceptColor:'blue',
-            EditColor:'blue',
-            CloseColor:'blue',
             page:0,
-            stat:'PENDING',
-            lock:false,
-            anchorEl:'',
-            inputStatus:'',
             TableHeaderValues:['Source','Target',"Google Reference","Grade"]  
 
         }
     }
 
     componentDidMount() {
-        this.setState({
-            hindi: [],
-            english: [],
-            hindi_score: [],
-            english_score: [],
-            file: {}
-        })
+       
         if (this.props.match.params.basename) {
             let api = new FetchSentences(this.props.match.params.basename,this.state.pageCount,1)
             this.props.APITransport(api);
@@ -88,12 +65,7 @@ class Corpus extends React.Component {
 
 
     componentDidUpdate(prevProps) {
-        if (prevProps.corpus !== this.props.corpus) {
-            this.setState({
-                hindi: this.props.corpus.hindi,
-                english: this.props.corpus.english
-            })
-        }
+       
         if (prevProps.sentences !== this.props.sentences) {
             this.setState({
                 sentences: this.props.sentences.data,
@@ -105,7 +77,6 @@ class Corpus extends React.Component {
 
     onStarClick(nextValue, prevValue, name) {
         let sentences = this.state.sentences
-        console.log(sentences[name])
         sentences[name].rating = nextValue
         let api = new UpdateSentencesGrade(sentences[name])
             this.props.APITransport(api);
@@ -163,7 +134,7 @@ class Corpus extends React.Component {
 
                     
                     <Grid item xs={12} sm={12} lg={12} xl={12} style={{marginLeft:'-4%'}}>
-                            <Paper >
+                        <Paper >
 
                             <TablePagination
                                 component="nav"
@@ -172,31 +143,23 @@ class Corpus extends React.Component {
                                 rowsPerPage={this.state.pageCount}
                                 count={this.state.count}
                                 onChangePage={this.handleChangePage}
-
-                                
                                 onChangeRowsPerPage={this.handleSelectChange}
                             />
 
-
                             <Divider/>
-                                <Table >
-                                    <TableHead>
-                                        <TableRow>
-                                        {this.state.TableHeaderValues.map((item) => (
-                                            <TableCell width="30%">{item}</TableCell>
-                        
-                  ))}
+                            <Table >
+                                <TableHead>
+                                    <TableRow>
+                                    {this.state.TableHeaderValues.map((item) => (
+                                        <TableCell width="31%">{item}</TableCell>
+                    
+                                    ))}
                                             
-                                           
-                                            
-                                        </TableRow>
-                                    </TableHead>
-                                    {CorpusDetails}
-                                </Table>
-                            </Paper>
-                            
-                        
-                        
+                                    </TableRow>
+                                </TableHead>
+                                {CorpusDetails}
+                            </Table>
+                        </Paper>
                     </Grid>
                 </Grid>
             </div>

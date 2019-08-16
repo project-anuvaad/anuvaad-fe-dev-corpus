@@ -9,8 +9,6 @@ import Button from '@material-ui/core/Button';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import AutoML from "../../../flux/actions/apis/auto_ml";
 import NMT from "../../../flux/actions/apis/nmt";
-import NMTSP from "../../../flux/actions/apis/nmtsp";
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { white, blueGrey50,darkBlack } from "material-ui/styles/colors"
