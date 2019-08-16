@@ -299,15 +299,15 @@ class Corpus extends React.Component {
         if (ocrValue && ocrValue.length > 0 && (status!="EDITED") && (status!="ACCEPTED")) {
             splitRow = e.split(' ')
             for (word in ocrValue) {
-                if (ocrValue[word] >= 80) {
+                if (ocrValue[word] >= 70) {
                     colorWord.push(<span><span>{splitRow[word]}</span><span>{" "}</span></span>)
                 }
 
-                else if (ocrValue[word] >= 60 && ocrValue[word] < 80) {
-                    colorWord.push(<span><span style={{textDecoration:'Underline' ,textDecorationColor: 'blue',textDecorationStyle:'wavy'}}>{splitRow[word]}</span><span>{" "}</span></span>)
-                }
+                // else if (ocrValue[word] >= 60 && ocrValue[word] < 80) {
+                //     colorWord.push(<span><span style={{textDecoration:'Underline' ,textDecorationColor: 'blue',textDecorationStyle:'wavy'}}>{splitRow[word]}</span><span>{" "}</span></span>)
+                // }
 
-                else if (ocrValue[word] < 60) {
+                else{
                     colorWord.push(<span><span style={{ textDecoration:'Underline',textDecorationColor: 'red',textDecorationStyle:'wavy'}}>{splitRow[word]}</span><span>{" "}</span></span>)
                 }
             }
