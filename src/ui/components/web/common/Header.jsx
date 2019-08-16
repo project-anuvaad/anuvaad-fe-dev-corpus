@@ -32,6 +32,7 @@ import ReportIcon from '@material-ui/icons/Report';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import history from "../../../../web.history";
 import { Button } from '@material-ui/core';
+import Fab from '@material-ui/core/Fab';
 
 
 const styles = {
@@ -49,9 +50,15 @@ class Header extends React.Component {
 		open: false,
 		auth: true,
 		anchorEl: null,
-		heading: 'Translation'
+		heading: 'Translation',
+		name:''
+		
+		
 
 	};
+	componentDidMount(){
+			this.setState({name: localStorage.getItem('userDetails')})
+	}
 
 	handleDrawerOpen = () => {
 		this.setState({ open: true });
@@ -98,7 +105,7 @@ class Header extends React.Component {
 		const { classes, theme } = this.props;
 		const { auth, anchorEl, open } = this.state;
 		const openEl = Boolean(anchorEl);
-		
+		console.log("name",this.state.name)
 		return (
 			<div>
 				<AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
@@ -118,18 +125,18 @@ class Header extends React.Component {
 						{auth && (
 							<div style={{
 								position: 'absolute',
-								right: '0',
+								
 								top:'10%',
-								right:'35px'
+								right:'50px'
 							}}>
-								<IconButton
+								<Fab
 									aria-owns={openEl ? 'menu-appbar' : null}
 									aria-haspopup="true"
 									onClick={this.handleMenu}
-									color="inherit"
-								>
-									<AccountCircle/>
-								</IconButton>
+									color="primary"
+									size="medium">
+									{this.state.name}	
+								</Fab>
 								<Menu
 									id="menu-appbar"
 									anchorEl={anchorEl}

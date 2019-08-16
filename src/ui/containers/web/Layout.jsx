@@ -12,6 +12,11 @@ import history from "../../../web.history";
 import UserAuth from "../../../flux/actions/apis/userprofile";
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+        userName: '',
+    }}
  
   renderSpinner() {
     if (this.props.apistatus.progress) {
@@ -21,7 +26,6 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log('layout')
-     
         let api = new UserAuth()
         this.props.APITransport(api);
     
@@ -29,6 +33,7 @@ class App extends React.Component {
 }
 
   componentDidUpdate(prevProps){
+    
     if(prevProps.apistatus !== this.props.apistatus){
       if(this.props.apistatus.unauthrized){
         history.push("/logout")
@@ -38,8 +43,8 @@ class App extends React.Component {
     if(prevProps.userProfile !== this.props.userProfile){
       console.log(this.props.userProfile.isActive)
       if(this.props.userProfile.isActive)
-      localStorage.setItem('userDetails',this.props.userProfile.firstname)
-      console.log( "local Storage",localStorage.getItem("userDetails"))
+      localStorage.setItem('userDetails',this.props.userProfile.firstname[0]+this.props.userProfile.lastname[0])
+      this.setState({userName: localStorage.getItem('userDetails')})
     }
     
   }
@@ -48,14 +53,19 @@ class App extends React.Component {
     const { classes, theme } = this.props;
     const Component = this.props.component; // eslint-disable-line
     return (
+      
       <MuiThemeProvider theme={Theme}>
+        {this.state.userName&&
         <div className={classes.root}>
         {this.renderSpinner()}
+        
           <Header classes={classes} theme={theme} />
           <div className={classes.container}>
             <Component />
           </div>
-        </div>
+          
+        
+        </div>}
       </MuiThemeProvider>
     );
   }
