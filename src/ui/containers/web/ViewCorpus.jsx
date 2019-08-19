@@ -108,7 +108,7 @@ class Corp extends React.Component {
                  sort: true,
                 }
                },
-               {
+                {
                 name: "created_on",
                 label: "Timestamp",
                 options: {

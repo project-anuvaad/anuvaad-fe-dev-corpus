@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import ReadMoreAndLess from 'react-read-more-less';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import Filter from "@material-ui/icons/FilterList";
 import FetchSentences from "../../../flux/actions/apis/sentences";
@@ -88,14 +88,42 @@ class Corpus extends React.Component {
         const CorpusDetails= <TableBody>
             {this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.map((row, index) => (
                 <TableRow key={index} >
-                    <TableCell component="th" scope="row">
-                        {row.source}
+
+
+                     <TableCell component="th" scope="row">
+                     <ReadMoreAndLess
+                            ref={this.ReadMore}
+                            className="read-more-content"
+                            charLimit={180}
+                            readMoreText="Read more"
+                            readLessText=""
+                        >
+                            {row.source}
+                        </ReadMoreAndLess>
+                    </TableCell> 
+                    <TableCell >
+                    <ReadMoreAndLess
+                            ref={this.ReadMore}
+                            className="read-more-content"
+                            charLimit={170}
+                            readMoreText="Read more"
+                            readLessText=""
+                        >
+                            {row.target}
+                        </ReadMoreAndLess>
+                        
                     </TableCell>
                     <TableCell >
-                        {row.target}
-                    </TableCell>
-                    <TableCell >
-                        {row.translation}
+                    <ReadMoreAndLess
+                            ref={this.ReadMore}
+                            className="read-more-content"
+                            charLimit={160}
+                            readMoreText="Read more"
+                            readLessText=""
+                        >
+                            {row.translation}
+                        </ReadMoreAndLess>
+                        
                     </TableCell>
                     <TableCell >
                    
