@@ -85,7 +85,7 @@ class Corpus extends React.Component {
     }
 
     handleChangePage = (event, page) => {
-
+        console.log(this.state.inputStatus)
         this.setState({ page, lock: false });
         if (this.props.match.params.basename) {
             let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, page + 1, this.state.inputStatus)
@@ -110,7 +110,6 @@ class Corpus extends React.Component {
                 this.props.APITransport(api);
             }
         } else {
-            console.log("")
             this.setState({
                 accuracy,
                 filterSelect:null
@@ -191,9 +190,7 @@ class Corpus extends React.Component {
             })
         }
         if (prevProps.sourceTranslate !== this.props.sourceTranslate) {
-            console.log("response------",this.props.sourceTranslate.data[0])
             this.setState({
-
                 sourceTranslate: this.props.sourceTranslate.data[0]
             })
         }
