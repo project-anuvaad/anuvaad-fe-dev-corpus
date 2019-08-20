@@ -33,7 +33,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import history from "../../../../web.history";
 import { Button } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
-
+import ActionDelete from '@material-ui/icons/QuestionAnswer';
 
 const styles = {
 	root: {
@@ -51,13 +51,17 @@ class Header extends React.Component {
 		auth: true,
 		anchorEl: null,
 		heading: 'Translation',
-		name:''
+		name: localStorage.getItem('userDetails'),
+		userName:''
+
 		
 		
 
 	};
 	componentDidMount(){
-			this.setState({name: localStorage.getItem('userDetails')})
+		let nameArray=  (localStorage.getItem('userDetails')).split(' ');
+		let userName=nameArray[0][0]+nameArray[1][0];
+		this.setState({userName})
 	}
 
 	handleDrawerOpen = () => {
@@ -102,10 +106,12 @@ class Header extends React.Component {
 	}
 
 	render() {
-		const { classes, theme } = this.props;
+		
+		const { classes, theme,title } = this.props;
 		const { auth, anchorEl, open } = this.state;
 		const openEl = Boolean(anchorEl);
-		console.log("name",this.state.name)
+		const role = JSON.parse(localStorage.getItem('roles'));
+		
 		return (
 			<div>
 				<AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
@@ -119,7 +125,15 @@ class Header extends React.Component {
 							<MenuIcon />
 						</IconButton> */}
 						<Typography variant="title" color="inherit" className={classes.flex}>
-						{this.state.heading}
+						{title}
+						</Typography>
+						<Typography variant="title" color="inherit" style={{
+								position: 'absolute',
+								
+								textTransform:'capitalize',
+								right:'130px'
+							}}>
+						Welcome {this.state.name}
 						</Typography>
 						{this.state.drawerClose}
 						{auth && (
@@ -135,7 +149,7 @@ class Header extends React.Component {
 									onClick={this.handleMenu}
 									color="primary"
 									size="medium">
-									{this.state.name}	
+									<AccountCircle/>	
 								</Fab>
 								<Menu
 									id="menu-appbar"
@@ -205,6 +219,7 @@ class Header extends React.Component {
 								)}
 							/>
 						</ListItem>
+						{role[0]=='editor' &&
 						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/newcorpus`)}}>
 							<ListItemIcon>
 								<StarIcon style={{ color: 'white' }} />
@@ -217,7 +232,8 @@ class Header extends React.Component {
           							</Typography>
 								)}
 							/>
-						</ListItem>
+						</ListItem>}
+						
 						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/corpus`)}}>
 							<ListItemIcon>
 								<SendIcon style={{ color: 'white' }} />
@@ -227,6 +243,20 @@ class Header extends React.Component {
 								primary={(
 									<Typography type="body2" style={{ color: '#FFFFFF' }}>
 										Corpus List
+          							</Typography>
+								)}
+							/>
+						</ListItem>
+
+						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/qna`)}}>
+							<ListItemIcon>
+								<ActionDelete style={{ color: 'white' }} />
+							</ListItemIcon>
+							<ListItemText
+								disableTypography
+								primary={(
+									<Typography type="body2" style={{ color: '#FFFFFF' }}>
+										QnA
           							</Typography>
 								)}
 							/>

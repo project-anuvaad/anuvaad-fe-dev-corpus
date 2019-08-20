@@ -278,7 +278,7 @@ class Corpus extends React.Component {
         this.setState({
             openExpand:true
         })
-        let api = new SourceTranslate(source)
+        let api = new SourceTranslate(this.props.match.params.basename,source)
             this.props.APITransport(api);
 
         
@@ -332,7 +332,7 @@ class Corpus extends React.Component {
                         {row.isEditable ? <Input id="email" style={{ width: '100%' }} multiline rowsMax="4" floatingLabelText="E-mail" value={row.source} onChange={(event) => { this.handleTextChange(event.target.value, index, 'source') }} /> : <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
-                            charLimit={300}
+                            charLimit={145}
                             readMoreText="Read more"
                             readLessText=""
                         >
@@ -343,7 +343,7 @@ class Corpus extends React.Component {
                         {row.isEditable ? <Input id="email" style={{ width: '100%' }} multiline rowsMax="4" floatingLabelText="E-mail" value={row.target} onChange={(event) => { this.handleTextChange(event.target.value, index, 'target') }} /> : <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
-                            charLimit={300}
+                            charLimit={130}
                             readMoreText="Read more"
                             readLessText=""
                         >
@@ -472,12 +472,9 @@ class Corpus extends React.Component {
                     ))}
                 </Menu>
 
-                
                 <Grid container spacing={24} style={{ padding: 5 }}>
                     <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: '-4%', marginTop: '20px' }}>
-                        <Typography variant="title" gutterBottom>
-                            Corpus Details
-                        </Typography>
+                        
                         <Grid
                             container
                             direction="row"
@@ -488,10 +485,10 @@ class Corpus extends React.Component {
                         </Grid>
                     </Grid>
 
-
+                        
                     <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: '-4%' }}>
                         <Paper >
-
+                        
                             <TablePagination
                                 component="nav"
                                 page={this.state.page}

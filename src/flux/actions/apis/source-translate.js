@@ -4,11 +4,12 @@ import { CommunicationStayCurrentLandscape } from "material-ui/svg-icons";
 
 
 export default class SourceTranslate extends API {
-    constructor(source, timeout = 2000) {
+    constructor(basename, source, timeout = 2000) {
         super('GET', timeout, false);
         this.type = C.SOURCE_TRANSLATE;
         this.source = source;
-        this.sentences=[]
+        this.sentences=[];
+        this.basename=basename;
         
     }
 
@@ -26,7 +27,7 @@ export default class SourceTranslate extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/corpus/translate-source?source=${this.source}`;
+        return `${super.apiEndPointAuto()}/corpus/translate-source?basename=${this.basename}&source=${this.source}`;
     }
 
     getBody() {

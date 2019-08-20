@@ -17,6 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import MUIDataTable from "mui-datatables";
 import Toolbar from '@material-ui/core/Toolbar';
 
+
 class Corp extends React.Component {
     constructor(props) {
         super(props)
@@ -30,12 +31,13 @@ class Corp extends React.Component {
             file: {},
             corpus_type: 'single',
             hindiFile: {},
-            englishFile: {}
+            englishFile: {},
+            role: JSON.parse(localStorage.getItem('roles'))
         }
     }
 
     componentDidMount() {
-
+        console.log("editor---",this.state.role[0])
         const { APITransport } = this.props;
         const apiObj = new FetchCorpus();
         APITransport(apiObj);
@@ -129,7 +131,7 @@ class Corp extends React.Component {
                         if(tableMeta.rowData){
                             return (
                                 <div style={{width:'90px'}}>
-                                     {tableMeta.rowData[4] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push(`${process.env.PUBLIC_URL}/parallel-corpus/`+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''} 
+                                     {tableMeta.rowData[4] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{this.state.role[0]=="editor" ? history.push(`${process.env.PUBLIC_URL}/parallel-corpus/`+tableMeta.rowData[0]):(this.state.role[0]=="grader"? history.push(`${process.env.PUBLIC_URL}/view-corpus/`+tableMeta.rowData[0]):'')} } > </ViewIcon></Tooltip>: ''} 
                                  </div>
                             );
                         }
@@ -155,11 +157,12 @@ class Corp extends React.Component {
 
 							
 						<Typography variant="title" color="inherit" style={{flex: 1}}>
-						Corpus List
+						
 						</Typography>
+                        {this.state.role[0]!=="grader" ? 
                         <Button variant="extendedFab" color="primary" style={{marginRight:0}}aria-label="Add" onClick={() => { history.push(`${process.env.PUBLIC_URL}/newcorpus`) }}>
                                 <AddIcon /> Corpus
-                        </Button>
+                        </Button>:''}
                         </Toolbar>
             
               

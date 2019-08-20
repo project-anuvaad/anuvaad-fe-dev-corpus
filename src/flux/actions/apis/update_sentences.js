@@ -34,6 +34,7 @@ export default class UpdateSentences extends API {
           sentences:[this.updateSentence]
         };
       }
+      
       getHeaders() {
     this.headers = {
       headers: {
