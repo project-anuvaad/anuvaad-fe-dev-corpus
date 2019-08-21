@@ -9,35 +9,69 @@ import Spinner from "../../components/web/common/Spinner";
 import Theme from '../../theme/web/theme-default';
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
-
+import UserAuth from "../../../flux/actions/apis/userprofile";
 
 class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+        userName: '',
+    }}
+ 
   renderSpinner() {
     if (this.props.apistatus.progress) {
       return <Spinner />;
     }
   }
 
+  componentDidMount() {
+    console.log('layout')
+        let api = new UserAuth()
+        this.props.APITransport(api);
+    
+
+}
+
   componentDidUpdate(prevProps){
+    
     if(prevProps.apistatus !== this.props.apistatus){
       if(this.props.apistatus.unauthrized){
         history.push(`${process.env.PUBLIC_URL}/logout`)
       }
     }
+
+    if(prevProps.userProfile !== this.props.userProfile){
+      if(this.props.userProfile.isActive)
+      localStorage.setItem('userDetails',this.props.userProfile.firstname+' '+this.props.userProfile.lastname)
+      if(this.props.userProfile.roles===null){
+        localStorage.setItem("roles",JSON.stringify(["editor"]))
+      }
+       else{
+        localStorage.setItem("roles",JSON.stringify(this.props.userProfile.roles))
+       }
+      this.setState({userName: localStorage.getItem('userDetails')})
+    }
+    
   }
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, title} = this.props;
+    
     const Component = this.props.component; // eslint-disable-line
     return (
+      
       <MuiThemeProvider theme={Theme}>
+        {this.state.userName&&
         <div className={classes.root}>
         {this.renderSpinner()}
-          <Header classes={classes} theme={theme} />
+        
+          <Header classes={classes} theme={theme} title={title} />
           <div className={classes.container}>
             <Component />
           </div>
-        </div>
+          
+        
+        </div>}
       </MuiThemeProvider>
     );
   }
@@ -45,7 +79,8 @@ class App extends React.Component {
 
 const mapStateToProps = state => ({
   user: state.login,
-  apistatus: state.apistatus
+  apistatus: state.apistatus,
+  userProfile:state.userProfile
 });
 
 const mapDispatchToProps = dispatch =>

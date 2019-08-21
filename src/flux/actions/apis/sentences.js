@@ -6,7 +6,7 @@ import C from "../constants";
 
 
 export default class FetchSentences extends API {
-    constructor(basename,pageCount,pageno,status="", timeout = 200000) {
+    constructor(basename,pageCount,pageno,status="",accuracy, timeout = 200000) {
         super("GET", timeout, false);
         this.basename = basename;
         this.sentences = null;
@@ -14,6 +14,7 @@ export default class FetchSentences extends API {
         this.pagesize=pageCount;
         this.pageno=pageno;
         this.status=status;
+        this.accuracy= accuracy;
 
     }
 
@@ -31,7 +32,7 @@ export default class FetchSentences extends API {
 
     apiEndPoint() {
         console.log(this.status)
-        if(this.status.item==="ALL" || this.status==="" )
+        if(this.status==="ALL" || this.status==="" )
         return `${super.apiEndPointAuto()}/app/fetch-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}`
         else{
             return `${super.apiEndPointAuto()}/app/fetch-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}&status=${this.status.item}`

@@ -16,6 +16,8 @@ import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Typography from '@material-ui/core/Typography';
 import MUIDataTable from "mui-datatables";
 import Toolbar from '@material-ui/core/Toolbar';
+import GradeIcon from '@material-ui/icons/Grade';
+import EditIcon from '@material-ui/icons/BorderColor';
 
 class Corp extends React.Component {
     constructor(props) {
@@ -30,12 +32,12 @@ class Corp extends React.Component {
             file: {},
             corpus_type: 'single',
             hindiFile: {},
-            englishFile: {}
+            englishFile: {},
+            role: JSON.parse(localStorage.getItem('roles'))
         }
     }
 
     componentDidMount() {
-
         const { APITransport } = this.props;
         const apiObj = new FetchCorpus();
         APITransport(apiObj);
@@ -108,7 +110,7 @@ class Corp extends React.Component {
                  sort: true,
                 }
                },
-               {
+                {
                 name: "created_on",
                 label: "Timestamp",
                 options: {
@@ -129,7 +131,11 @@ class Corp extends React.Component {
                         if(tableMeta.rowData){
                             return (
                                 <div style={{width:'90px'}}>
-                                     {tableMeta.rowData[4] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push(`${process.env.PUBLIC_URL}/parallel-corpus/`+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''} 
+                                    
+                                    {tableMeta.rowData[4] == 'COMPLETED'  && this.state.role.includes("editor") && <Tooltip title="Edit Sentence"><EditIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/parallel-corpus/`+tableMeta.rowData[0])} } > </EditIcon></Tooltip>} 
+                                    {tableMeta.rowData[4] == 'COMPLETED' && this.state.role.includes("grader") &&  <Tooltip title="Grade Sentence"><GradeIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/view-corpus/`+tableMeta.rowData[0])} } > </GradeIcon></Tooltip>} 
+                                    {tableMeta.rowData[4] == 'COMPLETED' && this.state.role.includes("dev") && <Tooltip title="View Sentence"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/view-corpus/`+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>} 
+
                                  </div>
                             );
                         }
@@ -155,11 +161,12 @@ class Corp extends React.Component {
 
 							
 						<Typography variant="title" color="inherit" style={{flex: 1}}>
-						Corpus List
+						
 						</Typography>
+                        {this.state.role[0]!=="grader" ? 
                         <Button variant="extendedFab" color="primary" style={{marginRight:0}}aria-label="Add" onClick={() => { history.push(`${process.env.PUBLIC_URL}/newcorpus`) }}>
                                 <AddIcon /> Corpus
-                        </Button>
+                        </Button>:''}
                         </Toolbar>
             
               

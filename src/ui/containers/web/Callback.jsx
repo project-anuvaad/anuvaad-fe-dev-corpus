@@ -2,10 +2,12 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import history from "../../../web.history";
 
+
 class Callback extends React.Component {
 
     componentDidMount() {
         let hash = this.props.location.hash.split('&')
+        console.log("hash",hash)
         hash.map((h) => {
             if (h.indexOf('access_token') > 0) {
                 localStorage.setItem('token', h.split('access_token=')[1])

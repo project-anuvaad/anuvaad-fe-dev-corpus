@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import ReadMoreAndLess from 'react-read-more-less';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import Filter from "@material-ui/icons/FilterList";
 import FetchSentences from "../../../flux/actions/apis/sentences";
@@ -26,42 +26,27 @@ class Corpus extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            text: '',
+            
             apiCalled: false,
-            hindi: [],
-            english: [],
-            hindi_score: [],
-            english_score: [],
-            file: {},
-            corpus_type: 'single',
-            hindiFile: {},
-            englishFile: {},
             sentences: [],
-            download: false,
-            downloadData:[],
             pageCount:5,
             status:'',
-            AcceptColor:'blue',
-            EditColor:'blue',
-            CloseColor:'blue',
             page:0,
-            stat:'PENDING',
-            lock:false,
-            anchorEl:'',
-            inputStatus:'',
-            TableHeaderValues:['Source','Target',"Google Reference","Grade"]  
+            TableHeaderValues:['Source','Target',"Google Reference","Grade"] ,
+            role: JSON.parse(localStorage.getItem('roles'))
 
         }
     }
 
     componentDidMount() {
-        this.setState({
-            hindi: [],
-            english: [],
-            hindi_score: [],
-            english_score: [],
-            file: {}
-        })
+        if(this.state.role.includes('dev')){
+            this.setState({TableHeaderValues:['Source','Target',"Google Reference"]})
+        }
+        else{
+            
+            this.setState({TableHeaderValues:['Source','Target',"Google Reference","Grade"]})
+             
+        }
         if (this.props.match.params.basename) {
             let api = new FetchSentences(this.props.match.params.basename,this.state.pageCount,1)
             this.props.APITransport(api);
@@ -88,12 +73,7 @@ class Corpus extends React.Component {
 
 
     componentDidUpdate(prevProps) {
-        if (prevProps.corpus !== this.props.corpus) {
-            this.setState({
-                hindi: this.props.corpus.hindi,
-                english: this.props.corpus.english
-            })
-        }
+       
         if (prevProps.sentences !== this.props.sentences) {
             this.setState({
                 sentences: this.props.sentences.data,
@@ -103,9 +83,8 @@ class Corpus extends React.Component {
         }
     }
 
-    onStarClick(nextValue, prevValue, name) {
+    handleStarClick(nextValue, prevValue, name) {
         let sentences = this.state.sentences
-        console.log(sentences[name])
         sentences[name].rating = nextValue
         let api = new UpdateSentencesGrade(sentences[name])
             this.props.APITransport(api);
@@ -117,25 +96,54 @@ class Corpus extends React.Component {
         const CorpusDetails= <TableBody>
             {this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.map((row, index) => (
                 <TableRow key={index} >
-                    <TableCell component="th" scope="row">
-                        {row.source}
+
+
+                     <TableCell component="th" scope="row">
+                     <ReadMoreAndLess
+                            ref={this.ReadMore}
+                            className="read-more-content"
+                            charLimit={180}
+                            readMoreText="Read more"
+                            readLessText="">
+                            {row.source}
+                        </ReadMoreAndLess>
+                    </TableCell> 
+                    <TableCell >
+                    <ReadMoreAndLess
+                            ref={this.ReadMore}
+                            className="read-more-content"
+                            charLimit={170}
+                            readMoreText="Read more"
+                            readLessText=""
+                        >
+                            {row.target}
+                        </ReadMoreAndLess>
+                        
                     </TableCell>
                     <TableCell >
-                        {row.target}
+                    <ReadMoreAndLess
+                            ref={this.ReadMore}
+                            className="read-more-content"
+                            charLimit={160}
+                            readMoreText="Read more"
+                            readLessText=""
+                        >
+                            {row.translation}
+                        </ReadMoreAndLess>
+                        
                     </TableCell>
+                    {!this.state.role.includes('dev')&&
                     <TableCell >
-                        {row.translation}
-                    </TableCell>
-                    <TableCell >
-                   
+                    <div style={{width:'80px'}}>
                     <StarRatingComponent 
                         name={index}
                         starCount={5}
                         value={row.rating}
-                        onStarClick={this.onStarClick.bind(this)}
+                        onStarClick={this.handleStarClick.bind(this)}
                     />
+                    </div>
 
-                    </TableCell>
+                    </TableCell>}
                     
                 </TableRow>
             ))}
@@ -147,23 +155,8 @@ class Corpus extends React.Component {
                 
                 {this.state.download ? <CSVDownload data={this.state.downloadData} target="_blank" /> : ''}
                 <Grid container spacing={24} style={{ padding: 5 }}>
-                    <Grid item xs={12} sm={12} lg={12} xl={12} style={{marginLeft:'-4%',marginTop:'20px'}}>
-                        <Typography variant="title" gutterBottom>
-                            Corpus Details
-                        </Typography>
-                                <Grid
-                            container
-                            direction="row"
-                            justify="flex-end"
-                            alignItems="right"
-                        >
-                            
-                        </Grid>
-                    </Grid>
-
-                    
-                    <Grid item xs={12} sm={12} lg={12} xl={12} style={{marginLeft:'-4%'}}>
-                            <Paper >
+                    <Grid item xs={12} sm={12} lg={12} xl={12} style={{marginLeft:'-4%',marginTop:'38px'}}>
+                        <Paper >
 
                             <TablePagination
                                 component="nav"
@@ -172,31 +165,21 @@ class Corpus extends React.Component {
                                 rowsPerPage={this.state.pageCount}
                                 count={this.state.count}
                                 onChangePage={this.handleChangePage}
-
-                                
                                 onChangeRowsPerPage={this.handleSelectChange}
                             />
 
-
                             <Divider/>
-                                <Table >
-                                    <TableHead>
-                                        <TableRow>
-                                        {this.state.TableHeaderValues.map((item) => (
-                                            <TableCell width="30%">{item}</TableCell>
-                        
-                  ))}
-                                            
-                                           
-                                            
-                                        </TableRow>
-                                    </TableHead>
-                                    {CorpusDetails}
-                                </Table>
-                            </Paper>
-                            
-                        
-                        
+                            <Table >
+                                <TableHead>
+                                    <TableRow>
+                                    {this.state.TableHeaderValues.map((item) => (
+                                        <TableCell width="31%">{item}</TableCell>
+                                    ))}       
+                                    </TableRow>
+                                </TableHead>
+                                {CorpusDetails}
+                            </Table>
+                        </Paper>
                     </Grid>
                 </Grid>
             </div>

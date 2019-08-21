@@ -16,8 +16,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { CSVLink, CSVDownload } from "react-csv";
-import SaveIcon from '@material-ui/icons/Check';
 import Accept from '@material-ui/icons/Spellcheck';
 import Close from '@material-ui/icons/Close';
 import TablePagination from "@material-ui/core/TablePagination";
@@ -25,6 +23,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Input from "@material-ui/core/Input";
 import Tooltip from '@material-ui/core/Tooltip';
 import UpdateSentencesStatus from "../../../flux/actions/apis/update-sentenses-status";
+import SourceTranslate from "../../../flux/actions/apis/source-translate";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { white, blueGrey50,darkBlack } from "material-ui/styles/colors";
@@ -63,23 +62,21 @@ class Corpus extends React.Component {
             stat: 'PENDING',
             lock: false,
             anchorEl: '',
-            inputStatus: '',
+            inputStatus: 'ALL',
             backColor: 'Grey',
             edited:true,
             MenuItemValues: ['ALL', 'ACCEPTED', "REJECTED", "EDITED", "PENDING", "PROCESSING"],
+            MenuFilterValues: ['ALL', 'RED','YELLOW','GREEN'],
             openDialog:false,
-            openExpand:false
+            openExpand:false,
+            sourceTranslate:'',
+            filterSelect:null,
+            accuracy:'ALL'
         }
     }
 
     componentDidMount() {
-        this.setState({
-            hindi: [],
-            english: [],
-            hindi_score: [],
-            english_score: [],
-            file: {}
-        })
+
         if (this.props.match.params.basename) {
             let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, 1)
             this.props.APITransport(api);
@@ -88,7 +85,7 @@ class Corpus extends React.Component {
     }
 
     handleChangePage = (event, page) => {
-
+        console.log(this.state.inputStatus)
         this.setState({ page, lock: false });
         if (this.props.match.params.basename) {
             let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, page + 1, this.state.inputStatus)
@@ -98,26 +95,83 @@ class Corpus extends React.Component {
 
     };
 
-    handleFilter = (inputStatus) => {
+    handleFilter = (inputStatus) => { 
+        let accuracy= inputStatus.item== 'RED' ? 'bad': inputStatus.item== 'YELLOW' ? 'medium' : inputStatus.item== 'GREEN' ? 'good': inputStatus
+        
+        if(accuracy==inputStatus){
+            this.setState({
+                inputStatus,
+                anchorEl:null,
+                filterSelect:null
+            })
+            if (this.props.match.params.basename) {
+                console.log(this.props.match.params.basename, this.state.pageCount, 1, inputStatus,this.state.accuracy)
+                let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, 1, inputStatus,this.state.accuracy)
+                this.props.APITransport(api);
+            }
+        } else {
+            this.setState({
+                accuracy,
+                filterSelect:null
+            })
+            if (this.props.match.params.basename) {
+                console.log("hoo",this.props.match.params.basename, this.state.pageCount, 1, this.state.inputStatus,accuracy)
+                let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, 1, this.state.inputStatus,accuracy)
+                this.props.APITransport(api);
+            }
+        }   
+    };
 
-        this.setState({ anchorEl: null })
-        this.setState({ inputStatus })
-        if (this.props.match.params.basename) {
-            let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, 1, inputStatus)
+
+    handleActionButton(index, action) {
+
+        let sentences = this.state.sentences;
+        let color1 = ''
+        sentences[index].isEditable = false
+        sentences[index].status = action === "ACCEPTED" ? 'ACCEPTED' : (action === 'REJECTED' ? 'REJECTED' : '')
+        this.setState({ backColor: 'green' })
+
+        this.setState({
+
+            sentences: sentences,
+            status: action,
+            download: false,
+            lock: false
+        })
+
+        if (!action) {
+            console.log("success")
+            let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, this.state.page + 1, this.state.inputStatus)
             this.props.APITransport(api);
 
         }
+        else {
 
 
-    };
+            let api = new UpdateSentencesStatus(sentences[index])
+            this.props.APITransport(api);
+        }
+    }
 
+    handleSaveButton(index) {
 
+        let sentences = this.state.sentences
+        console.log('value', sentences)
+        sentences[index].isdialog = false,
+        sentences[index].isEditable = false,
+            sentences[index].status = "EDITED"
+        this.setState({
+            openExpand:false,
+            openDialog: false,
+            lock: false,
+            sentences: sentences,
 
-    handleSelectChange = event => {
-        this.setState({ pageCount: event.target.value, page: 0 });
-        let api = new FetchSentences(this.props.match.params.basename, event.target.value, 1, this.state.inputStatus)
+            download: false
+        })
+        let api = new UpdateSentences(sentences[index])
         this.props.APITransport(api);
-    };
+    }
+    
 
 
     componentDidUpdate(prevProps) {
@@ -135,9 +189,19 @@ class Corpus extends React.Component {
                 count: this.props.sentences.count
             })
         }
+        if (prevProps.sourceTranslate !== this.props.sourceTranslate) {
+            this.setState({
+                sourceTranslate: this.props.sourceTranslate.data[0]
+            })
+        }
     }
+    
 
-
+    handleSelectChange = event => {
+        this.setState({ pageCount: event.target.value, page: 0 });
+        let api = new FetchSentences(this.props.match.params.basename, event.target.value, 1, this.state.inputStatus)
+        this.props.APITransport(api);
+    };
 
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
@@ -170,57 +234,7 @@ class Corpus extends React.Component {
         })
     }
 
-    handleActionButton(index, action) {
 
-        let sentences = this.state.sentences;
-        let color1 = ''
-        sentences[index].isEditable = false
-        sentences[index].status = action === "ACCEPTED" ? 'ACCEPTED' : (action === 'REJECTED' ? 'REJECTED' : '')
-        this.setState({ backColor: 'green' })
-
-        this.setState({
-
-            sentences: sentences,
-            status: action,
-            download: false,
-            lock: false
-        })
-
-        if (!action) {
-            console.log("success")
-            let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, this.state.page + 1, this.state.inputStatus)
-            this.props.APITransport(api);
-
-        }
-        else {
-
-
-            let api = new UpdateSentencesStatus(sentences[index])
-            this.props.APITransport(api);
-        }
-    }
-
-
-
-
-    handleSaveButton(index) {
-
-        let sentences = this.state.sentences
-        console.log('value', sentences)
-        sentences[index].isdialog = false,
-        sentences[index].isEditable = false,
-            sentences[index].status = "EDITED"
-        this.setState({
-            openExpand:false,
-            openDialog: false,
-            lock: false,
-            sentences: sentences,
-
-            download: false
-        })
-        let api = new UpdateSentences(sentences[index])
-        this.props.APITransport(api);
-    }
 
 
     handleTextChange(value, index, key) {
@@ -233,23 +247,41 @@ class Corpus extends React.Component {
     }
 
     handleSelect(event) {
+        console.log(event.currentTarget)
         this.setState({ anchorEl: event.currentTarget });
+    };
+
+    handleAlignSelect(event) {
+        
+        this.setState({ filterSelect: event.currentTarget });
     };
     handleClose = () => {
        
-        this.setState({ anchorEl: null,openDialog: false });
+        this.setState({ anchorEl: null,openDialog: false,filterSelect:null });
     };
     handleDialogClose = (index) => {
         let sentences = this.state.sentences
         sentences[index].isdialog = false
         this.setState({ openDialog: false,openExpand:false });
+        let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, this.state.page + 1, this.state.inputStatus)
+            this.props.APITransport(api);
     };
 
     handleOpen = (index) => {
-        console.log("clicked")
+ 
         let sentences = this.state.sentences
         sentences[index].isdialog = true
         this.setState({ openDialog: true });
+    };
+
+    handleSourceTranslate = (source) => {
+        this.setState({
+            openExpand:true
+        })
+        let api = new SourceTranslate(this.props.match.params.basename,source)
+            this.props.APITransport(api);
+
+        
     };
     handleColor(color) {
         let color1 = 'grey'
@@ -281,11 +313,15 @@ class Corpus extends React.Component {
         return e;
 
     }
-    handleClickExpand(event){
+
+    handleClickExpand(event,value){
         this.setState({openExpand:event})
+        if(this.state.sourceTranslate==""){
+        this.setState({
+            sourceTranslate:value
+        })
     }
-
-
+    }
 
 
     render() {
@@ -296,7 +332,7 @@ class Corpus extends React.Component {
                         {row.isEditable ? <Input id="email" style={{ width: '100%' }} multiline rowsMax="4" floatingLabelText="E-mail" value={row.source} onChange={(event) => { this.handleTextChange(event.target.value, index, 'source') }} /> : <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
-                            charLimit={300}
+                            charLimit={145}
                             readMoreText="Read more"
                             readLessText=""
                         >
@@ -307,7 +343,7 @@ class Corpus extends React.Component {
                         {row.isEditable ? <Input id="email" style={{ width: '100%' }} multiline rowsMax="4" floatingLabelText="E-mail" value={row.target} onChange={(event) => { this.handleTextChange(event.target.value, index, 'target') }} /> : <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
-                            charLimit={300}
+                            charLimit={130}
                             readMoreText="Read more"
                             readLessText=""
                         >
@@ -322,85 +358,86 @@ class Corpus extends React.Component {
                                 : <span style={{ width: '35px', height: '35px',borderRadius:'50%',display: 'inline-block', backgroundColor:'green',marginRight:'50px'}}>    </span>)}
                     </TableCell>
 
-
                     <TableCell width="10%">
-                        {row.isEditable ? <div>
-                            <Tooltip title="Save" disableTriggerFocus={true}><SaveIcon style={{ cursor: 'pointer', marginRight: '5px', color: 'green', fontSize: '30px' }} onClick={() => {
-                                { this.handleSaveButton(index)}
-                            }} /></Tooltip>
-                            <Tooltip title="Revert" disableTriggerFocus={true}><Close style={{ cursor: 'pointer', marginRight: '5px', color: 'red' }} onClick={() => {
-                                this.handleActionButton(index, '')
-                            }} /></Tooltip> </div> :
-                            <div style={{ width: '95px' }}>
-
-                                <Tooltip title="Accept" disableTriggerFocus={true}><Accept style={{ cursor: 'pointer', marginRight: '5px', color: "green" }} onClick={() => {
-                                    { this.state.lock ? '' : this.handleActionButton(index, "ACCEPTED") }
-
-                                }} />
-                                </Tooltip>
-                                <Tooltip title="Edit" disableTriggerFocus={true}><EditIcon style={{ cursor: 'pointer', marginRight: '5px', color: '#335995', fontSize: '30px' }} onClick={() => {
-                                     this.handleOpen(index) }}
-                             /></Tooltip>
-                                 {row.isdialog ?
-                        <Dialog
-                        open={this.state.openDialog}
-                        onClose={this.handleClose}
-                        disableBackdropClick
-                        disableEscapeKeyDown
-                        fullWidth
-                        aria-labelledby="form-dialog-title">
-                            <Typography variant="h5" style={{ color: darkBlack, background:blueGrey50, paddingLeft:'12%', paddingBottom:'12px',paddingTop:'8px'}} >Edit source and target sentence here</Typography>
                         
-                            <DialogContent>
-                                <DialogContentText /><br/>
-                                <Typography variant="h6" gutterBottom>
-                                    Source Sentence:
-                                </Typography>
-                                <Paper style={{paddingTop:'12px',paddingLeft:'5px'}}>
-                                <div style={{color:"blue"}}>
-                                <Input id="email" style={{ width: '100%' }} multiline  floatingLabelText="E-mail" value={row.source} onChange={(event) => { this.handleTextChange(event.target.value, index, 'source') }}/></div></Paper><br/>
-                                <Typography variant="h6" gutterBottom>
-                                    Target Sentence:
-                                </Typography>
+                        <div style={{ width: '95px' }}>
 
-                                <Paper style={{ paddingTop:'12px',paddingLeft:'5px'}}>
-                                    <Input id="email" style={{ width: '100%' }} multiline  floatingLabelText="E-mail" value={row.target} onChange={(event) => { this.handleTextChange(event.target.value, index, 'target') }}/>
-                                </Paper><br/>
-                                <Paper>
-                                    <div style={{background:"#D3D3D3",paddingBottom:'15px',paddingTop:'12px',paddingLeft:'5px'}}>
-                                    <div>
-                                    <Typography variant="h6" gutterBottom style={{}}>
-                                        Machine Translated Sentence(Reference)&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-                                        {this.state.openExpand ? <Tooltip title="Hide" disableTriggerFocus={true}><ExpandMore style={{color:'blue'}}onClick={() => {
-                                        this.handleClickExpand(false) }}/></Tooltip> : <Tooltip title="Expand" disableTriggerFocus={true}><ExpandLess style={{color:'blue'}} onClick={() => {
-                                        this.handleClickExpand(true) }}/></Tooltip>}
-                                    </Typography> </div>
+                            <Tooltip title="Accept" disableTriggerFocus={true}><Accept style={{ cursor: 'pointer', marginRight: '5px', color: "green" }} onClick={() => {
+                                { this.state.lock ? '' : this.handleActionButton(index, "ACCEPTED") }
+
+                            }} />
+                            </Tooltip>
+                            <Tooltip title="Edit" disableTriggerFocus={true}><EditIcon style={{ cursor: 'pointer', marginRight: '5px', color: '#335995', fontSize: '30px' }} onClick={() => {
+                                    this.handleOpen(index) }}
+                            /></Tooltip>
+                            {row.isdialog ?
+                                <Dialog
+                                open={this.state.openDialog}
+                                onClose={this.handleClose}
+                                disableBackdropClick
+                                disableEscapeKeyDown
+                                fullWidth
+                                aria-labelledby="form-dialog-title">
+                                    <Typography variant="h5" style={{ color: darkBlack, background:blueGrey50, paddingLeft:'12%', paddingBottom:'12px',paddingTop:'8px'}} >Edit source and target sentence here</Typography>
+                                
+                                    <DialogContent>
+                                        <DialogContentText /><br/>
+                                        <Typography variant="h6" gutterBottom>
+                                            Source Sentence:
+                                        </Typography>
                                         
-                                    <Collapse in={this.state.openExpand} timeout="auto" unmountOnExit>
-                                        <span style={{ fontFamily: '"Source Sans Pro", "Arial", sans-serif'}}>{row.translation}</span>
-                                    </Collapse>
+                                        <Paper style={{paddingTop:'12px',paddingLeft:'5px'}}>
+                                        <div style={{color:"blue"}}>
+                                        <Input id="email" style={{ width: '100%' }} multiline  floatingLabelText="E-mail" value={row.source} onChange={(event) => { this.handleTextChange(event.target.value, index, 'source') }}/></div></Paper><br/>
+                                        <div style={{marginLeft:'63%'}}>
+                                        <Button onClick={() => 
+                                                                { this.handleSourceTranslate(row.source)}} variant="contained" color="primary">
+                                            Machine Translate
+                                            </Button>
+                                            </div>
+                                        <Typography variant="h6" gutterBottom>
+                                            Target Sentence:
+                                        </Typography>
+
+                                        <Paper style={{ paddingTop:'12px',paddingLeft:'5px'}}>
+                                            <Input id="email" style={{ width: '100%' }} multiline  floatingLabelText="E-mail" value={row.target} onChange={(event) => { this.handleTextChange(event.target.value, index, 'target') }}/>
+                                        </Paper><br/>
+                                        <Paper>
+                                            <div style={{background:"#D3D3D3",paddingBottom:'15px',paddingTop:'12px',paddingLeft:'5px'}}>
+                                            <div>
+                                            <Typography variant="h6" gutterBottom style={{}}>
+                                                Machine Translated Sentence(Reference)&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                                                {this.state.openExpand ? <Tooltip title="Hide" disableTriggerFocus={true}><ExpandMore style={{color:'blue'}}onClick={() => {
+                                                this.handleClickExpand(false) }}/></Tooltip> : <Tooltip title="Expand" disableTriggerFocus={true}><ExpandLess style={{color:'blue'}} onClick={() => {
+                                                this.handleClickExpand(true,row.translation) }}/></Tooltip>}
+                                            </Typography> </div>
+                                                
+                                            <Collapse in={this.state.openExpand} timeout="auto" unmountOnExit>
+                                                <span style={{ fontFamily: '"Source Sans Pro", "Arial", sans-serif'}}>{this.state.sourceTranslate}</span>
+                                            </Collapse>
 
 
-                                    </div>
-                                </Paper>
-                                </DialogContent>
-                                <DialogActions style={{marginRight:'22px'}}>
-                                    <Button onClick={() => 
-                                                        { this.handleDialogClose(index)}} variant="contained" color="primary">
-                                    Cancel
-                                    </Button>
-                                    <Button variant="contained" color="primary" onClick={() => 
-                                                        { this.handleSaveButton(index)}}>
-                                    Save
-                                    </Button>
-                                </DialogActions>
-                        </Dialog>:''}
+                                            </div>
+                                        </Paper>
+                                        </DialogContent>
+                                        <DialogActions style={{marginRight:'22px'}}>
+                                            <Button onClick={() => 
+                                                                { this.handleDialogClose(index)}} variant="contained" color="primary">
+                                            Cancel
+                                            </Button>
+                                            <Button variant="contained" color="primary" onClick={() => 
+                                                                { this.handleSaveButton(index)}}>
+                                            Save
+                                            </Button>
+                                        </DialogActions>
+                                </Dialog>:''
+                            }
                                 
                                 <Tooltip title="Reject" disableTriggerFocus={true}><Close style={{ cursor: 'pointer', marginRight: '5px', color: "red" }} onClick={() => {
                                     { this.state.lock ? '' : this.handleActionButton(index, "REJECTED") }
                                 }} /></Tooltip>
                             </div>
-                        }
+                        
                     </TableCell>
 
 
@@ -413,29 +450,31 @@ class Corpus extends React.Component {
         </TableBody>
 
         return (
-            <div>
 
+            <div>
                 <Menu
                     id="simple-menu"
                     anchorEl={this.state.anchorEl}
                     open={Boolean(this.state.anchorEl)}
-                    onClose={this.handleClose}
-                >
-
-
-
+                    onClose={this.handleClose}>
                     {this.state.MenuItemValues.map((item) => (
                         <MenuItem value={item} onClick={() => { this.handleFilter({ item }) }}>{item}</MenuItem>
                     ))}
-
                 </Menu>
 
-                {this.state.download ? <CSVDownload data={this.state.downloadData} target="_blank" /> : ''}
+                <Menu
+                    id="simple-menu"
+                    anchorEl={this.state.filterSelect}
+                    open={Boolean(this.state.filterSelect)}
+                    onClose={this.handleClose}>
+                    {this.state.MenuFilterValues.map((item) => (
+                        <MenuItem value={item} onClick={() => { this.handleFilter({ item }) }}>{item}</MenuItem>
+                    ))}
+                </Menu>
+
                 <Grid container spacing={24} style={{ padding: 5 }}>
                     <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: '-4%', marginTop: '20px' }}>
-                        <Typography variant="title" gutterBottom>
-                            Corpus Details
-                        </Typography>
+                        
                         <Grid
                             container
                             direction="row"
@@ -446,10 +485,10 @@ class Corpus extends React.Component {
                         </Grid>
                     </Grid>
 
-
+                        
                     <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: '-4%' }}>
                         <Paper >
-
+                        
                             <TablePagination
                                 component="nav"
                                 page={this.state.page}
@@ -457,10 +496,7 @@ class Corpus extends React.Component {
                                 rowsPerPage={this.state.pageCount}
                                 count={this.state.count}
                                 onChangePage={this.handleChangePage}
-
-
-                                onChangeRowsPerPage={this.handleSelectChange}
-                            />
+                                onChangeRowsPerPage={this.handleSelectChange}/>
 
 
                             <Divider />
@@ -472,19 +508,36 @@ class Corpus extends React.Component {
                                         <TableCell width="35%">Source Sentence</TableCell>
                                         <TableCell width="35%">Target Sentence</TableCell>
                                         {/* <TableCell width="27%">Machine translated reference </TableCell> */}
-                                        <TableCell width='10%' align="left">Alignment Accuracy</TableCell>
+                                        <TableCell width='10%' align="left" >
+                                        <Grid container spacing={24} style={{ padding: 5 }}>
+                                        <Grid item xs={8} sm={9} lg={9} xl={9}>
+                                            Alignment Accuracy 
+                                            </Grid>  
+                                            <Grid item xs={4} sm={3} lg={3} xl={3} >
+                                            <Filter onClick={(event) => {
+                                            this.handleAlignSelect(event)
+                                        }} />
+                                        </Grid>
+                                        </Grid>
+                                        </TableCell>
                                         <TableCell width="10%">Action</TableCell>
-                                        <TableCell width="10%"><div>Status <Filter onClick={(event) => {
+                                        <TableCell width="10%"><div>
+                                        <Grid container spacing={24} >
+                                        <Grid item xs={6} sm={6} lg={6} xl={6} style={{ paddingTop: '17px' }}>
+                                            
+                                            Status 
+                                            </Grid>
+                                            <Grid item xs={6} sm={6} lg={6} xl={6}>
+                                            <Filter onClick={(event) => {
                                             this.handleSelect(event)
-                                        }} /></div></TableCell>
+                                        }} />
+                                        </Grid></Grid>
+                                        </div></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 {CorpusDetails}
                             </Table>
                         </Paper>
-
-
-
                     </Grid>
                 </Grid>
             </div>
@@ -497,6 +550,7 @@ const mapStateToProps = state => ({
     apistatus: state.apistatus,
     corpus: state.corpus,
     sentences: state.sentences,
+    sourceTranslate: state.source_translate
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

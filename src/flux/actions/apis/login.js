@@ -50,7 +50,7 @@ export default class LoginAPI extends API {
   getHeaders() {
     this.headers = {
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type" : "application/json"
       }
     };
     return this.headers;

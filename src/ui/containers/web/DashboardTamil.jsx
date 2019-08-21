@@ -9,8 +9,6 @@ import Button from '@material-ui/core/Button';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import AutoML from "../../../flux/actions/apis/auto_ml";
 import NMT from "../../../flux/actions/apis/nmt";
-import NMTSP from "../../../flux/actions/apis/nmtsp";
-import CircularProgress from '@material-ui/core/CircularProgress';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { white, blueGrey50,darkBlack } from "material-ui/styles/colors"
@@ -28,7 +26,9 @@ class Dashboard extends React.Component {
       tocken: false,
       source:'',
       target:'',
-      model:''
+      model:'',
+      sourceLanguage: ['English'],
+      targetLanguage: ['Hindi','Tamil'],
     }
   }
 
@@ -119,7 +119,7 @@ class Dashboard extends React.Component {
         
         </Grid>
         <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
-            <Select id={"outlined-age-simple"} MenuItemValues={this.state.source=='English'? ['Hindi','Tamil']:['English']} handleChange={this.handleSelectChange} value={this.state.target} name="target" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
+            <Select id={"outlined-age-simple"} MenuItemValues={this.state.source=='English'? this.state.targetLanguage: this.state.sourceLanguage} handleChange={this.handleSelectChange} value={this.state.target} name="target" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
             </Grid>
             </Grid>
         <div style={{marginLeft:'40px'}}>
@@ -159,7 +159,7 @@ class Dashboard extends React.Component {
             <NewOrders title="Google" data={[this.state.autoMlText]} />
           
           
-            <NewOrders title="Aanuvada Model" data={this.state.nmtText} />
+            <NewOrders title="Anuvaad Model" data={this.state.nmtText} />
             </div>
         }
         </Paper>
