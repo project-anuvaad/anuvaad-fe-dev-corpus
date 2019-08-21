@@ -32,13 +32,21 @@ class Corpus extends React.Component {
             pageCount:5,
             status:'',
             page:0,
-            TableHeaderValues:['Source','Target',"Google Reference","Grade"]  
+            TableHeaderValues:['Source','Target',"Google Reference","Grade"] ,
+            role: JSON.parse(localStorage.getItem('roles'))
 
         }
     }
 
     componentDidMount() {
-       
+        if(this.state.role.includes('dev')){
+            this.setState({TableHeaderValues:['Source','Target',"Google Reference"]})
+        }
+        else{
+            
+            this.setState({TableHeaderValues:['Source','Target',"Google Reference","Grade"]})
+             
+        }
         if (this.props.match.params.basename) {
             let api = new FetchSentences(this.props.match.params.basename,this.state.pageCount,1)
             this.props.APITransport(api);
@@ -124,6 +132,7 @@ class Corpus extends React.Component {
                         </ReadMoreAndLess>
                         
                     </TableCell>
+                    {!this.state.role.includes('dev')&&
                     <TableCell >
                     <div style={{width:'68px'}}>
                     <StarRatingComponent 
@@ -134,7 +143,7 @@ class Corpus extends React.Component {
                     />
                     </div>
 
-                    </TableCell>
+                    </TableCell>}
                     
                 </TableRow>
             ))}

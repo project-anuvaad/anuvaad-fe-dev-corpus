@@ -212,7 +212,7 @@ class Header extends React.Component {
 								)}
 							/>
 						</ListItem>
-						{role[0]=='editor' &&
+						{role.includes('dev') &&
 						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/newcorpus`)}}>
 							<ListItemIcon>
 								<StarIcon style={{ color: 'white' }} />
