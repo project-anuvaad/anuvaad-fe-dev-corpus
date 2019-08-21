@@ -134,7 +134,7 @@ class Corpus extends React.Component {
                     </TableCell>
                     {!this.state.role.includes('dev')&&
                     <TableCell >
-                    <div style={{width:'68px'}}>
+                    <div style={{width:'80px'}}>
                     <StarRatingComponent 
                         name={index}
                         starCount={5}
