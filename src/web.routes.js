@@ -26,16 +26,17 @@ const PrivateRoute = ({ component: Component, userRoles,title, authenticate, ...
 );
 
 class AppRoutes extends React.Component {
-  authenticateUser = (userRoles) => {
+  authenticateUser = (allowedRoles) => {
     let count=0;
     const token = localStorage.getItem("token");
-    const allowedRoles = JSON.parse(localStorage.getItem("roles"))
-    
+    const userRoles = JSON.parse(localStorage.getItem("roles"))
+    console.log(allowedRoles)
+    console.log(userRoles)
     if(token) {
-      if(userRoles && Array.isArray(userRoles)){
+      if(allowedRoles && Array.isArray(allowedRoles)){
 
-        userRoles.map((userRole)=>{
-          allowedRoles.map((allowedRole)=>{
+        allowedRoles.map((allowedRole)=>{
+          userRoles.map((userRole)=>{
             console.log("role",userRole,allowedRole)
             if(userRole==allowedRole)
               {
@@ -44,7 +45,7 @@ class AppRoutes extends React.Component {
           })
         })
 
-        if(count===allowedRoles.length){
+        if(count>0){
           return true;
         }
         else{
@@ -71,10 +72,10 @@ class AppRoutes extends React.Component {
             <Route exact path={`${process.env.PUBLIC_URL}/callback`} component={Callback} />
             <Route exact path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard-tamil`} title="Translator" component={DashboardTamil}  authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} title="Corpus Details" userRoles={['grader']} component={GradeViewCorpus} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} title="Corpus Details" userRoles={['grader','dev']} component={GradeViewCorpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-translations/:basename`} component={ViewTranslations} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/corpus`} component={Corp} title="Corpus List" authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`} title="Corpus Details"  userRoles={['editor']} component={Corpus} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`} title="Corpus Details"  userRoles={['editor','dev']} component={Corpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translations`} component={Translations} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translate`} component={Translate} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/qna`} title="Q&A" component={QnA} authenticate={this.authenticateUser} />
