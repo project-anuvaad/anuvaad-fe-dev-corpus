@@ -1,6 +1,6 @@
 
 
-						import React from 'react';
+import React from 'react';
 // import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
@@ -10,8 +10,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import Grid from '@material-ui/core/Grid';
@@ -20,15 +18,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import SearchIcon from '@material-ui/icons/AddToQueue';
 import StarIcon from '@material-ui/icons/FiberNew';
-import SvgIcon from '@material-ui/icons/Accessibility';
-import LaunchIcon from '@material-ui/icons/Launch';
 import SendIcon from '@material-ui/icons/Send';
-import MailIcon from '@material-ui/icons/Mail';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ReportIcon from '@material-ui/icons/Report';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import history from "../../../../web.history";
 import { Button } from '@material-ui/core';
@@ -151,6 +143,7 @@ class Header extends React.Component {
 									size="medium">
 									<AccountCircle/>	
 								</Fab>
+								
 								<Menu
 									id="menu-appbar"
 									anchorEl={anchorEl}

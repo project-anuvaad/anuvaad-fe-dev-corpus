@@ -75,7 +75,7 @@ class Corpus extends React.Component {
         }
     }
 
-    onStarClick(nextValue, prevValue, name) {
+    handleStarClick(nextValue, prevValue, name) {
         let sentences = this.state.sentences
         sentences[name].rating = nextValue
         let api = new UpdateSentencesGrade(sentences[name])
@@ -96,8 +96,7 @@ class Corpus extends React.Component {
                             className="read-more-content"
                             charLimit={180}
                             readMoreText="Read more"
-                            readLessText=""
-                        >
+                            readLessText="">
                             {row.source}
                         </ReadMoreAndLess>
                     </TableCell> 
@@ -126,13 +125,14 @@ class Corpus extends React.Component {
                         
                     </TableCell>
                     <TableCell >
-                   
+                    <div style={{width:'68px'}}>
                     <StarRatingComponent 
                         name={index}
                         starCount={5}
                         value={row.rating}
-                        onStarClick={this.onStarClick.bind(this)}
+                        onStarClick={this.handleStarClick.bind(this)}
                     />
+                    </div>
 
                     </TableCell>
                     
@@ -146,22 +146,7 @@ class Corpus extends React.Component {
                 
                 {this.state.download ? <CSVDownload data={this.state.downloadData} target="_blank" /> : ''}
                 <Grid container spacing={24} style={{ padding: 5 }}>
-                    <Grid item xs={12} sm={12} lg={12} xl={12} style={{marginLeft:'-4%',marginTop:'20px'}}>
-                        <Typography variant="title" gutterBottom>
-                            Corpus Details
-                        </Typography>
-                                <Grid
-                            container
-                            direction="row"
-                            justify="flex-end"
-                            alignItems="right"
-                        >
-                            
-                        </Grid>
-                    </Grid>
-
-                    
-                    <Grid item xs={12} sm={12} lg={12} xl={12} style={{marginLeft:'-4%'}}>
+                    <Grid item xs={12} sm={12} lg={12} xl={12} style={{marginLeft:'-4%',marginTop:'38px'}}>
                         <Paper >
 
                             <TablePagination
@@ -180,9 +165,7 @@ class Corpus extends React.Component {
                                     <TableRow>
                                     {this.state.TableHeaderValues.map((item) => (
                                         <TableCell width="31%">{item}</TableCell>
-                    
-                                    ))}
-                                            
+                                    ))}       
                                     </TableRow>
                                 </TableHead>
                                 {CorpusDetails}
