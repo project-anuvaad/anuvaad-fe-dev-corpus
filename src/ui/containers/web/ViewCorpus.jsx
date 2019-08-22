@@ -163,7 +163,8 @@ class Corp extends React.Component {
 						<Typography variant="title" color="inherit" style={{flex: 1}}>
 						
 						</Typography>
-                        {this.state.role.includes("dev") ? 
+
+                        {this.state.role.includes("dev")? 
                         <Button variant="extendedFab" color="primary" style={{marginRight:0}}aria-label="Add" onClick={() => { history.push(`${process.env.PUBLIC_URL}/newcorpus`) }}>
                                 <AddIcon /> Corpus
                         </Button>:''}
