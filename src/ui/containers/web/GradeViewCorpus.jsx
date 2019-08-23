@@ -20,7 +20,7 @@ import Typography from '@material-ui/core/Typography';
 import { CSVLink, CSVDownload } from "react-csv";
 import StarRatingComponent from 'react-star-rating-component';
 import TablePagination from "@material-ui/core/TablePagination";
-import LinesEllipsis from 'react-lines-ellipsis';
+
 
 class Corpus extends React.Component {
     constructor(props) {
