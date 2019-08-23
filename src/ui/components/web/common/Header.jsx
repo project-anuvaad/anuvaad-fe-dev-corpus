@@ -158,6 +158,7 @@ class Header extends React.Component {
 									open={openEl}
 									onClose={this.handleClose}
 								>
+									<MenuItem onClick={()=>{this.handleClose();history.push(`${process.env.PUBLIC_URL}/profile`)}}>My Profile</MenuItem>
 									<MenuItem onClick={()=>{this.handleClose();history.push(`${process.env.PUBLIC_URL}/logout`)}}>Logout</MenuItem>
 								</Menu>
 							</div>

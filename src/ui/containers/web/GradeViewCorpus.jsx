@@ -20,7 +20,7 @@ import Typography from '@material-ui/core/Typography';
 import { CSVLink, CSVDownload } from "react-csv";
 import StarRatingComponent from 'react-star-rating-component';
 import TablePagination from "@material-ui/core/TablePagination";
-;
+import LinesEllipsis from 'react-lines-ellipsis';
 
 class Corpus extends React.Component {
     constructor(props) {
@@ -32,7 +32,7 @@ class Corpus extends React.Component {
             pageCount:5,
             status:'',
             page:0,
-            TableHeaderValues:['Source','Target',"Google Reference","Grade"] ,
+            TableHeaderValues:['Source','Target',"Machine translated reference","Grade"] ,
             role: JSON.parse(localStorage.getItem('roles'))
 
         }
@@ -40,11 +40,11 @@ class Corpus extends React.Component {
 
     componentDidMount() {
         if(this.state.role.includes('dev')){
-            this.setState({TableHeaderValues:['Source','Target',"Google Reference"]})
+            this.setState({TableHeaderValues:['Source','Target',"Machine translated reference"]})
         }
         else{
             
-            this.setState({TableHeaderValues:['Source','Target',"Google Reference","Grade"]})
+            this.setState({TableHeaderValues:['Source','Target',"Machine translated reference","Grade"]})
              
         }
         if (this.props.match.params.basename) {
@@ -96,13 +96,13 @@ class Corpus extends React.Component {
         const CorpusDetails= <TableBody>
             {this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.map((row, index) => (
                 <TableRow key={index} >
-
+                        
 
                      <TableCell component="th" scope="row">
                      <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
-                            charLimit={180}
+                            
                             readMoreText="Read more"
                             readLessText="">
                             {row.source}
@@ -112,7 +112,7 @@ class Corpus extends React.Component {
                     <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
-                            charLimit={170}
+                            
                             readMoreText="Read more"
                             readLessText=""
                         >
@@ -124,11 +124,11 @@ class Corpus extends React.Component {
                     <ReadMoreAndLess
                             ref={this.ReadMore}
                             className="read-more-content"
-                            charLimit={160}
+                            
                             readMoreText="Read more"
-                            readLessText=""
-                        >
-                            {row.translation}
+                            readLessText="">   
+                        {row.translation.replace(/&quot;/g,'"')}
+                            
                         </ReadMoreAndLess>
                         
                     </TableCell>

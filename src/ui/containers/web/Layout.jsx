@@ -43,6 +43,7 @@ class App extends React.Component {
     if(prevProps.userProfile !== this.props.userProfile){
       if(this.props.userProfile.isActive)
       localStorage.setItem('userDetails',this.props.userProfile.firstname+' '+this.props.userProfile.lastname)
+      localStorage.setItem('userProfile',JSON.stringify(this.props.userProfile))
       if(this.props.userProfile.roles===null){
         localStorage.setItem("roles",JSON.stringify(["editor"]))
       }
@@ -67,6 +68,7 @@ class App extends React.Component {
         
           <Header classes={classes} theme={theme} title={title} />
           <div className={classes.container}>
+
             <Component />
           </div>
           

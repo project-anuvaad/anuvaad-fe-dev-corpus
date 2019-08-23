@@ -129,7 +129,7 @@ class Dashboard extends React.Component {
             value={this.state.text}
               id="standard-multiline-static"
               placeholder = "Enter Text Here ......"
-              style={{ width: '100%' }}
+              style={{ width: '96%' }}
               multiline
               marginLeft="normal"
               onChange={(event) => {
@@ -137,8 +137,14 @@ class Dashboard extends React.Component {
               }}
             />
           </Grid>
+          <Button variant="contained"  onClick={this.handleClear.bind(this)} color="primary" aria-label="edit" style={{marginLeft:'1.3%',width:'44%', marginBottom:'4%', marginTop:'4%',marginRight:'5%'}}>
+                    Clear
+                  </Button>
+                <Button variant="contained" onClick={this.handleSubmit.bind(this)} color="primary" aria-label="edit" style={{width:'44%', marginBottom:'4%', marginTop:'4%'}}>
+                    Submit
+                  </Button>
                
-          <Grid item xs={9} sm={6} lg={2} xl={2}>
+          {/* <Grid item xs={9} sm={6} lg={2} xl={2}>
             
             <Button variant="contained" color="primary" onClick={this.handleSubmit.bind(this)}>
               Submit
@@ -149,7 +155,7 @@ class Dashboard extends React.Component {
               Clear
             </Button>
            
-            </Grid>
+            </Grid> */}
         </Grid>
         </div>
         {this.state.autoMlText && this.state.nmtText &&

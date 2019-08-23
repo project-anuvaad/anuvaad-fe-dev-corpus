@@ -13,6 +13,7 @@ import Corp from "./ui/containers/web/ViewCorpus";
 import history from "./web.history";
 import Home from "./ui/containers/web/Home";
 import Translate from "./ui/containers/web/Translate";
+import UserProfile from "./ui/containers/web/UserProfile";
 import ViewTranslations from "./ui/containers/web/ViewTranslations";
 import DashboardTamil from "./ui/containers/web/DashboardTamil";
 import GradeViewCorpus from "./ui/containers/web/GradeViewCorpus";
@@ -59,6 +60,7 @@ class AppRoutes extends React.Component {
             <Route exact path={`${process.env.PUBLIC_URL}/`} component={Home} />
             <Route exact path={`${process.env.PUBLIC_URL}/callback`} component={Callback} />
             <Route exact path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard-tamil`} title="Translator" component={DashboardTamil} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} title="Corpus Details" userRoles={['grader', 'dev']} component={GradeViewCorpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-translations/:basename`} component={ViewTranslations} authenticate={this.authenticateUser} />
