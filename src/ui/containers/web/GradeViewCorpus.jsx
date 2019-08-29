@@ -21,7 +21,14 @@ import { CSVLink, CSVDownload } from "react-csv";
 import StarRatingComponent from 'react-star-rating-component';
 import TablePagination from "@material-ui/core/TablePagination";
 
+import Pagination from "material-ui-flat-pagination";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import Select from '@material-ui/core/Select';
+import Toolbar from '@material-ui/core/Toolbar';
+import MenuItem from '@material-ui/core/MenuItem';
 
+const theme = createMuiTheme();
 class Corpus extends React.Component {
     constructor(props) {
         super(props)
@@ -66,7 +73,7 @@ class Corpus extends React.Component {
       };
 
       handleSelectChange = event => {
-        this.setState({ pageCount: event.target.value,page:0 });
+        this.setState({ pageCount: event.target.value,offset:0 });
             let api = new FetchSentences(this.props.match.params.basename,event.target.value,1,this.state.inputStatus)
             this.props.APITransport(api);
       };
@@ -156,17 +163,44 @@ class Corpus extends React.Component {
                 {this.state.download ? <CSVDownload data={this.state.downloadData} target="_blank" /> : ''}
                 <Grid container spacing={24} style={{ padding: 5 }}>
                     <Grid item xs={12} sm={12} lg={12} xl={12} style={{marginLeft:'-4%',marginTop:'38px'}}>
+                    <Toolbar style={{marginRight:'-1.2%'}}>
+
+							
+<Typography variant="title" color="inherit" style={{flex: 1}}>
+
+</Typography>
+<Typography variant="h8" gutterBottom>
+                                            Rows per page:
+                                           
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+          <Select
+          width = "50%"
+            value={this.state.pageCount}
+            onChange={this.handleSelectChange}
+            displayEmpty
+          >
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+            <MenuItem value={50}>50</MenuItem>
+            <MenuItem value={100}>100</MenuItem>
+          </Select>
+          </Typography> 
+
+
+</Toolbar>
                         <Paper >
 
-                            <TablePagination
-                                component="nav"
-                                page={this.state.page}
-                                rowsPerPageOptions={[5, 10, 25,50,100]}
-                                rowsPerPage={this.state.pageCount}
-                                count={this.state.count}
-                                onChangePage={this.handleChangePage}
-                                onChangeRowsPerPage={this.handleSelectChange}
-                            />
+                        <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <Pagination
+            align='right'
+          limit={1}
+          offset={this.state.offset}
+          total={this.state.count/this.state.pageCount}
+          onClick={(event, offset) => {this.handleChangePage(event,offset)}}
+        />
+        </MuiThemeProvider>
 
                             <Divider/>
                             <Table >

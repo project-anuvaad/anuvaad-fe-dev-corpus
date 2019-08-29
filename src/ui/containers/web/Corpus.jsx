@@ -147,7 +147,7 @@ class Corpus extends React.Component {
 
         if (!action) {
             console.log("success")
-            let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, this.state.page + 1, this.state.inputStatus)
+            let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, this.state.offset + 1, this.state.inputStatus)
             this.props.APITransport(api);
 
         }
@@ -205,7 +205,7 @@ class Corpus extends React.Component {
 
     handleSelectChange = event => {
         console.log(event.target.value)
-        this.setState({ pageCount: event.target.value, page: 0 });
+        this.setState({ pageCount: event.target.value, offset: 0 });
         let api = new FetchSentences(this.props.match.params.basename, event.target.value, 1, this.state.inputStatus)
         this.props.APITransport(api);
     };
