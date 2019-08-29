@@ -17,15 +17,6 @@ export default class HtmlToDoc extends API {
 
     processResponse(res) {
         super.processResponse(res);
-        // this.answers = res
-        // if (res.token) {
-        //     this.token = res.token;
-        //     this.expires = res.expires;
-        //     this.role = res.role;
-        //     this.userid = res.userid;
-        //     this.name = res.name;
-        //     // sessionStorage.setItem('user', JSON.stringify(res.user))
-        // }
     }
 
     apiEndPoint() {

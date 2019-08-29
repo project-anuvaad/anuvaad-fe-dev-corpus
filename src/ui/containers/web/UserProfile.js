@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -18,6 +19,9 @@ import Button from "@material-ui/core/Button";
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip';
+import Updatepassword from "../../../flux/actions/apis/updatepassword";
+import Snackbar from "@material-ui/core/Snackbar";
+import MySnackbarContentWrapper from "../../components/web/common/snackbar";
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -26,6 +30,10 @@ class UserProfile extends React.Component {
         oldpassword:'',
         newpassword:'',
         repassword:'',
+        status:'',
+        open:false,
+        messageSnack:'',
+        
         
       userDetails: JSON.parse(localStorage.getItem('userProfile'))
     }
@@ -35,44 +43,19 @@ class UserProfile extends React.Component {
     this.setState({
       autoMlText: '',
       nmtText: [],
-      nmtTextSP: []
+      nmtTextSP: [],
+      message:''
       
     })
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.automl !== this.props.automl) {
-      this.setState({
-        autoMlText: this.props.automl.text,
-      })
-    }
-    if (prevProps.nmt !== this.props.nmt) {
-      this.setState({
-        nmtText: this.props.nmt.text,
-      })
-    }
-    if (prevProps.nmtsp !== this.props.nmtsp) {
-      this.setState({
-        nmtTextSP: this.props.nmtsp.text,
-      })
-    }
-  }
 
   handleTextChange(key, event) {
     this.setState({
       [key]: event.target.value
     })
   }
-  handleClear() {
-    console.log('clear')
-    this.setState({
-      text:'',
-      autoMlText:'',
-      source:'',
-      target:'',
-      drawer:false
-    })
-  }
+  
 
   handleSelectChange = event => {
     
@@ -83,6 +66,9 @@ class UserProfile extends React.Component {
       this.setState({drawer:true})
   }
   handleCancel=()=> {
+    this.setState({    
+      message: ""
+    })
     this.setState({drawer:false})
 }
 handleClose=()=> {
@@ -96,17 +82,93 @@ handleClose=()=> {
     })
 }
 
+validateForm() {
+  return (
+    this.state.oldpassword.length>3 &&
+    this.state.newpassword.length>5 &&
+    this.state.repassword===this.state.newpassword
+  );
+}
+
+componentDidUpdate(prevProps) {
   
+  
+  if (prevProps.updatePasswordstatus!== this.props.updatePasswordstatus) {
+    console.log("cdu",typeof(this.props.updatePasswordstatus.http.status))
+    if(this.props.updatePasswordstatus.http.status===400){
+      this.setState({
+        message:"Current password is wrong. Please try again",
+      status:this.props.updatePasswordstatus.http.status 
+      })
+      
+    }
+    else if(this.props.updatePasswordstatus.http.status===200){
+      this.setState({
+        open:true,
+        messageSnack:"Successfully changed password. Please login with your new Password",
+      status:this.props.updatePasswordstatus.http.status 
+      })
+      
+      setTimeout(()=>{history.push(`${process.env.PUBLIC_URL}/logout`)},3000)
+
+    }
     
+    this.setState({
+      status:this.props.updatePasswordstatus.why,
+      oldpassword:'',
+        newpassword:'',
+        repassword:''
+    })
+    
+    
+    
+    
+
+  }
+}
     
     handleSubmit = () => {
-        const { APITransport } = this.props;
-        // const apiObj = new Changepassword(this.state.oldpassword, this.state.newpassword, this.state.repassword);
-        // APITransport(apiObj);
+      console.log("sajish")
+        if(this.state.oldpassword.length>3){
+          if(this.state.newpassword.length>5){
+            if(this.state.repassword===this.state.newpassword){
+              if(this.state.repassword!==this.state.oldpassword){
+              this.setState({
+            
+                message: ""
+              })
+          console.log(this.state.userDetails.id,this.state.userDetails.username,this.state.oldpassword,this.state.newpassword)
+        const apiObj = new Updatepassword(this.state.userDetails.id,this.state.userDetails.username,this.state.oldpassword,this.state.newpassword);
+         this.props.APITransport(apiObj);
         this.setState({showLoader:true})
-        // setTimeout(()=>{history.push("/")},2000)
-        
+        // setTimeout(()=>{history.push("{this.handleClose();history.push(`${process.env.PUBLIC_URL}/logout`)}")},200
+            }
+            else{
+              this.setState({      
+                message: "Old password and new password should be different"
+              })
+            }
+            }
+            else{
+              this.setState({           
+                message: "New password and repeat password should be equal"
+              })
+            }  
+          }
+          
+          else{
+            this.setState({      
+              message: "New password is too short(min 6 char)"
+            })
+          }
+        }
+      
+      else{
+        this.setState({
+          message: "Please enter correct current password"
+        })
       }
+    }
 
   render() {
 
@@ -178,47 +240,43 @@ handleClose=()=> {
                                         
               <form method="post">
                 <FormControl fullWidth>
-                <TextField placeholder={'Old Password*'} type="password" id="outlined-required" onChange={(event) => {this.handleTextChange('oldpassword', event)}}
+                <TextField placeholder={'Old Password*'} error value ={this.state.oldpassword} required type="password" id="outlined-required" onChange={(event) => {this.handleTextChange('oldpassword', event)}}
               margin="normal" varient="outlined" style={{width:'100%', marginBottom:'4%'}}
               />
                   
                 </FormControl>
                 <FormControl fullWidth>
-                <TextField placeholder={"New Password*"} type="password" id="outlined-required" onChange={(event) => {this.handleTextChange('newpassword', event)}}
+                <TextField placeholder={"New Password*"} required value ={this.state.newpassword} type="password" id="outlined-required" onChange={(event) => {this.handleTextChange('newpassword', event)}}
               margin="normal" varient="outlined" style={{width:'100%', marginBottom:'4%'}}
               />
                   
                 </FormControl>
                 <FormControl fullWidth>
-                <TextField placeholder={"Confirm New Password*"} id="outlined-required" type="password" onChange={(event) => {this.handleTextChange('repassword', event)}}
+                <TextField placeholder={"Confirm New Password*"} value ={this.state.repassword} required id="outlined-required" type="password" onChange={(event) => {this.handleTextChange('repassword', event)}}
               margin="normal" varient="outlined"  style={{width:'100%', marginBottom:'4%'}}
               />                </FormControl>
                 <div>
+                  <span style={{marginLeft:'20%',color:'red'}}>{this.state.message}</span>
+                  <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}>
+                            <MySnackbarContentWrapper
+                                onClose={this.handleClose}
+                                variant="success"
+                                message= {this.state.messageSnack} />
+                            </Snackbar>
                 <DialogActions style={{marginRight:'22px'}}>
                 <Button variant="contained"  onClick={this.handleCancel} color="primary" aria-label="edit" style={{width:'50%', marginBottom:'4%', marginTop:'4%'}}>
                     Cancel
                   </Button>
-                <Button variant="contained" disabled={this.state.oldpassword && this.state.newpassword &&  this.state.repassword ? false : true} onClick={this.handleSubmit} color="primary" aria-label="edit" style={{width:'50%', marginBottom:'4%', marginTop:'4%'}}>
-                    Change Password
+                <Button variant="contained" disabled={this.state.oldpassword && this.state.newpassword && this.state.repassword ? false:true} onClick={this.handleSubmit} color="primary" aria-label="edit" style={{width:'50%', marginBottom:'4%', marginTop:'4%'}}>
+                    Submit
                   </Button>
                                             
-                                            </DialogActions>
-                 
-
-
-                  
-                  
+                </DialogActions>
                 </div>
               </form>
-            
-
-                                        
-                                        
-                                       
-                                        </DialogContent>
-                                        
-                                </Dialog>:''
-                            }
+            </DialogContent>                   
+          </Dialog>:''
+        }
       </div>
     );
   }
@@ -229,7 +287,9 @@ const mapStateToProps = state => ({
   apistatus: state.apistatus,
   automl: state.automl,
   nmt: state.nmt,
-  nmtsp: state.nmtsp
+  nmtsp: state.nmtsp,
+  updatePasswordstatus: state.updatePasswordstatus
+  
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

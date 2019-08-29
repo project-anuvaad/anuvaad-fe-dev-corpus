@@ -1,6 +1,5 @@
 import API from "./api";
 import C from "../constants";
-import { CommunicationStayCurrentLandscape } from "material-ui/svg-icons";
 
 
 export default class UpdateSentences extends API {
@@ -17,8 +16,6 @@ export default class UpdateSentences extends API {
     }
 
     processResponse(res) {
-        console.log("11111",res.data)
-        CommunicationStayCurrentLandscape.log(res)
         super.processResponse(res)
         if (res.data) {
             this.sentences = res.data;

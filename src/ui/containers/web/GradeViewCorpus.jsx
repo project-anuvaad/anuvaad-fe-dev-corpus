@@ -32,7 +32,7 @@ class Corpus extends React.Component {
             pageCount:5,
             status:'',
             page:0,
-            TableHeaderValues:['Source','Target',"Machine translated reference","Grade"] ,
+            TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference","Grade"] ,
             role: JSON.parse(localStorage.getItem('roles'))
 
         }
@@ -40,11 +40,11 @@ class Corpus extends React.Component {
 
     componentDidMount() {
         if(this.state.role.includes('dev')){
-            this.setState({TableHeaderValues:['Source','Target',"Machine translated reference"]})
+            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference"]})
         }
         else{
             
-            this.setState({TableHeaderValues:['Source','Target',"Machine translated reference","Grade"]})
+            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference","Grade"]})
              
         }
         if (this.props.match.params.basename) {

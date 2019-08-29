@@ -8,6 +8,7 @@ import Callback from "./ui/containers/web/Callback";
 import NotFound from "./ui/containers/web/NotFound";
 import Corpus from "./ui/containers/web/Corpus";
 import Translations from "./ui/containers/web/Translations";
+import createcorpus from "./ui/containers/web/CreateCorpus";
 import newcorpus from "./ui/containers/web/Newcorpus";
 import Corp from "./ui/containers/web/ViewCorpus";
 import history from "./web.history";
@@ -18,6 +19,7 @@ import ViewTranslations from "./ui/containers/web/ViewTranslations";
 import DashboardTamil from "./ui/containers/web/DashboardTamil";
 import GradeViewCorpus from "./ui/containers/web/GradeViewCorpus";
 import QnA from "./ui/containers/web/QnA";
+
 
 const PrivateRoute = ({ component: Component, userRoles, title, authenticate, ...rest }) => (
 
@@ -30,6 +32,7 @@ class AppRoutes extends React.Component {
   authenticateUser = (allowedRoles) => {
     let count = 0;
     const token = localStorage.getItem("token");
+    if(localStorage.getItem("roles")){
     const userRoles = JSON.parse(localStorage.getItem("roles"))
     if (token) {
       if (allowedRoles && Array.isArray(allowedRoles)) {
@@ -49,6 +52,9 @@ class AppRoutes extends React.Component {
       }
     }
     return false;
+  }else{
+    alert('Something Went wrong. Please try again')
+  }
   }
 
   render() {
@@ -69,7 +75,9 @@ class AppRoutes extends React.Component {
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translations`} component={Translations} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translate`} component={Translate} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/qna`} title="Q&A" component={QnA} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/newcorpus`} title="Create Corpus" userRoles={['dev']} component={newcorpus} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/newcorpus`} title="Parallel Corpus" userRoles={['dev']} component={newcorpus} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/create-corpus`} title="Create Corpus" userRoles={['dev']} component={createcorpus} authenticate={this.authenticateUser} />
+            
             <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser} />
 
 

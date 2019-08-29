@@ -5,14 +5,11 @@ import API from "./api";
 import C from "../constants";
 
 export default class CreateCorpus extends API {
-    constructor(file,hindiFile, englishFile, corpus_type,name,domain,comment, timeout = 2000) {
+    constructor(file,name,domain,language,comment, timeout = 2000) {
         super('POST', timeout, false, 'MULTIPART');
-        this.type = C.CREATE_PARALLEL_CORPUS;
+        this.type = C.CREATE_CORPUS;
         this.file = file
-        this.hindiFile = hindiFile
-        this.englishFile = englishFile
-        this.corpus_type = corpus_type
-        this.corpus_data = {}
+        this.lang= language
         this.add_name = name
         this.domain = domain
         this.comment = comment
@@ -30,25 +27,25 @@ export default class CreateCorpus extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/corpus/multiple`;
+        return `${super.apiEndPointAuto()}/app/upload-corpus`;
     }
 
     getFormData() {
         const formData = new FormData();
-        console.log('hindi', this.hindiFile,'english', this.englishFile);
+        console.log('hindi', this.file,'english', this.lang);
         console.log(this.comment);
 
-            formData.append('hindi', this.hindiFile);
-            formData.append('english', this.englishFile);
+            formData.append('corpus', this.file);
             formData.append('name',this.add_name);
             formData.append('domain',this.domain);
-            formData.append('comment',this.comment);
+            formData.append('lang',this.lang);
         return formData;
     }
 
     getHeaders() {
         return {
             headers: {
+                'Authorization': 'Bearer '+decodeURI(localStorage.getItem('token')),
                 'Content-Type': 'multipart/form-data',
             }
         }
