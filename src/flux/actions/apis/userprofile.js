@@ -23,7 +23,7 @@ export default class Translation extends API {
     }
 
     apiEndPoint() {
-        console.log('sajish')
+        
         return `${super.apiEndPointAuto()}/app/get-profile`;
     }
 
@@ -41,6 +41,7 @@ export default class Translation extends API {
     }
 
     getPayload() {
+        console.log(this.userDetails)
         return this.userDetails
     }
 

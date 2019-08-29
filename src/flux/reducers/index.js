@@ -11,6 +11,7 @@ import translations from './translations';
 import translation_sentences from './translation_sentences';
 import sentences from './sentences';
 import userProfile from './userprofile';
+import updatePasswordstatus from './updatepassword';
 import source_translate from './source-translate';
 export default {
     login,
@@ -24,5 +25,7 @@ export default {
     translations,
     translation_sentences,
     source_translate,
-    userProfile
+    userProfile,
+    updatePasswordstatus
+    
 };

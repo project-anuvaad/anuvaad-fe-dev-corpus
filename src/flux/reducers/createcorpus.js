@@ -2,7 +2,7 @@ import C from '../actions/constants';
 
 export default function (state = {}, action) {
     switch (action.type) {
-        case C.CREATE_PARALLEL_CORPUS:
+        case C.CREATE_CORPUS:
             return action.payload;
 
         default:

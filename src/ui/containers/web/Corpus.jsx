@@ -35,7 +35,12 @@ import Collapse from '@material-ui/core/Collapse';
 import Button from "@material-ui/core/Button";
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-
+import Pagination from "material-ui-flat-pagination";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import Select from '@material-ui/core/Select';
+import Toolbar from '@material-ui/core/Toolbar';
+const theme = createMuiTheme();
 class Corpus extends React.Component {
     constructor(props) {
         super(props)
@@ -59,6 +64,7 @@ class Corpus extends React.Component {
             EditColor: 'blue',
             CloseColor: 'blue',
             page: 0,
+            offset:0,
             stat: 'PENDING',
             lock: false,
             anchorEl: '',
@@ -84,11 +90,11 @@ class Corpus extends React.Component {
 
     }
 
-    handleChangePage = (event, page) => {
-        console.log(this.state.inputStatus)
-        this.setState({ page, lock: false });
+    handleChangePage = (event, offset) => {
+        console.log(offset)
+        this.setState({ offset, lock: false });
         if (this.props.match.params.basename) {
-            let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, page + 1, this.state.inputStatus)
+            let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, offset+1, this.state.inputStatus)
             this.props.APITransport(api);
 
         }
@@ -198,6 +204,7 @@ class Corpus extends React.Component {
     
 
     handleSelectChange = event => {
+        console.log(event.target.value)
         this.setState({ pageCount: event.target.value, page: 0 });
         let api = new FetchSentences(this.props.match.params.basename, event.target.value, 1, this.state.inputStatus)
         this.props.APITransport(api);
@@ -325,6 +332,7 @@ class Corpus extends React.Component {
 
 
     render() {
+       
         const CorpusDetails = <TableBody>
             {this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.map((row, index) => (
                 <TableRow key={index} hover={true} >
@@ -452,15 +460,12 @@ class Corpus extends React.Component {
         return (
 
             <div>
-                <Menu
-                    id="simple-menu"
-                    anchorEl={this.state.anchorEl}
-                    open={Boolean(this.state.anchorEl)}
-                    onClose={this.handleClose}>
-                    {this.state.MenuItemValues.map((item) => (
-                        <MenuItem value={item} onClick={() => { this.handleFilter({ item }) }}>{item}</MenuItem>
-                    ))}
-                </Menu>
+
+
+
+               
+
+                
 
                 <Menu
                     id="simple-menu"
@@ -487,16 +492,52 @@ class Corpus extends React.Component {
 
                         
                     <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: '-4%' }}>
+                    <Toolbar style={{marginRight:'-1.2%'}}>
+
+							
+<Typography variant="title" color="inherit" style={{flex: 1}}>
+
+</Typography>
+<Typography variant="h8" gutterBottom>
+                                            Rows per page:
+                                           
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
+          <Select
+          width = "50%"
+            value={this.state.pageCount}
+            onChange={this.handleSelectChange}
+            displayEmpty
+          >
+            <MenuItem value={5}>5</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+            <MenuItem value={50}>50</MenuItem>
+            <MenuItem value={100}>100</MenuItem>
+          </Select>
+          </Typography> 
+
+
+</Toolbar>
                         <Paper >
                         
-                            <TablePagination
+                        <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <Pagination
+            align='right'
+          limit={1}
+          offset={this.state.offset}
+          total={this.state.count/this.state.pageCount}
+          onClick={(event, offset) => {this.handleChangePage(event,offset)}}
+        />
+      </MuiThemeProvider>
+                            {/* <TablePagination
                                 component="nav"
                                 page={this.state.page}
                                 rowsPerPageOptions={[5, 10, 25, 50, 100]}
                                 rowsPerPage={this.state.pageCount}
                                 count={this.state.count}
                                 onChangePage={this.handleChangePage}
-                                onChangeRowsPerPage={this.handleSelectChange}/>
+                                onChangeRowsPerPage={this.handleSelectChange}/> */}
 
 
                             <Divider />
