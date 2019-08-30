@@ -39,6 +39,7 @@ class Corpus extends React.Component {
             pageCount:5,
             status:'',
             page:0,
+            offset:0,
             TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference","Grade"] ,
             role: JSON.parse(localStorage.getItem('roles'))
 
@@ -61,11 +62,11 @@ class Corpus extends React.Component {
 
     }
 
-    handleChangePage = (event, page) => {
+    handleChangePage = (event, offset) => {
         
-        this.setState({ page,lock:false});
+        this.setState({ offset,lock:false});
         if (this.props.match.params.basename) {
-        let api = new FetchSentences(this.props.match.params.basename,this.state.pageCount,page+1,this.state.inputStatus)
+        let api = new FetchSentences(this.props.match.params.basename,this.state.pageCount,offset+1,this.state.inputStatus)
             this.props.APITransport(api);
             
         }
