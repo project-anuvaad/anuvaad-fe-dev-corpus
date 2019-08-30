@@ -26,10 +26,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('layout')
-    let api = new UserAuth()
-    this.props.APITransport(api);
   }
+
+    
 
 
 
@@ -41,20 +40,6 @@ class App extends React.Component {
       }
     }
 
-    if (prevProps.userProfile !== this.props.userProfile) {
-      if (this.props.userProfile.isActive) {
-        localStorage.setItem('userDetails', this.props.userProfile.firstname + ' ' + this.props.userProfile.lastname)
-        localStorage.setItem('userProfile', JSON.stringify(this.props.userProfile))
-        if (this.props.userProfile.roles === null) {
-          localStorage.setItem("roles", JSON.stringify(["editor"]))
-        }
-        else {
-          localStorage.setItem("roles", JSON.stringify(this.props.userProfile.roles))
-        }
-      }
-      this.setState({ userName: localStorage.getItem('userDetails') })
-    }
-
   }
 
   render() {
@@ -64,7 +49,6 @@ class App extends React.Component {
     return (
 
       <MuiThemeProvider theme={Theme}>
-        {this.state.userName &&
           <div className={classes.root}>
             {this.renderSpinner()}
 
@@ -75,7 +59,7 @@ class App extends React.Component {
             </div>
 
 
-          </div>}
+          </div>
       </MuiThemeProvider>
     );
   }
