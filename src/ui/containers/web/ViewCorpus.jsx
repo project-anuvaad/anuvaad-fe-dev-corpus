@@ -91,8 +91,6 @@ class Corp extends React.Component {
                 }
                },
 
-            
-
             {
                 name: "status",
                 label: "Status",
@@ -130,12 +128,10 @@ class Corp extends React.Component {
                     customBodyRender: (value, tableMeta, updateValue) => {   
                         if(tableMeta.rowData){
                             return (
-                                <div style={{width:'90px'}}>
-                                    
+                                <div style={{width:'90px'}}>   
                                     {tableMeta.rowData[4] == 'COMPLETED'  && this.state.role.includes("editor") && <Tooltip title="Edit Sentence"><EditIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/parallel-corpus/`+tableMeta.rowData[0])} } > </EditIcon></Tooltip>} 
                                     {tableMeta.rowData[4] == 'COMPLETED' && this.state.role.includes("grader") &&  <Tooltip title="Grade Sentence"><GradeIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/view-corpus/`+tableMeta.rowData[0])} } > </GradeIcon></Tooltip>} 
                                     {tableMeta.rowData[4] == 'COMPLETED' && this.state.role.includes("dev") && <Tooltip title="View Sentence"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/view-corpus/`+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>} 
-
                                  </div>
                             );
                         }
@@ -157,27 +153,18 @@ class Corp extends React.Component {
         return (
             <div>
 
-<Toolbar style={{marginLeft:"-5.4%",marginRight:'1.5%',marginTop:'20px'}}>
-
-							
+        <Toolbar style={{marginLeft:"-5.4%",marginRight:'1.5%',marginTop:'20px'}}>	
 						<Typography variant="title" color="inherit" style={{flex: 1}}>
-						
 						</Typography>
-
                         {this.state.role.includes("dev")? 
                         <Button variant="extendedFab" color="primary" style={{marginRight:0}}aria-label="Add" onClick={() => { history.push(`${process.env.PUBLIC_URL}/newcorpus`) }}>
                                 <AddIcon /> Corpus
                         </Button>:''}
                         </Toolbar>
-            
-              
-
-                    
                     <div style={{marginLeft: '-4%', marginRight: '3%', marginTop: '40px'}}>
                     <MUIDataTable  title={"Documents"} data={this.state.name} columns={columns} options={options}/>
                 </div>
-                  </div>  
-                
+                  </div>         
         );
     }
 }

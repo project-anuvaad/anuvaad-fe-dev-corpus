@@ -39,6 +39,7 @@ class Corpus extends React.Component {
             pageCount:5,
             status:'',
             page:0,
+            offset:0,
             TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference","Grade"] ,
             role: JSON.parse(localStorage.getItem('roles'))
 
@@ -61,11 +62,11 @@ class Corpus extends React.Component {
 
     }
 
-    handleChangePage = (event, page) => {
+    handleChangePage = (event, offset) => {
         
-        this.setState({ page,lock:false});
+        this.setState({ offset,lock:false});
         if (this.props.match.params.basename) {
-        let api = new FetchSentences(this.props.match.params.basename,this.state.pageCount,page+1,this.state.inputStatus)
+        let api = new FetchSentences(this.props.match.params.basename,this.state.pageCount,offset+1,this.state.inputStatus)
             this.props.APITransport(api);
             
         }
@@ -145,7 +146,7 @@ class Corpus extends React.Component {
                     <StarRatingComponent 
                         name={index}
                         starCount={5}
-                        value={row.rating}
+                        value={row.rating ? row.rating : 0}
                         onStarClick={this.handleStarClick.bind(this)}
                     />
                     </div>
@@ -163,16 +164,11 @@ class Corpus extends React.Component {
                 {this.state.download ? <CSVDownload data={this.state.downloadData} target="_blank" /> : ''}
                 <Grid container spacing={24} style={{ padding: 5 }}>
                     <Grid item xs={12} sm={12} lg={12} xl={12} style={{marginLeft:'-4%',marginTop:'38px'}}>
-                    <Toolbar style={{marginRight:'-1.2%'}}>
-
-							
+                    <Toolbar style={{marginRight:'-1.2%'}}>							
 <Typography variant="title" color="inherit" style={{flex: 1}}>
-
 </Typography>
 <Typography variant="h8" gutterBottom>
-                                            Rows per page:
-                                           
-                                            &nbsp;&nbsp;&nbsp;&nbsp;
+        Rows per page:&nbsp;&nbsp;&nbsp;&nbsp;
           <Select
           width = "50%"
             value={this.state.pageCount}
