@@ -26,9 +26,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('layout')
-    // let api = new UserAuth()
-    // this.props.APITransport(api);
+    console.log('layout')
+    let api = new UserAuth()
+    this.props.APITransport(api);
   }
 
 
