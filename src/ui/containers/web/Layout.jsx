@@ -31,13 +31,12 @@ class App extends React.Component {
     this.props.APITransport(api);
 
 
-  }
 
-  componentDidUpdate(prevProps) {
-
-    if (prevProps.apistatus !== this.props.apistatus) {
-      if (this.props.apistatus.unauthrized) {
-        history.push("/logout")
+  componentDidUpdate(prevProps){
+    
+    if(prevProps.apistatus !== this.props.apistatus){
+      if(this.props.apistatus.unauthrized){
+        history.push(`${process.env.PUBLIC_URL}/logout`)
       }
     }
 
