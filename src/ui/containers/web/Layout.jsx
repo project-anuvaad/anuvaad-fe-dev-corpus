@@ -15,9 +15,10 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        userName: '',
-    }}
- 
+      userName: '',
+    }
+  }
+
   renderSpinner() {
     if (this.props.apistatus.progress) {
       return <Spinner />;
@@ -26,11 +27,10 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log('layout')
-        let api = new UserAuth()
-        this.props.APITransport(api);
-    
+    let api = new UserAuth()
+    this.props.APITransport(api);
 
-}
+
 
   componentDidUpdate(prevProps){
     
@@ -40,40 +40,41 @@ class App extends React.Component {
       }
     }
 
-    if(prevProps.userProfile !== this.props.userProfile){
-      if(this.props.userProfile.isActive)
-      localStorage.setItem('userDetails',this.props.userProfile.firstname+' '+this.props.userProfile.lastname)
-      localStorage.setItem('userProfile',JSON.stringify(this.props.userProfile))
-      if(this.props.userProfile.roles===null){
-        localStorage.setItem("roles",JSON.stringify(["editor"]))
+    if (prevProps.userProfile !== this.props.userProfile) {
+      if (this.props.userProfile.isActive) {
+        localStorage.setItem('userDetails', this.props.userProfile.firstname + ' ' + this.props.userProfile.lastname)
+        localStorage.setItem('userProfile', JSON.stringify(this.props.userProfile))
+        if (this.props.userProfile.roles === null) {
+          localStorage.setItem("roles", JSON.stringify(["editor"]))
+        }
+        else {
+          localStorage.setItem("roles", JSON.stringify(this.props.userProfile.roles))
+        }
       }
-       else{
-        localStorage.setItem("roles",JSON.stringify(this.props.userProfile.roles))
-       }
-      this.setState({userName: localStorage.getItem('userDetails')})
+      this.setState({ userName: localStorage.getItem('userDetails') })
     }
-    
+
   }
 
   render() {
-    const { classes, theme, title} = this.props;
-    
+    const { classes, theme, title } = this.props;
+
     const Component = this.props.component; // eslint-disable-line
     return (
-      
-      <MuiThemeProvider theme={Theme}>
-        {this.state.userName&&
-        <div className={classes.root}>
-        {this.renderSpinner()}
-        
-          <Header classes={classes} theme={theme} title={title} />
-          <div className={classes.container}>
 
-            <Component />
-          </div>
-          
-        
-        </div>}
+      <MuiThemeProvider theme={Theme}>
+        {this.state.userName &&
+          <div className={classes.root}>
+            {this.renderSpinner()}
+
+            <Header classes={classes} theme={theme} title={title} />
+            <div className={classes.container}>
+
+              <Component />
+            </div>
+
+
+          </div>}
       </MuiThemeProvider>
     );
   }
@@ -82,7 +83,7 @@ class App extends React.Component {
 const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
-  userProfile:state.userProfile
+  userProfile: state.userProfile
 });
 
 const mapDispatchToProps = dispatch =>
