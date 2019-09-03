@@ -102,8 +102,9 @@ class Corpus extends React.Component {
     };
 
     handleFilter = (inputStatus) => { 
-        let accuracy= inputStatus.item== 'RED' ? 'bad': inputStatus.item== 'YELLOW' ? 'medium' : inputStatus.item== 'GREEN' ? 'good': inputStatus
         
+        let accuracy= inputStatus.item== 'RED' ? 'bad': inputStatus.item== 'YELLOW' ? 'medium' : inputStatus.item== 'GREEN' ? 'good': inputStatus
+        console.log("-----",accuracy,inputStatus)
         if(accuracy==inputStatus){
             this.setState({
                 inputStatus,
@@ -111,7 +112,8 @@ class Corpus extends React.Component {
                 filterSelect:null
             })
             if (this.props.match.params.basename) {
-                console.log(this.props.match.params.basename, this.state.pageCount, 1, inputStatus,this.state.accuracy)
+
+                console.log("entered",this.props.match.params.basename, this.state.pageCount, 1, inputStatus,this.state.accuracy)
                 let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, 1, inputStatus,this.state.accuracy)
                 this.props.APITransport(api);
             }
@@ -461,12 +463,15 @@ class Corpus extends React.Component {
 
             <div>
 
-
-
-               
-
-                
-
+                <Menu
+                    id="simple-menu"
+                    anchorEl={this.state.anchorEl}
+                    open={Boolean(this.state.anchorEl)}
+                    onClose={this.handleClose}>
+                    {this.state.MenuItemValues.map((item) => (
+                        <MenuItem value={item} onClick={() => { this.handleFilter({ item }) }}>{item}</MenuItem>
+                    ))}
+                </Menu>
                 <Menu
                     id="simple-menu"
                     anchorEl={this.state.filterSelect}
