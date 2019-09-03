@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReadMoreAndLess from 'react-read-more-less';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
-import Filter from "@material-ui/icons/FilterList";
+
 import FetchSentences from "../../../flux/actions/apis/sentences";
 import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
 import Divider from '@material-ui/core/Divider';
@@ -139,7 +139,7 @@ class Corpus extends React.Component {
                             
                         </ReadMoreAndLess>
                         
-                    </TableCell>
+                    </TableCell> 
                     {!this.state.role.includes('dev')&&
                     <TableCell >
                     <div style={{width:'80px'}}>
@@ -190,9 +190,11 @@ class Corpus extends React.Component {
                         <MuiThemeProvider theme={theme}>
         <CssBaseline />
         <Pagination
+            
             align='right'
           limit={1}
           offset={this.state.offset}
+          centerRipple={true}
           total={this.state.count/this.state.pageCount}
           onClick={(event, offset) => {this.handleChangePage(event,offset)}}
         />
