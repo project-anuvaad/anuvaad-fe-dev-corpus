@@ -135,7 +135,7 @@ class Corpus extends React.Component {
                             
                             readMoreText="Read more"
                             readLessText="">   
-                        {row.translation.replace(/&quot;/g,'"')}
+                        {row.translation ? row.translation.replace(/&quot;/g,'"') : ''}
                             
                         </ReadMoreAndLess>
                         
