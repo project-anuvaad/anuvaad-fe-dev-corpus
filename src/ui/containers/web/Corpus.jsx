@@ -63,7 +63,6 @@ class Corpus extends React.Component {
             AcceptColor: 'blue',
             EditColor: 'blue',
             CloseColor: 'blue',
-            page: 0,
             offset:0,
             stat: 'PENDING',
             lock: false,
@@ -272,7 +271,7 @@ class Corpus extends React.Component {
         let sentences = this.state.sentences
         sentences[index].isdialog = false
         this.setState({ openDialog: false,openExpand:false });
-        let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, this.state.page + 1, this.state.inputStatus)
+        let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, this.state.offset + 1, this.state.inputStatus)
             this.props.APITransport(api);
     };
 
@@ -288,9 +287,7 @@ class Corpus extends React.Component {
             openExpand:true
         })
         let api = new SourceTranslate(this.props.match.params.basename,source)
-            this.props.APITransport(api);
-
-        
+            this.props.APITransport(api);   
     };
     handleColor(color) {
         let color1 = 'grey'
