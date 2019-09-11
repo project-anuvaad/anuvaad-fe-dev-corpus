@@ -63,7 +63,6 @@ class Corpus extends React.Component {
             AcceptColor: 'blue',
             EditColor: 'blue',
             CloseColor: 'blue',
-            page: 0,
             offset:0,
             stat: 'PENDING',
             lock: false,
@@ -87,6 +86,7 @@ class Corpus extends React.Component {
             let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, 1)
             this.props.APITransport(api);
         }
+           
 
     }
 
@@ -132,37 +132,28 @@ class Corpus extends React.Component {
 
 
     handleActionButton(index, action) {
-
         let sentences = this.state.sentences;
         let color1 = ''
         sentences[index].isEditable = false
         sentences[index].status = action === "ACCEPTED" ? 'ACCEPTED' : (action === 'REJECTED' ? 'REJECTED' : '')
         this.setState({ backColor: 'green' })
-
         this.setState({
-
             sentences: sentences,
             status: action,
             download: false,
             lock: false
         })
-
         if (!action) {
-            console.log("success")
             let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, this.state.offset + 1, this.state.inputStatus)
             this.props.APITransport(api);
-
         }
         else {
-
-
             let api = new UpdateSentencesStatus(sentences[index])
             this.props.APITransport(api);
         }
     }
 
     handleSaveButton(index) {
-
         let sentences = this.state.sentences
         console.log('value', sentences)
         sentences[index].isdialog = false,
@@ -180,8 +171,6 @@ class Corpus extends React.Component {
         this.props.APITransport(api);
     }
     
-
-
     componentDidUpdate(prevProps) {
         if (prevProps.corpus !== this.props.corpus) {
             this.setState({
@@ -204,7 +193,6 @@ class Corpus extends React.Component {
         }
     }
     
-
     handleSelectChange = event => {
         console.log(event.target.value)
         this.setState({ pageCount: event.target.value, offset: 0 });
@@ -215,7 +203,6 @@ class Corpus extends React.Component {
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
-
 
     handleFileChange = (e) => {
         if (e.target.files[0]) {
@@ -243,9 +230,6 @@ class Corpus extends React.Component {
         })
     }
 
-
-
-
     handleTextChange(value, index, key) {
         console.log('view clicked')
         let sentences = this.state.sentences
@@ -264,15 +248,17 @@ class Corpus extends React.Component {
         
         this.setState({ filterSelect: event.currentTarget });
     };
+
     handleClose = () => {
        
         this.setState({ anchorEl: null,openDialog: false,filterSelect:null });
     };
+
     handleDialogClose = (index) => {
         let sentences = this.state.sentences
         sentences[index].isdialog = false
-        this.setState({ openDialog: false,openExpand:false });
-        let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, this.state.page + 1, this.state.inputStatus)
+        this.setState({ openDialog: false,openExpand:false,sourceTranslate:'' });
+        let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, this.state.offset + 1, this.state.inputStatus)
             this.props.APITransport(api);
     };
 
@@ -288,9 +274,7 @@ class Corpus extends React.Component {
             openExpand:true
         })
         let api = new SourceTranslate(this.props.match.params.basename,source)
-            this.props.APITransport(api);
-
-        
+            this.props.APITransport(api);   
     };
     handleColor(color) {
         let color1 = 'grey'
