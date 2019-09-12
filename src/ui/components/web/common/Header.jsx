@@ -200,7 +200,7 @@ class Header extends React.Component {
 							/>
 						</ListItem>
 						<Divider />
-						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/dashboard-tamil`)}}>
+						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/dashboard`)}}>
 							<ListItemIcon>
 							<SearchIcon style={{ color: 'white'}} />
 							</ListItemIcon>

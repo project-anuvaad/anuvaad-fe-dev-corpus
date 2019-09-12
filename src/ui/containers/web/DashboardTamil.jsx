@@ -28,7 +28,7 @@ class Dashboard extends React.Component {
       target:'',
       model:'',
       sourceLanguage: ['English'],
-      targetLanguage: ['Hindi','Tamil'],
+      targetLanguage: ['Hindi','Tamil','Gujarati'],
     }
   }
 
@@ -109,7 +109,7 @@ class Dashboard extends React.Component {
         
         </Grid>
         <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
-            <Select id={"outlined-age-simple"} MenuItemValues={['English','Hindi','Tamil']} handleChange={this.handleSelectChange} value={this.state.source} name="source" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
+            <Select id={"outlined-age-simple"} MenuItemValues={['English','Hindi']} handleChange={this.handleSelectChange} value={this.state.source} name="source" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
             </Grid>
             </Grid>
 

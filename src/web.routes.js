@@ -67,7 +67,7 @@ class AppRoutes extends React.Component {
             <Route exact path={`${process.env.PUBLIC_URL}/callback`} component={Callback} />
             <Route exact path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard-tamil`} title="Translator" component={DashboardTamil} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard`} title="Translator" component={DashboardTamil} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} title="Corpus Details" userRoles={['grader', 'dev']} component={GradeViewCorpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-translations/:basename`} component={ViewTranslations} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/corpus`} component={Corp} title="Corpus List" authenticate={this.authenticateUser} />
