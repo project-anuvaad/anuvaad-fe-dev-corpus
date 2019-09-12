@@ -47,6 +47,9 @@ export default class NMT extends API {
     else if(this.target==='Hindi'){
         this.model=1
     }
+    else if(this.target==='Gujarati'){
+        this.model=10
+    }
     else{
       this.model=2
     }

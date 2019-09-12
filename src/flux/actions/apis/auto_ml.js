@@ -33,13 +33,13 @@ export default class AutoML extends API {
     }
 
     apiEndPoint() {
-        console.log(this.target,this.source)
-        return this.target==='Tamil' ? `${super.apiEndPointAuto()}/auto/tamil` : (this.target==='Hindi' ? `${super.apiEndPointAuto()}/auto/eng` :(this.target==='English'? `${super.apiEndPointAuto()}/auto/hin`:''));
+        return `${super.apiEndPointAuto()}/auto/translate`;
     }
 
     getBody() {
         return {
-            text: this.text
+            text: this.text,
+            target_lang: this.target
         }
     }
 
