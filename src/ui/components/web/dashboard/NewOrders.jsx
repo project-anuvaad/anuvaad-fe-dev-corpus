@@ -37,32 +37,6 @@ const NewOrders = props => {
               {text ? text : ' '}
       </Typography>
             })}
-            
-      {/* 
-            <Typography variant="subtitle2" gutterBottom style={{ color: 'white' }}>
-              Transaltion Output
-      </Typography>
-            <Typography variant="subtitle2" gutterBottom style={{ color: 'white' }}>
-              Transaltion Output
-      </Typography>
-            <Typography variant="subtitle2" gutterBottom style={{ color: 'white' }}>
-              Transaltion Output
-      </Typography>
-            <Typography variant="subtitle2" gutterBottom style={{ color: 'white' }}>
-              Transaltion Output
-      </Typography>
-            <Typography variant="subtitle2" gutterBottom style={{ color: 'white' }}>
-              Transaltion Output
-      </Typography>
-            <Typography variant="subtitle2" gutterBottom style={{ color: 'white' }}>
-              Transaltion Output
-      </Typography>
-            <Typography variant="subtitle2" gutterBottom style={{ color: 'white' }}>
-              Transaltion Output
-      </Typography>
-            <Typography variant="subtitle2" gutterBottom style={{ color: 'white' }}>
-              Transaltion Output
-      </Typography> */}
           </div>
         </ResponsiveContainer>
       </div>
