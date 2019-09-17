@@ -31,7 +31,7 @@ class SimpleSelect extends React.Component {
                 }
               >
                   {MenuItemValues.map((item) => (
-                        <MenuItem value={item}>{item}</MenuItem>
+                    <MenuItem value={item.language_code}>{item.language_name}</MenuItem>
                   ))}
               </Select>
             </FormControl>
