@@ -13,6 +13,9 @@ import sentences from './sentences';
 import userProfile from './userprofile';
 import updatePasswordstatus from './updatepassword';
 import source_translate from './source-translate';
+import supportLanguage from './fetchlanguages';
+import langModel from './fetchmodel';
+
 export default {
     login,
     automl,
@@ -26,6 +29,8 @@ export default {
     translation_sentences,
     source_translate,
     userProfile,
-    updatePasswordstatus
+    updatePasswordstatus,
+    supportLanguage,
+    langModel
     
 };
