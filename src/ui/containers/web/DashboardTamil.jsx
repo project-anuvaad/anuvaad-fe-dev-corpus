@@ -13,6 +13,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { white, blueGrey50,darkBlack } from "material-ui/styles/colors"
 import Select from '../../components/web/common/Select';
+import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
+import FetchModel from "../../../flux/actions/apis/fetchmodel";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -26,9 +28,9 @@ class Dashboard extends React.Component {
       tocken: false,
       source:'',
       target:'',
-      model:'',
-      sourceLanguage: ['English'],
-      targetLanguage: ['Hindi','Tamil','Gujarati'],
+      modelLanguage:[],
+      language:[],
+      model:''
     }
   }
 
@@ -38,6 +40,20 @@ class Dashboard extends React.Component {
       nmtText: [],
       nmtTextSP: []
     })
+
+    const { APITransport,MODELApi } = this.props;
+        const apiObj = new FetchLanguage();
+        APITransport(apiObj);
+        this.setState({showLoader:true})
+
+        const apiModel = new FetchModel();
+        APITransport(apiModel);
+
+
+
+        this.setState({showLoader:true})
+        
+
   }
 
   componentDidUpdate(prevProps) {
@@ -46,14 +62,28 @@ class Dashboard extends React.Component {
         autoMlText: this.props.automl.text,
       })
     }
+
     if (prevProps.nmt !== this.props.nmt) {
       this.setState({
         nmtText: this.props.nmt.text,
       })
     }
+
     if (prevProps.nmtsp !== this.props.nmtsp) {
       this.setState({
         nmtTextSP: this.props.nmtsp.text,
+      })
+    }
+
+    if (prevProps.supportLanguage !== this.props.supportLanguage) {
+      this.setState({
+        language: this.props.supportLanguage
+      })
+    }
+
+    if (prevProps.langModel !== this.props.langModel) {
+      this.setState({
+        modelLanguage: this.props.langModel
       })
     }
   }
@@ -64,7 +94,6 @@ class Dashboard extends React.Component {
     })
   }
   handleClear() {
-    console.log('clear')
     this.setState({
       text:'',
       autoMlText:'',
@@ -78,22 +107,49 @@ class Dashboard extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleSource(modelLanguage,supportLanguage){
+    
+    var result =[];
+    modelLanguage.map((item) => 
+      supportLanguage.map((value)=>(
+        item.source_language_code===value.language_code?
+        result.push(value):null
+      )))
+      var value = new Set(result);
+      var source_language= [...value]
+    return source_language;
+  }
+
+  handleTarget(modelLanguage,supportLanguage,sourceLanguage){
+
+    var result =[];
+    modelLanguage.map((item) => 
+    {item.source_language_code===sourceLanguage?
+      supportLanguage.map((value)=>(
+        item.target_language_code===value.language_code?
+        result.push(value):null
+      )):''})
+      var value = new Set(result);
+      var target_language= [...value]
+    return target_language;
+      
+  }
+
   handleSubmit() {
     
-    
+    var model='';
     const { APITransport, NMTApi, NMTSPApi } = this.props;
-
+    this.state.modelLanguage.map((item) =>(
+        item.target_language_code === this.state.target &&  item.source_language_code === this.state.source?
+          model= item :''))
     const apiObj = new AutoML(this.state.text, this.state.source, this.state.target);
-    const nmt = new NMT(this.state.text, this.state.model, true,this.state.target);
-    // const nmtsp = new NMTSP(this.state.text);
-    this.setState({
-      nmtText: [],
-      nmtTextSP: []
-    })
+    const nmt = new NMT(this.state.text, model, true,this.state.target);
+    
     APITransport(apiObj);
     NMTApi(nmt)
-    // NMTSPApi(nmtsp)
     this.setState({
+      autoMlText:'',
+      nmtText:'',
       apiCalled: true
     })
   }
@@ -109,17 +165,16 @@ class Dashboard extends React.Component {
         
         </Grid>
         <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
-            <Select id={"outlined-age-simple"} MenuItemValues={['English','Hindi']} handleChange={this.handleSelectChange} value={this.state.source} name="source" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
+            <Select id={"outlined-age-simple"} MenuItemValues={this.handleSource(this.state.modelLanguage,this.state.language)} handleChange={this.handleSelectChange} value={this.state.source} name="source" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
             </Grid>
             </Grid>
-
             <Grid container spacing={4} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
           <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select target language :</Typography>
         
         </Grid>
         <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
-            <Select id={"outlined-age-simple"} MenuItemValues={this.state.source=='English'? this.state.targetLanguage: this.state.sourceLanguage} handleChange={this.handleSelectChange} value={this.state.target} name="target" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
+            <Select id={"outlined-age-simple"} MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage,this.state.language,this.state.source):[]} handleChange={this.handleSelectChange} value={this.state.target} name="target" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
             </Grid>
             </Grid>
         <div style={{marginLeft:'40px'}}>
@@ -143,28 +198,13 @@ class Dashboard extends React.Component {
                 <Button variant="contained" onClick={this.handleSubmit.bind(this)} color="primary" aria-label="edit" style={{width:'44%', marginBottom:'4%', marginTop:'4%'}}>
                     Submit
                   </Button>
-               
-          {/* <Grid item xs={9} sm={6} lg={2} xl={2}>
-            
-            <Button variant="contained" color="primary" onClick={this.handleSubmit.bind(this)}>
-              Submit
-            </Button>
-            </Grid>
-            <Grid item xs={9} sm={6} lg={3} xl={3}>
-            <Button variant="contained" color="primary" onClick={this.handleClear.bind(this)}>
-              Clear
-            </Button>
-           
-            </Grid> */}
         </Grid>
         </div>
         {this.state.autoMlText && this.state.nmtText &&
         <div>
         
           
-            <NewOrders title="Google" data={[this.state.autoMlText]} />
-          
-          
+            <NewOrders title="Machine Translated" data={[this.state.autoMlText]} />
             <NewOrders title="Anuvaad Model" data={this.state.nmtText} />
             </div>
         }
@@ -179,13 +219,16 @@ const mapStateToProps = state => ({
   apistatus: state.apistatus,
   automl: state.automl,
   nmt: state.nmt,
-  nmtsp: state.nmtsp
+  nmtsp: state.nmtsp,
+  supportLanguage: state.supportLanguage,
+  langModel: state.langModel
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   APITransport,
   NMTApi: APITransport,
   NMTSPApi: APITransport,
+  MODELApi: APITransport
 }, dispatch);
 
 

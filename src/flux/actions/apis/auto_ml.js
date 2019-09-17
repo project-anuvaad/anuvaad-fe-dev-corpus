@@ -22,14 +22,6 @@ export default class AutoML extends API {
         super.processResponse(res);
         this.answers = res
         console.log(res)
-        // if (res.token) {
-        //     this.token = res.token;
-        //     this.expires = res.expires;
-        //     this.role = res.role;
-        //     this.userid = res.userid;
-        //     this.name = res.name;
-        //     // sessionStorage.setItem('user', JSON.stringify(res.user))
-        // }
     }
 
     apiEndPoint() {
