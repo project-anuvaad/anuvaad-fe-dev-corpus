@@ -20,7 +20,7 @@ class Callback extends React.Component {
                 else {
                   localStorage.setItem("roles", JSON.stringify(this.props.userProfile.roles))
                 }
-                history.push(`${process.env.PUBLIC_URL}/corpus`)
+                history.push(`${process.env.PUBLIC_URL}/dashboard`)
               }
         }
     }
