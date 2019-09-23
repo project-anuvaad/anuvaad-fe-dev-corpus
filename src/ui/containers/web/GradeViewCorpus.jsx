@@ -52,7 +52,7 @@ class Corpus extends React.Component {
         }
         else{
             
-            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference","Grade"]})
+            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference","Sentence Grade","Spelling Grade"]})
              
         }
         if (this.props.match.params.basename) {
@@ -99,6 +99,14 @@ class Corpus extends React.Component {
         this.setState({rating: nextValue});
       }
 
+      handleSpellStarClick(nextValue, prevValue, name) {
+        let sentences = this.state.sentences
+        sentences[name].spelling_rating = nextValue
+        let api = new UpdateSentencesGrade(sentences[name])
+            this.props.APITransport(api);
+        this.setState({spelling_rating: nextValue});
+      }
+
 
     render() {
         const CorpusDetails= <TableBody>
@@ -142,7 +150,7 @@ class Corpus extends React.Component {
                     </TableCell> 
                     {!this.state.role.includes('dev')&&
                     <TableCell >
-                    <div style={{width:'80px'}}>
+                    <div style={{width:'100px'}}>
                     <StarRatingComponent 
                         name={index}
                         starCount={5}
@@ -151,7 +159,25 @@ class Corpus extends React.Component {
                     />
                     </div>
 
-                    </TableCell>}
+                    </TableCell>
+                    
+                
+                }
+                {!this.state.role.includes('dev')&&
+                    <TableCell >
+                    <div style={{width:'92px'}}>
+                    <StarRatingComponent 
+                        name={index}
+                        starCount={5}
+                        value={row.spelling_rating ? row.spelling_rating : 0}
+                        onStarClick={this.handleSpellStarClick.bind(this)}
+                    />
+                    </div>
+
+                    </TableCell>
+                    
+                
+                }
                     
                 </TableRow>
             ))}
