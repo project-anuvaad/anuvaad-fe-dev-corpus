@@ -90,6 +90,22 @@ class Corp extends React.Component {
                  sort: true,
                 }
                },
+               {
+                name: "source_lang",
+                label: "Source",
+                options: {
+                 filter: true,
+                 sort: true,
+                }
+               },
+               {
+                name: "target_lang",
+                label: "Target",
+                options: {
+                 filter: true,
+                 sort: true,
+                }
+               },
 
             {
                 name: "status",
@@ -100,14 +116,7 @@ class Corp extends React.Component {
                 }
                },
               
-               {
-                name: "comment",
-                label: "Comment",
-                options: {
-                 filter: true,
-                 sort: true,
-                }
-               },
+               
                 {
                 name: "created_on",
                 label: "Timestamp",
@@ -129,9 +138,9 @@ class Corp extends React.Component {
                         if(tableMeta.rowData){
                             return (
                                 <div style={{width:'90px'}}>   
-                                    {tableMeta.rowData[4] == 'COMPLETED'  && this.state.role.includes("editor") && <Tooltip title="Edit Sentence"><EditIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/parallel-corpus/`+tableMeta.rowData[0])} } > </EditIcon></Tooltip>} 
-                                    {tableMeta.rowData[4] == 'COMPLETED' && this.state.role.includes("grader") &&  <Tooltip title="Grade Sentence"><GradeIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/view-corpus/`+tableMeta.rowData[0])} } > </GradeIcon></Tooltip>} 
-                                    {tableMeta.rowData[4] == 'COMPLETED' && this.state.role.includes("dev") && <Tooltip title="View Sentence"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/view-corpus/`+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>} 
+                                    {tableMeta.rowData[6] == 'COMPLETED'  && this.state.role.includes("editor") && <Tooltip title="Edit Sentence"><EditIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/parallel-corpus/`+tableMeta.rowData[0])} } > </EditIcon></Tooltip>} 
+                                    {tableMeta.rowData[6] == 'COMPLETED' && this.state.role.includes("grader") &&  <Tooltip title="Grade Sentence"><GradeIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/view-corpus/`+tableMeta.rowData[0])} } > </GradeIcon></Tooltip>} 
+                                    {tableMeta.rowData[6] == 'COMPLETED' && this.state.role.includes("dev") && <Tooltip title="View Sentence"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/view-corpus/`+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>} 
                                  </div>
                             );
                         }
