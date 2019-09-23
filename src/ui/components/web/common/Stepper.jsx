@@ -6,17 +6,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 
-
-
-
-
-
-
-
 class HorizontalLabelPositionBelowStepper extends React.Component {
-  
-  
-  
 
   render() {
     const { steps, style,activeStep, alternativeLabel } = this.props;
