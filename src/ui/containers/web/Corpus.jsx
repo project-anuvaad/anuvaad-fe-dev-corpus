@@ -104,7 +104,6 @@ class Corpus extends React.Component {
     handleFilter = (inputStatus) => { 
         
         let accuracy= inputStatus.item== 'RED' ? 'bad': inputStatus.item== 'YELLOW' ? 'medium' : inputStatus.item== 'GREEN' ? 'good': inputStatus
-        console.log("-----",accuracy,inputStatus)
         if(accuracy==inputStatus){
             this.setState({
                 inputStatus,
