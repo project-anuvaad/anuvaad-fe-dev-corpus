@@ -60,18 +60,24 @@ class Dashboard extends React.Component {
     if (prevProps.automl !== this.props.automl) {
       this.setState({
         autoMlText: this.props.automl.text,
+        
       })
     }
 
     if (prevProps.nmt !== this.props.nmt) {
+      console.log("test",this.props.nmt)
       this.setState({
-        nmtText: this.props.nmt.text,
+        
+        nmtText: this.props.nmt,
+        
+        
       })
     }
 
     if (prevProps.nmtsp !== this.props.nmtsp) {
       this.setState({
         nmtTextSP: this.props.nmtsp.text,
+
       })
     }
 
@@ -155,10 +161,13 @@ class Dashboard extends React.Component {
   }
 
   render() {
+
+    const role = JSON.parse(localStorage.getItem('roles'));
+    console.log("test",typeof(this.state.nmtText.tgt))
     return (
       <div>
         <Paper style={{marginLeft:'25%',width:'50%',marginTop:'5%'}}>
-        <Typography variant="h5" style={{ color: darkBlack, background:blueGrey50, paddingLeft:'40%', paddingBottom:'12px',paddingTop:'8px'}} >Translator</Typography>
+        <Typography variant="h5" style={{ color: darkBlack, background:blueGrey50, paddingLeft:'40%', paddingBottom:'12px',paddingTop:'8px'}} >Translate</Typography>
         <Grid container spacing={4} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
           <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select source language :</Typography>
@@ -204,10 +213,20 @@ class Dashboard extends React.Component {
         <div>
         
           
-            <NewOrders title="Machine Translated" data={[this.state.autoMlText]} />
-            <NewOrders title="Anuvaad Model" data={this.state.nmtText} />
+          <NewOrders title="Machine Translated" data={[this.state.autoMlText]} />
+            <NewOrders title="Anuvaad Model" data={this.state.nmtText.tgt} />
+
             </div>
-        }
+            }
+            {this.state.autoMlText && this.state.nmtText && role.includes('dev') &&
+        <div>
+            <NewOrders title="Input Subwords" data={this.state.nmtText.input_subwords} />
+            <NewOrders title="Output Subwords" data={this.state.nmtText.output_subwords}/>
+
+            </div>
+            }
+           
+        
         </Paper>
       </div>
     );

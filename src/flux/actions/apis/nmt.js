@@ -11,7 +11,7 @@ export default class NMT extends API {
         this.model = parseInt(model.model_id);
         this.reverse = reverse;
         this.target = target;;
-        this.answers = null;
+        this.answers = [];
         this.url_end_point=model.url_end_point;
         this.type = C.NMT;
     }
@@ -24,7 +24,7 @@ export default class NMT extends API {
         console.log("result",res)
         super.processResponse(res);
         if (res.response_body) {
-            this.answers = [res.response_body[0].tgt]
+            this.answers = [res.response_body[0]]
         }
         
     }

@@ -31,12 +31,11 @@ const NewOrders = props => {
       <div style={{ ...styles.header }}>{title}</div>
       <div style={styles.div}>
         <ResponsiveContainer>
+          
           <div>
-            {data.map((text)=>{
-              return <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"55px"}} >
-              {text ? text : ' '}
-      </Typography>
-            })}
+             <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"55px"}} >
+              {data ?data : ' ' }
+          </Typography> 
           </div>
         </ResponsiveContainer>
       </div>
