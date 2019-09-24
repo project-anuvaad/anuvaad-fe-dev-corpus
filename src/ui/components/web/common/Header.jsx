@@ -125,8 +125,9 @@ class Header extends React.Component {
 								textTransform:'capitalize',
 								right:'130px'
 							}}>
-						Welcome {this.state.name}
+						Welcome {this.state.name} [{role}]
 						</Typography>
+
 						{this.state.drawerClose}
 						{auth && (
 							<div style={{
@@ -208,7 +209,7 @@ class Header extends React.Component {
 								disableTypography
 								primary={(
 									<Typography type="body2" style={{ color: '#FFFFFF'}}>
-										Translator
+										Translate
           							</Typography>
 								)}
 							/>
