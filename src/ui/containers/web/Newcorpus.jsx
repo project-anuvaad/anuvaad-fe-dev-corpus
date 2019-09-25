@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import CreateCorpus from "../../../flux/actions/apis/corpus";
 import MySnackbarContentWrapper from "../../components/web/common/snackbar";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Paper from '@material-ui/core/Paper';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -19,9 +19,10 @@ import Input from "@material-ui/core/Input";
 import history from "../../../web.history";
 import Snackbar from "@material-ui/core/Snackbar";
 import {DropzoneArea} from 'material-ui-dropzone';
-import Select from '../../components/web/common/Select';
+import Select from "@material-ui/core/Select";
 import Stepper from "../../components/web/common/Stepper";
 import { white, blueGrey50,darkBlack } from "material-ui/styles/colors"
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 class Newcorpus extends React.Component {
@@ -37,7 +38,8 @@ class Newcorpus extends React.Component {
             hindi_score: [],
             english_score: [],
             file: {},
-            
+            MenuItemValues:['English'],
+            MenuItargettemValues:['Hindi'],
             corpus_type: 'single',
             hindiFile: [],
             englishFile:[],
@@ -57,8 +59,9 @@ class Newcorpus extends React.Component {
             (this.setState({
                 token:true,
                 open:true
-                }) ,
-                setTimeout(()=>{history.push(`${process.env.PUBLIC_URL}/corpus`)},2000))}
+                }) 
+                
+               )}
 
           
         }
@@ -72,7 +75,7 @@ class Newcorpus extends React.Component {
     }
 
     handleSelectChange = event => {
-        console.log(event.target.name,event.target.value)
+      console.log([event.target.name],event.target.value)
         this.setState({ [event.target.name]: event.target.value });
       };
 
@@ -112,13 +115,26 @@ class Newcorpus extends React.Component {
         switch (stepIndex) {
           case 0:
             return <div>
-            <Grid container spacing={4} >
+            <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
           <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '12%', paddingTop: '14%' }} >Please select source language :</Typography>
         
         </Grid>
         <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
-            <Select id={"outlined-age-simple"} MenuItemValues={['English']} handleChange={this.handleSelectChange} value={this.state.english} name="english" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
+            <Select
+                style={{minWidth: 120,align:'right'}}
+                value={this.state.english}
+                onChange={this.handleSelectChange}
+                input={
+                  <OutlinedInput name='english' id="outlined-age-simple"/>
+                }
+              >
+                  {this.state.MenuItemValues.map((item) => (
+                    <MenuItem key={item} value={item}>{item}</MenuItem>
+                  ))}
+              </Select>
+
+
             </Grid>
             </Grid><br/>
             {this.state.val>1 ?
@@ -135,13 +151,26 @@ class Newcorpus extends React.Component {
             
           case 1: 
             return <div>
-            <Grid container spacing={4} >
+            <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
           <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '5%', paddingTop: '14%' }} >Please select Target language :</Typography>
         
         </Grid>
         <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
-            <Select id={"outlined-age-simple"} MenuItemValues={["Tamil"]} handleChange={this.handleSelectChange} value={this.state.hindi} name="hindi" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
+
+        <Select
+                style={{minWidth: 120,align:'right'}}
+                value={this.state.hindi}
+                onChange={this.handleSelectChange}
+                input={
+                  <OutlinedInput name='hindi' id="outlined-age-simple"/>
+                }
+              >
+                  {this.state.MenuItargettemValues.map((item) => (
+                    <MenuItem key={item} value={item}>{item}</MenuItem>
+                  ))}
+              </Select>
+
             </Grid>
             </Grid><br/>
             <DropzoneArea Dropzoneiles=""
@@ -195,11 +224,8 @@ class Newcorpus extends React.Component {
           else{
           return true;
           }
-
       }
 
-      
-    
       handleNext = () => {
         console.log(this.state.englishFile.name)
         if(this.state.activeStep===0 && this.state.englishFile.name && this.state.english){
@@ -232,18 +258,16 @@ class Newcorpus extends React.Component {
       };
     
       handleSubmit() {
-        console.log("file",this.state.file, "hindifile",this.state.hindiFile,"eng", this.state.englishFile, this.state.corpus_type, this.state.add_name, this.state.domain,this.state.comment)
         const isValid=this.validate();
         if(isValid){
         const { APITransport } = this.props;
-        const apiObj = new CreateCorpus(this.state.file, this.state.hindiFile, this.state.englishFile, this.state.corpus_type, this.state.add_name, this.state.domain,this.state.comment);
+        const apiObj = new CreateCorpus(this.state.file, this.state.hindiFile, this.state.englishFile,this.state.hindi,this.state.english, this.state.corpus_type, this.state.add_name, this.state.domain,this.state.comment);
         APITransport(apiObj);
         this.setState({showLoader:true}) 
+        setTimeout(()=>{history.push(`${process.env.PUBLIC_URL}/corpus`)},12000)
         }
     }
-
     render() {
-
       const { classes } = this.props;
         return (
               <div className={classes.CorpusContainer}>
@@ -265,8 +289,7 @@ class Newcorpus extends React.Component {
             <Typography >{this.getStepContent(this.state.activeStep)}</Typography>
             </div>
         )}
-<form method="post">
-                          
+<form method="post">                  
                   </form>
                   
                             <Button variant="contained" color="primary" className={classes.button} onClick={this.handleBack}> {this.state.activeStep === 0 ? "Cancel": "Back"} </Button>
@@ -285,7 +308,6 @@ class Newcorpus extends React.Component {
         );
     }
 }
-
 const mapStateToProps = state => ({
     user: state.login,
     apistatus: state.apistatus,
@@ -296,6 +318,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     APITransport,
     CreateCorpus: APITransport,
 }, dispatch);
-
-
 export default withRouter(withStyles(NewCorpusStyle)(connect(mapStateToProps, mapDispatchToProps)(Newcorpus)));

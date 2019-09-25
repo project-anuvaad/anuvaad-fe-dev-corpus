@@ -162,28 +162,28 @@ class Dashboard extends React.Component {
 
   render() {
 
-    const role = JSON.parse(localStorage.getItem('roles'));
-    console.log("test",typeof(this.state.nmtText.tgt))
+    var role = JSON.parse(localStorage.getItem('roles'));
+    console.log("test",(role[0]))
     return (
       <div>
         <Paper style={{marginLeft:'25%',width:'50%',marginTop:'5%'}}>
         <Typography variant="h5" style={{ color: darkBlack, background:blueGrey50, paddingLeft:'40%', paddingBottom:'12px',paddingTop:'8px'}} >Translate</Typography>
-        <Grid container spacing={4} >
+        <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-          <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select source language :</Typography>
+          <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select source language :</Typography>
         
         </Grid>
-        <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
+        <Grid item xs={3} sm={3} lg={3} xl={3}><br/><br/>
             <Select id={"outlined-age-simple"} MenuItemValues={this.handleSource(this.state.modelLanguage,this.state.language)} handleChange={this.handleSelectChange} value={this.state.source} name="source" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
             </Grid>
             </Grid>
-            <Grid container spacing={4} >
+            <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-          <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select target language :</Typography>
+          <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select target language &nbsp;:</Typography>
         
         </Grid>
-        <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
-            <Select id={"outlined-age-simple"} MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage,this.state.language,this.state.source):[]} handleChange={this.handleSelectChange} value={this.state.target} name="target" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
+        <Grid item xs={3} sm={3} lg={3} xl={3} ><br/><br/>
+            <Select id={"outlined-age-simple"} MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage,this.state.language,this.state.source):[]} handleChange={this.handleSelectChange} value={this.state.target} name="target" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%',marginLeft:"10%"}} />
             </Grid>
             </Grid>
         <div style={{marginLeft:'40px'}}>
@@ -195,7 +195,6 @@ class Dashboard extends React.Component {
               placeholder = "Enter Text Here ......"
               style={{ width: '96%' }}
               multiline
-              marginLeft="normal"
               onChange={(event) => {
                 this.handleTextChange('text', event)
               }}
@@ -213,14 +212,14 @@ class Dashboard extends React.Component {
         <div>
         
           
-          <NewOrders title="Machine Translated" data={[this.state.autoMlText]} />
-            <NewOrders title="Anuvaad Model" data={this.state.nmtText.tgt} />
+          <NewOrders title="Machine Translated" data={[this.state.autoMlText]}/>
+            <NewOrders title="Anuvaad Model" data={this.state.nmtText.tgt}/>
 
             </div>
             }
             {this.state.autoMlText && this.state.nmtText && role.includes('dev') &&
         <div>
-            <NewOrders title="Input Subwords" data={this.state.nmtText.input_subwords} />
+            <NewOrders  title="Input Subwords" data={this.state.nmtText.input_subwords}/>
             <NewOrders title="Output Subwords" data={this.state.nmtText.output_subwords}/>
 
             </div>
