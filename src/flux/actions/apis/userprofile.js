@@ -41,7 +41,6 @@ export default class Translation extends API {
     }
 
     getPayload() {
-        console.log(this.userDetails)
         return this.userDetails
     }
 

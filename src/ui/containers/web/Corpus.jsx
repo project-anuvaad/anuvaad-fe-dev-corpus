@@ -154,7 +154,6 @@ class Corpus extends React.Component {
 
     handleSaveButton(index) {
         let sentences = this.state.sentences
-        console.log('value', sentences)
         sentences[index].isdialog = false,
         sentences[index].isEditable = false,
             sentences[index].status = "EDITED"

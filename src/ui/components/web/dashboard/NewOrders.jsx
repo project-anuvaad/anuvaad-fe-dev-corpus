@@ -5,7 +5,7 @@ import { LineChart, Line, ResponsiveContainer } from "recharts";
 import { typography } from "material-ui/styles";
 import Typography from '@material-ui/core/Typography';
 const NewOrders = props => {
-  const { title, data } = props;
+  const { title, data, font } = props;
   const styles = {
     paper: {
       backgroundColor: blueGrey50,
@@ -13,8 +13,9 @@ const NewOrders = props => {
     },
     div: {
       // height: 95,
-      padding: "5px 15px 0 15px",
-      color: darkBlack
+      padding: "5px 15px 15px 15px",
+      color: darkBlack,
+
     },
     header: {
       fontSize: 24,
@@ -28,10 +29,9 @@ const NewOrders = props => {
 
   return (
     <Paper style={styles.paper}>
-      <div style={{ ...styles.header }}>{title}</div>
+      <div style={{ ...styles.header}}>{title}</div>
       <div style={styles.div}>
         <ResponsiveContainer>
-          
           <div>
              <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"55px"}} >
               {data ?data : ' ' }

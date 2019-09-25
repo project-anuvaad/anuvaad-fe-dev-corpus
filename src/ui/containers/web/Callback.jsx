@@ -18,6 +18,7 @@ class Callback extends React.Component {
                   localStorage.setItem("roles", JSON.stringify(["editor"]))
                 }
                 else {
+                  console.log("role",this.props.userProfile.roles)
                   localStorage.setItem("roles", JSON.stringify(this.props.userProfile.roles))
                 }
                 history.push(`${process.env.PUBLIC_URL}/dashboard`)

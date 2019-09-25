@@ -99,40 +99,35 @@ class Header extends React.Component {
 
 	render() {
 		
-		const { classes, theme,title } = this.props;
+		const { classes, title } = this.props;
 		const { auth, anchorEl, open } = this.state;
 		const openEl = Boolean(anchorEl);
-		const role = JSON.parse(localStorage.getItem('roles'));
-		
+		var role = JSON.parse(localStorage.getItem('roles'));
+		var useRole = new Array();
+		role.map((item,value) => (
+			useRole.push(item),
+			value!==role.length-1 ? useRole.push(', '):null
+		))
+
 		return (
 			<div>
 				<AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
 					<Toolbar disableGutters={!open}>
-						{/* <IconButton
-							color="inherit"
-							aria-label="open drawer"
-							onClick={this.handleDrawerOpen}
-							className={classNames(classes.menuButton, open && classes.hide)}
-						>
-							<MenuIcon />
-						</IconButton> */}
 						<Typography variant="title" color="inherit" className={classes.flex}>
 						{title}
 						</Typography>
 						<Typography variant="title" color="inherit" style={{
 								position: 'absolute',
-								
 								textTransform:'capitalize',
 								right:'130px'
 							}}>
-						Welcome {this.state.name} [{role}]
+						Welcome {this.state.name} [{useRole}]
 						</Typography>
 
 						{this.state.drawerClose}
 						{auth && (
 							<div style={{
 								position: 'absolute',
-								
 								top:'10%',
 								right:'50px'
 							}}>
@@ -181,16 +176,12 @@ class Header extends React.Component {
           variant="persistent"
           anchor="left"
 		  open={open}
-		  marginTop="10%"
-          
           classes={{
             paper: classes.drawerPaper
           }}
         >
-
 				<List>
 					<ListItem >
-							
 							<ListItemText
 								disableTypography
 								primary={(
@@ -259,29 +250,12 @@ class Header extends React.Component {
 
 						
 
-						<ListItem style={{paddingTop:'17%',paddingBottom:'17%',marginTop:'43%',marginLeft:'82%'}} button onClick={(event)=>{this.handleDrawerClose();}}>
+						<ListItem style={{paddingTop:'17%',paddingBottom:'17%',marginTop:'43%',marginLeft:'82%',width:'18%'}} button onClick={(event)=>{this.handleDrawerClose();}}>
 							<ListItemIcon>
 								<ChevronLeftIcon style={{ color: 'white'}} />
 							</ListItemIcon>
 						</ListItem>
 						</List>
-          {/* <List>
-            {["Components"].map((text, index) => (
-              <ListItem button >
-                <ListItemText primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>{text}</Typography>} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List >
-            {["1.Header Image (NA)", "2.Header Text", "3.Title", "4.List Items", "5.Paragraph"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>{text}</Typography>}/>
-              </ListItem>
-            ))}
-		  </List> */}
-		  
-
         </Drawer>
 			
         <main
@@ -304,11 +278,7 @@ class Header extends React.Component {
             </Button>
           )}
           <div className={classes.drawerHeader} />
-
-          
         </main>
-      {/* </div> */}
-      {/* </Grid> */}
       </Grid>
       </div>
     
