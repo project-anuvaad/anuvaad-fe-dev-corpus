@@ -212,7 +212,7 @@ class Dashboard extends React.Component {
         <div>
         
           
-          <NewOrders title="Machine Translated" data={[this.state.autoMlText]}/>
+          {/* <NewOrders title="Machine Translated" data={[this.state.autoMlText]}/> */}
             <NewOrders title="Anuvaad Model" data={this.state.nmtText.tgt}/>
 
             </div>
