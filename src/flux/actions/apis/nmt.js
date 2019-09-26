@@ -36,6 +36,9 @@ export default class NMT extends API {
     getBody() {
         console.log(this.model)
         this.model=this.model
+        if(this.model == 13){
+            this.model = 1
+        }
         return [{
             "src": this.par, "id": this.model
         }]
