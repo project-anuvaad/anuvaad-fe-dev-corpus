@@ -15,6 +15,8 @@ import { white, blueGrey50,darkBlack } from "material-ui/styles/colors"
 import Select from '../../components/web/common/Select';
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -30,7 +32,9 @@ class Dashboard extends React.Component {
       target:'',
       modelLanguage:[],
       language:[],
-      model:''
+      model:'',
+      checkedMachine: false,
+      checkedSubwords: false
     }
   }
 
@@ -45,12 +49,8 @@ class Dashboard extends React.Component {
         const apiObj = new FetchLanguage();
         APITransport(apiObj);
         this.setState({showLoader:true})
-
         const apiModel = new FetchModel();
         APITransport(apiModel);
-
-
-
         this.setState({showLoader:true})
         
 
@@ -67,17 +67,13 @@ class Dashboard extends React.Component {
     if (prevProps.nmt !== this.props.nmt) {
       console.log("test",this.props.nmt)
       this.setState({
-        
         nmtText: this.props.nmt,
-        
-        
       })
     }
 
     if (prevProps.nmtsp !== this.props.nmtsp) {
       this.setState({
         nmtTextSP: this.props.nmtsp.text,
-
       })
     }
 
@@ -94,6 +90,10 @@ class Dashboard extends React.Component {
     }
   }
 
+  handleChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
+
   handleTextChange(key, event) {
     this.setState({
       [key]: event.target.value
@@ -104,7 +104,9 @@ class Dashboard extends React.Component {
       text:'',
       autoMlText:'',
       source:'',
-      target:''
+      target:'',
+      checkedMachine: false,
+      checkedSubwords: false
     })
   }
 
@@ -166,7 +168,7 @@ class Dashboard extends React.Component {
     console.log("test",(role[0]))
     return (
       <div>
-        <Paper style={{marginLeft:'25%',width:'50%',marginTop:'5%'}}>
+        <Paper style={{marginLeft:'25%',width:'50%',marginTop:'4%'}}>
         <Typography variant="h5" style={{ color: darkBlack, background:blueGrey50, paddingLeft:'40%', paddingBottom:'12px',paddingTop:'8px'}} >Translate</Typography>
         <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
@@ -200,6 +202,30 @@ class Dashboard extends React.Component {
               }}
             />
           </Grid>
+          <FormControlLabel
+          style={{marginLeft:'0%',width:'45%',marginRight:'5%'}}
+          control={
+            <Checkbox
+            color="default"
+              checked={this.state.checkedMachine}
+              value="checkedMachine"
+              onChange={this.handleChange('checkedMachine')}
+            />
+          }
+          label="Machine Translated"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+            color="default"
+              checked={this.state.checkedSubwords}
+              value="checkedSubwords"
+              onChange={this.handleChange('checkedSubwords')}
+            />
+          }
+          label="Input and Output Subwords"
+        />
+       
           <Button variant="contained"  onClick={this.handleClear.bind(this)} color="primary" aria-label="edit" style={{marginLeft:'1.3%',width:'44%', marginBottom:'4%', marginTop:'4%',marginRight:'5%'}}>
                     Clear
                   </Button>
@@ -210,22 +236,15 @@ class Dashboard extends React.Component {
         </div>
         {this.state.autoMlText && this.state.nmtText &&
         <div>
-        
-          
-          <NewOrders title="Machine Translated" data={[this.state.autoMlText]}/>
+          {this.state.checkedMachine &&
+            <NewOrders title="Machine Translated" data={[this.state.autoMlText]}/>}
             <NewOrders title="Anuvaad Model" data={this.state.nmtText.tgt}/>
-
-            </div>
-            }
-            {this.state.autoMlText && this.state.nmtText && role.includes('dev') &&
+            </div>}
+            {this.state.autoMlText && this.state.nmtText && role.includes('dev') && this.state.checkedSubwords && 
         <div>
             <NewOrders  title="Input Subwords" data={this.state.nmtText.input_subwords}/>
             <NewOrders title="Output Subwords" data={this.state.nmtText.output_subwords}/>
-
-            </div>
-            }
-           
-        
+            </div>}
         </Paper>
       </div>
     );
@@ -248,6 +267,5 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   NMTSPApi: APITransport,
   MODELApi: APITransport
 }, dispatch);
-
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
