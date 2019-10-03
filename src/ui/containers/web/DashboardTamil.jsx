@@ -21,6 +21,7 @@ import SelectModel from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import TranslateSentence from '../../components/web/dashboard/TranslateSentence';
+import Chip from '@material-ui/core/Chip';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -162,6 +163,15 @@ class Dashboard extends React.Component {
 
   }
 
+  handleDelete = data => () => {
+    this.setState(state => {
+      const chipData = [...state.model];
+      const chipToDelete = chipData.indexOf(data);
+      chipData.splice(chipToDelete, 1);
+      this.setState({model:chipData})
+    });
+  };
+
   handleSubmit(role) {
     var model=[];
     const { APITransport, NMTApi } = this.props;
@@ -225,11 +235,15 @@ class Dashboard extends React.Component {
                 input={<OutlinedInput name={this.state.model} id="select-multiple-checkbox" />} >
                   {this.state.source && this.state.target ?
                    this.handleModel(this.state.modelLanguage,this.state.source,this.state.target).map((item) => (
-                   <MenuItem key={item} value={item}>{this.state.target && <Checkbox color="default" checked={this.state.model.indexOf(item) > -1} />}{item}</MenuItem>
+                   <MenuItem key={item} value={item}>{item}</MenuItem>
                   )):[]}>
 
 
-            </SelectModel>
+            </SelectModel><br/>
+            <div style={{marginTop:'8px'}}>
+            {this.state.model.map(value => (
+                  <Chip key={value} label={value}  onDelete={this.handleDelete(value)}/>
+                ))}</div>
             
             </Grid>
             </Grid>
