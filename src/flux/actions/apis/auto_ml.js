@@ -21,7 +21,7 @@ export default class AutoML extends API {
     processResponse(res) {
         super.processResponse(res);
         this.answers = res
-        console.log(res)
+        console.log("----",res)
     }
 
     apiEndPoint() {

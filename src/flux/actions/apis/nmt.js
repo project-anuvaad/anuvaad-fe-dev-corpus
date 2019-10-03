@@ -8,11 +8,11 @@ export default class NMT extends API {
     constructor(par, model, reverse,target, timeout = 200000) {
         super("POST", timeout, false);
         this.par = par;
-        this.model = parseInt(model.model_id);
+        this.model = model;
         this.reverse = reverse;
-        this.target = target;;
+        this.target = target;
         this.answers = [];
-        this.url_end_point=model.url_end_point;
+        this.url_end_point=model[0].url_end_point;
         this.type = C.NMT;
     }
 
@@ -21,10 +21,10 @@ export default class NMT extends API {
     }
 
     processResponse(res) {
-        console.log("result",res)
+        console.log("result-------",res.response_body)
         super.processResponse(res);
         if (res.response_body) {
-            this.answers = [res.response_body[0]]
+            this.answers = res.response_body
         }
         
     }
@@ -34,14 +34,15 @@ export default class NMT extends API {
     }
 
     getBody() {
-        console.log(this.model)
-        this.model=this.model
-        if(this.model == 13){
-            this.model = 1
-        }
-        return [{
-            "src": this.par, "id": this.model
-        }]
+        
+        var modelArray=[]
+
+        this.model.map(item =>(
+           modelArray.push( {
+                "src": this.par, "id": parseInt(item.model_id), "s_id":item.model_name, "n_id":item.model_name
+            })
+        ))
+        return modelArray
     }
 
     getHeaders() {
