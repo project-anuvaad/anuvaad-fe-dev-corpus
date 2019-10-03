@@ -11,13 +11,13 @@ class SimpleSelect extends React.Component {
     
 
     render() {
-      const { id, MenuItemValues, handleChange, value, name} = this.props;
+      const { id,selectValue, MenuItemValues, handleChange, value, name} = this.props;
 
         return (
           <form>
             <FormControl>
               <Select
-                style={{minWidth: 120,align:'right'}}
+                style={{minWidth: 160,align:'right',maxWidth:160}}
                 value={value}
                 onChange={handleChange}
                 input={

@@ -17,6 +17,10 @@ import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import SelectModel from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import TranslateSentence from '../../components/web/dashboard/TranslateSentence';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -32,7 +36,7 @@ class Dashboard extends React.Component {
       target:'',
       modelLanguage:[],
       language:[],
-      model:'',
+      model:[],
       checkedMachine: false,
       checkedSubwords: false
     }
@@ -102,17 +106,24 @@ class Dashboard extends React.Component {
   handleClear() {
     this.setState({
       text:'',
+      nmtText:'',
       autoMlText:'',
       source:'',
       target:'',
+      model:[],
       checkedMachine: false,
       checkedSubwords: false
     })
   }
 
+  handleSelectModelChange= event => {
+    
+    this.setState({ model: event.target.value });
+  };
+
   handleSelectChange = event => {
     
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value, model:[] });
   };
 
   handleSource(modelLanguage,supportLanguage){
@@ -129,7 +140,6 @@ class Dashboard extends React.Component {
   }
 
   handleTarget(modelLanguage,supportLanguage,sourceLanguage){
-
     var result =[];
     modelLanguage.map((item) => 
     {item.source_language_code===sourceLanguage?
@@ -139,17 +149,29 @@ class Dashboard extends React.Component {
       )):''})
       var value = new Set(result);
       var target_language= [...value]
-    return target_language;
-      
+    return target_language;   
   }
 
-  handleSubmit() {
-    
-    var model='';
-    const { APITransport, NMTApi, NMTSPApi } = this.props;
-    this.state.modelLanguage.map((item) =>(
-        item.target_language_code === this.state.target &&  item.source_language_code === this.state.source?
-          model= item :''))
+  handleModel(modelLanguage,source,target){
+
+    var result =[];
+    modelLanguage.map((item) => 
+    {item.source_language_code===source && item.target_language_code===target?
+      result.push(item.model_name):null})
+      return result;
+
+  }
+
+  handleSubmit(role) {
+    var model=[];
+    const { APITransport, NMTApi } = this.props;
+    role.includes('dev')?
+      this.state.modelLanguage.map((item) =>(
+          item.target_language_code === this.state.target &&  item.source_language_code === this.state.source && this.state.model.includes(item.model_name)?
+            model.push(item):[])) :
+            this.state.modelLanguage.map((item) =>(
+              item.target_language_code === this.state.target &&  item.source_language_code === this.state.source && item.model_id != 13?
+                model.push(item):[]))
     const apiObj = new AutoML(this.state.text, this.state.source, this.state.target);
     const nmt = new NMT(this.state.text, model, true,this.state.target);
     
@@ -165,29 +187,53 @@ class Dashboard extends React.Component {
   render() {
 
     var role = JSON.parse(localStorage.getItem('roles'));
-    console.log("test",(role[0]))
     return (
       <div>
         <Paper style={{marginLeft:'25%',width:'50%',marginTop:'4%'}}>
         <Typography variant="h5" style={{ color: darkBlack, background:blueGrey50, paddingLeft:'40%', paddingBottom:'12px',paddingTop:'8px'}} >Translate</Typography>
         <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-          <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select source language :</Typography>
-        
+          <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select source language </Typography>
         </Grid>
+
         <Grid item xs={3} sm={3} lg={3} xl={3}><br/><br/>
-            <Select id={"outlined-age-simple"} MenuItemValues={this.handleSource(this.state.modelLanguage,this.state.language)} handleChange={this.handleSelectChange} value={this.state.source} name="source" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
+            <Select id={"outlined-age-simple"} selectValue='language_code' MenuItemValues={this.handleSource(this.state.modelLanguage,this.state.language)} handleChange={this.handleSelectChange} value={this.state.source} name="source" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%'}} />
             </Grid>
             </Grid>
             <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-          <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select target language &nbsp;:</Typography>
-        
+          <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select target language &nbsp;</Typography>
         </Grid>
         <Grid item xs={3} sm={3} lg={3} xl={3} ><br/><br/>
-            <Select id={"outlined-age-simple"} MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage,this.state.language,this.state.source):[]} handleChange={this.handleSelectChange} value={this.state.target} name="target" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%',marginLeft:"10%"}} />
+            <Select id={"outlined-age-simple"} selectValue='language_code' MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage,this.state.language,this.state.source):[]} handleChange={this.handleSelectChange} value={this.state.target} name="target" style={{marginRight: '30%', marginBottom: '5%',marginTop: '4%',marginLeft:"10%"}} />
             </Grid>
             </Grid>
+        {role.includes('dev') &&
+            <Grid container spacing={8} >
+            <Grid item xs={8} sm={8} lg={8} xl={8}>
+          <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select model type </Typography>
+        
+        </Grid>
+        <Grid item xs={3} sm={3} lg={3} xl={3}><br/><br/>
+            
+            <SelectModel id="select-multiple-chip"
+                multiple={true}
+                style={{minWidth: 160,align:'right',maxWidth: 160}}
+                value={this.state.model}
+                onChange={this.handleSelectModelChange}
+                renderValue={selected => selected.join(', ')}
+                input={<OutlinedInput name={this.state.model} id="select-multiple-checkbox" />} >
+                  {this.state.source && this.state.target ?
+                   this.handleModel(this.state.modelLanguage,this.state.source,this.state.target).map((item) => (
+                   <MenuItem key={item} value={item}>{this.state.target && <Checkbox color="default" checked={this.state.model.indexOf(item) > -1} />}{item}</MenuItem>
+                  )):[]}>
+
+
+            </SelectModel>
+            
+            </Grid>
+            </Grid>
+        }
         <div style={{marginLeft:'40px'}}>
         <Grid container spacing={24} style={{ padding: 24 }}>
           <Grid item xs={12} sm={12} lg={12} xl={12}>
@@ -202,8 +248,9 @@ class Dashboard extends React.Component {
               }}
             />
           </Grid>
+          
           <FormControlLabel
-          style={{marginLeft:'0%',width:'45%',marginRight:'5%'}}
+          style={{marginLeft:'0%',width:'46%',marginRight:'5%'}}
           control={
             <Checkbox
             color="default"
@@ -214,7 +261,10 @@ class Dashboard extends React.Component {
           }
           label="Machine Translated"
         />
+        {role.includes('dev') &&
+          
         <FormControlLabel
+        
           control={
             <Checkbox
             color="default"
@@ -225,26 +275,27 @@ class Dashboard extends React.Component {
           }
           label="Input and Output Subwords"
         />
+        
+          }
        
           <Button variant="contained"  onClick={this.handleClear.bind(this)} color="primary" aria-label="edit" style={{marginLeft:'1.3%',width:'44%', marginBottom:'4%', marginTop:'4%',marginRight:'5%'}}>
                     Clear
                   </Button>
-                <Button variant="contained" onClick={this.handleSubmit.bind(this)} color="primary" aria-label="edit" style={{width:'44%', marginBottom:'4%', marginTop:'4%'}}>
+                <Button variant="contained" onClick={this.handleSubmit.bind(this,role)} color="primary" aria-label="edit" style={{width:'44%', marginBottom:'4%', marginTop:'4%'}}>
                     Submit
                   </Button>
         </Grid>
         </div>
-        {this.state.autoMlText && this.state.nmtText &&
+        { this.state.nmtText[0] &&
         <div>
-          {this.state.checkedMachine &&
-            <NewOrders title="Machine Translated" data={[this.state.autoMlText]}/>}
-            <NewOrders title="Anuvaad Model" data={this.state.nmtText.tgt}/>
+          
+            <NewOrders title="Anuvaad Model" data={this.state.nmtText} status={this.state.checkedSubwords}/>
             </div>}
-            {this.state.autoMlText && this.state.nmtText && role.includes('dev') && this.state.checkedSubwords && 
-        <div>
-            <NewOrders  title="Input Subwords" data={this.state.nmtText.input_subwords}/>
-            <NewOrders title="Output Subwords" data={this.state.nmtText.output_subwords}/>
-            </div>}
+          {
+            this.state.checkedMachine &&
+            <TranslateSentence title="Machine Translated" data={this.state.autoMlText}/>
+          }
+            
         </Paper>
       </div>
     );
