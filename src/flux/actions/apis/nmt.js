@@ -12,7 +12,7 @@ export default class NMT extends API {
         this.reverse = reverse;
         this.target = target;
         this.answers = [];
-        this.url_end_point=model[0].url_end_point;
+        this.url_end_point=model[0]?model[0].url_end_point:model.url_end_point;
         this.type = C.NMT;
     }
 
