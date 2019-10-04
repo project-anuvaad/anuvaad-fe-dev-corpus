@@ -13,7 +13,7 @@ import { grey400, cyan600, grey900, white } from "material-ui/styles/colors";
 import { typography } from "material-ui/styles";
 import Wallpaper from "material-ui/svg-icons/device/wallpaper";
 import Typography from "@material-ui/core/Typography";
-
+import Tooltip from '@material-ui/core/Tooltip';
 const RecentlyProducts = props => {
   const { data, title } = props;
   const styles = {
