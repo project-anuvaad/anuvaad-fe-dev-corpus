@@ -22,6 +22,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import TranslateSentence from '../../components/web/dashboard/TranslateSentence';
 import Chip from '@material-ui/core/Chip';
+import { Tooltip } from '@material-ui/core';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -158,7 +159,7 @@ class Dashboard extends React.Component {
     var result =[];
     modelLanguage.map((item) => 
     {item.source_language_code===source && item.target_language_code===target?
-      result.push(item.model_name):null})
+      result.push(item):null})
       return result;
 
   }
@@ -180,7 +181,7 @@ class Dashboard extends React.Component {
           item.target_language_code === this.state.target &&  item.source_language_code === this.state.source && this.state.model.includes(item.model_name)?
             model.push(item):[])) :
             this.state.modelLanguage.map((item) =>(
-              item.target_language_code === this.state.target &&  item.source_language_code === this.state.source && item.model_id != 13?
+              item.target_language_code === this.state.target &&  item.source_language_code === this.state.source && item.model_id != 13 && model.length<1?
                 model.push(item):[]))
     const apiObj = new AutoML(this.state.text, this.state.source, this.state.target);
     const nmt = new NMT(this.state.text, model, true,this.state.target);
@@ -235,17 +236,20 @@ class Dashboard extends React.Component {
                 input={<OutlinedInput name={this.state.model} id="select-multiple-checkbox" />} >
                   {this.state.source && this.state.target ?
                    this.handleModel(this.state.modelLanguage,this.state.source,this.state.target).map((item) => (
-                   <MenuItem key={item} value={item}>{item}</MenuItem>
+                    <Tooltip placement="right" enterDelay={200} key={item.model_id} value={item.model_name} title={item.description?item.description:'NA'}  ><MenuItem key={item.model_id} value={item.model_name}>{item.model_name}</MenuItem></Tooltip>
                   )):[]}>
 
 
             </SelectModel><br/>
-            <div style={{marginTop:'8px'}}>
+            
+            
+            </Grid>
+            {role.includes('dev') && 
+            <div style={{ marginLeft: '8%', paddingTop: '10px' }}>
             {this.state.model.map(value => (
                   <Chip key={value} label={value}  onDelete={this.handleDelete(value)}/>
                 ))}</div>
-            
-            </Grid>
+            }
             </Grid>
         }
         <div style={{marginLeft:'40px'}}>
