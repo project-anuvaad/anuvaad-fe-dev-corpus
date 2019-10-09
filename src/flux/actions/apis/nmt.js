@@ -30,7 +30,7 @@ export default class NMT extends API {
     }
 
     apiEndPoint() {
-        return this.url_end_point ?  `http://52.40.71.62:3003/translator/${this.url_end_point}`: `http://52.40.71.62:3003/translator/translation_en`;
+        return this.url_end_point ?  `${super.apiEndPointAuto()}/app/${this.url_end_point}`: `${super.apiEndPointAuto()}/app/translation_en`;
     }
 
     getBody() {
@@ -48,6 +48,7 @@ export default class NMT extends API {
     getHeaders() {
         this.headers = {
             headers: {
+                'Authorization': 'Bearer '+decodeURI(localStorage.getItem('token')), 
                 "Content-Type": "application/json"
             }
         };
