@@ -222,7 +222,7 @@ class Dashboard extends React.Component {
         {role.includes('dev') &&
             <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-          <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select model type </Typography>
+          <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', paddingTop: '9.5%' }} >Please select model </Typography>
         
         </Grid>
         <Grid item xs={3} sm={3} lg={3} xl={3}><br/><br/>
@@ -247,7 +247,7 @@ class Dashboard extends React.Component {
             {role.includes('dev') && 
             <div style={{ marginLeft: '8%', paddingTop: '10px' }}>
             {this.state.model.map(value => (
-                  <Chip key={value} label={value}  onDelete={this.handleDelete(value)}/>
+                  <Chip key={value} label={value}  onDelete={this.handleDelete(value)} style={{ marginLeft:'5px',marginTop: '8px' }}/>
                 ))}</div>
             }
             </Grid>
