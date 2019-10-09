@@ -40,7 +40,8 @@ class Dashboard extends React.Component {
       language:[],
       model:[],
       checkedMachine: false,
-      checkedSubwords: false
+      checkedSubwords: false,
+      showSplitted: false
     }
   }
 
@@ -114,7 +115,8 @@ class Dashboard extends React.Component {
       target:'',
       model:[],
       checkedMachine: false,
-      checkedSubwords: false
+      checkedSubwords: false,
+      showSplitted: false
     })
   }
 
@@ -181,10 +183,10 @@ class Dashboard extends React.Component {
           item.target_language_code === this.state.target &&  item.source_language_code === this.state.source && this.state.model.includes(item.model_name)?
             model.push(item):[])) :
             this.state.modelLanguage.map((item) =>(
-              item.target_language_code === this.state.target &&  item.source_language_code === this.state.source && item.model_id != 13 && model.length<1?
+              item.target_language_code === this.state.target &&  item.source_language_code === this.state.source && model.length<1?
                 model.push(item):[]))
     const apiObj = new AutoML(this.state.text, this.state.source, this.state.target);
-    const nmt = new NMT(this.state.text, model, true,this.state.target);
+    const nmt = new NMT(this.state.text, model, true,this.state.target, this.state.showSplitted);
     
     APITransport(apiObj);
     NMTApi(nmt)
@@ -268,7 +270,7 @@ class Dashboard extends React.Component {
           </Grid>
           
           <FormControlLabel
-          style={{marginLeft:'0%',width:'46%',marginRight:'5%'}}
+          style={{marginLeft:'0%',width:'23%',marginRight:'5%'}}
           control={
             <Checkbox
             color="default"
@@ -279,6 +281,22 @@ class Dashboard extends React.Component {
           }
           label="Machine Translated"
         />
+        {role.includes('dev') &&
+          
+          <FormControlLabel
+          style={{marginLeft:'0%',width:'23%',marginRight:'5%'}}
+            control={
+              <Checkbox
+              color="default"
+                checked={this.state.showSplitted}
+                value="showSplitted"
+                onChange={this.handleChange('showSplitted')}
+              />
+            }
+            label="Show , splitted"
+          />
+          
+            }
         {role.includes('dev') &&
           
         <FormControlLabel
