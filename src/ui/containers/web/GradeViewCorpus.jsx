@@ -52,7 +52,7 @@ class Corpus extends React.Component {
         }
         else{
             
-            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference","Sentence Grade","Spelling Grade"]})
+            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference","Sentence Grade","Spelling Grade","Context Grade"]})
              
         }
         if (this.props.match.params.basename) {
@@ -105,6 +105,14 @@ class Corpus extends React.Component {
         let api = new UpdateSentencesGrade(sentences[name])
             this.props.APITransport(api);
         this.setState({spelling_rating: nextValue});
+      }
+
+      handleContextStarClick(nextValue, prevValue, name) {
+        let sentences = this.state.sentences
+        sentences[name].context_rating = nextValue
+        let api = new UpdateSentencesGrade(sentences[name])
+            this.props.APITransport(api);
+        this.setState({context_rating: nextValue});
       }
 
 
@@ -174,9 +182,21 @@ class Corpus extends React.Component {
                     />
                     </div>
 
-                    </TableCell>
-                    
-                
+                    </TableCell>  
+                }
+
+                    {!this.state.role.includes('dev')&&
+                    <TableCell >
+                    <div style={{width:'92px'}}>
+                    <StarRatingComponent 
+                        name={index}
+                        starCount={5}
+                        value={row.context_rating ? row.context_rating : 0}
+                        onStarClick={this.handleContextStarClick.bind(this)}
+                    />
+                    </div>
+
+                    </TableCell>  
                 }
                     
                 </TableRow>
