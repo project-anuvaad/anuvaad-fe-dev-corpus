@@ -44,7 +44,7 @@ export default class NMT extends API {
                 let spilttedText = this.par.split(',')
                 spilttedText.map((s) => {
                     modelArray.push({
-                        "src": s.trim(), "id": parseInt(item.model_id), "s_id": item.model_name, "n_id": item.model_name
+                        "src": s.trim(), "id": parseInt(item.model_id), "s_id": item.model_name+'_Comma Split', "n_id": item.model_name
                     })
                 })
             }
