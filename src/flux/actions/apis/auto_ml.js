@@ -25,7 +25,7 @@ export default class AutoML extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/auto/translate`;
+        return `${super.apiEndPointAuto()}/app/translate`;
     }
 
     getBody() {
@@ -36,7 +36,13 @@ export default class AutoML extends API {
     }
 
     getHeaders() {
-
+        this.headers = {
+            headers: {
+                'Authorization': 'Bearer '+decodeURI(localStorage.getItem('token')), 
+                "Content-Type": "application/json"
+            }
+        };
+        return this.headers;
     }
 
     getPayload() {
