@@ -5,14 +5,15 @@ import API from "./api";
 import C from "../constants";
 
 export default class NMT extends API {
-    constructor(par, model, reverse,target, timeout = 200000) {
+    constructor(par, model, reverse, target, showSplitted, timeout = 200000) {
         super("POST", timeout, false);
         this.par = par;
         this.model = model;
         this.reverse = reverse;
         this.target = target;
         this.answers = [];
-        this.url_end_point=model[0]?model[0].url_end_point:model.url_end_point;
+        this.showSplitted = showSplitted
+        this.url_end_point = model[0] ? model[0].url_end_point : model.url_end_point;
         this.type = C.NMT;
     }
 
@@ -21,34 +22,40 @@ export default class NMT extends API {
     }
 
     processResponse(res) {
-        console.log("result-------",res.response_body)
+        console.log("result-------", res.response_body)
         super.processResponse(res);
         if (res.response_body) {
             this.answers = res.response_body
         }
-        
+
     }
 
     apiEndPoint() {
-        return this.url_end_point ?  `${super.apiEndPointAuto()}/app/${this.url_end_point}`: `${super.apiEndPointAuto()}/app/translation_en`;
+        return this.url_end_point ? `${super.apiEndPointAuto()}/app/${this.url_end_point}` : `${super.apiEndPointAuto()}/app/translation_en`;
     }
 
     getBody() {
-        
-        var modelArray=[]
-
-        this.model.map(item =>(
-           modelArray.push( {
-                "src": this.par, "id": parseInt(item.model_id), "s_id":item.model_name, "n_id":item.model_name
+        var modelArray = []
+        this.model.map(item => {
+            modelArray.push({
+                "src": this.par, "id": parseInt(item.model_id), "s_id": item.model_name, "n_id": item.model_name
             })
-        ))
+            if (this.showSplitted) {
+                let spilttedText = this.par.split(',')
+                spilttedText.map((s) => {
+                    modelArray.push({
+                        "src": s.trim(), "id": parseInt(item.model_id), "s_id": item.model_name, "n_id": item.model_name
+                    })
+                })
+            }
+        })
         return modelArray
     }
 
     getHeaders() {
         this.headers = {
             headers: {
-                'Authorization': 'Bearer '+decodeURI(localStorage.getItem('token')), 
+                'Authorization': 'Bearer ' + decodeURI(localStorage.getItem('token')),
                 "Content-Type": "application/json"
             }
         };
