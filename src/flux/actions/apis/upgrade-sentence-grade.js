@@ -3,10 +3,11 @@ import C from "../constants";
 
 
 export default class UpdateSentences extends API {
-    constructor(updateSentence, timeout = 2000) {
+    constructor(updateSentence,modelid, timeout = 2000) {
         super('POST', timeout, false);
         this.type = C.UPDATE_SENTENCE_DRADE;
         this.updateSentence = updateSentence;
+        this.modelid = modelid;
         this.sentences=[]
         
     }
@@ -28,7 +29,8 @@ export default class UpdateSentences extends API {
 
     getBody() {
         return {
-          sentences:[this.updateSentence]
+          sentences:[this.updateSentence],
+          modelid:this.modelid
         };
       }
       getHeaders() {
