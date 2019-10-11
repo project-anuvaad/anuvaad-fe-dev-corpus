@@ -50,11 +50,7 @@ class Header extends React.Component {
 		
 
 	};
-	componentDidMount(){
-		let nameArray=  (localStorage.getItem('userDetails')).split(' ');
-		let userName=nameArray[0][0]+nameArray[1][0];
-		this.setState({userName})
-	}
+	
 
 	handleDrawerOpen = () => {
 		this.setState({ open: true });
@@ -233,6 +229,22 @@ class Header extends React.Component {
 								)}
 							/>
 						</ListItem>
+						
+						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/benchmark`)}}>
+							<ListItemIcon>
+								<SendIcon style={{ color: 'white' }} />
+							</ListItemIcon>
+							<ListItemText
+								disableTypography
+								primary={(
+									<Typography type="body2" style={{ color: '#FFFFFF' }}>
+										Benchmark
+          							</Typography>
+								)}
+							/>
+						</ListItem>
+						
+						
 
 						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/qna`)}}>
 							<ListItemIcon>

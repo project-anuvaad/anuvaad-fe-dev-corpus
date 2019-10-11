@@ -187,10 +187,10 @@ class Dashboard extends React.Component {
                 model.push(item):[]))
     const apiObj = new AutoML(this.state.text, this.state.source, this.state.target);
     const nmt = new NMT(this.state.text, model, true,this.state.target, this.state.showSplitted);
-    
-    APITransport(apiObj);
     NMTApi(nmt)
+    this.state.checkedMachine ? APITransport(apiObj):''
     this.setState({
+      showLoader:true,
       autoMlText:'',
       nmtText:'',
       apiCalled: true
@@ -270,7 +270,7 @@ class Dashboard extends React.Component {
           </Grid>
           
           <FormControlLabel
-          style={{marginLeft:'0%',width:'23%',marginRight:'5%'}}
+          style={{marginLeft:'0%',width:role.includes('dev')?'26%':'60%',marginRight:'5%'}}
           control={
             <Checkbox
             color="default"
@@ -328,7 +328,7 @@ class Dashboard extends React.Component {
             <NewOrders title="Anuvaad Model" data={this.state.nmtText} status={this.state.checkedSubwords}/>
             </div>}
           {
-            this.state.checkedMachine &&
+            this.state.checkedMachine && this.state.autoMlText && this.state.nmtText &&
             <TranslateSentence title="Machine Translated" data={this.state.autoMlText}/>
           }
             
