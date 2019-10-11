@@ -19,7 +19,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { CSVLink, CSVDownload } from "react-csv";
 import StarRatingComponent from 'react-star-rating-component';
-import TablePagination from "@material-ui/core/TablePagination";
+import FetchBenchmarkModel from "../../../flux/actions/apis/fetchenchmarkmodel";
 
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -29,7 +29,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import MenuItem from '@material-ui/core/MenuItem';
 
 const theme = createMuiTheme();
-class Corpus extends React.Component {
+class BenchmarkGrade extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -47,17 +47,12 @@ class Corpus extends React.Component {
     }
 
     componentDidMount() {
-        console.log("props------------",this.props)
-        if(this.state.role.includes('dev')){
-            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference"]})
-        }
-        else{
+       
             
-            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference","Sentence Grade","Spelling Grade","Context Grade"]})
-             
-        }
-        if (this.props.match.params.basename) {
-            let api = new FetchSentences(this.props.match.params.basename,this.state.pageCount,1)
+            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Sentence Grade","Spelling Grade","Context Grade"]})
+        
+        if (this.props.match.params.basename && this.props.match.params.modelid) {
+            let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid, this.state.pageCount,1)
             this.props.APITransport(api);
         }
 
@@ -67,7 +62,7 @@ class Corpus extends React.Component {
         
         this.setState({ offset,lock:false});
         if (this.props.match.params.basename) {
-        let api = new FetchSentences(this.props.match.params.basename,this.state.pageCount,offset+1,this.state.inputStatus)
+        let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,this.state.pageCount,offset+1,this.state.inputStatus)
             this.props.APITransport(api);
             
         }
@@ -76,18 +71,19 @@ class Corpus extends React.Component {
 
       handleSelectChange = event => {
         this.setState({ pageCount: event.target.value,offset:0 });
-            let api = new FetchSentences(this.props.match.params.basename,event.target.value,1,this.state.inputStatus)
+            let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,event.target.value,1,this.state.inputStatus)
             this.props.APITransport(api);
       };
 
 
     componentDidUpdate(prevProps) {
        
-        if (prevProps.sentences !== this.props.sentences) {
+        if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel) {
+            console.log("value----",this.props.count)
             this.setState({
-                sentences: this.props.sentences.data,
-                sentenceCancel: this.props.sentences.data,
-                count:this.props.sentences.count
+                sentences: this.props.fetchBenchmarkModel.data,
+                sentenceCancel: this.props.fetchBenchmarkModel.data,
+                count: this.props.fetchBenchmarkModel.count
             })
         }
     }
@@ -145,19 +141,8 @@ class Corpus extends React.Component {
                         </ReadMoreAndLess>
                         
                     </TableCell>
-                    <TableCell >
-                    <ReadMoreAndLess
-                            ref={this.ReadMore}
-                            className="read-more-content"
-                            
-                            readMoreText="Read more"
-                            readLessText="">   
-                        {row.translation ? row.translation.replace(/&quot;/g,'"') : ''}
-                            
-                        </ReadMoreAndLess>
-                        
-                    </TableCell> 
-                    {!this.state.role.includes('dev')&&
+                     
+                    
                     <TableCell >
                     <div style={{width:'100px'}}>
                     <StarRatingComponent 
@@ -171,8 +156,8 @@ class Corpus extends React.Component {
                     </TableCell>
                     
                 
-                }
-                {!this.state.role.includes('dev')&&
+                
+                
                     <TableCell >
                     <div style={{width:'92px'}}>
                     <StarRatingComponent 
@@ -184,9 +169,9 @@ class Corpus extends React.Component {
                     </div>
 
                     </TableCell>  
-                }
+                
 
-                    {!this.state.role.includes('dev')&&
+                    
                     <TableCell >
                     <div style={{width:'92px'}}>
                     <StarRatingComponent 
@@ -198,7 +183,7 @@ class Corpus extends React.Component {
                     </div>
 
                     </TableCell>  
-                }
+                
                     
                 </TableRow>
             ))}
@@ -225,8 +210,8 @@ class Corpus extends React.Component {
             <MenuItem value={5}>5</MenuItem>
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={20}>20</MenuItem>
-            <MenuItem value={50}>50</MenuItem>
-            <MenuItem value={100}>100</MenuItem>
+            <MenuItem value={30}>30</MenuItem>
+            
           </Select>
           </Typography> 
 
@@ -252,7 +237,7 @@ class Corpus extends React.Component {
                                 <TableHead>
                                     <TableRow>
                                     {this.state.TableHeaderValues.map((item) => (
-                                        <TableCell width="31%">{item}</TableCell>
+                                        <TableCell width="45%">{item}</TableCell>
                                     ))}       
                                     </TableRow>
                                 </TableHead>
@@ -271,6 +256,7 @@ const mapStateToProps = state => ({
     apistatus: state.apistatus,
     corpus: state.corpus,
     sentences: state.sentences,
+    fetchBenchmarkModel: state.fetchBenchmarkModel
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -279,4 +265,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch);
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Corpus));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BenchmarkGrade));

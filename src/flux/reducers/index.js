@@ -15,7 +15,8 @@ import updatePasswordstatus from './updatepassword';
 import source_translate from './source-translate';
 import supportLanguage from './fetchlanguages';
 import langModel from './fetchmodel';
-
+import fetchBenchmark from './benchmark';
+import fetchBenchmarkModel from './fetchbenchmarkmodel';
 export default {
     login,
     automl,
@@ -31,6 +32,10 @@ export default {
     userProfile,
     updatePasswordstatus,
     supportLanguage,
-    langModel
+    langModel,
+    fetchBenchmark,
+    fetchBenchmarkModel
+
+
     
 };
