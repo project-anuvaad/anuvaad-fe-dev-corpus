@@ -262,7 +262,7 @@ class Benchmark extends React.Component {
                         if(tableMeta.rowData){
                             return (
                                 <div style={{width:'90px'}}>   
-                                    <Tooltip title="Grade Sentence"><GradeIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ this.handleSubmit(tableMeta.rowData[0])} } > </GradeIcon></Tooltip>
+                                    {this.state.target && this.state.model && <Tooltip title="Grade Sentence"><GradeIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ this.handleSubmit(tableMeta.rowData[0])} } > </GradeIcon></Tooltip>}
                                     </div>
                             );
                         }
