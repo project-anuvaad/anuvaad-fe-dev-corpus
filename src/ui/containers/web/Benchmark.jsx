@@ -23,6 +23,7 @@ import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import Select from '../../components/web/common/Select';
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import FetchBenchmarkModel from "../../../flux/actions/apis/fetchenchmarkmodel";
+import { DatePicker } from 'material-ui';
 
 class Benchmark extends React.Component {
     constructor(props) {
@@ -59,9 +60,12 @@ class Benchmark extends React.Component {
 
     }
 
-    handleSelectChange = event => {
-    
-        this.setState({ [event.target.name]: event.target.value});
+    handleSelectChange = (event) => {
+        console.log("-----",event.target.name)
+        this.setState({ [event.target.name]: event.target.value,
+        id:event.target.id
+        });
+        console.log(event.target.value)
       };
 
 
@@ -105,26 +109,9 @@ class Benchmark extends React.Component {
       }
 
 
-      handleSubmit(row){
-        this.setState({
-            row:row})
-        const { APITransport } = this.props;
-        var model =''
-        this.state.modelLanguage.map((item) =>(
-            item.model_name === this.state.model ? 
-            model= item:[])) 
-
-
-            console.log(row,model.modelid)
-            const apiObj = new FetchBenchmarkModel(row,model.model_id,5,1);
-            APITransport(apiObj)
-    this.setState({
-      showLoader:true,
-      modelid:model.model_id
-    })
-
-        
-    
+      handleSubmit(row, modelid){
+            console.log(row)
+            history.push(`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/`+row+'/'+modelid)
       }
 
     componentDidUpdate(prevProps) {
@@ -147,7 +134,7 @@ class Benchmark extends React.Component {
 
           if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel) {
             console.log("modelid---",this.state.modelid)
-            history.push(`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/`+this.state.row+'/'+this.state.modelid)
+            
 
           }
     }
@@ -199,8 +186,10 @@ class Benchmark extends React.Component {
                     empty: true,
                     customBodyRender: (value, tableMeta, updateValue) => {   
                         if(tableMeta.rowData){
+                            console.log(tableMeta.rowData)
+                            let name = "target-"+tableMeta.rowData[0]
                             return (
-                                 <Select id={"outlined-age-simple"} selectValue='language_code' MenuItemValues={tableMeta.rowData[3] ? this.handleTarget(this.state.modelLanguage,this.state.language,tableMeta.rowData[3]):[]} handleChange={this.handleSelectChange} value={this.state.target} name="target"  />
+                                 <Select id={"outlined-age-simple"} selectValue='language_code' MenuItemValues={tableMeta.rowData[3] ? this.handleTarget(this.state.modelLanguage,this.state.language,tableMeta.rowData[3]):[]} handleChange={this.handleSelectChange} value= {this.state[name]} name={name} val={tableMeta.rowData[0]} />
             
                             );
                         }
@@ -217,18 +206,23 @@ class Benchmark extends React.Component {
                     sort: false,
                     empty: true,
                     customBodyRender: (value, tableMeta, updateValue) => {   
+                        let targetname = "target-"+tableMeta.rowData[0]
+                        let modelname = "model-"+tableMeta.rowData[0]
                         if(tableMeta.rowData){
                             return (
                                 <SelectModel 
                 style={{minWidth: 160,align:'right',maxWidth: 100}}
-                name='model'
-                value={this.state.model}
+                name={modelname}
+                key={tableMeta.rowData[0]}
+                
+                value={this.state[modelname]}
                 onChange={this.handleSelectChange}
                 input={<OutlinedInput name={this.state.model} id="outlined-age-simple" />} >
-                  {tableMeta.rowData[3]&& this.state.target ?
-                   this.handleModel(this.state.modelLanguage,tableMeta.rowData[3],this.state.target).map((item) => (
-                    <MenuItem key={item.model_id} value={item.model_name}>{item.model_name}</MenuItem>
-                  )):[]}>
+                  {tableMeta.rowData[3]&& this.state[targetname] ?
+                   this.handleModel(this.state.modelLanguage,tableMeta.rowData[3],this.state[targetname]).map((item) => {
+                       console.log(item.model_id)
+                    return <MenuItem key={item.model_id} value={item.model_id}>{item.model_name}</MenuItem>
+                  }):[]}>
 
 
             </SelectModel>
@@ -260,9 +254,11 @@ class Benchmark extends React.Component {
                     empty: true,
                     customBodyRender: (value, tableMeta, updateValue) => {   
                         if(tableMeta.rowData){
+                            let targetname = "target-"+tableMeta.rowData[0]
+                        let modelname = "model-"+tableMeta.rowData[0]
                             return (
                                 <div style={{width:'90px'}}>   
-                                    {this.state.target && this.state.model && <Tooltip title="Grade Sentence"><GradeIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ this.handleSubmit(tableMeta.rowData[0])} } > </GradeIcon></Tooltip>}
+                                    {this.state[targetname] && this.state[modelname] && <Tooltip title="Grade Sentence"><GradeIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ this.handleSubmit(tableMeta.rowData[0],this.state[modelname])} } > </GradeIcon></Tooltip>}
                                     </div>
                             );
                         }
