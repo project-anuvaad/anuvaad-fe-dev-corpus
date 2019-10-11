@@ -49,7 +49,7 @@ class BenchmarkGrade extends React.Component {
     componentDidMount() {
        
             
-            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Sentence Grade","Spelling Grade","Context Grade"]})
+            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Grammar Grade","Vocabulary Grade","Context Grade"]})
         
         if (this.props.match.params.basename && this.props.match.params.modelid) {
             let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid, this.state.pageCount,1)
@@ -91,7 +91,7 @@ class BenchmarkGrade extends React.Component {
     handleStarClick(nextValue, prevValue, name) {
         let sentences = this.state.sentences
         sentences[name].rating = nextValue
-        let api = new UpdateSentencesGrade(sentences[name])
+        let api = new UpdateSentencesGrade(sentences[name],this.props.match.params.modelid)
             this.props.APITransport(api);
         this.setState({rating: nextValue});
       }
@@ -99,7 +99,7 @@ class BenchmarkGrade extends React.Component {
       handleSpellStarClick(nextValue, prevValue, name) {
         let sentences = this.state.sentences
         sentences[name].spelling_rating = nextValue
-        let api = new UpdateSentencesGrade(sentences[name])
+        let api = new UpdateSentencesGrade(sentences[name],this.props.match.params.modelid)
             this.props.APITransport(api);
         this.setState({spelling_rating: nextValue});
       }
@@ -107,7 +107,7 @@ class BenchmarkGrade extends React.Component {
       handleContextStarClick(nextValue, prevValue, name) {
         let sentences = this.state.sentences
         sentences[name].context_rating = nextValue
-        let api = new UpdateSentencesGrade(sentences[name])
+        let api = new UpdateSentencesGrade(sentences[name],this.props.match.params.modelid)
             this.props.APITransport(api);
         this.setState({context_rating: nextValue});
       }
@@ -182,7 +182,9 @@ class BenchmarkGrade extends React.Component {
                     />
                     </div>
 
-                    </TableCell>  
+                    </TableCell> 
+
+                      
                 
                     
                 </TableRow>
