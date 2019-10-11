@@ -49,7 +49,7 @@ class BenchmarkGrade extends React.Component {
     componentDidMount() {
        
             
-            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Grammar Grade","Vocabulary Grade","Context Grade"]})
+            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Grammar Grade","Vocabulary Grade","Context Grade", "Aggregate score"]})
         
         if (this.props.match.params.basename && this.props.match.params.modelid) {
             let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid, this.state.pageCount,1)
@@ -159,7 +159,7 @@ class BenchmarkGrade extends React.Component {
                 
                 
                     <TableCell >
-                    <div style={{width:'92px'}}>
+                    <div style={{width:'110px'}}>
                     <StarRatingComponent 
                         name={index}
                         starCount={5}
@@ -183,8 +183,13 @@ class BenchmarkGrade extends React.Component {
                     </div>
 
                     </TableCell> 
+                        
+                     <TableCell >
+                    <div style={{width:'108px'}}>
+                    { ((row.context_rating ? row.context_rating* 6: 0) +(row.spelling_rating ? row.spelling_rating* 3 : 0) + (row.rating ? row.rating* 1 : 0))/10}
+                    </div>
 
-                      
+                    </TableCell>  
                 
                     
                 </TableRow>
