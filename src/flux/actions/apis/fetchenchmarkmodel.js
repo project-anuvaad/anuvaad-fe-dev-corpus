@@ -2,13 +2,14 @@ import API from "./api";
 import C from "../constants";
 
 export default class FetchBenchmarkModel extends API {
-    constructor(basename, model, pagesize, pageno, timeout = 200000) {
+    constructor(basename, model, pagesize, pageno,status, timeout = 200000) {
         super("GET", timeout, false);
         this.modelid = model;
         this.basename = basename;
         this.sentences = null;
         this.pagesize = pagesize;
         this.pageno = pageno;
+        this.status = status;
         this.type = C.FETCH_BENCHMARK_MODEL;
     }
 
@@ -26,7 +27,7 @@ export default class FetchBenchmarkModel extends API {
     apiEndPoint() {
         console.log('sajish')
         
-        return `${super.apiEndPointAuto()}/app/fetch-benchmark-sentences?basename=${this.basename}&modelid=${this.modelid}&pagesize=${this.pagesize}&pageno=${this.pageno}`
+        return `${super.apiEndPointAuto()}/app/fetch-benchmark-sentences?basename=${this.basename}&modelid=${this.modelid}&pagesize=${this.pagesize}&pageno=${this.pageno}&status=${this.status}`
     }
 
     getBody() {
