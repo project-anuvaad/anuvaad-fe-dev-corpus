@@ -35,8 +35,8 @@ class Benchmark extends React.Component {
             english: [],
             hindi_score: [],
             english_score: [],
-            modelLanguage:[],
-            language:[],
+            modelLanguage: [],
+            language: [],
             file: {},
             corpus_type: 'single',
             hindiFile: {},
@@ -50,69 +50,72 @@ class Benchmark extends React.Component {
         const apiObj = new FetchBenchmark();
         const apiLang = new FetchLanguage();
         APITransport(apiObj);
-        
+
         const apiModel = new FetchModel();
         APITransport(apiModel);
-        
+
         APITransport(apiLang);
-        
+
 
 
     }
 
     handleSelectChange = (event) => {
-        console.log("-----",event.target.name)
-        this.setState({ [event.target.name]: event.target.value,
-        id:event.target.id
+        console.log("-----", event.target.name)
+        this.setState({
+            [event.target.name]: event.target.value,
+            id: event.target.id
         });
         console.log(event.target.value)
-      };
+    };
 
 
-    handleTarget(modelLanguage,supportLanguage,sourceLanguage){
+    handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
 
-        console.log("values",modelLanguage,supportLanguage,sourceLanguage)
-        var result =[];
-        var name="";
+        console.log("values", modelLanguage, supportLanguage, sourceLanguage)
+        var result = [];
+        var name = "";
 
-        supportLanguage.map((value)=>(
-            value.language_name === sourceLanguage ? 
-            name= value.language_code:''
-          ))
-          
-        modelLanguage.map((item) => 
-        {item.source_language_code == name?
-          supportLanguage.map((value)=>(
-            item.target_language_code===value.language_code?
-            result.push(value):null
-          )):''})
-          var value = new Set(result);
-          var target_language= [...value]
-          
-        return target_language;   
-      }
+        supportLanguage.map((value) => (
+            value.language_name === sourceLanguage ?
+                name = value.language_code : ''
+        ))
 
-      handleModel(modelLanguage,source,target){
-        console.log(modelLanguage,source,target)
-        var result =[];
-        var name='';
-        this.state.language.map((value)=>(
-            value.language_name === source ? 
-            name= value.language_code:''
-          ))
-        modelLanguage.map((item) => 
-        {item.source_language_code===name && item.target_language_code===target?
-          result.push(item):null})
-          console.log(result)
-          return result;
-    
-      }
+        modelLanguage.map((item) => {
+        item.source_language_code == name ?
+            supportLanguage.map((value) => (
+                item.target_language_code === value.language_code ?
+                    result.push(value) : null
+            )) : ''
+        })
+        var value = new Set(result);
+        var target_language = [...value]
+
+        return target_language;
+    }
+
+    handleModel(modelLanguage, source, target) {
+        console.log(modelLanguage, source, target)
+        var result = [];
+        var name = '';
+        this.state.language.map((value) => (
+            value.language_name === source ?
+                name = value.language_code : ''
+        ))
+        modelLanguage.map((item) => {
+        item.source_language_code === name && item.target_language_code === target ?
+            result.push(item) : null
+        })
+        console.log(result)
+        return result;
+
+    }
 
 
-      handleSubmit(row, modelid){
-            console.log(row)
-            history.push(`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/`+row+'/'+modelid)
-      }
+    handleSubmit(row, modelid) {
+        console.log(row)
+        history.push(`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/` + row + '/' + modelid)
+    }
 
     componentDidUpdate(prevProps) {
         if (prevProps.fetchBenchmark !== this.props.fetchBenchmark) {
@@ -122,173 +125,174 @@ class Benchmark extends React.Component {
 
         if (prevProps.supportLanguage !== this.props.supportLanguage) {
             this.setState({
-              language: this.props.supportLanguage
+                language: this.props.supportLanguage
             })
-          }
-        
+        }
+
         if (prevProps.langModel !== this.props.langModel) {
             this.setState({
-              modelLanguage: this.props.langModel
+                modelLanguage: this.props.langModel
             })
-          }
+        }
 
-          if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel) {
-            console.log("modelid---",this.state.modelid)
-            
+        if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel) {
+            console.log("modelid---", this.state.modelid)
 
-          }
+
+        }
     }
 
     render() {
 
-        
+
 
         const columns = [
             {
-             name: "basename",
-             label: "basename",
-             options: {
-                display: 'excluded',
-             }
+                name: "basename",
+                label: "basename",
+                options: {
+                    display: 'excluded',
+                }
             },
             {
                 name: "name",
                 label: "Category",
                 options: {
-                 filter: true,
-                 sort: true,
+                    filter: true,
+                    sort: true,
                 }
             },
 
-            
+
             {
                 name: "no_of_sentences",
                 label: "Sentences",
                 options: {
-                 filter: true,
-                 sort: true,
+                    filter: true,
+                    sort: true,
                 }
-               },
-               {
+            },
+            {
                 name: "source_lang",
                 label: "Source",
                 options: {
-                 filter: true,
-                 sort: true,
+                    filter: true,
+                    sort: true,
                 }
-               },
-               {
+            },
+            {
                 name: "Target",
-                
+
                 options: {
                     filter: true,
                     sort: false,
                     empty: true,
-                    customBodyRender: (value, tableMeta, updateValue) => {   
-                        if(tableMeta.rowData){
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        if (tableMeta.rowData) {
                             console.log(tableMeta.rowData)
-                            let name = "target-"+tableMeta.rowData[0]
+                            let name = "target-" + tableMeta.rowData[0]
                             return (
-                                 <Select id={"outlined-age-simple"} selectValue='language_code' MenuItemValues={tableMeta.rowData[3] ? this.handleTarget(this.state.modelLanguage,this.state.language,tableMeta.rowData[3]):[]} handleChange={this.handleSelectChange} value= {this.state[name]} name={name} val={tableMeta.rowData[0]} />
-            
+                                <Select id={"outlined-age-simple"} selectValue='language_code' MenuItemValues={tableMeta.rowData[3] ? this.handleTarget(this.state.modelLanguage, this.state.language, tableMeta.rowData[3]) : []} handleChange={this.handleSelectChange} value={this.state[name]} name={name} val={tableMeta.rowData[0]} />
+
                             );
                         }
-                
+
                     }
                 }
-               },
+            },
 
-               {
+            {
                 name: "Model",
-                
+
                 options: {
                     filter: true,
                     sort: false,
                     empty: true,
-                    customBodyRender: (value, tableMeta, updateValue) => {   
-                        let targetname = "target-"+tableMeta.rowData[0]
-                        let modelname = "model-"+tableMeta.rowData[0]
-                        if(tableMeta.rowData){
+                    customBodyRender: (value, tableMeta, updateValue) => {
+
+                        if (tableMeta.rowData) {
+                            let targetname = "target-" + tableMeta.rowData[0]
+                            let modelname = "model-" + tableMeta.rowData[0]
                             return (
-                                <SelectModel 
-                style={{minWidth: 160,align:'right',maxWidth: 100}}
-                name={modelname}
-                key={tableMeta.rowData[0]}
-                
-                value={this.state[modelname]}
-                onChange={this.handleSelectChange}
-                input={<OutlinedInput name={this.state.model} id="outlined-age-simple" />} >
-                  {tableMeta.rowData[3]&& this.state[targetname] ?
-                   this.handleModel(this.state.modelLanguage,tableMeta.rowData[3],this.state[targetname]).map((item) => {
-                       console.log(item.model_id)
-                    return <MenuItem key={item.model_id} value={item.model_id}>{item.model_name}</MenuItem>
-                  }):[]}>
+                                <SelectModel
+                                    style={{ minWidth: 160, align: 'right', maxWidth: 100 }}
+                                    name={modelname}
+                                    key={tableMeta.rowData[0]}
 
-
+                                    value={this.state[modelname]}
+                                    onChange={this.handleSelectChange}
+                                    input={<OutlinedInput name={this.state.model} id="outlined-age-simple" />} >
+                                    {tableMeta.rowData[3] && this.state[targetname] ?
+                                        this.handleModel(this.state.modelLanguage, tableMeta.rowData[3], this.state[targetname]).map((item) => {
+                                            console.log(item.model_id)
+                                            return <MenuItem key={item.model_id} value={item.model_id}>{item.model_name}</MenuItem>
+                                        }) : []}>
+                  
+                  
             </SelectModel>
-            
+
                             );
                         }
-                
+
                     }
                 }
-               },
-              
-               
-                {
+            },
+
+
+            {
                 name: "created_on",
                 label: "Timestamp",
                 options: {
-                 filter: true,
-                 sort: true,
-                 sortDirection: 'desc'
+                    filter: true,
+                    sort: true,
+                    sortDirection: 'desc'
                 }
-               },
+            },
 
-               
+
             {
                 name: "Action",
                 options: {
                     filter: true,
                     sort: false,
                     empty: true,
-                    customBodyRender: (value, tableMeta, updateValue) => {   
-                        if(tableMeta.rowData){
-                            let targetname = "target-"+tableMeta.rowData[0]
-                        let modelname = "model-"+tableMeta.rowData[0]
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        if (tableMeta.rowData) {
+                            let targetname = "target-" + tableMeta.rowData[0]
+                            let modelname = "model-" + tableMeta.rowData[0]
                             return (
-                                <div style={{width:'90px'}}>   
-                                    {this.state[targetname] && this.state[modelname] && <Tooltip title="Grade Sentence"><GradeIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ this.handleSubmit(tableMeta.rowData[0],this.state[modelname])} } > </GradeIcon></Tooltip>}
-                                    </div>
+                                <div style={{ width: '90px' }}>
+                                    {this.state[targetname] && this.state[modelname] && <Tooltip title="Grade Sentence"><GradeIcon style={{ width: "24", height: "24", cursor: 'pointer', marginLeft: '10%', marginRight: '8%' }} onClick={() => { this.handleSubmit(tableMeta.rowData[0], this.state[modelname]) }} > </GradeIcon></Tooltip>}
+                                </div>
                             );
                         }
-                
+
                     }
                 }
             },
         ];
-         
+
         const options = {
             filterType: 'checkbox',
             download: false,
             print: false,
             fixedHeader: true,
-            filter:false,
-            selectableRows:'none'
+            filter: false,
+            selectableRows: 'none'
         };
 
         return (
             <div>
 
-        <Toolbar style={{marginLeft:"-5.4%",marginRight:'1.5%'}}>	
-						<Typography variant="title" color="inherit" style={{flex: 1}}>
-						</Typography>
-                        
-                        </Toolbar>
-                    <div style={{marginLeft: '-4%', marginRight: '3%', marginTop: '40px'}}>
-                    <MUIDataTable  title={"Documents"} data={this.state.name} columns={columns} options={options}/>
+                <Toolbar style={{ marginLeft: "-5.4%", marginRight: '1.5%' }}>
+                    <Typography variant="title" color="inherit" style={{ flex: 1 }}>
+                    </Typography>
+
+                </Toolbar>
+                <div style={{ marginLeft: '-4%', marginRight: '3%', marginTop: '40px' }}>
+                    <MUIDataTable title={"Documents"} data={this.state.name} columns={columns} options={options} />
                 </div>
-                  </div>         
+            </div>
         );
     }
 }
@@ -299,7 +303,7 @@ const mapStateToProps = state => ({
     fetchBenchmark: state.fetchBenchmark,
     langModel: state.langModel,
     supportLanguage: state.supportLanguage,
-    fetchBenchmarkModel:state.fetchBenchmarkModel
+    fetchBenchmarkModel: state.fetchBenchmarkModel
 
 });
 
