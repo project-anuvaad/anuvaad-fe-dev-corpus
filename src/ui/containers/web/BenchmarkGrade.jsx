@@ -6,8 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReadMoreAndLess from 'react-read-more-less';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
-
-import FetchSentences from "../../../flux/actions/apis/sentences";
+import Menu from '@material-ui/core/Menu';
 import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
 import Divider from '@material-ui/core/Divider';
 import Table from '@material-ui/core/Table';
@@ -20,7 +19,7 @@ import Typography from '@material-ui/core/Typography';
 import { CSVLink, CSVDownload } from "react-csv";
 import StarRatingComponent from 'react-star-rating-component';
 import FetchBenchmarkModel from "../../../flux/actions/apis/fetchenchmarkmodel";
-
+import { Tooltip } from '@material-ui/core';
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
@@ -33,14 +32,18 @@ class BenchmarkGrade extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            
+            inputStatus:'ALL',
+            pending: null,
+            score:{},
             apiCalled: false,
             sentences: [],
             pageCount:5,
             status:'',
             page:0,
             offset:0,
+            MenuItemValues:["All", "Pending"],
             TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference","Grade"] ,
+            TableHeaderDescription: ['Source Sentence','Target Sentence',"how good the contextual meaning of the sentence", "How well sequenced and properly framed the output is, given the meaning was conveyed", "Vocabulary/Lexicon- This  captures two things- first, proper words to express the meaning of those sentences, including correct proper nouns(names, places etc.). Secondly, it includes if the output contains more better words i.e a better synonym, this is helpful in relative comparison, when you want to give more weight to न्यायाधीश in comparison to जस्टिस","Structure of sentence grade(60%) 	Vocabulary / Lexicon grade(30%)	Meaning of sentence grade(10%)"],
             role: JSON.parse(localStorage.getItem('roles'))
 
         }
@@ -49,7 +52,7 @@ class BenchmarkGrade extends React.Component {
     componentDidMount() {
        
             
-            this.setState({TableHeaderValues:['Source Sentence','Target Sentence',"Grammar Grade","Vocabulary Grade","Context Grade", "Aggregate score"]})
+            this.setState({TableHeaderValues:['Source Sentence','Target Sentence', "Meaning of sentence grade", "Structure of sentence grade","Vocabulary / Lexicon grade", "Aggregate score"]})
         
         if (this.props.match.params.basename && this.props.match.params.modelid) {
             let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid, this.state.pageCount,1)
@@ -69,6 +72,12 @@ class BenchmarkGrade extends React.Component {
 
       };
 
+      handleStatusChange = event => {
+        this.setState({ inputStatus: event.target.value });
+            let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,this.state.pageCount,1,event.target.value)
+            this.props.APITransport(api);
+      };
+
       handleSelectChange = event => {
         this.setState({ pageCount: event.target.value,offset:0 });
             let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,event.target.value,1,this.state.inputStatus)
@@ -83,7 +92,9 @@ class BenchmarkGrade extends React.Component {
             this.setState({
                 sentences: this.props.fetchBenchmarkModel.data,
                 sentenceCancel: this.props.fetchBenchmarkModel.data,
-                count: this.props.fetchBenchmarkModel.count
+                count: this.props.fetchBenchmarkModel.count,
+                score: this.props.fetchBenchmarkModel.sum,
+                pending: this.props.fetchBenchmarkModel.pending,
             })
         }
     }
@@ -114,6 +125,8 @@ class BenchmarkGrade extends React.Component {
 
 
     render() {
+        console.log(this.state.score.context_rating,this.state.score.grammer_grade, this.state.score.spelling_rating)
+        const sum = ((this.state.score.context_rating ? this.state.score.context_rating * 6 : 0 + this.state.score.grammer_grade ? this.state.score.grammer_grade * 3 : 0 + this.state.score.spelling_rating ?  this.state.score.spelling_rating * 1 : 0 )/10) 
         const CorpusDetails= <TableBody>
             {this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.map((row, index) => (
                 <TableRow key={index} >
@@ -155,9 +168,6 @@ class BenchmarkGrade extends React.Component {
 
                     </TableCell>
                     
-                
-                
-                
                     <TableCell >
                     <div style={{width:'110px'}}>
                     <StarRatingComponent 
@@ -170,10 +180,8 @@ class BenchmarkGrade extends React.Component {
 
                     </TableCell>  
                 
-
-                    
                     <TableCell >
-                    <div style={{width:'92px'}}>
+                    <div style={{width:'100px'}}>
                     <StarRatingComponent 
                         name={index}
                         starCount={5}
@@ -185,8 +193,8 @@ class BenchmarkGrade extends React.Component {
                     </TableCell> 
                         
                      <TableCell >
-                    <div style={{width:'108px'}}>
-                    { ((row.context_rating ? row.context_rating* 6: 0) +(row.spelling_rating ? row.spelling_rating* 3 : 0) + (row.rating ? row.rating* 1 : 0))/10}
+                    <div style={{width:'90px'}}>
+                    { ((row.context_rating ? row.context_rating* 6 : 0) +(row.spelling_rating ? row.spelling_rating* 3 : 0) + (row.rating ? row.rating* 1 : 0))/10}
                     </div>
 
                     </TableCell>  
@@ -228,24 +236,58 @@ class BenchmarkGrade extends React.Component {
 
                         <MuiThemeProvider theme={theme}>
         <CssBaseline />
+        <Grid container spacing={24} style={{ padding: 5 }}>
+                    
+        <Grid item xs={3} sm={3} lg={3} xl={3}>
+            <Typography variant="title" color="inherit" style={{paddingBottom:'8px',paddingLeft:'15px',flex: 1}}>
+            {this.state.pending==0 ? " Total Grade : " +sum :null }
+</Typography>
+</Grid>
+                    <Grid item xs={3} sm={3} lg={3} xl={3}>
+            <Typography variant="title" color="inherit" style={{paddingBottom:'8px',flex: 1}}>
+                {this.state.count && "Number of sentences pendng : "} {this.state.pending?this.state.pending: this.state.count && this.state.count- this.state.count }
+</Typography>
+</Grid>
+<Grid item xs={3} sm={3} lg={2} xl={2}>
+Status Filter :&nbsp;&nbsp;&nbsp;
+<Select
+          
+            value={this.state.inputStatus}
+            onChange={this.handleStatusChange}
+            displayEmpty
+          >
+            <MenuItem value={"ALL"}>All</MenuItem>
+            <MenuItem value={"PENDING"}>Pending</MenuItem>
+            
+            
+          </Select>
+                </Grid>
+<Grid item xs={4} sm={4} lg={4} xl={4} >
+           
         <Pagination
             
             align='right'
           limit={1}
           offset={this.state.offset}
           centerRipple={true}
-          total={this.state.count/this.state.pageCount}
+          total={(this.state.inputStatus==="PENDING" ? this.state.pending : this.state.count)/this.state.pageCount}
           onClick={(event, offset) => {this.handleChangePage(event,offset)}}
         />
+         </Grid>
+         
+            </Grid>
+        
         </MuiThemeProvider>
 
                             <Divider/>
                             <Table >
                                 <TableHead>
                                     <TableRow>
-                                    {this.state.TableHeaderValues.map((item) => (
-                                        <TableCell width="45%">{item}</TableCell>
-                                    ))}       
+                                    {this.state.TableHeaderValues.map((item,index) => {
+                                        console.log("index value",this.state.TableHeaderDescription[index])
+                                        return <Tooltip placement="top-start" enterDelay={200} key={"1"}  title={this.state.TableHeaderDescription[index]} ><TableCell width="45%">{item}</TableCell></Tooltip>
+                                        
+                                    })}       
                                     </TableRow>
                                 </TableHead>
                                 {CorpusDetails}
