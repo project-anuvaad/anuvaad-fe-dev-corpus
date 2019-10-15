@@ -136,7 +136,7 @@ class BenchmarkGrade extends React.Component {
       }
 
       calculateScore(){
-          return (this.state.score.context_rating * 6 +  this.state.score.grammer_grade * 3 +   this.state.score.spelling_rating * 1 )/10
+          return ((this.state.score.context_rating * 6 +  this.state.score.grammer_grade * 3 +   this.state.score.spelling_rating * 1 )/10)
       }
 
 
