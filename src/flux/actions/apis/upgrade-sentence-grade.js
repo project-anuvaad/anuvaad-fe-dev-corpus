@@ -5,7 +5,7 @@ import C from "../constants";
 export default class UpdateSentences extends API {
     constructor(updateSentence,modelid, timeout = 2000) {
         super('POST', timeout, false);
-        this.type = C.UPDATE_SENTENCE_DRADE;
+        this.type = C.UPDATE_SENTENCE_GRADE;
         this.updateSentence = updateSentence;
         this.modelid = modelid;
         this.sentences=[]
@@ -18,8 +18,8 @@ export default class UpdateSentences extends API {
 
     processResponse(res) {
         super.processResponse(res)
-        if (res.data) {
-            this.sentences = res.data;
+        if (res) {
+            this.sentences = res;
         }
     }
 
