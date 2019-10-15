@@ -51,9 +51,7 @@ class BenchmarkGrade extends React.Component {
 
     componentDidMount() {
        
-            
-            this.setState({TableHeaderValues:['Source Sentence','Target Sentence', "Meaning of sentence", "Structure of sentence","Vocabulary / Lexicon", "Aggregate score"]})
-        
+        this.setState({TableHeaderValues:['Source Sentence','Target Sentence', "Meaning of sentence", "Structure of sentence","Vocabulary / Lexicon", "Aggregate score"]})
         if (this.props.match.params.basename && this.props.match.params.modelid) {
             let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid, this.state.pageCount,1)
             this.props.APITransport(api);
@@ -86,9 +84,17 @@ class BenchmarkGrade extends React.Component {
 
 
     componentDidUpdate(prevProps) {
+        console.log("",this.props.updateGrade)
+        if (prevProps.updateGrade !== this.props.updateGrade ) {
+
+            let apivalue = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,this.state.pageCount,this.state.offset+1,this.state.inputStatus)
+            this.props.APITransport(apivalue);
+
+        }
+            
        
-        if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel) {
-            console.log("value----",this.props.count)
+        if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel ) {
+            
             this.setState({
                 sentences: this.props.fetchBenchmarkModel.data,
                 sentenceCancel: this.props.fetchBenchmarkModel.data,
@@ -103,7 +109,9 @@ class BenchmarkGrade extends React.Component {
         let sentences = this.state.sentences
         sentences[name].rating = nextValue
         let api = new UpdateSentencesGrade(sentences[name],this.props.match.params.modelid)
+            
             this.props.APITransport(api);
+            
         this.setState({rating: nextValue});
       }
 
@@ -111,7 +119,9 @@ class BenchmarkGrade extends React.Component {
         let sentences = this.state.sentences
         sentences[name].spelling_rating = nextValue
         let api = new UpdateSentencesGrade(sentences[name],this.props.match.params.modelid)
-            this.props.APITransport(api);
+        
+        this.props.APITransport(api);
+        
         this.setState({spelling_rating: nextValue});
       }
 
@@ -119,14 +129,19 @@ class BenchmarkGrade extends React.Component {
         let sentences = this.state.sentences
         sentences[name].context_rating = nextValue
         let api = new UpdateSentencesGrade(sentences[name],this.props.match.params.modelid)
+            
             this.props.APITransport(api);
+            
         this.setState({context_rating: nextValue});
+      }
+
+      calculateScore(){
+          return (this.state.score.context_rating * 6 +  this.state.score.grammer_grade * 3 +   this.state.score.spelling_rating * 1 )/10
       }
 
 
     render() {
-        console.log(this.state.score.context_rating,this.state.score.grammer_grade, this.state.score.spelling_rating)
-        const sum = (( this.state.score.context_rating * 6 +  this.state.score.grammer_grade * 3 +   this.state.score.spelling_rating * 1 )/10) 
+        
         const CorpusDetails= <TableBody>
             {this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.map((row, index) => (
                 <TableRow key={index} >
@@ -244,7 +259,7 @@ class BenchmarkGrade extends React.Component {
                     
         <Grid item xs={3} sm={3} lg={3} xl={3}>
             <Typography variant="title" color="inherit" style={{paddingBottom:'8px',paddingLeft:'15px',flex: 1}}>
-            {this.state.pending==0 ? " Total Grade : " +sum :null }
+            {this.state.pending==0 ? " Total Grade : " + this.calculateScore() :null }
 </Typography>
 </Grid>
                     <Grid item xs={3} sm={3} lg={3} xl={3}>
@@ -309,7 +324,8 @@ const mapStateToProps = state => ({
     apistatus: state.apistatus,
     corpus: state.corpus,
     sentences: state.sentences,
-    fetchBenchmarkModel: state.fetchBenchmarkModel
+    fetchBenchmarkModel: state.fetchBenchmarkModel,
+    updateGrade:state.updateGrade
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
