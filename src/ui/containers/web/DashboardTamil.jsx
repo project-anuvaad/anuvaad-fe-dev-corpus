@@ -183,7 +183,7 @@ class Dashboard extends React.Component {
           item.target_language_code === this.state.target &&  item.source_language_code === this.state.source && this.state.model.includes(item.model_name)?
             model.push(item):[])) :
             this.state.modelLanguage.map((item) =>(
-              item.target_language_code === this.state.target &&  item.source_language_code === this.state.source && model.length<1?
+              item.target_language_code === this.state.target &&  item.source_language_code === this.state.source && model.length<1 && item.is_primary?
                 model.push(item):[]))
     const apiObj = new AutoML(this.state.text, this.state.source, this.state.target);
     const nmt = new NMT(this.state.text, model, true,this.state.target, this.state.showSplitted);
