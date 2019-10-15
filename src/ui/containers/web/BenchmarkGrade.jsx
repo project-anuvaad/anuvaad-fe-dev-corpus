@@ -52,7 +52,7 @@ class BenchmarkGrade extends React.Component {
     componentDidMount() {
        
             
-            this.setState({TableHeaderValues:['Source Sentence','Target Sentence', "Meaning of sentence grade", "Structure of sentence grade","Vocabulary / Lexicon grade", "Aggregate score"]})
+            this.setState({TableHeaderValues:['Source Sentence','Target Sentence', "Meaning of sentence", "Structure of sentence","Vocabulary / Lexicon", "Aggregate score"]})
         
         if (this.props.match.params.basename && this.props.match.params.modelid) {
             let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid, this.state.pageCount,1)
@@ -126,7 +126,7 @@ class BenchmarkGrade extends React.Component {
 
     render() {
         console.log(this.state.score.context_rating,this.state.score.grammer_grade, this.state.score.spelling_rating)
-        const sum = ((this.state.score.context_rating ? this.state.score.context_rating * 6 : 0 + this.state.score.grammer_grade ? this.state.score.grammer_grade * 3 : 0 + this.state.score.spelling_rating ?  this.state.score.spelling_rating * 1 : 0 )/10) 
+        const sum = (( this.state.score.context_rating * 6 +  this.state.score.grammer_grade * 3 +   this.state.score.spelling_rating * 1 )/10) 
         const CorpusDetails= <TableBody>
             {this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.map((row, index) => (
                 <TableRow key={index} >
@@ -154,6 +154,18 @@ class BenchmarkGrade extends React.Component {
                         </ReadMoreAndLess>
                         
                     </TableCell>
+
+                    <TableCell >
+                    <div style={{width:'100px'}}>
+                    <StarRatingComponent 
+                        name={index}
+                        starCount={5}
+                        value={row.context_rating ? row.context_rating : 0}
+                        onStarClick={this.handleContextStarClick.bind(this)}
+                    />
+                    </div>
+
+                    </TableCell>
                      
                     
                     <TableCell >
@@ -167,7 +179,7 @@ class BenchmarkGrade extends React.Component {
                     </div>
 
                     </TableCell>
-                    
+
                     <TableCell >
                     <div style={{width:'110px'}}>
                     <StarRatingComponent 
@@ -178,23 +190,15 @@ class BenchmarkGrade extends React.Component {
                     />
                     </div>
 
-                    </TableCell>  
+                    </TableCell>
+                    
+                      
                 
-                    <TableCell >
-                    <div style={{width:'100px'}}>
-                    <StarRatingComponent 
-                        name={index}
-                        starCount={5}
-                        value={row.context_rating ? row.context_rating : 0}
-                        onStarClick={this.handleContextStarClick.bind(this)}
-                    />
-                    </div>
-
-                    </TableCell> 
+                     
                         
                      <TableCell >
                     <div style={{width:'90px'}}>
-                    { ((row.context_rating ? row.context_rating* 6 : 0) +(row.spelling_rating ? row.spelling_rating* 3 : 0) + (row.rating ? row.rating* 1 : 0))/10}
+                    { ((row.context_rating ? row.context_rating* 6 : 0) +(row.spelling_rating ? row.spelling_rating* 1 : 0) + (row.rating ? row.rating* 3 : 0))/10}
                     </div>
 
                     </TableCell>  
@@ -245,7 +249,7 @@ class BenchmarkGrade extends React.Component {
 </Grid>
                     <Grid item xs={3} sm={3} lg={3} xl={3}>
             <Typography variant="title" color="inherit" style={{paddingBottom:'8px',flex: 1}}>
-                {this.state.count && "Number of sentences pending : "} {this.state.pending?this.state.pending: this.state.count && this.state.count- this.state.count }
+                {this.state.count && "Number of sentences pending : "} {this.state.pending && this.state.pending}
 </Typography>
 </Grid>
 <Grid item xs={3} sm={3} lg={2} xl={2}>
