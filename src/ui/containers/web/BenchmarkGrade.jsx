@@ -136,7 +136,8 @@ class BenchmarkGrade extends React.Component {
       }
 
       calculateScore(){
-          return ((this.state.score.context_rating * 6 +  this.state.score.grammer_grade * 3 +   this.state.score.spelling_rating * 1 )/10)
+          const result =  this.props.match.params.basename === 1570785751 ? ((this.state.score.context_rating ? this.state.score.context_rating* 2 : 0) +(this.state.score.spelling_rating ? this.state.score.spelling_rating* 6 : 0) + (this.state.score.rating ? this.state.score.rating* 2 : 0))/10: ((this.state.score.context_rating * 6 +  this.state.score.grammer_grade * 3 +   this.state.score.spelling_rating * 1 )/10)
+          return result
       }
 
 
@@ -213,7 +214,7 @@ class BenchmarkGrade extends React.Component {
                         
                      <TableCell >
                     <div style={{width:'90px'}}>
-                    { ((row.context_rating ? row.context_rating* 6 : 0) +(row.spelling_rating ? row.spelling_rating* 1 : 0) + (row.rating ? row.rating* 3 : 0))/10}
+                    {this.props.match.params.basename === "1570785751" ? ((row.context_rating ? row.context_rating* 2 : 0) +(row.spelling_rating ? row.spelling_rating* 6 : 0) + (row.rating ? row.rating* 2 : 0))/10 : ((row.context_rating ? row.context_rating* 6 : 0) +(row.spelling_rating ? row.spelling_rating* 1 : 0) + (row.rating ? row.rating* 3 : 0))/10}
                     </div>
 
                     </TableCell>  
@@ -259,7 +260,7 @@ class BenchmarkGrade extends React.Component {
                     
         <Grid item xs={3} sm={3} lg={3} xl={3}>
             <Typography variant="title" color="inherit" style={{paddingBottom:'8px',paddingLeft:'15px',flex: 1}}>
-            {this.state.pending==0 ? " Total Grade : " + this.calculateScore() :null }
+            {this.state.pending ? " Total Grade : " + this.calculateScore() :null }
 </Typography>
 </Grid>
                     <Grid item xs={3} sm={3} lg={3} xl={3}>
