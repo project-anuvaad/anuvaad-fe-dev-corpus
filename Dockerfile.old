@@ -1,7 +1,7 @@
 FROM node:10-alpine
 COPY package.json /
 WORKDIR /
-RUN apk update && apk add python openjdk7 make g++
+RUN apk update && apk add python openjdk7 make g++ bash
 ENV JAVA_HOME=/usr/lib/jvm/java-1.7-openjdk
 ENV PATH=$PATH:/usr/lib/jvm/java-1.7-openjdk/bin
 RUN npm install
