@@ -21,7 +21,7 @@ then
 docker rm "$JOB_BASE_NAME"
 fi
 
-docker run --env REACT_APP_BASE_URL=$base_url --env REACT_APP_APIGW_BASE_URL=$apigw_url --env REACT_APP_CLIENT_ID=$client_id -v $(pwd):/opt --name "$JOB_BASE_NAME" anuvaadio/anuvaad-fe-client-dev-base:1 /bin/bash -c "cd /opt &&  npm run build"
+docker run --env REACT_APP_BASE_URL=$base_url --env REACT_APP_APIGW_BASE_URL=$apigw_url --env REACT_APP_CLIENT_ID=$client_id -v $(pwd):/opt --name "$JOB_BASE_NAME" anuvaadio/anuvaad-fe-client-dev-base:1 /bin/sh -c "cd /opt &&  npm run build"
 docker rm "$JOB_BASE_NAME"
 commit_id=$(git rev-parse --short HEAD)
 echo $commit_id> commit_id.txt
