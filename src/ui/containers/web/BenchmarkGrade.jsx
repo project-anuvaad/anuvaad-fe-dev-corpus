@@ -260,7 +260,7 @@ class BenchmarkGrade extends React.Component {
                     
         <Grid item xs={3} sm={3} lg={3} xl={3}>
             <Typography variant="title" color="inherit" style={{paddingBottom:'8px',paddingLeft:'15px',flex: 1}}>
-            {this.state.pending ? " Total Grade : " + this.calculateScore() :null }
+            {this.state.pending === 0 ? " Total Grade : " + this.calculateScore() :null }
 </Typography>
 </Grid>
                     <Grid item xs={3} sm={3} lg={3} xl={3}>
