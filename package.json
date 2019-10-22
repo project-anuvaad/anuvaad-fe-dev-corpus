@@ -13,7 +13,7 @@
 		"install": "^0.13.0",
 		"material-ui": "^0.20.1",
 		"material-ui-datatables": "^0.18.2",
-		"material-ui-dropzone": "^2.3.5",
+		"material-ui-dropzone": "~2.3.5",
 		"material-ui-filter": "^3.0.2",
 		"material-ui-flat-pagination": "^3.2.0",
 		"material-ui-next": "^1.0.0-beta.47",
