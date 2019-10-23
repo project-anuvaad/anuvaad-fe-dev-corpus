@@ -34,6 +34,8 @@ class BenchmarkGrade extends React.Component {
         this.state = {
             inputStatus:'ALL',
             pending: null,
+            PendingpageNumber: 1,
+            AllPageNumber: 1,
             score:{},
             apiCalled: false,
             sentences: [],
@@ -71,8 +73,10 @@ class BenchmarkGrade extends React.Component {
       };
 
       handleStatusChange = event => {
+          console.log("sajish-----------------------------------",this.state.offset+1,event.target.value)
+        event.target.value ==="ALL"? this.setState({AllPageNumber:this.state.offset+1}):''
         this.setState({ inputStatus: event.target.value });
-            let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,this.state.pageCount,1,event.target.value)
+            let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,this.state.pageCount,event.target.value ==="ALL"?this.state.AllPageNumber:1,event.target.value)
             this.props.APITransport(api);
       };
 
@@ -288,7 +292,7 @@ Status Filter :&nbsp;&nbsp;&nbsp;
             
             align='right'
           limit={1}
-          offset={this.state.offset}
+          offset={this.state.inputStatus=="ALL" ? this.state.AllPageNumber : this.state.offset}
           centerRipple={true}
           total={(this.state.inputStatus==="PENDING" ? this.state.pending : this.state.count)/this.state.pageCount}
           onClick={(event, offset) => {this.handleChangePage(event,offset)}}
