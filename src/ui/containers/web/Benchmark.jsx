@@ -224,7 +224,6 @@ class Benchmark extends React.Component {
                                     input={<OutlinedInput name={this.state.model} id="outlined-age-simple" />} >
                                     {tableMeta.rowData[3] && this.state[targetname] ?
                                         this.handleModel(this.state.modelLanguage, tableMeta.rowData[3], this.state[targetname]).map((item) => {
-                                            console.log(item.model_id)
                                             return <MenuItem key={item.model_id} value={item.model_id}>{item.model_name}</MenuItem>
                                         }) : []}>
                   

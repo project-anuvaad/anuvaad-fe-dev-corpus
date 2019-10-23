@@ -26,6 +26,7 @@ import history from "../../../../web.history";
 import { Button } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab';
 import ActionDelete from '@material-ui/icons/QuestionAnswer';
+import GroupIcon from '@material-ui/icons/Group';
 
 const styles = {
 	root: {
@@ -215,7 +216,7 @@ class Header extends React.Component {
 								)}
 							/>
 						</ListItem>}
-						
+						{role.includes('dev','grader') &&
 						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/corpus`)}}>
 							<ListItemIcon>
 								<SendIcon style={{ color: 'white' }} />
@@ -229,7 +230,8 @@ class Header extends React.Component {
 								)}
 							/>
 						</ListItem>
-						
+						}
+						{role.includes('dev','grader') &&
 						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/benchmark`)}}>
 							<ListItemIcon>
 								<SendIcon style={{ color: 'white' }} />
@@ -243,6 +245,23 @@ class Header extends React.Component {
 								)}
 							/>
 						</ListItem>
+						}
+
+							{role.includes('admin') &&
+								<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push("/graderreport") }}>
+									<ListItemIcon>
+										<GroupIcon style={{ color: 'white' }} />
+										</ListItemIcon>
+									<ListItemText
+										disableTypography
+										primary={(
+											<Typography type="body2" style={{ color: '#FFFFFF' }}>
+												Grader Reports
+          							</Typography>
+										)}
+									/>
+									</ListItem>
+								}
 						
 						
 
@@ -259,6 +278,8 @@ class Header extends React.Component {
 								)}
 							/>
 						</ListItem>
+
+						
 
 						
 
