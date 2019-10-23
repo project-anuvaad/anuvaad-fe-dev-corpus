@@ -18,6 +18,8 @@ import langModel from './fetchmodel';
 import fetchBenchmark from './benchmark';
 import fetchBenchmarkModel from './fetchbenchmarkmodel';
 import updateGrade from './update-sentences-grade';
+import graderReport from './graderreport';
+
 export default {
     login,
     automl,
@@ -36,7 +38,8 @@ export default {
     langModel,
     fetchBenchmark,
     fetchBenchmarkModel,
-    updateGrade
+    updateGrade,
+    graderReport
 
 
     
