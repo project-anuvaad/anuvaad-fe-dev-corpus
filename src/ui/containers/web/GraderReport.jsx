@@ -36,23 +36,23 @@ class GraderReport extends React.Component {
         }
     }
 
-    handleClick=(rowData)=>{
-        console.log("rowdata",rowData)
-        this.setState({tocken:true,graderReport:rowData[1]})
-       
+    handleClick = (rowData) => {
+        console.log("rowdata", rowData)
+        this.setState({ tocken: true, graderReport: rowData[1] })
+
 
     }
 
     componentDidMount() {
-        
+
 
     }
 
-    handleSubmit(){
+    handleSubmit() {
         const { APITransport } = this.props;
 
-        console.log(this.state.from_date,this.state.to_date)
-        const apiObj = new GraderReportDetails(this.state.from_date,this.state.to_date);
+        console.log(this.state.from_date, this.state.to_date)
+        const apiObj = new GraderReportDetails(this.state.from_date, this.state.to_date);
         APITransport(apiObj);
         this.setState({ showLoader: true })
     }
@@ -60,28 +60,28 @@ class GraderReport extends React.Component {
     componentDidUpdate(prevProps) {
 
         if (prevProps.graderReport !== this.props.graderReport) {
-            console.log("report----",this.props.graderReport)
-          this.setState({
-            graderDetails: this.props.graderReport.data,
-            
+            console.log("report----", this.props.graderReport)
+            this.setState({
+                graderDetails: this.props.graderReport.data,
 
-          })
+
+            })
         }
     }
-    handleClose=()=>{
+    handleClose = () => {
         console.log("asdasfdsf")
-        this.setState({tocken:false})
+        this.setState({ tocken: false })
 
     }
 
     handleTextChange(key, event) {
         this.setState({
-          [key]: event.target.value
+            [key]: event.target.value
         })
-      }
-   
+    }
+
     render() {
-        
+
         const Table1columns = [
             {
                 name: "username",
@@ -100,10 +100,10 @@ class GraderReport extends React.Component {
                     display: 'excluded',
                 }
             },
-            
+
             {
                 name: "sentence_count",
-                label: "Sentence ount",
+                label: "Sentence Count",
                 options: {
                     filter: true,
                     sort: true,
@@ -117,7 +117,7 @@ class GraderReport extends React.Component {
                     filter: true,
                     sort: true,
                 }
-            } 
+            }
         ];
 
         const options1 = {
@@ -127,11 +127,11 @@ class GraderReport extends React.Component {
             fixedHeader: true,
             filter: false,
             selectableRows: 'none',
-            
-            onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData):''
+
+            onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : ''
         };
 
-        const Table2columns=[
+        const Table2columns = [
             {
                 name: "category_name",
                 label: "Category Name",
@@ -141,7 +141,7 @@ class GraderReport extends React.Component {
                     sortDirection: 'desc'
                 }
             },
-            
+
             {
                 name: "source",
                 label: "Source",
@@ -161,8 +161,8 @@ class GraderReport extends React.Component {
                     sortDirection: 'desc'
                 }
             },
-            
-            
+
+
             {
                 name: "rating",
                 label: "Meaning of sentence",
@@ -172,7 +172,7 @@ class GraderReport extends React.Component {
                     sortDirection: 'desc'
                 }
             },
-            
+
             {
                 name: "context_rating",
                 label: "Structure of sentence",
@@ -191,65 +191,65 @@ class GraderReport extends React.Component {
                     sortDirection: 'desc'
                 }
             }
-            
+
 
         ]
 
         return (
             <div>
-                
-                
+
+
                 {!this.state.tocken ?
-<div>
+                    <div>
 
 
-<Grid container spacing={24} style={{ padding: 5 }}>
-                    <Grid item xs={2} sm={2} lg={2} xl={2} style={{marginLeft:'16%',marginTop:'38px'}}>
-                    <Typography variant="title" color="inherit" >
-                    From Date :
+                        <Grid container spacing={24} style={{ padding: 5 }}>
+                            <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: '16%', marginTop: '38px' }}>
+                                <Typography variant="title" color="inherit" >
+                                    From Date :
 						</Typography>
-                        </Grid>
-                    <Grid item xs={2} sm={2} lg={2} xl={2} style={{marginLeft:'-8%',marginTop:'20px', width:'40px'}}><TextField id={this.state.from_date}  value={this.state.from_date } type="date"   onChange={(event) => { this.handleTextChange('from_date', event)  }}
-                  margin="normal" varient="outlined" style={{ marginLeft:'5%', width: '90%', marginBottom: '4%' }}
-                /> </Grid>
- 
+                            </Grid>
+                            <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: '-8%', marginTop: '20px', width: '40px' }}><TextField id={this.state.from_date} value={this.state.from_date} type="date" onChange={(event) => { this.handleTextChange('from_date', event) }}
+                                margin="normal" varient="outlined" style={{ marginLeft: '5%', width: '90%', marginBottom: '4%' }}
+                            /> </Grid>
 
-                    <Grid item xs={2} sm={2} lg={2} xl={2} style={{marginLeft:'2%',marginTop:'38px'}}>
-                    <Typography variant="title" color="inherit" >
-                    To Date :
+
+                            <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: '2%', marginTop: '38px' }}>
+                                <Typography variant="title" color="inherit" >
+                                    To Date :
 						</Typography>
-                        </Grid>
-                    <Grid item xs={2} sm={2} lg={2} xl={2} style={{marginLeft:'-8%',marginTop:'20px'}}><TextField id={this.state.to_date} value={this.state.to_date} type="date"  onChange={(event) => { this.handleTextChange('to_date', event) }}
-                  margin="normal" varient="outlined" style={{ marginLeft:'5%', width: '90%', marginBottom: '4%' }}
-                /></Grid>
- 
- <Grid item xs={3} sm={3} lg={3} xl={3} style={{marginLeft:'-8%',marginTop:'34px'}}>
- <Button variant="contained"  onClick={(event) => { this.handleSubmit( )}} color={'primary'} aria-label="edit" style={{ width: '170px',marginLeft:'50%', marginBottom: '4%' ,marginTop:'1px' }}>
-                            Submit
+                            </Grid>
+                            <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: '-8%', marginTop: '20px' }}><TextField id={this.state.to_date} value={this.state.to_date} type="date" onChange={(event) => { this.handleTextChange('to_date', event) }}
+                                margin="normal" varient="outlined" style={{ marginLeft: '5%', width: '90%', marginBottom: '4%' }}
+                            /></Grid>
+
+                            <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginLeft: '-8%', marginTop: '34px' }}>
+                                <Button variant="contained" onClick={(event) => { this.handleSubmit() }} color={'primary'} aria-label="edit" style={{ width: '170px', marginLeft: '50%', marginBottom: '4%', marginTop: '1px' }}>
+                                    Submit
                         </Button>
 
+                            </Grid>
                         </Grid>
-                        </Grid>
-                <div style={{ marginLeft: '-4%', marginRight: '3%', marginTop: '40px' }}>
-                    <MUIDataTable title={"Grader Details"} data={this.state.graderDetails} columns={Table1columns} options={options1} />
-                </div></div>:
-                <div>
+                        <div style={{ marginLeft: '-4%', marginRight: '3%', marginTop: '40px' }}>
+                            <MUIDataTable title={"Grader Details"} data={this.state.graderDetails} columns={Table1columns} options={options1} />
+                        </div></div> :
+                    <div>
 
-<Toolbar style={{marginLeft:"-5.4%",marginRight:'1.5%',marginTop:'20px'}}>	
-						<Typography variant="title" color="inherit" style={{flex: 1}}>
-						</Typography>
-                        <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { this.handleClose()}}>
-                < CloseIcon/> Close
+                        <Toolbar style={{ marginLeft: "-5.4%", marginRight: '1.5%', marginTop: '20px' }}>
+                            <Typography variant="title" color="inherit" style={{ flex: 1 }}>
+                            </Typography>
+                            <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { this.handleClose() }}>
+                                < CloseIcon /> Close
             </Fab>
                         </Toolbar>
-                
-                <div style={{ marginLeft: '-4%', marginRight: '3%', marginTop: '40px' }}>
-                    <MUIDataTable title={"Graded Report"} data={this.state.graderReport? this.state.graderReport: ''} columns={Table2columns} options={options1} />
-                </div>
-                </div>
+
+                        <div style={{ marginLeft: '-4%', marginRight: '3%', marginTop: '40px' }}>
+                            <MUIDataTable title={"Graded Report"} data={this.state.graderReport ? this.state.graderReport : ''} columns={Table2columns} options={options1} />
+                        </div>
+                    </div>
                 }
 
-               
+
             </div>
 
         );
