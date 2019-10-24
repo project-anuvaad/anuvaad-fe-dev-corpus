@@ -29,7 +29,7 @@ export default class UpdateSentences extends API {
 
     getBody() {
         return {
-          sentences:[this.updateSentence],
+          sentences:this.updateSentence,
           modelid:this.modelid
         };
       }
