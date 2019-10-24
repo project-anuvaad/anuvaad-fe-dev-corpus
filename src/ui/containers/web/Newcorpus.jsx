@@ -117,7 +117,7 @@ class Newcorpus extends React.Component {
             return <div>
             <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-          <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '12%', paddingTop: '14%' }} >Please select source language :</Typography>
+          <Typography value='' variant="title" style={{ marginLeft: '12%', paddingTop: '14%' }} >Please select source language :</Typography>
         
         </Grid>
         <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
