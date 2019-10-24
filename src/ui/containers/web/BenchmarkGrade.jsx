@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-
+import Dialog from "../../components/web/common/SimpleDialog";
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -26,13 +26,14 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Select from '@material-ui/core/Select';
 import Toolbar from '@material-ui/core/Toolbar';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import Button from "@material-ui/core/Button";
 const theme = createMuiTheme();
 class BenchmarkGrade extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             inputStatus:'ALL',
+            apiCall: false,
             pending: null,
             PendingpageNumber: 1,
             AllPageNumber: 1,
@@ -43,6 +44,7 @@ class BenchmarkGrade extends React.Component {
             status:'',
             page:0,
             offset:0,
+            tocken: false,
             MenuItemValues:["All", "Pending"],
             TableHeaderValues:['Source Sentence','Target Sentence',"Machine translated reference","Grade"] ,
             TableHeaderDescription: ['Source Sentence','Target Sentence',"how good the contextual meaning of the sentence", "How well sequenced and properly framed the output is, given the meaning was conveyed", "Vocabulary/Lexicon- This  captures two things- first, proper words to express the meaning of those sentences, including correct proper nouns(names, places etc.). Secondly, it includes if the output contains more better words i.e a better synonym, this is helpful in relative comparison, when you want to give more weight to न्यायाधीश in comparison to जस्टिस","Structure of sentence grade(60%) 	Vocabulary / Lexicon grade(30%)	Meaning of sentence grade(10%)"],
@@ -52,45 +54,54 @@ class BenchmarkGrade extends React.Component {
     }
 
     componentDidMount() {
-       
+        
         this.setState({TableHeaderValues:['Source Sentence','Target Sentence', "Meaning of sentence", "Structure of sentence","Vocabulary / Lexicon", "Aggregate score"]})
-        if (this.props.match.params.basename && this.props.match.params.modelid) {
-            let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid, this.state.pageCount,1)
+        if (this.props.match.params.basename && this.props.match.params.modelid  && !this.state.dialogOpen) {
+            let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid, this.state.pageCount,this.state.offset+1)
             this.props.APITransport(api);
         }
 
     }
 
     handleChangePage = (event, offset) => {
-        
-        this.setState({ offset,lock:false});
-        if (this.props.match.params.basename) {
+
+        var value = this.state.tocken ? this.state.apiCall ? true: false: true
+        this.setState({ offset,lock:false, dialogOpen:this.state.tocken ? true:false });
+        if (this.props.match.params.basename && value ) {
         let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,this.state.pageCount,offset+1,this.state.inputStatus)
             this.props.APITransport(api);
             
         }
-
+        
       };
 
       handleStatusChange = event => {
-          console.log("sajish-----------------------------------",this.state.offset+1,event.target.value)
-        event.target.value ==="ALL"? this.setState({AllPageNumber:this.state.offset+1}):''
-        this.setState({ inputStatus: event.target.value });
-            let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,this.state.pageCount,event.target.value ==="ALL"?this.state.AllPageNumber:1,event.target.value)
+        var value = this.state.tocken ? this.state.apiCall ? true: false: true
+        event.target.value ==="ALL"? this.setState({AllPageNumber:this.state.offset+2}):''
+        this.setState({ inputStatus: event.target.value,offset:0 , dialogOpen:this.state.tocken ? true:false});
+        if( value ){
+            let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,this.state.pageCount,event.target.value ==="PENDING"? 1:this.state.AllPageNumber,event.target.value)
             this.props.APITransport(api);
+        
+    }
+   
+    
       };
 
       handleSelectChange = event => {
-        this.setState({ pageCount: event.target.value,offset:0 });
+
+        var value = this.state.tocken ? this.state.apiCall ? true: false: true
+        this.setState({ pageCount: event.target.value,offset:0, dialogOpen:this.state.tocken ? true:false });
+        if( value ){
             let api = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,event.target.value,1,this.state.inputStatus)
             this.props.APITransport(api);
+        }
       };
 
 
     componentDidUpdate(prevProps) {
-        console.log("",this.props.updateGrade)
-        if (prevProps.updateGrade !== this.props.updateGrade ) {
 
+        if (prevProps.updateGrade !== this.props.updateGrade ) {
             let apivalue = new FetchBenchmarkModel(this.props.match.params.basename,this.props.match.params.modelid,this.state.pageCount,this.state.offset+1,this.state.inputStatus)
             this.props.APITransport(apivalue);
 
@@ -100,6 +111,7 @@ class BenchmarkGrade extends React.Component {
         if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel ) {
             
             this.setState({
+                apiCall: false,
                 sentences: this.props.fetchBenchmarkModel.data,
                 sentenceCancel: this.props.fetchBenchmarkModel.data,
                 count: this.props.fetchBenchmarkModel.count,
@@ -109,34 +121,33 @@ class BenchmarkGrade extends React.Component {
         }
     }
 
+
     handleStarClick(nextValue, prevValue, name) {
-        let sentences = this.state.sentences
-        sentences[name].rating = nextValue
-        let api = new UpdateSentencesGrade(sentences[name],this.props.match.params.modelid)
-            
-            this.props.APITransport(api);
-            
-        this.setState({rating: nextValue});
+        console.log(this.state.dialogOpen)
+        let sentence = this.state.sentences
+        sentence[name].rating = nextValue
+        console.log("sentences",sentence)
+        this.setState({sentences:sentence})
+        this.setState({rating: nextValue, sentences:sentence, tocken: true});
       }
 
       handleSpellStarClick(nextValue, prevValue, name) {
-        let sentences = this.state.sentences
-        sentences[name].spelling_rating = nextValue
-        let api = new UpdateSentencesGrade(sentences[name],this.props.match.params.modelid)
-        
-        this.props.APITransport(api);
-        
-        this.setState({spelling_rating: nextValue});
+        let sentence = this.state.sentences
+        sentence[name].spelling_rating = nextValue
+        this.setState({spelling_rating: nextValue, sentences:sentence, tocken: true});
       }
 
       handleContextStarClick(nextValue, prevValue, name) {
-        let sentences = this.state.sentences
-        sentences[name].context_rating = nextValue
-        let api = new UpdateSentencesGrade(sentences[name],this.props.match.params.modelid)
-            
-            this.props.APITransport(api);
-            
-        this.setState({context_rating: nextValue});
+        let sentence = this.state.sentences   
+        sentence[name].context_rating = nextValue
+        this.setState({context_rating: nextValue, sentences:sentence, tocken: true});
+      }
+
+      handleSubmit=()=>{
+          
+        let api = new UpdateSentencesGrade(this.state.sentences,this.props.match.params.modelid)
+        this.setState({dialogOpen: false, apiCall: true, tocken: false})
+        this.props.APITransport(api);
       }
 
       calculateScore(){
@@ -292,7 +303,7 @@ Status Filter :&nbsp;&nbsp;&nbsp;
             
             align='right'
           limit={1}
-          offset={this.state.inputStatus=="ALL" ? this.state.AllPageNumber : this.state.offset}
+          offset={this.state.offset}
           centerRipple={true}
           total={(this.state.inputStatus==="PENDING" ? this.state.pending : this.state.count)/this.state.pageCount}
           onClick={(event, offset) => {this.handleChangePage(event,offset)}}
@@ -308,8 +319,7 @@ Status Filter :&nbsp;&nbsp;&nbsp;
                                 <TableHead>
                                     <TableRow>
                                     {this.state.TableHeaderValues.map((item,index) => {
-                                        console.log("index value",this.state.TableHeaderDescription[index])
-                                        return <Tooltip placement="top-start" enterDelay={200} key={"1"}  title={this.state.TableHeaderDescription[index]} ><TableCell width="45%">{item}</TableCell></Tooltip>
+                                        return <Tooltip placement="top-start" enterDelay={200} key={item}  title={this.state.TableHeaderDescription[index]} ><TableCell width="45%">{item}</TableCell></Tooltip>
                                         
                                     })}       
                                     </TableRow>
@@ -319,6 +329,21 @@ Status Filter :&nbsp;&nbsp;&nbsp;
                         </Paper>
                     </Grid>
                 </Grid>
+                {this.state.sentences[0]&&
+                <div>
+                    {this.state.dialogOpen && this.state.tocken &&
+                     <Dialog open={this.state.dialogOpen} message={"Kindly save your changes"} title="Save Changes" value= {this.state.sentences} handleSubmit={this.handleSubmit} handleClose={this.handleClose}/>}
+<Toolbar style={{marginRight:'3%',marginTop:'20px'}}>	
+						<Typography variant="title" color="inherit" style={{flex: 1}}>
+						</Typography>
+                        <Button variant="contained"  onClick={(event) => { this.handleSubmit(this.state.sentences)}} color={'primary'} aria-label="edit" style={{ width: '170px', marginBottom: '4%' ,marginTop:'1px' }}>
+                            Save
+                        </Button>
+                        </Toolbar>
+                
+                        </div>
+                }
+                
             </div>
         );
     }
