@@ -37,8 +37,8 @@ export default class SimpleDialog extends React.Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        
-                        <Button onClick={(event) => { handleSubmit(value,status) }} color="primary">Save</Button>
+                        <Button onClick={(event) => { handleClose() }} color="primary">No</Button>
+                        <Button onClick={(event) => { handleSubmit(value,status) }} color="primary">Yes</Button>
                     </DialogActions>
                 </Dialog>
             
