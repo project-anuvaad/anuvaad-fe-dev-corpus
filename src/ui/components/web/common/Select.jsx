@@ -11,7 +11,7 @@ class SimpleSelect extends React.Component {
     
 
     render() {
-      const { id,selectValue, MenuItemValues, handleChange, value, name} = this.props;
+      const { id, MenuItemValues, handleChange, value, name} = this.props;
 
         return (
           <form>
@@ -21,7 +21,7 @@ class SimpleSelect extends React.Component {
                 value={value}
                 onChange={handleChange}
                 input={
-                  <OutlinedInput name={name} id={id}/>
+                  <OutlinedInput labelWidth={200} name={name} id={id}/>
                 }
               >
                   {MenuItemValues.map((item) => (
