@@ -185,7 +185,7 @@ class BenchmarkGrade extends React.Component {
 
   calculateScore() {
     const result =
-      this.props.match.params.basename === 1570785751 || this.props.match.params.basename === 1570785239
+      this.props.match.params.basename === "1570785751" || this.props.match.params.basename === "1570785239"
         ? ((this.state.score.context_rating ? this.state.score.context_rating * 2 : 0) +
             (this.state.score.spelling_rating ? this.state.score.spelling_rating * 6 : 0) +
             (this.state.score.rating ? this.state.score.rating * 2 : 0)) /
@@ -247,7 +247,7 @@ class BenchmarkGrade extends React.Component {
 
               <TableCell>
                 <div style={{ width: "90px" }}>
-                  {this.props.match.params.basename === 1570785751 || this.props.match.params.basename === 1570785239
+                  {this.props.match.params.basename === "1570785751" || this.props.match.params.basename === "1570785239"
                     ? ((row.context_rating ? row.context_rating * 2 : 0) +
                         (row.spelling_rating ? row.spelling_rating * 6 : 0) +
                         (row.rating ? row.rating * 2 : 0)) /
