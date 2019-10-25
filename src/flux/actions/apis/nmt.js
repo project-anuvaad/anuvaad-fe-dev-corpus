@@ -5,65 +5,68 @@ import API from "./api";
 import C from "../constants";
 
 export default class NMT extends API {
-    constructor(par, model, reverse, target, showSplitted, timeout = 200000) {
-        super("POST", timeout, false);
-        this.par = par;
-        this.model = model;
-        this.reverse = reverse;
-        this.target = target;
-        this.answers = [];
-        this.showSplitted = showSplitted
-        this.url_end_point = model[0] ? model[0].url_end_point : model.url_end_point;
-        this.type = C.NMT;
+  constructor(par, model, reverse, target, showSplitted, timeout = 200000) {
+    super("POST", timeout, false);
+    this.par = par;
+    this.model = model;
+    this.reverse = reverse;
+    this.target = target;
+    this.answers = [];
+    this.showSplitted = showSplitted;
+    this.url_end_point = model[0] ? model[0].url_end_point : model.url_end_point;
+    this.type = C.NMT;
+  }
+
+  toString() {
+    return `${super.toString()} email: ${this.email} token: ${this.token} expires: ${this.expires} userid: ${this.userid}, type: ${this.type}`;
+  }
+
+  processResponse(res) {
+    super.processResponse(res);
+    if (res.response_body) {
+      this.answers = res.response_body;
     }
+  }
 
-    toString() {
-        return `${super.toString()} email: ${this.email} token: ${this.token} expires: ${this.expires} userid: ${this.userid}, type: ${this.type}`;
-    }
+  apiEndPoint() {
+    return this.url_end_point ? `${super.apiEndPointAuto()}/app/${this.url_end_point}` : `${super.apiEndPointAuto()}/app/translation_en`;
+  }
 
-    processResponse(res) {
-        console.log("result-------", res.response_body)
-        super.processResponse(res);
-        if (res.response_body) {
-            this.answers = res.response_body
-        }
+  getBody() {
+    var modelArray = [];
+    this.model.map(item => {
+      modelArray.push({
+        src: this.par,
+        id: parseInt(item.model_id),
+        s_id: item.model_name,
+        n_id: item.model_name
+      });
+      if (this.showSplitted) {
+        let spilttedText = this.par.split(",");
+        spilttedText.map(s => {
+          modelArray.push({
+            src: s.trim(),
+            id: parseInt(item.model_id),
+            s_id: item.model_name + "_Comma Split",
+            n_id: item.model_name
+          });
+        });
+      }
+    });
+    return modelArray;
+  }
 
-    }
+  getHeaders() {
+    this.headers = {
+      headers: {
+        Authorization: "Bearer " + decodeURI(localStorage.getItem("token")),
+        "Content-Type": "application/json"
+      }
+    };
+    return this.headers;
+  }
 
-    apiEndPoint() {
-        return this.url_end_point ? `${super.apiEndPointAuto()}/app/${this.url_end_point}` : `${super.apiEndPointAuto()}/app/translation_en`;
-    }
-
-    getBody() {
-        var modelArray = []
-        this.model.map(item => {
-            modelArray.push({
-                "src": this.par, "id": parseInt(item.model_id), "s_id": item.model_name, "n_id": item.model_name
-            })
-            if (this.showSplitted) {
-                let spilttedText = this.par.split(',')
-                spilttedText.map((s) => {
-                    modelArray.push({
-                        "src": s.trim(), "id": parseInt(item.model_id), "s_id": item.model_name+'_Comma Split', "n_id": item.model_name
-                    })
-                })
-            }
-        })
-        return modelArray
-    }
-
-    getHeaders() {
-        this.headers = {
-            headers: {
-                'Authorization': 'Bearer ' + decodeURI(localStorage.getItem('token')),
-                "Content-Type": "application/json"
-            }
-        };
-        return this.headers;
-    }
-
-    getPayload() {
-        return this.answers
-    }
-
+  getPayload() {
+    return this.answers;
+  }
 }
