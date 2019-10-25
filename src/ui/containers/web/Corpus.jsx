@@ -284,10 +284,6 @@ class Corpus extends React.Component {
                     colorWord.push(<span><span>{splitRow[word]}</span><span>{" "}</span></span>)
                 }
 
-                // else if (ocrValue[word] >= 60 && ocrValue[word] < 80) {
-                //     colorWord.push(<span><span style={{textDecoration:'Underline' ,textDecorationColor: 'blue',textDecorationStyle:'wavy'}}>{splitRow[word]}</span><span>{" "}</span></span>)
-                // }
-
                 else{
                     colorWord.push(<span><span style={{ textDecoration:'Underline',textDecorationColor: 'red',textDecorationStyle:'wavy'}}>{splitRow[word]}</span><span>{" "}</span></span>)
                 }
@@ -510,16 +506,7 @@ class Corpus extends React.Component {
           onClick={(event, offset) => {this.handleChangePage(event,offset)}}
         />
       </MuiThemeProvider>
-                            {/* <TablePagination
-                                component="nav"
-                                page={this.state.page}
-                                rowsPerPageOptions={[5, 10, 25, 50, 100]}
-                                rowsPerPage={this.state.pageCount}
-                                count={this.state.count}
-                                onChangePage={this.handleChangePage}
-                                onChangeRowsPerPage={this.handleSelectChange}/> */}
-
-
+                           
                             <Divider />
                             <Table >
                                 <TableHead>
