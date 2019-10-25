@@ -52,7 +52,7 @@ class BenchmarkGrade extends React.Component {
         "how good the contextual meaning of the sentence",
         "How well sequenced and properly framed the output is, given the meaning was conveyed",
         "Vocabulary/Lexicon- This  captures two things- first, proper words to express the meaning of those sentences, including correct proper nouns(names, places etc.). Secondly, it includes if the output contains more better words i.e a better synonym, this is helpful in relative comparison, when you want to give more weight to न्यायाधीश in comparison to जस्टिस",
-        "Structure of sentence grade(60%) 	Vocabulary / Lexicon grade(30%)	Meaning of sentence grade(10%)"
+        this.props.match.params.basename ==="1570785751"?"How much accurately name are translated": "Aggrecate Score", "Aggrecate Score"
       ],
 
       role: JSON.parse(localStorage.getItem("roles"))
@@ -61,12 +61,13 @@ class BenchmarkGrade extends React.Component {
 
   componentDidMount() {
     this.setState({
-      TableHeaderValues: [
+      TableHeaderValues:[
         "Source Sentence",
         "Target Sentence",
         "Meaning of sentence",
         "Structure of sentence",
         "Vocabulary / Lexicon",
+        this.props.match.params.basename ==="1570785751"? "Names Accuracy":"Aggregate score",
         "Aggregate score"
       ]
     });
@@ -159,6 +160,13 @@ class BenchmarkGrade extends React.Component {
     this.setState({ rating: nextValue, sentences: sentence, tocken: true });
   }
 
+  handleNameStarClick(nextValue, prevValue, name) {
+    let sentence = this.state.sentences;
+    sentence[parseInt(name)].name_accuracy_rating = nextValue;
+    this.setState({ sentences: sentence });
+    this.setState({ name_accuracy_rating: nextValue, sentences: sentence, tocken: true });
+  }
+
   handleSpellStarClick(nextValue, prevValue, name) {
     let sentence = this.state.sentences;
     sentence[parseInt(name)].spelling_rating = nextValue;
@@ -185,12 +193,17 @@ class BenchmarkGrade extends React.Component {
 
   calculateScore() {
     const result =
-      this.props.match.params.basename === "1570785751" || this.props.match.params.basename === "1570785239"
+      this.props.match.params.basename === "1570785239"
         ? ((this.state.score.context_rating ? this.state.score.context_rating * 2 : 0) +
             (this.state.score.spelling_rating ? this.state.score.spelling_rating * 6 : 0) +
             (this.state.score.grammer_grade ? this.state.score.grammer_grade * 2 : 0)) /
           10
-        : (this.state.score.context_rating * 6 + this.state.score.grammer_grade * 3 + this.state.score.spelling_rating * 1) / 10;
+        : this.props.match.params.basename === "1570785751" ? ((this.state.score.context_rating ? this.state.score.context_rating * 2 : 0) +
+        (this.state.score.spelling_rating ? this.state.score.spelling_rating * 1 : 0) +
+        (this.state.score.grammer_grade ? this.state.score.grammer_grade * 1 : 0)+ (this.state.score.name_accuracy_rating ? this.state.score.name_accuracy_rating * 6 : 0)) /
+      10  :
+        
+        (this.state.score.context_rating * 6 + this.state.score.grammer_grade * 3 + this.state.score.spelling_rating * 1) / 10;
     return result;
   }
 
@@ -245,14 +258,30 @@ class BenchmarkGrade extends React.Component {
                 </div>
               </TableCell>
 
+              {this.props.match.params.basename === "1570785751" &&
+              <TableCell>
+                <div style={{ width: "110px" }}>
+                  <StarRatingComponent
+                    name={index.toString()}
+                    starCount={5}
+                    value={row.name_accuracy_rating ? row.name_accuracy_rating : 0}
+                    onStarClick={this.handleNameStarClick.bind(this)}
+                  />
+                </div>
+              </TableCell>
+              }
+
               <TableCell>
                 <div style={{ width: "90px" }}>
-                  {this.props.match.params.basename === "1570785751" || this.props.match.params.basename === "1570785239"
+                  { this.props.match.params.basename === "1570785239"
                     ? ((row.context_rating ? row.context_rating * 2 : 0) +
                         (row.spelling_rating ? row.spelling_rating * 6 : 0) +
                         (row.rating ? row.rating * 2 : 0)) /
                       10
-                    : ((row.context_rating ? row.context_rating * 6 : 0) +
+                    : this.props.match.params.basename === "1570785751" ? ((row.context_rating ? row.context_rating * 2 : 0) +
+                    (row.spelling_rating ? row.spelling_rating * 1 : 0) +
+                    (row.rating ? row.rating * 1 : 0) + (row.name_accuracy_rating ? row.name_accuracy_rating * 6 : 0)) /
+                  10:((row.context_rating ? row.context_rating * 6 : 0) +
                         (row.spelling_rating ? row.spelling_rating * 1 : 0) +
                         (row.rating ? row.rating * 3 : 0)) /
                       10}
@@ -321,11 +350,16 @@ class BenchmarkGrade extends React.Component {
                 <TableHead>
                   <TableRow>
                     {this.state.TableHeaderValues.map((item, index) => {
-                      return (
+                      return ( 
+                        this.props.match.params.basename ==="1570785751" ? 
+
+                        
                         <Tooltip placement="top-start" enterDelay={200} key={item} title={this.state.TableHeaderDescription[index]}>
                           <TableCell width="45%">{item}</TableCell>
+                        </Tooltip>: index !=5 && <Tooltip placement="top-start" enterDelay={200} key={item} title={this.state.TableHeaderDescription[index]}>
+                          <TableCell width="45%">{item}</TableCell>
                         </Tooltip>
-                      );
+                        );
                     })}
                   </TableRow>
                 </TableHead>
