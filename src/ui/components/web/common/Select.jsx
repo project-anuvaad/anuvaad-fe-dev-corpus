@@ -21,7 +21,7 @@ class SimpleSelect extends React.Component {
                 value={value}
                 onChange={handleChange}
                 input={
-                  <OutlinedInput labelWidth={200} name={name} id={id}/>
+                  <OutlinedInput name={name} id={id}/>
                 }
               >
                   {MenuItemValues.map((item) => (
