@@ -91,7 +91,6 @@ class Corpus extends React.Component {
     }
 
     handleChangePage = (event, offset) => {
-        console.log(offset)
         this.setState({ offset, lock: false });
         if (this.props.match.params.basename) {
             let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, offset+1, this.state.inputStatus)
@@ -112,7 +111,7 @@ class Corpus extends React.Component {
             })
             if (this.props.match.params.basename) {
 
-                console.log("entered",this.props.match.params.basename, this.state.pageCount, 1, inputStatus,this.state.accuracy)
+                
                 let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, 1, inputStatus,this.state.accuracy)
                 this.props.APITransport(api);
             }
@@ -122,7 +121,6 @@ class Corpus extends React.Component {
                 filterSelect:null
             })
             if (this.props.match.params.basename) {
-                console.log("hoo",this.props.match.params.basename, this.state.pageCount, 1, this.state.inputStatus,accuracy)
                 let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, 1, this.state.inputStatus,accuracy)
                 this.props.APITransport(api);
             }
@@ -192,7 +190,6 @@ class Corpus extends React.Component {
     }
     
     handleSelectChange = event => {
-        console.log(event.target.value)
         this.setState({ pageCount: event.target.value, offset: 0 });
         let api = new FetchSentences(this.props.match.params.basename, event.target.value, 1, this.state.inputStatus)
         this.props.APITransport(api);
@@ -221,7 +218,6 @@ class Corpus extends React.Component {
     handleEditButton(index) {
         let sentences = this.state.sentences
         sentences[index].isEditable = true
-        console.log("type", typeof (sentences))
         this.setState({
             sentences: sentences,
             lock:true
@@ -229,7 +225,6 @@ class Corpus extends React.Component {
     }
 
     handleTextChange(value, index, key) {
-        console.log('view clicked')
         let sentences = this.state.sentences
         sentences[index][key] = value
         this.setState({
@@ -238,7 +233,6 @@ class Corpus extends React.Component {
     }
 
     handleSelect(event) {
-        console.log(event.currentTarget)
         this.setState({ anchorEl: event.currentTarget });
     };
 
@@ -276,7 +270,6 @@ class Corpus extends React.Component {
     };
     handleColor(color) {
         let color1 = 'grey'
-        console.log(color)
         return color == 'ACCEPTED' ? 'green' : (color == 'EDITED' ? '#2c6b96' : (color == "REJECTED" ? "red" : (color == "PROCESSING" ? '#f1de7f' : (color == "PENDING" ? 'grey' : ''))))
     }
 

@@ -1,193 +1,236 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import { withRouter } from "react-router-dom";
 
-import Grid from '@material-ui/core/Grid';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import Button from '@material-ui/core/Button';
-import APITransport from '../../../flux/actions/apitransport/apitransport';
+import Grid from "@material-ui/core/Grid";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import Button from "@material-ui/core/Button";
+import APITransport from "../../../flux/actions/apitransport/apitransport";
 import FetchCorpus from "../../../flux/actions/apis/corp";
-import ViewIcon from '@material-ui/icons/Visibility';
-import Tooltip from '@material-ui/core/Tooltip';
+import ViewIcon from "@material-ui/icons/Visibility";
+import Tooltip from "@material-ui/core/Tooltip";
 import history from "../../../web.history";
-import AddIcon from '@material-ui/icons/Add';
-import { withStyles } from '@material-ui/core/styles';
+import AddIcon from "@material-ui/icons/Add";
+import { withStyles } from "@material-ui/core/styles";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
-import Typography from '@material-ui/core/Typography';
+import Typography from "@material-ui/core/Typography";
 import MUIDataTable from "mui-datatables";
-import Toolbar from '@material-ui/core/Toolbar';
-import GradeIcon from '@material-ui/icons/Grade';
-import EditIcon from '@material-ui/icons/BorderColor';
+import Toolbar from "@material-ui/core/Toolbar";
+import GradeIcon from "@material-ui/icons/Grade";
+import EditIcon from "@material-ui/icons/BorderColor";
 
 class Corp extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            name: [],
-            apiCalled: false,
-            hindi: [],
-            english: [],
-            hindi_score: [],
-            english_score: [],
-            file: {},
-            corpus_type: 'single',
-            hindiFile: {},
-            englishFile: {},
-            role: JSON.parse(localStorage.getItem('roles'))
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: [],
+      apiCalled: false,
+      hindi: [],
+      english: [],
+      hindi_score: [],
+      english_score: [],
+      file: {},
+      corpus_type: "single",
+      hindiFile: {},
+      englishFile: {},
+      role: JSON.parse(localStorage.getItem("roles"))
+    };
+  }
+
+  componentDidMount() {
+    const { APITransport } = this.props;
+    const apiObj = new FetchCorpus();
+    APITransport(apiObj);
+    this.setState({ showLoader: true });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.corp !== this.props.corp) {
+      this.setState({ name: this.props.corp });
+    }
+  }
+
+  render() {
+    const columns = [
+      {
+        name: "basename",
+        label: "basename",
+        options: {
+          display: "excluded"
         }
-    }
-
-    componentDidMount() {
-        const { APITransport } = this.props;
-        const apiObj = new FetchCorpus();
-        APITransport(apiObj);
-        this.setState({showLoader:true})
-
-
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.corp !== this.props.corp) {
-            this.setState({ name: this.props.corp })
-
+      },
+      {
+        name: "name",
+        label: "File Name",
+        options: {
+          filter: true,
+          sort: true
         }
-    }
+      },
 
-    render() {
+      {
+        name: "domain",
+        label: "Domain",
+        options: {
+          filter: true,
+          sort: false
+        }
+      },
+      {
+        name: "no_of_sentences",
+        label: "Sentences",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
+      {
+        name: "source_lang",
+        label: "Source",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
+      {
+        name: "target_lang",
+        label: "Target",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
 
-        
+      {
+        name: "status",
+        label: "Status",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
 
-        const columns = [
-            {
-             name: "basename",
-             label: "basename",
-             options: {
-                display: 'excluded',
-             }
-            },
-            {
-                name: "name",
-                label: "File Name",
-                options: {
-                 filter: true,
-                 sort: true,
-                }
-            },
+      {
+        name: "created_on",
+        label: "Timestamp",
+        options: {
+          filter: true,
+          sort: true,
+          sortDirection: "desc"
+        }
+      },
 
-            {
-             name: "domain",
-             label: "Domain",
-             options: {
-              filter: true,
-              sort: false,
-             }
-            },
-            {
-                name: "no_of_sentences",
-                label: "Sentences",
-                options: {
-                 filter: true,
-                 sort: true,
-                }
-               },
-               {
-                name: "source_lang",
-                label: "Source",
-                options: {
-                 filter: true,
-                 sort: true,
-                }
-               },
-               {
-                name: "target_lang",
-                label: "Target",
-                options: {
-                 filter: true,
-                 sort: true,
-                }
-               },
-
-            {
-                name: "status",
-                label: "Status",
-                options: {
-                 filter: true,
-                 sort: true,
-                }
-               },
-              
-               
-                {
-                name: "created_on",
-                label: "Timestamp",
-                options: {
-                 filter: true,
-                 sort: true,
-                 sortDirection: 'desc'
-                }
-               },
-
-               
-            {
-                name: "Action",
-                options: {
-                    filter: true,
-                    sort: false,
-                    empty: true,
-                    customBodyRender: (value, tableMeta, updateValue) => {   
-                        if(tableMeta.rowData){
-                            return (
-                                <div style={{width:'90px'}}>   
-                                    {tableMeta.rowData[6] == 'COMPLETED'  && this.state.role.includes("editor") && <Tooltip title="Edit Sentence"><EditIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/parallel-corpus/`+tableMeta.rowData[0])} } > </EditIcon></Tooltip>} 
-                                    {tableMeta.rowData[6] == 'COMPLETED' && this.state.role.includes("grader") &&  <Tooltip title="Grade Sentence"><GradeIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/view-corpus/`+tableMeta.rowData[0])} } > </GradeIcon></Tooltip>} 
-                                    {tableMeta.rowData[6] == 'COMPLETED' && this.state.role.includes("dev") && <Tooltip title="View Sentence"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{ history.push(`${process.env.PUBLIC_URL}/view-corpus/`+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>} 
-                                 </div>
-                            );
-                        }
-                
-                    }
-                }
-            },
-        ];
-         
-        const options = {
-            filterType: 'checkbox',
-            download: false,
-            print: false,
-            fixedHeader: true,
-            filter:false,
-            selectableRows:'none'
-        };
-
-        return (
-            <div>
-
-        <Toolbar style={{marginLeft:"-5.4%",marginRight:'1.5%',marginTop:'20px'}}>	
-						<Typography variant="title" color="inherit" style={{flex: 1}}>
-						</Typography>
-                        {this.state.role.includes("dev")? 
-                        <Button variant="extendedFab" color="primary" style={{marginRight:0}}aria-label="Add" onClick={() => { history.push(`${process.env.PUBLIC_URL}/newcorpus`) }}>
-                                <AddIcon /> Corpus
-                        </Button>:''}
-                        </Toolbar>
-                    <div style={{marginLeft: '-4%', marginRight: '3%', marginTop: '40px'}}>
-                    <MUIDataTable  title={"Documents"} data={this.state.name} columns={columns} options={options}/>
+      {
+        name: "Action",
+        options: {
+          filter: true,
+          sort: false,
+          empty: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (tableMeta.rowData) {
+              return (
+                <div style={{ width: "90px" }}>
+                  {tableMeta.rowData[6] == "COMPLETED" && this.state.role.includes("editor") && (
+                    <Tooltip title="Edit Sentence">
+                      <EditIcon
+                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
+                        onClick={() => {
+                          history.push(`${process.env.PUBLIC_URL}/parallel-corpus/` + tableMeta.rowData[0]);
+                        }}
+                      >
+                        {" "}
+                      </EditIcon>
+                    </Tooltip>
+                  )}
+                  {tableMeta.rowData[6] == "COMPLETED" && this.state.role.includes("grader") && (
+                    <Tooltip title="Grade Sentence">
+                      <GradeIcon
+                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
+                        onClick={() => {
+                          history.push(`${process.env.PUBLIC_URL}/view-corpus/` + tableMeta.rowData[0]);
+                        }}
+                      >
+                        {" "}
+                      </GradeIcon>
+                    </Tooltip>
+                  )}
+                  {tableMeta.rowData[6] == "COMPLETED" && this.state.role.includes("dev") && (
+                    <Tooltip title="View Sentence">
+                      <ViewIcon
+                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
+                        onClick={() => {
+                          history.push(`${process.env.PUBLIC_URL}/view-corpus/` + tableMeta.rowData[0]);
+                        }}
+                      >
+                        {" "}
+                      </ViewIcon>
+                    </Tooltip>
+                  )}
                 </div>
-                  </div>         
-        );
-    }
+              );
+            }
+          }
+        }
+      }
+    ];
+
+    const options = {
+      filterType: "checkbox",
+      download: false,
+      print: false,
+      fixedHeader: true,
+      filter: false,
+      selectableRows: "none"
+    };
+
+    return (
+      <div>
+        <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
+          <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+          {this.state.role.includes("dev") ? (
+            <Button
+              variant="extendedFab"
+              color="primary"
+              style={{ marginRight: 0 }}
+              aria-label="Add"
+              onClick={() => {
+                history.push(`${process.env.PUBLIC_URL}/newcorpus`);
+              }}
+            >
+              <AddIcon /> Corpus
+            </Button>
+          ) : (
+            ""
+          )}
+        </Toolbar>
+        <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+          <MUIDataTable title={"Documents"} data={this.state.name} columns={columns} options={options} />
+        </div>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
-    user: state.login,
-    apistatus: state.apistatus,
-    corp: state.corp,
+  user: state.login,
+  apistatus: state.apistatus,
+  corp: state.corp
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-    APITransport,
-    CreateCorpus: APITransport,
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      APITransport,
+      CreateCorpus: APITransport
+    },
+    dispatch
+  );
 
-
-export default withRouter(withStyles(NewCorpusStyle)(connect(mapStateToProps, mapDispatchToProps)(Corp)));
+export default withRouter(
+  withStyles(NewCorpusStyle)(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(Corp)
+  )
+);
