@@ -188,7 +188,7 @@ class BenchmarkGrade extends React.Component {
       this.props.match.params.basename === "1570785751" || this.props.match.params.basename === "1570785239"
         ? ((this.state.score.context_rating ? this.state.score.context_rating * 2 : 0) +
             (this.state.score.spelling_rating ? this.state.score.spelling_rating * 6 : 0) +
-            (this.state.score.rating ? this.state.score.rating * 2 : 0)) /
+            (this.state.score.grammer_grade ? this.state.score.grammer_grade * 2 : 0)) /
           10
         : (this.state.score.context_rating * 6 + this.state.score.grammer_grade * 3 + this.state.score.spelling_rating * 1) / 10;
     return result;

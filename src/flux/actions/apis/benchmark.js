@@ -18,7 +18,6 @@ export default class FetchBenchmark extends API {
     processResponse(res) {
         super.processResponse(res)
         if (res.data) {
-          console.log(res.data)
             this.fetch_corpus_data = res.data;
         }
     }

@@ -47,7 +47,7 @@ function error(err, api, dispatch) {
   if (api.errorMsg || api.errorMsg === null) {
     errorMsg = api.errorMsg === null ? "" : api.errorMsg;
   }
-  dispatch(apiStatusAsync(false, true, errorMsg,null, err.response && err.response.status === 401 ? true : false));
+  dispatch(apiStatusAsync(false, true, errorMsg, null, err.response && err.response.status === 401 ? true : false));
   if (typeof api.processNextErrorStep === "function") {
     api.processNextErrorStep();
   }
@@ -68,23 +68,20 @@ export default function dispatchAPI(api) {
           error(err, api, dispatch);
         });
     };
-  }
-  else if (api.method === "POST") {
+  } else if (api.method === "POST") {
     return dispatch => {
       dispatch(apiStatusAsync(true, false, ""));
       // console.log('api.apiEndPoint :: ', api.apiEndPoint());
       axios
         .post(api.apiEndPoint(), api.getBody(), api.getHeaders())
         .then(res => {
-          console.log(res)
           success(res, api, dispatch);
         })
         .catch(err => {
           error(err, api, dispatch);
         });
     };
-  }
-  else if (api.method === "PUT") {
+  } else if (api.method === "PUT") {
     return dispatch => {
       dispatch(apiStatusAsync(true, false, ""));
       axios
@@ -96,8 +93,7 @@ export default function dispatchAPI(api) {
           error(err, api, dispatch);
         });
     };
-  }
-  else if (api.method === "DELETE") {
+  } else if (api.method === "DELETE") {
     return dispatch => {
       dispatch(apiStatusAsync(true, false, ""));
       axios

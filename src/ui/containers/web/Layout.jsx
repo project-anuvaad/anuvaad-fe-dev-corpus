@@ -6,17 +6,17 @@ import Header from "../../components/web/common/Header";
 import GlobalStyles from "../../styles/web/styles";
 import Spinner from "../../components/web/common/Spinner";
 // import Theme from "../../theme/web/theme-red";
-import Theme from '../../theme/web/theme-default';
+import Theme from "../../theme/web/theme-default";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 import UserAuth from "../../../flux/actions/apis/userprofile";
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      userName: '',
-    }
+      userName: ""
+    };
   }
 
   renderSpinner() {
@@ -25,20 +25,14 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-  }
-    
+  componentDidMount() {}
 
-
-
-  componentDidUpdate(prevProps){
-    
-    if(prevProps.apistatus !== this.props.apistatus){
-      if(this.props.apistatus.unauthrized){
-        history.push(`${process.env.PUBLIC_URL}/logout`)
+  componentDidUpdate(prevProps) {
+    if (prevProps.apistatus !== this.props.apistatus) {
+      if (this.props.apistatus.unauthrized) {
+        history.push(`${process.env.PUBLIC_URL}/logout`);
       }
     }
-
   }
 
   render() {
@@ -46,19 +40,15 @@ class App extends React.Component {
 
     const Component = this.props.component; // eslint-disable-line
     return (
-
       <MuiThemeProvider theme={Theme}>
-          <div className={classes.root}>
-            {this.renderSpinner()}
+        <div className={classes.root}>
+          {this.renderSpinner()}
 
-            <Header classes={classes} theme={theme} title={title} />
-            <div className={classes.container}>
-
-              <Component />
-            </div>
-
-
+          <Header classes={classes} theme={theme} title={title} />
+          <div className={classes.container}>
+            <Component />
           </div>
+        </div>
       </MuiThemeProvider>
     );
   }

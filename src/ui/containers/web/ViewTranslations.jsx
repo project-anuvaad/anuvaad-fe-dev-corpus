@@ -130,15 +130,6 @@ class Corpus extends React.Component {
         }
         return (count / item_count)
     }
-    onChange = () => {
-        console.log("success")
-    }
-
-    handleSubmit() {
-        // const { APITransport } = this.props;
-        // const apiObj = new Fetc(this.state.file, this.state.hindiFile, this.state.englishFile, this.state.corpus_type);
-        // APITransport(apiObj);
-    }
 
     handleEditButton(index) {
         let sentences = this.state.sentences
