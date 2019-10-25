@@ -75,7 +75,6 @@ class Newcorpus extends React.Component {
     }
 
     handleSelectChange = event => {
-      console.log([event.target.name],event.target.value)
         this.setState({ [event.target.name]: event.target.value });
       };
 
@@ -96,14 +95,12 @@ class Newcorpus extends React.Component {
     }
 
     handleSource = (files) => {
-      console.log("source",typeof(files))
       this.setState({
         englishFile: files
       });
     }
 
     handleTarget = (files) => {
-      console.log("target",files)
       this.setState({
         hindiFile: files
       });
@@ -111,7 +108,6 @@ class Newcorpus extends React.Component {
     }
 
     getStepContent=(stepIndex)=> {
-        console.log(stepIndex)
         switch (stepIndex) {
           case 0:
             return <div>
@@ -227,7 +223,6 @@ class Newcorpus extends React.Component {
       }
 
       handleNext = () => {
-        console.log(this.state.englishFile.name)
         if(this.state.activeStep===0 && this.state.englishFile.name && this.state.english){
         this.setState(state => ({
           activeStep: 1,

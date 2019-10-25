@@ -53,13 +53,13 @@ class Login extends React.Component {
     const { APITransporter } = this.props;
 
     const apiObj = new LoginAPI(email, password);
-    if((email == 'aroop' || email =='ajitesh' || email == 'kd' || email =='vivek' )&& password =='test')
-    {
-      localStorage.setItem('token','123')
-      setTimeout(()=>{history.push(`${process.env.PUBLIC_URL}/corpus`)}, 1000);
-    }
-    else{
-      alert('Wrong credentials')
+    if ((email == "aroop" || email == "ajitesh" || email == "kd" || email == "vivek") && password == "test") {
+      localStorage.setItem("token", "123");
+      setTimeout(() => {
+        history.push(`${process.env.PUBLIC_URL}/corpus`);
+      }, 1000);
+    } else {
+      alert("Wrong credentials");
     }
     // APITransporter(apiObj);
   };
@@ -101,7 +101,6 @@ class Login extends React.Component {
               </form>
             </Paper>
 
-           
             <div className={classes.buttonsDiv} />
           </div>
         </div>
