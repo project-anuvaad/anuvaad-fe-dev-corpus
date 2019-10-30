@@ -21,19 +21,18 @@ class Grader extends React.Component {
     onMeaningStarClick(nextValue, prevValue, name) {
         console.log(name);
         this.setState({ [name]: nextValue });
-        console.log(this.state.meaning);
+        this.props.handleStarClick(nextValue, prevValue, name)
     }
 
     onStructureStarClick(nextValue, prevValue, name) {
         console.log(name);
         this.setState({ [name]: nextValue });
-        console.log(this.state.meaning);
+        this.props.handleStarClick(nextValue, prevValue, name)
     }
 
     onVocabularyStarClick(nextValue, prevValue, name) {
-        console.log(name);
         this.setState({ [name]: nextValue });
-        console.log(this.state.meaning);
+        this.props.handleStarClick(nextValue, prevValue, name)
     }
 
     render() {

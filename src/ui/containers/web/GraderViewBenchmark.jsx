@@ -6,6 +6,7 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import FetchBenchmarkCompareModel from "../../../flux/actions/apis/fetchenchmarkcomparemodel";
 import Pagination from "material-ui-flat-pagination";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import Grader from "../../components/web/common/Grader";
 
 const theme = createMuiTheme();
 class BenchmarkGrade extends React.Component {
@@ -71,6 +72,8 @@ class BenchmarkGrade extends React.Component {
       this.props.APITransport(api);
   }
 
+ 
+
 
   static getDerivedStateFromProps(nextProps, prevState){
     
@@ -117,14 +120,32 @@ class BenchmarkGrade extends React.Component {
     }
   }
 
+  onStarClick(nextValue, prevValue, name) {
+    console.log(name);
+    this.setState({ [name]: nextValue });
+    console.log(this.state.meaning);
+  }
+
  
 
   render() {
+
     
+    var grade = this.state.sentences.map((value,i)=>{
+        var val = i==0? "A": "B";
+        <Grader title= {"Model "+ {val}} description={value.target} handleStarClick={this.onStarClick} handleStarClick = {this.onStarClick} handleStarClick ={this.onStarClick} meaning={"meaning-"+{i}} structure={"structure-"+{i}} vocabulary = {"vocabulary"+{i}}/>
+
+    })
+
+    console.log("sajish---",grade)
      
     return (
       <div>
-         
+          {grade[0]}
+
+          {grade[1]}
+
+         {/*  */}
          <Pagination
                       align="right"
                       limit={1}
