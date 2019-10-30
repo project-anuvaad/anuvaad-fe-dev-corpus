@@ -144,8 +144,8 @@ class UploadBenchmarkfile extends React.Component {
                     }}
                     displayEmpty
                   >
-                    <MenuItem value={"english"}>English</MenuItem>
-                    <MenuItem value={"hindi"}>Hindi</MenuItem>
+                    <MenuItem value={"English"}>English</MenuItem>
+                    <MenuItem value={"Hindi"}>Hindi</MenuItem>
                   </Select>
 
                 </Toolbar>
