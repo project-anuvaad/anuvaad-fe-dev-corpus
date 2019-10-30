@@ -7,6 +7,11 @@ import FetchBenchmarkCompareModel from "../../../flux/actions/apis/fetchenchmark
 import Pagination from "material-ui-flat-pagination";
 import Grid from "@material-ui/core/Grid";
 import Grader from "../../components/web/common/Grader";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
+import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
 
 class BenchmarkGrade extends React.Component {
   constructor(props) {
@@ -71,6 +76,11 @@ class BenchmarkGrade extends React.Component {
     this.props.APITransport(api);
   }
 
+  handleSubmit = () => {
+    let api = new UpdateSentencesGrade(this.state.sentences, this.props.match.params.modelid);
+    this.setState({ dialogOpen: false, apiCall: true, tocken: false });
+    this.props.APITransport(api);
+  };
 
 
 
@@ -123,7 +133,7 @@ class BenchmarkGrade extends React.Component {
     let sentences = this.state.sentences
     sentences[index][name] = nextValue
     this.setState({ sentences: sentences });
-    console.log(this.state.sentences);
+   
   }
 
 
@@ -140,6 +150,20 @@ class BenchmarkGrade extends React.Component {
           })}
         </Grid>
         {/*  */}
+        {this.state.sentences && this.state.sentences.length > 0 &&  <Toolbar style={{ marginRight: "3%", marginTop: "20px" }}>
+              <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+              <Button
+                variant="contained"
+                onClick={event => {
+                  this.handleSubmit(this.state.sentences);
+                }}
+                color={"primary"}
+                aria-label="edit"
+                style={{ width: "170px", marginBottom: "4%", marginTop: "1px" }}
+              >
+                Save
+              </Button>
+            </Toolbar>}
         {this.state.sentences && this.state.sentences.length > 0 && 
         <Pagination
           align="right"

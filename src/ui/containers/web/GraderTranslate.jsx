@@ -176,7 +176,7 @@ class GarderTranslate extends React.Component {
           </Grid>
 
           <Grid item xs={8} sm={8} lg={8} xl={8} style={{position:"fixed", marginLeft:'20%', maxHeight: '720px', overflowY:'scroll'}}>
-            {this.state.base}
+            
             {!this.state.base && this.state.createBenchmark ? (
               <CreateCorpus/>
             ) : this.state.base ? (
