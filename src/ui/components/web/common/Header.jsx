@@ -328,7 +328,7 @@ class Header extends React.Component {
             color='primary'
             variant="contained"
             className={classes.buttonRight}
-              
+			style={{zIndex:9999}}
               
               
               onClick={this.handleDrawerOpen}
