@@ -8,7 +8,7 @@ import Callback from "./ui/containers/web/Callback";
 import NotFound from "./ui/containers/web/NotFound";
 import Corpus from "./ui/containers/web/Corpus";
 import Translations from "./ui/containers/web/Translations";
-import createcorpus from "./ui/containers/web/CreateCorpus";
+import createcorpus from "./ui/containers/web/UploadBenchmark";
 import newcorpus from "./ui/containers/web/Newcorpus";
 import Corp from "./ui/containers/web/ViewCorpus";
 import Benchmark from "./ui/containers/web/Benchmark";

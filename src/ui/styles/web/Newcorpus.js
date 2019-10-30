@@ -46,7 +46,7 @@ typography:{
 
 button: {
   justifyContent: 'center',
-  left: theme.spacing.unit*12,
+  left: theme.spacing.unit*22,
   marginBottom:'2%',
   marginTop:'5%'
   ,
@@ -54,7 +54,7 @@ button: {
 },
 buttons: {
   justifyContent: 'center',
-  left: theme.spacing.unit*16,
+  left: theme.spacing.unit*26,
   marginBottom:'2%',
   marginTop:'5%',
   width:'220px'
