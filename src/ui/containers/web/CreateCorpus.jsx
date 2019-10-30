@@ -9,20 +9,20 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import CreateCorpus from "../../../flux/actions/apis/createcorpus";
 import Snackbar from "@material-ui/core/Snackbar";
 import MySnackbarContentWrapper from "../../components/web/common/snackbar";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Paper from "@material-ui/core/Paper";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-import Typography from "@material-ui/core/Typography";
+
 import { withStyles } from "@material-ui/core";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Input from "@material-ui/core/Input";
 import history from "../../../web.history";
 
 import { DropzoneArea } from "material-ui-dropzone";
-import Select from "../../components/web/common/Select";
-import Stepper from "../../components/web/common/Stepper";
-import { white, blueGrey50, darkBlack } from "material-ui/styles/colors";
+
 
 class Createcorpus extends React.Component {
   constructor(props) {
@@ -58,9 +58,11 @@ class Createcorpus extends React.Component {
     });
   }
 
-  handleSelectChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  handleSelectChange(key, event) {
+    this.setState({
+      [key]: event.target.value
+    });
+  }
 
   handleFileChange = e => {
     if (e.target.files[0]) {
@@ -91,43 +93,30 @@ class Createcorpus extends React.Component {
   };
 
   handleSubmit() {
-    const isValid = this.validate();
-    if (isValid) {
+
+    console.log(this.state.file, this.state.add_name, this.state.source)
+    
       const { APITransport } = this.props;
-      const apiObj = new CreateCorpus(
-        this.state.file,
-        this.state.add_name
-      );
-      APITransport(apiObj);
+    //   //const apiObj = new UploadBenchmark(
+    //     this.state.file,
+    //     this.state.add_name,
+    //     this.state.source
+    //   );
+    //   APITransport(apiObj);
       this.setState({ showLoader: true });
-    }
+    
   }
 
   render() {
     const { classes } = this.props;
     return (
-      <Paper className={classes.paper} elevation={2}>
-        <Typography
-          gutterBottom
-          variant="title"
-          component="h2"
-          style={{
-            marginTop: "-3.7%",
-            paddingLeft: "40%",
-            background: blueGrey50,
-            paddingTop: "25px",
-            paddingBottom: "16px",
-            marginLeft: "-2.3%",
-            marginRight: "-2.3%"
-          }}
-        >
-          Upload Benchmark
-        </Typography>
-        <br />
-        <div style={{ Top: "5px", PaddingBottom: "5px" }}>
+      <div style={{marginLeft:'300px',marginTop:'60px'}}>
+        
+        <div style={{ Top: "15px", PaddingBottom: "5px" }}>
           <FormControl fullWidth>
-            <InputLabel htmlFor="Add Name">Output Corpusname*</InputLabel>
+            <InputLabel htmlFor="Add Name">Benckmark filename*</InputLabel>
             <Input
+            style={{width:'200%'}}
               id="name"
               required
               onChange={event => {
@@ -141,7 +130,26 @@ class Createcorpus extends React.Component {
         <br />
         <br />
 
+        <AppBar position="static" style={{width:'200%'}}>
+                <Toolbar>
+                  <Select
+                    width="100%"
+                    value={this.state.source}
+                    style={{ background: "white", fill: "white", width: "150px" }}
+                    onChange={event => {
+                      this.handleSelectChange("source", event);
+                    }}
+                    displayEmpty
+                  >
+                    <MenuItem value={"english"}>English</MenuItem>
+                    <MenuItem value={"hindi"}>Hindi</MenuItem>
+                  </Select>
+
+                </Toolbar>
+              </AppBar>
+        <div style={{width:'200%'}}>
         <DropzoneArea
+        style={{width:'200%'}}
           Dropzoneiles=""
           onDrop={this.handleSource}
           id="source"
@@ -150,19 +158,28 @@ class Createcorpus extends React.Component {
           dropzoneText="Please Add/Drop txt file here"
           filesLimit={1}
         ></DropzoneArea>
+        </div>
 
-        <Button variant="contained" color="primary" className={classes.button} onClick={this.handleBack}>
+        <Button variant="contained" color="primary" style={{justifyContent: 'center',
+  
+  marginBottom:'2%',
+  marginTop:'5%',
+  width:'220px'}} onClick={this.handleBack}>
           {" "}
           Cancel{" "}
         </Button>
-        <Button variant="contained" color="primary" className={classes.buttons} onClick={this.handleSubmit.bind(this)}>
+        <Button variant="contained" color="primary" style={{justifyContent: 'center',
+  
+  marginBottom:'2%',
+  marginTop:'5%',
+  width:'220px'}} onClick={this.handleSubmit.bind(this)}>
           Submit
         </Button>
 
         <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}>
           <MySnackbarContentWrapper onClose={this.handleClose} variant="success" message={this.state.message} />
         </Snackbar>
-      </Paper>
+        </div>
     );
   }
 }
