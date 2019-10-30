@@ -7,15 +7,11 @@ import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import FetchBenchmark from "../../../flux/actions/apis/benchmark";
-import ViewIcon from "@material-ui/icons/Visibility";
-import Tooltip from "@material-ui/core/Tooltip";
-import history from "../../../web.history";
-import AddIcon from "@material-ui/icons/Add";
 import { withStyles } from "@material-ui/core/styles";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Typography from "@material-ui/core/Typography";
 
-import ViewCorpus from "./Corpus";
+import CreateCorpus from "./CreateCorpus";
 import SearchIcon from "@material-ui/icons/Search";
 import UploadFile from "@material-ui/icons/CloudUpload";
 import InputBase from "@material-ui/core/InputBase";
@@ -56,7 +52,8 @@ class GarderTranslate extends React.Component {
       hindiFile: {},
       englishFile: {},
       role: JSON.parse(localStorage.getItem("roles")),
-      sentences: []
+      sentences: [],
+      createBenchmark: false
     };
   }
 
@@ -86,6 +83,13 @@ class GarderTranslate extends React.Component {
         sentences: this.props.sentences
       });
     }
+  }
+
+  handleSubmit=()=>{
+      console.log("clicked")
+      this.setState({
+          createBenchmark: true
+      })
   }
 
   render() {
@@ -152,6 +156,7 @@ class GarderTranslate extends React.Component {
                 </div>
                 <div>
                   <Button
+                    onClick = {this.handleSubmit}
                     variant="contained"
                     style={{
                       width: "23.3%",
@@ -170,6 +175,7 @@ class GarderTranslate extends React.Component {
                   >
                     <UploadFile fontSize="large" />
                     &nbsp;&nbsp;&nbsp;Upload Training Data
+                    
                   </Button>
                 </div>
               </div>
@@ -178,10 +184,8 @@ class GarderTranslate extends React.Component {
 
           <Grid item xs={8} sm={8} lg={8} xl={8} style={{position:"fixed", marginLeft:'20%'}}>
             {this.state.base}
-            {!this.state.base ? (
-              <Typography variant="h5" color="inherit" style={{ marginTop: "43px", marginLeft: "2%" }}>
-                Translation Training Data
-              </Typography>
+            {!this.state.base && this.state.createBenchmark ? (
+              <CreateCorpus/>
             ) : (
               <div>
                 
