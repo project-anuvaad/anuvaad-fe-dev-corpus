@@ -9,12 +9,10 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import FetchBenchmark from "../../../flux/actions/apis/benchmark";
 import { withStyles } from "@material-ui/core/styles";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
-import Typography from "@material-ui/core/Typography";
-
-import CreateCorpus from "./CreateCorpus";
+import GraderViewBenchmark from "./GraderViewBenchmark";
+import CreateCorpus from "./UploadBenchmark";
 import SearchIcon from "@material-ui/icons/Search";
 import UploadFile from "@material-ui/icons/CloudUpload";
-import InputBase from "@material-ui/core/InputBase";
 
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
@@ -43,14 +41,7 @@ class GarderTranslate extends React.Component {
     this.state = {
       name: [],
       apiCalled: false,
-      hindi: [],
-      english: [],
-      hindi_score: [],
-      english_score: [],
       file: {},
-      corpus_type: "single",
-      hindiFile: {},
-      englishFile: {},
       role: JSON.parse(localStorage.getItem("roles")),
       sentences: [],
       createBenchmark: false
@@ -88,12 +79,14 @@ class GarderTranslate extends React.Component {
   handleSubmit=()=>{
       console.log("clicked")
       this.setState({
-          createBenchmark: true
+          createBenchmark: true, base:'', value:''
       })
   }
 
   render() {
-    const { classes } = this.props;
+    const { base } = this.props;
+
+    console.log(base)
 
     return (
       <div>
@@ -160,7 +153,7 @@ class GarderTranslate extends React.Component {
                     variant="contained"
                     style={{
                       width: "23.3%",
-                      marginLeft: "53px",
+                      marginLeft: "-53px",
                       height: 96,
                       backgroundColor: "#CB1E60",
                       margin: 0,
@@ -186,11 +179,11 @@ class GarderTranslate extends React.Component {
             {this.state.base}
             {!this.state.base && this.state.createBenchmark ? (
               <CreateCorpus/>
-            ) : (
+            ) : this.state.base ? (
               <div>
-                
+                <GraderViewBenchmark base={this.state.base}/>
               </div>
-            )}
+            ):''}
           </Grid>
         </Grid>
       </div>

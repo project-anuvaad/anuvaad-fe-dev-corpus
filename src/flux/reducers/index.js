@@ -17,6 +17,7 @@ import supportLanguage from './fetchlanguages';
 import langModel from './fetchmodel';
 import fetchBenchmark from './benchmark';
 import fetchBenchmarkModel from './fetchbenchmarkmodel';
+import fetchBenchmarkCompareModel from './fetchbenchmarkcompares';
 import updateGrade from './update-sentences-grade';
 import graderReport from './graderreport';
 
@@ -39,7 +40,8 @@ export default {
     fetchBenchmark,
     fetchBenchmarkModel,
     updateGrade,
-    graderReport
+    graderReport,
+    fetchBenchmarkCompareModel
 
 
     
