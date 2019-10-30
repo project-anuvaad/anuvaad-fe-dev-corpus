@@ -91,7 +91,7 @@ class GarderTranslate extends React.Component {
     return (
       <div>
         <Grid container spacing={4}>
-          <Grid item xs={3} sm={3} lg={3} xl={3} style={{marginLeft:'-115px'}}>
+          <Grid item xs={3} sm={3} lg={3} xl={3} style={{marginLeft:'-130px'}}>
             
               <div>
                 <div
@@ -105,7 +105,7 @@ class GarderTranslate extends React.Component {
                   }}
                 >
                   <TextField
-                    style={{ marginLeft: "53px", paddingLeft: "30px", width: "77%", paddingTop: "30px" }}
+                    style={{ marginLeft: "0px", paddingLeft: "30px", width: "77%", paddingTop: "30px" }}
                     id="input-with-icon-textfield"
                    
                     InputProps={{
@@ -125,7 +125,7 @@ class GarderTranslate extends React.Component {
                           style={{
                             backgroundColor: "#F3F3F8",
                             color: this.state.value === i.name && index == this.state.index ? "#CB1E60" : "black",
-                            marginLeft: "53px",
+                            marginLeft: "20px",
                             paddingLeft: "30px",
                             paddingTop: "30px",
                             paddingBottom: "10px",
@@ -158,7 +158,7 @@ class GarderTranslate extends React.Component {
                       backgroundColor: "#CB1E60",
                       margin: 0,
                       top: "auto",
-                      left: 20,
+                      left: 0,
                       bottom: 2,
 
                       position: "fixed",
@@ -175,7 +175,7 @@ class GarderTranslate extends React.Component {
             
           </Grid>
 
-          <Grid item xs={8} sm={8} lg={8} xl={8} style={{position:"fixed", marginLeft:'20%'}}>
+          <Grid item xs={8} sm={8} lg={8} xl={8} style={{position:"fixed", marginLeft:'20%', maxHeight: '720px', overflowY:'scroll'}}>
             {this.state.base}
             {!this.state.base && this.state.createBenchmark ? (
               <CreateCorpus/>

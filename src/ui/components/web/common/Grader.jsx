@@ -15,28 +15,31 @@ class Grader extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({ showLoader: true });
+        this.setState({
+            [this.props.meaning + this.props.index]: this.props.data[this.props.meaning] ? this.props.data[this.props.meaning] : 0,
+            [this.props.structure + this.props.index]: this.props.data[this.props.structure] ? this.props.data[this.props.structure] : 0,
+            [this.props.vocabulary + this.props.index]: this.props.data[this.props.vocabulary] ? this.props.data[this.props.vocabulary] : 0
+        });
     }
 
     onMeaningStarClick(nextValue, prevValue, name) {
         console.log(name);
-        this.setState({ [name]: nextValue });
-        this.props.handleStarClick(nextValue, prevValue, name)
+        this.setState({ [name + this.props.index]: nextValue });
+        this.props.handleStarClick(nextValue, prevValue, name, this.props.index)
     }
 
     onStructureStarClick(nextValue, prevValue, name) {
         console.log(name);
-        this.setState({ [name]: nextValue });
-        this.props.handleStarClick(nextValue, prevValue, name)
+        this.setState({ [name + this.props.index]: nextValue });
+        this.props.handleStarClick(nextValue, prevValue, name, this.props.index)
     }
 
     onVocabularyStarClick(nextValue, prevValue, name) {
-        this.setState({ [name]: nextValue });
-        this.props.handleStarClick(nextValue, prevValue, name)
+        this.setState({ [name + this.props.index]: nextValue });
+        this.props.handleStarClick(nextValue, prevValue, name, this.props.index)
     }
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <Grid container spacing={4} style={{ padding: "20px" }}>
@@ -69,7 +72,7 @@ class Grader extends React.Component {
 
                         <Grid item xs={12} sm={12} lg={4} xl={4} style={{ flex: 1, textAlign: "right" }}>
                             <h1>
-                                <StarRatingComponent name={this.props.meaning} starCount={5} value={this.state.meaning} onStarClick={this.onMeaningStarClick.bind(this)} />
+                                <StarRatingComponent name={this.props.meaning} starCount={5} value={this.state[this.props.meaning + this.props.index]} onStarClick={this.onMeaningStarClick.bind(this)} />
                             </h1>
                         </Grid>
                     </Grid>
@@ -84,7 +87,7 @@ class Grader extends React.Component {
 
                         <Grid item xs={12} sm={12} lg={4} xl={4} style={{ flex: 1, textAlign: "right" }}>
                             <h1>
-                                <StarRatingComponent name={this.props.structure} starCount={5} value={this.state.structure} onStarClick={this.onStructureStarClick.bind(this)} />
+                                <StarRatingComponent name={this.props.structure} starCount={5} value={this.state[this.props.structure + this.props.index]} onStarClick={this.onStructureStarClick.bind(this)} />
                             </h1>
                         </Grid>
                     </Grid>
@@ -98,7 +101,7 @@ class Grader extends React.Component {
 
                         <Grid item xs={12} sm={12} lg={4} xl={4} style={{ flex: 1, textAlign: "right" }}>
                             <h1>
-                                <StarRatingComponent name={this.props.vocabulary} starCount={5} value={this.state.vocabulary} onStarClick={this.onVocabularyStarClick.bind(this)} />
+                                <StarRatingComponent name={this.props.vocabulary} starCount={5} value={this.state[this.props.vocabulary + this.props.index]} onStarClick={this.onVocabularyStarClick.bind(this)} />
                             </h1>
                         </Grid>
                     </Grid>
@@ -111,6 +114,6 @@ class Grader extends React.Component {
 
 export default withRouter(
     withStyles(NewCorpusStyle)(
-      (Grader)
+        (Grader)
     )
 );

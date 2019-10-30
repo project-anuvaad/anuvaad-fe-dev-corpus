@@ -225,6 +225,7 @@ class BenchmarkGrade extends React.Component {
                 </ReadMoreAndLess>
               </TableCell>
 
+
               <TableCell>
                 <div style={{ width: "100px" }}>
                   <StarRatingComponent

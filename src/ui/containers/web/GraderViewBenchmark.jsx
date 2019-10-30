@@ -5,10 +5,9 @@ import { bindActionCreators } from "redux";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import FetchBenchmarkCompareModel from "../../../flux/actions/apis/fetchenchmarkcomparemodel";
 import Pagination from "material-ui-flat-pagination";
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
 import Grader from "../../components/web/common/Grader";
 
-const theme = createMuiTheme();
 class BenchmarkGrade extends React.Component {
   constructor(props) {
     super(props);
@@ -26,87 +25,87 @@ class BenchmarkGrade extends React.Component {
       page: 0,
       offset: 0,
       tocken: false,
-      
+
       TableHeaderValues: ["Source Sentence", "Target Sentence", "Machine translated reference", "Grade"],
-      
+
       role: JSON.parse(localStorage.getItem("roles"))
     };
   }
 
   componentDidMount() {
-   
-    
-        console.log("sajish")
-      let api = new FetchBenchmarkCompareModel(
-        this.props.base,
-        this.state.pageCount,
-        1
-      );
-      this.props.APITransport(api);
-    
+
+
+    console.log("sajish")
+    let api = new FetchBenchmarkCompareModel(
+      this.props.base,
+      this.state.pageCount,
+      1
+    );
+    this.props.APITransport(api);
+
   }
 
-  handleChangePage (event, offset) {
+  handleChangePage(event, offset) {
 
-    this.setState({offset})
-    
-    if(this.state.base){ 
+    this.setState({ offset, sentences: [] })
+
+    if (this.state.base) {
       let api = new FetchBenchmarkCompareModel(
         this.state.base,
-        
+
         this.state.pageCount,
         offset + 1,
         this.state.inputStatus
       );
       this.props.APITransport(api);
-      }
+    }
   };
 
-  handleFetchBenchmark(base){
-        console.log("sajish")
+  handleFetchBenchmark(base) {
+    console.log("sajish")
     let api = new FetchBenchmarkCompareModel(
-        this.state.base,
-        this.state.pageCount,
-        1
-      );
-      this.props.APITransport(api);
+      this.state.base,
+      this.state.pageCount,
+      1
+    );
+    this.props.APITransport(api);
   }
 
- 
 
 
-  static getDerivedStateFromProps(nextProps, prevState){
-    
-    if( nextProps.base !== prevState.base){
-      
 
-      return { 
-        
+  static getDerivedStateFromProps(nextProps, prevState) {
+
+    if (nextProps.base !== prevState.base) {
+
+
+      return {
+
         base: nextProps.base,
         apiCall: true
 
       };
-      
-   }
-   else return null;
- }
+
+    }
+    else return null;
+  }
 
   componentDidUpdate(prevProps) {
 
     if (prevProps.base !== this.state.base) {
-        this.setState({base:this.state.base})
+      this.setState({ base: this.state.base })
       let api = new FetchBenchmarkCompareModel(
-          this.props.base,
-          this.state.pageCount,
-          this.state.offset + 1,
-          this.state.inputStatus
-        );
-        this.props.APITransport(api);
-      }
+        this.props.base,
+        this.state.pageCount,
+        this.state.offset + 1,
+        this.state.inputStatus
+      );
+      this.props.APITransport(api);
+    }
 
     if (prevProps.fetchBenchmarkCompareModel !== this.props.fetchBenchmarkCompareModel) {
 
-        console.log(this.props.fetchBenchmarkCompareModel)
+      console.log(this.props.fetchBenchmarkCompareModel)
       this.setState({
         apiCall: false,
         sentenceCancel: prevProps.fetchBenchmarkCompareModel.data,
@@ -115,48 +114,45 @@ class BenchmarkGrade extends React.Component {
         score: this.props.fetchBenchmarkCompareModel.sum,
         pending: this.props.fetchBenchmarkCompareModel.pending
       });
-      
-      
+
+
     }
   }
 
-  onStarClick(nextValue, prevValue, name) {
-    console.log(name);
-    this.setState({ [name]: nextValue });
-    console.log(this.state.meaning);
+  onStarClick(nextValue, prevValue, name, index) {
+    let sentences = this.state.sentences
+    sentences[index][name] = nextValue
+    this.setState({ sentences: sentences });
+    console.log(this.state.sentences);
   }
 
- 
+
 
   render() {
-
-    
-    var grade = this.state.sentences.map((value,i)=>{
-        var val = i==0? "A": "B";
-        <Grader title= {"Model "+ {val}} description={value.target} handleStarClick={this.onStarClick} handleStarClick = {this.onStarClick} handleStarClick ={this.onStarClick} meaning={"meaning-"+{i}} structure={"structure-"+{i}} vocabulary = {"vocabulary"+{i}}/>
-
-    })
-
-    console.log("sajish---",grade)
-     
     return (
       <div>
-          {grade[0]}
+        <Grid container spacing={4} style={{ padding: "20px" }}>
+          {this.state.sentences.map((value, i) => {
+            var val = i == 0 ? "A" : "B";
+            return <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <Grader title={"Model " + val} index={i} description={value.target} handleStarClick={this.onStarClick.bind(this)} data={value} handleStarClick={this.onStarClick.bind(this)} handleStarClick={this.onStarClick.bind(this)} meaning={"rating"} structure={"context_rating"} vocabulary={"spelling_rating"} />
+            </Grid>
+          })}
+        </Grid>
+        {/*  */}
+        {this.state.sentences && this.state.sentences.length > 0 && 
+        <Pagination
+          align="right"
+          limit={1}
+          offset={this.state.offset}
+          centerRipple={true}
+          total={this.state.count}
+          onClick={(event, offset) => {
+            this.handleChangePage(event, offset);
+          }}
+        />
+      }
 
-          {grade[1]}
-
-         {/*  */}
-         <Pagination
-                      align="right"
-                      limit={1}
-                      offset={this.state.offset}
-                      centerRipple={true}
-                      total={ this.state.count}
-                      onClick={(event, offset) => {
-                        this.handleChangePage(event, offset);
-                      }}
-                    />
-        
       </div>
     );
   }
