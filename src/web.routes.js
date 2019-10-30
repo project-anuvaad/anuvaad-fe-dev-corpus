@@ -22,7 +22,8 @@ import GradeViewCorpus from "./ui/containers/web/GradeViewCorpus";
 import BenchmarkGrade from "./ui/containers/web/BenchmarkGrade";
 import QnA from "./ui/containers/web/QnA";
 import GraderReport from "./ui/containers/web/GraderReport";
-
+import GraderTranslate from "./ui/containers/web/SentenceTranslate";
+import FileTranslate from "./ui/containers/web/GraderTranslate";
 const PrivateRoute = ({ component: Component, userRoles, title, authenticate, ...rest }) => (
 
 
@@ -73,6 +74,10 @@ class AppRoutes extends React.Component {
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} title="Corpus Details" userRoles={['grader', 'dev']} component={GradeViewCorpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/:basename/:modelid`} title="Benchmark" userRoles={['grader', 'dev']} component={BenchmarkGrade} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/graderreport`} title="Grader Report"  component={GraderReport} userRoles={['admin']} authenticate={this.authenticateUser} />
+            
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/benchmarktranslate`} component={FileTranslate} title="Benchmark Upload" authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/texttranslate`} component={GraderTranslate} title="Translate" authenticate={this.authenticateUser} />
+
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-translations/:basename`} component={ViewTranslations} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/corpus`} component={Corp} title="Corpus List" userRoles={['grader', 'dev']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/benchmark`} component={Benchmark} userRoles={['grader', 'dev']} title="Benchmark" authenticate={this.authenticateUser} />

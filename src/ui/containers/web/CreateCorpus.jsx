@@ -29,16 +29,10 @@ class Createcorpus extends React.Component {
     super(props);
     this.state = {
       add_name: "",
-      doamin: "",
-      text: "",
-      language: "",
       apiCalled: false,
-
       file: [],
-
-      comment: "",
       open: false,
-      message: "Corpus added successfully",
+      message: "Benchmark added successfully",
       token: false,
 
       val: 0,
@@ -90,34 +84,7 @@ class Createcorpus extends React.Component {
     });
   };
 
-  validate = () => {
-    let nameError = "";
-    let domainError = "";
-    let commentError = "";
-    let languageError = "";
-    if (!this.state.add_name) {
-      nameError = "Name shouldn't be empty";
-    }
-    if (!this.state.domain) {
-      domainError = "Domain shouldn't be empty";
-    }
-    if (!this.state.comment) {
-      commentError = "Comment Shouldn't be empty";
-    }
-    if (!this.state.language) {
-      languageError = "Language shouldn't be empty";
-    }
-    this.setState({
-      nameError,
-      domainError,
-      commentError,
-      languageError
-    });
-    if (nameError || domainError || commentError || languageError) {
-    } else {
-      return true;
-    }
-  };
+  
 
   handleBack = () => {
     history.push(`${process.env.PUBLIC_URL}/corpus`);
@@ -129,11 +96,7 @@ class Createcorpus extends React.Component {
       const { APITransport } = this.props;
       const apiObj = new CreateCorpus(
         this.state.file,
-        this.state.add_name,
-        this.state.domain,
-        this.state.language,
-        this.state.comment,
-        this.state.language
+        this.state.add_name
       );
       APITransport(apiObj);
       this.setState({ showLoader: true });
@@ -158,7 +121,7 @@ class Createcorpus extends React.Component {
             marginRight: "-2.3%"
           }}
         >
-          Create Corpus
+          Upload Benchmark
         </Typography>
         <br />
         <div style={{ Top: "5px", PaddingBottom: "5px" }}>
@@ -175,39 +138,6 @@ class Createcorpus extends React.Component {
           </FormControl>
         </div>
 
-        <FormControl fullWidth>
-          <InputLabel htmlFor="Domain">Domain*</InputLabel>
-          <Input
-            id="domain"
-            required
-            onChange={event => {
-              this.handleTextChange("domain", event);
-            }}
-          />
-          <span style={{ color: "red" }}>{this.state.domainError}</span>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel htmlFor="Comment">Language*</InputLabel>
-          <Input
-            id="comment"
-            required
-            onChange={event => {
-              this.handleTextChange("language", event);
-            }}
-          />
-          <span style={{ color: "red" }}>{this.state.languageError}</span>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel htmlFor="Comment">Description*</InputLabel>
-          <Input
-            id="comment"
-            required
-            onChange={event => {
-              this.handleTextChange("comment", event);
-            }}
-          />
-          <span style={{ color: "red" }}>{this.state.commentError}</span>
-        </FormControl>
         <br />
         <br />
 

@@ -99,7 +99,7 @@ class Translate extends React.Component {
                 </Typography><br/><br/>
                     <Grid item xs={12} sm={12} lg={12} xl={12}>
                         <label className= {classes.label} >Hindi</label>&nbsp;
-                            <input type="file" className={classes.textField} name="hindiFile" onChange={this.handleMultiFileChange.bind(this)} accept=".pdf" />
+                            <input type="file" className={classes.textField} name="hindiFile" onChange={this.handleMultiFileChange.bind(this)} accept=".txt" />
                         <div style={{ color: 'red' }}>{this.state.hindiError}</div>
                     </Grid><br /><br />
                     <Grid item xs={6} sm={6} lg={6} xl={6} style={{marginBottom:"5%"}}>

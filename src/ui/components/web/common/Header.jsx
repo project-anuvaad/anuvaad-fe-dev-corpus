@@ -202,6 +202,33 @@ class Header extends React.Component {
 								)}
 							/>
 						</ListItem>
+
+						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/texttranslate`)}}>
+							<ListItemIcon>
+							<SearchIcon style={{ color: 'white'}} />
+							</ListItemIcon>
+							<ListItemText
+								disableTypography
+								primary={(
+									<Typography type="body2" style={{ color: '#FFFFFF'}}>
+										Translate
+          							</Typography>
+								)}
+							/>
+						</ListItem>
+						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`)}}>
+							<ListItemIcon>
+							<SearchIcon style={{ color: 'white'}} />
+							</ListItemIcon>
+							<ListItemText
+								disableTypography
+								primary={(
+									<Typography type="body2" style={{ color: '#FFFFFF'}}>
+										Benchmark 
+          							</Typography>
+								)}
+							/>
+						</ListItem>
 						{role.includes('dev') &&
 						<ListItem style={{paddingTop:'8%',paddingBottom:'8%'}} button onClick={()=>{this.handleDrawerClose();history.push(`${process.env.PUBLIC_URL}/newcorpus`)}}>
 							<ListItemIcon>
