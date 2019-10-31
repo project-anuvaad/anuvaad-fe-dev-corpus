@@ -204,7 +204,7 @@ class Header extends React.Component {
 										/>
 									</ListItem>
 								}
-								{role.includes('analyzer') &&
+								{/* {role.includes('analyzer') &&
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={() => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/texttranslate`) }}>
 										<ListItemIcon>
 											<SearchIcon style={{ color: 'white' }} />
@@ -218,7 +218,7 @@ class Header extends React.Component {
 											)}
 										/>
 									</ListItem>
-								}
+								} */}
 								{role.includes('analyzer') &&
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={() => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`) }}>
 										<ListItemIcon>
@@ -228,7 +228,7 @@ class Header extends React.Component {
 											disableTypography
 											primary={(
 												<Typography type="body2" style={{ color: '#FFFFFF' }}>
-													Benchmark
+													Upload File
           							</Typography>
 											)}
 										/>

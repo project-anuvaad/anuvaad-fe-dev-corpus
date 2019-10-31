@@ -19,7 +19,7 @@ class Callback extends React.Component {
         }
         var role = JSON.parse(localStorage.getItem('roles'));
         if (role.includes('analyzer')) {
-          history.push(`${process.env.PUBLIC_URL}/texttranslate`);
+          history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`);
         } else {
           history.push(`${process.env.PUBLIC_URL}/dashboard`);
         }
