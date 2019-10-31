@@ -114,7 +114,7 @@ class ComparisonReport extends React.Component {
       filter: false,
       selectableRows: "none",
       download: true,
-
+      downloadOptions:{filename: "Comparison-Report.csv"},
       onDownload: (buildHead, buildBody, columns, data) =>
       buildHead(headerNames)+buildBody(data) ,
      
