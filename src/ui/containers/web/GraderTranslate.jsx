@@ -102,6 +102,7 @@ class GarderTranslate extends React.Component {
                     marginTop: "-20px",
                     minWidth: "100px",
                     minHeight: '84vh',
+                    paddingBottom:'40px',
                     backgroundColor: "#F3F3F8"
                   }}
                 >
