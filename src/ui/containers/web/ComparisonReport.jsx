@@ -12,6 +12,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import build from "material-ui/svg-icons/action/build";
 class ComparisonReport extends React.Component {
   constructor(props) {
     super(props);
@@ -115,7 +116,7 @@ class ComparisonReport extends React.Component {
       download: true,
 
       onDownload: (buildHead, buildBody, columns, data) =>
-      buildHead(headerNames) ,
+      buildHead(headerNames)+buildBody(data) ,
      
       onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : ""
     };
