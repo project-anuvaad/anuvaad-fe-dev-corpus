@@ -219,7 +219,7 @@ class Header extends React.Component {
 										/>
 									</ListItem>
 								} */}
-								{role.includes('analyzer') &&
+								{/* {role.includes('analyzer') && */}
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={() => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`) }}>
 										<ListItemIcon>
 											<SendIcon style={{ color: 'white' }} />
@@ -233,7 +233,7 @@ class Header extends React.Component {
 											)}
 										/>
 									</ListItem>
-								}
+								{/* } */}
 								{role.includes('dev') &&
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={() => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/newcorpus`) }}>
 										<ListItemIcon>
