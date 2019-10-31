@@ -150,13 +150,13 @@ class SentenceTranslate extends React.Component {
                 onChange={event => {
                   this.handleSelectChange("text", event);
                 }}
-                style={{ minWidth: "99.3%",maxWidth:'99.3%', minHeight: "162px",maxHeight: "162px", fontSize: "20px" }}
+                style={{ minWidth: "100%",maxWidth:'100%%', minHeight: "162px",maxHeight: "162px", fontSize: "20px" }}
               />
             </Form>
           </Grid>
           <Grid item xs={6} sm={6} lg={6} xl={6} style={{ marginBottom: "5%", paddingTop: "180px" }}>
             {/* <Button variant="contained" color="primary" className={classes.button} onClick={() => { history.push(`${process.env.PUBLIC_URL}/translations`) }}>Cancel</Button> */}
-            <Button variant="contained" color="primary" className={classes.buttons} onClick={this.handleSubmit.bind(this)}>
+            <Button variant="contained" disabled= {this.state.text ? false: true} color="primary" className={classes.buttons} onClick={this.handleSubmit.bind(this)}>
               Translate
             </Button>
           </Grid>
@@ -175,6 +175,8 @@ class SentenceTranslate extends React.Component {
               <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
               <Button
                 variant="contained"
+
+                
                 onClick={event => {
                   this.handleUpdateSubmit(this.state.sentences);
                 }}

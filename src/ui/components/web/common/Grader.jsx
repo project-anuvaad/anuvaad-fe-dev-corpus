@@ -15,6 +15,7 @@ class Grader extends React.Component {
     }
 
     componentDidMount() {
+        console.log(this.props.data[this.props.meaning])
         this.setState({
             [this.props.meaning + this.props.index]: this.props.data[this.props.meaning] ? this.props.data[this.props.meaning] : 0,
             [this.props.structure + this.props.index]: this.props.data[this.props.structure] ? this.props.data[this.props.structure] : 0,
@@ -55,7 +56,7 @@ class Grader extends React.Component {
 
                         <Grid item xs={12} sm={12} lg={9} xl={9} style={{ flex: 1, marginTop: "20px", marginBottom: "20px" }}>
                             
-                            <div style={{minHeight:'70px', width:'130%'}}>
+                            <div style={{minHeight:'80px', width:'130%'}}>
                                 {this.props.description}
                                 </div>
                         </Grid>

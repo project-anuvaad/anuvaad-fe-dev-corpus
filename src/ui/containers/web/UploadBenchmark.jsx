@@ -60,6 +60,7 @@ class UploadBenchmarkfile extends React.Component {
   }
 
   handleSelectChange(key, event) {
+    event.preventDefault();
     this.setState({
       [key]: event.target.value
     });
