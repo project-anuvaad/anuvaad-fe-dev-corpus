@@ -95,7 +95,7 @@ class ComparisonReport extends React.Component {
       },
       {
         name: "word_count",
-        label: "Word Count",
+        label: "",
         options: {
           filter: true,
           sort: true
@@ -103,6 +103,8 @@ class ComparisonReport extends React.Component {
       }
     ];
 
+    var data =this.state.graderDetails
+    const footerNames = ['Full Name', 'Job', 'Whereabouts', 'Age', 'Allowance'];
     const options1 = {
       filterType: "checkbox",
       download: false,
@@ -111,6 +113,10 @@ class ComparisonReport extends React.Component {
       filter: false,
       selectableRows: "none",
       download: true,
+
+      onDownload: (buildHead, buildBody, columns, data) =>
+      buildHead(headerNames) ,
+     
       onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : ""
     };
 
@@ -172,7 +178,35 @@ class ComparisonReport extends React.Component {
           sort: true,
           sortDirection: "desc"
         }
+
       }
+    ];
+
+    const headerNames = [
+      {
+        name: 'Category Name',
+        download: true,
+      },
+      {
+        name: 'Source',
+        download: true,
+      },
+      {
+        name: 'Target',
+        download: true,
+      },
+      {
+        name: 'Meaning of sentence',
+        download: true,
+      },
+      {
+        name: 'Structure of sentence',
+        download: true,
+      },
+      {
+        name: 'Vocabulary / Lexicon',
+        download: true,
+      },
     ];
 
     return (
