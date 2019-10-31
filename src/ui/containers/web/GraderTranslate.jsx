@@ -56,11 +56,9 @@ class GarderTranslate extends React.Component {
     this.setState({ showLoader: true });
   }
 
-  handleFetchSentence(e, index, basename) {
-      console.log("sajish")
-    
+  handleFetchSentence(e, index, basename, name) {
     if (e.target.textContent) {
-      this.setState({ value: e.target.textContent,sentences:[], index, base: basename });
+      this.setState({ value: e.target.textContent,sentences:[], index, base: basename, file_name: name});
     }
   }
 
@@ -79,7 +77,6 @@ class GarderTranslate extends React.Component {
   }
 
   handleSubmit=()=>{
-      console.log("clicked")
       this.setState({
           createBenchmark: true, base:'', value:'',open1:true
       })
@@ -107,11 +104,10 @@ class GarderTranslate extends React.Component {
                     backgroundColor: "#F3F3F8"
                   }}
                 >
-                 <Typography variant="h6" color="inherit"style={{ paddingTop: "40px",marginLeft:'15%' }} ><b>Benchmark List</b><br/></Typography>
+                 <Typography variant="h6" color="inherit"style={{ paddingTop: "40px",marginLeft:'15%' }} ><b>Files List</b><br/></Typography>
 
                   <ScrollArea>
                     {this.state.name.map((i, index) => {
-                      console.log("i", i);
                       return (
                         <div
                           style={{
@@ -128,7 +124,7 @@ class GarderTranslate extends React.Component {
                         >
                           <div
                             onClick={e => {
-                              this.handleFetchSentence(e, index, i.basename);
+                              this.handleFetchSentence(e, index, i.basename, i.name);
                             }}
                           >
                             {i.name}
@@ -160,7 +156,7 @@ class GarderTranslate extends React.Component {
                     }}
                   >
                     <UploadFile fontSize="large" />
-                    &nbsp;&nbsp;&nbsp;Upload Benchmark
+                    &nbsp;&nbsp;&nbsp;Upload File
                     
                   </Button>
                 </div>
@@ -174,7 +170,7 @@ class GarderTranslate extends React.Component {
               <CreateBenchmark open1={this.state.open1}/>
             ) : this.state.base ? (
               <div>
-                <GraderViewBenchmark base={this.state.base}/>
+                <GraderViewBenchmark base={this.state.base} label={this.state.file_name}/>
               </div>
             ):''}
           </Grid>
