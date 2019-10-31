@@ -16,7 +16,10 @@ class AppBar extends Component{
                   <Typography variant="h6" color="inherit" style={{  flex: 1 }}>
                     {this.props.pending === 0 ? "Completed":( "Number of sentence pending :" +this.props.pending)}
                   </Typography>
+                  
+                  <Typography variant="h6" color="inherit" >Pending: {this.props.val}</Typography>
 
+                    
                  
                 </Toolbar>
               </AppBarButton>

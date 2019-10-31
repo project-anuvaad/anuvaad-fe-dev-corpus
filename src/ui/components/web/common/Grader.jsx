@@ -5,6 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import NewCorpusStyle from "../../../styles/web/Newcorpus";
 import Typography from "@material-ui/core/Typography";
 import StarRatingComponent from "react-star-rating-component";
+import ReadMoreReact from 'read-more-react';
 
 class Grader extends React.Component {
     constructor(props) {
@@ -57,7 +58,18 @@ class Grader extends React.Component {
                         <Grid item xs={12} sm={12} lg={9} xl={9} style={{ flex: 1, marginTop: "20px", marginBottom: "20px" }}>
                             
                             <div style={{minHeight:'80px', width:'130%'}}>
-                                {this.props.description}
+                            {this.props.description}
+
+                            {/* <ReadMoreReact 
+                min={200}
+                ideal={250}
+                max={300}
+                readMoreText=".....ReadMore..."/> */}
+                            
+                        
+                            
+                            
+                                
                                 </div>
                         </Grid>
                         <Grid item xs={12} sm={12} lg={3} xl={3}>
