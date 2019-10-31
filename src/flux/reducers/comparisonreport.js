@@ -7,7 +7,6 @@ export default function (state = {}, action) {
             if (action.payload && Array.isArray(action.payload)) {
                 let data_arr = []
                 action.payload.map((data, index) => {
-                    console.log(data._id)
                     if (data._id !== 'hemat') {
                         data._id = 'anuvaad_' + data._id
                     }
