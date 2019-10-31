@@ -67,6 +67,11 @@ class GarderTranslate extends React.Component {
       console.log(this.props.fetchBenchmark);
       this.setState({ name: this.props.fetchBenchmark });
     }
+    if(prevProps.uploadbenchmark !== this.props.uploadbenchmark){
+      const { APITransport } = this.props;
+      const apiObj = new FetchBenchmark();
+      APITransport(apiObj);
+    }
 
     if (prevProps.sentences !== this.props.sentences) {
       console.log("props----", this.props.sentences);
@@ -184,7 +189,8 @@ const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
   fetchBenchmark: state.fetchBenchmark,
-  sentences: state.sentences
+  sentences: state.sentences,
+  uploadbenchmark: state.uploadbenchmark
 });
 
 const mapDispatchToProps = dispatch =>
