@@ -12,14 +12,15 @@ import Typography from "@material-ui/core/Typography";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
-import AppBar from "../../components/web/common/Appbar";
-import Divider from "@material-ui/core/Divider";
-
+ import AppBar from "../../components/web/common/Appbar";
+ import Divider from "@material-ui/core/Divider";
+ import Switch from '@material-ui/core/Switch';
 class BenchmarkGrade extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       inputStatus: "ALL",
+      checkedB: false,
       apiCall: false,
       pending: null,
       PendingpageNumber: 1,
@@ -79,9 +80,15 @@ class BenchmarkGrade extends React.Component {
   }
 
   handleSubmit = () => {
+    console.log("-----",this.state.offset,this.state.count)
+    if(this.state.offset<this.state.count){
     let api = new UpdateSentencesGrade(this.state.sentences, this.props.match.params.modelid);
     this.setState({ dialogOpen: false, apiCall: true, showLoader: true, tocken: false, sentences: [] });
     this.props.APITransport(api);
+    }
+    else{
+        alert("Reached Last page");
+    }
   };
 
 
@@ -153,19 +160,52 @@ class BenchmarkGrade extends React.Component {
 
   }
 
+  handleSwitchChange=()=>{
 
+    console.log(this.state.checkedB)
+
+    if(this.state.checkedB){
+        let api = new FetchBenchmarkCompareModel(
+            this.props.base,
+            this.state.pageCount,
+             1,
+            "ALL"
+          );
+          this.props.APITransport(api);
+          this.setState({inputStatus:"ALL",offset:0})
+    }
+    else{
+
+        let api = new FetchBenchmarkCompareModel(
+            this.props.base,
+            this.state.pageCount,
+            1,
+            "PENDING"
+          );
+          this.props.APITransport(api);
+          this.setState({inputStatus:"PENDING",offset:0})
+    }
+    this.setState({ checkedB: !this.state.checkedB,sentences:[]});
+  }
 
   render() {
+    var value =  <Switch
+    checked={this.state.checkedB}
+    onChange={()=>{this.handleSwitchChange()}}
+    value="checkedB"
+    color="white"
+  />
     return (
       <div>
         <Typography variant="title" color="inherit" style={{ marginTop: "20px", marginLeft: '20px' }} ><b>{"Sentences From " + this.props.label}</b></Typography>
         <Grid container spacing={4} style={{ padding: "20px" }}>
-          {this.state.sentences && this.state.sentences.length > 0 && <AppBar pending={this.state.pending} count={this.state.count} />}
-          {this.state.sentences.length > 0 && <Typography variant="title" color="inherit" style={{ marginTop: "20px" }} ><b>Source Sentence</b><br /></Typography>}
-          <Grid item xs={12} sm={12} lg={12} xl={12}>
-            <Typography variant="body1" color="inherit" style={{ marginTop: "20px" }} > {this.state.sentences.length > 0 && this.state.sentences[0].source}</Typography>
-          </Grid>
-
+        {this.state.sentences && this.state.sentences.length > 0 &&<AppBar pending={this.state.pending} count={this.state.count} val={value}/>}
+        
+        {this.state.sentences.length > 0&& <Typography variant="title" color="inherit"style={{ marginTop: "20px" }} ><b>Source Sentence</b><br/></Typography>}
+        <Grid item xs={12} sm={12} lg={12} xl={12}>
+        <Typography variant="body1" color="inherit" style={{ marginTop: "20px" }} > {this.state.sentences.length > 0 && this.state.sentences[0].source}</Typography>
+        </Grid>
+        
           {this.state.sentences.map((value, i) => {
             var val = i == 0 ? "A" : "B";
             return <Grid item xs={6} sm={6} lg={6} xl={6}>
@@ -174,34 +214,34 @@ class BenchmarkGrade extends React.Component {
           })}
         </Grid>
         {/*  */}
-
-        {this.state.sentences && this.state.sentences.length > 0 && <Toolbar style={{ marginRight: "3%", marginTop: "20px" }}>
-          <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
-          <Button
-            variant="contained"
-            disabled={this.state.sentences.length > 0 ? this.state.sentences[0].rating && this.state.sentences[1].rating && this.state.sentences[0].context_rating && this.state.sentences[1].context_rating && this.state.sentences[0].spelling_rating && this.state.sentences[1].spelling_rating ? false : true : true}
-            onClick={event => {
-              this.handleSubmit(this.state.sentences);
-            }}
-            color={"primary"}
-            aria-label="edit"
-            style={{ width: "170px", marginBottom: "4%", marginTop: "1px" }}
-          >
-            Save & Next
+        
+        {this.state.sentences && this.state.sentences.length > 0 &&  <Toolbar style={{ marginRight: "3%", marginTop: "20px" }}>
+              <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+              <Button
+                variant="contained"
+                disabled ={this.state.sentences[0] && this.state.sentences[1] ? this.state.sentences[0].rating && this.state.sentences[1].rating && this.state.sentences[0].context_rating && this.state.sentences[1].context_rating && this.state.sentences[0].spelling_rating && this.state.sentences[1].spelling_rating? false:true: true}
+                onClick={event => {
+                  this.handleSubmit(this.state.sentences);
+                }}
+                color={"primary"}
+                aria-label="edit"
+                style={{ width: "170px", marginBottom: "4%", marginTop: "1px" }}
+              >
+                Save & Next
               </Button>
-        </Toolbar>}
-        {this.state.sentences && this.state.sentences.length > 0 &&
-          <Pagination
-            align="right"
-            limit={1}
-            offset={this.state.offset}
-            centerRipple={true}
-            total={this.state.count}
-            onClick={(event, offset) => {
-              this.handleChangePage(event, offset);
-            }}
-          />
-        }
+            </Toolbar>}
+        {this.state.sentences && this.state.sentences.length > 0 && 
+        <Pagination
+          align="right"
+          limit={1}
+          offset={this.state.offset}
+          centerRipple={true}
+          total={this.state.inputStatus==="PENDING"? this.state.pending: this.state.count}
+          onClick={(event, offset) => {
+            this.handleChangePage(event, offset);
+          }}
+        />
+      }
 
       </div>
     );
