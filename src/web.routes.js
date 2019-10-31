@@ -8,7 +8,7 @@ import Callback from "./ui/containers/web/Callback";
 import NotFound from "./ui/containers/web/NotFound";
 import Corpus from "./ui/containers/web/Corpus";
 import Translations from "./ui/containers/web/Translations";
-import createcorpus from "./ui/containers/web/CreateCorpus";
+import createcorpus from "./ui/containers/web/UploadBenchmark";
 import newcorpus from "./ui/containers/web/Newcorpus";
 import Corp from "./ui/containers/web/ViewCorpus";
 import Benchmark from "./ui/containers/web/Benchmark";
@@ -21,8 +21,10 @@ import DashboardTamil from "./ui/containers/web/DashboardTamil";
 import GradeViewCorpus from "./ui/containers/web/GradeViewCorpus";
 import BenchmarkGrade from "./ui/containers/web/BenchmarkGrade";
 import QnA from "./ui/containers/web/QnA";
-
-
+import GraderReport from "./ui/containers/web/GraderReport";
+import GraderTranslate from "./ui/containers/web/SentenceTranslate";
+import FileTranslate from "./ui/containers/web/GraderTranslate";
+import ComparisonReport from "./ui/containers/web/ComparisonReport";
 const PrivateRoute = ({ component: Component, userRoles, title, authenticate, ...rest }) => (
 
 
@@ -72,10 +74,15 @@ class AppRoutes extends React.Component {
             <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard`} title="Translate" component={DashboardTamil} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} title="Corpus Details" userRoles={['grader', 'dev']} component={GradeViewCorpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/:basename/:modelid`} title="Benchmark" userRoles={['grader', 'dev']} component={BenchmarkGrade} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/graderreport`} title="Grader Report"  component={GraderReport} userRoles={['admin']} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/comparison-report`} title="Comparison Report"  component={ComparisonReport} userRoles={['admin']} authenticate={this.authenticateUser} />
             
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/benchmarktranslate`} userRoles={['analyzer']} component={FileTranslate} title="Benchmark Upload" authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/texttranslate`} userRoles={['analyzer']} component={GraderTranslate} title="Translate" authenticate={this.authenticateUser} />
+
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-translations/:basename`} component={ViewTranslations} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/corpus`} component={Corp} title="Corpus List" authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/benchmark`} component={Benchmark} title="Benchmark" authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/corpus`} component={Corp} title="Corpus List" userRoles={['grader', 'dev']} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/benchmark`} component={Benchmark} userRoles={['grader', 'dev']} title="Benchmark" authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`} title="Corpus Details" userRoles={['editor', 'dev']} component={Corpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translations`} component={Translations} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translate`} component={Translate} authenticate={this.authenticateUser} />

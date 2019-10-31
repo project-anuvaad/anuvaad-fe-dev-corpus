@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import Button from '@material-ui/core/Button';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import CreateCorpus from "../../../flux/actions/apis/corpus";
-import MySnackbarContentWrapper from "../../components/web/common/snackbar";
+import MySnackbarContentWrapper from "../../components/web/common/Snackbar";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Paper from '@material-ui/core/Paper';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -75,7 +75,6 @@ class Newcorpus extends React.Component {
     }
 
     handleSelectChange = event => {
-      console.log([event.target.name],event.target.value)
         this.setState({ [event.target.name]: event.target.value });
       };
 
@@ -96,14 +95,12 @@ class Newcorpus extends React.Component {
     }
 
     handleSource = (files) => {
-      console.log("source",typeof(files))
       this.setState({
         englishFile: files
       });
     }
 
     handleTarget = (files) => {
-      console.log("target",files)
       this.setState({
         hindiFile: files
       });
@@ -111,13 +108,12 @@ class Newcorpus extends React.Component {
     }
 
     getStepContent=(stepIndex)=> {
-        console.log(stepIndex)
         switch (stepIndex) {
           case 0:
             return <div>
             <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-          <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '12%', paddingTop: '14%' }} >Please select source language :</Typography>
+          <Typography value='' variant="title" style={{ marginLeft: '12%', paddingTop: '14%' }} >Please select source language :</Typography>
         
         </Grid>
         <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
@@ -227,7 +223,6 @@ class Newcorpus extends React.Component {
       }
 
       handleNext = () => {
-        console.log(this.state.englishFile.name)
         if(this.state.activeStep===0 && this.state.englishFile.name && this.state.english){
         this.setState(state => ({
           activeStep: 1,

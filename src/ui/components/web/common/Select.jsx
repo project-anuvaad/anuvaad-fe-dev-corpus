@@ -11,7 +11,7 @@ class SimpleSelect extends React.Component {
     
 
     render() {
-      const { id,selectValue, MenuItemValues, handleChange, value, name} = this.props;
+      const { id, MenuItemValues, handleChange, value, name} = this.props;
 
         return (
           <form>
