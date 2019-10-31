@@ -193,7 +193,7 @@ class BenchmarkGrade extends React.Component {
     checked={this.state.checkedB}
     onChange={()=>{this.handleSwitchChange()}}
     value="checkedB"
-    color="white"
+    color="secondary"
   />
     return (
       <div>
