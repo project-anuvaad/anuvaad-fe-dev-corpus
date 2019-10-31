@@ -83,7 +83,7 @@ class UploadBenchmarkfile extends React.Component {
 
   handleSource = files => {
     this.setState({
-      file: files
+      file: files, tocken: true
     });
   };
 
@@ -105,7 +105,7 @@ class UploadBenchmarkfile extends React.Component {
          this.state.source
        );
       this.props.APITransport(apiObj);
-      this.setState({ showLoader: true });
+      this.setState({ showLoader: true, tocken: false });
     
   }
 
@@ -158,7 +158,7 @@ class UploadBenchmarkfile extends React.Component {
           Dropzoneiles=""
           onDrop={this.handleSource}
           id="source"
-          showPreviewsInDropzone={true}
+          showPreviewsInDropzone={this.state.tocken}
           acceptedFiles={[".txt"]}
           dropzoneText="Please Add/Drop txt file here"
           filesLimit={1}
@@ -177,7 +177,7 @@ class UploadBenchmarkfile extends React.Component {
           <MySnackbarContentWrapper onClose={this.handleClose} variant="success" message={this.state.message} />
         </Snackbar>
         </div>
-        }
+        
         </div>
     );
   }
