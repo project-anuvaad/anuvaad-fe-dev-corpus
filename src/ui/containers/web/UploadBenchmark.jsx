@@ -119,7 +119,7 @@ class UploadBenchmarkfile extends React.Component {
         
         <div style={{ Top: "15px", PaddingBottom: "5px" }}>
           <FormControl fullWidth>
-            <InputLabel htmlFor="Add Name">Benckmark filename*</InputLabel>
+            <InputLabel htmlFor="Add Name">Filename/Title*</InputLabel>
             <Input
             value={this.state.add_name}
             style={{width:'200%'}}
@@ -161,7 +161,7 @@ class UploadBenchmarkfile extends React.Component {
           id="source"
           showPreviewsInDropzone={this.state.tocken}
           acceptedFiles={[".txt"]}
-          dropzoneText="Please Add/Drop txt file here"
+          dropzoneText="Please Drag and drop txt file(only)"
           filesLimit={1}
         ></DropzoneArea>
         </div>
