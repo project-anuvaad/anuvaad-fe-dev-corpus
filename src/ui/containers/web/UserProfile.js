@@ -20,7 +20,7 @@ import Fab from "@material-ui/core/Fab";
 import Tooltip from "@material-ui/core/Tooltip";
 import Updatepassword from "../../../flux/actions/apis/updatepassword";
 import Snackbar from "@material-ui/core/Snackbar";
-import MySnackbarContentWrapper from "../../components/web/common/snackbar";
+import MySnackbarContentWrapper from "../../components/web/common/Snackbar";
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -278,9 +278,9 @@ class UserProfile extends React.Component {
                 </FormControl>
                 <div>
                   <span style={{ marginLeft: "20%", color: "red" }}>{this.state.message}</span>
-                  <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}>
+                  {/* <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}>
                     <MySnackbarContentWrapper onClose={this.handleClose} variant="success" message={this.state.messageSnack} />
-                  </Snackbar>
+                  </Snackbar> */}
                   <DialogActions style={{ marginRight: "22px" }}>
                     <Button
                       variant="contained"

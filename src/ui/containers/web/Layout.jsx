@@ -6,6 +6,7 @@ import Header from "../../components/web/common/Header";
 import GlobalStyles from "../../styles/web/styles";
 import Spinner from "../../components/web/common/Spinner";
 // import Theme from "../../theme/web/theme-red";
+import Snackbars from '../../components/web/common/Snackbar'
 import Theme from "../../theme/web/theme-default";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
@@ -22,6 +23,12 @@ class App extends React.Component {
   renderSpinner() {
     if (this.props.apistatus.progress) {
       return <Spinner />;
+    }
+  }
+
+  renderMessage() {
+    if (this.props.apistatus.message) {
+      return <Snackbars message={this.props.apistatus.message} variant={this.props.apistatus.error ? 'error':'success'}/>;
     }
   }
 
@@ -48,6 +55,7 @@ class App extends React.Component {
           <div className={classes.container}>
             <Component />
           </div>
+          {this.renderMessage()}
         </div>
       </MuiThemeProvider>
     );
