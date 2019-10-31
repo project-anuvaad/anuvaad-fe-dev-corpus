@@ -289,6 +289,21 @@ class Header extends React.Component {
 									/>
 									</ListItem>
 								}
+								{role.includes('admin') &&
+								<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/comparison-report`) }}>
+									<ListItemIcon>
+										<GroupIcon style={{ color: 'white' }} />
+										</ListItemIcon>
+									<ListItemText
+										disableTypography
+										primary={(
+											<Typography type="body2" style={{ color: '#FFFFFF' }}>
+												Comparison Reports
+          							</Typography>
+										)}
+									/>
+									</ListItem>
+								}
 						
 						
 
