@@ -12,6 +12,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import build from "material-ui/svg-icons/action/build";
 class ComparisonReport extends React.Component {
   constructor(props) {
     super(props);
@@ -95,7 +96,7 @@ class ComparisonReport extends React.Component {
       },
       {
         name: "word_count",
-        label: "Word Count",
+        label: "",
         options: {
           filter: true,
           sort: true
@@ -103,6 +104,8 @@ class ComparisonReport extends React.Component {
       }
     ];
 
+    var data =this.state.graderDetails
+    const footerNames = ['Full Name', 'Job', 'Whereabouts', 'Age', 'Allowance'];
     const options1 = {
       filterType: "checkbox",
       download: false,
@@ -111,6 +114,10 @@ class ComparisonReport extends React.Component {
       filter: false,
       selectableRows: "none",
       download: true,
+
+      onDownload: (buildHead, buildBody, columns, data) =>
+      buildHead(headerNames)+buildBody(data) ,
+     
       onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : ""
     };
 
@@ -172,7 +179,35 @@ class ComparisonReport extends React.Component {
           sort: true,
           sortDirection: "desc"
         }
+
       }
+    ];
+
+    const headerNames = [
+      {
+        name: 'Category Name',
+        download: true,
+      },
+      {
+        name: 'Source',
+        download: true,
+      },
+      {
+        name: 'Target',
+        download: true,
+      },
+      {
+        name: 'Meaning of sentence',
+        download: true,
+      },
+      {
+        name: 'Structure of sentence',
+        download: true,
+      },
+      {
+        name: 'Vocabulary / Lexicon',
+        download: true,
+      },
     ];
 
     return (

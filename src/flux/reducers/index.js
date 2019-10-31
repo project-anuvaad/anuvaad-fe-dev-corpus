@@ -12,6 +12,7 @@ import translation_sentences from './translation_sentences';
 import sentences from './sentences';
 import userProfile from './userprofile';
 import updatePasswordstatus from './updatepassword';
+import uploadbenchmark from './uploadbenchmark';
 import source_translate from './source-translate';
 import supportLanguage from './fetchlanguages';
 import langModel from './fetchmodel';
@@ -44,7 +45,8 @@ export default {
     graderReport,
     fetchBenchmarkCompareModel,
     benchmarkTranslate,
-    comparisonreport
+    comparisonreport,
+    uploadbenchmark
 
 
     
