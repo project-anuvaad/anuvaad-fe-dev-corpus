@@ -1,8 +1,8 @@
 import { Form, TextArea } from "semantic-ui-react";
-
+import Grader from "../../components/web/common/Grader";
 import React from "react";
 import { withRouter } from "react-router-dom";
-import InputLabel from "@material-ui/core/InputLabel";
+import BenchmarkTranslate from "../../../flux/actions/apis/benchmarktranslate";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -16,7 +16,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import Models from "./Models";
+import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
 class SentenceTranslate extends React.Component {
   constructor(props) {
     super(props);
@@ -34,10 +34,19 @@ class SentenceTranslate extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.apistatus !== this.props.apistatus) {
       this.setState({ showLoader: true });
-      setTimeout(() => {
-        history.push(`${process.env.PUBLIC_URL}/translations`);
-      }, 3000);
+      
     }
+
+    if (prevProps.benchmarkTranslate !== this.props.benchmarkTranslate) {
+        console.log("test---",this.props.benchmarkTranslate.data)
+        this.setState({
+            
+            
+            sentences: this.props.benchmarkTranslate.data,
+          });
+        
+      }
+    
   }
 
   handleSelectChange(key, event) {
@@ -58,12 +67,36 @@ class SentenceTranslate extends React.Component {
     }
   };
 
+  componentWillUnmount(){
+      this.setState({file:[]})
+  }
+
   handleSelechange = event => {
     this.setState({ pageCount: event.target.value, offset: 0 });
   };
 
+
+  onStarClick(nextValue, prevValue, name, index) {
+    let sentences = this.state.sentences
+    sentences[index][name] = nextValue
+    this.setState({ sentences: sentences });
+   
+  }
+
+  handleUpdateSubmit = () => {
+    let api = new UpdateSentencesGrade(this.state.sentences, this.props.match.params.modelid);
+    this.setState({ dialogOpen: false, apiCall: true,showLoader: true, tocken: false ,sentences: []});
+    this.props.APITransport(api);
+
+    this.setState({source:'', target:'', text:'' });
+  };
+
   handleSubmit() {
-    console.log(this.state.source, this.state.target, this.state.text);
+
+    const { APITransport } = this.props;
+        const apiObj = new BenchmarkTranslate( this.state.text, this.state.source, this.state.target);
+        APITransport(apiObj);
+    (this.state.source, this.state.target, this.state.text);
   }
 
   render() {
@@ -87,8 +120,8 @@ class SentenceTranslate extends React.Component {
                     }}
                     displayEmpty
                   >
-                    <MenuItem value={"english"}>English</MenuItem>
-                    <MenuItem value={"hindi"}>Hindi</MenuItem>
+                    <MenuItem value={"English"}>English</MenuItem>
+                    <MenuItem value={"Hindi"}>Hindi</MenuItem>
                   </Select>
 
                   <Typography variant="h6" color="inherit" style={{ marginLeft: "20%", flex: 1 }}>
@@ -104,8 +137,8 @@ class SentenceTranslate extends React.Component {
                     }}
                     displayEmpty
                   >
-                    <MenuItem value={"english"}>English</MenuItem>
-                    <MenuItem value={"hindi"}>Hindi</MenuItem>
+                   {this.state.source === "Hindi" && <MenuItem value={"English"}>English</MenuItem>}
+                   {this.state.source === "English" && <MenuItem value={"Hindi"}>Hindi</MenuItem>}
                   </Select>
                 </Toolbar>
               </AppBar>
@@ -126,7 +159,31 @@ class SentenceTranslate extends React.Component {
             </Button>
           </Grid>
         </Grid>
-        <Models />
+        <Grid container spacing={4} style={{ padding: "20px", marginTop:"-60px"}}>
+        
+          {this.state.sentences && this.state.sentences.map((value, i) => {
+            var val = i == 0 ? "A" : "B";
+            return <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <Grader title={"Model " + val} index={i} description={value.target} handleStarClick={this.onStarClick.bind(this)} data={value} handleStarClick={this.onStarClick.bind(this)} handleStarClick={this.onStarClick.bind(this)} meaning={"rating"} structure={"context_rating"} vocabulary={"spelling_rating"} />
+            </Grid>
+          })}
+        </Grid>
+
+        {this.state.sentences && this.state.sentences.length > 0 &&  <Toolbar style={{ marginRight: "3%", marginTop: "20px" }}>
+              <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+              <Button
+                variant="contained"
+                onClick={event => {
+                  this.handleUpdateSubmit(this.state.sentences);
+                }}
+                color={"primary"}
+                aria-label="edit"
+                style={{ width: "170px", marginBottom: "4%", marginTop: "1px" }}
+              >
+                Save
+              </Button>
+            </Toolbar>}
+        
       </div>
     );
   }
@@ -135,7 +192,8 @@ class SentenceTranslate extends React.Component {
 const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
-  corpus: state.corpus
+  corpus: state.corpus,
+  benchmarkTranslate: state.benchmarkTranslate
 });
 
 const mapDispatchToProps = dispatch =>
