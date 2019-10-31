@@ -110,7 +110,7 @@ class ComparisonReport extends React.Component {
       fixedHeader: true,
       filter: false,
       selectableRows: "none",
-
+      download: true,
       onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : ""
     };
 
