@@ -83,7 +83,7 @@ class BenchmarkGrade extends React.Component {
     console.log("-----",this.state.offset,this.state.count)
     if(this.state.offset<this.state.count){
     let api = new UpdateSentencesGrade(this.state.sentences, this.props.match.params.modelid);
-    this.setState({ dialogOpen: false, apiCall: true,showLoader: true, tocken: false ,sentences: []});
+    this.setState({ dialogOpen: false, apiCall: true, showLoader: true, tocken: false, sentences: [] });
     this.props.APITransport(api);
     }
     else{
@@ -125,17 +125,17 @@ class BenchmarkGrade extends React.Component {
     }
 
     if (prevProps.updateGrade !== this.props.updateGrade) {
-        let api1 = new FetchBenchmarkCompareModel(
-            this.state.base,
-    
-            this.state.pageCount,
-            this.state.offset + 2,
-            this.state.inputStatus
-          );
-        this.setState({ showLoader: true,offset:this.state.offset+1,sentences: []});
-        this.props.APITransport(api1);
-        
-      }
+      let api1 = new FetchBenchmarkCompareModel(
+        this.state.base,
+
+        this.state.pageCount,
+        this.state.offset + 2,
+        this.state.inputStatus
+      );
+      this.setState({ showLoader: true, offset: this.state.offset + 1, sentences: [] });
+      this.props.APITransport(api1);
+
+    }
 
     if (prevProps.fetchBenchmarkCompareModel !== this.props.fetchBenchmarkCompareModel) {
 
@@ -157,7 +157,7 @@ class BenchmarkGrade extends React.Component {
     let sentences = this.state.sentences
     sentences[index][name] = nextValue
     this.setState({ sentences: sentences });
-   
+
   }
 
   handleSwitchChange=()=>{
@@ -197,7 +197,7 @@ class BenchmarkGrade extends React.Component {
   />
     return (
       <div>
-          <Typography variant="title" color="inherit"style={{ marginTop: "20px",marginLeft:'20px' }} ><b>Benchmark Sentences</b></Typography>
+        <Typography variant="title" color="inherit" style={{ marginTop: "20px", marginLeft: '20px' }} ><b>{"Sentences From " + this.props.label}</b></Typography>
         <Grid container spacing={4} style={{ padding: "20px" }}>
         {this.state.sentences && this.state.sentences.length > 0 &&<AppBar pending={this.state.pending} count={this.state.count} val={value}/>}
         
