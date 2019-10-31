@@ -7,8 +7,8 @@ import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import UploadBenchmark from "../../../flux/actions/apis/uploadbenchmark";
-import Snackbar from "@material-ui/core/Snackbar";
-import MySnackbarContentWrapper from "../../components/web/common/snackbar";
+// import Snackbar from "@material-ui/core/Snackbar";
+// import MySnackbarContentWrapper from "../../components/web/common/snackbar";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Select from "@material-ui/core/Select";
@@ -173,9 +173,9 @@ class UploadBenchmarkfile extends React.Component {
           Submit
         </Button>
 
-        <Snackbar style = {{marginTop:'50px'}}anchorOrigin={{ vertical: "top", horizontal: "right" }} onClose={this.handleClose} open={this.state.open} autoHideDuration={6000}>
+        {/* <Snackbar style = {{marginTop:'50px'}}anchorOrigin={{ vertical: "top", horizontal: "right" }} onClose={this.handleClose} open={this.state.open} autoHideDuration={6000}>
           <MySnackbarContentWrapper onClose={this.handleClose} variant="success" message={this.state.message} />
-        </Snackbar>
+        </Snackbar> */}
         </div>
         }
         </div>

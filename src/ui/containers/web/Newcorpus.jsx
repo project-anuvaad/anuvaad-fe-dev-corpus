@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import Button from '@material-ui/core/Button';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import CreateCorpus from "../../../flux/actions/apis/corpus";
-import MySnackbarContentWrapper from "../../components/web/common/snackbar";
+import MySnackbarContentWrapper from "../../components/web/common/Snackbar";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Paper from '@material-ui/core/Paper';
 import InputLabel from '@material-ui/core/InputLabel';
