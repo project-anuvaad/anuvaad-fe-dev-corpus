@@ -42,7 +42,7 @@ class Grader extends React.Component {
     render() {
         return (
             <div>
-                <Grid container spacing={4} style={{ padding: "20px" }}>
+                <Grid container spacing={4} style={{ paddingTop: "20px" }}>
                     <Grid item xs={12} sm={12} lg={12} xl={12} style={{}}>
                         <Typography variant="h6" color="inherit">
                             <b>
@@ -54,9 +54,10 @@ class Grader extends React.Component {
                     <Grid container>
 
                         <Grid item xs={12} sm={12} lg={9} xl={9} style={{ flex: 1, marginTop: "20px", marginBottom: "20px" }}>
-                            <Typography variant="h6" color="inherit" style={{ flex: 1 }}>
+                            
+                            <div style={{minHeight:'70px', width:'130%'}}>
                                 {this.props.description}
-                            </Typography>
+                                </div>
                         </Grid>
                         <Grid item xs={12} sm={12} lg={3} xl={3}>
                         </Grid>
@@ -65,12 +66,12 @@ class Grader extends React.Component {
 
                     <Grid container>
                         <Grid item xs={12} sm={12} lg={8} xl={8} style={{ flex: 1 }}>
-                            <Typography variant="h6" color="inherit" style={{ flex: 1, marginTop: "20px" }}>
+                            <Typography variant="h6" color="inherit" style={{ flex: 1 }}>
                                 Meaning of sentence:
                         </Typography>
                         </Grid>
 
-                        <Grid item xs={12} sm={12} lg={4} xl={4} style={{ flex: 1, textAlign: "right" }}>
+                        <Grid item xs={12} sm={12} lg={4} xl={4} style={{ flex: 1, textAlign: "right",marginTop:'-20px',marginRight:'7%' }}>
                             <h1>
                                 <StarRatingComponent name={this.props.meaning} starCount={5} value={this.state[this.props.meaning + this.props.index]} onStarClick={this.onMeaningStarClick.bind(this)} />
                             </h1>
@@ -85,7 +86,7 @@ class Grader extends React.Component {
                         </Grid>
 
 
-                        <Grid item xs={12} sm={12} lg={4} xl={4} style={{ flex: 1, textAlign: "right" }}>
+                        <Grid item xs={12} sm={12} lg={4} xl={4} style={{ flex: 1, textAlign: "right",marginTop:'-20px',marginRight:'7%' }}>
                             <h1>
                                 <StarRatingComponent name={this.props.structure} starCount={5} value={this.state[this.props.structure + this.props.index]} onStarClick={this.onStructureStarClick.bind(this)} />
                             </h1>
@@ -99,7 +100,7 @@ class Grader extends React.Component {
                         </Typography>
                         </Grid>
 
-                        <Grid item xs={12} sm={12} lg={4} xl={4} style={{ flex: 1, textAlign: "right" }}>
+                        <Grid item xs={12} sm={12} lg={4} xl={4} style={{ flex: 1, textAlign: "right",marginTop:'-20px',marginRight:'7%' }}>
                             <h1>
                                 <StarRatingComponent name={this.props.vocabulary} starCount={5} value={this.state[this.props.vocabulary + this.props.index]} onStarClick={this.onVocabularyStarClick.bind(this)} />
                             </h1>

@@ -10,10 +10,10 @@ import FetchBenchmark from "../../../flux/actions/apis/benchmark";
 import { withStyles } from "@material-ui/core/styles";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import GraderViewBenchmark from "./GraderViewBenchmark";
-import CreateCorpus from "./UploadBenchmark";
+import CreateBenchmark from "./UploadBenchmark";
 import SearchIcon from "@material-ui/icons/Search";
 import UploadFile from "@material-ui/icons/CloudUpload";
-
+import Typography from "@material-ui/core/Typography";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import ScrollArea from "react-scrollbar";
@@ -23,7 +23,8 @@ const styles = theme => ({
     marginTop: "500px",
     marginRight: theme.spacing.unit * 2,
     marginLeft: "300px",
-    width: "100%"
+    width: "100%",
+    open1: true
   },
   searchIcon: {
     marginTop: "500px",
@@ -79,7 +80,7 @@ class GarderTranslate extends React.Component {
   handleSubmit=()=>{
       console.log("clicked")
       this.setState({
-          createBenchmark: true, base:'', value:''
+          createBenchmark: true, base:'', value:'',open1:true
       })
   }
 
@@ -97,25 +98,14 @@ class GarderTranslate extends React.Component {
                 <div
                   style={{
                     marginBottom: "68px",
-                    
+                    width:'90%',
                     marginTop: "-20px",
                     minWidth: "100px",
                     minHeight: '84vh',
                     backgroundColor: "#F3F3F8"
                   }}
                 >
-                  <TextField
-                    style={{ marginLeft: "0px", paddingLeft: "30px", width: "77%", paddingTop: "30px" }}
-                    id="input-with-icon-textfield"
-                   
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <SearchIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
+                 <Typography variant="h6" color="inherit"style={{ paddingTop: "40px",marginLeft:'15%' }} ><b>Benchmark List</b><br/></Typography>
 
                   <ScrollArea>
                     {this.state.name.map((i, index) => {
@@ -126,7 +116,7 @@ class GarderTranslate extends React.Component {
                             backgroundColor: "#F3F3F8",
                             color: this.state.value === i.name && index == this.state.index ? "#CB1E60" : "black",
                             marginLeft: "20px",
-                            paddingLeft: "30px",
+                            paddingLeft: "50px",
                             paddingTop: "30px",
                             paddingBottom: "10px",
                             cursor: "pointer",
@@ -152,10 +142,11 @@ class GarderTranslate extends React.Component {
                     onClick = {this.handleSubmit}
                     variant="contained"
                     style={{
-                      width: "23.3%",
+                      width: "21.2%",
                       marginLeft: "-53px",
                       height: 96,
                       backgroundColor: "#CB1E60",
+
                       margin: 0,
                       top: "auto",
                       left: 0,
@@ -175,10 +166,10 @@ class GarderTranslate extends React.Component {
             
           </Grid>
 
-          <Grid item xs={8} sm={8} lg={8} xl={8} style={{position:"fixed", marginLeft:'20%', maxHeight: '720px', overflowY:'scroll'}}>
+          <Grid item xs={8} sm={8} lg={8} xl={8} style={{position:"fixed", marginLeft:'20%'}}>
             
             {!this.state.base && this.state.createBenchmark ? (
-              <CreateCorpus/>
+              <CreateBenchmark open1={this.state.open1}/>
             ) : this.state.base ? (
               <div>
                 <GraderViewBenchmark base={this.state.base}/>

@@ -34,7 +34,7 @@ class UploadBenchmarkfile extends React.Component {
       open: false,
       message: "Benchmark added successfully",
       token: false,
-
+      open1: true,
       val: 0,
       warning: ""
     };
@@ -90,7 +90,7 @@ class UploadBenchmarkfile extends React.Component {
   
 
   handleBack = () => {
-    history.push(`${process.env.PUBLIC_URL}/corpus`);
+    this.setState({open1:false})
   };
 
   handleClose = () => {
@@ -112,6 +112,8 @@ class UploadBenchmarkfile extends React.Component {
   render() {
     const { classes } = this.props;
     return (
+      <div>
+     
       <div style={{marginLeft:'100px',marginTop:'60px'}}>
         
         <div style={{ Top: "15px", PaddingBottom: "5px" }}>
@@ -171,9 +173,11 @@ class UploadBenchmarkfile extends React.Component {
           Submit
         </Button>
 
-        <Snackbar style = {{marginTop:'50px'}}anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={1000}>
+        <Snackbar style = {{marginTop:'50px'}}anchorOrigin={{ vertical: "top", horizontal: "right" }} onClose={this.handleClose} open={this.state.open} autoHideDuration={6000}>
           <MySnackbarContentWrapper onClose={this.handleClose} variant="success" message={this.state.message} />
         </Snackbar>
+        </div>
+        }
         </div>
     );
   }
