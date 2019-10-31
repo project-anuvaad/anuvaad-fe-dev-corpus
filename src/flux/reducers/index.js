@@ -20,6 +20,7 @@ import fetchBenchmarkModel from './fetchbenchmarkmodel';
 import fetchBenchmarkCompareModel from './fetchbenchmarkcompares';
 import updateGrade from './update-sentences-grade';
 import graderReport from './graderreport';
+import comparisonreport from './comparisonreport';
 import benchmarkTranslate from './benchmarktranslate';
 export default {
     login,
@@ -42,7 +43,8 @@ export default {
     updateGrade,
     graderReport,
     fetchBenchmarkCompareModel,
-    benchmarkTranslate
+    benchmarkTranslate,
+    comparisonreport
 
 
     
