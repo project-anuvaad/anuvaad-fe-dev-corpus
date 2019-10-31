@@ -43,7 +43,6 @@ class BenchmarkGrade extends React.Component {
   componentDidMount() {
 
 
-    console.log("sajish")
     let api = new FetchBenchmarkCompareModel(
       this.props.base,
       this.state.pageCount,
@@ -54,10 +53,10 @@ class BenchmarkGrade extends React.Component {
   }
 
   handleChangePage(event, offset) {
-
+    console.log("of", offset, this.state.offset, this.state.count)
     this.setState({ offset, sentences: [] })
 
-    if (this.state.base) {
+    if (this.state.base ) {
       let api = new FetchBenchmarkCompareModel(
         this.state.base,
 
@@ -81,14 +80,11 @@ class BenchmarkGrade extends React.Component {
 
   handleSubmit = () => {
     console.log("-----",this.state.offset,this.state.count)
-    if(this.state.offset<this.state.count){
+    
     let api = new UpdateSentencesGrade(this.state.sentences, this.props.match.params.modelid);
     this.setState({ dialogOpen: false, apiCall: true, showLoader: true, tocken: false, sentences: [] });
     this.props.APITransport(api);
-    }
-    else{
-        alert("Reached Last page");
-    }
+
   };
 
 
@@ -125,15 +121,21 @@ class BenchmarkGrade extends React.Component {
     }
 
     if (prevProps.updateGrade !== this.props.updateGrade) {
+
+
       let api1 = new FetchBenchmarkCompareModel(
         this.state.base,
 
         this.state.pageCount,
-        this.state.offset + 2,
+        this.state.offset+1===this.state.count ?this.state.offset+1 : (this.state.inputStatus==="PENDING"&& this.state.offset+1===this.state.pending)? this.state.offset :this.state.offset + 2,
         this.state.inputStatus
       );
-      this.setState({ showLoader: true, offset: this.state.offset + 1, sentences: [] });
+
+      
+      this.setState({ showLoader: true, offset:  this.state.offset+1===this.state.count ?this.state.offset : (this.state.inputStatus==="PENDING"&& this.state.offset+1===this.state.pending)? this.state.offset-1 :this.state.offset +1 , sentences: [] });
       this.props.APITransport(api1);
+        
+      
 
     }
 
@@ -227,7 +229,9 @@ class BenchmarkGrade extends React.Component {
                 aria-label="edit"
                 style={{ width: "170px", marginBottom: "4%", marginTop: "1px" }}
               >
-                Save & Next
+
+{this.state.offset+1===this.state.count ? "Save":(this.state.inputStatus==="PENDING"&& this.state.offset+1===this.state.pending)? "Save" :"Save & Next"}
+               
               </Button>
             </Toolbar>}
         {this.state.sentences && this.state.sentences.length > 0 && 
