@@ -105,10 +105,10 @@ class SentenceTranslate extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <Typography variant="h5" color="inherit" style={{ marginTop: "20px" }}>
+        <Typography variant="h5" color="inherit" style={{ marginTop: "20px",marginLeft:'10%' }}>
           <b>Translate Text</b>
         </Typography>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} style={{marginLeft:'10%'}}>
           <Grid item xs={6} sm={6} lg={6} xl={6}>
             <Form style={{ marginTop: "30px" }}>
               <AppBar position="static">
@@ -150,7 +150,7 @@ class SentenceTranslate extends React.Component {
                 onChange={event => {
                   this.handleSelectChange("text", event);
                 }}
-                style={{ minWidth: "100%",maxWidth:'100%%', minHeight: "162px",maxHeight: "162px", fontSize: "20px" }}
+                style={{ minWidth: "99.3%",maxWidth:'99.3%', minHeight: "162px",maxHeight: "162px", fontSize: "20px" }}
               />
             </Form>
           </Grid>
