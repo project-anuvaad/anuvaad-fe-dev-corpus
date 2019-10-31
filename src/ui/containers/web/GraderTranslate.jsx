@@ -79,7 +79,6 @@ class GarderTranslate extends React.Component {
   }
 
   handleSubmit=()=>{
-      console.log("clicked")
       this.setState({
           createBenchmark: true, base:'', value:'',open1:true
       })
@@ -107,11 +106,10 @@ class GarderTranslate extends React.Component {
                     backgroundColor: "#F3F3F8"
                   }}
                 >
-                 <Typography variant="h6" color="inherit"style={{ paddingTop: "40px",marginLeft:'15%' }} ><b>Benchmark List</b><br/></Typography>
+                 <Typography variant="h6" color="inherit"style={{ paddingTop: "40px",marginLeft:'15%' }} ><b>Files List</b><br/></Typography>
 
                   <ScrollArea>
                     {this.state.name.map((i, index) => {
-                      console.log("i", i);
                       return (
                         <div
                           style={{
@@ -160,7 +158,7 @@ class GarderTranslate extends React.Component {
                     }}
                   >
                     <UploadFile fontSize="large" />
-                    &nbsp;&nbsp;&nbsp;Upload Benchmark
+                    &nbsp;&nbsp;&nbsp;Upload File
                     
                   </Button>
                 </div>
