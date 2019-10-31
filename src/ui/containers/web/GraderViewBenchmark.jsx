@@ -94,7 +94,9 @@ class BenchmarkGrade extends React.Component {
       return {
 
         base: nextProps.base,
-        apiCall: true
+        apiCall: true,
+        sentences: [],
+        offset: 0
 
       };
 
@@ -156,9 +158,9 @@ class BenchmarkGrade extends React.Component {
   render() {
     return (
       <div>
-          <Typography variant="title" color="inherit"style={{ marginTop: "20px",marginLeft:'20px' }} ><b>Translation Training Data</b></Typography>
+          <Typography variant="title" color="inherit"style={{ marginTop: "20px",marginLeft:'20px' }} ><b>Benchmark Sentences</b></Typography>
         <Grid container spacing={4} style={{ padding: "20px" }}>
-        {this.state.sentences && this.state.sentences.length > 0 &&<AppBar pending={this.state.pending} count={this.state.count}/>}
+        {this.state.sentences && this.state.sentences.length > 0 &&<AppBar pending={this.state.pending} count={this.state.count} />}
         {this.state.sentences.length > 0&& <Typography variant="title" color="inherit"style={{ marginTop: "20px" }} ><b>Source Sentence</b><br/></Typography>}
         <Grid item xs={12} sm={12} lg={12} xl={12}>
         <Typography variant="body1" color="inherit" style={{ marginTop: "20px" }} > {this.state.sentences.length > 0 && this.state.sentences[0].source}</Typography>
@@ -177,6 +179,7 @@ class BenchmarkGrade extends React.Component {
               <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
               <Button
                 variant="contained"
+                disabled ={this.state.sentences.length>0 ? this.state.sentences[0].rating && this.state.sentences[1].rating && this.state.sentences[0].context_rating && this.state.sentences[1].context_rating && this.state.sentences[0].spelling_rating && this.state.sentences[1].spelling_rating? false:true: true}
                 onClick={event => {
                   this.handleSubmit(this.state.sentences);
                 }}
