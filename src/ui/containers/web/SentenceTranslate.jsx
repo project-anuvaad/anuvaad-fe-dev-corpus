@@ -21,7 +21,9 @@ class SentenceTranslate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLoader: false
+      showLoader: false,
+      source: 'English',
+      target: 'Hindi'
     };
   }
 
