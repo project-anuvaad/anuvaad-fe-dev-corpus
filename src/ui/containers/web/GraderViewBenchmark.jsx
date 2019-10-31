@@ -163,7 +163,7 @@ class BenchmarkGrade extends React.Component {
         <Grid item xs={12} sm={12} lg={12} xl={12}>
         <Typography variant="body1" color="inherit" style={{ marginTop: "20px" }} > {this.state.sentences.length > 0 && this.state.sentences[0].source}</Typography>
         </Grid>
-        <Divider/>
+        Divider/>
           {this.state.sentences.map((value, i) => {
             var val = i == 0 ? "A" : "B";
             return <Grid item xs={6} sm={6} lg={6} xl={6}>
