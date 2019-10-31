@@ -57,9 +57,10 @@ class GarderTranslate extends React.Component {
   }
 
   handleFetchSentence(e, index, basename) {
+      console.log("sajish")
     
     if (e.target.textContent) {
-      this.setState({ value: e.target.textContent, index, base: basename });
+      this.setState({ value: e.target.textContent,sentences:[], index, base: basename });
     }
   }
 
@@ -159,7 +160,7 @@ class GarderTranslate extends React.Component {
                     }}
                   >
                     <UploadFile fontSize="large" />
-                    &nbsp;&nbsp;&nbsp;Upload Training Data
+                    &nbsp;&nbsp;&nbsp;Upload Benchmark
                     
                   </Button>
                 </div>
