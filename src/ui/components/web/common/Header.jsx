@@ -189,7 +189,7 @@ class Header extends React.Component {
 									/>
 								</ListItem>
 								<Divider />
-								{!role.includes('analyzer') &&
+								{!role.includes('analyzer') &&  !role.includes('admin') && 
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={() => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/dashboard`) }}>
 										<ListItemIcon>
 											<SearchIcon style={{ color: 'white' }} />
@@ -279,7 +279,7 @@ class Header extends React.Component {
 									</ListItem>
 								}
 
-								{role.includes('admin') &&
+								{/* {role.includes('admin') &&
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
 										<ListItemIcon>
 											<GroupIcon style={{ color: 'white' }} />
@@ -293,7 +293,7 @@ class Header extends React.Component {
 											)}
 										/>
 									</ListItem>
-								}
+								} */}
 								{role.includes('admin') &&
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/comparison-report`) }}>
 										<ListItemIcon>
@@ -311,7 +311,7 @@ class Header extends React.Component {
 								}
 
 
-								{!role.includes('analyzer') &&
+								{!role.includes('analyzer') &&  !role.includes('admin') && 
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={() => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/qna`) }}>
 										<ListItemIcon>
 											<ActionDelete style={{ color: 'white' }} />
