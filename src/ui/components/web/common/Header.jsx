@@ -331,6 +331,7 @@ class Header extends React.Component {
 
 
 
+
 								<ListItem style={{ paddingTop: '17%', paddingBottom: '17%', marginTop: '43%', marginLeft: '82%', width: '18%' }} button onClick={(event) => { this.handleDrawerClose(); }}>
 									<ListItemIcon>
 										<ChevronLeftIcon style={{ color: 'white' }} />
