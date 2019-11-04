@@ -17,7 +17,7 @@ class AppBar extends Component{
                     {this.props.pending === 0 ? "Completed":( "Number of sentence pending :" +this.props.pending)}
                   </Typography>
                   
-                  <Typography variant="h6" color="inherit" >Pending: {this.props.val}</Typography>
+                  {this.props.pending !== 0 && <Typography variant="h6" color="inherit" >Pending: {this.props.val}</Typography>}
 
                     
                  
