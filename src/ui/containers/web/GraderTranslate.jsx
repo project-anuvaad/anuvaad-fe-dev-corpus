@@ -189,7 +189,7 @@ class GarderTranslate extends React.Component {
               <div>
                 <GraderViewBenchmark base={this.state.base} label={this.state.file_name}/>
               </div>
-            ):""}
+            ):<Typography variant="h6" color="inherit"style={{ paddingTop: "50%",marginLeft:'56%',textAlign:'center',color:"#ACACAC",marginRight:'-26%' }} >{this.state.renderPageMessage}<br/></Typography>}
           </Grid>
         </Grid>
         { this.state.value>0 &&
