@@ -16,6 +16,8 @@ import UploadFile from "@material-ui/icons/CloudUpload";
 import Typography from "@material-ui/core/Typography";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
+import Snackbars from "../../components/web/common/Snackbar";
+
 import ScrollArea from "react-scrollbar";
 const styles = theme => ({
   search: {
@@ -24,7 +26,9 @@ const styles = theme => ({
     marginRight: theme.spacing.unit * 2,
     marginLeft: "300px",
     width: "100%",
-    open1: true
+    open1: true,
+    open: false,
+    value : 0
   },
   searchIcon: {
     marginTop: "500px",
@@ -43,6 +47,9 @@ class GarderTranslate extends React.Component {
       name: [],
       apiCalled: false,
       file: {},
+      message: "Benchmark added successfully",
+      filesMessage:"No Records Found",
+      renderPageMessage:'Please select a file from the left pane or upload a new file to start.',
       role: JSON.parse(localStorage.getItem("roles")),
       sentences: [],
       createBenchmark: false
@@ -64,13 +71,17 @@ class GarderTranslate extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchBenchmark !== this.props.fetchBenchmark) {
-      console.log(this.props.fetchBenchmark);
       this.setState({ name: this.props.fetchBenchmark });
     }
     if(prevProps.uploadbenchmark !== this.props.uploadbenchmark){
       const { APITransport } = this.props;
       const apiObj = new FetchBenchmark();
       APITransport(apiObj);
+      this.setState({ value: 1 });
+      setTimeout(()=>{this.setState({ value: 0 })}, 4000)
+     
+      
+      
     }
 
     if (prevProps.sentences !== this.props.sentences) {
@@ -81,6 +92,8 @@ class GarderTranslate extends React.Component {
     }
   }
 
+  
+
   handleSubmit=()=>{
       this.setState({
           createBenchmark: true, base:'', value:'',open1:true
@@ -89,8 +102,7 @@ class GarderTranslate extends React.Component {
 
   render() {
     const { base } = this.props;
-
-    console.log(base)
+    console.log("open",this.state.value)
 
     return (
       <div>
@@ -112,7 +124,7 @@ class GarderTranslate extends React.Component {
                  <Typography variant="h6" color="inherit"style={{ paddingTop: "40px",marginLeft:'15%' }} ><b>Files List</b><br/></Typography>
 
                   <ScrollArea>
-                    {this.state.name.map((i, index) => {
+                    {this.state.name.length>0 ? this.state.name.map((i, index) => {
                       return (
                         <div
                           style={{
@@ -137,7 +149,7 @@ class GarderTranslate extends React.Component {
                           </div>
                         </div>
                       );
-                    })}
+                    }): <Typography variant="subtitle1" color="inherit"style={{ paddingTop: "40px",marginLeft:'15%' }} >{this.state.filesMessage}<br/></Typography> }
                   </ScrollArea>
                 </div>
                 <div>
@@ -177,9 +189,13 @@ class GarderTranslate extends React.Component {
               <div>
                 <GraderViewBenchmark base={this.state.base} label={this.state.file_name}/>
               </div>
-            ):''}
+            ):<Typography variant="h6" color="inherit"style={{ paddingTop: "50%",marginLeft:'56%',textAlign:'center',color:"#ACACAC",marginRight:'-26%' }} >{this.state.renderPageMessage}<br/></Typography>}
           </Grid>
         </Grid>
+        { this.state.value>0 &&
+      (<Snackbars message={this.state.message} variant={this.props.apistatus.error ? 'error':'success'} openValue={true}/>
+     
+      )}
       </div>
     );
   }
