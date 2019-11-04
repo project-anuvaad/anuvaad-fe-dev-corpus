@@ -263,7 +263,7 @@ class Header extends React.Component {
 										/>
 									</ListItem>
 								}
-								{role.includes('dev', 'grader') &&
+								{(role.includes('dev') || role.includes('grader') ) &&
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={() => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/benchmark`) }}>
 										<ListItemIcon>
 											<SendIcon style={{ color: 'white' }} />
