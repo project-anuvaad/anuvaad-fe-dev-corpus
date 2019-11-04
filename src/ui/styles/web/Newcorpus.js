@@ -57,7 +57,8 @@ buttons: {
   left: theme.spacing.unit*26,
   marginBottom:'2%',
   marginTop:'5%',
-  width:'220px'
+  width:'240px',
+  marginLeft:'10%'
 },
 
   paper: {

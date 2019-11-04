@@ -7,8 +7,7 @@ import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import UploadBenchmark from "../../../flux/actions/apis/uploadbenchmark";
-// import Snackbar from "@material-ui/core/Snackbar";
-// import MySnackbarContentWrapper from "../../components/web/common/snackbar";
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Select from "@material-ui/core/Select";
@@ -32,11 +31,10 @@ class UploadBenchmarkfile extends React.Component {
       apiCalled: false,
       file: [],
       open: false,
-      message: "Benchmark added successfully",
       token: false,
-      open1: true,
       val: 0,
-      warning: ""
+      warning: "",
+      key : 1
     };
   }
 
@@ -46,10 +44,17 @@ class UploadBenchmarkfile extends React.Component {
         add_name:'',
         file: [],
         source:'',
-        open:true
+        open:true,
+        open1: true
 
 
       })
+
+      if (prevProps.apistatus !== this.props.apistatus.progress) {
+        this.setState({})
+      }
+
+      
     }
   }
 
@@ -61,6 +66,7 @@ class UploadBenchmarkfile extends React.Component {
 
   handleSelectChange(key, event) {
     event.preventDefault();
+    
     this.setState({
       [key]: event.target.value
     });
@@ -83,10 +89,19 @@ class UploadBenchmarkfile extends React.Component {
   };
 
   handleSource = files => {
+    console.log(files.name)
     this.setState({
-      file: files, tocken: true
+      file: files,
+      add_name: this.state.add_name ? this.state.add_name : files.name.split('.')[0]
+
     });
   };
+
+
+  componentWillUnmount() { 
+    this.setState({file:[]})
+}
+
 
   
 
@@ -106,7 +121,8 @@ class UploadBenchmarkfile extends React.Component {
          this.state.source
        );
       this.props.APITransport(apiObj);
-      this.setState({ showLoader: true, tocken: false });
+      this.setState({ showLoader: true, tocken: false, key: this.state.key+1 });
+    
     
   }
 
@@ -155,28 +171,25 @@ class UploadBenchmarkfile extends React.Component {
               </AppBar>
         <div style={{width:'200%'}}>
         <DropzoneArea
+        key={this.state.key}
         style={{width:'200%'}}
           Dropzoneiles=""
           onDrop={this.handleSource}
           id="source"
-          showPreviewsInDropzone={this.state.tocken}
+          showPreviewsInDropzone={true}
           acceptedFiles={[".txt"]}
           dropzoneText="Please Drag and drop txt file(only)"
           filesLimit={1}
         ></DropzoneArea>
         </div>
 
-        <Button variant="contained" color="primary" className={classes.button} onClick={this.handleBack}>
-          {" "}
-          Cancel{" "}
-        </Button>
         <Button variant="contained" color="primary" className={classes.buttons} onClick={this.handleSubmit.bind(this)}>
           Submit
         </Button>
 
-        {/* <Snackbar style = {{marginTop:'50px'}}anchorOrigin={{ vertical: "top", horizontal: "right" }} onClose={this.handleClose} open={this.state.open} autoHideDuration={6000}>
-          <MySnackbarContentWrapper onClose={this.handleClose} variant="success" message={this.state.message} />
-        </Snackbar> */}
+        
+
+        
         </div>
         
         </div>
