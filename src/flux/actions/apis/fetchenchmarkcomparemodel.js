@@ -24,7 +24,7 @@ export default class FetchBenchmarkCompareModel extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/app/fetch-benchmark-compare-sentences?basename=${this.basename}&pagesize=${
+    return `${super.apiEndPointAuto()}/fetch-benchmark-compare-sentences?basename=${this.basename}&pagesize=${
       this.pagesize
     }&pageno=${this.pageno}&status=${this.status}`;
   }

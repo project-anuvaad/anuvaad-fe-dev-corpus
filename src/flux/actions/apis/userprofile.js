@@ -24,7 +24,7 @@ export default class Translation extends API {
 
     apiEndPoint() {
         
-        return `${super.apiEndPointAuto()}/app/get-profile`;
+        return `${super.apiEndPointAuto()}/get-profile`;
     }
 
     getBody() {

@@ -28,7 +28,7 @@ export default class BenchmarkTranslate extends API {
 
     apiEndPoint() {
         console.log("test",this.sentence )
-        return `${super.apiEndPointAuto()}/app/translate-with-hemat`;
+        return `${super.apiEndPointAuto()}/translate-with-hemat`;
     }
 
     getBody() {

@@ -22,7 +22,7 @@ export default class ComparisonReport extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/app/fetch-benchmark-analyzer-reports?from_date=${this.from_date}&to_date=${this.to_date}`;
+    return `${super.apiEndPointAuto()}/fetch-benchmark-analyzer-reports?from_date=${this.from_date}&to_date=${this.to_date}`;
   }
 
   getBody() {
