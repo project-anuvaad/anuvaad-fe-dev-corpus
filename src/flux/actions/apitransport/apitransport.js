@@ -44,7 +44,7 @@ function success(res, api, dispatch) {
 
 function error(err, api, dispatch) {
   // console.log(err)
-  let errorMsg = err.response && err.response.data && err.response.data.why ? err.response.data.why : ((Strings.error.message.http[err.response.status] || Strings.error.message.http.default));
+  let errorMsg = err.response && err.response.data && err.response.data.why ? err.response.data.why : Strings.error.message.http.default;
   if (api.errorMsg || api.errorMsg === null) {
     errorMsg = api.errorMsg === null ? "" : api.errorMsg;
   }
