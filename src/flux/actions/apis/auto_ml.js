@@ -24,7 +24,7 @@ export default class AutoML extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/app/translate`;
+        return `${super.apiEndPointAuto()}/translate`;
     }
 
     getBody() {

@@ -36,7 +36,7 @@ export default class AddUser extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/app/create-user`;
+        return `${super.apiEndPointAuto()}/create-user`;
     }
 
     getBody() {

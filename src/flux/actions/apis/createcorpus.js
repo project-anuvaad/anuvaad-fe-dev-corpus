@@ -27,7 +27,7 @@ export default class CreateCorpus extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/app/upload-corpus`;
+        return `${super.apiEndPointAuto()}/upload-corpus`;
     }
 
     getFormData() {

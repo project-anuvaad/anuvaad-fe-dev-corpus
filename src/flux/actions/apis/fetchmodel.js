@@ -21,7 +21,7 @@ export default class FetchModel extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/auto/anuvaad/v1/fetch-models`;
+    return `${super.apiEndPointAuto()}/fetch-models`;
   }
 
   getBody() {
@@ -31,7 +31,8 @@ export default class FetchModel extends API {
   getHeaders() {
     return {
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + decodeURI(localStorage.getItem("token"))
       }
     };
   }

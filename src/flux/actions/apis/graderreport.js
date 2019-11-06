@@ -22,7 +22,7 @@ export default class GraderReport extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/app/fetch-benchmark-reports?from_date=${this.from_date}&to_date=${this.to_date}`;
+    return `${super.apiEndPointAuto()}/fetch-benchmark-reports?from_date=${this.from_date}&to_date=${this.to_date}`;
   }
 
   getBody() {

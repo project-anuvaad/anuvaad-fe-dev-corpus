@@ -28,7 +28,7 @@ export default class UpdatePassword extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/app/update-password-admin`;
+        return `${super.apiEndPointAuto()}/update-password-admin`;
     }
 
     getBody() {
