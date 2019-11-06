@@ -25,7 +25,7 @@ export default class UserRoles extends API {
 
     apiEndPoint() {
 
-        return `${super.apiEndPointAuto()}/app/list-roles`;
+        return `${super.apiEndPointAuto()}/list-roles`;
     }
 
     getBody() {
