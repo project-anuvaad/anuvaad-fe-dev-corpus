@@ -23,7 +23,7 @@ export default class FetchCorpus extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/app/fetch-corpus`
+        return `${super.apiEndPointAuto()}/fetch-corpus`
     }
 
     getHeaders() {

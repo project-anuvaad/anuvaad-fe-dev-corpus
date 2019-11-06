@@ -21,7 +21,7 @@ export default class FetchLanguage extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/auto/anuvaad/v1/fetch-languages`;
+    return `${super.apiEndPointAuto()}/fetch-languages`;
   }
 
   getBody() {
@@ -31,7 +31,8 @@ export default class FetchLanguage extends API {
   getHeaders() {
     return {
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + decodeURI(localStorage.getItem("token"))
       }
     };
   }
