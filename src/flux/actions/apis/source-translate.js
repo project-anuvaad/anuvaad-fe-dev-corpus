@@ -26,7 +26,7 @@ export default class SourceTranslate extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/app/translate-source?basename=${this.basename}&source=${this.source}`;
+        return `${super.apiEndPointAuto()}/translate-source?basename=${this.basename}&source=${this.source}`;
     }
 
     getBody() {

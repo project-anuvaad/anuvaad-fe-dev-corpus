@@ -23,7 +23,7 @@ export default class UpdateSentencesStatus extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/app/update-sentences-status`;
+    return `${super.apiEndPointAuto()}/update-sentences-status`;
   }
 
   getBody() {
