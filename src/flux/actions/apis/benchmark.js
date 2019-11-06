@@ -23,7 +23,7 @@ export default class FetchBenchmark extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/app/fetch-benchmarks`
+        return `${super.apiEndPointAuto()}/fetch-benchmarks`
     }
 
     getHeaders() {

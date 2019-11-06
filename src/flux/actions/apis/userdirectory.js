@@ -25,7 +25,7 @@ export default class UserDirectory extends API {
 
     apiEndPoint() {
 
-        return `${super.apiEndPointAuto()}/app/list-users`;
+        return `${super.apiEndPointAuto()}/list-users`;
     }
 
     getBody() {

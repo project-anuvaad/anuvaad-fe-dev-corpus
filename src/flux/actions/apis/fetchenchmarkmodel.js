@@ -25,7 +25,7 @@ export default class FetchBenchmarkModel extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/app/fetch-benchmark-sentences?basename=${this.basename}&modelid=${this.modelid}&pagesize=${
+    return `${super.apiEndPointAuto()}/fetch-benchmark-sentences?basename=${this.basename}&modelid=${this.modelid}&pagesize=${
       this.pagesize
     }&pageno=${this.pageno}&status=${this.status}`;
   }

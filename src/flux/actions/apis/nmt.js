@@ -29,7 +29,7 @@ export default class NMT extends API {
   }
 
   apiEndPoint() {
-    return this.url_end_point ? `${super.apiEndPointAuto()}/app/${this.url_end_point}` : `${super.apiEndPointAuto()}/app/translation_en`;
+    return this.url_end_point ? `${super.apiEndPointAuto()}/${this.url_end_point}` : `${super.apiEndPointAuto()}/translation_en`;
   }
 
   getBody() {

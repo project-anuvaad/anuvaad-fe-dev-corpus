@@ -32,7 +32,7 @@ export default class AddUser extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/app/update-user-status`;
+        return `${super.apiEndPointAuto()}/update-user-status`;
     }
 
     getBody() {
