@@ -25,7 +25,7 @@ import { Button } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import ActionDelete from "@material-ui/icons/QuestionAnswer";
 import GroupIcon from "@material-ui/icons/Group";
-
+import onClickOutside from 'react-onclickoutside';
 const styles = {
   root: {
     flexGrow: 1
@@ -91,7 +91,7 @@ class Header extends React.Component {
     role.map((item, value) => (useRole.push(item), value !== role.length - 1 ? useRole.push(", ") : null));
 
     return (
-      <div>
+      <div  onClick={this.state.open ? this.handleDrawerClose:''}>
         <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
           <Toolbar disableGutters={!open}>
             <Typography variant="title" color="inherit" className={classes.flex}>
@@ -171,7 +171,9 @@ class Header extends React.Component {
               color="inherit"
               variant="persistent"
               anchor="left"
-              open={open}
+			  open={open}
+			  onRequestChange={this.handleDrawerClose}
+			  
               classes={{
                 paper: classes.drawerPaper
               }}
@@ -320,7 +322,7 @@ class Header extends React.Component {
                   </ListItem>
                 )}
 
-                {/* {role.includes('admin') &&
+                {role.includes('admin') &&
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
 										<ListItemIcon>
 											<GroupIcon style={{ color: 'white' }} />
@@ -334,7 +336,7 @@ class Header extends React.Component {
 											)}
 										/>
 									</ListItem>
-								} */}
+								} 
                 {role.includes("admin") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
