@@ -23,7 +23,7 @@ export default class FetchTranslations extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/app/fetch-translation-process`
+        return `${super.apiEndPointAuto()}/fetch-translation-process`
     }
 
     getHeaders() {

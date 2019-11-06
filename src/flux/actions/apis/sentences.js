@@ -29,9 +29,9 @@ export default class FetchSentences extends API {
 
   apiEndPoint() {
     if (this.status.item === "ALL" || this.status === "" || this.status === "ALL")
-      return `${super.apiEndPointAuto()}/app/fetch-corpus-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}`;
+      return `${super.apiEndPointAuto()}/fetch-corpus-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}`;
     else {
-      return `${super.apiEndPointAuto()}/app/fetch-corpus-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${
+      return `${super.apiEndPointAuto()}/fetch-corpus-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${
         this.pageno
       }&status=${this.status.item}`;
     }

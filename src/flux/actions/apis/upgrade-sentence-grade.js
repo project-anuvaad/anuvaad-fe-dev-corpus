@@ -24,7 +24,7 @@ export default class UpdateSentences extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/app/update-sentences-grade`;
+        return `${super.apiEndPointAuto()}/update-sentences-grade`;
     }
 
     getBody() {

@@ -337,6 +337,7 @@ class Header extends React.Component {
 										/>
 									</ListItem>
 								} 
+
                 {role.includes("admin") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
