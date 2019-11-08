@@ -27,12 +27,10 @@ export default class UploadBenchmark extends API {
     }
 
     apiEndPoint() {
-        console.log("sajish")
         return `${super.apiEndPointAuto()}/upload-benchmark`;
     }
 
     getFormData() {
-        console.log("sajish")
         const formData = new FormData();
             formData.append('file', this.file);
             formData.append('name',this.add_name);

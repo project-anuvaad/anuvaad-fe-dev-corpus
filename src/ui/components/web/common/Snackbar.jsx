@@ -106,7 +106,7 @@ class CustomizedSnackbars extends React.Component {
                         vertical: 'bottom',
                         horizontal: 'left',
                     }}
-                    open={this.state.open}
+                    open={this.state.open }
                     autoHideDuration={6000}
                     onClose={this.handleClose}
                 >

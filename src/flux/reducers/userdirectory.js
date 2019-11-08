@@ -2,7 +2,7 @@ import C from '../actions/constants';
 
 export default function (state = {}, action) {
     switch (action.type) {
-        case C.BENCHMARK_TRANSLATE:
+        case C.USER_DIRECTORY:
             return action.payload;
 
         default:

@@ -1,14 +1,16 @@
 import API from "./api";
 import C from "../constants";
 
-export default class BenchmarkTranslate extends API {
+export default class UpdatePassword extends API {
     
-    constructor(text,source,target, timeout = 2000) {
+    constructor(id,new_password, timeout = 2000) {
         super('POST', timeout, false);
-        this.type = C.BENCHMARK_TRANSLATE;
-        this.sentence = text;
-        this.target = target;
-        this.result=""   
+        this.type = C.UPDATE_PASSWORD;
+        this.user_id = id;
+        
+        
+        this.new_password = new_password;
+        this.updatePassword=""   
     }
 
     toString() {
@@ -21,18 +23,18 @@ export default class BenchmarkTranslate extends API {
         
         super.processResponse(res)
         if (res) {
-            this.result = res;
+            this.updatePassword = res;
         }
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/translate-with-hemat`;
+        return `${super.apiEndPointAuto()}/update-password-admin`;
     }
 
     getBody() {
         return {
-            sentence : this.sentence,
-            target : this.target
+            user_id : this.user_id,
+            new_password : this.new_password
         };
       }
       
@@ -47,7 +49,7 @@ export default class BenchmarkTranslate extends API {
   }
 
     getPayload() {
-        return this.result;
+        return this.updatePassword;
     }
 
 }

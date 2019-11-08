@@ -1,14 +1,20 @@
+/**
+ * Corpus API
+ */
+
 import API from "./api";
 import C from "../constants";
 
-export default class BenchmarkTranslate extends API {
-    
-    constructor(text,source,target, timeout = 2000) {
+export default class AddUser extends API {
+    constructor(username, status, timeout = 2000) {
         super('POST', timeout, false);
-        this.type = C.BENCHMARK_TRANSLATE;
-        this.sentence = text;
-        this.target = target;
-        this.result=""   
+        this.type = C.DELETE_USER;
+       
+        this.username = username
+        this.status = status
+
+        this.deleteuser = {}
+
     }
 
     toString() {
@@ -21,18 +27,18 @@ export default class BenchmarkTranslate extends API {
         
         super.processResponse(res)
         if (res) {
-            this.result = res;
+            this.deleteuser = res;
         }
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/translate-with-hemat`;
+        return `${super.apiEndPointAuto()}/update-user-status`;
     }
 
     getBody() {
         return {
-            sentence : this.sentence,
-            target : this.target
+            username: this.username,
+       status: this.status
         };
       }
       
@@ -47,7 +53,19 @@ export default class BenchmarkTranslate extends API {
   }
 
     getPayload() {
-        return this.result;
+        return this.deleteuser;
     }
 
 }
+
+
+
+
+    
+
+   
+
+    
+
+
+   

@@ -43,8 +43,7 @@ function success(res, api, dispatch) {
 }
 
 function error(err, api, dispatch) {
-  // console.log(err)
-  let errorMsg = err.response && err.response.data && err.response.data.why ? err.response.data.why : ((Strings.error.message.http[err.response.status] || Strings.error.message.http.default));
+  let errorMsg = err.response && err.response.data && err.response.data.why ? err.response.data.why : Strings.error.message.http.default;
   if (api.errorMsg || api.errorMsg === null) {
     errorMsg = api.errorMsg === null ? "" : api.errorMsg;
   }
@@ -72,7 +71,6 @@ export default function dispatchAPI(api) {
   } else if (api.method === "POST") {
     return dispatch => {
       dispatch(apiStatusAsync(true, false, ""));
-      // console.log('api.apiEndPoint :: ', api.apiEndPoint());
       axios
         .post(api.apiEndPoint(), api.getBody(), api.getHeaders())
         .then(res => {
@@ -108,7 +106,6 @@ export default function dispatchAPI(api) {
     };
   }
   return dispatch => {
-    // console.log(api.apiEndPoint());
     dispatch(apiStatusAsync(true, false, ""));
     axios
       .get(api.apiEndPoint(), api.getHeaders())

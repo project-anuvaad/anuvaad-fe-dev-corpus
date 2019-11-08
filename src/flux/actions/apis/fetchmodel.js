@@ -31,8 +31,8 @@ export default class FetchModel extends API {
   getHeaders() {
     return {
       headers: {
-        Authorization: "Bearer " + decodeURI(localStorage.getItem("token")),
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + decodeURI(localStorage.getItem("token"))
       }
     };
   }
