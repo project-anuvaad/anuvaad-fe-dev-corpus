@@ -1,5 +1,5 @@
-import createHistory from 'history/createBrowserHistory';
+var history = require("history").createBrowserHistory
 
-const history = createHistory();
+const browserhistory = history();
 
-export default history;
+export default browserhistory;
