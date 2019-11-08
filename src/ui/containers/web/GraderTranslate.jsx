@@ -86,7 +86,6 @@ class GarderTranslate extends React.Component {
     }
 
     if (prevProps.sentences !== this.props.sentences) {
-      console.log("props----", this.props.sentences);
       this.setState({
         sentences: this.props.sentences
       });
@@ -103,8 +102,6 @@ class GarderTranslate extends React.Component {
 
   render() {
     const { base } = this.props;
-    console.log("open",this.state.value)
-
     return (
       <div>
         <Grid container spacing={4}>

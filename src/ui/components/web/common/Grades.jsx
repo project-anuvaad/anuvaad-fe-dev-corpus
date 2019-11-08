@@ -5,9 +5,7 @@ export default class GradesScore extends React.Component {
     
 
     render() {
-
         var {score} = this.props
-        console.log(score)
         return (
             <div>
                 

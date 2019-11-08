@@ -21,13 +21,11 @@ export default class BenchmarkTranslate extends API {
         
         super.processResponse(res)
         if (res) {
-            console.log(res)
             this.result = res;
         }
     }
 
     apiEndPoint() {
-        console.log("test",this.sentence )
         return `${super.apiEndPointAuto()}/translate-with-hemat`;
     }
 

@@ -17,7 +17,6 @@ export default class UserRoles extends API {
 
     processResponse(res) {
         super.processResponse(res)
-        console.log("res",res.data)
         if (res.data) {
             this.userRoles = res.data;
         }
