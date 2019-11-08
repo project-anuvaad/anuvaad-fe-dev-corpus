@@ -28,7 +28,7 @@ export default class Translation extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/translate-docx`;
+        return `${super.apiEndPointAuto()}/v2/translate-docx`;
     }
 
     getFormData() {
