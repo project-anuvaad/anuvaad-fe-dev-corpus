@@ -17,7 +17,7 @@ export default function (state = {}, action) {
                             previous_model_id = data.s_id
                         }
                         else{
-                            if(index == action.payload.length - 1){
+                            if(index === action.payload.length - 1){
                                 data_arr.push(previous_data)
                             }
                             previous_data.tgt = previous_data.tgt + ', '+data.tgt
@@ -30,6 +30,7 @@ export default function (state = {}, action) {
                         previous_data = null
                         data_arr.push(data)
                     }
+                    return data
                 })
                 return data_arr
             }

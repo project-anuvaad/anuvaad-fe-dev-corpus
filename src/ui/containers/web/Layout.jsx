@@ -51,9 +51,9 @@ class App extends React.Component {
         <div className={classes.root}>
           {this.renderSpinner()}
 
-          <Header classes={classes} theme={theme} title={title} />
+          <Header classes={{}} theme={theme} title={title} />
           <div className={classes.container}>
-            <Component />
+            <Component classes={{}}/>
           </div>
           {this.renderMessage()}
         </div>
