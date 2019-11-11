@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import Button from '@material-ui/core/Button';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import CreateCorpus from "../../../flux/actions/apis/corpus";
-import MySnackbarContentWrapper from "../../components/web/common/Snackbar";
+import Snackbar from "../../components/web/common/Snackbar";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Paper from '@material-ui/core/Paper';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -17,7 +17,6 @@ import { withStyles } from "@material-ui/core";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Input from "@material-ui/core/Input";
 import history from "../../../web.history";
-import Snackbar from "@material-ui/core/Snackbar";
 import {DropzoneArea} from 'material-ui-dropzone';
 import Select from "@material-ui/core/Select";
 import Stepper from "../../components/web/common/Stepper";
@@ -49,7 +48,8 @@ class Newcorpus extends React.Component {
             token: false,
             activeStep: 0,
             val:0,
-            warning:''
+            warning:'',
+            openSnack: false
             
         }
     }
@@ -259,7 +259,8 @@ class Newcorpus extends React.Component {
         const apiObj = new CreateCorpus(this.state.file, this.state.hindiFile, this.state.englishFile,this.state.hindi,this.state.english, this.state.corpus_type, this.state.add_name, this.state.domain,this.state.comment);
         APITransport(apiObj);
         this.setState({showLoader:true}) 
-        setTimeout(()=>{history.push(`${process.env.PUBLIC_URL}/corpus`)},12000)
+        setTimeout(()=>{ this.setState({ openSnack : true}) },10000)
+        setTimeout(()=>{history.push(`${process.env.PUBLIC_URL}/corpus`) },12000)
         }
     }
     render() {
@@ -287,17 +288,18 @@ class Newcorpus extends React.Component {
 <form method="post">                  
                   </form>
                   
-                            <Button variant="contained" color="primary" className={classes.button} onClick={this.handleBack}> {this.state.activeStep === 0 ? "Cancel": "Back"} </Button>
-                            <Button variant="contained" color="primary" className={classes.buttons} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) :this.handleNext}> {this.state.activeStep === 2 ? 'Create Corpus' :"Next"}</Button>
+                            <Button variant="contained" color="primary" className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? "Cancel": "Back"} </Button>
+                            <Button variant="contained" color="primary" className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) :this.handleNext}> {this.state.activeStep === 2 ? 'Create Corpus' :"Next"}</Button>
                             <div style={{color:'red' , marginLeft:"30%"}}>{this.state.warning}</div>
                 </Paper>
                 
-                <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}>
-                            <MySnackbarContentWrapper
+                {this.state.openSnack &&
+                <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}
+                            
                                 onClose={this.handleClose}
                                 variant="success"
-                                message= {this.state.message} />
-                            </Snackbar>
+                                message= {this.state.message} />}
+                            
             </div>
 
         );
