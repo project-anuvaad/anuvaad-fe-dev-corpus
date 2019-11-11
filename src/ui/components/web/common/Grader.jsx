@@ -16,7 +16,6 @@ class Grader extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.data[this.props.meaning])
         this.setState({
             [this.props.meaning + this.props.index]: this.props.data[this.props.meaning] ? this.props.data[this.props.meaning] : 0,
             [this.props.structure + this.props.index]: this.props.data[this.props.structure] ? this.props.data[this.props.structure] : 0,
@@ -25,13 +24,11 @@ class Grader extends React.Component {
     }
 
     onMeaningStarClick(nextValue, prevValue, name) {
-        console.log(name);
         this.setState({ [name + this.props.index]: nextValue });
         this.props.handleStarClick(nextValue, prevValue, name, this.props.index)
     }
 
     onStructureStarClick(nextValue, prevValue, name) {
-        console.log(name);
         this.setState({ [name + this.props.index]: nextValue });
         this.props.handleStarClick(nextValue, prevValue, name, this.props.index)
     }

@@ -61,6 +61,23 @@ buttons: {
   marginLeft:'10%'
 },
 
+button1: {
+  justifyContent: 'center',
+  left: theme.spacing.unit*12,
+  marginBottom:'2%',
+  marginTop:'5%'
+  ,
+  width:'220px'
+},
+btns: {
+  justifyContent: 'center',
+  left: theme.spacing.unit*6,
+  marginBottom:'2%',
+  marginTop:'5%',
+  width:'240px',
+  marginLeft:'10%'
+},
+
   paper: {
     padding: 25,
     marginTop:'20px',

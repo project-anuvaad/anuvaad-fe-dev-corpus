@@ -25,7 +25,6 @@ import { Button } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import ActionDelete from "@material-ui/icons/QuestionAnswer";
 import GroupIcon from "@material-ui/icons/Group";
-
 const styles = {
   root: {
     flexGrow: 1
@@ -80,7 +79,7 @@ class Header extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-  handleClick = () => {};
+  handleClick = () => { };
 
   render() {
     const { classes, title } = this.props;
@@ -91,7 +90,7 @@ class Header extends React.Component {
     role.map((item, value) => (useRole.push(item), value !== role.length - 1 ? useRole.push(", ") : null));
 
     return (
-      <div>
+      <div onClick={this.state.open ? this.handleDrawerClose : ()=>{}}>
         <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
           <Toolbar disableGutters={!open}>
             <Typography variant="title" color="inherit" className={classes.flex}>
@@ -321,20 +320,21 @@ class Header extends React.Component {
                 )}
 
                 {role.includes('admin') &&
-									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
-										<ListItemIcon>
-											<GroupIcon style={{ color: 'white' }} />
-										</ListItemIcon>
-										<ListItemText
-											disableTypography
-											primary={(
-												<Typography type="body2" style={{ color: '#FFFFFF' }}>
-													Grader Reports
+                  <ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
+                    <ListItemIcon>
+                      <GroupIcon style={{ color: 'white' }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      disableTypography
+                      primary={(
+                        <Typography type="body2" style={{ color: '#FFFFFF' }}>
+                          Grader Reports
           							</Typography>
-											)}
-										/>
-									</ListItem>
-								}
+                      )}
+                    />
+                  </ListItem>
+                }
+
                 {role.includes("admin") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
@@ -470,10 +470,10 @@ class Header extends React.Component {
               {this.state.open ? (
                 ""
               ) : (
-                <Button color="primary" variant="contained" className={classes.buttonRight} style={{ zIndex: 9999 }} onClick={this.handleDrawerOpen}>
-                  <ChevronRightIcon />
-                </Button>
-              )}
+                  <Button color="primary" variant="contained" className={classes.buttonRight} style={{ zIndex: 9999 }} onClick={this.handleDrawerOpen}>
+                    <ChevronRightIcon />
+                  </Button>
+                )}
               <div className={classes.drawerHeader} />
             </main>
           </Grid>

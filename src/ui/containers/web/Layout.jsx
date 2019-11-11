@@ -53,7 +53,7 @@ class App extends React.Component {
 
           <Header classes={classes} theme={theme} title={title} />
           <div className={classes.container}>
-            <Component />
+            <Component classes={{}}/>
           </div>
           {this.renderMessage()}
         </div>

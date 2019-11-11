@@ -40,7 +40,6 @@ class SentenceTranslate extends React.Component {
     }
 
     if (prevProps.benchmarkTranslate !== this.props.benchmarkTranslate) {
-        console.log("test---",this.props.benchmarkTranslate.data)
         this.setState({
             
             
