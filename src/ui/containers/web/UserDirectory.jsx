@@ -37,27 +37,26 @@ class UserDirectory extends React.Component {
             filename: '',
             snack: false,
             message: '',
-            user:{},
+            user: {},
             newUser: false,
             loginUser: localStorage.getItem('userDetails').split(" ")[0]
 
         }
     }
 
-    handleCancel=()=>{
-        this.setState({openValue:false})
-      }
+    handleCancel = () => {
+        this.setState({ openValue: false })
+    }
 
-      handleClickOpen = (name, status) => {
-          console.log(name)
+    handleClickOpen = (name, status) => {
         const { APITransport } = this.props;
-         const apiObj = new UserDelete(name,status);
-         APITransport(apiObj);
+        const apiObj = new UserDelete(name, status);
+        APITransport(apiObj);
         this.setState({ open: false, showLoader: true })
         const apiObj1 = new UserDirectoryList();
         APITransport(apiObj1)
-        var a = 
-        this.setState({ showLoader: true, message: this.state.name + (this.state.status === "DELETE" ? " user deactivated successfully!" : " user activated successfully!" )})
+        var a =
+            this.setState({ showLoader: true, message: this.state.name + (this.state.status === "DELETE" ? " user deactivated successfully!" : " user activated successfully!") })
         setTimeout(() => { this.setState({ snack: true }) }, 700)
         return false;
     };
@@ -71,8 +70,10 @@ class UserDirectory extends React.Component {
 
     componentDidUpdate(prevProps, nexpProps) {
         if (prevProps.userList !== this.props.userList) {
-            this.setState({ userList: this.props.userList,
-            count: this.props.count })
+            this.setState({
+                userList: this.props.userList,
+                count: this.props.count
+            })
         }
     }
     handleClick=(rowData)=>{
@@ -91,10 +92,9 @@ class UserDirectory extends React.Component {
             open: true,
             openValue: false,
             value, name, status
-            
+
         });
     }
-   
 
     handleClose=()=>{
         
@@ -102,7 +102,7 @@ class UserDirectory extends React.Component {
     }
 
     render() {
-       
+
         const columns = [
             {
                 name: "id",
@@ -135,73 +135,73 @@ class UserDirectory extends React.Component {
                     display: 'excluded',
                 }
             },
-            
+
             {
-                
 
-            name: "email",
-            label: "Email ID",
-            options: {
-                filter: true,
-                sort: true,
-            }
-        },
-        {
-            name: "roles",
-            label: "Roles",
-            options: {
-                display: 'excluded',
-            }
-        },
 
-        {
-            name: "Roles",
-            options: {
-                filter: true,
-                sort: false,
-                empty: true,
-                customBodyRender: (value, tableMeta, updateValue) => {
-                    if (tableMeta.rowData) {
-                        return (
-                            <div style={{ width: '120px' }}>
-                               {tableMeta.rowData[5] ? tableMeta.rowData[5].join(', '):''} </div>
-                        );
+                name: "email",
+                label: "Email ID",
+                options: {
+                    filter: true,
+                    sort: true,
+                }
+            },
+            {
+                name: "roles",
+                label: "Roles",
+                options: {
+                    display: 'excluded',
+                }
+            },
+
+            {
+                name: "Roles",
+                options: {
+                    filter: true,
+                    sort: false,
+                    empty: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        if (tableMeta.rowData) {
+                            return (
+                                <div style={{ width: '120px' }}>
+                                    {tableMeta.rowData[5] ? tableMeta.rowData[5].join(', ') : ''} </div>
+                            );
+                        }
+
                     }
+                }
+            },
+            {
+                name: "isActive",
+                label: "Active",
+                options: {
+                    display: 'excluded',
+                }
+            },
 
+            {
+                name: "Action",
+                options: {
+                    filter: true,
+                    sort: false,
+                    empty: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        if (tableMeta.rowData) {
+                            return (
+                                <div >
+                                    {tableMeta.rowData[1] !== this.state.loginUser ?
+                                        <Button variant="contained" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1], tableMeta.rowData[7] ? "DELETE" : "ACTIVE") }} color={tableMeta.rowData[7] ? "" : 'primary'} aria-label="edit" style={{ width: '170px', marginLeft: '-13%', marginBottom: '4%', marginTop: '4%' }}>
+                                            {tableMeta.rowData[7] ? "Deactivate" : "Activate"}
+                                        </Button> : ''}
+                                </div>
+                            );
+                        }
+
+                    }
                 }
             }
-        },
-        {
-            name: "isActive",
-            label: "Active",
-            options: {
-                display: 'excluded',
-            }
-        },
 
-        {
-            name: "Action",
-            options: {
-                filter: true,
-                sort: false,
-                empty: true,
-                customBodyRender: (value, tableMeta, updateValue) => {
-                    if (tableMeta.rowData) {
-                        return (
-                            <div >
-                        {tableMeta.rowData[1]!== this.state.loginUser ? 
-                        <Button variant="contained"  onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1], tableMeta.rowData[7] ? "DELETE":"ACTIVE" )}} color={tableMeta.rowData[7] ? "":'primary'} aria-label="edit" style={{ width: '170px',marginLeft:'-13%', marginBottom: '4%', marginTop: '4%' }}>
-                            {tableMeta.rowData[7] ?  "Deactivate": "Activate" }
-                        </Button> :''}
-                              </div>   
-                        );
-                    }
 
-                }
-            }
-        }
-
-        
         ];
 
         const options = {
@@ -211,8 +211,8 @@ class UserDirectory extends React.Component {
             fixedHeader: true,
             filter: false,
             selectableRows: 'none',
-            rowsPerPage : 10,
-            
+            rowsPerPage: 10,
+
             onRowClick: rowData => this.handleClick(rowData)
         };
 
@@ -225,23 +225,23 @@ class UserDirectory extends React.Component {
                     <AddIcon /> Add User
                 </Fab>
                 <Grid container spacing={24} style={{ padding: 24 }}>
-          <Grid item xs={val} sm={val} lg={val} xl={val}>
-                <div style={{ marginLeft:val==8 ? '-6%': '-4%', marginRight: '3%', marginTop: '10px' }}>
-                    <MUIDataTable title={"User Management"} data={this.state.userList} columns={columns} options={options} />
-                </div>
-                </Grid>
-                <Grid item xs={4} sm={4} lg={4} xl={4}>
-                
-                <UserUpdate userDetails={this.state.user} openValue={this.state.openValue} handleCancel={this.handleCancel} newUser= {this.state.newUser}/>
-                
-                </Grid>
-                
+                    <Grid item xs={val} sm={val} lg={val} xl={val}>
+                        <div style={{ marginLeft: val == 8 ? '-6%' : '-4%', marginRight: '3%', marginTop: '10px' }}>
+                            <MUIDataTable title={"User Management"} data={this.state.userList} columns={columns} options={options} />
+                        </div>
+                    </Grid>
+                    <Grid item xs={4} sm={4} lg={4} xl={4}>
+
+                        <UserUpdate userDetails={this.state.user} openValue={this.state.openValue} handleCancel={this.handleCancel} newUser={this.state.newUser} />
+
+                    </Grid>
+
                 </Grid>
 
                 {this.state.open &&
                 <DeleteUser value={this.state.value} name={this.state.name} handleClickOpen= {this.handleClickOpen} open={this.state.open} status={this.state.status} handleClose={this.handleClose.bind(this)}/>
                 }
-               
+
 
                 {this.state.snack && this.state.message &&
                     <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.snack} onClose={this.handleClose} autoHideDuration={3000} >

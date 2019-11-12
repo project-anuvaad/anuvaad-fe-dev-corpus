@@ -104,10 +104,7 @@ this.props.handleTockenChange()
 	role.map((item, value) => (useRole.push(item), value !== role.length - 1 ? useRole.push(", ") : null));
     return (
       <div  >
-        <AppBar position="fixed" 
-        onClick={() => {
-          this.handleDrawerClose();
-        }} className={classNames(classes.appBar, open && classes.appBarShift)}>
+        <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
           <Toolbar disableGutters={!open}>
             <Typography variant="title" color="inherit" className={classes.flex}>
               {title}
@@ -188,9 +185,10 @@ this.props.handleTockenChange()
               anchor="left"
         open={open}
         
-        onClick={() => {
-          this.handleDrawerClose();
-        }}
+         onClick={() => {
+                      this.handleDrawerClose();
+                      
+                    }}
 			  
               classes={{
                 paper: classes.drawerPaper

@@ -17,7 +17,6 @@ export default class UserDirectory extends API {
 
     processResponse(res) {
         super.processResponse(res)
-        console.log("res",res.data)
         if (res.data) {
             this.userDetails = res.data;
         }

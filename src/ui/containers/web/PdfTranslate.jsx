@@ -41,14 +41,12 @@ class PdfTranslate extends React.Component {
   componentDidUpdate(prevProps) {
 
     if (prevProps.supportLanguage !== this.props.supportLanguage) {
-      console.log(this.props.supportLanguage)
       this.setState({
         language: this.props.supportLanguage
       })
     }
 
     if (prevProps.langModel !== this.props.langModel) {
-      console.log(this.props.langModel)
       this.setState({
         modelLanguage: this.props.langModel
       })
@@ -84,7 +82,6 @@ class PdfTranslate extends React.Component {
 
   handleSource(modelLanguage, supportLanguage) {
     var result = [];
-    console.log("model",modelLanguage)
     if (modelLanguage && supportLanguage) {
       modelLanguage.map((item) =>
         supportLanguage.map((value) => (
@@ -99,7 +96,6 @@ class PdfTranslate extends React.Component {
 
   handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
     var result = [];
-    console.log("model",modelLanguage)
     if (modelLanguage && supportLanguage) {
       modelLanguage.map((item) => {
       item.source_language_code === sourceLanguage ?

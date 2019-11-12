@@ -22,6 +22,7 @@ import graderReport from './graderreport';
 import comparisonreport from './comparisonreport';
 import benchmarkTranslate from './benchmarktranslate';
 import translation from './translation';
+import audio from './audio';
 import fetchtranslation from './viewtranslate';
 
 import deletefile from './delete';
@@ -58,6 +59,7 @@ export default {
     fetchtranslation,
     deletefile,
     updatePasswordstatus,
+    audio,
     userList,
     userRoles,
     addUser

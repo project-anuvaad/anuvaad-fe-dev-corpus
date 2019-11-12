@@ -15,10 +15,7 @@ export default class UserDelete extends React.Component {
     
 
     render() {
-
         var {value, name, handleClickOpen, open, status} = this.props
-
-        console.log("status,",status)
         return (
             <div>
             

@@ -53,7 +53,6 @@ class BenchmarkGrade extends React.Component {
   }
 
   handleChangePage(event, offset) {
-    console.log("of", offset, this.state.offset, this.state.count)
     this.setState({ offset, sentences: [] })
 
     if (this.state.base ) {
@@ -69,7 +68,6 @@ class BenchmarkGrade extends React.Component {
   };
 
   handleFetchBenchmark(base) {
-    console.log("sajish")
     let api = new FetchBenchmarkCompareModel(
       this.state.base,
       this.state.pageCount,
@@ -79,8 +77,6 @@ class BenchmarkGrade extends React.Component {
   }
 
   handleSubmit = () => {
-    console.log("-----",this.state.offset,this.state.count)
-    
     let api = new UpdateSentencesGrade(this.state.sentences, this.props.match.params.modelid);
     this.setState({ dialogOpen: false, apiCall: true, showLoader: true, tocken: false, sentences: [] });
     this.props.APITransport(api);
@@ -140,8 +136,6 @@ class BenchmarkGrade extends React.Component {
     }
 
     if (prevProps.fetchBenchmarkCompareModel !== this.props.fetchBenchmarkCompareModel) {
-
-      console.log(this.props.fetchBenchmarkCompareModel)
       this.setState({
         apiCall: false,
         sentenceCancel: prevProps.fetchBenchmarkCompareModel.data,
@@ -163,9 +157,6 @@ class BenchmarkGrade extends React.Component {
   }
 
   handleSwitchChange=()=>{
-
-    console.log(this.state.checkedB)
-
     if(this.state.checkedB){
         let api = new FetchBenchmarkCompareModel(
             this.props.base,
