@@ -273,8 +273,8 @@ class ComparisonReport extends React.Component {
           </div>
         ) : (
           <div>
-            <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
-              <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+            
+              
               <Fab
                 variant="extended"
                 color="primary"
@@ -286,7 +286,7 @@ class ComparisonReport extends React.Component {
               >
                 <CloseIcon /> Close
               </Fab>
-            </Toolbar>
+            
 
             <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
               <MUIDataTable

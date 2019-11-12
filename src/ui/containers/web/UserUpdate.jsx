@@ -59,15 +59,15 @@ class UserUpdate extends React.Component {
 
   handleSubmit = () => {
     var model = '';
-
-    const { APITransport } = this.props;
-    const apiObj = new AddUser(this.state.userid, this.state.firstname, this.state.lastname, this.state.userpassword, this.state.email, this.state.roles);
-    APITransport(apiObj);
-    this.setState({ showLoader: true })
-
-    setTimeout(() => { this.setState({ value: true }) }, 1000);
-
-
+    
+      const { APITransport } = this.props;
+      const apiObj = new AddUser(this.state.userid, this.state.firstname, this.state.lastname, this.state.userpassword,this.state.email, this.state.roles);
+      APITransport(apiObj);
+      this.setState({ showLoader: true })
+      
+      
+      
+    
   }
 
   handlePasswordSubmit = (id) => {
@@ -87,9 +87,9 @@ class UserUpdate extends React.Component {
 
   componentDidUpdate(prevProps, nexpProps) {
     if (prevProps.userRoles !== this.props.userRoles) {
-      this.setState({
-        userRoles: this.props.userRoles, value: false
-      })
+        this.setState({ userRoles: this.props.userRoles,value : false
+         })
+         setTimeout(()=>{this.setState({value:true})}, 1000);
     }
 
   }

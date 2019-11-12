@@ -19,7 +19,12 @@ import FetchTranslations from "../../../flux/actions/apis/fetchtranslation";
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import history from "../../../web.history";
 import MySnackbarContentWrapper from "../../components/web/common/Snackbar";
+import Timer from "../../components/web/common/CountDown";
+import ProgressBar from "../../components/web/common/ProgressBar";
 import Fab from '@material-ui/core/Fab';
+import Typography from "@material-ui/core/Typography";
+import Toolbar from "@material-ui/core/Toolbar";
+import { Line, Circle } from 'rc-progress';
 
 var file = "";
 class ViewTranslate extends React.Component {
@@ -61,6 +66,13 @@ class ViewTranslate extends React.Component {
         });
     }
 
+    handleRefresh(){
+        const { APITransport } = this.props;
+        const apiObj = new FetchTranslations();
+        APITransport(apiObj);
+        this.setState({ showLoader: true })
+    }
+
     handleClickOpen = (basename) => {
         const { APITransport } = this.props;
         const apiObj = new DeleteFile(basename);
@@ -81,9 +93,12 @@ class ViewTranslate extends React.Component {
         if (prevProps.fetchtranslation !== this.props.fetchtranslation) {
             this.setState({ fetchtranslation: this.props.fetchtranslation })
         }
+
+        
     }
 
     render() {
+
         
         const columns = [
             {
@@ -133,8 +148,39 @@ class ViewTranslate extends React.Component {
                 name: "status",
                 label: "Status",
                 options: {
+                    display: 'excluded',
+                }
+            },
+        
+        {
+            name: "eta",
+            label: "ETA",
+            options: {
+                display: 'excluded',
+            }
+        },
+            
+
+            
+            {
+                name: "Status",
+                options: {
                     filter: true,
-                    sort: true,
+                    sort: false,
+                    empty: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        if (tableMeta.rowData) {
+                            const result = tableMeta.rowData[6]*1000 - (Date.now()- new Date(tableMeta.rowData[2]));
+                            return (
+                                
+                                <div style={{ width: '120px' }}>
+                                     {(tableMeta.rowData[5] !== 'COMPLETED' && tableMeta.rowData[6]) ? (result > 0 ? <div> <ProgressBar val={result} eta= {tableMeta.rowData[6]*1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)}/> </div>: tableMeta.rowData[5] ): tableMeta.rowData[5]}
+                                     
+                                </div>
+                            );
+                        }
+
+                    }
                 }
             },
             {
@@ -147,7 +193,7 @@ class ViewTranslate extends React.Component {
                         if (tableMeta.rowData) {
                             return (
                                 <div style={{ width: '120px' }}>
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <a href={(process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : 'http://nlp-nmt-160078446.us-west-2.elb.amazonaws.com') + "/corpus/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><Tooltip title="Download"><DeleteOutlinedIcon style={{ width: "24", height: "24", marginRight: '8%', color: 'black' }} /></Tooltip></a> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <a href={(process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : 'http://documents.anuvaad.org') + "/corpus/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><Tooltip title="Download"><DeleteOutlinedIcon style={{ width: "24", height: "24", marginRight: '8%', color: 'black' }} /></Tooltip></a> : ''}
                                     {/* {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''}  */}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Delete"><DeleteIcon style={{ width: "24", height: "24", cursor: 'pointer', marginLeft: '10%' }} onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }}  > </DeleteIcon></Tooltip> : ''}
                                 </div>
@@ -156,7 +202,7 @@ class ViewTranslate extends React.Component {
 
                     }
                 }
-            },
+            }
         ];
 
         const options = {
@@ -170,10 +216,12 @@ class ViewTranslate extends React.Component {
 
         return (
             <div>
-
-                <Fab variant="extended" color="secondary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { history.push("/pdftranslate") }}>
+                <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
+          <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+                <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { history.push("/pdftranslate") }}>
                     <AddIcon /> Translate
                 </Fab>
+                </Toolbar>
 
                 <div style={{ marginLeft: '-4%', marginRight: '3%', marginTop: '40px' }}>
                     <MUIDataTable title={"Documents"} data={this.state.fetchtranslation} columns={columns} options={options} />
@@ -201,6 +249,7 @@ class ViewTranslate extends React.Component {
                         </DialogActions>
                     </Dialog>
                 }
+
 
                 {this.state.snack && this.state.message &&
                     <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.snack} onClose={this.handleClose} autoHideDuration={3000} >

@@ -121,7 +121,7 @@ class PdfTranslate extends React.Component {
             <Typography value='Document Translator' variant="h5" gutterBottom="true" style={{ paddingLeft: '30%', paddingTop: '3%', paddingBottom: '4%', background:blueGrey50, marginBottom:'3%'}} />
            
             <Grid container spacing={4} >
-              <DropZone handleChange={this.handleChange} />
+              <DropZone handleChange={this.handleChange} supportFile={['.docx']}/>
               <Grid item xs={8} sm={8} lg={8} xl={8}>
                 <Typography value='Select source language' variant="title" gutterBottom="true" style={{ marginLeft: '22%', paddingTop: '48px' }} />
               </Grid>
