@@ -32,10 +32,19 @@ import EditTranslate from "./ui/containers/web/EditTranslate";
 import ViewTranslate from "./ui/containers/web/ViewTranslate";
 import UserDirectory from "./ui/containers/web/UserDirectory";
 import ViewDoc from "./ui/containers/web/ViewDoc";
+import TranslatePresident from "./ui/containers/web/TranslatePresident";
 const PrivateRoute = ({ component: Component, userRoles, title, authenticate, ...rest }) => (
 
 
   <Route {...rest} render={props => (authenticate(userRoles) ? <Layout component={Component} title={title} {...props} /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
+
+);
+
+
+const PresidentRoute = ({ component: Component, userRoles, title, authenticate, ...rest }) => (
+
+
+  <Route {...rest} render={props => (authenticate(userRoles) ? <Component /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
 
 );
 
@@ -77,6 +86,9 @@ class AppRoutes extends React.Component {
             <Route exact path={`${process.env.PUBLIC_URL}/`} component={Home} />
             <Route exact path={`${process.env.PUBLIC_URL}/callback`} component={Callback} />
             <Route exact path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
+            
+            <PresidentRoute exact path={`${process.env.PUBLIC_URL}/translate-president`} component={TranslatePresident} authenticate={this.authenticateUser}/>
+            
             <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard`} title="Translate" component={DashboardTamil} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} title="Corpus Details" userRoles={['grader', 'dev']} component={GradeViewCorpus} authenticate={this.authenticateUser} />
