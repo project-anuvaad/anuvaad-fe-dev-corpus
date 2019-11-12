@@ -321,7 +321,7 @@ class GraderReport extends React.Component {
                             return (
                                 
                                 <div style={{ width: '120px' }}>
-                                     {tableMeta.rowData.length>0 ? tableMeta.rowData[1].length : 0 }
+                                     {tableMeta.rowData && tableMeta.rowData.length>0 ? tableMeta.rowData[1].length : 0 }
                                      
                                 </div>
                             );
