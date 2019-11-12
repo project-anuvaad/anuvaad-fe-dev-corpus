@@ -109,7 +109,7 @@ class GraderReport extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "desc"
+          
         }
       },
       {
@@ -140,7 +140,7 @@ class GraderReport extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "desc"
+          
         }
       },
 
@@ -211,7 +211,7 @@ class GraderReport extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "desc"
+          
         }
       },
       
@@ -264,7 +264,7 @@ class GraderReport extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "desc"
+          
         }
       },
 
@@ -321,7 +321,7 @@ class GraderReport extends React.Component {
                             return (
                                 
                                 <div style={{ width: '120px' }}>
-                                     {tableMeta.rowData[1] ? tableMeta.rowData[1].length : 0 }
+                                     {tableMeta.rowData.length>0 ? tableMeta.rowData[1].length : 0 }
                                      
                                 </div>
                             );
