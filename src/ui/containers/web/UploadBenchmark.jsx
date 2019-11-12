@@ -89,7 +89,6 @@ class UploadBenchmarkfile extends React.Component {
   };
 
   handleSource = files => {
-    console.log(files.name)
     this.setState({
       file: files,
       add_name: this.state.add_name ? this.state.add_name : files.name.split('.')[0]

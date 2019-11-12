@@ -27,6 +27,7 @@
 		"prop-types": "^15.6.2",
 		"rc-progress": "^2.5.2",
 		"react": "16.4.1",
+		"react-bootstrap": "0.32.4",
 		"react-collapsing-table": "^1.0.0",
 		"react-confirm-alert": "^2.4.1",
 		"react-countdown-now": "^2.1.2",
