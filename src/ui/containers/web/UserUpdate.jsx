@@ -65,7 +65,7 @@ class UserUpdate extends React.Component {
       APITransport(apiObj);
       this.setState({ showLoader: true })
       
-      setTimeout(()=>{this.setState({value:true})}, 1000);
+      
       
     
   }
@@ -89,6 +89,7 @@ class UserUpdate extends React.Component {
     if (prevProps.userRoles !== this.props.userRoles) {
         this.setState({ userRoles: this.props.userRoles,value : false
          })
+         setTimeout(()=>{this.setState({value:true})}, 1000);
     }
 
 }

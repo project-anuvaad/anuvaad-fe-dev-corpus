@@ -322,7 +322,7 @@ class BenchmarkGrade extends React.Component {
                   </Grid>
                   <Grid item xs={3} sm={3} lg={3} xl={3}>
                     <Typography variant="title" color="inherit" style={{ paddingBottom: "8px", flex: 1 }}>
-                    {this.state.pending ? (this.state.count && "Number of sentences pending : ") + (this.state.pending && this.state.pending) : "Completed"}
+                    {this.state.pending ? (this.state.count && "Number of sentences pending : ") + (this.state.pending && this.state.pending) : this.state.pending ===0 &&"Completed"}
                     </Typography>
                   </Grid>
                   <Grid item xs={3} sm={3} lg={2} xl={2}>

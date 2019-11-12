@@ -31,13 +31,30 @@ class GraderReport extends React.Component {
       filename: "",
       snack: false,
       message: "",
-      tocken: false
+      tocken: false,
+      tockenValue: false,
+      categoryValue: false
     };
   }
 
-  handleClick = rowData => {
-    this.setState({ tocken: true, graderReport: rowData[1] });
+  handleClickCategoryModel = rowData => {
+
+    console.log("-----",rowData, rowData[1][0].category_name)
+    this.setState({ categoryValue: true, categoryReport: rowData[1] });
   };
+
+  handleClick = rowData => {
+
+    
+     this.setState({ tocken: true, graderReport: rowData[1] });
+  };
+
+  handleClickModel = rowData => {
+
+    console.log("-----66666",rowData, rowData[1])
+    rowData[4] && this.setState({ tockenValue: true, graderRecords: rowData[1] });
+  };
+
 
   handleSubmit() {
     const { APITransport } = this.props;
@@ -54,8 +71,10 @@ class GraderReport extends React.Component {
       });
     }
   }
-  handleClose = () => {
-    this.setState({ tocken: false });
+  handleClose = (value) => {
+
+    console.log("va",value)
+    this.setState({ [value]: false });
   };
 
   handleTextChange(key, event) {
@@ -77,8 +96,8 @@ class GraderReport extends React.Component {
       },
 
       {
-        name: "record_unique",
-        label: "record",
+        name: "models",
+        label: "Models",
         options: {
           display: "excluded"
         }
@@ -114,7 +133,7 @@ class GraderReport extends React.Component {
       onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : ""
     };
 
-    const Table2columns = [
+    const Table4columns = [
       {
         name: "category_name",
         label: "Category Name",
@@ -131,7 +150,7 @@ class GraderReport extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "desc"
+          
         }
       },
 
@@ -141,7 +160,7 @@ class GraderReport extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "desc"
+          
         }
       },
 
@@ -151,7 +170,7 @@ class GraderReport extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "desc"
+          
         }
       },
 
@@ -161,7 +180,7 @@ class GraderReport extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "desc"
+          
         }
       },
       {
@@ -170,10 +189,184 @@ class GraderReport extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "desc"
+          
+        }
+      },
+     
+
+      {
+        name: "name_accuracy_rating",
+        label: "Names Accuracy",
+        options: {
+          display: this.state.categoryReport && this.state.categoryReport[0].category_name!=="Names Benchmark" ? "excluded" : 'true'
+          
         }
       }
     ];
+
+    const Table2columns = [
+      {
+        name: "model_name",
+        label: "Model Name",
+        options: {
+          filter: true,
+          sort: true,
+          sortDirection: "desc"
+        }
+      },
+      
+
+      {
+        name: "categories",
+        label: "Categories",
+        options: {
+          display: "excluded"
+        }
+      },
+
+      {
+        name: "source_lang",
+        label: "Source Language",
+        options: {
+          filter: true,
+          sort: true,
+        }
+      }
+      ,
+
+      {
+        name: "target_lang",
+        label: "Target Language",
+        options: {
+          filter: true,
+          sort: true,
+        }
+      }
+      ,
+      {
+        name: "records_count",
+        label: "Sentence Count",
+        options: {
+          filter: true,
+          sort: true,
+        }
+      }
+      
+
+
+      
+    ];
+
+    const Table3columns = [
+      {
+        name: "category_name",
+        label: "Category Name",
+        options: {
+          filter: true,
+          sort: true,
+          sortDirection: "desc"
+        }
+      },
+
+      {
+        name: "records",
+        label: "Records",
+        options: {
+          display: "excluded"
+        }
+      }
+      ,
+
+      {
+        name: "context_rating",
+        label: "Context",
+        options: {
+          display: "excluded"
+        }
+      }
+      ,
+      {
+        name: "name_accuracy_rating",
+        label: "Names Accuracy",
+        options: {
+          display: "excluded"                                                                                                                                                                                                                                                                                                                                                                                                    
+        }
+      }
+      ,
+      {
+        name: "rating",
+        label: "Rating",
+        options: {
+          display: "excluded"                                                                                                                                                                                                                                                                                                                                                                                                      
+        }
+      }
+      ,
+      {
+        name: "spelling_rating",
+        label: "Spelling",
+        options: {
+          display: "excluded"                                                                                                                                                                                                                                                                                                                                                                                                     
+        }
+      }
+      ,
+            
+            {
+                name: "Total sentences",
+                options: {
+                    filter: true,
+                    sort: false,
+                    empty: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        
+                            return (
+                                
+                                <div style={{ width: '120px' }}>
+                                     {tableMeta.rowData[1] ? tableMeta.rowData[1].length : 0 }
+                                     
+                                </div>
+                            );
+                        }
+
+                    }
+                
+            },
+
+            
+            
+            {
+                name: "Aggregate score",
+                options: {
+                    filter: true,
+                    sort: false,
+                    empty: true,
+                    customBodyRender: (value, tableMeta, updateValue) => {
+                        
+                            return (
+                                
+                                <div style={{ width: '120px' }}>
+                                     {tableMeta.rowData[0] === "Names Benchmark" ? ( tableMeta.rowData[2] * 2 + tableMeta.rowData[3] * 6 + tableMeta.rowData[4]*1+tableMeta.rowData[5]*1) / 10 : tableMeta.rowData[0] === "SC Judgement Orders" ? (tableMeta.rowData[2] * 2 +  tableMeta.rowData[4]* 2 +tableMeta.rowData[5]* 6 ) / 10: (tableMeta.rowData[2] * 6 +  tableMeta.rowData[4]* 3 +tableMeta.rowData[5]* 1 ) / 10}
+                                     
+                                </div>
+                            );
+                        }
+
+                    }
+                
+            },
+
+      
+    ];
+
+    const options2 = {
+      filterType: "checkbox",
+      download: false,
+      print: false,
+      fixedHeader: true,
+      filter: false,
+      selectableRows: "none",
+
+      onRowClick: !this.state.tockenValue ? rowData => this.handleClickModel(rowData) : !this.state.categoryValue ? rowData => this.handleClickCategoryModel(rowData):''
+    };
 
     return (
       <div>
@@ -238,29 +431,44 @@ class GraderReport extends React.Component {
           </div>
         ) : (
           <div>
-            <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
-              <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+            
               <Fab
                 variant="extended"
                 color="primary"
                 aria-label="Add"
                 style={{ marginLeft: "-4%", marginTop: "1%" }}
                 onClick={() => {
-                  this.handleClose();
+                  this.handleClose(this.state.categoryValue ?'categoryValue': this.state.tockenValue ? 'tockenValue': 'tocken');
                 }}
               >
-                <CloseIcon /> Close
+                <CloseIcon />{!this.state.categoryReport && !this.state.tockenValue && this.state.tocken ? "Close" : "Back" }
               </Fab>
-            </Toolbar>
-
+            
+                {!this.state.tockenValue ? 
             <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
               <MUIDataTable
-                title={"Graded Report"}
+                title={"Model Details"}
                 data={this.state.graderReport ? this.state.graderReport : ""}
                 columns={Table2columns}
-                options={options1}
+                options={options2}
               />
-            </div>
+            </div> : !this.state.categoryValue ?  
+
+<div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+<MUIDataTable
+  title={"Category Details"}
+  data={this.state.graderRecords ? this.state.graderRecords : ""}
+  columns={Table3columns}
+  options={options2}
+/>
+                </div>: <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+<MUIDataTable
+  title={"Graded Records"}
+  data={this.state.categoryReport ? this.state.categoryReport : ""}
+  columns={Table4columns}
+  options={options2}
+/>
+                </div> }
           </div>
         )}
       </div>
