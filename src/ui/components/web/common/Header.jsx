@@ -19,13 +19,15 @@ import ListItemText from "@material-ui/core/ListItemText";
 import SearchIcon from "@material-ui/icons/AddToQueue";
 import StarIcon from "@material-ui/icons/FiberNew";
 import SendIcon from "@material-ui/icons/Send";
+import InsertChart from "@material-ui/icons/InsertChart";
+import Receipt from "@material-ui/icons/Receipt";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import history from "../../../../web.history";
 import { Button } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import ActionDelete from "@material-ui/icons/QuestionAnswer";
 import GroupIcon from "@material-ui/icons/Group";
-import onClickOutside from 'react-onclickoutside';
+
 const styles = {
   root: {
     flexGrow: 1
@@ -50,6 +52,16 @@ class Header extends React.Component {
     this.setState({ open: true });
   };
 
+  componentDidUpdate(){
+	if(this.state.open && this.props.tocken){
+		this.setState({ open: false });
+		
+	}
+	if(this.props.tocken){
+this.props.handleTockenChange()
+	}
+  }
+
   handleDrawerTranslate = () => {
     this.setState({
       open: false,
@@ -63,7 +75,8 @@ class Header extends React.Component {
       heading: "Documents"
     });
   };
-  handleDrawerClose = () => {
+  handleDrawerClose(){
+	  console.log()
     this.setState({
       open: false
     });
@@ -88,11 +101,13 @@ class Header extends React.Component {
     const openEl = Boolean(anchorEl);
     var role = JSON.parse(localStorage.getItem("roles"));
     var useRole = new Array();
-    role.map((item, value) => (useRole.push(item), value !== role.length - 1 ? useRole.push(", ") : null));
-
+	role.map((item, value) => (useRole.push(item), value !== role.length - 1 ? useRole.push(", ") : null));
     return (
-      <div  onClick={this.state.open ? this.handleDrawerClose:''}>
-        <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
+      <div  >
+        <AppBar position="fixed" 
+        onClick={() => {
+          this.handleDrawerClose();
+        }} className={classNames(classes.appBar, open && classes.appBarShift)}>
           <Toolbar disableGutters={!open}>
             <Typography variant="title" color="inherit" className={classes.flex}>
               {title}
@@ -171,8 +186,11 @@ class Header extends React.Component {
               color="inherit"
               variant="persistent"
               anchor="left"
-			  open={open}
-			  onRequestChange={this.handleDrawerClose}
+        open={open}
+        
+        onClick={() => {
+          this.handleDrawerClose();
+        }}
 			  
               classes={{
                 paper: classes.drawerPaper
@@ -325,7 +343,7 @@ class Header extends React.Component {
                 {role.includes('admin') &&
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
 										<ListItemIcon>
-											<GroupIcon style={{ color: 'white' }} />
+											<Receipt style={{ color: 'white' }} />
 										</ListItemIcon>
 										<ListItemText
 											disableTypography
@@ -336,6 +354,7 @@ class Header extends React.Component {
 											)}
 										/>
 									</ListItem>
+
 								} 
 
                 {role.includes("admin") && (
@@ -348,7 +367,7 @@ class Header extends React.Component {
                     }}
                   >
                     <ListItemIcon>
-                      <GroupIcon style={{ color: "white" }} />
+                      <InsertChart style={{ color: "white" }} />
                     </ListItemIcon>
                     <ListItemText
                       disableTypography
@@ -486,9 +505,5 @@ class Header extends React.Component {
   }
 }
 
-// Header.propTypes = {
-//   classes: PropTypes.object.isRequired,
-//   theme: PropTypes.object.isRequired,
-// };
 
 export default withStyles(styles)(Header);

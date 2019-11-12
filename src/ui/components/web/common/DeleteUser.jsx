@@ -38,7 +38,7 @@ export default class UserDelete extends React.Component {
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">No</Button>
+                        <Button onClick={this.props.handleClose} color="primary">No</Button>
                         <Button onClick={(event) => { handleClickOpen(name, status) }} color="primary">Yes</Button>
                     </DialogActions>
                 </Dialog>

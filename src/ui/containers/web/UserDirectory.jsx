@@ -76,18 +76,20 @@ class UserDirectory extends React.Component {
         }
     }
     handleClick=(rowData)=>{
+        console.log("---")
         rowData[1]!== this.state.loginUser?
         this.setState({openValue:true,user:rowData, newUser: rowData[0] ? false : true})
         :''
-        console.log(this.state.newUser)
+        console.log("---",this.state.newUser)
 
     }
 
 
     handleSubmit = (value, name, status) => {
-        
+        console.log("op",this.state.openValue)
         this.setState({
             open: true,
+            openValue: false,
             value, name, status
             
         });
@@ -96,7 +98,7 @@ class UserDirectory extends React.Component {
 
     handleClose=()=>{
         
-        this.setState({open:false, snack:false})
+        this.setState({open:false, snack:false, openValue: false})
     }
 
     render() {
@@ -214,12 +216,12 @@ class UserDirectory extends React.Component {
             onRowClick: rowData => this.handleClick(rowData)
         };
 
-        console.log("user",this.state.user)
+        console.log("user",this.state.openValue)
             const val = this.state.openValue? 8 : 12
         return (
             <div>
                 
-                <Fab variant="extended" color="secondary" aria-label="Add" style={{  marginLeft :this.state.newUser ? "1":"-2.5%" ,marginTop: '1%' }} onClick={() => this.handleClick([])}>
+                <Fab variant="extended" color="primary" aria-label="Add" style={{  marginLeft :this.state.newUser ? "1":"-2.5%" ,marginTop: '1%' }} onClick={() => this.handleClick([])}>
                     <AddIcon /> Add User
                 </Fab>
                 <Grid container spacing={24} style={{ padding: 24 }}>
@@ -237,7 +239,7 @@ class UserDirectory extends React.Component {
                 </Grid>
 
                 {this.state.open &&
-                <DeleteUser value={this.state.value} name={this.state.name} handleClickOpen= {this.handleClickOpen} open={this.state.open} status={this.state.status}/>
+                <DeleteUser value={this.state.value} name={this.state.name} handleClickOpen= {this.handleClickOpen} open={this.state.open} status={this.state.status} handleClose={this.handleClose.bind(this)}/>
                 }
                
 
