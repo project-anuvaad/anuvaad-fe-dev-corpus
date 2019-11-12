@@ -344,7 +344,7 @@ class GraderReport extends React.Component {
                             return (
                                 
                                 <div style={{ width: '120px' }}>
-                                     {tableMeta.rowData && tableMeta.rowData[0] === "Names Benchmark" ? ( tableMeta.rowData[2] * 2 + tableMeta.rowData[3] * 6 + tableMeta.rowData[4]*1+tableMeta.rowData[5]*1) / 10 : tableMeta.rowData[0] === "SC Judgement Orders" ? (tableMeta.rowData[2] * 2 +  tableMeta.rowData[4]* 2 +tableMeta.rowData[5]* 6 ) / 10: (tableMeta.rowData[2] * 6 +  tableMeta.rowData[4]* 3 +tableMeta.rowData[5]* 1 ) / 10}
+                                     {tableMeta.rowData ? ( tableMeta.rowData[0] === "Names Benchmark" ? ( tableMeta.rowData[2] * 2 + tableMeta.rowData[3] * 6 + tableMeta.rowData[4]*1+tableMeta.rowData[5]*1) / 10 : tableMeta.rowData[0] === "SC Judgement Orders" ? (tableMeta.rowData[2] * 2 +  tableMeta.rowData[4]* 2 +tableMeta.rowData[5]* 6 ) / 10: (tableMeta.rowData[2] * 6 +  tableMeta.rowData[4]* 3 +tableMeta.rowData[5]* 1 ) / 10):0}
                                      
                                 </div>
                             );
