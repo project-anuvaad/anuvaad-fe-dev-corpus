@@ -32,7 +32,7 @@ export default class CreateCorpus extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/corpus/multiple`;
+        return `${super.apiEndPointAuto()}/multiple`;
     }
 
     getFormData() {
