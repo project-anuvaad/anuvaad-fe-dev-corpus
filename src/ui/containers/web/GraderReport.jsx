@@ -39,16 +39,16 @@ class GraderReport extends React.Component {
 
   handleClickCategoryModel = rowData => {
     console.log("-----", rowData, rowData[1][0].category_name);
-    this.setState({ categoryValue: true, categoryReport: rowData[1],title3:rowData[0] });
+    this.setState({ categoryValue: true, categoryReport: rowData? rowData[1]: '',title3:rowData[0] });
   };
 
   handleClick = rowData => {
-    this.setState({ tocken: true, graderReport: rowData[1],title1:rowData[0] });
+    this.setState({ tocken: true, graderReport: rowData? rowData[1]: '',title1:rowData[0] });
   };
 
   handleClickModel = rowData => {
     console.log("-----66666", rowData, rowData[1]);
-    rowData[4] && this.setState({ tockenValue: true, graderRecords: rowData[1], title2:rowData[0] });
+    rowData[4] && this.setState({ tockenValue: true, graderRecords: rowData? rowData[1]: '', title2:rowData[0] });
   };
 
   handleSubmit() {
@@ -386,7 +386,7 @@ class GraderReport extends React.Component {
               </Grid>
             </Grid>
             <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-              <MUIDataTable title={"Grader Details"} data={this.state.graderDetails} columns={Table1columns} options={options1} />
+              <MUIDataTable title={"Grader Details"} data={this.state.graderDetails ? this.state.graderDetails : ''} columns={Table1columns} options={options1} />
             </div>
           </div>
         ) : (
