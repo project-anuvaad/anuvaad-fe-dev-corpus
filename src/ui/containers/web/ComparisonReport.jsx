@@ -8,11 +8,10 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import CloseIcon from "@material-ui/icons/Close";
 import Fab from "@material-ui/core/Fab";
 import Typography from "@material-ui/core/Typography";
-import Toolbar from "@material-ui/core/Toolbar";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import build from "material-ui/svg-icons/action/build";
+
 class ComparisonReport extends React.Component {
   constructor(props) {
     super(props);
@@ -32,12 +31,19 @@ class ComparisonReport extends React.Component {
       filename: "",
       snack: false,
       message: "",
-      tocken: false
+      tocken: false,
+      tockenValue: false,
+      detailedReport: false
     };
   }
 
   handleClick = rowData => {
-    this.setState({ tocken: true, graderReport: rowData[1] });
+    console.log(rowData[0])
+    this.setState({ tocken: true, categoryReport: rowData[1], title:rowData[0]  });
+  };
+
+  handleClickModel= rowData => {
+    this.setState({ tockenValue: true, detailedReport: rowData[1] });
   };
 
   handleSubmit() {
@@ -55,10 +61,10 @@ class ComparisonReport extends React.Component {
       });
     }
   }
-  handleClose = () => {
-    this.setState({ tocken: false });
+  handleClose = value => {
+    console.log("va", value);
+    this.setState({ [value]: false });
   };
-
   handleTextChange(key, event) {
     this.setState({
       [key]: event.target.value
@@ -68,8 +74,8 @@ class ComparisonReport extends React.Component {
   render() {
     const Table1columns = [
       {
-        name: "_id",
-        label: "Model",
+        name: "model_name",
+        label: "Model Name",
         options: {
           filter: true,
           sort: true,
@@ -78,7 +84,7 @@ class ComparisonReport extends React.Component {
       },
 
       {
-        name: "record_unique",
+        name: "categories",
         label: "record",
         options: {
           display: "excluded"
@@ -90,22 +96,78 @@ class ComparisonReport extends React.Component {
         label: "Sentence Count",
         options: {
           filter: true,
-          sort: true,
-          sortDirection: "desc"
+          sort: true
         }
       },
       {
         name: "word_count",
-        label: "",
+        label: "Word Count",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
+
+      {
+        name: "source_lang",
+        label: "Source",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
+
+      {
+        name: "target_lang",
+        label: "Target",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
+
+      {
+        name: "rating",
+        label: "Meaning of sentence",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
+      {
+        name: "context_rating",
+        label: "Structure of sentence",
+
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
+
+      {
+        name: "spelling_rating",
+        label: "Vocabulary / Lexicon",
         options: {
           filter: true,
           sort: true
         }
       }
+      ,
+
+      {
+        name: "Maximum Score",
+        options: {
+          filter: true,
+          sort: false,
+          empty: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return <div style={{ width: "120px" }}>{tableMeta.rowData && tableMeta.rowData[2] !== 0 ? tableMeta.rowData[2] * 5 : "-"}</div>;
+          }
+        }
+      }
     ];
 
-    var data =this.state.graderDetails
-    const footerNames = ['Full Name', 'Job', 'Whereabouts', 'Age', 'Allowance'];
+    var data = this.state.graderDetails;
     const options1 = {
       filterType: "checkbox",
       download: false,
@@ -113,15 +175,104 @@ class ComparisonReport extends React.Component {
       fixedHeader: true,
       filter: false,
       selectableRows: "none",
-      download: true,
-      downloadOptions:{filename: "Comparison-Report.csv"},
-      onDownload: (buildHead, buildBody, columns, data) =>
-      buildHead(headerNames)+buildBody(data) ,
      
-      onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : ""
+      onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : !this.state.tockenValue ? rowData => this.handleClickModel(rowData):''
     };
 
     const Table2columns = [
+      {
+        name: "category_name",
+        label: "Category Name",
+        options: {
+          filter: true,
+          sort: true,
+          sortDirection: "desc"
+        }
+      },
+
+      {
+        name: "records",
+        label: "record",
+        options: {
+          display: "excluded"
+        }
+      },
+
+    
+
+      {
+        name: "Total Sentence",
+        options: {
+          filter: true,
+          sort: false,
+          empty: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return <div style={{ width: "120px" }}>{tableMeta.rowData && tableMeta.rowData[1] !== 0 ? tableMeta.rowData[1].length : ""}</div>;
+          }
+        }
+      },
+
+      {
+        name: "rating",
+        label: "Meaning of sentence",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
+
+      {
+        name: "context_rating",
+        label: "Structure of sentence",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
+      {
+        name: "spelling_rating",
+        label: "Vocabulary / Lexicon",
+        options: {
+          filter: true,
+          sort: true
+        }
+      }
+      ,
+      {
+        name: "name_accuracy_rating",
+        label: "Names Accuracy",
+        options: {
+          display: "excluded"
+        }
+      },
+
+      {
+        name: "Names Accuracy",
+        options: {
+          filter: true,
+          sort: false,
+          empty: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return <div style={{ width: "120px" }}>{tableMeta.rowData && tableMeta.rowData[6] !== 0 ? tableMeta.rowData[6] : "-"}</div>;
+          }
+        }
+      },
+
+      {
+        name: "Maximum Score",
+        options: {
+          filter: true,
+          sort: false,
+          empty: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            return <div style={{ width: "120px" }}>{tableMeta.rowData && tableMeta.rowData[1] !== 0 ? tableMeta.rowData[1].length * 5 : "-"}</div>;
+          }
+        }
+      }
+    ];
+
+
+    const Table3columns = [
       {
         name: "category_name",
         label: "Category Name",
@@ -137,8 +288,7 @@ class ComparisonReport extends React.Component {
         label: "Source",
         options: {
           filter: true,
-          sort: true,
-          sortDirection: "desc"
+          sort: true
         }
       },
 
@@ -147,8 +297,7 @@ class ComparisonReport extends React.Component {
         label: "Target",
         options: {
           filter: true,
-          sort: true,
-          sortDirection: "desc"
+          sort: true
         }
       },
 
@@ -157,8 +306,7 @@ class ComparisonReport extends React.Component {
         label: "Meaning of sentence",
         options: {
           filter: true,
-          sort: true,
-          sortDirection: "desc"
+          sort: true
         }
       },
 
@@ -167,8 +315,7 @@ class ComparisonReport extends React.Component {
         label: "Structure of sentence",
         options: {
           filter: true,
-          sort: true,
-          sortDirection: "desc"
+          sort: true
         }
       },
       {
@@ -176,38 +323,66 @@ class ComparisonReport extends React.Component {
         label: "Vocabulary / Lexicon",
         options: {
           filter: true,
-          sort: true,
-          sortDirection: "desc"
+          sort: true
         }
-
       }
+      ,
+      {
+        name: "name_accuracy_rating",
+        label: "Names Accuracy",
+        options: {
+          display: "excluded"
+        }
+      },
+
+      
+
+      {
+        name: "name_accuracy_rating",
+        label: "Names Accuracy",
+        options: {
+          display: this.state.detailedReport && this.state.detailedReport[0].category_name !== "Names Benchmark" ? "excluded" : "true"
+        }
+      }
+      
     ];
+
+    const options2 = {
+      filterType: "checkbox",
+      print: false,
+      fixedHeader: true,
+      filter: false,
+      download: true,
+      downloadOptions: { filename: "Comparison-Report.csv" },
+      onDownload: (buildHead, buildBody, columns, data) => buildHead(headerNames) + buildBody(data),
+      onRowClick: ""
+    };
 
     const headerNames = [
       {
-        name: 'Category Name',
-        download: true,
+        name: "Category Name",
+        download: true
       },
       {
-        name: 'Source',
-        download: true,
+        name: "Source",
+        download: true
       },
       {
-        name: 'Target',
-        download: true,
+        name: "Target",
+        download: true
       },
       {
-        name: 'Meaning of sentence',
-        download: true,
+        name: "Meaning of sentence",
+        download: true
       },
       {
-        name: 'Structure of sentence',
-        download: true,
+        name: "Structure of sentence",
+        download: true
       },
       {
-        name: 'Vocabulary / Lexicon',
-        download: true,
-      },
+        name: "Vocabulary / Lexicon",
+        download: true
+      }
     ];
 
     return (
@@ -273,29 +448,44 @@ class ComparisonReport extends React.Component {
           </div>
         ) : (
           <div>
-            
-              
-              <Fab
-                variant="extended"
-                color="primary"
-                aria-label="Add"
-                style={{ marginLeft: "-4%", marginTop: "1%" }}
-                onClick={() => {
-                  this.handleClose();
-                }}
-              >
-                <CloseIcon /> Close
-              </Fab>
+            <Fab
+              variant="extended"
+              color="primary"
+              aria-label="Add"
+              style={{ marginLeft: "-4%", marginTop: "1%" }}
+              onClick={() => {
+                this.handleClose( this.state.tockenValue ? "tockenValue" : "tocken");
+              }}
+            >
+              <CloseIcon /> Back
+            </Fab>
+
+
             
 
-            <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+            {! this.state.tockenValue ?(
+              <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
               <MUIDataTable
-                title={"Comparison Report"}
-                data={this.state.graderReport ? this.state.graderReport : ""}
+                title={this.state.title? this.state.title:"Category details"}
+                data={this.state.categoryReport ? this.state.categoryReport : ""}
                 columns={Table2columns}
                 options={options1}
               />
-            </div>
+              </div>
+            ) : (
+              <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+                <MUIDataTable
+                  title={this.state.detailedReport && this.state.detailedReport[0].category_name}
+                  data={this.state.detailedReport ? this.state.detailedReport : ""}
+                  columns={Table3columns}
+                  options={options2}
+                />
+              </div>
+
+            
+            
+          
+        )}
           </div>
         )}
       </div>
