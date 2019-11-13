@@ -39,11 +39,11 @@ class ComparisonReport extends React.Component {
 
   handleClick = rowData => {
     console.log(rowData[0])
-    this.setState({ tocken: true, categoryReport: rowData[1], title:rowData[0]  });
+    this.setState({ tocken: true, categoryReport: rowData ? rowData[1]: '', title:rowData[0]  });
   };
 
   handleClickModel= rowData => {
-    this.setState({ tockenValue: true, detailedReport: rowData[1] });
+    this.setState({ tockenValue: true, detailedReport: rowData ? rowData[1]: '' });
   };
 
   handleSubmit() {
@@ -167,7 +167,7 @@ class ComparisonReport extends React.Component {
       }
     ];
 
-    var data = this.state.graderDetails;
+   
     const options1 = {
       filterType: "checkbox",
       download: false,
@@ -346,7 +346,7 @@ class ComparisonReport extends React.Component {
       }
       
     ];
-
+    
     const options2 = {
       filterType: "checkbox",
       print: false,
@@ -443,7 +443,7 @@ class ComparisonReport extends React.Component {
               </Grid>
             </Grid>
             <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-              <MUIDataTable title={"Comparison Report"} data={this.state.graderDetails} columns={Table1columns} options={options1} />
+              <MUIDataTable title={"Comparison Report"} data={this.state.grade ? this.state.graderDetails: ''} columns={Table1columns} options={options1} />
             </div>
           </div>
         ) : (
