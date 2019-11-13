@@ -386,7 +386,7 @@ class GraderReport extends React.Component {
               </Grid>
             </Grid>
             <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-              <MUIDataTable title={"Grader Details"} data={this.state.graderDetails ? this.state.graderDetails : ''} columns={Table1columns} options={options1} />
+              <MUIDataTable title={"Grader Details"} data={this.state.graderDetails ? this.state.graderDetails : []} columns={Table1columns} options={options1} />
             </div>
           </div>
         ) : (
@@ -408,7 +408,7 @@ class GraderReport extends React.Component {
               <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
                 <MUIDataTable
                   title={this.state.title1?this.state.title1: "Model Details"}
-                  data={this.state.graderReport ? this.state.graderReport : ""}
+                  data={this.state.graderReport ? this.state.graderReport : []}
                   columns={Table2columns}
                   options={options2}
                 />
@@ -417,7 +417,7 @@ class GraderReport extends React.Component {
               <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
                 <MUIDataTable
                   title={this.state.title2 ? this.state.title2: "Category Details"}
-                  data={this.state.graderRecords ? this.state.graderRecords : ""}
+                  data={this.state.graderRecords ? this.state.graderRecords : []}
                   columns={Table3columns}
                   options={options2}
                 />
@@ -426,7 +426,7 @@ class GraderReport extends React.Component {
               <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
                 <MUIDataTable
                   title={this.state.title3 ? this.state.title3 :"Graded Records"}
-                  data={this.state.categoryReport ? this.state.categoryReport : ""}
+                  data={this.state.categoryReport ? this.state.categoryReport : []}
                   columns={Table4columns}
                   options={options2}
                 />
