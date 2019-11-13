@@ -443,7 +443,7 @@ class ComparisonReport extends React.Component {
               </Grid>
             </Grid>
             <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-              <MUIDataTable title={"Comparison Report"} data={this.state.grade ? this.state.graderDetails: ''} columns={Table1columns} options={options1} />
+              <MUIDataTable title={"Comparison Report"} data={this.state.grade ? this.state.graderDetails: []} columns={Table1columns} options={options1} />
             </div>
           </div>
         ) : (
@@ -467,7 +467,7 @@ class ComparisonReport extends React.Component {
               <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
               <MUIDataTable
                 title={this.state.title? this.state.title:"Category details"}
-                data={this.state.categoryReport ? this.state.categoryReport : ""}
+                data={this.state.categoryReport ? this.state.categoryReport : []}
                 columns={Table2columns}
                 options={options1}
               />
@@ -476,7 +476,7 @@ class ComparisonReport extends React.Component {
               <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
                 <MUIDataTable
                   title={this.state.detailedReport && this.state.detailedReport[0].category_name}
-                  data={this.state.detailedReport ? this.state.detailedReport : ""}
+                  data={this.state.detailedReport ? this.state.detailedReport : []}
                   columns={Table3columns}
                   options={options2}
                 />
