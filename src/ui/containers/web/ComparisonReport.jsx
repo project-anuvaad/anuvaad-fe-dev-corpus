@@ -443,7 +443,7 @@ class ComparisonReport extends React.Component {
               </Grid>
             </Grid>
             <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-              <MUIDataTable title={"Comparison Report"} data={this.state.grade ? this.state.graderDetails: []} columns={Table1columns} options={options1} />
+              <MUIDataTable title={"Comparison Report"} data={this.state.graderDetails ? this.state.graderDetails: []} columns={Table1columns} options={options1} />
             </div>
           </div>
         ) : (
