@@ -7,10 +7,10 @@ export default function (state = {}, action) {
             if (action.payload && Array.isArray(action.payload)) {
                 let data_arr = []
                 action.payload.map((data, index) => {
-                    if (data._id !== 'hemat') {
-                        data._id = 'anuvaad_' + data._id
+                    if (data.model_name) {
+                        data_arr.push(data)
                     }
-                    data_arr.push(data)
+                    
                 })
                 return data_arr
             }

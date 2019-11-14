@@ -62,7 +62,7 @@ class ComparisonReport extends React.Component {
     }
   }
   handleClose = value => {
-    console.log("va", value);
+    
     this.setState({ [value]: false });
   };
   handleTextChange(key, event) {
@@ -77,8 +77,9 @@ class ComparisonReport extends React.Component {
         name: "model_name",
         label: "Model Name",
         options: {
-          filter: true,
-          sort: false
+          filter: false,
+          sort: true,
+          sortDirection: "desc"
         }
       },
 
@@ -86,33 +87,18 @@ class ComparisonReport extends React.Component {
         name: "categories",
         label: "record",
         options: {
+          filter: false,
           display: "excluded"
         }
       },
 
-      {
-        name: "sentence_count",
-        label: "Sentence Count",
-        options: {
-          filter: true,
-          sort: false
-        }
-      },
-      {
-        name: "word_count",
-        label: "Word Count",
-        options: {
-          filter: true,
-          sort: false
-        }
-      },
-
+      
       {
         name: "source_lang",
         label: "Source",
         options: {
           filter: true,
-          sort: false
+          sort: true
         }
       },
 
@@ -121,16 +107,34 @@ class ComparisonReport extends React.Component {
         label: "Target",
         options: {
           filter: true,
-          sort: false
+          sort: true
         }
       },
+
+      {
+        name: "sentence_count",
+        label: "Sentence Count",
+        options: {
+          filter: false,
+          sort: true
+        }
+      },
+      {
+        name: "word_count",
+        label: "Word Count",
+        options: {
+          filter: false,
+          sort: true
+        }
+      },
+
 
       {
         name: "rating",
         label: "Meaning of sentence",
         options: {
-          filter: true,
-          sort: false
+          filter: false,
+          sort: true
         }
       },
       {
@@ -138,8 +142,8 @@ class ComparisonReport extends React.Component {
         label: "Structure of sentence",
 
         options: {
-          filter: true,
-          sort: false
+          filter: false,
+          sort: true
         }
       },
 
@@ -147,8 +151,8 @@ class ComparisonReport extends React.Component {
         name: "spelling_rating",
         label: "Vocabulary / Lexicon",
         options: {
-          filter: true,
-          sort: false
+          filter: false,
+          sort: true
         }
       }
       ,
@@ -156,11 +160,11 @@ class ComparisonReport extends React.Component {
       {
         name: "Maximum Score",
         options: {
-          filter: true,
+          filter: false,
           sort: false,
           empty: true,
           customBodyRender: (value, tableMeta, updateValue) => {
-            return <div style={{ width: "120px" }}>{tableMeta.rowData && tableMeta.rowData[2] !== 0 ? tableMeta.rowData[2] * 5 : "-"}</div>;
+            return <div style={{ width: "120px" }}>{tableMeta.rowData && tableMeta.rowData[4] !== 0 ? tableMeta.rowData[4] * 5 : "-"}</div>;
           }
         }
       }
@@ -168,11 +172,11 @@ class ComparisonReport extends React.Component {
 
    
     const options1 = {
-      filterType: "checkbox",
+      filterType: "dropdown",
       download: false,
       print: false,
       fixedHeader: true,
-      filter: false,
+      filter: true,
       selectableRows: "none",
      
       onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : !this.state.tockenValue ? rowData => this.handleClickModel(rowData):''
@@ -203,7 +207,7 @@ class ComparisonReport extends React.Component {
         name: "Total Sentence",
         options: {
           filter: true,
-          sort: false,
+          sort: true,
           empty: true,
           customBodyRender: (value, tableMeta, updateValue) => {
             return <div style={{ width: "120px" }}>{tableMeta.rowData && tableMeta.rowData[1] !== 0 ? tableMeta.rowData[1].length : ""}</div>;
