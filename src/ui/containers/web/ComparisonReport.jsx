@@ -78,8 +78,7 @@ class ComparisonReport extends React.Component {
         label: "Model Name",
         options: {
           filter: true,
-          sort: true,
-          sortDirection: "desc"
+          sort: false
         }
       },
 
@@ -96,7 +95,7 @@ class ComparisonReport extends React.Component {
         label: "Sentence Count",
         options: {
           filter: true,
-          sort: true
+          sort: false
         }
       },
       {
@@ -104,7 +103,7 @@ class ComparisonReport extends React.Component {
         label: "Word Count",
         options: {
           filter: true,
-          sort: true
+          sort: false
         }
       },
 
@@ -113,7 +112,7 @@ class ComparisonReport extends React.Component {
         label: "Source",
         options: {
           filter: true,
-          sort: true
+          sort: false
         }
       },
 
@@ -122,7 +121,7 @@ class ComparisonReport extends React.Component {
         label: "Target",
         options: {
           filter: true,
-          sort: true
+          sort: false
         }
       },
 
@@ -131,7 +130,7 @@ class ComparisonReport extends React.Component {
         label: "Meaning of sentence",
         options: {
           filter: true,
-          sort: true
+          sort: false
         }
       },
       {
@@ -140,7 +139,7 @@ class ComparisonReport extends React.Component {
 
         options: {
           filter: true,
-          sort: true
+          sort: false
         }
       },
 
@@ -149,7 +148,7 @@ class ComparisonReport extends React.Component {
         label: "Vocabulary / Lexicon",
         options: {
           filter: true,
-          sort: true
+          sort: false
         }
       }
       ,
