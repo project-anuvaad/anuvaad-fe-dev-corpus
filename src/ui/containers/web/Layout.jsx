@@ -53,7 +53,9 @@ class App extends React.Component {
   }
 
   render() {
-    const { classes, theme, title } = this.props;
+    const { classes, theme, title, drawer } = this.props;
+
+    console.log("drawer",drawer)
 
     const Component = this.props.component; // eslint-disable-line
     return (
@@ -61,7 +63,7 @@ class App extends React.Component {
         <div className={classes.root} >
           {this.renderSpinner()}
 
-          <Header classes={classes} theme={theme} title={title}  tocken={this.state.tocken} handleTockenChange={this.handleTockenChange.bind(this)} />
+          <Header classes={classes} theme={theme} title={title} drawer={drawer}  tocken={this.state.tocken} handleTockenChange={this.handleTockenChange.bind(this)} />
           <div className={classes.container} onClick={this.handlDrawerTocken.bind(this)}>
             <Component />
           </div>

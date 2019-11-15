@@ -12,6 +12,9 @@ class AppCard extends React.Component {
                     <Typography className='cardTitle' color="textSecondary" gutterBottom>
                         {text}
             </Typography>
+            <Typography  color="textSecondary" gutterBottom>
+                       
+            </Typography>
                 </CardContent>
             </Card>
         );
