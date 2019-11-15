@@ -4,9 +4,9 @@ import Button from "@material-ui/core/Button";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Card from  '../../components/web/common/ZoomCard';
+import Card from '../../components/web/common/ZoomCard';
 
-import AppCard from  '../../components/web/Card';
+import AppCard from '../../components/web/Card';
 import '../../styles/web/TranslatePresident.css';
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
@@ -64,11 +64,11 @@ class TranslatePresident extends React.Component {
 
   handleTextChange(key, event) {
     this.setState({
-      [key]: event.target.value, val : true
+      [key]: event.target.value, val: true
     });
   }
 
-  handleChange=()=>{
+  handleChange = () => {
     this.setState({ showZoom: true })
   }
 
@@ -136,6 +136,7 @@ class TranslatePresident extends React.Component {
               </Grid>
               <Grid container item xs={12} spacing={3} id='cardGrid'>
                 <React.Fragment>
+                  {/* <Grid item xs={12} sm={4} className='slideUp'><Card></Card></Grid> */}
                   {langs.map((lang) => {
                     return (<Grid item xs={12} sm={4} className='slideUp'><AppCard header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} /></Grid>)
                   })}
@@ -149,7 +150,7 @@ class TranslatePresident extends React.Component {
                 <CloseIcon style={{ color: 'CB1E60' }} />
               </Fab>
             </Grid>
-           : null}
+            : null}
 
 
         </div>
