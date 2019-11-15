@@ -96,7 +96,9 @@ this.props.handleTockenChange()
   handleClick = () => {};
 
   render() {
-    const { classes, title } = this.props;
+    const { classes, title, drawer } = this.props;
+
+    console.log("drawer", drawer)
     const { auth, anchorEl, open } = this.state;
     const openEl = Boolean(anchorEl);
     var role = JSON.parse(localStorage.getItem("roles"));
@@ -178,7 +180,7 @@ this.props.handleTockenChange()
         </Grid> */}
             {/* <Grid item xs={12} sm={12} lg={12} xl={12}> */}
             {/* <div className={classes.root}>   */}
-
+            
             <Drawer
               color="inherit"
               variant="persistent"
@@ -481,6 +483,7 @@ this.props.handleTockenChange()
                 </ListItem>
               </List>
             </Drawer>
+            
 
             <main
               className={classNames(classes.content, {
@@ -489,7 +492,7 @@ this.props.handleTockenChange()
             >
               {this.state.open ? (
                 ""
-              ) : (
+              ) : (!drawer &&
                 <Button color="primary" variant="contained" className={classes.buttonRight} style={{ zIndex: 9999 }} onClick={this.handleDrawerOpen}>
                   <ChevronRightIcon />
                 </Button>

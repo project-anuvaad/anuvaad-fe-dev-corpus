@@ -1,14 +1,24 @@
 
 import React , { useState, useRef } from 'react';
-import { Button } from 'react-bootstrap';
+import Button from "@material-ui/core/Button";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import AppCard from  '../../components/web/Card';
 import '../../styles/web/TranslatePresident.css';
-const langs = ['Bengali', 'Marathi', 'Malayalam', 'Hindi', 'Kannada', 'Gujurati', 'Tamil', 'Telugu', 'Punjabi'];
+import NewCorpusStyle from "../../styles/web/Newcorpus";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import APITransport from "../../../flux/actions/apitransport/apitransport";
+import { withStyles } from "@material-ui/core";
+import { withRouter } from "react-router-dom";
+import Fab from '@material-ui/core/Fab';
+import CloseIcon from '@material-ui/icons/Close';  
 
-export default class TranslatePresident extends React.Component {
+const langs = ['Bengali', 'Marathi', 'Malayalam', 'Hindi', 'Kannada', 'Gujurati', 'Tamil', 'Telugu', 'Punjabi'];
+                                                                                                          
+
+class TranslatePresident extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,33 +26,50 @@ export default class TranslatePresident extends React.Component {
       showLangLayout: false
     };
   }
+
+   handleTextChange(key, event) {
+    this.setState({
+      [key]: event.target.value
+    });
+  }
   handleOnClick = () => {
     this.setState({ showLayout: true })
     setTimeout(() => {
       this.setState({ showLangLayout: true })
     }, 1000)
   }
+
+  handleClose = () => {
+    this.setState({ showLayout: false , showLangLayout: false, sentence:''})
+    
+  }
   render() {
     return (
         <div className="App">
         {!this.state.showLayout ?
           <div>
-            <textarea className='idbox' rows='5' cols='50' placeholder='We have many beautiful Languages' />
+            <textarea className='idbox' rows='5' cols='50' placeholder='Please enter text here...' onChange={(event) => {this.handleTextChange('sentence', event)}}/>
             <div >
-              <Button style={{cursor:'pointer', color: 'white'}} id='button' type='submit' size='sm' onClick={this.handleOnClick}>Translate</Button>
+              <Button onClick = {this.handleSubmit}
+                    variant="contained" color="primary"
+                    style={{
+                     width:'25%',
+                      height: 50,
+                      
+                    }}  onClick={this.handleOnClick.bind(this)}>Translate</Button>
             </div>
           </div> :
           (!this.state.showLangLayout && <div className={'fadeUp'}>
-            <textarea className='idbox' rows='5' cols='50' placeholder='We have many beautiful Languages' />
-          </div>)
+           <textarea className='idbox' rows='5' cols='50' placeholder='Please enter text here...' onChange={(event) => {this.handleTextChange('sentence', event)}}/>
+            </div>)
         }
         <div>
           {this.state.showLangLayout ? 
             <Grid container spacing={4} style={{paddingLeft: '17%',paddingRight: '17%'}}>
               <Grid container item xs={12} spacing={1}>
                 <Paper id='paper'>
-                  <Typography id='title' color="white" gutterBottom style={{color: 'white'}}>
-                    We have many beautiful languages
+                  <Typography id='title' color="black" gutterBottom style={{color: 'black'}}>
+                    {this.state.sentence}
                         </Typography>
                 </Paper>
               </Grid>
@@ -53,6 +80,11 @@ export default class TranslatePresident extends React.Component {
                     })}
                 </React.Fragment>
               </Grid>
+
+              <Fab  aria-label="Close" style={{margin:"auto",
+  display:"block",color: 'white'}} onClick={this.handleClose.bind(this)}>
+        <CloseIcon style={{color: 'CB1E60'}}/>
+      </Fab>
             </Grid>
            : null}
         </div>
@@ -60,5 +92,29 @@ export default class TranslatePresident extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  user: state.login,
+  apistatus: state.apistatus,
+  corpus: state.corpus
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      APITransport,
+      CreateCorpus: APITransport
+    },
+    dispatch
+  );
+
+export default withRouter(
+  withStyles(NewCorpusStyle)(
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(TranslatePresident)
+  )
+);
 
 
