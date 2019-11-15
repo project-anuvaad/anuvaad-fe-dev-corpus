@@ -106,7 +106,7 @@
   }
   .card{
       
-      height: 165px;
+      min-height: 165px;
       margin: 20px
   }
   #cardGrid{
