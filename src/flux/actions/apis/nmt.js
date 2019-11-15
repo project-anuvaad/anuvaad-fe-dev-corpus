@@ -5,7 +5,7 @@ import API from "./api";
 import C from "../constants";
 
 export default class NMT extends API {
-  constructor(par, model, reverse, target, showSplitted, timeout = 200000) {
+  constructor(par, model, reverse, target, showSplitted,type, timeout = 200000) {
     super("POST", timeout, false);
     this.par = par;
     this.model = model;
@@ -14,7 +14,7 @@ export default class NMT extends API {
     this.answers = [];
     this.showSplitted = showSplitted;
     this.url_end_point = model[0] ? model[0].url_end_point : model.url_end_point;
-    this.type = C.NMT;
+    this.type = type ? type : C.NMT;
   }
 
   toString() {

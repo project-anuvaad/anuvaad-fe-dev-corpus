@@ -5,16 +5,25 @@ import Typography from '@material-ui/core/Typography';
 
 class AppCard extends React.Component {
     render() {
-        let { text } = this.props
+        let { header, body } = this.props
         return (
             <Card className='card' >
                 <CardContent>
                     <Typography className='cardTitle' color="textSecondary" gutterBottom>
-                        {text}
-            </Typography>
-            <Typography  color="textSecondary" gutterBottom>
-                       
-            </Typography>
+                        {header}
+                    </Typography>
+
+                    {body ?
+                        <Typography color="textSecondary" gutterBottom>
+                            {body}
+                        </Typography>
+                        :
+                        <div>
+                            <span style={{ width: '70%', backgroundColor: '#d3d3d3', display: 'inline-block' }}>&nbsp;</span>
+                            <br></br> <br></br>
+                            <span style={{ width: '50%', backgroundColor: '#d3d3d3', display: 'inline-block' }}>&nbsp;</span>
+                        </div>
+                    }
                 </CardContent>
             </Card>
         );
