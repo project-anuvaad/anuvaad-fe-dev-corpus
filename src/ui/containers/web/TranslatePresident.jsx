@@ -4,6 +4,8 @@ import Button from "@material-ui/core/Button";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Card from  '../../components/web/common/ZoomCard';
+
 import AppCard from  '../../components/web/Card';
 import '../../styles/web/TranslatePresident.css';
 import NewCorpusStyle from "../../styles/web/Newcorpus";
@@ -29,8 +31,11 @@ class TranslatePresident extends React.Component {
 
    handleTextChange(key, event) {
     this.setState({
-      [key]: event.target.value
+      [key]: event.target.value, val : true
     });
+  }
+  handleChange=()=>{
+    this.setState({ showZoom: true })
   }
   handleOnClick = () => {
     this.setState({ showLayout: true })
@@ -75,8 +80,9 @@ class TranslatePresident extends React.Component {
               </Grid>
               <Grid container item xs={12} spacing={3} id='cardGrid'>
                 <React.Fragment>
+                
                     {langs.map((lang)=>{
-                        return (<Grid item xs={12} sm={4} className='slideUp'><AppCard text={lang}/></Grid>)
+                        return (<Grid item xs={12} sm={4} className='slideUp'><AppCard text={lang} handleChange={this.handleChange.bind(this)}/></Grid>)
                     })}
                 </React.Fragment>
               </Grid>
@@ -87,6 +93,8 @@ class TranslatePresident extends React.Component {
       </Fab>
             </Grid>
            : null}
+
+           
         </div>
       </div>
     )

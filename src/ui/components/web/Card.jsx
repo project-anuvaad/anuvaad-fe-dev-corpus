@@ -7,7 +7,7 @@ class AppCard extends React.Component {
     render() {
         let { text } = this.props
         return (
-            <Card className='card'>
+            <Card className='card' >
                 <CardContent>
                     <Typography className='cardTitle' color="textSecondary" gutterBottom>
                         {text}
