@@ -89,9 +89,10 @@ class AppRoutes extends React.Component {
             <Route exact path={`${process.env.PUBLIC_URL}/callback`} component={Callback} />
             <Route exact path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
             
-            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate-president`} drawer={true} title="Anuvaad Translate" component={TranslatePresident} authenticate={this.authenticateUser}/>
             <PrivateRoute exact path={`${process.env.PUBLIC_URL}/anuvaad-translate`} drawer={true} title="Anuvaad Translate" component={TPresident} authenticate={this.authenticateUser}/>
 
+            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate`} drawer={true} title="Anuvaad Translate" component={TranslatePresident} authenticate={this.authenticateUser}/>
+            
             <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard`} title="Translate" component={DashboardTamil} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} title="Corpus Details" userRoles={['grader', 'dev']} component={GradeViewCorpus} authenticate={this.authenticateUser} />
@@ -107,7 +108,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute path={`${process.env.PUBLIC_URL}/benchmark`} component={Benchmark} userRoles={['grader', 'dev']} title="Benchmark" authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`} title="Corpus Details" userRoles={['editor', 'dev']} component={Corpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translations`} component={Translations} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/translate`} component={Translate} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/translate-v1`} component={Translate} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/upload-audio`} component={UploadAudio} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/qna`} title="Q&A" component={QnA} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/newcorpus`} title="Parallel Corpus" userRoles={['dev']} component={newcorpus} authenticate={this.authenticateUser} />
