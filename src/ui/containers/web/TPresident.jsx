@@ -20,7 +20,7 @@ import { withRouter } from "react-router-dom";
 import C from '../../../flux/actions/constants'
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
-
+import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 const langs = [
   { label: 'Bengali', code: 'bn', type: C.BENGALI },
   { label: 'Gujarati', code: 'gu', type: C.GUJARATI },
@@ -34,14 +34,15 @@ const langs = [
 ];
 
 
-class TranslatePresident extends React.Component {
+class Translate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showLayout: false,
       showLangLayout: false,
       model: [],
-      langs: []
+      langs: [],
+      sentence: ''
     };
   }
 
@@ -117,7 +118,7 @@ class TranslatePresident extends React.Component {
                   width: '25%',
                   height: 50,
 
-                }} onClick={this.handleOnClick.bind(this)}>Translate</Button>
+                }}  onClick={this.state.sentence && this.handleOnClick.bind(this)}>Translate</Button>
             </div>
           </div> :
           (!this.state.showLangLayout && <div className={'fadeUp'}>
@@ -126,30 +127,37 @@ class TranslatePresident extends React.Component {
         }
         <div>
           {this.state.showLangLayout ?
-            <Grid container spacing={4} style={{ paddingLeft: '17%', paddingRight: '17%' }}>
-              <Grid container item xs={12} spacing={1}>
-                <Paper id='paper'>
-                  <Typography id='title' color="black" gutterBottom style={{ color: 'black' }}>
-                    {this.state.sentence}
-                  </Typography>
-                </Paper>
+            <Grid container spacing={16} style={{ paddingLeft: '5%' }}>
+              <Grid container item xs={4} sm={4} lg={4} xl={4} spacing={1}>
+                <AppCard header ={this.state.sentence} body={" "}style={{width:'100%', height:'30%',marginTop:'50%', background:blueGrey50}}>
+                  
+                </AppCard>
               </Grid>
-              <Grid container item xs={12} spacing={3} id='cardGrid'>
+              {/* <Grid container item xs={12} spacing={3} id='cardGrid'>
                 <React.Fragment>
                   {langs.map((lang) => {
-                    return (<Grid item xs={12} sm={4} className='slideUp'><AppCard header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{minHeight: "165px"
-                     , margin: "20px"}}/></Grid>)
+                    return (<Grid item xs={12} sm={4} className='slideUp'><AppCard header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} /></Grid>)
                   })}
                 </React.Fragment>
-              </Grid>
+              </Grid> */}
 
-              <Fab aria-label="Close" style={{
+<Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} >
+                <React.Fragment>
+                  {langs.map((lang) => {
+                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp'><AppCard header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{raised: true, Height: '100px', background:blueGrey50, marginBottom:'5px'}} /></Grid>)
+                  })}
+                </React.Fragment>
+                <Fab aria-label="Close" style={{
                 margin: "auto",
                 display: "block", color: 'white'
               }} onClick={this.handleClose.bind(this)}>
                 <CloseIcon style={{ color: 'CB1E60' }} />
               </Fab>
+              </Grid>
+
+              
             </Grid>
+            
            : null}
 
 
@@ -190,7 +198,7 @@ export default withRouter(
     connect(
       mapStateToProps,
       mapDispatchToProps
-    )(TranslatePresident)
+    )(Translate)
   )
 );
 

@@ -5,12 +5,12 @@ import Typography from '@material-ui/core/Typography';
 
 class AppCard extends React.Component {
     render() {
-        let { header, body } = this.props
+        let { header, body , style} = this.props
         return (
-            <Card className='card' >
+            <Card     style={style} >
                 <CardContent>
-                    <Typography className='cardTitle' color="textSecondary" gutterBottom>
-                        {header}
+                    <Typography variant="h6" className='cardTitle' color="textSecondary" gutterBottom>
+                        <b>{header}</b>
                     </Typography>
 
                     {body ?
