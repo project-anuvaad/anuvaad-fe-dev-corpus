@@ -4,10 +4,9 @@ import Button from "@material-ui/core/Button";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Card from '../../components/web/common/ZoomCard';
-import $ from 'jquery';
+import Card from  '../../components/web/common/ZoomCard';
 
-import AppCard from '../../components/web/Card';
+import AppCard from  '../../components/web/Card';
 import '../../styles/web/TranslatePresident.css';
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
@@ -20,9 +19,8 @@ import { withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import C from '../../../flux/actions/constants'
 import Fab from '@material-ui/core/Fab';
-import Zoom from '@material-ui/core/Zoom';
 import CloseIcon from '@material-ui/icons/Close';
-
+import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 const langs = [
   { label: 'Bengali', code: 'bn', type: C.BENGALI },
   { label: 'Gujarati', code: 'gu', type: C.GUJARATI },
@@ -35,16 +33,16 @@ const langs = [
   { label: 'Telugu', code: 'te', type: C.TELUGU }
 ];
 
-var timer;
 
-class TranslatePresident extends React.Component {
+class Translate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showLayout: false,
       showLangLayout: false,
       model: [],
-      langs: []
+      langs: [],
+      sentence: ''
     };
   }
 
@@ -67,11 +65,11 @@ class TranslatePresident extends React.Component {
 
   handleTextChange(key, event) {
     this.setState({
-      [key]: event.target.value, val: true
+      [key]: event.target.value, val : true
     });
   }
 
-  handleChange = () => {
+  handleChange=()=>{
     this.setState({ showZoom: true })
   }
 
@@ -99,45 +97,14 @@ class TranslatePresident extends React.Component {
   }
 
   handleClose = () => {
-    clearTimeout(timer);
-    this.handleCardHoverOut()
     this.setState({ showLayout: false, showLangLayout: false, sentence: '' })
     langs.map((lang) => {
       this.setState({
         [lang.label.toLowerCase()]: null
       })
     })
+
   }
-
-
-
-  handleCardHover(header, body) {
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      this.setState({
-        showZoomed: true,
-        header: header,
-        body: body
-      })
-      $('html, body').animate({
-        scrollTop: 50
-      }, 'fast');
-    }.bind(this), 1000);
-  }
-
-  handleCardHoverOut() {
-    this.setState({
-      showZoomed: false,
-      header: '',
-      body: ''
-    })
-  }
-
-  clearTimer() {
-    clearTimeout(timer);
-  }
-
-
   render() {
     return (
       <div className="App">
@@ -151,7 +118,7 @@ class TranslatePresident extends React.Component {
                   width: '25%',
                   height: 50,
 
-                }} onClick={this.handleOnClick.bind(this)}>Translate</Button>
+                }}  onClick={this.state.sentence && this.handleOnClick.bind(this)}>Translate</Button>
             </div>
           </div> :
           (!this.state.showLangLayout && <div className={'fadeUp'}>
@@ -160,39 +127,38 @@ class TranslatePresident extends React.Component {
         }
         <div>
           {this.state.showLangLayout ?
-            <Grid container spacing={4} style={{ paddingLeft: '17%', paddingRight: '17%' }}>
-              <Grid container item xs={12} spacing={1}>
-                <Paper id='paper'>
-                  <Typography id='title' color="black" gutterBottom style={{ color: 'black' }}>
-                    {this.state.sentence}
-                  </Typography>
-                </Paper>
+            <Grid container spacing={16} style={{ paddingLeft: '5%' }}>
+              <Grid container item xs={4} sm={4} lg={4} xl={4} spacing={1}>
+                <AppCard header ={this.state.sentence} body={" "}style={{width:'100%', height:'30%',marginTop:'50%', background:blueGrey50}}>
+                  
+                </AppCard>
               </Grid>
-              <Grid container item xs={12} spacing={2} id='cardGrid'>
+              {/* <Grid container item xs={12} spacing={3} id='cardGrid'>
                 <React.Fragment>
-                  {this.state.showZoomed &&
-                    <Zoom in={true} timeout={700}>
-                      <Grid item xs={12} sm={12} id="focus">
-                        <AppCard bigsize header={this.state.header} body={this.state.body} handleHoverOut={this.handleCardHoverOut.bind(this)} />
-                      </Grid>
-                    </Zoom>
-                  }
                   {langs.map((lang) => {
-                    return (<Grid item xs={12} sm={4} className='slideUp'><AppCard header={lang.label} handleHoverOut={this.clearTimer.bind(this)} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} handleHover={this.handleCardHover.bind(this)} style={{minHeight: "165px"
-                    , margin: "20px"}}/></Grid>)
-
+                    return (<Grid item xs={12} sm={4} className='slideUp'><AppCard header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} /></Grid>)
                   })}
                 </React.Fragment>
-              </Grid>
+              </Grid> */}
 
-              <Fab aria-label="Close" style={{
+<Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} >
+                <React.Fragment>
+                  {langs.map((lang) => {
+                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp'><AppCard header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{raised: true, Height: '100px', background:blueGrey50, marginBottom:'5px'}} /></Grid>)
+                  })}
+                </React.Fragment>
+                <Fab aria-label="Close" style={{
                 margin: "auto",
                 display: "block", color: 'white'
               }} onClick={this.handleClose.bind(this)}>
                 <CloseIcon style={{ color: 'CB1E60' }} />
               </Fab>
+              </Grid>
+
+              
             </Grid>
-            : null}
+            
+           : null}
 
 
         </div>
@@ -232,7 +198,7 @@ export default withRouter(
     connect(
       mapStateToProps,
       mapDispatchToProps
-    )(TranslatePresident)
+    )(Translate)
   )
 );
 
