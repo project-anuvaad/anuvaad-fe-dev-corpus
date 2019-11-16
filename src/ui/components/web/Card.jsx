@@ -1,20 +1,27 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
+import Zoom from '@material-ui/core/Zoom';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 class AppCard extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+    handleZoom() {
+
+    }
     render() {
-        let { header, body } = this.props
+        let { header, body, bigsize } = this.props
         return (
-            <Card className='card' >
+            <Card className='card' onMouseLeave={this.props.handleHoverOut} onMouseOver={this.props.handleHover && body ? () => { this.props.handleHover(header, body) } : bigsize ? ()=>{} : (() => { this.props.handleHoverOut()})} style={bigsize ? { minHeight: '600px' } : {}}>
                 <CardContent>
-                    <Typography className='cardTitle' color="textSecondary" gutterBottom>
+                    <Typography className='cardTitle' color="textSecondary" gutterBottom style={bigsize ? { fontSize: '70px' } : {}}>
                         {header}
                     </Typography>
 
                     {body ?
-                        <Typography color="textSecondary" gutterBottom>
+                        <Typography color="textSecondary" gutterBottom style={bigsize ? { fontSize: '70px' } : {}}>
                             {body}
                         </Typography>
                         :
