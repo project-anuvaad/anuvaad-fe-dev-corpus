@@ -122,7 +122,7 @@ class TranslatePresident extends React.Component {
       $('html, body').animate({
         scrollTop: 50
       }, 'fast');
-    }.bind(this), 500);
+    }.bind(this), 1000);
   }
 
   handleCardHoverOut() {
