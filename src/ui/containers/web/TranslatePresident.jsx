@@ -115,21 +115,27 @@ class TranslatePresident extends React.Component {
     timer = setTimeout(function () {
       this.setState({
         showZoomed: true,
+        zoom: true,
         header: header,
         body: body
       })
       $('html, body').animate({
         scrollTop: 50
       }, 'fast');
-    }.bind(this), 1000);
+    }.bind(this), 500);
   }
 
   handleCardHoverOut() {
     this.setState({
-      showZoomed: false,
-      header: '',
-      body: ''
+      zoom: false,
     })
+    setTimeout(function () {
+      this.setState({
+        showZoomed: false,
+        header: '',
+        body: ''
+      })
+    }.bind(this), 700);
   }
 
   clearTimer() {
@@ -170,7 +176,7 @@ class TranslatePresident extends React.Component {
               <Grid container item xs={12} spacing={2} id='cardGrid'>
                 <React.Fragment>
                   {this.state.showZoomed &&
-                    <Zoom in={true} timeout={700}>
+                    <Zoom in={this.state.zoom} timeout={700}>
                       <Grid item xs={12} sm={12} id="focus">
                         <AppCard bigsize header={this.state.header} body={this.state.body} handleHoverOut={this.handleCardHoverOut.bind(this)} />
                       </Grid>
