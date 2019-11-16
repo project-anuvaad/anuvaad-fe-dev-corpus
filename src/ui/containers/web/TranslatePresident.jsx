@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Card from '../../components/web/common/ZoomCard';
+import $ from 'jquery';
 
 import AppCard from '../../components/web/Card';
 import '../../styles/web/TranslatePresident.css';
@@ -19,6 +20,7 @@ import { withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import C from '../../../flux/actions/constants'
 import Fab from '@material-ui/core/Fab';
+import Zoom from '@material-ui/core/Zoom';
 import CloseIcon from '@material-ui/icons/Close';
 
 const langs = [
@@ -33,6 +35,7 @@ const langs = [
   { label: 'Telugu', code: 'te', type: C.TELUGU }
 ];
 
+var timer;
 
 class TranslatePresident extends React.Component {
   constructor(props) {
@@ -96,14 +99,45 @@ class TranslatePresident extends React.Component {
   }
 
   handleClose = () => {
+    clearTimeout(timer);
+    this.handleCardHoverOut()
     this.setState({ showLayout: false, showLangLayout: false, sentence: '' })
     langs.map((lang) => {
       this.setState({
         [lang.label.toLowerCase()]: null
       })
     })
-
   }
+
+
+
+  handleCardHover(header, body) {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      this.setState({
+        showZoomed: true,
+        header: header,
+        body: body
+      })
+      $('html, body').animate({
+        scrollTop: 50
+      }, 'fast');
+    }.bind(this), 1000);
+  }
+
+  handleCardHoverOut() {
+    this.setState({
+      showZoomed: false,
+      header: '',
+      body: ''
+    })
+  }
+
+  clearTimer() {
+    clearTimeout(timer);
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -134,11 +168,17 @@ class TranslatePresident extends React.Component {
                   </Typography>
                 </Paper>
               </Grid>
-              <Grid container item xs={12} spacing={3} id='cardGrid'>
+              <Grid container item xs={12} spacing={2} id='cardGrid'>
                 <React.Fragment>
-                  {/* <Grid item xs={12} sm={4} className='slideUp'><Card></Card></Grid> */}
+                  {this.state.showZoomed &&
+                    <Zoom in={true} timeout={700}>
+                      <Grid item xs={12} sm={12} id="focus">
+                        <AppCard bigsize header={this.state.header} body={this.state.body} handleHoverOut={this.handleCardHoverOut.bind(this)} />
+                      </Grid>
+                    </Zoom>
+                  }
                   {langs.map((lang) => {
-                    return (<Grid item xs={12} sm={4} className='slideUp'><AppCard header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} /></Grid>)
+                    return (<Grid item xs={12} sm={4} className='slideUp'><AppCard header={lang.label} handleHoverOut={this.clearTimer.bind(this)} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} handleHover={this.handleCardHover.bind(this)} /></Grid>)
                   })}
                 </React.Fragment>
               </Grid>
