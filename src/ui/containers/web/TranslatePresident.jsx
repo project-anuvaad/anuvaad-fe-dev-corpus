@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Card from '../../components/web/common/ZoomCard';
 import $ from 'jquery';
 
 import AppCard from '../../components/web/Card';
