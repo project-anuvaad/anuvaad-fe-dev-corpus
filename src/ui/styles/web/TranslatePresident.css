@@ -6,7 +6,6 @@
     background-color: rgb(255, 255, 255);
     min-height: 80vh;
     text-align: center;
-    margin-left: -7%;
   }
   
   .App-link {
@@ -22,16 +21,16 @@
     transition: all 500ms ease;  
    }
    .idbox {
-    width:45%;
+    width: 80%;
     font-family: arial,sans-serif;
-    font-size:30px;
+    font-size: 30px;
     min-height: 300px;
     background: rgb(218, 218, 218);
     padding: 40px;
     text-align: left;
     border-radius: 5px;
     resize: none;
-    margin:12% 15% 3% 15%;
+    margin: 5% 5% 3% 5%;
    }
    .translateBtn {
       border-radius: 5px !important;   
@@ -64,7 +63,7 @@
       color:rgb(214, 208, 208);
       width: 100%;
       margin-top: 20px ;
-      margin-bottom: 80px;
+      margin-bottom: 1%;
       padding-top: 25px;
       padding-bottom: 25px;
       margin-right:22px;
