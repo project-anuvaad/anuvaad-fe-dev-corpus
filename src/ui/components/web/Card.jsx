@@ -16,11 +16,11 @@ class AppCard extends React.Component {
         return (
             <Card style={style} className={[bigsize || title ? '' : 'zoom', 'card'].join(' ')} onMouseLeave={this.props.handleHoverOut} onMouseOver={this.props.handleHover && body ? () => { this.props.handleHover(header, body) } : bigsize ? () => { } : (() => { this.props.handleHoverOut() })} style={showSmall ? { minHeight: window.innerHeight / 12 } : (bigsize ? { minHeight: window.innerHeight - window.innerHeight / 7 } : (title ? { minWidth: '100%' } : {}))}>
                 <CardContent>
-                    <Typography className='cardTitle' color="textSecondary" gutterBottom style={fontSize ? { fontSize: fontSize } : (bigsize ? { fontSize: '70px' } : {})}>
+                    <Typography className='cardTitle' color="textSecondary" gutterBottom style={fontSize ? { fontSize: fontSize } : (bigsize ? { fontSize: '40px' } : {})}>
                         {header}
                     </Typography>
                     {body ?
-                        <Typography color="textSecondary" gutterBottom style={fontSize ? { fontSize: fontSize } : (bigsize ? { fontSize: '70px' } : {})}>
+                        <Typography color="textSecondary" gutterBottom style={fontSize ? { fontSize: fontSize } : (bigsize ? { fontSize: '40px' } : {})}>
                             {body}
                         </Typography>
                         :

@@ -9,6 +9,13 @@ const GlobalStyles = theme => ({
     fontFamily: theme.typography.fontFamily,
     minHeight: '-webkit-fill-available'
   },
+  containerDemo: {
+    margin: '5em 0em 0em 0em',
+    width: '100%',
+    background: theme.palette.background.default,
+    fontFamily: theme.typography.fontFamily,
+    minHeight: '-webkit-fill-available'
+  },
   root: {
     background: theme.palette.background.default,
     flexGrow: 1,
