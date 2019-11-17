@@ -35,10 +35,10 @@ import ViewDoc from "./ui/containers/web/ViewDoc";
 import TranslatePresident from "./ui/containers/web/TranslatePresident";
 import TPresident from "./ui/containers/web/TPresident";
 
-const PrivateRoute = ({ component: Component, userRoles, title,drawer, authenticate, ...rest }) => (
+const PrivateRoute = ({ component: Component, userRoles, title,drawer,forDemo, authenticate, ...rest }) => (
 
 
-  <Route {...rest} render={props => (authenticate(userRoles) ? <Layout component={Component} title={title} drawer={drawer} {...props} /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
+  <Route {...rest} render={props => (authenticate(userRoles) ? <Layout component={Component} title={title} forDemo={forDemo} drawer={drawer} {...props} /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
 
 );
 
@@ -89,9 +89,9 @@ class AppRoutes extends React.Component {
             <Route exact path={`${process.env.PUBLIC_URL}/callback`} component={Callback} />
             <Route exact path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
             
-            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/anuvaad-translate`} drawer={true} title="Anuvaad Translate" component={TPresident} authenticate={this.authenticateUser}/>
+            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/anuvaad-translate`} forDemo drawer={true} title="Anuvaad Translate" component={TPresident} authenticate={this.authenticateUser}/>
 
-            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate`} drawer={true} title="Anuvaad Translate" component={TranslatePresident} authenticate={this.authenticateUser}/>
+            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate`} forDemo drawer={true} title="Anuvaad Translate" component={TranslatePresident} authenticate={this.authenticateUser}/>
             
             <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard`} title="Translate" component={DashboardTamil} authenticate={this.authenticateUser} />

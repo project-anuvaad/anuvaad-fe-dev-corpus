@@ -98,7 +98,6 @@ this.props.handleTockenChange()
   render() {
     const { classes, title, drawer } = this.props;
 
-    console.log("drawer", drawer)
     const { auth, anchorEl, open } = this.state;
     const openEl = Boolean(anchorEl);
     var role = JSON.parse(localStorage.getItem("roles"));
@@ -172,6 +171,7 @@ this.props.handleTockenChange()
           </Toolbar>
         </AppBar>
         <div>
+          {!drawer && 
           <Grid container spacing={24} style={{ padding: 24 }}>
             {/* <Grid item xs={12} sm={12} lg={12} xl={12}>
         <div style={{marginLeft:'-5%',marginTop:'-1%'}}>
@@ -180,7 +180,6 @@ this.props.handleTockenChange()
         </Grid> */}
             {/* <Grid item xs={12} sm={12} lg={12} xl={12}> */}
             {/* <div className={classes.root}>   */}
-            
             <Drawer
               color="inherit"
               variant="persistent"
@@ -500,6 +499,7 @@ this.props.handleTockenChange()
               <div className={classes.drawerHeader} />
             </main>
           </Grid>
+          }
         </div>
       </div>
     );

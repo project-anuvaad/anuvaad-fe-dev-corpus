@@ -165,15 +165,15 @@ class TranslatePresident extends React.Component {
         }
         <div>
           {this.state.showLangLayout ?
-            <Grid container spacing={4} style={{ paddingLeft: '17%', paddingRight: '17%' }}>
+            <Grid container spacing={4} style={{ paddingLeft: '1%', paddingRight: '1%' }}>
               <Grid container item xs={12} spacing={1}>
                 <Paper id='paper'>
                   {this.state.showZoomed &&
-                    <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '70px' : '20px', transition: 'transform .5s' }}>
+                    <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '40px' : '20px', transition: 'transform .5s' }}>
                       {'English'}
                     </Typography>
                   }
-                  <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '70px' : '20px', transition: 'transform .5s' }}>
+                  <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '40px' : '20px', transition: 'transform .5s' }}>
                     {this.state.sentence}
                   </Typography>
                 </Paper>

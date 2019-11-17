@@ -162,9 +162,9 @@ class Translate extends React.Component {
         }
         <div>
           {this.state.showLangLayout ?
-            <Grid container spacing={16} style={{ marginLeft: '9%' }}>
-              <Grid container item xs={3} sm={3} lg={3} xl={3} spacing={1}>
-                <AppCard title handleHover={() => { }} handleHoverOut={() => { }} header={this.state.showZoomed ? "English" : this.state.sentence} body={this.state.showZoomed ? this.state.sentence : " "} fontSize={this.state.showZoomed ? '70px' : '20px'} style={{ minWidth: '100%', height: '30%', marginTop: '50%', background: blueGrey50 }}>
+            <Grid container spacing={16} style={{ marginLeft: '1%' }}>
+              <Grid container item xs={4} sm={4} lg={4} xl={4} spacing={1}>
+                <AppCard title handleHover={() => { }} handleHoverOut={() => { }} header={this.state.showZoomed ? "English" : this.state.sentence} body={this.state.showZoomed ? this.state.sentence : " "} fontSize={this.state.showZoomed ? '40px' : '20px'} style={{ minWidth: '100%', height: '30%', marginTop: '50%', background: blueGrey50 }}>
 
                 </AppCard>
               </Grid>
@@ -176,7 +176,7 @@ class Translate extends React.Component {
                 </React.Fragment>
               </Grid> */}
 
-              <Grid container item xs={7} sm={7} lg={7} xl={7} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll' }} id="cards">
+              <Grid container item xs={8} sm={8} lg={8} xl={8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll' }} id="cards">
                 <React.Fragment>
                   {this.state.showZoomed &&
                     <Zoom in={this.state.zoom} timeout={700}>
