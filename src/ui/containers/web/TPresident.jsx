@@ -117,7 +117,7 @@ class Translate extends React.Component {
         header: header,
         body: body
       })
-      $('html, body').animate({
+      $('#cards').animate({
         scrollTop: 0
       }, 'fast');
     }.bind(this), 1000);
@@ -164,7 +164,7 @@ class Translate extends React.Component {
           {this.state.showLangLayout ?
             <Grid container spacing={16} style={{ marginLeft: '9%' }}>
               <Grid container item xs={3} sm={3} lg={3} xl={3} spacing={1}>
-                <AppCard title handleHover={() => { }} handleHoverOut={() => { }} header={this.state.sentence} body={" "} fontSize={this.state.showZoomed ? '40px' : '20px'} style={{ minWidth: '100%', height: '30%', marginTop: '50%', background: blueGrey50 }}>
+                <AppCard title handleHover={() => { }} handleHoverOut={() => { }} header={this.state.showZoomed ? "English" : this.state.sentence} body={this.state.showZoomed ? this.state.sentence : " "} fontSize={this.state.showZoomed ? '70px' : '20px'} style={{ minWidth: '100%', height: '30%', marginTop: '50%', background: blueGrey50 }}>
 
                 </AppCard>
               </Grid>
@@ -176,7 +176,7 @@ class Translate extends React.Component {
                 </React.Fragment>
               </Grid> */}
 
-              <Grid container item xs={7} sm={7} lg={7} xl={7} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll' }}>
+              <Grid container item xs={7} sm={7} lg={7} xl={7} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll' }} id="cards">
                 <React.Fragment>
                   {this.state.showZoomed &&
                     <Zoom in={this.state.zoom} timeout={700}>
@@ -186,7 +186,7 @@ class Translate extends React.Component {
                     </Zoom>
                   }
                   {langs.map((lang) => {
-                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp' style={{ marginRight: '5%' }}><AppCard handleHoverOut={this.clearTimer.bind(this)} handleHover={this.handleCardHover.bind(this)} header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{ raised: true, Height: '100px', background: blueGrey50, marginBottom: '5px' }} /></Grid>)
+                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp' style={{ marginRight: '5%' }}><AppCard showSmall handleHoverOut={this.clearTimer.bind(this)} handleHover={this.handleCardHover.bind(this)} header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{ raised: true, Height: '100px', background: blueGrey50, marginBottom: '5px' }} /></Grid>)
                   })}
                 </React.Fragment>
                 <Fab aria-label="Close" style={{
