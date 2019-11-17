@@ -120,7 +120,7 @@ class TranslatePresident extends React.Component {
         body: body
       })
       $('html, body').animate({
-        scrollTop: 50
+        scrollTop: 0
       }, 'fast');
     }.bind(this), 1000);
   }
@@ -168,7 +168,12 @@ class TranslatePresident extends React.Component {
             <Grid container spacing={4} style={{ paddingLeft: '17%', paddingRight: '17%' }}>
               <Grid container item xs={12} spacing={1}>
                 <Paper id='paper'>
-                  <Typography id='title' color="black" gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '40px' : '20px' ,transition: 'transform .5s'}}>
+                  {this.state.showZoomed &&
+                    <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '70px' : '20px', transition: 'transform .5s' }}>
+                      {'English'}
+                    </Typography>
+                  }
+                  <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '70px' : '20px', transition: 'transform .5s' }}>
                     {this.state.sentence}
                   </Typography>
                 </Paper>
