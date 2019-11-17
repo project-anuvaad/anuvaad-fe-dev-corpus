@@ -168,7 +168,7 @@ class TranslatePresident extends React.Component {
             <Grid container spacing={4} style={{ paddingLeft: '17%', paddingRight: '17%' }}>
               <Grid container item xs={12} spacing={1}>
                 <Paper id='paper'>
-                  <Typography id='title' color="black" gutterBottom style={{ color: 'black' }}>
+                  <Typography id='title' color="black" gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '40px' : '20px' ,transition: 'transform .5s'}}>
                     {this.state.sentence}
                   </Typography>
                 </Paper>
@@ -183,8 +183,10 @@ class TranslatePresident extends React.Component {
                     </Zoom>
                   }
                   {langs.map((lang) => {
-                    return (<Grid item xs={12} sm={4} className='slideUp'><AppCard header={lang.label} handleHoverOut={this.clearTimer.bind(this)} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} handleHover={this.handleCardHover.bind(this)} style={{minHeight: "165px"
-                    , margin: "20px"}}/></Grid>)
+                    return (<Grid item xs={12} sm={4} className='slideUp'><AppCard header={lang.label} handleHoverOut={this.clearTimer.bind(this)} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} handleHover={this.handleCardHover.bind(this)} style={{
+                      minHeight: "165px"
+                      , margin: "20px"
+                    }} /></Grid>)
 
                   })}
                 </React.Fragment>
