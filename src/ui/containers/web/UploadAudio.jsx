@@ -66,7 +66,7 @@ class UploadAudio extends React.Component {
         const apiModel = new FetchModel();
         APITransport(apiModel);
         this.setState({ showLoader: true })
-        navigator.mediaDevices.getUserMedia({ audio: true },
+        navigator.getUserMedia({ audio: true },
             () => {
                 console.log('Permission Granted');
                 this.setState({ isBlocked: false });
