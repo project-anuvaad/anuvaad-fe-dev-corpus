@@ -21,9 +21,9 @@ import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 const langs = [
+  { label: 'Hindi', code: 'hi', type: C.HINDI },
   { label: 'Bengali', code: 'bn', type: C.BENGALI },
   { label: 'Gujarati', code: 'gu', type: C.GUJARATI },
-  { label: 'Hindi', code: 'hi', type: C.HINDI },
   { label: 'Kannada', code: 'kn', type: C.KANNADA },
   { label: 'Malayalam', code: 'ml', type: C.MALAYALAM },
   { label: 'Marathi', code: 'mr', type: C.MARATHI },
@@ -162,9 +162,9 @@ class Translate extends React.Component {
         }
         <div>
           {this.state.showLangLayout ?
-            <Grid container spacing={16} style={{ marginLeft: '1%' }}>
-              <Grid container item xs={4} sm={4} lg={4} xl={4} spacing={1}>
-                <AppCard title handleHover={() => { }} handleHoverOut={() => { }} header={this.state.showZoomed ? "English" : this.state.sentence} body={this.state.showZoomed ? this.state.sentence : " "} fontSize={this.state.showZoomed ? '40px' : '20px'} style={{ minWidth: '100%', height: '30%', marginTop: '50%', background: blueGrey50 }}>
+            <Grid container spacing={16}>
+              <Grid container item xs={this.state.showZoomed ? 6 : 4} sm={this.state.showZoomed ? 6 : 4} lg={this.state.showZoomed ? 6 : 4} xl={this.state.showZoomed ? 6 : 4} spacing={1}>
+                <AppCard title handleHover={() => { }} handleHoverOut={() => { }} header={"English"} body={this.state.sentence} fontSize={this.state.showZoomed ? '40px' : '20px'} showZoomed={this.state.showZoomed} style={{ minWidth: '100%', marginTop: '50%', background: blueGrey50 }}>
 
                 </AppCard>
               </Grid>
@@ -176,13 +176,11 @@ class Translate extends React.Component {
                 </React.Fragment>
               </Grid> */}
 
-              <Grid container item xs={8} sm={8} lg={8} xl={8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll' }} id="cards">
+              <Grid container item xs={this.state.showZoomed ? 6 : 8} sm={this.state.showZoomed ? 6 : 8} lg={this.state.showZoomed ? 6 : 8} xl={this.state.showZoomed ? 6 : 8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll' }} id="cards">
                 <React.Fragment>
                   {this.state.showZoomed &&
                     <Zoom in={this.state.zoom} timeout={700}>
-                      <Grid item xs={12} sm={12} id="focus">
                         <AppCard bigsize header={this.state.header} body={this.state.body} handleHoverOut={this.handleCardHoverOut.bind(this)} />
-                      </Grid>
                     </Zoom>
                   }
                   {langs.map((lang) => {
