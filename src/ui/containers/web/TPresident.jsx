@@ -164,7 +164,7 @@ class Translate extends React.Component {
           {this.state.showLangLayout ?
             <Grid container spacing={16}>
               <Grid container item xs={this.state.showZoomed ? 6 : 4} sm={this.state.showZoomed ? 6 : 4} lg={this.state.showZoomed ? 6 : 4} xl={this.state.showZoomed ? 6 : 4} spacing={1}>
-                <AppCard title handleHover={() => { }} handleHoverOut={() => { }} header={"English"} body={this.state.sentence} fontSize={this.state.showZoomed ? '40px' : '20px'} showZoomed={this.state.showZoomed} style={{ minWidth: '100%', marginTop: '50%', background: blueGrey50 }}>
+                <AppCard title handleHover={() => { }} handleHoverOut={() => { }} header={"English"} body={this.state.sentence} fontSize={this.state.showZoomed ? '40px' : '20px'} showZoomed={this.state.showZoomed} style={{ minWidth: '100%', marginTop: '50%', background: blueGrey50, minHeight: window.innerHeight + 7 - window.innerHeight / 5 }}>
 
                 </AppCard>
               </Grid>
@@ -180,7 +180,7 @@ class Translate extends React.Component {
                 <React.Fragment>
                   {this.state.showZoomed &&
                     <Zoom in={this.state.zoom} timeout={700}>
-                        <AppCard bigsize header={this.state.header} body={this.state.body} handleHoverOut={this.handleCardHoverOut.bind(this)} />
+                      <AppCard bigsize header={this.state.header} body={this.state.body} handleHoverOut={this.handleCardHoverOut.bind(this)} />
                     </Zoom>
                   }
                   {langs.map((lang) => {
