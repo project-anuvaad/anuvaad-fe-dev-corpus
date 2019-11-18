@@ -22,6 +22,18 @@ import graderReport from './graderreport';
 import comparisonreport from './comparisonreport';
 import benchmarkTranslate from './benchmarktranslate';
 import translation from './translation';
+import audio from './audio';
+
+import hindi from './hindi';
+import marathi from './marathi';
+import telugu from './telugu';
+import tamil from './tamil';
+import punjabi from './punjabi';
+import malayalam from './malayalam';
+import kannada from './kannada';
+import gujarati from './gujarati';
+import bengali from './bengali';
+
 import fetchtranslation from './viewtranslate';
 
 import deletefile from './delete';
@@ -58,7 +70,17 @@ export default {
     fetchtranslation,
     deletefile,
     updatePasswordstatus,
+    audio,
     userList,
     userRoles,
-    addUser
+    addUser,
+    hindi,
+    bengali,
+    punjabi,
+    malayalam,
+    tamil,
+    telugu,
+    marathi,
+    kannada,
+    gujarati,
 };

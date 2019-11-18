@@ -19,12 +19,15 @@ import ListItemText from "@material-ui/core/ListItemText";
 import SearchIcon from "@material-ui/icons/AddToQueue";
 import StarIcon from "@material-ui/icons/FiberNew";
 import SendIcon from "@material-ui/icons/Send";
+import InsertChart from "@material-ui/icons/InsertChart";
+import Receipt from "@material-ui/icons/Receipt";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import history from "../../../../web.history";
 import { Button } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import ActionDelete from "@material-ui/icons/QuestionAnswer";
 import GroupIcon from "@material-ui/icons/Group";
+
 const styles = {
   root: {
     flexGrow: 1
@@ -49,6 +52,16 @@ class Header extends React.Component {
     this.setState({ open: true });
   };
 
+  componentDidUpdate(){
+	if(this.state.open && this.props.tocken){
+		this.setState({ open: false });
+		
+	}
+	if(this.props.tocken){
+this.props.handleTockenChange()
+	}
+  }
+
   handleDrawerTranslate = () => {
     this.setState({
       open: false,
@@ -62,7 +75,8 @@ class Header extends React.Component {
       heading: "Documents"
     });
   };
-  handleDrawerClose = () => {
+  handleDrawerClose(){
+	  console.log()
     this.setState({
       open: false
     });
@@ -79,18 +93,18 @@ class Header extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-  handleClick = () => { };
+  handleClick = () => {};
 
   render() {
-    const { classes, title } = this.props;
+    const { classes, title, drawer } = this.props;
+
     const { auth, anchorEl, open } = this.state;
     const openEl = Boolean(anchorEl);
     var role = JSON.parse(localStorage.getItem("roles"));
     var useRole = new Array();
-    role.map((item, value) => (useRole.push(item), value !== role.length - 1 ? useRole.push(", ") : null));
-
+	role.map((item, value) => (useRole.push(item), value !== role.length - 1 ? useRole.push(", ") : null));
     return (
-      <div onClick={this.state.open ? this.handleDrawerClose : ()=>{}}>
+      <div  >
         <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
           <Toolbar disableGutters={!open}>
             <Typography variant="title" color="inherit" className={classes.flex}>
@@ -157,6 +171,7 @@ class Header extends React.Component {
           </Toolbar>
         </AppBar>
         <div>
+          {!drawer && 
           <Grid container spacing={24} style={{ padding: 24 }}>
             {/* <Grid item xs={12} sm={12} lg={12} xl={12}>
         <div style={{marginLeft:'-5%',marginTop:'-1%'}}>
@@ -165,12 +180,17 @@ class Header extends React.Component {
         </Grid> */}
             {/* <Grid item xs={12} sm={12} lg={12} xl={12}> */}
             {/* <div className={classes.root}>   */}
-
             <Drawer
               color="inherit"
               variant="persistent"
               anchor="left"
-              open={open}
+        open={open}
+        
+         onClick={() => {
+                      this.handleDrawerClose();
+                      
+                    }}
+			  
               classes={{
                 paper: classes.drawerPaper
               }}
@@ -320,20 +340,21 @@ class Header extends React.Component {
                 )}
 
                 {role.includes('admin') &&
-                  <ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
-                    <ListItemIcon>
-                      <GroupIcon style={{ color: 'white' }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={(
-                        <Typography type="body2" style={{ color: '#FFFFFF' }}>
-                          Grader Reports
+									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
+										<ListItemIcon>
+											<Receipt style={{ color: 'white' }} />
+										</ListItemIcon>
+										<ListItemText
+											disableTypography
+											primary={(
+												<Typography type="body2" style={{ color: '#FFFFFF' }}>
+													Grader Reports
           							</Typography>
-                      )}
-                    />
-                  </ListItem>
-                }
+											)}
+										/>
+									</ListItem>
+
+								} 
 
                 {role.includes("admin") && (
                   <ListItem
@@ -345,7 +366,7 @@ class Header extends React.Component {
                     }}
                   >
                     <ListItemIcon>
-                      <GroupIcon style={{ color: "white" }} />
+                      <InsertChart style={{ color: "white" }} />
                     </ListItemIcon>
                     <ListItemText
                       disableTypography
@@ -461,6 +482,7 @@ class Header extends React.Component {
                 </ListItem>
               </List>
             </Drawer>
+            
 
             <main
               className={classNames(classes.content, {
@@ -469,23 +491,20 @@ class Header extends React.Component {
             >
               {this.state.open ? (
                 ""
-              ) : (
-                  <Button color="primary" variant="contained" className={classes.buttonRight} style={{ zIndex: 9999 }} onClick={this.handleDrawerOpen}>
-                    <ChevronRightIcon />
-                  </Button>
-                )}
+              ) : (!drawer &&
+                <Button color="primary" variant="contained" className={classes.buttonRight} style={{ zIndex: 9999 }} onClick={this.handleDrawerOpen}>
+                  <ChevronRightIcon />
+                </Button>
+              )}
               <div className={classes.drawerHeader} />
             </main>
           </Grid>
+          }
         </div>
       </div>
     );
   }
 }
 
-// Header.propTypes = {
-//   classes: PropTypes.object.isRequired,
-//   theme: PropTypes.object.isRequired,
-// };
 
 export default withStyles(styles)(Header);

@@ -16,7 +16,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userName: ""
+      userName: "",
+      tocken: false
     };
   }
 
@@ -25,6 +26,15 @@ class App extends React.Component {
       return <Spinner />;
     }
   }
+
+  handlDrawerTocken=() =>{
+   this.setState({tocken:true})
+  }
+
+  handleTockenChange(){
+    this.setState({tocken:!this.state.tocken})
+  }
+
 
   renderMessage() {
     if (this.props.apistatus.message) {
@@ -43,17 +53,17 @@ class App extends React.Component {
   }
 
   render() {
-    const { classes, theme, title } = this.props;
-
+    const { classes, theme, title, drawer, forDemo } = this.props;
+    console.log(forDemo)
     const Component = this.props.component; // eslint-disable-line
     return (
       <MuiThemeProvider theme={Theme}>
-        <div className={classes.root}>
+        <div className={classes.root} >
           {this.renderSpinner()}
 
-          <Header classes={classes} theme={theme} title={title} />
-          <div className={classes.container}>
-            <Component classes={{}}/>
+          <Header classes={classes} theme={theme} title={title} drawer={drawer}  tocken={this.state.tocken} handleTockenChange={this.handleTockenChange.bind(this)} />
+          <div className={forDemo ? classes.containerDemo : classes.container} onClick={this.handlDrawerTocken.bind(this)}>
+            <Component />
           </div>
           {this.renderMessage()}
         </div>
