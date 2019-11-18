@@ -50,7 +50,7 @@
 		"react-router-private-route": "0.0.3",
 		"react-router-redux": "^4.0.8",
 		"react-score-indicator": "^2.1.1",
-		"react-scripts": "1.1.4",
+		"react-scripts": "3.2.0",
 		"react-scrollbar": "^0.5.6",
 		"react-star-rating-component": "^1.4.1",
 		"react-star-ratings": "^2.3.0",
