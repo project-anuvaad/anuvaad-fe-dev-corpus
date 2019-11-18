@@ -105,7 +105,7 @@
   }
   .card{
       min-height: 165px;
-      margin: 20px
+      margin: 20px;
   }
   .zoom{
     transition: transform .4s;

@@ -133,7 +133,7 @@ class Translate extends React.Component {
         header: '',
         body: ''
       })
-    }.bind(this), 700);
+    }.bind(this), 100);
   }
 
   clearTimer() {
