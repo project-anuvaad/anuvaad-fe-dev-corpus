@@ -14,8 +14,9 @@ class AppCard extends React.Component {
     render() {
         let { header, body, bigsize, style, title, fontSize, showSmall, showZoomed } = this.props
         return (
-            <Card style={style} className={[bigsize || title ? '' : 'zoom', 'card'].join(' ')} onMouseLeave={this.props.handleHoverOut} onMouseOver={this.props.handleHover && body ? () => { this.props.handleHover(header, body) } : bigsize ? () => { } : (() => { this.props.handleHoverOut() })} style={showSmall ? { minHeight: window.innerHeight / 12 } : (bigsize ? { minHeight: window.innerHeight - window.innerHeight / 6, minWidth: '95%' } : (title ? (showZoomed ? { minWidth: '100%',height: window.innerHeight  - window.innerHeight / 6 } : { paddingTop:'35%',minWidth: '100%' }) : {}))}>
-                <CardContent>
+            <Card style={style} className={[bigsize || title ? '' : 'zoom', 'card'].join(' ')} onMouseLeave={this.props.handleHoverOut} onMouseOver={this.props.handleHover && body ? () => { this.props.handleHover(header, body) } : bigsize ? () => { } : (() => { this.props.handleHoverOut() })} style={showSmall ? { minHeight: window.innerHeight / 12 } : (bigsize ? { minHeight: window.innerHeight - window.innerHeight / 6, minWidth: '95%' } : (title ? (showZoomed ? { minWidth: '100%',height: window.innerHeight  - window.innerHeight / 6 } : { display: "flex",
+            justifyContent:'center',alignItems: "center", minWidth: '100%' }) : {}))}>
+                <CardContent >
                     <Typography  color="#4c4c4c" gutterBottom style={fontSize ? { fontSize: fontSize } : (bigsize ? { fontSize: '42px' } : {})}>
                         {header}
                     </Typography>

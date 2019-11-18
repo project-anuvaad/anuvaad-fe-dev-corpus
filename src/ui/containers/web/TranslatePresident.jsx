@@ -165,7 +165,7 @@ class TranslatePresident extends React.Component {
         }
         <div>
           {this.state.showLangLayout ?
-            <Grid container spacing={4} style={{ paddingLeft: '1%', paddingRight: '1%' }}>
+            <Grid container spacing={4} style={{ paddingLeft: '1%', paddingRight: '1%'  ,marginBottom:'10px'}}>
               <Grid container item xs={12} spacing={1}>
                 <Paper id='paper'>
                   {this.state.showZoomed &&
