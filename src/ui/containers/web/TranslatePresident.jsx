@@ -23,9 +23,9 @@ import Zoom from '@material-ui/core/Zoom';
 import CloseIcon from '@material-ui/icons/Close';
 
 const langs = [
+  { label: 'Hindi', code: 'hi', type: C.HINDI },
   { label: 'Bengali', code: 'bn', type: C.BENGALI },
   { label: 'Gujarati', code: 'gu', type: C.GUJARATI },
-  { label: 'Hindi', code: 'hi', type: C.HINDI },
   { label: 'Kannada', code: 'kn', type: C.KANNADA },
   { label: 'Malayalam', code: 'ml', type: C.MALAYALAM },
   { label: 'Marathi', code: 'mr', type: C.MARATHI },

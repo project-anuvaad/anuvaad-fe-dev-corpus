@@ -176,7 +176,7 @@ class Translate extends React.Component {
                 </React.Fragment>
               </Grid> */}
 
-              <Grid container item xs={this.state.showZoomed ? 6 : 8} sm={this.state.showZoomed ? 6 : 8} lg={this.state.showZoomed ? 6 : 8} xl={this.state.showZoomed ? 6 : 8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll' }} id="cards">
+              <Grid container item xs={this.state.showZoomed ? 6 : 8} sm={this.state.showZoomed ? 6 : 8} lg={this.state.showZoomed ? 6 : 8} xl={this.state.showZoomed ? 6 : 8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll',marginBottom:'10px' }} id="cards">
                 <React.Fragment>
                   {this.state.showZoomed &&
                     <Zoom in={this.state.zoom} timeout={700}>
