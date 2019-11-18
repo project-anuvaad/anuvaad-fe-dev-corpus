@@ -169,11 +169,11 @@ class TranslatePresident extends React.Component {
               <Grid container item xs={12} spacing={1}>
                 <Paper id='paper'>
                   {this.state.showZoomed &&
-                    <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '40px' : '20px', transition: 'transform .5s' }}>
+                    <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '42px' : '20px', transition: 'transform .5s' }}>
                       {'English'}
                     </Typography>
                   }
-                  <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '40px' : '20px', transition: 'transform .5s' }}>
+                  <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '42px' : '20px', transition: 'transform .5s' }}>
                     {this.state.sentence}
                   </Typography>
                 </Paper>
