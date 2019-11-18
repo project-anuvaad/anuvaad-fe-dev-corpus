@@ -24,6 +24,9 @@ class Callback extends React.Component {
         else if (role.includes('admin')) {
           history.push(`${process.env.PUBLIC_URL}/comparison-report`);
         }
+        else if (role.includes('user')) {
+          history.push(`${process.env.PUBLIC_URL}/translate`);
+        }
         else {
           history.push(`${process.env.PUBLIC_URL}/dashboard`);
         }
