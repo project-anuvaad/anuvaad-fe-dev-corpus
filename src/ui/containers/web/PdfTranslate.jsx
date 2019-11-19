@@ -46,9 +46,18 @@ class PdfTranslate extends React.Component {
       })
     }
 
+    
+
     if (prevProps.langModel !== this.props.langModel) {
       this.setState({
         modelLanguage: this.props.langModel
+      })
+    }
+
+    if (prevProps.translation !== this.props.translation) {
+      history.push("/viewtranslate")
+      this.setState({
+        translation: this.props.translation
       })
     }
   }
@@ -76,7 +85,7 @@ class PdfTranslate extends React.Component {
       const apiObj = new PdfTranslation(this.state.source.language_name, this.state.target.language_name, this.state.files, model);
       APITransport(apiObj);
       this.setState({ showLoader: true })
-      setTimeout(() => { history.push("/viewtranslate") }, 12000)
+      
     }
   }
 
