@@ -89,9 +89,9 @@ class AppRoutes extends React.Component {
             <Route exact path={`${process.env.PUBLIC_URL}/callback`} component={Callback} />
             <Route exact path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
             
-            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/anuvaad-translate`} forDemo drawer={true} title="Anuvaad Translate" component={TPresident} authenticate={this.authenticateUser}/>
+            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate`} userRoles={['user']} forDemo drawer={true} title="Anuvaad Translate" component={TPresident} authenticate={this.authenticateUser}/>
 
-            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate`} forDemo drawer={true} title="Anuvaad Translate" component={TranslatePresident} authenticate={this.authenticateUser}/>
+            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/anuvaad-translate`} userRoles={['user']} forDemo drawer={true} title="Anuvaad Translate" component={TranslatePresident} authenticate={this.authenticateUser}/>
             
             <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard`} title="Translate" component={DashboardTamil} authenticate={this.authenticateUser} />
