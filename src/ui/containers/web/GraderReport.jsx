@@ -187,6 +187,15 @@ class GraderReport extends React.Component {
           display: this.state.categoryReport && this.state.categoryReport[0].category_name !== "Names Benchmark" ? "excluded" : "true"
         }
       }
+      ,
+      {
+        name: "comments",
+        label: "Comments",
+        options: {
+          filter: true,
+          sort: true
+        }
+      }
     ];
 
     const Table2columns = [

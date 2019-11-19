@@ -32,7 +32,7 @@ import EditTranslate from "./ui/containers/web/EditTranslate";
 import ViewTranslate from "./ui/containers/web/ViewTranslate";
 import UserDirectory from "./ui/containers/web/UserDirectory";
 import ViewDoc from "./ui/containers/web/ViewDoc";
-import TranslatePresident from "./ui/containers/web/TranslatePresident";
+import TranslatePresident from "./ui/containers/web/TranslateJudgement";
 import TPresident from "./ui/containers/web/TPresident";
 
 const PrivateRoute = ({ component: Component, userRoles, title,drawer,forDemo, authenticate, ...rest }) => (
@@ -91,7 +91,7 @@ class AppRoutes extends React.Component {
             
             <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate`} userRoles={['user']} forDemo drawer={true} title="Anuvaad Translate" component={TPresident} authenticate={this.authenticateUser}/>
 
-            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/anuvaad-translate`} userRoles={['user']} forDemo drawer={true} title="Anuvaad Translate" component={TranslatePresident} authenticate={this.authenticateUser}/>
+            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/anuvaad-translate`} forDemo drawer={true} title="Anuvaad Translate" component={TranslatePresident} authenticate={this.authenticateUser}/>
             
             <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard`} title="Translate" component={DashboardTamil} authenticate={this.authenticateUser} />
