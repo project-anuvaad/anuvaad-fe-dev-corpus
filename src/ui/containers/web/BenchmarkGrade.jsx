@@ -24,7 +24,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
 import Toolbar from "@material-ui/core/Toolbar";
-
+import TextField from '@material-ui/core/TextField';
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 const theme = createMuiTheme();
@@ -69,7 +69,8 @@ class BenchmarkGrade extends React.Component {
         "Structure of sentence",
         "Vocabulary / Lexicon",
         this.props.match.params.basename ==="1570785751"? "Names Accuracy":"Aggregate score",
-        "Aggregate score"
+        "Aggregate score",
+        "Comments"
       ]
     });
     if (this.props.match.params.basename && this.props.match.params.modelid && !this.state.dialogOpen) {
@@ -154,6 +155,17 @@ class BenchmarkGrade extends React.Component {
     }
   }
 
+  handleChange = (name,index) => event => {
+    console.log(event.target.value, name)
+    let sentence = this.state.sentences;
+    sentence[index].comments = event.target.value;
+    this.setState({ sentences: sentence });
+    this.setState({ comments: event.target.value, sentences: sentence, tocken: true });
+
+    console.log(this.state.sentences)
+    
+  };
+
   handleStarClick(nextValue, prevValue, name) {
     let sentence = this.state.sentences;
     sentence[parseInt(name)].rating = nextValue;
@@ -181,6 +193,8 @@ class BenchmarkGrade extends React.Component {
   }
 
   handleSubmit = () => {
+
+    console.log("this.state.comment")
     let api = new UpdateSentencesGrade(this.state.sentences, this.props.match.params.modelid);
     this.setState({ dialogOpen: false, apiCall: true, tocken: false });
     this.props.APITransport(api);
@@ -221,6 +235,7 @@ class BenchmarkGrade extends React.Component {
                 </ReadMoreAndLess>
               </TableCell>
               <TableCell>
+                
                 <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText="Read more" readLessText="">
                   {row.target}
                 </ReadMoreAndLess>
@@ -274,7 +289,7 @@ class BenchmarkGrade extends React.Component {
               }
 
               <TableCell>
-                <div style={{ width: "90px" }}>
+                <div style={{ width: "40px" }}>
                   { this.props.match.params.basename === "1570785239"
                     ? ((row.context_rating ? row.context_rating * 2 : 0) +
                         (row.spelling_rating ? row.spelling_rating * 6 : 0) +
@@ -287,6 +302,20 @@ class BenchmarkGrade extends React.Component {
                         (row.spelling_rating ? row.spelling_rating * 1 : 0) +
                         (row.rating ? row.rating * 3 : 0)) /
                       10}
+                </div>
+              </TableCell>
+              <TableCell>
+                <div style={{ width: "210px" }}>
+                <TextField
+          id="standard-multiline-flexible"
+          
+          multiline
+          rowsMax="4"
+          value={row.comments?row.comments:''}
+          onChange={this.handleChange('comments',index)}
+          
+          margin="normal"
+        />
                 </div>
               </TableCell>
             </TableRow>
