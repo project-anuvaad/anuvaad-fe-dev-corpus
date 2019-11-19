@@ -79,7 +79,7 @@ class PdfTranslate extends React.Component {
     var model = '';
     if (this.state.modelLanguage) {
       this.state.modelLanguage.map((item) => (
-        item.target_language_code === this.state.target.language_code && item.source_language_code === this.state.source.language_code ?
+        item.target_language_code === this.state.target.language_code && item.source_language_code === this.state.source.language_code && item.is_primary ?
           model = item : ''))
       const { APITransport } = this.props;
       const apiObj = new PdfTranslation(this.state.source.language_name, this.state.target.language_name, this.state.files, model);
