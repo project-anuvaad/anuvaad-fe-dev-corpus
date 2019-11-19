@@ -9,7 +9,7 @@ import '../../styles/web/TranslatePresident.css';
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Zoom from '@material-ui/core/Zoom';
 import APITransport from "../../../flux/actions/apitransport/apitransport";
-import NMT from "../../../flux/actions/apis/nmt";
+import NMT from "../../../flux/actions/apis/nmt_president";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import { connect } from "react-redux";
@@ -87,7 +87,7 @@ class Translate extends React.Component {
     this.setState({ showLayout: true })
     langs.map((lang) => {
       let model = this.getModelForLang(lang.code)
-      let api = new NMT(this.state.sentence, model, false, null, false, lang.type);
+      let api = new NMT(this.state.sentence, model, false, null, true, lang.type);
       this.props.TranslateAPI(api);
     })
 
@@ -176,15 +176,17 @@ class Translate extends React.Component {
                 </React.Fragment>
               </Grid> */}
 
-              <Grid container item xs={this.state.showZoomed ? 6 : 8} sm={this.state.showZoomed ? 6 : 8} lg={this.state.showZoomed ? 6 : 8} xl={this.state.showZoomed ? 6 : 8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll',marginBottom:'10px'}} id="cards">
+              <Grid container item xs={this.state.showZoomed ? 6 : 8} sm={this.state.showZoomed ? 6 : 8} lg={this.state.showZoomed ? 6 : 8} xl={this.state.showZoomed ? 6 : 8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll', marginBottom: '10px' }} id="cards">
                 <React.Fragment>
                   {this.state.showZoomed &&
                     <Zoom in={this.state.zoom} timeout={700}>
                       <AppCard bigsize header={this.state.header} body={this.state.body} handleHoverOut={this.handleCardHoverOut.bind(this)} />
                     </Zoom>
                   }
-                  {langs.map((lang) => {
-                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp' style={{ marginRight: '5%' }}><AppCard showSmall handleHoverOut={this.clearTimer.bind(this)} handleHover={this.handleCardHover.bind(this)} header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{ raised: true, Height: '100px', background: blueGrey50, marginBottom: '5px' }} /></Grid>)
+                  {langs.map((lang, index) => {
+                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp' style={{ marginRight: '5%' }}><AppCard index={index} showSmall handleHoverOut={this.clearTimer.bind(this)} handleHover={this.handleCardHover.bind(this)} header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()].map(function (elem) {
+                      return elem.tgt;
+                    }) : ''} style={{ raised: true, Height: '100px', background: blueGrey50, marginBottom: '5px' }} /></Grid>)
                   })}
                 </React.Fragment>
                 <Fab aria-label="Close" style={{
