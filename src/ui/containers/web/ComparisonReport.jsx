@@ -347,6 +347,15 @@ class ComparisonReport extends React.Component {
           display: this.state.detailedReport && this.state.detailedReport[0].category_name !== "Names Benchmark" ? "excluded" : "true"
         }
       }
+      ,
+      {
+        name: "comments",
+        label: "Comments",
+        options: {
+          filter: true,
+          sort: true
+        }
+      }
       
     ];
     
@@ -384,6 +393,10 @@ class ComparisonReport extends React.Component {
       },
       {
         name: "Vocabulary / Lexicon",
+        download: true
+      },
+      {
+        name: "Comments",
         download: true
       }
     ];
