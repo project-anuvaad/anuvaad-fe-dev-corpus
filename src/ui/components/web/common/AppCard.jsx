@@ -14,8 +14,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const styles = theme => ({
   card: {
-    marginTop:'19px',
-    marginRight:'4%'
+    marginTop:'19px'
   },
   media: {
     height: 0,
