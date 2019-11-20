@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 import Button from "@material-ui/core/Button";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import AppCard from  '../../components/web/common/AppCard';
-import Card from  '../../components/web/Card';
+import AppCard from '../../components/web/common/AppCard';
+import Card from '../../components/web/Card';
 import '../../styles/web/TranslatePresident.css';
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
@@ -19,15 +19,15 @@ import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 const langs = [
-  { label: 'Hindi', code: 'hi', type: C.HINDI, color:'#ff8000' },
-  { label: 'Bengali', code: 'bn', type: C.BENGALI , color:'#ff8000'},
-  { label: 'Gujarati', code: 'gu', type: C.GUJARATI, color:'#ff8000' },
+  { label: 'Hindi', code: 'hi', type: C.HINDI, color: '#ff8000' },
+  { label: 'Bengali', code: 'bn', type: C.BENGALI, color: '#ff8000' },
+  { label: 'Gujarati', code: 'gu', type: C.GUJARATI, color: '#ff8000' },
   { label: 'Kannada', code: 'kn', type: C.KANNADA },
   { label: 'Malayalam', code: 'ml', type: C.MALAYALAM },
   { label: 'Marathi', code: 'mr', type: C.MARATHI },
-  { label: 'Punjabi', code: 'pa', type: C.PUNJABI,  color:'#008000'},
-  { label: 'Tamil', code: 'ta', type: C.TAMIL, color:'#008000' },
-  { label: 'Telugu', code: 'te', type: C.TELUGU, color:'#008000' }
+  { label: 'Punjabi', code: 'pa', type: C.PUNJABI, color: '#008000' },
+  { label: 'Tamil', code: 'ta', type: C.TAMIL, color: '#008000' },
+  { label: 'Telugu', code: 'te', type: C.TELUGU, color: '#008000' }
 ];
 
 
@@ -40,7 +40,7 @@ class Translate extends React.Component {
       model: [],
       langs: [],
       sentence: '',
-      
+      Hindi: true
     };
   }
 
@@ -52,10 +52,25 @@ class Translate extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    if (this.props[langs[0].label.toLowerCase()] !== prevProps[langs[0].label.toLowerCase()]) {
+      langs.map((lang, index) => {
+        if (index !== 0) {
+          let model = this.getModelForLang(lang.code)
+          let api = new NMT(this.state.sentence, model, false, null, false, lang.type);
+          this.props.TranslateAPI(api);
+        }
+      })
+    }
     langs.map((lang) => {
       if (this.props[lang.label.toLowerCase()] !== prevProps[lang.label.toLowerCase()]) {
+        let opened = false
+        langs.map((lang) => {
+          if (this.state[lang.label] && lang.label !== 'Hindi') {
+            opened = true
+          }
+        })
         this.setState({
-            Hindi: this.props.hindi ? true: false,
+          Hindi: this.props.hindi && !opened ? true : false,
           [lang.label.toLowerCase()]: this.props[lang.label.toLowerCase()]
         })
       }
@@ -65,30 +80,30 @@ class Translate extends React.Component {
   handleTextChange(key, event) {
 
     this.setState({
-      [key]: event.target.value, val : true
+      [key]: event.target.value, val: true
     });
   }
 
-  handleExpandClick = (header,body) => {
-    console.log(header,body)
+  handleExpandClick = (header, body) => {
+    console.log(header, body)
 
     langs.map((lang) => {
-        
-          if(lang.label== header){
-              this.setState({[header]: !this.state[header]})
-          }
-          else{
-            this.setState({[lang.label]: false})
-          }
-        
-      })
-  this.setState(state => ({ [header]: !this.state[header], header, body}));
-  
-  
-   
-};
 
-  handleChange=()=>{
+      if (lang.label == header) {
+        this.setState({ [header]: !this.state[header] })
+      }
+      else {
+        this.setState({ [lang.label]: false })
+      }
+
+    })
+    this.setState(state => ({ [header]: !this.state[header], header, body }));
+
+
+
+  };
+
+  handleChange = () => {
     this.setState({ showZoom: true })
   }
 
@@ -104,11 +119,11 @@ class Translate extends React.Component {
 
   handleOnClick = () => {
     this.setState({ showLayout: true })
-    langs.map((lang) => {
-      let model = this.getModelForLang(lang.code)
-      let api = new NMT(this.state.sentence, model, false, null, false, lang.type);
+    // langs.map((lang) => {
+      let model = this.getModelForLang(langs[0].code)
+      let api = new NMT(this.state.sentence, model, false, null, false, langs[0].type);
       this.props.TranslateAPI(api);
-    })
+    // })
 
     setTimeout(() => {
       this.setState({ showLangLayout: true })
@@ -121,7 +136,7 @@ class Translate extends React.Component {
 
       this.setState({
         [lang.label.toLowerCase()]: null,
-        [lang.label]:false
+        [lang.label]: false
 
       })
     })
@@ -140,7 +155,7 @@ class Translate extends React.Component {
                   width: '25%',
                   height: 50,
 
-                }}  onClick={this.state.sentence && this.handleOnClick.bind(this)}>Translate</Button>
+                }} onClick={this.state.sentence && this.handleOnClick.bind(this)}>Translate</Button>
             </div>
           </div> :
           (!this.state.showLangLayout && <div className={'fadeUp'}>
@@ -150,35 +165,41 @@ class Translate extends React.Component {
         <div>
           {this.state.showLangLayout ?
             <Grid container spacing={16} style={{ paddingLeft: '1%' }}>
-              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{height:'92vh',marginLeft:'-3%', overflowX: "hidden",
-  overflowY: "auto"}}>
-              <Card bigsize header ={"English"} body={this.state.sentence} style={{ display: "flex",
-                alignItems: "center",justifyContent: "right" }}/>
+              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{
+                height: '92vh', marginLeft: '-3%', overflowX: "hidden",
+                overflowY: "auto"
+              }}>
+                <Card bigsize header={"English"} body={this.state.sentence} style={{
+                  display: "flex",
+                  alignItems: "center", justifyContent: "right"
+                }} />
               </Grid>
-              
 
-<Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{height:'92vh', float: "left",
-  overflowX: "hidden",
-  overflowY: "auto"}}>
+
+              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{
+                height: '92vh', float: "left",
+                overflowX: "hidden",
+                overflowY: "auto"
+              }}>
                 <React.Fragment>
                   {langs.map((lang) => {
-                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp'><AppCard header={lang.label} handleExpandClick={this.handleExpandClick.bind(this)} expanded={this.state[lang.label]} color={lang.color} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{ background:lang.color}} /></Grid>)
+                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp'><AppCard header={lang.label} handleExpandClick={this.handleExpandClick.bind(this)} expanded={this.state[lang.label]} color={lang.color} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{ background: lang.color }} /></Grid>)
                   })}
                 </React.Fragment>
                 <Fab aria-label="Close" style={{
-                margin: "auto",
-                marginTop:'40px',
-                marginBottom:'25px',
-                display: "block", color: 'white'
-              }} onClick={this.handleClose.bind(this)}>
-                <CloseIcon style={{ color: 'CB1E60' }} />
-              </Fab>
+                  margin: "auto",
+                  marginTop: '40px',
+                  marginBottom: '25px',
+                  display: "block", color: 'white'
+                }} onClick={this.handleClose.bind(this)}>
+                  <CloseIcon style={{ color: 'CB1E60' }} />
+                </Fab>
               </Grid>
 
 
             </Grid>
 
-           : null}
+            : null}
 
 
         </div>
