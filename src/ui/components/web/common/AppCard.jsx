@@ -74,12 +74,12 @@ class RecipeReviewCard extends React.Component {
         <Collapse in={this.props.expanded}>
           <CardContent>
             {!body && 
-            <Typography color="#4c4c4c" style={{ fontSize: '35px', textAlign:'left' }}>
+            <Typography color="#4c4c4c" style={{ fontSize: '32px', textAlign:'left' }}>
               Loading...
             </Typography>
             }
           {body &&
-            <Typography color="#4c4c4c" style={{ fontSize: '35px', textAlign:'left' }}>
+            <Typography color="#4c4c4c" style={{ fontSize: '32px', textAlign:'left' }}>
              {Array.isArray(body) ? body.map((b)=>{
                console.log(b)
                return b + (index === 0 && b.indexOf('।') < 0 && b.indexOf('?') < 0 ? '। ' : '')
