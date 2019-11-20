@@ -66,16 +66,16 @@ class UploadAudio extends React.Component {
         const apiModel = new FetchModel();
         APITransport(apiModel);
         this.setState({ showLoader: true })
-        navigator.getUserMedia({ audio: true },
-            () => {
-                console.log('Permission Granted');
-                this.setState({ isBlocked: false });
-            },
-            () => {
-                console.log('Permission Denied');
-                this.setState({ isBlocked: true })
-            },
-        );
+        // navigator.getUserMedia({ audio: true },
+        //     () => {
+        //         console.log('Permission Granted');
+        //         this.setState({ isBlocked: false });
+        //     },
+        //     () => {
+        //         console.log('Permission Denied');
+        //         this.setState({ isBlocked: true })
+        //     },
+        // );
     }
 
     componentDidUpdate(prevProps) {
@@ -157,14 +157,14 @@ class UploadAudio extends React.Component {
                                 onDrop={this.handleChange} maxFileSize={20000000} style={{ marginTop: '20%' }} acceptedFiles={['.mp3', '.wav', '.flac']} dropzoneText="Drop audio file here or click here to locate the audi file(.mp3 or .wav or .flac)" filesLimit={1}
                             ></DropzoneArea>
                         </Grid><br /><br />
-                        <Grid container spacing={4} >
+                        {/* <Grid container spacing={4} >
                             <Grid item xs={6} sm={6} lg={6} xl={6} sm={6} style={{ textAlign: 'right' }}>
                                 <Button value={"Record"} color={'secondary'} variant={"contained"} dis={this.state.isRecording} onClick={this.start} />
                             </Grid>
                             <Grid item xs={5} sm={5} lg={5} xl={5} sm={5} style={{ marginLeft: '2%' }}>
                                 <Button value={"Stop"} color={'secondary'} variant={"contained"} onClick={this.stop} dis={!this.state.isRecording} />
                             </Grid>
-                        </Grid>
+                        </Grid> */}
 
                         <Button value={"Submit"} color={'secondary'} variant={"contained"} dis={this.state.files.name ? false : true} onClick={this.handleSubmit} style={{ width: '100%' }} />
                         {/* }}  */}

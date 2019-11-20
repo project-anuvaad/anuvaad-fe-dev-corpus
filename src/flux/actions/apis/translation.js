@@ -23,7 +23,7 @@ export default class Translation extends API {
     processResponse(res) {
         super.processResponse(res)
         if (res.data) {
-            this.pdf_translate = res.data;
+            this.pdf_translate = {'data':res.data};
         }
     }
 

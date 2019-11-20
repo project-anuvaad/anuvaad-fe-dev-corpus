@@ -1,15 +1,13 @@
-
 import React, { useState, useRef } from 'react';
 import Button from "@material-ui/core/Button";
+import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import $ from 'jquery';
-
-import AppCard from '../../components/web/Card';
+import AppCard from '../../components/web/common/AppCard';
+import Card from '../../components/web/Card';
 import '../../styles/web/TranslatePresident.css';
 import NewCorpusStyle from "../../styles/web/Newcorpus";
-import Zoom from '@material-ui/core/Zoom';
 import APITransport from "../../../flux/actions/apitransport/apitransport";
-import NMT from "../../../flux/actions/apis/nmt_president";
+import NMT from "../../../flux/actions/apis/nmt";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import { connect } from "react-redux";
@@ -21,18 +19,17 @@ import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 const langs = [
-  { label: 'Hindi', code: 'hi', type: C.HINDI },
-  { label: 'Bengali', code: 'bn', type: C.BENGALI },
-  { label: 'Gujarati', code: 'gu', type: C.GUJARATI },
+  { label: 'Hindi', code: 'hi', type: C.HINDI, color: '#ff8000' },
+  { label: 'Bengali', code: 'bn', type: C.BENGALI, color: '#ff8000' },
+  { label: 'Gujarati', code: 'gu', type: C.GUJARATI, color: '#ff8000' },
   { label: 'Kannada', code: 'kn', type: C.KANNADA },
   { label: 'Malayalam', code: 'ml', type: C.MALAYALAM },
   { label: 'Marathi', code: 'mr', type: C.MARATHI },
-  { label: 'Punjabi', code: 'pa', type: C.PUNJABI },
-  { label: 'Tamil', code: 'ta', type: C.TAMIL },
-  { label: 'Telugu', code: 'te', type: C.TELUGU }
+  { label: 'Punjabi', code: 'pa', type: C.PUNJABI, color: '#008000' },
+  { label: 'Tamil', code: 'ta', type: C.TAMIL, color: '#008000' },
+  { label: 'Telugu', code: 'te', type: C.TELUGU, color: '#008000' }
 ];
 
-var timer;
 
 class Translate extends React.Component {
   constructor(props) {
@@ -42,7 +39,8 @@ class Translate extends React.Component {
       showLangLayout: false,
       model: [],
       langs: [],
-      sentence: ''
+      sentence: '',
+
     };
   }
 
@@ -56,7 +54,14 @@ class Translate extends React.Component {
   componentDidUpdate(prevProps) {
     langs.map((lang) => {
       if (this.props[lang.label.toLowerCase()] !== prevProps[lang.label.toLowerCase()]) {
+        let opened = false
+        langs.map((lang) => {
+          if (this.state[lang.label]) {
+            opened = true
+          }
+        })
         this.setState({
+          Hindi: this.props.hindi && !opened ? true : false,
           [lang.label.toLowerCase()]: this.props[lang.label.toLowerCase()]
         })
       }
@@ -64,10 +69,30 @@ class Translate extends React.Component {
   }
 
   handleTextChange(key, event) {
+
     this.setState({
       [key]: event.target.value, val: true
     });
   }
+
+  handleExpandClick = (header, body) => {
+    console.log(header, body)
+
+    langs.map((lang) => {
+
+      if (lang.label == header) {
+        this.setState({ [header]: !this.state[header] })
+      }
+      else {
+        this.setState({ [lang.label]: false })
+      }
+
+    })
+    this.setState(state => ({ [header]: !this.state[header], header, body }));
+
+
+
+  };
 
   handleChange = () => {
     this.setState({ showZoom: true })
@@ -75,7 +100,7 @@ class Translate extends React.Component {
 
   getModelForLang(lang_code) {
     let model = []
-    this.props.langModel.map(item =>
+    this.props.langModel.length && this.props.langModel.map(item =>
       item.target_language_code === lang_code &&
       item.source_language_code === 'en' && item.is_primary &&
       model.push(item)
@@ -87,59 +112,27 @@ class Translate extends React.Component {
     this.setState({ showLayout: true })
     langs.map((lang) => {
       let model = this.getModelForLang(lang.code)
-      let api = new NMT(this.state.sentence, model, false, null, true, lang.type);
+      let api = new NMT(this.state.sentence, model, false, null, false, lang.type);
       this.props.TranslateAPI(api);
     })
 
     setTimeout(() => {
       this.setState({ showLangLayout: true })
-    }, 1000)
+    }, 1500)
   }
 
   handleClose = () => {
-    clearTimeout(timer);
-    this.handleCardHoverOut()
     this.setState({ showLayout: false, showLangLayout: false, sentence: '' })
     langs.map((lang) => {
+
       this.setState({
-        [lang.label.toLowerCase()]: null
+        [lang.label.toLowerCase()]: null,
+        [lang.label]: false
+
       })
     })
 
   }
-
-  handleCardHover(header, body) {
-    clearTimeout(timer);
-    timer = setTimeout(function () {
-      this.setState({
-        showZoomed: true,
-        zoom: true,
-        header: header,
-        body: body
-      })
-      $('#cards').animate({
-        scrollTop: 0
-      }, 'fast');
-    }.bind(this), 1000);
-  }
-
-  handleCardHoverOut() {
-    this.setState({
-      zoom: false,
-    })
-    setTimeout(function () {
-      this.setState({
-        showZoomed: false,
-        header: '',
-        body: ''
-      })
-    }.bind(this), 100);
-  }
-
-  clearTimer() {
-    clearTimeout(timer);
-  }
-
   render() {
     return (
       <div className="App">
@@ -162,35 +155,32 @@ class Translate extends React.Component {
         }
         <div>
           {this.state.showLangLayout ?
-            <Grid container spacing={16}>
-              <Grid container item xs={this.state.showZoomed ? 6 : 4} sm={this.state.showZoomed ? 6 : 4} lg={this.state.showZoomed ? 6 : 4} xl={this.state.showZoomed ? 6 : 4} spacing={1}>
-                <AppCard title handleHover={() => { }} handleHoverOut={() => { }} header={"English"} body={this.state.sentence} fontSize={this.state.showZoomed ? '40px' : '20px'} showZoomed={this.state.showZoomed} style={{ minWidth: '100%', marginTop: '50%', background: blueGrey50, minHeight: window.innerHeight + 7 - window.innerHeight / 5 }}>
-
-                </AppCard>
+            <Grid container spacing={16} style={{ paddingLeft: '1%' }}>
+              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{
+                height: '92vh', marginLeft: '-3%', overflowX: "hidden",
+                overflowY: "auto"
+              }}>
+                <Card bigsize header={"English"} body={this.state.sentence} style={{
+                  display: "flex",
+                  alignItems: "center", justifyContent: "right"
+                }} />
               </Grid>
-              {/* <Grid container item xs={12} spacing={3} id='cardGrid'>
+
+
+              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{
+                height: '92vh', float: "left",
+                overflowX: "hidden",
+                overflowY: "auto"
+              }}>
                 <React.Fragment>
                   {langs.map((lang) => {
-                    return (<Grid item xs={12} sm={4} className='slideUp'><AppCard header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} /></Grid>)
-                  })}
-                </React.Fragment>
-              </Grid> */}
-
-              <Grid container item xs={this.state.showZoomed ? 6 : 8} sm={this.state.showZoomed ? 6 : 8} lg={this.state.showZoomed ? 6 : 8} xl={this.state.showZoomed ? 6 : 8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll',marginBottom:'10px', paddingBottom:'10px'}} id="cards">
-                <React.Fragment>
-                  {this.state.showZoomed &&
-                    <Zoom in={this.state.zoom} timeout={700}>
-                      <AppCard bigsize header={this.state.header} body={this.state.body} handleHoverOut={this.handleCardHoverOut.bind(this)} />
-                    </Zoom>
-                  }
-                  {langs.map((lang, index) => {
-                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp' style={{ marginRight: '5%' }}><AppCard index={index} showSmall handleHoverOut={this.clearTimer.bind(this)} handleHover={this.handleCardHover.bind(this)} header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()].map(function (elem) {
-                      return elem.tgt;
-                    }) : ''} style={{ raised: true, Height: '100px', background: blueGrey50, marginBottom: '5px' }} /></Grid>)
+                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp'><AppCard header={lang.label} handleExpandClick={this.handleExpandClick.bind(this)} expanded={this.state[lang.label]} color={lang.color} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{ background: lang.color }} /></Grid>)
                   })}
                 </React.Fragment>
                 <Fab aria-label="Close" style={{
                   margin: "auto",
+                  marginTop: '40px',
+                  marginBottom: '25px',
                   display: "block", color: 'white'
                 }} onClick={this.handleClose.bind(this)}>
                   <CloseIcon style={{ color: 'CB1E60' }} />
@@ -204,7 +194,7 @@ class Translate extends React.Component {
 
 
         </div>
-      </div >
+      </div>
     )
   }
 }
@@ -243,5 +233,3 @@ export default withRouter(
     )(Translate)
   )
 );
-
-
