@@ -91,7 +91,7 @@ class AppRoutes extends React.Component {
             
             <PrivateRoute exact path={`${process.env.PUBLIC_URL}/anuvaad-translate`} userRoles={['user']} forDemo drawer={true} title="Anuvaad Translate" component={TPresident} authenticate={this.authenticateUser}/>
 
-            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate`} forDemo drawer={true} title="SUVAS" component={TranslatePresident} authenticate={this.authenticateUser}/>
+            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate`} forDemo title="SUVAS" userRoles={['user']} component={TranslatePresident} authenticate={this.authenticateUser}/>
             
             <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard`} title="Translate" component={DashboardTamil} authenticate={this.authenticateUser} />
@@ -110,14 +110,14 @@ class AppRoutes extends React.Component {
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translations`} component={Translations} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translate-v1`} component={Translate} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/upload-audio`} component={UploadAudio} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/qna`} title="Q&A" component={QnA} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/qna`} title="Q&A" userRoles={['editor']} component={QnA} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/newcorpus`} title="Parallel Corpus" userRoles={['dev']} component={newcorpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/create-corpus`} title="Create Corpus" userRoles={['dev']} component={createcorpus} authenticate={this.authenticateUser} />
   
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/pdftranslate`} title="Translate File" component={PdfTranslate} userRoles={['editor']} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/pdftranslate`} title="Translate File" component={PdfTranslate} userRoles={['editor','user']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/userdirectory`} title="User Directory" component={UserDirectory} userRoles={['admin']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/edittranslate`} title="Document View" component={EditTranslate} userRoles={['notactive']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/viewtranslate`} title="Documents"  component={ViewTranslate} userRoles={['editor']} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/viewtranslate`} title="Documents"  component={ViewTranslate} userRoles={['editor', 'user']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-doc/:basename`} title="Document Details" component={ViewDoc} userRoles={['editor']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser} />
 

@@ -213,7 +213,29 @@ this.props.handleTockenChange()
                   />
                 </ListItem>
                 <Divider />
-                {!role.includes("analyzer") && !role.includes("admin") && (
+                {role.includes("user")  && (
+                  <ListItem
+                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                    button
+                    onClick={() => {
+                      this.handleDrawerClose();
+                      history.push(`${process.env.PUBLIC_URL}/translate`);
+                    }}
+                  >
+                    <ListItemIcon>
+                      <SearchIcon style={{ color: "white" }} />
+                    </ListItemIcon>
+                    <ListItemText
+                      disableTypography
+                      primary={
+                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          Translate
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                )}
+                {!role.includes("analyzer") && !role.includes("admin")&& !role.includes("user") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -379,7 +401,7 @@ this.props.handleTockenChange()
                   </ListItem>
                 )}
 
-                {role.includes("editor") && (
+                {(role.includes("editor")|| role.includes("user")) && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -401,7 +423,7 @@ this.props.handleTockenChange()
                     />
                   </ListItem>
                 )}
-                {role.includes("editor") && (
+                {(role.includes("editor")|| role.includes("user")) && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -423,6 +445,7 @@ this.props.handleTockenChange()
                     />
                   </ListItem>
                 )}
+                
                 {role.includes("admin") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
@@ -446,7 +469,7 @@ this.props.handleTockenChange()
                   </ListItem>
                 )}
 
-                {!role.includes("analyzer") && !role.includes("admin") && (
+                {!role.includes("analyzer") && !role.includes("admin") &&!role.includes("user") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button

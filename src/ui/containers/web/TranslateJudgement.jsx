@@ -55,7 +55,6 @@ class Translate extends React.Component {
     langs.map((lang) => {
       if (this.props[lang.label.toLowerCase()] !== prevProps[lang.label.toLowerCase()]) {
         this.setState({
-            Hindi: this.props.hindi ? true: false,
           [lang.label.toLowerCase()]: this.props[lang.label.toLowerCase()]
         })
       }
@@ -118,7 +117,6 @@ class Translate extends React.Component {
   handleClose = () => {
     this.setState({ showLayout: false, showLangLayout: false, sentence: '' })
     langs.map((lang) => {
-        console.log([lang.label])
       this.setState({
         [lang.label.toLowerCase()]: null,
         [lang.label]:false
@@ -150,7 +148,7 @@ class Translate extends React.Component {
         <div>
           {this.state.showLangLayout ?
             <Grid container spacing={16} style={{ paddingLeft: '1%' }}>
-              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{height:'92vh', position:"fixed"}}>
+              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{height:'92vh', position:"fixed",marginLeft:'-3%'}}>
               <Card bigsize header ={"English"} body={this.state.sentence} style={{ display: "flex",
                 alignItems: "center",justifyContent: "right" }}/>
               </Grid>
