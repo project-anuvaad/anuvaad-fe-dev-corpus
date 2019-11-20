@@ -40,7 +40,7 @@ class Translate extends React.Component {
       model: [],
       langs: [],
       sentence: '',
-      Hindi:true
+      
     };
   }
 
@@ -55,6 +55,7 @@ class Translate extends React.Component {
     langs.map((lang) => {
       if (this.props[lang.label.toLowerCase()] !== prevProps[lang.label.toLowerCase()]) {
         this.setState({
+            Hindi: this.props.hindi ? true: false,
           [lang.label.toLowerCase()]: this.props[lang.label.toLowerCase()]
         })
       }
@@ -62,7 +63,7 @@ class Translate extends React.Component {
   }
 
   handleTextChange(key, event) {
-      console.log("sajish")
+
     this.setState({
       [key]: event.target.value, val : true
     });
@@ -111,14 +112,17 @@ class Translate extends React.Component {
 
     setTimeout(() => {
       this.setState({ showLangLayout: true })
-    }, 1000)
+    }, 1500)
   }
 
   handleClose = () => {
     this.setState({ showLayout: false, showLangLayout: false, sentence: '' })
     langs.map((lang) => {
+        console.log([lang.label])
       this.setState({
-        [lang.label.toLowerCase()]: null
+        [lang.label.toLowerCase()]: null,
+        [lang.label]:false
+
       })
     })
 
