@@ -26,7 +26,7 @@ export default class Translation extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/corpus/remove-process`;
+        return process.env.REACT_APP_DOWNLOAD_URL ? `${process.env.REACT_APP_DOWNLOAD_URL}/corpus/remove-process` : `${super.apiEndPointAuto()}/corpus/remove-process`;
     }
 
     getFormData() {
