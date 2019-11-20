@@ -173,6 +173,14 @@ class Translate extends React.Component {
                   display: "flex",
                   alignItems: "center", justifyContent: "right"
                 }} />
+
+                <Fab aria-label="Close" style={{
+                  margin: "auto",
+                  marginBottom: '10px',
+                  display: "block", color: 'white'
+                }} onClick={this.handleClose.bind(this)}>
+                  <CloseIcon style={{ color: 'CB1E60' }} />
+                </Fab>
               </Grid>
 
 
@@ -188,14 +196,7 @@ class Translate extends React.Component {
                     }) : ''} style={{ background: lang.color }} /></Grid>)
                   })}
                 </React.Fragment>
-                <Fab aria-label="Close" style={{
-                  margin: "auto",
-                  marginTop: '40px',
-                  marginBottom: '25px',
-                  display: "block", color: 'white'
-                }} onClick={this.handleClose.bind(this)}>
-                  <CloseIcon style={{ color: 'CB1E60' }} />
-                </Fab>
+                
               </Grid>
 
 
