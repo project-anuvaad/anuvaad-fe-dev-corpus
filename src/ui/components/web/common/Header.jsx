@@ -207,7 +207,7 @@ this.props.handleTockenChange()
                         color="inherit"
                         className={classes.flex}
                       >
-                        SUVAS
+                        ANUVAAD
                       </Typography>
                     }
                   />
