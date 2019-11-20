@@ -38,7 +38,7 @@ class RecipeReviewCard extends React.Component {
 
   render() {
 
-    let { header, body , style, expanded} = this.props
+    let { header, body , style, expanded, index} = this.props
     const { classes } = this.props;
 
     return (
@@ -73,9 +73,17 @@ class RecipeReviewCard extends React.Component {
         
         <Collapse in={this.props.expanded}>
           <CardContent>
+            {!body && 
+            <Typography color="#4c4c4c" style={{ fontSize: '35px', textAlign:'left' }}>
+              Loading...
+            </Typography>
+            }
           {body &&
             <Typography color="#4c4c4c" style={{ fontSize: '35px', textAlign:'left' }}>
-             {body}
+             {Array.isArray(body) ? body.map((b)=>{
+               console.log(b)
+               return b + (index === 0 && b.indexOf('।') < 0 && b.indexOf('?') < 0 ? '। ' : '')
+             }) : body}
             </Typography>
             
         }
