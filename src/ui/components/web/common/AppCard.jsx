@@ -10,11 +10,12 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const styles = theme => ({
   card: {
-    marginTop:'19px'
+    marginTop: '19px'
   },
   media: {
     height: 0,
@@ -32,17 +33,17 @@ const styles = theme => ({
 });
 
 class RecipeReviewCard extends React.Component {
-  state = { expanded: false};
+  state = { expanded: false };
 
 
   render() {
 
-    let { header, body , style, expanded, index} = this.props
+    let { header, body, style, expanded, index } = this.props
     const { classes } = this.props;
 
     return (
       <Card className={classes.card}>
-          
+
         <CardHeader style={style}
           action={
             <IconButton
@@ -50,44 +51,48 @@ class RecipeReviewCard extends React.Component {
                 [classes.expandOpen]: expanded
               })}
 
-              
-              onClick= {this.props.handleExpandClick && body ? () => { this.props.handleExpandClick(header, body) }:''}
+
+              onClick={this.props.handleExpandClick && body ? () => { this.props.handleExpandClick(header, body) } : ''}
               aria-expanded={expanded}
               aria-label="Show more"
             >
-              <ExpandMoreIcon />
+              {body ?
+                <ExpandMoreIcon />
+                :
+                <CircularProgress color="black"/>
+              }
 
-             
+
             </IconButton>
 
           }
 
-          
-          titleTypographyProps={{variant:'h4' }}
+
+          titleTypographyProps={{ variant: 'h4' }}
           title={header}
         />
 
-        
 
-        
+
+
         <Collapse in={this.props.expanded}>
           <CardContent>
-            {!body && 
-            <Typography color="#4c4c4c" style={{ fontSize: '32px', textAlign:'left' }}>
-              Loading...
+            {!body &&
+              <Typography color="#4c4c4c" style={{ fontSize: '32px', textAlign: 'left' }}>
+                Loading...
             </Typography>
             }
-          {body &&
-            <Typography color="#4c4c4c" style={{ fontSize: '32px', textAlign:'left' }}>
-             {Array.isArray(body) ? body.map((b)=>{
-               console.log(b)
-               return b + (index === 0 && b.indexOf('।') < 0 && b.indexOf('?') < 0 ? '। ' : '')
-             }) : body}
-            </Typography>
-            
-        }
+            {body &&
+              <Typography color="#4c4c4c" style={{ fontSize: '32px', textAlign: 'left' }}>
+                {Array.isArray(body) ? body.map((b) => {
+                  console.log(b)
+                  return b + (index === 0 && b.indexOf('।') < 0 && b.indexOf('?') < 0 ? '। ' : '')
+                }) : body}
+              </Typography>
+
+            }
           </CardContent>
-          
+
         </Collapse>
       </Card>
     );
@@ -99,13 +104,12 @@ RecipeReviewCard.propTypes = {
 };
 
 export default withStyles(styles)(RecipeReviewCard);
-    
-        
 
 
-       
-               
 
-                    
-                       
-            
+
+
+
+
+
+
