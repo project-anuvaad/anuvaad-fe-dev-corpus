@@ -25,12 +25,12 @@ class AppCard extends React.Component {
                     {body ?
                         Array.isArray(body) ?
                             body.map((b) => {
-                                return <Typography gutterBottom color="#4c4c4c" style={fontSize ? { fontSize: fontSize } : (bigsize ? { fontSize: '42px' } : {})}>
+                                return <Typography gutterBottom color="#4c4c4c" style={fontSize ? { fontSize: fontSize } : (bigsize ? { fontSize: '35px', textAlign:'left' } : {})}>
                                     {b + (index === 0 && b.indexOf('।') < 0 && b.indexOf('?') < 0 ? '।' : '')}
                                 </Typography>
                             })
                             :
-                            <Typography gutterBottom color="#4c4c4c" style={fontSize ? { fontSize: fontSize } : (bigsize ? { fontSize: '42px' } : {})}>
+                            <Typography gutterBottom color="#4c4c4c" style={fontSize ? { fontSize: fontSize } : (bigsize ? { fontSize: '35px', textAlign:'left' } : {})}>
                                 {body}
                             </Typography>
                         :
