@@ -10,13 +10,11 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { ScrollTo, ScrollArea } from "react-scroll-to";
+
 
 const styles = theme => ({
   card: {
-    
-    
-    marginTop:'20px',
+    marginTop:'19px',
     marginRight:'4%'
   },
   media: {
@@ -28,10 +26,6 @@ const styles = theme => ({
   },
   expand: {
     transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
   },
   expandOpen: {
     transform: "rotate(180deg)"
@@ -39,37 +33,27 @@ const styles = theme => ({
 });
 
 class RecipeReviewCard extends React.Component {
-  state = { expanded: false,marginTop:"auto" };
+  state = { expanded: false};
 
-  handleExpandClick = () => {
-
-    
-    this.setState(state => ({ expanded: !state.expanded }));
-    if(this.state.expanded){
-        
-    }
-    
-     
-  };
 
   render() {
 
-    let { header, body , style} = this.props
+    let { header, body , style, expanded} = this.props
     const { classes } = this.props;
 
     return (
       <Card className={classes.card}>
           
-        <CardHeader style={{ fontSize: '42px' }}
+        <CardHeader style={style}
           action={
             <IconButton
               className={classnames(classes.expand, {
-                [classes.expandOpen]: this.state.expanded
+                [classes.expandOpen]: expanded
               })}
 
               
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
+              onClick= {this.props.handleExpandClick && body ? () => { this.props.handleExpandClick(header, body) }:''}
+              aria-expanded={expanded}
               aria-label="Show more"
             >
               <ExpandMoreIcon />
@@ -86,19 +70,14 @@ class RecipeReviewCard extends React.Component {
 
         
 
-        <CardActions className={classes.actions} disableActionSpacing />
-        <Collapse in={this.state.expanded} style={{marginTop:this.state.marginTop}} timeout="auto" unmountOnExit>
+        
+        <Collapse in={this.props.expanded}>
           <CardContent>
-          {body ?
-            <Typography color="#4c4c4c" style={{ fontSize: '35px' }}>
+          {body &&
+            <Typography color="#4c4c4c" style={{ fontSize: '35px', textAlign:'left' }}>
              {body}
             </Typography>
-            :
-            <div>
-                <span style={{ width: '70%', backgroundColor: '#d3d3d3', display: 'inline-block' }}>&nbsp;</span>
-                <br></br> <br></br>
-                <span style={{ width: '50%', backgroundColor: '#d3d3d3', display: 'inline-block' }}>&nbsp;</span>
-            </div>
+            
         }
           </CardContent>
           
