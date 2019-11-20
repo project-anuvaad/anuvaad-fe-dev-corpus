@@ -21,7 +21,7 @@ class AppCard extends React.Component {
                         {header}
                     </Typography>
                     {body ?
-                        <Typography  gutterBottom color="#4c4c4c" style={fontSize ? { fontSize: fontSize } : (bigsize ? { fontSize: '35px' } : {})}>
+                        <Typography  gutterBottom color="#4c4c4c" style={fontSize ? { fontSize: fontSize } : (bigsize ? { fontSize: '35px', textAlign:'left' } : {})}>
                             {body}
                         </Typography>
                         :

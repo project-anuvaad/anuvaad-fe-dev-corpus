@@ -19,15 +19,15 @@ import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 const langs = [
-  { label: 'Bengali', code: 'bn', type: C.BENGALI },
-  { label: 'Gujarati', code: 'gu', type: C.GUJARATI },
-  { label: 'Hindi', code: 'hi', type: C.HINDI },
+  { label: 'Hindi', code: 'hi', type: C.HINDI, color:'#ff8000' },
+  { label: 'Bengali', code: 'bn', type: C.BENGALI , color:'#ff8000'},
+  { label: 'Gujarati', code: 'gu', type: C.GUJARATI, color:'#ff8000' },
   { label: 'Kannada', code: 'kn', type: C.KANNADA },
   { label: 'Malayalam', code: 'ml', type: C.MALAYALAM },
   { label: 'Marathi', code: 'mr', type: C.MARATHI },
-  { label: 'Punjabi', code: 'pa', type: C.PUNJABI },
-  { label: 'Tamil', code: 'ta', type: C.TAMIL },
-  { label: 'Telugu', code: 'te', type: C.TELUGU }
+  { label: 'Punjabi', code: 'pa', type: C.PUNJABI,  color:'#008000'},
+  { label: 'Tamil', code: 'ta', type: C.TAMIL, color:'#008000' },
+  { label: 'Telugu', code: 'te', type: C.TELUGU, color:'#008000' }
 ];
 
 
@@ -39,7 +39,8 @@ class Translate extends React.Component {
       showLangLayout: false,
       model: [],
       langs: [],
-      sentence: ''
+      sentence: '',
+      Hindi:true
     };
   }
 
@@ -61,10 +62,30 @@ class Translate extends React.Component {
   }
 
   handleTextChange(key, event) {
+      console.log("sajish")
     this.setState({
       [key]: event.target.value, val : true
     });
   }
+
+  handleExpandClick = (header,body) => {
+    console.log(header,body)
+
+    langs.map((lang) => {
+        
+          if(lang.label== header){
+              this.setState({[header]: !this.state[header]})
+          }
+          else{
+            this.setState({[lang.label]: false})
+          }
+        
+      })
+  this.setState(state => ({ [header]: !this.state[header], header, body}));
+  
+  
+   
+};
 
   handleChange=()=>{
     this.setState({ showZoom: true })
@@ -72,7 +93,7 @@ class Translate extends React.Component {
 
   getModelForLang(lang_code) {
     let model = []
-    this.props.langModel.map(item =>
+    this.props.langModel.length && this.props.langModel.map(item =>
       item.target_language_code === lang_code &&
       item.source_language_code === 'en' && item.is_primary &&
       model.push(item)
@@ -125,21 +146,21 @@ class Translate extends React.Component {
         <div>
           {this.state.showLangLayout ?
             <Grid container spacing={16} style={{ paddingLeft: '1%' }}>
-              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{height:'85vh', position:"fixed"}}>
+              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{height:'92vh', position:"fixed"}}>
               <Card bigsize header ={"English"} body={this.state.sentence} style={{ display: "flex",
-                alignItems: "center",justifyContent: "center" }}/>
+                alignItems: "center",justifyContent: "right" }}/>
               </Grid>
               
 
 <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{marginLeft:'50%'}}>
                 <React.Fragment>
                   {langs.map((lang) => {
-                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp'><AppCard header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{raised: true, Height: '100px', background:blueGrey50, marginBottom:'5px'}} /></Grid>)
+                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp'><AppCard header={lang.label} handleExpandClick={this.handleExpandClick.bind(this)} expanded={this.state[lang.label]} color={lang.color} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{ background:lang.color}} /></Grid>)
                   })}
                 </React.Fragment>
                 <Fab aria-label="Close" style={{
                 margin: "auto",
-                marginTop:'25px',
+                marginTop:'40px',
                 marginBottom:'25px',
                 display: "block", color: 'white'
               }} onClick={this.handleClose.bind(this)}>
