@@ -7,7 +7,7 @@ import Card from '../../components/web/Card';
 import '../../styles/web/TranslatePresident.css';
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
-import NMT from "../../../flux/actions/apis/nmt";
+import NMT from "../../../flux/actions/apis/nmt_president";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import { connect } from "react-redux";
@@ -56,7 +56,7 @@ class Translate extends React.Component {
       langs.map((lang, index) => {
         if (index !== 0) {
           let model = this.getModelForLang(lang.code)
-          let api = new NMT(this.state.sentence, model, false, null, false, lang.type);
+          let api = new NMT(this.state.sentence, model, false, null, true, lang.type);
           this.props.TranslateAPI(api);
         }
       })
@@ -121,7 +121,7 @@ class Translate extends React.Component {
     this.setState({ showLayout: true })
     // langs.map((lang) => {
       let model = this.getModelForLang(langs[0].code)
-      let api = new NMT(this.state.sentence, model, false, null, false, langs[0].type);
+      let api = new NMT(this.state.sentence, model, false, null, true, langs[0].type);
       this.props.TranslateAPI(api);
     // })
 
