@@ -27,22 +27,22 @@ class App extends React.Component {
     }
   }
 
-  handlDrawerTocken=() =>{
-   this.setState({tocken:true})
+  handlDrawerTocken = () => {
+    this.setState({ tocken: true })
   }
 
-  handleTockenChange(){
-    this.setState({tocken:!this.state.tocken})
+  handleTockenChange() {
+    this.setState({ tocken: !this.state.tocken })
   }
 
 
   renderMessage() {
     if (this.props.apistatus.message) {
-      return <Snackbars message={this.props.apistatus.message} variant={this.props.apistatus.error ? 'error':'success'}/>;
+      return <Snackbars message={this.props.apistatus.message} variant={this.props.apistatus.error ? 'error' : 'success'} />;
     }
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   componentDidUpdate(prevProps) {
     if (prevProps.apistatus !== this.props.apistatus) {
@@ -53,14 +53,15 @@ class App extends React.Component {
   }
 
   render() {
-    const { classes, theme, title, drawer, forDemo } = this.props;
+    const { classes, theme, title, drawer, forDemo, dontShowLoader } = this.props;
     const Component = this.props.component; // eslint-disable-line
     return (
       <MuiThemeProvider theme={Theme}>
         <div className={classes.root} >
-          {this.renderSpinner()}
-
-          <Header classes={classes} theme={theme} title={title} drawer={drawer}  tocken={this.state.tocken} handleTockenChange={this.handleTockenChange.bind(this)} />
+          {!dontShowLoader &&
+            this.renderSpinner()
+          }
+          <Header classes={classes} theme={theme} title={title} drawer={drawer} tocken={this.state.tocken} handleTockenChange={this.handleTockenChange.bind(this)} />
           <div className={forDemo ? classes.containerDemo : classes.container} onClick={this.handlDrawerTocken.bind(this)}>
             <Component />
           </div>

@@ -40,7 +40,7 @@ class Translate extends React.Component {
       model: [],
       langs: [],
       sentence: '',
-
+      Hindi: true
     };
   }
 
@@ -52,6 +52,15 @@ class Translate extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    if (this.props[langs[0].label.toLowerCase()] !== prevProps[langs[0].label.toLowerCase()]) {
+      langs.map((lang, index) => {
+        if (index !== 0) {
+          let model = this.getModelForLang(lang.code)
+          let api = new NMT(this.state.sentence, model, false, null, false, lang.type);
+          this.props.TranslateAPI(api);
+        }
+      })
+    }
     langs.map((lang) => {
       if (this.props[lang.label.toLowerCase()] !== prevProps[lang.label.toLowerCase()]) {
         let opened = false
@@ -110,11 +119,11 @@ class Translate extends React.Component {
 
   handleOnClick = () => {
     this.setState({ showLayout: true })
-    langs.map((lang) => {
-      let model = this.getModelForLang(lang.code)
-      let api = new NMT(this.state.sentence, model, false, null, false, lang.type);
+    // langs.map((lang) => {
+      let model = this.getModelForLang(langs[0].code)
+      let api = new NMT(this.state.sentence, model, false, null, false, langs[0].type);
       this.props.TranslateAPI(api);
-    })
+    // })
 
     setTimeout(() => {
       this.setState({ showLangLayout: true })
