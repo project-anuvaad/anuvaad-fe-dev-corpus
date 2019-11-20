@@ -147,7 +147,7 @@ class Translate extends React.Component {
       <div className="App">
         {!this.state.showLayout ?
           <div>
-            <textarea className='idbox' rows='5' cols='50' placeholder='Please enter text here...' onChange={(event) => { this.handleTextChange('sentence', event) }} />
+            <textarea className='idbox' rows='5' cols='50' placeholder='Please enter English sentence to translate...' onChange={(event) => { this.handleTextChange('sentence', event) }} />
             <div >
               <Button onClick={this.handleSubmit}
                 variant="contained" color="primary"
@@ -182,8 +182,10 @@ class Translate extends React.Component {
                 overflowY: "auto"
               }}>
                 <React.Fragment>
-                  {langs.map((lang) => {
-                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp'><AppCard header={lang.label} handleExpandClick={this.handleExpandClick.bind(this)} expanded={this.state[lang.label]} color={lang.color} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{ background: lang.color }} /></Grid>)
+                  {langs.map((lang, index) => {
+                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp'><AppCard header={lang.label} handleExpandClick={this.handleExpandClick.bind(this)} expanded={this.state[lang.label]} color={lang.color} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()].map(function (elem) {
+                      return elem.tgt + (index === 0 && elem.tgt.indexOf('।') < 0 && elem.tgt.indexOf('?') < 0 ? '। ' : ' ');
+                    }) : ''} style={{ background: lang.color }} /></Grid>)
                   })}
                 </React.Fragment>
                 <Fab aria-label="Close" style={{
