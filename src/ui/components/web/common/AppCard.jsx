@@ -38,7 +38,7 @@ class RecipeReviewCard extends React.Component {
 
   render() {
 
-    let { header, body, style, expanded, index } = this.props
+    let { header, body, style, expanded, index, cardKey } = this.props
     const { classes } = this.props;
 
     return (
@@ -52,7 +52,7 @@ class RecipeReviewCard extends React.Component {
               })}
 
 
-              onClick={this.props.handleExpandClick && body ? () => { this.props.handleExpandClick(header, body) } : ''}
+              onClick={this.props.handleExpandClick && body ? () => { this.props.handleExpandClick(cardKey, body) } : ''}
               aria-expanded={expanded}
               aria-label="Show more"
             >
@@ -85,8 +85,7 @@ class RecipeReviewCard extends React.Component {
             {body &&
               <Typography color="#4c4c4c" style={{ fontSize: '32px', textAlign: 'left' }}>
                 {Array.isArray(body) ? body.map((b) => {
-                  console.log(b)
-                  return b + (index === 0 && b.indexOf('।') < 0 && b.indexOf('?') < 0 ? '। ' : '')
+                  return b
                 }) : body}
               </Typography>
 
