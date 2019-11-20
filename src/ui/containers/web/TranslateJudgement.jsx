@@ -2,12 +2,12 @@ import React, { useState, useRef } from 'react';
 import Button from "@material-ui/core/Button";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import AppCard from  '../../components/web/common/AppCard';
-import Card from  '../../components/web/Card';
+import AppCard from '../../components/web/common/AppCard';
+import Card from '../../components/web/Card';
 import '../../styles/web/TranslatePresident.css';
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
-import NMT from "../../../flux/actions/apis/nmt";
+import NMT from "../../../flux/actions/apis/nmt_president";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import { connect } from "react-redux";
@@ -19,15 +19,15 @@ import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 const langs = [
-  { label: 'Bengali', code: 'bn', type: C.BENGALI },
-  { label: 'Gujarati', code: 'gu', type: C.GUJARATI },
-  { label: 'Hindi', code: 'hi', type: C.HINDI },
+  { label: 'Hindi', code: 'hi', type: C.HINDI, color: '#ff8000' },
+  { label: 'Bengali', code: 'bn', type: C.BENGALI, color: '#ff8000' },
+  { label: 'Gujarati', code: 'gu', type: C.GUJARATI, color: '#ff8000' },
   { label: 'Kannada', code: 'kn', type: C.KANNADA },
   { label: 'Malayalam', code: 'ml', type: C.MALAYALAM },
   { label: 'Marathi', code: 'mr', type: C.MARATHI },
-  { label: 'Punjabi', code: 'pa', type: C.PUNJABI },
-  { label: 'Tamil', code: 'ta', type: C.TAMIL },
-  { label: 'Telugu', code: 'te', type: C.TELUGU }
+  { label: 'Punjabi', code: 'pa', type: C.PUNJABI, color: '#008000' },
+  { label: 'Tamil', code: 'ta', type: C.TAMIL, color: '#008000' },
+  { label: 'Telugu', code: 'te', type: C.TELUGU, color: '#008000' }
 ];
 
 
@@ -39,7 +39,8 @@ class Translate extends React.Component {
       showLangLayout: false,
       model: [],
       langs: [],
-      sentence: ''
+      sentence: '',
+
     };
   }
 
@@ -54,6 +55,7 @@ class Translate extends React.Component {
     langs.map((lang) => {
       if (this.props[lang.label.toLowerCase()] !== prevProps[lang.label.toLowerCase()]) {
         this.setState({
+          Hindi: this.props.hindi ? true : false,
           [lang.label.toLowerCase()]: this.props[lang.label.toLowerCase()]
         })
       }
@@ -61,18 +63,38 @@ class Translate extends React.Component {
   }
 
   handleTextChange(key, event) {
+
     this.setState({
-      [key]: event.target.value, val : true
+      [key]: event.target.value, val: true
     });
   }
 
-  handleChange=()=>{
+  handleExpandClick = (header, body) => {
+    console.log(header, body)
+
+    langs.map((lang) => {
+
+      if (lang.label == header) {
+        this.setState({ [header]: !this.state[header] })
+      }
+      else {
+        this.setState({ [lang.label]: false })
+      }
+
+    })
+    this.setState(state => ({ [header]: !this.state[header], header, body }));
+
+
+
+  };
+
+  handleChange = () => {
     this.setState({ showZoom: true })
   }
 
   getModelForLang(lang_code) {
     let model = []
-    this.props.langModel.map(item =>
+    this.props.langModel.length && this.props.langModel.map(item =>
       item.target_language_code === lang_code &&
       item.source_language_code === 'en' && item.is_primary &&
       model.push(item)
@@ -84,20 +106,22 @@ class Translate extends React.Component {
     this.setState({ showLayout: true })
     langs.map((lang) => {
       let model = this.getModelForLang(lang.code)
-      let api = new NMT(this.state.sentence, model, false, null, false, lang.type);
+      let api = new NMT(this.state.sentence, model, false, null, true, lang.type);
       this.props.TranslateAPI(api);
     })
 
     setTimeout(() => {
       this.setState({ showLangLayout: true })
-    }, 1000)
+    }, 1500)
   }
 
   handleClose = () => {
     this.setState({ showLayout: false, showLangLayout: false, sentence: '' })
     langs.map((lang) => {
       this.setState({
-        [lang.label.toLowerCase()]: null
+        [lang.label.toLowerCase()]: null,
+        [lang.label]: false
+
       })
     })
 
@@ -115,7 +139,7 @@ class Translate extends React.Component {
                   width: '25%',
                   height: 50,
 
-                }}  onClick={this.state.sentence && this.handleOnClick.bind(this)}>Translate</Button>
+                }} onClick={this.state.sentence && this.handleOnClick.bind(this)}>Translate</Button>
             </div>
           </div> :
           (!this.state.showLangLayout && <div className={'fadeUp'}>
@@ -125,32 +149,34 @@ class Translate extends React.Component {
         <div>
           {this.state.showLangLayout ?
             <Grid container spacing={16} style={{ paddingLeft: '1%' }}>
-              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{height:'85vh', position:"fixed"}}>
-              <Card bigsize header ={"English"} body={this.state.sentence} style={{ display: "flex",
-                alignItems: "center",justifyContent: "center" }}/>
+              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{ height: '92vh', position: "fixed", marginLeft: '-3%' }}>
+                <Card bigsize header={"English"} body={this.state.sentence} style={{
+                  display: "flex",
+                  alignItems: "center", justifyContent: "right"
+                }} />
               </Grid>
-              
-
-<Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{marginLeft:'50%'}}>
+              <Grid container item xs={6} sm={6} lg={6} xl={6} spacing={1} style={{ marginLeft: '50%' }}>
                 <React.Fragment>
-                  {langs.map((lang) => {
-                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp'><AppCard header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()][0].tgt : ''} style={{raised: true, Height: '100px', background:blueGrey50, marginBottom:'5px'}} /></Grid>)
+                  {langs.map((lang, index) => {
+                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp'><AppCard index={index} header={lang.label} handleExpandClick={this.handleExpandClick.bind(this)} expanded={this.state[lang.label]} color={lang.color} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()].map(function (elem) {
+                      return elem.tgt;
+                    }) : ''} style={{ background: lang.color }} /></Grid>)
                   })}
                 </React.Fragment>
                 <Fab aria-label="Close" style={{
-                margin: "auto",
-                marginTop:'25px',
-                marginBottom:'25px',
-                display: "block", color: 'white'
-              }} onClick={this.handleClose.bind(this)}>
-                <CloseIcon style={{ color: 'CB1E60' }} />
-              </Fab>
+                  margin: "auto",
+                  marginTop: '40px',
+                  marginBottom: '25px',
+                  display: "block", color: 'white'
+                }} onClick={this.handleClose.bind(this)}>
+                  <CloseIcon style={{ color: 'CB1E60' }} />
+                </Fab>
               </Grid>
 
 
             </Grid>
 
-           : null}
+            : null}
 
 
         </div>
