@@ -56,7 +56,7 @@ class Translate extends React.Component {
       if (this.props[lang.label.toLowerCase()] !== prevProps[lang.label.toLowerCase()]) {
         let opened = false
         langs.map((lang) => {
-          if (this.state[lang.label]) {
+          if (this.state[lang.label] && lang.label !== 'Hindi') {
             opened = true
           }
         })
