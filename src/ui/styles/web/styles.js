@@ -1,5 +1,6 @@
 
 const drawerWidth = 240;
+let logo = require('../../../assets/logo.png')
 
 const GlobalStyles = theme => ({
   container: {
@@ -36,7 +37,7 @@ const GlobalStyles = theme => ({
   appBarShift: {
 
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth+43}px)`,
+    width: `calc(100% - ${drawerWidth + 43}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
@@ -59,27 +60,27 @@ const GlobalStyles = theme => ({
       duration: theme.transitions.duration.enteringScreen
     })
   },
-  buttonLeft:{
-                
-    marginLeft:'230px',
+  buttonLeft: {
+
+    marginLeft: '230px',
     marginTop: "17%",
-    height:'12%',
+    height: '12%',
     position: "fixed",
-    backgroundColor:'#335995'
-    
+    backgroundColor: '#335995'
+
   },
-  buttonRight:{
-        marginLeft:'-50px',
-        marginTop: "19%",
-        position: "fixed",
-        height:'12%',
-        backgroundColor:'#335995'
+  buttonRight: {
+    marginLeft: '-50px',
+    marginTop: "19%",
+    position: "fixed",
+    height: '12%',
+    backgroundColor: '#335995'
   },
 
 
 
-  editButton:{
-    width:"70%"
+  editButton: {
+    width: "70%"
   },
   hide: {
     display: "none"
@@ -89,10 +90,10 @@ const GlobalStyles = theme => ({
     flexShrink: 0
   },
   drawerPaper: {
-    
+
     width: '282px',
-    backgroundColor:'#335995'
-    
+    backgroundColor: '#335995'
+
   },
   drawerHeader: {
     display: "flex",
