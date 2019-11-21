@@ -22,12 +22,12 @@
    }
    .idbox {
     width: 80%;
+    text-align: justify;
     font-family: arial,sans-serif;
     font-size: 30px;
     min-height: 300px;
     background: rgb(218, 218, 218);
     padding: 40px;
-    text-align: left;
     border-radius: 5px;
     resize: none;
     margin: 5% 5% 3% 5%;
