@@ -35,10 +35,10 @@ import ViewDoc from "./ui/containers/web/ViewDoc";
 import TranslatePresident from "./ui/containers/web/TranslateJudgement";
 import TPresident from "./ui/containers/web/TPresident";
 
-const PrivateRoute = ({ component: Component, userRoles, title,drawer,forDemo, authenticate, ...rest }) => (
+const PrivateRoute = ({ component: Component, userRoles, title, drawer, forDemo, dontShowLoader, authenticate, ...rest }) => (
 
 
-  <Route {...rest} render={props => (authenticate(userRoles) ? <Layout component={Component} title={title} forDemo={forDemo} drawer={drawer} {...props} /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
+  <Route {...rest} render={props => (authenticate(userRoles) ? <Layout dontShowLoader={dontShowLoader} component={Component} title={title} forDemo={forDemo} drawer={drawer} {...props} /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
 
 );
 
@@ -54,29 +54,29 @@ class AppRoutes extends React.Component {
   authenticateUser = (allowedRoles) => {
     let count = 0;
     const token = localStorage.getItem("token");
-    if(localStorage.getItem("roles")){
-    const userRoles = JSON.parse(localStorage.getItem("roles"))
-    if (token) {
-      if (allowedRoles && Array.isArray(allowedRoles)) {
-        allowedRoles.map((allowedRole) => {
-          userRoles.map((userRole) => {
-            if (userRole == allowedRole) {
-              count = count + 1
-            }
+    if (localStorage.getItem("roles")) {
+      const userRoles = JSON.parse(localStorage.getItem("roles"))
+      if (token) {
+        if (allowedRoles && Array.isArray(allowedRoles)) {
+          allowedRoles.map((allowedRole) => {
+            userRoles.map((userRole) => {
+              if (userRole == allowedRole) {
+                count = count + 1
+              }
+            })
           })
-        })
-        if (count > 0) {
+          if (count > 0) {
+            return true;
+          }
+        }
+        else {
           return true;
         }
       }
-      else {
-        return true;
-      }
+      return false;
+    } else {
+      alert('Something Went wrong. Please try again')
     }
-    return false;
-  }else{
-    alert('Something Went wrong. Please try again')
-  }
   }
 
   render() {
@@ -88,18 +88,18 @@ class AppRoutes extends React.Component {
             <Route exact path={`${process.env.PUBLIC_URL}/`} component={Home} />
             <Route exact path={`${process.env.PUBLIC_URL}/callback`} component={Callback} />
             <Route exact path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
-            
-            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/anuvaad-translate`} userRoles={['user']} forDemo drawer={true} title="Anuvaad Translate" component={TPresident} authenticate={this.authenticateUser}/>
 
-            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate`} forDemo title="Translate" userRoles={['user']} component={TranslatePresident} authenticate={this.authenticateUser}/>
-            
+            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/anuvaad-translate`} userRoles={['user']} forDemo drawer={true} title="Anuvaad Translate" component={TPresident} authenticate={this.authenticateUser} />
+
+            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate`} dontShowLoader forDemo title="SUVAS-Translate" userRoles={['user']} component={TranslatePresident} authenticate={this.authenticateUser} />
+
             <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard`} title="Translate" component={DashboardTamil} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} title="Corpus Details" userRoles={['grader', 'dev']} component={GradeViewCorpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/:basename/:modelid`} title="Benchmark" userRoles={['grader', 'dev']} component={BenchmarkGrade} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/graderreport`} title="Grader Report"  component={GraderReport} userRoles={['admin']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/comparison-report`} title="Comparison Report"  component={ComparisonReport} userRoles={['admin']} authenticate={this.authenticateUser} />
-            
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/graderreport`} title="Grader Report" component={GraderReport} userRoles={['admin']} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/comparison-report`} title="Comparison Report" component={ComparisonReport} userRoles={['admin']} authenticate={this.authenticateUser} />
+
             <PrivateRoute path={`${process.env.PUBLIC_URL}/benchmarktranslate`} userRoles={['analyzer']} component={FileTranslate} title="File Upload" authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/texttranslate`} userRoles={['analyzer']} component={GraderTranslate} title="Translate" authenticate={this.authenticateUser} />
 
@@ -113,11 +113,11 @@ class AppRoutes extends React.Component {
             <PrivateRoute path={`${process.env.PUBLIC_URL}/qna`} title="Q&A" userRoles={['editor']} component={QnA} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/newcorpus`} title="Parallel Corpus" userRoles={['dev']} component={newcorpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/create-corpus`} title="Create Corpus" userRoles={['dev']} component={createcorpus} authenticate={this.authenticateUser} />
-  
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/pdftranslate`} title="Translate File" component={PdfTranslate} userRoles={['editor','user']} authenticate={this.authenticateUser} />
+
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/pdftranslate`} title="SUVAS-Translate File" component={PdfTranslate} userRoles={['editor', 'user']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/userdirectory`} title="User Directory" component={UserDirectory} userRoles={['admin']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/edittranslate`} title="Document View" component={EditTranslate} userRoles={['notactive']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/viewtranslate`} title="Documents"  component={ViewTranslate} userRoles={['editor', 'user']} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/viewtranslate`} title="SUVAS-Documents" component={ViewTranslate} userRoles={['editor', 'user']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-doc/:basename`} title="Document Details" component={ViewDoc} userRoles={['editor']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser} />
 
