@@ -76,7 +76,7 @@ class App extends React.Component {
                 <img src={logo} style={{
                   width: '70%',
                   height: '80%',
-                  opacity: '0.3',
+                  opacity: '0.1',
                   display: 'block',
                   marginLeft: 'auto',
                   marginRight: 'auto'
