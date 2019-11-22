@@ -18,13 +18,13 @@ class Callback extends React.Component {
           localStorage.setItem("roles", JSON.stringify(this.props.userProfile.roles));
         }
         var role = JSON.parse(localStorage.getItem('roles'));
-        if (role.includes('analyzer')) {
+        if (role && Array.isArray(role) && role.includes('analyzer')) {
           history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`);
         }
-        else if (role.includes('admin')) {
+        else if (role && Array.isArray(role) && role.includes('admin')) {
           history.push(`${process.env.PUBLIC_URL}/comparison-report`);
         }
-        else if (role.includes('user')) {
+        else if (role && Array.isArray(role) && role.includes('user')) {
           history.push(`${process.env.PUBLIC_URL}/translate`);
         }
         else {
