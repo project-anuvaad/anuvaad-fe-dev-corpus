@@ -213,7 +213,7 @@ this.props.handleTockenChange()
                   />
                 </ListItem>
                 <Divider />
-                {role.includes("user")  && (
+                {role && Array.isArray(role) && role.includes("user")  && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -235,7 +235,7 @@ this.props.handleTockenChange()
                     />
                   </ListItem>
                 )}
-                {!role.includes("analyzer") && !role.includes("admin")&& !role.includes("user") && (
+                {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin")&& !role.includes("user") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -272,7 +272,7 @@ this.props.handleTockenChange()
 										/>
 									</ListItem>
 								} */}
-                {role.includes("analyzer") && (
+                {role && Array.isArray(role) && role.includes("analyzer") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -294,7 +294,7 @@ this.props.handleTockenChange()
                     />
                   </ListItem>
                 )}
-                {role.includes("dev") && (
+                {role && Array.isArray(role) && role.includes("dev") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -316,7 +316,7 @@ this.props.handleTockenChange()
                     />
                   </ListItem>
                 )}
-                {role.includes("dev", "grader") && (
+                {role && Array.isArray(role) && role.includes("dev", "grader") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -338,7 +338,7 @@ this.props.handleTockenChange()
                     />
                   </ListItem>
                 )}
-                {(role.includes("dev") || role.includes("grader")) && (
+                {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader")) && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -361,7 +361,7 @@ this.props.handleTockenChange()
                   </ListItem>
                 )}
 
-                {role.includes('admin') &&
+                {role && Array.isArray(role) && role.includes('admin') &&
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
 										<ListItemIcon>
 											<Receipt style={{ color: 'white' }} />
@@ -378,7 +378,7 @@ this.props.handleTockenChange()
 
 								} 
 
-                {role.includes("admin") && (
+                {role && Array.isArray(role) && role.includes("admin") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -401,7 +401,7 @@ this.props.handleTockenChange()
                   </ListItem>
                 )}
 
-                {(role.includes("editor")|| role.includes("user")) && (
+                {role && Array.isArray(role) && (role.includes("editor")|| role.includes("user")) && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -423,7 +423,7 @@ this.props.handleTockenChange()
                     />
                   </ListItem>
                 )}
-                {(role.includes("editor")|| role.includes("user")) && (
+                {role && Array.isArray(role) && (role.includes("editor")|| role.includes("user")) && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -446,7 +446,7 @@ this.props.handleTockenChange()
                   </ListItem>
                 )}
                 
-                {role.includes("admin") && (
+                {role && Array.isArray(role) && role.includes("admin") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button
@@ -469,7 +469,7 @@ this.props.handleTockenChange()
                   </ListItem>
                 )}
 
-                {!role.includes("analyzer") && !role.includes("admin") &&!role.includes("user") && (
+                {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") &&!role.includes("user") && (
                   <ListItem
                     style={{ paddingTop: "8%", paddingBottom: "8%" }}
                     button

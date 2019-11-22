@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'babel-polyfill';
 import { Provider } from 'react-redux';
 import storeFactory from './flux/store/store';
 import registerServiceWorker from './registerServiceWorker';
