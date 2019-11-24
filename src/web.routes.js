@@ -35,10 +35,10 @@ import ViewDoc from "./ui/containers/web/ViewDoc";
 import TranslatePresident from "./ui/containers/web/TranslateJudgement";
 import TPresident from "./ui/containers/web/TPresident";
 
-const PrivateRoute = ({ component: Component, userRoles, title, drawer, forDemo, dontShowLoader, authenticate, ...rest }) => (
+const PrivateRoute = ({ component: Component, userRoles, title, drawer,showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
 
 
-  <Route {...rest} render={props => (authenticate(userRoles) ? <Layout dontShowLoader={dontShowLoader} component={Component} title={title} forDemo={forDemo} drawer={drawer} {...props} /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
+  <Route {...rest} render={props => (authenticate(userRoles) ? <Layout dontShowLoader={dontShowLoader} showLogo={showLogo} component={Component} title={title} forDemo={forDemo} drawer={drawer} {...props} /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
 
 );
 
@@ -114,10 +114,10 @@ class AppRoutes extends React.Component {
             <PrivateRoute path={`${process.env.PUBLIC_URL}/newcorpus`} title="Parallel Corpus" userRoles={['dev']} component={newcorpus} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/create-corpus`} title="Create Corpus" userRoles={['dev']} component={createcorpus} authenticate={this.authenticateUser} />
 
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/pdftranslate`} title="SUVAS-Translate File" component={PdfTranslate} userRoles={['editor', 'user']} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/pdftranslate`} showLogo title="SUVAS-Translate File" component={PdfTranslate} userRoles={['editor', 'user']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/userdirectory`} title="User Directory" component={UserDirectory} userRoles={['admin']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/edittranslate`} title="Document View" component={EditTranslate} userRoles={['notactive']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/viewtranslate`} title="SUVAS-Documents" component={ViewTranslate} userRoles={['editor', 'user']} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/viewtranslate`} showLogo title="SUVAS-Documents" component={ViewTranslate} userRoles={['editor', 'user']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/view-doc/:basename`} title="Document Details" component={ViewDoc} userRoles={['editor']} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser} />
 
