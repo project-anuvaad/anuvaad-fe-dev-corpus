@@ -18,6 +18,9 @@ import C from '../../../flux/actions/constants'
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
+import SCImage from '../../../assets/icon.jpg'
+
+
 const langs = [
   { label: 'Hindi', labelSecondary: 'हिन्दी', code: 'hi', type: C.HINDI, color: '#ff8000' },
   { label: 'Bengali', labelSecondary: 'বাংলা', code: 'bn', type: C.BENGALI, color: '#ff8000' },
@@ -147,7 +150,7 @@ class Translate extends React.Component {
       <div className="App">
         {!this.state.showLayout ?
           <div>
-            <textarea className='idbox' rows='5' cols='50' placeholder='Please enter English sentence to translate...' onChange={(event) => { this.handleTextChange('sentence', event) }} />
+            <textarea className='idbox' rows='5' cols='50' placeholder='Please enter English text to translate...' onChange={(event) => { this.handleTextChange('sentence', event) }} />
             <div >
               <Button onClick={this.handleSubmit}
                 variant="contained" color="primary"
@@ -156,6 +159,13 @@ class Translate extends React.Component {
                   height: 50,
 
                 }} onClick={this.state.sentence && this.handleOnClick.bind(this)}>Translate</Button>
+                <img src={SCImage} style={{
+                  width: '15%',
+                  height: '80%',
+                  display: 'block',
+                  marginLeft: 'auto',
+                  marginRight: 'auto'
+                }} />
             </div>
           </div> :
           (!this.state.showLangLayout && <div className={'fadeUp'}>
