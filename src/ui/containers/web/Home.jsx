@@ -1,5 +1,6 @@
 import React from "react";
 import CONFIG from "../../../configs/apigw";
+import history from "../../../web.history";
 
 class Home extends React.Component {
   state = {
@@ -7,17 +8,7 @@ class Home extends React.Component {
   };
   componentDidMount() {
     this.setState({ showLoader: true });
-    window.location.href =
-      CONFIG.BASE_URL +
-      CONFIG.AUTH_ENDPOINT +
-      "?" +
-      CONFIG.RESPONSE_TYPE +
-      "&" +
-      CONFIG.CLIENT_ID +
-      "&" +
-      CONFIG.REDIRECT_URI +
-      "&" +
-      CONFIG.RETURN_TO;
+    history.push(`${process.env.PUBLIC_URL}/callback`)
   }
 
   render() {

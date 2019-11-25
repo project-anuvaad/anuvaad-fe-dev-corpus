@@ -46,6 +46,11 @@ class Callback extends React.Component {
         localStorage.removeItem("token");
         history.push(`${process.env.PUBLIC_URL}/logout`);
       }
+      else{
+        localStorage.setItem("token", '1234');
+        let api = new UserAuth();
+        this.props.APITransport(api);
+      }
     });
   }
 
