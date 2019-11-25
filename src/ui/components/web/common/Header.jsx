@@ -27,6 +27,7 @@ import { Button } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import ActionDelete from "@material-ui/icons/QuestionAnswer";
 import GroupIcon from "@material-ui/icons/Group";
+import logo from '../../../../assets/logo.png'
 
 const styles = {
   root: {
@@ -35,6 +36,10 @@ const styles = {
   flex: {
     flex: 1,
     marginLeft: "2%"
+  },
+  felxDemo: {
+    flex: 1,
+    marginLeft: "1%"
   }
 };
 
@@ -52,14 +57,14 @@ class Header extends React.Component {
     this.setState({ open: true });
   };
 
-  componentDidUpdate(){
-	if(this.state.open && this.props.tocken){
-		this.setState({ open: false });
-		
-	}
-	if(this.props.tocken){
-this.props.handleTockenChange()
-	}
+  componentDidUpdate() {
+    if (this.state.open && this.props.tocken) {
+      this.setState({ open: false });
+
+    }
+    if (this.props.tocken) {
+      this.props.handleTockenChange()
+    }
   }
 
   handleDrawerTranslate = () => {
@@ -75,8 +80,8 @@ this.props.handleTockenChange()
       heading: "Documents"
     });
   };
-  handleDrawerClose(){
-	  console.log()
+  handleDrawerClose() {
+    console.log()
     this.setState({
       open: false
     });
@@ -93,21 +98,28 @@ this.props.handleTockenChange()
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-  handleClick = () => {};
+  handleClick = () => { };
 
   render() {
-    const { classes, title, drawer } = this.props;
+    const { classes, title, drawer, forDemo } = this.props;
 
     const { auth, anchorEl, open } = this.state;
     const openEl = Boolean(anchorEl);
     var role = JSON.parse(localStorage.getItem("roles"));
     var useRole = new Array();
-	role.map((item, value) => (useRole.push(item), value !== role.length - 1 ? useRole.push(", ") : null));
+    role.map((item, value) => (useRole.push(item), value !== role.length - 1 ? useRole.push(", ") : null));
     return (
       <div  >
         <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
           <Toolbar disableGutters={!open}>
-            <Typography variant="title" color="inherit" className={classes.flex}>
+            {forDemo &&
+              <img src={logo} style={{
+                width: '2%',
+                display: 'block',
+                marginLeft: '1%'
+              }} />
+            }
+            <Typography variant="title" color="inherit" className={forDemo ? classes.felxDemo : classes.flex}>
               {title}
             </Typography>
             <Typography
@@ -171,93 +183,93 @@ this.props.handleTockenChange()
           </Toolbar>
         </AppBar>
         <div>
-          {!drawer && 
-          <Grid container spacing={24} style={{ padding: 24 }}>
-            {/* <Grid item xs={12} sm={12} lg={12} xl={12}>
+          {!drawer &&
+            <Grid container spacing={24} style={{ padding: 24 }}>
+              {/* <Grid item xs={12} sm={12} lg={12} xl={12}>
         <div style={{marginLeft:'-5%',marginTop:'-1%'}}>
         <AppBar />
         </div>
         </Grid> */}
-            {/* <Grid item xs={12} sm={12} lg={12} xl={12}> */}
-            {/* <div className={classes.root}>   */}
-            <Drawer
-              color="inherit"
-              variant="persistent"
-              anchor="left"
-        open={open}
-        
-         onClick={() => {
-                      this.handleDrawerClose();
-                      
-                    }}
-			  
-              classes={{
-                paper: classes.drawerPaper
-              }}
-            >
-              <List>
-                <ListItem>
-                  <ListItemText
-                    disableTypography
-                    primary={
-                      <Typography
-                        type="body2"
-                        style={{ color: "#FFFFFF", paddingBottom: "2%", marginLeft: "21%" }}
-                        variant="title"
-                        color="inherit"
-                        className={classes.flex}
-                      >
-                        SUVAS
+              {/* <Grid item xs={12} sm={12} lg={12} xl={12}> */}
+              {/* <div className={classes.root}>   */}
+              <Drawer
+                color="inherit"
+                variant="persistent"
+                anchor="left"
+                open={open}
+
+                onClick={() => {
+                  this.handleDrawerClose();
+
+                }}
+
+                classes={{
+                  paper: classes.drawerPaper
+                }}
+              >
+                <List>
+                  <ListItem>
+                    <ListItemText
+                      disableTypography
+                      primary={
+                        <Typography
+                          type="body2"
+                          style={{ color: "#FFFFFF", paddingBottom: "2%", marginLeft: "21%" }}
+                          variant="title"
+                          color="inherit"
+                          className={classes.flex}
+                        >
+                          SUVAS
                       </Typography>
-                    }
-                  />
-                </ListItem>
-                <Divider />
-                {role && Array.isArray(role) && role.includes("user")  && (
-                  <ListItem
-                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                    button
-                    onClick={() => {
-                      this.handleDrawerClose();
-                      history.push(`${process.env.PUBLIC_URL}/translate`);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <SearchIcon style={{ color: "white" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={
-                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                          Translate
-                        </Typography>
                       }
                     />
                   </ListItem>
-                )}
-                {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin")&& !role.includes("user") && (
-                  <ListItem
-                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                    button
-                    onClick={() => {
-                      this.handleDrawerClose();
-                      history.push(`${process.env.PUBLIC_URL}/dashboard`);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <SearchIcon style={{ color: "white" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={
-                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                          Translate
+                  <Divider />
+                  {role && Array.isArray(role) && role.includes("user") && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={() => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/translate`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <SearchIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Translate
                         </Typography>
-                      }
-                    />
-                  </ListItem>
-                )}
-                {/* {role.includes('analyzer') &&
+                        }
+                      />
+                    </ListItem>
+                  )}
+                  {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") && !role.includes("user") && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={() => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/dashboard`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <SearchIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Translate
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+                  {/* {role.includes('analyzer') &&
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={() => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/texttranslate`) }}>
 										<ListItemIcon>
 											<SearchIcon style={{ color: 'white' }} />
@@ -272,256 +284,256 @@ this.props.handleTockenChange()
 										/>
 									</ListItem>
 								} */}
-                {role && Array.isArray(role) && role.includes("analyzer") && (
-                  <ListItem
-                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                    button
-                    onClick={() => {
-                      this.handleDrawerClose();
-                      history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <SendIcon style={{ color: "white" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={
-                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                          Upload File
+                  {role && Array.isArray(role) && role.includes("analyzer") && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={() => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <SendIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Upload File
                         </Typography>
-                      }
-                    />
-                  </ListItem>
-                )}
-                {role && Array.isArray(role) && role.includes("dev") && (
-                  <ListItem
-                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                    button
-                    onClick={() => {
-                      this.handleDrawerClose();
-                      history.push(`${process.env.PUBLIC_URL}/newcorpus`);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <StarIcon style={{ color: "white" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={
-                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                          Corpus
+                        }
+                      />
+                    </ListItem>
+                  )}
+                  {role && Array.isArray(role) && role.includes("dev") && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={() => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/newcorpus`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <StarIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Corpus
                         </Typography>
-                      }
-                    />
-                  </ListItem>
-                )}
-                {role && Array.isArray(role) && role.includes("dev", "grader") && (
-                  <ListItem
-                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                    button
-                    onClick={() => {
-                      this.handleDrawerClose();
-                      history.push(`${process.env.PUBLIC_URL}/corpus`);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <SendIcon style={{ color: "white" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={
-                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                          Corpus List
+                        }
+                      />
+                    </ListItem>
+                  )}
+                  {role && Array.isArray(role) && role.includes("dev", "grader") && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={() => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/corpus`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <SendIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Corpus List
                         </Typography>
-                      }
-                    />
-                  </ListItem>
-                )}
-                {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader")) && (
-                  <ListItem
-                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                    button
-                    onClick={() => {
-                      this.handleDrawerClose();
-                      history.push(`${process.env.PUBLIC_URL}/benchmark`);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <SendIcon style={{ color: "white" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={
-                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                          Benchmark
+                        }
+                      />
+                    </ListItem>
+                  )}
+                  {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader")) && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={() => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/benchmark`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <SendIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Benchmark
                         </Typography>
-                      }
-                    />
-                  </ListItem>
-                )}
+                        }
+                      />
+                    </ListItem>
+                  )}
 
-                {role && Array.isArray(role) && role.includes('admin') &&
-									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
-										<ListItemIcon>
-											<Receipt style={{ color: 'white' }} />
-										</ListItemIcon>
-										<ListItemText
-											disableTypography
-											primary={(
-												<Typography type="body2" style={{ color: '#FFFFFF' }}>
-													Grader Reports
+                  {role && Array.isArray(role) && role.includes('admin') &&
+                    <ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
+                      <ListItemIcon>
+                        <Receipt style={{ color: 'white' }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={(
+                          <Typography type="body2" style={{ color: '#FFFFFF' }}>
+                            Grader Reports
           							</Typography>
-											)}
-										/>
-									</ListItem>
+                        )}
+                      />
+                    </ListItem>
 
-								} 
+                  }
 
-                {role && Array.isArray(role) && role.includes("admin") && (
+                  {role && Array.isArray(role) && role.includes("admin") && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/comparison-report`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <InsertChart style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Comparison Reports
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push("/pdftranslate");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <TranslateIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Translate File
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push("/viewtranslate");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <SendIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Documents
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+
+                  {role && Array.isArray(role) && role.includes("admin") && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push("/userdirectory");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <GroupIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            User Management
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+
+                  {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") && !role.includes("user") && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={() => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/qna`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <ActionDelete style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            QnA
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+
                   <ListItem
-                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                    style={{ paddingTop: "17%", paddingBottom: "17%", marginTop: "43%", marginLeft: "82%", width: "18%" }}
                     button
                     onClick={event => {
                       this.handleDrawerClose();
-                      history.push(`${process.env.PUBLIC_URL}/comparison-report`);
                     }}
                   >
                     <ListItemIcon>
-                      <InsertChart style={{ color: "white" }} />
+                      <ChevronLeftIcon style={{ color: "white" }} />
                     </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={
-                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                          Comparison Reports
-                        </Typography>
-                      }
-                    />
                   </ListItem>
-                )}
+                </List>
+              </Drawer>
 
-                {role && Array.isArray(role) && (role.includes("editor")|| role.includes("user")) && (
-                  <ListItem
-                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                    button
-                    onClick={event => {
-                      this.handleDrawerClose();
-                      history.push("/pdftranslate");
-                    }}
-                  >
-                    <ListItemIcon>
-                      <TranslateIcon style={{ color: "white" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={
-                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                          Translate File
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-                )}
-                {role && Array.isArray(role) && (role.includes("editor")|| role.includes("user")) && (
-                  <ListItem
-                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                    button
-                    onClick={event => {
-                      this.handleDrawerClose();
-                      history.push("/viewtranslate");
-                    }}
-                  >
-                    <ListItemIcon>
-                      <SendIcon style={{ color: "white" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={
-                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                          Documents
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-                )}
-                
-                {role && Array.isArray(role) && role.includes("admin") && (
-                  <ListItem
-                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                    button
-                    onClick={event => {
-                      this.handleDrawerClose();
-                      history.push("/userdirectory");
-                    }}
-                  >
-                    <ListItemIcon>
-                      <GroupIcon style={{ color: "white" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={
-                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                          User Management
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-                )}
 
-                {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") &&!role.includes("user") && (
-                  <ListItem
-                    style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                    button
-                    onClick={() => {
-                      this.handleDrawerClose();
-                      history.push(`${process.env.PUBLIC_URL}/qna`);
-                    }}
-                  >
-                    <ListItemIcon>
-                      <ActionDelete style={{ color: "white" }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      disableTypography
-                      primary={
-                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                          QnA
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-                )}
-
-                <ListItem
-                  style={{ paddingTop: "17%", paddingBottom: "17%", marginTop: "43%", marginLeft: "82%", width: "18%" }}
-                  button
-                  onClick={event => {
-                    this.handleDrawerClose();
-                  }}
-                >
-                  <ListItemIcon>
-                    <ChevronLeftIcon style={{ color: "white" }} />
-                  </ListItemIcon>
-                </ListItem>
-              </List>
-            </Drawer>
-            
-
-            <main
-              className={classNames(classes.content, {
-                [classes.contentShift]: open
-              })}
-            >
-              {this.state.open ? (
-                ""
-              ) : (!drawer &&
-                <Button color="primary" variant="contained" className={classes.buttonRight} style={{ zIndex: 9999 }} onClick={this.handleDrawerOpen}>
-                  <ChevronRightIcon />
-                </Button>
-              )}
-              <div className={classes.drawerHeader} />
-            </main>
-          </Grid>
+              <main
+                className={classNames(classes.content, {
+                  [classes.contentShift]: open
+                })}
+              >
+                {this.state.open ? (
+                  ""
+                ) : (!drawer &&
+                  <Button color="primary" variant="contained" className={classes.buttonRight} style={{ zIndex: 9999 }} onClick={this.handleDrawerOpen}>
+                    <ChevronRightIcon />
+                  </Button>
+                  )}
+                <div className={classes.drawerHeader} />
+              </main>
+            </Grid>
           }
         </div>
       </div>
