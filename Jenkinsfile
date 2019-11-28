@@ -25,9 +25,9 @@ docker run --env REACT_APP_BASE_URL=$base_url --env REACT_APP_APIGW_BASE_URL=$ap
 docker rm "$JOB_BASE_NAME"
 commit_id=$(git rev-parse --short HEAD)
 echo $commit_id> commit_id.txt
-docker build -t gohila/$image_name:$commit_id .
+docker build -t anuvaadio/$image_name:$commit_id .
 docker login -u $dockerhub_user -p $dockerhub_pass
-docker push gohila/$image_name:$commit_id
+docker push anuvaadio/$image_name:$commit_id
 
 '''
 
