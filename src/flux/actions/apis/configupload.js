@@ -5,7 +5,7 @@ import API from "./api";
 import C from "../constants";
 
 export default class ConfigUpload extends API {
-    constructor(configFile, name, timeout = 2000) {
+    constructor(configFile,name, timeout = 2000) {
         super('POST', timeout, false, 'MULTIPART');
         this.type = C.CONFIGUPLOAD;
         this.file = configFile
@@ -18,12 +18,12 @@ export default class ConfigUpload extends API {
 
     processResponse(res) {
         super.processResponse(res)
-
-
-        console.log("resp", res.data)
+        
+        
+        console.log("resp",res.data)
         if (res.data) {
-            this.config = { 'data': res.data, 'name': this.name };
-
+            this.config = {'data':res.data, 'name':this.name};
+            
         }
     }
 
@@ -32,12 +32,19 @@ export default class ConfigUpload extends API {
     }
 
     getFormData() {
-        return this.file
+        const formData = new FormData();
+
+            formData.append('file', this.file);
+            formData.append('name', this.name);
+            
+        return this.file;
     }
 
     getHeaders() {
         return {
-            headers: { 'Content-Type': 'text/octet-stream' }
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
         }
     }
 

@@ -26,9 +26,9 @@ class NewExtraction extends React.Component {
       configName: "",
       csvName: "",
       value: 1,
-      
-      message:'Process started, This might be long running operation, kindly look the status of your workspace under Here',
-    
+
+      message: 'Process started, This might be long running operation, kindly look the status of your workspace under Here',
+
       csvData:
         "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",
       processData:
@@ -36,13 +36,41 @@ class NewExtraction extends React.Component {
     };
   }
 
+  readFileDataAsBase64(file) {
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        resolve(event.target.result);
+      };
+
+      reader.onerror = (err) => {
+        reject(err);
+      };
+
+      reader.readAsBinaryString(file);
+    });
+  }
+
   handleChange = (key, event) => {
     console.log(event.target.files[0], key);
     this.setState({
-      [key]: event.target.files[0],
       configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
       csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
     });
+    this.readFileDataAsBase64(event.target.files[0]).then((result, err) => {
+      console.log(result)
+      console.log(err)
+      this.setState({
+        [key]: result
+      });
+    })
+    // this.setState({
+    //   [key]: new Blob(event.target.files[0]),
+    //   configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
+    //   csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
+    // });
   };
 
   handleTextChange(key, event) {
@@ -53,59 +81,60 @@ class NewExtraction extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    
+
     if (prevProps.configUplaod !== this.props.configUplaod) {
-      console.log("-----",this.props.configUplaod)
-      this.setState({files:this.props.configUplaod})
-    
+      console.log("-----", this.props.configUplaod)
+      this.setState({ files: this.props.configUplaod })
 
-    if(this.props.configUplaod.length===2)
-    {
-      const configFilepath = this.props.configUplaod[0].name == "configFile" ? this.props.configUplaod[0].data.filepath : this.props.configUplaod[1].data.filepath
-      const csvFilepath = this.props.configUplaod[0].name == "csvFile" ? this.props.configUplaod[0].data.filepath : this.props.configUplaod[1].data.filepath
-      
 
-      const { APITransport } = this.props;
-    
-    const apiObj = new RunExperiment(
-      this.state.workspaceName, configFilepath, csvFilepath
-    );
-    
-    this.state.csvFile && APITransport(apiObj);
-    this.setState({ showLoader: true});
+      if (this.props.configUplaod.length === 2) {
+        const configFilepath = this.props.configUplaod[0].name == "configFile" ? this.props.configUplaod[0].data.filepath : this.props.configUplaod[1].data.filepath
+        const csvFilepath = this.props.configUplaod[0].name == "csvFile" ? this.props.configUplaod[0].data.filepath : this.props.configUplaod[1].data.filepath
+
+
+        const { APITransport } = this.props;
+
+        const apiObj = new RunExperiment(
+          this.state.workspaceName, configFilepath, csvFilepath
+        );
+
+        this.state.csvFile && APITransport(apiObj);
+        this.setState({ showLoader: true });
+      }
+
     }
 
-  }
+    if (prevProps.workspaceDetails !== this.props.workspaceDetails) {
+      this.setState({
+        open: true, workspaceName: "",
+        configFile: '',
+        csvFile: '', files: [], workspaceName: '', configName: ''
+      })
 
-  if (prevProps.workspaceDetails !== this.props.workspaceDetails) {
-    this.setState({open:true,workspaceName: "",
-    configFile: '',
-      csvFile: '',files:[],workspaceName:'',configName:''})
 
-
-    setTimeout(()=>{ history.push(`${process.env.PUBLIC_URL}/Workspace-details`)}, 3000);
-    //
-  }
+      setTimeout(() => { history.push(`${process.env.PUBLIC_URL}/Workspace-details`) }, 3000);
+      //
+    }
   }
 
   handleSubmit() {
-    console.log(this.state.workspaceName, this.state.configFile,this.state.csvFile)
-    if(this.state.workspaceName && this.state.configFile && this.state.csvFile ){
-    const { APITransport } = this.props;
-    
-    const apiObj = new ConfigUpload(
-      this.state.configFile,
-      "configFile"
-    );
-    this.state.configFile && APITransport(apiObj);
-    const apiObj2 = new ConfigUpload(
-      this.state.csvFile,
-      "csvFile"
-    );
-    this.state.csvFile && APITransport(apiObj2);
-    this.setState({ showLoader: true });
+    console.log(this.state.workspaceName, this.state.configFile, this.state.csvFile)
+    if (this.state.workspaceName && this.state.configFile && this.state.csvFile) {
+      const { APITransport } = this.props;
+
+      const apiObj = new ConfigUpload(
+        this.state.configFile,
+        "configFile"
+      );
+      this.state.configFile && APITransport(apiObj);
+      const apiObj2 = new ConfigUpload(
+        this.state.csvFile,
+        "csvFile"
+      );
+      this.state.csvFile && APITransport(apiObj2);
+      this.setState({ showLoader: true });
     }
-    else{
+    else {
       alert("Fields should not be empty")
     }
     // history.push(`${process.env.PUBLIC_URL}/tocken-extraction`);
@@ -148,7 +177,7 @@ class NewExtraction extends React.Component {
             <Grid item xs={6} sm={6} lg={6} xl={6} style={{ marginTop: "-7px", height: "56px" }}>
               <Grid container spacing={8}>
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
-                  <FileUpload accept=".txt" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="configFile" />
+                  <FileUpload accept=".yaml" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="configFile" />
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -205,12 +234,12 @@ class NewExtraction extends React.Component {
             </Grid>
           </Grid>
         </Paper>
-                {this.state.open &&
-        <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}
-                            
-                                onClose={this.handleClose}
-                                variant="success"
-                message= {this.state.message} /> }
+        {this.state.open &&
+          <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}
+
+            onClose={this.handleClose}
+            variant="success"
+            message={this.state.message} />}
       </div>
     );
   }
