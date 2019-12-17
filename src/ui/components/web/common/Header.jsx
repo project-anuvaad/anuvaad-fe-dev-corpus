@@ -98,7 +98,6 @@ class Header extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-  handleClick = () => { };
 
   render() {
     const { classes, title, drawer, forDemo } = this.props;
@@ -225,6 +224,28 @@ class Header extends React.Component {
                     />
                   </ListItem>
                   <Divider />
+
+                  <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push("/data-pipeline-tools");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <SendIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Data Pipeline
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+
                   {role && Array.isArray(role) && role.includes("user") && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
