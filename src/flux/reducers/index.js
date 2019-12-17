@@ -46,6 +46,8 @@ import fetchWorkspace from './fetchworkspace';
 import fetchWorkspaceDetails from './fetchworkspacedetails';
 import updatePasswordstatus from './updatepassword';
 
+import uploadTokenValue from './uploadtoken';
+
 export default {
     login,
     automl,
@@ -90,5 +92,6 @@ export default {
     configUplaod,
     workspaceDetails,
     fetchWorkspace,
-    fetchWorkspaceDetails
+    fetchWorkspaceDetails,
+    uploadTokenValue
 };

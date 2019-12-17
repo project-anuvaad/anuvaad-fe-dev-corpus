@@ -39,7 +39,7 @@ export default class RunExperiment extends API {
             paragraph_workspace:{
         title: this.title,
        config_file_location: this.config_file_location,
-       csv_file_location: this.csv_file_location}
+       paragraph_file_location: this.csv_file_location}
               };
       }
       
