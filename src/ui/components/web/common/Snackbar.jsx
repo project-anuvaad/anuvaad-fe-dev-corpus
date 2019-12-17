@@ -43,7 +43,7 @@ const styles1 = theme => ({
 });
 
 function MySnackbarContent(props) {
-    const { classes, className, message, onClose, variant, ...other } = props;
+    const { classes, className, message, onClose, variant,open, ...other } = props;
     const Icon = variantIcon[variant];
 
     return (
@@ -102,7 +102,7 @@ class CustomizedSnackbars extends React.Component {
         return (
             <div>
                 <Snackbar
-                    anchorOrigin={{
+                    anchorOrigin= {this.props.anchorOrigin ? this.props.anchorOrigin: {
                         vertical: 'bottom',
                         horizontal: 'left',
                     }}

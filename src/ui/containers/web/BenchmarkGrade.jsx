@@ -61,6 +61,7 @@ class BenchmarkGrade extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.match.params)
     this.setState({
       TableHeaderValues:[
         "Source Sentence",
