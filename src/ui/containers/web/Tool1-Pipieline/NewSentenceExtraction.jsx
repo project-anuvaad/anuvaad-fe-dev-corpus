@@ -54,15 +54,19 @@ class NewExtraction extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.configUplaod !== this.props.configUplaod) {
       this.setState({ files: this.props.configUplaod });
-
-      if (this.props.configUplaod.length === 2) {
+      const len = this.props.configUplaod.length
+      if (len%2 === 0) {
+        console.log("t1",this.props.configUplaod[len-1])
+        console.log("t2",this.props.configUplaod[len-2])
+        
         const configFilepath =
-          this.props.configUplaod[0].name == "configFile" ? this.props.configUplaod[0].data.filepath : this.props.configUplaod[1].data.filepath;
+          this.props.configUplaod[len-1].name == "configFile" ? this.props.configUplaod[len-1].data.filepath : this.props.configUplaod[len-2].data.filepath;
         const csvFilepath =
-          this.props.configUplaod[0].name == "csvFile" ? this.props.configUplaod[0].data.filepath : this.props.configUplaod[1].data.filepath;
+          this.props.configUplaod[len-1].name == "csvFile" ? this.props.configUplaod[len-1].data.filepath : this.props.configUplaod[len-2].data.filepath;
 
         const { APITransport } = this.props;
 
+        console.log(configFilepath, csvFilepath)
         const apiObj = new RunExperiment(this.state.workspaceName, configFilepath, csvFilepath);
 
         this.state.csvFile && APITransport(apiObj);

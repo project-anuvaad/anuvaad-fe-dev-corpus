@@ -20,7 +20,7 @@ class ApplyToken extends React.Component {
         this.state = {
             value:1,
             processData: 'Press "Next" to extract sentences',
-            activeStep:1,
+            activeStep:0,
             workspaceDetails:''
             
         }

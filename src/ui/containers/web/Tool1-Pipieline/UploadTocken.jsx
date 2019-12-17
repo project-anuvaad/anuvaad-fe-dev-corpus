@@ -17,6 +17,7 @@ import FileUpload from "../../../components/web/common/FileUpload";
 import history from "../../../../web.history";
 import ConfigUpload from "../../../../flux/actions/apis/configupload";
 import UploadApiToken from "../../../../flux/actions/apis/uploadtoken";
+import Snackbar from "../../../components/web/common/Snackbar";
 
 class UploadToken extends React.Component {
   constructor(props) {
@@ -28,7 +29,8 @@ class UploadToken extends React.Component {
       positiveToken: "",
       negativeToken: "",
       workspaceName: this.props.match.params.name,
-      session_id: this.props.match.params.session_id
+      session_id: this.props.match.params.session_id,
+      message: "Step 2 process started successfully",
     };
   }
 
@@ -191,6 +193,17 @@ class UploadToken extends React.Component {
             </Grid>
           </Grid>
         </Paper>
+
+        {this.state.open && (
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={this.state.open}
+            autoHideDuration={6000}
+            onClose={this.handleClose}
+            variant="success"
+            message={this.state.message}
+          />
+        )}
       </div>
     );
   }
