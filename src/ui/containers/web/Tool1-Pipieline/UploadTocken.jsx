@@ -71,7 +71,7 @@ class UploadToken extends React.Component {
       this.state.negativeToken && APITransport(apiObj2);
       this.setState({ showLoader: true });
     } else {
-      alert("Fields should not be empty");
+      alert("Please upload token file properly");
     }
 
     // history.push(`${process.env.PUBLIC_URL}/sentence-extraction`);
