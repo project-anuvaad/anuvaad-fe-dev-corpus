@@ -17,8 +17,7 @@ class TokenExtraction extends React.Component {
         super(props)
         this.state = {
             value:1,
-            steps:["Token extraction", "Apply token", "Extract sentences"],
-            activeStep:0,
+            activeStep:1,
             processData: 'Press "Next" to goto Step 2'
             
         }

@@ -36,6 +36,9 @@ class ExtractionWorkspace extends React.Component {
     console.log("=====",rowData)
     this.setState({workSpacename: rowData[0], id:rowData[1]})
     if(rowData[2]=="IN-PROGRESS"){
+      history.push(`${process.env.PUBLIC_URL}/Sentence-Extraction`+ "/" + rowData[0] + "/" + rowData[1])
+    }
+    else if(rowData[2]=="At Step1"){
       history.push(`${process.env.PUBLIC_URL}/apply-token`+ "/" + rowData[0] + "/" + rowData[1])
     }
     }

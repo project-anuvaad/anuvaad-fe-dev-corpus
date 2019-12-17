@@ -129,7 +129,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute path={`${process.env.PUBLIC_URL}/apply-token/:name/:session_id`} title="STAGE 1, TOOLCHAIN" component={ApplyTocken}  authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/data-pipeline-tools`} title="DATA PIPELINE DASHBOARD" component={DataPipeline}  authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/upload-token/:name/:session_id`} title="STAGE 1, TOOLCHAIN" component={UploadTocken}  authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/sentence-extraction`} title="STAGE 1, TOOLCHAIN" component={SentenceExtraction}  authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/sentence-extraction/:name/:session_id`} title="STAGE 1, TOOLCHAIN" component={SentenceExtraction}  authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/new-extraction`} title="STAGE 1, TOOLCHAIN" component={NewSentenceExtraction}  authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/token-extraction`} title="STAGE 1, TOOLCHAIN" component={TockenExtraction}  authenticate={this.authenticateUser} />
             
