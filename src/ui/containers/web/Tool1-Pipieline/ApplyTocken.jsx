@@ -44,7 +44,7 @@ class ApplyToken extends React.Component {
       }
 
     handleSubmit() {
-        history.push(`${process.env.PUBLIC_URL}/upload-token`);
+        history.push(`${process.env.PUBLIC_URL}/upload-token/` + this.props.match.params.name + "/" + this.props.match.params.session_id);
       }
 
     handleChange = (key, event) => {
