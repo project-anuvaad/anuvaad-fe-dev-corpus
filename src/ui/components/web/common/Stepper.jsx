@@ -16,7 +16,7 @@ class HorizontalLabelPositionBelowStepper extends React.Component {
           {steps.map(label => (
             <Step key={label}>
               <StepLabel StepIconProps={{
-      classes: { root: {color:"blue"} }
+      color:"blue"
     }}>{label}</StepLabel>
             </Step>
           ))}

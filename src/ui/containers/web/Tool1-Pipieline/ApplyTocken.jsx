@@ -38,8 +38,8 @@ class ApplyToken extends React.Component {
 
       componentDidUpdate(prevProps) {
         if (prevProps.fetchWorkspaceDetails !== this.props.fetchWorkspaceDetails) {
-          console.log(this.props.fetchWorkspaceDetails)
-          this.setState({ workspaceDetails: this.props.fetchWorkspaceDetails});
+          console.log("----",this.props.fetchWorkspaceDetails)
+          this.setState({ workspaceDetails: this.props.fetchWorkspaceDetails.data});
         }
       }
 
@@ -65,50 +65,63 @@ class ApplyToken extends React.Component {
                 <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
                 <StepDetals workSpace={this.props.match.params.name} activeStep={this.state.activeStep}/>
                 <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
+            
+            <Grid item xs={3} sm={3} lg={3} xl={3}>
               <Typography gutterBottom variant="title" component="h2" >
               Positive tokens :
               </Typography>
               <br />
             </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6} >
+            <Grid item xs={7} sm={7} lg={7} xl={7} >
             <Grid container spacing={8}>
-                <Grid item xs={4} sm={4} lg={4} xl={4} style={{  marginTop: "-27px" }}>
-                <Button variant="contained" color="primary" style={{ width: "85%", marginTop: "6%", height: "56px" }}>
+            <Grid item xs={3} sm={3} lg={3} xl={3}>
+          
+          </Grid>
+                <Grid item xs={4} sm={4} lg={4} xl={4} style={{  marginTop: "-10px" }}>
+                <a  href={(process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : 'http://auth.anuvaad.org') +  "/download/"+ this.state.workspaceDetails.token_file} style={{textDecoration:"none"}}>
+                <Button variant="contained" color="primary" style={{ width: "85%", height: "56px" }}>
                     Download & View
-                  </Button>
+                  </Button> </a>
                 </Grid>
 
-                <Grid item xs={6} sm={6} lg={6} xl={6}>
+                <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography gutterBottom variant="title" component="h2" >
-              Found 0 tokens
+                Found {this.state.workspaceDetails.token_count ? this.state.workspaceDetails.token_count : 0 } tokens
               </Typography>
                 </Grid>
               </Grid>
+            
               </Grid>
-            <Grid item xs={5} sm={5} lg={5} xl={5} style={{  marginTop: "40px" }}>
+    
+              
+            <Grid item xs={3} sm={3} lg={3} xl={3} style={{  marginTop: "40px" }}>
               <Typography gutterBottom variant="title" component="h2" >
               Negative tokens :
               </Typography>
               <br />
             </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6}  style={{  marginTop: "40px" }} >
+            <Grid item xs={7} sm={7} lg={7} xl={7} style={{  marginTop: "30px" }}>
             <Grid container spacing={8}>
-                <Grid item xs={4} sm={4} lg={4} xl={4} style={{  marginTop: "-27px" }}>
-                <Button variant="contained" color="primary" style={{ width: "85%", marginTop: "6%", height: "56px" }}>
+            <Grid item xs={3} sm={3} lg={3} xl={3}>
+          
+          </Grid>
+                <Grid item xs={4} sm={4} lg={4} xl={4} >
+
+                <a  href={(process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : 'http://auth.anuvaad.org') +  "/download/"+ this.state.workspaceDetails.negative_token_file} style={{textDecoration:"none"}}>
+                <Button variant="contained" color="primary" style={{ width: "85%", height: "56px" }}>
                     Download & View
-                  </Button>
+                  </Button> </a>
                 </Grid>
 
-                <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <Typography gutterBottom variant="title" component="h2" >
-              Found 0 tokens
+                <Grid item xs={4} sm={4} lg={4} xl={4}>
+                <Typography gutterBottom variant="title" component="h2" style={{  marginTop: "10px" }}>
+                  Found {this.state.workspaceDetails.negative_token_count ? this.state.workspaceDetails.negative_token_count : 0 } tokens
               </Typography>
                 </Grid>
               </Grid>
               </Grid>
-
-              <Grid item xs={5} sm={5} lg={5} xl={5}style={{ marginTop: "56px"}}>
+    
+              <Grid item xs={3} sm={3} lg={3} xl={3}style={{ marginTop: "56px"}}>
               <Typography
                 variant="subtitle1"
                 color="inherit"
@@ -118,15 +131,22 @@ class ApplyToken extends React.Component {
               </Typography>
               <br />
             </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ marginTop: "40px"}}>
+            <Grid item xs={7} sm={7} lg={7} xl={7} >
+            <Grid container spacing={8}>
+            <Grid item xs={3} sm={3} lg={3} xl={3}>
+          
+          </Grid>
+            <Grid item xs={8} sm={8} lg={8} xl={8} style={{ marginTop: "40px"}}>
               <Button
                 variant="contained"
                 color="primary"
-                style={{ width: "60%", height: "56px" }}
+                style={{ width: "87%", height: "60px" }}
                 onClick={this.handleSubmit.bind(this)}
               >
                 Next
               </Button>
+              </Grid>
+              </Grid>
             </Grid>
             </Grid>
                 </Paper>

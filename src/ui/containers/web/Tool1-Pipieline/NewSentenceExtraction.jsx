@@ -15,6 +15,7 @@ import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
 import ConfigUpload from "../../../../flux/actions/apis/configupload";
 import RunExperiment from "../../../../flux/actions/apis/runexperiment";
+import Spinner from "../../../components/web/common/Spinner";
 
 class NewExtraction extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class NewExtraction extends React.Component {
       configName: "",
       csvName: "",
       value: 1,
+      load:false,
 
       message: "Process started, This might be long running operation, kindly look the status of your workspace under Here",
 
@@ -36,12 +38,38 @@ class NewExtraction extends React.Component {
     };
   }
 
+  readFileDataAsBinary(file) {
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        resolve(event.target.result);
+      };
+
+      reader.onerror = (err) => {
+        reject(err);
+      };
+
+      reader.readAsBinaryString(file);
+    });
+  }
+
   handleChange = (key, event) => {
     this.setState({
-      [key]: event.target.files[0],
       configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
       csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
     });
+    this.readFileDataAsBinary(event.target.files[0]).then((result, err) => {
+      this.setState({
+        [key]: result
+      });
+    })
+    // this.setState({
+    //   [key]: new Blob(event.target.files[0]),
+    //   configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
+    //   csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
+    // });
   };
 
   handleTextChange(key, event) {
@@ -56,8 +84,6 @@ class NewExtraction extends React.Component {
       this.setState({ files: this.props.configUplaod });
       const len = this.props.configUplaod.length
       if (len%2 === 0) {
-        console.log("t1",this.props.configUplaod[len-1])
-        console.log("t2",this.props.configUplaod[len-2])
         
         const configFilepath =
           this.props.configUplaod[len-1].name == "configFile" ? this.props.configUplaod[len-1].data.filepath : this.props.configUplaod[len-2].data.filepath;
@@ -75,7 +101,7 @@ class NewExtraction extends React.Component {
     }
 
     if (prevProps.workspaceDetails !== this.props.workspaceDetails) {
-      this.setState({ open: true, workspaceName: "", configFile: "", csvFile: "", files: [], workspaceName: "", configName: "", csvName: "" });
+      this.setState({ open: true,load:false, workspaceName: "", configFile: "", csvFile: "", files: [], workspaceName: "", configName: "", csvName: "" });
 
       setTimeout(() => {
         history.push(`${process.env.PUBLIC_URL}/Workspace-details`);
@@ -92,7 +118,7 @@ class NewExtraction extends React.Component {
       this.state.configFile && APITransport(apiObj);
       const apiObj2 = new ConfigUpload(this.state.csvFile, "csvFile");
       this.state.csvFile && APITransport(apiObj2);
-      this.setState({ showLoader: true });
+      this.setState({ showLoader: true,load:true });
     } else {
       alert("Fields should not be empty");
     }
@@ -146,7 +172,7 @@ class NewExtraction extends React.Component {
             </Grid>
             <Grid item xs={12} sm={12} lg={12} xl={12}>
               <Typography
-                variant="subtitle"
+                variant="subtitle2"
                 color="inherit"
                 style={{ textAlign: "justify", color: "#ACACAC", marginRight: "28%", marginTop: "40px" }}
               >
@@ -173,7 +199,7 @@ class NewExtraction extends React.Component {
 
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography
-                variant="subtitle"
+                variant="subtitle2"
                 color="inherit"
                 style={{ textAlign: "justify", color: "#ACACAC", marginTop: "7%", width: "80%", marginLeft: "2px" }}
               >
@@ -203,6 +229,7 @@ class NewExtraction extends React.Component {
             message={this.state.message}
           />
         )}
+        {this.state.load && <Spinner/>}
       </div>
     );
   }

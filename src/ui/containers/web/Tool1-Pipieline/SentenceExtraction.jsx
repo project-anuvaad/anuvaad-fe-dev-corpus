@@ -11,20 +11,46 @@ import TabDetals from "./WorkspaceDetailsTab";
 import StepDetals from "./TockenExtractionSteps";
 import FileUpload from "../../../components/web/common/FileUpload";
 import history from "../../../../web.history";
+import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchworkspacedetails";
 
 class SentenceExtraction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       value: 1,
-
       activeStep: 2
     };
+  }
+
+ 
+
+
+  componentDidMount() {
+    console.log("--", this.props.match.params.session_id)
+    const { APITransport } = this.props;
+    let api = new FetchWorkspaceDetails(
+        this.props.match.params.session_id,
+      );
+      APITransport(api);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.fetchWorkspaceDetails !== this.props.fetchWorkspaceDetails) {
+      console.log("----",this.props.fetchWorkspaceDetails.data)
+      this.setState({ workspaceDetails: this.props.fetchWorkspaceDetails.data});
+    }
+  }
+
+  handleClick=()=>{
+    this.setState({
+        activeStep:3
+    })
   }
 
   handleChange = (key, event) => {
     console.log(event.target.files[0], key);
     this.setState({
+        activeStep:3,
       [key]: event.target.files[0],
       configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
       csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
@@ -36,29 +62,39 @@ class SentenceExtraction extends React.Component {
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
         <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
-          <StepDetals activeStep={this.state.activeStep} />
+          <StepDetals workSpace={this.props.match.params.name} activeStep={this.state.activeStep} />
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
-            <Grid item xs={5} sm={5} lg={5} xl={5} style={{ marginTop: "10px" }}>
+            <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
                 Negative tokens :
               </Typography>
               <br />
             </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ marginTop: "10px" }}>
-              <Grid container spacing={8}>
-                <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "-30px" }}>
-                  <Button variant="contained" color="primary" style={{ width: "85%", marginTop: "6%", height: "56px" }}>
+            <Grid item xs={7} sm={7} lg={7} xl={7} style={{  marginTop: "30px" }}>
+            <Grid container spacing={8}>
+            <Grid item xs={3} sm={3} lg={3} xl={3}>
+          
+          </Grid>
+
+          
+
+                <Grid item xs={4} sm={4} lg={4} xl={4} >
+
+                <a  href={(process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : 'http://auth.anuvaad.org') +  "/download/"+ (this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file : '')} style={{textDecoration:"none"}}>
+                <Button variant="contained" color="primary" onClick={this.handleClick}  style={{ width: "85%", height: "56px", marginTop: "-30px" }}>
                     Download & View
-                  </Button>
+                  </Button> </a>
+
+                
                 </Grid>
 
-                <Grid item xs={6} sm={6} lg={6} xl={6}>
-                  <Typography gutterBottom variant="title" component="h2">
-                    Found 0 tokens
-                  </Typography>
+                <Grid item xs={4} sm={4} lg={4} xl={4}>
+                <Typography gutterBottom variant="title" component="h2" style={{  marginTop: "-15px" }}>
+                  Found {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_count                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     : 0 } tokens
+              </Typography>
                 </Grid>
               </Grid>
-            </Grid>
+              </Grid>
           </Grid>
         </Paper>
       </div>
@@ -69,7 +105,7 @@ class SentenceExtraction extends React.Component {
 const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
-  corpus: state.corpus
+  fetchWorkspaceDetails: state.fetchWorkspaceDetails
 });
 
 const mapDispatchToProps = dispatch =>
