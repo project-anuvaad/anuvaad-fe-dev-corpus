@@ -20,7 +20,7 @@ class ExistingWorkspace extends React.Component {
 
   componentDidMount() {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage,this.state.page+1,"PROCESSING");
+    const apiObj = new FetchWorkspace(this.state.rowsPerPage,this.state.page+1,"PROCESSED");
     APITransport(apiObj);
     this.setState({ showLoader: true });
   }
@@ -34,10 +34,22 @@ class ExistingWorkspace extends React.Component {
   changePage = (page, rowsPerPage) => {
       console.log("====",page, rowsPerPage)
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(rowsPerPage,page+1,"PROCESSING");
+    const apiObj = new FetchWorkspace(rowsPerPage,page+1,"PROCESSED");
     APITransport(apiObj);
     this.setState({ page:page,rowsPerPage });
   };
+
+
+  handleClick=(rowData)=>{
+    console.log("=====",rowData)
+    this.setState({workSpacename: rowData[0], id:rowData[1]})
+    if(rowData[2]=="At Step2"){
+      history.push(`${process.env.PUBLIC_URL}/Sentence-Extraction`+ "/" + rowData[0] + "/" + rowData[1])
+    }
+    else if(rowData[2]=="At Step1"){
+      history.push(`${process.env.PUBLIC_URL}/apply-token`+ "/" + rowData[0] + "/" + rowData[1])
+    }
+    }
 
   
 
@@ -49,24 +61,56 @@ class ExistingWorkspace extends React.Component {
 
 
     const columns = [
-        {
+      {
+      
+        name: "title",
+        label: "Workspace",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
+      {
+        name: "session_id",
+        label: "id",
+        options: {
+            display: 'excluded',
+        }
+    },
+    {
+      name: "step",
+      label: "step",
+      options: {
+          display: 'excluded',
+      }
+  },
+      {
+        name: "status",
+        label: "Status",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
+      {
+        name: "token_count",
+        label: "Possitive Token",
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
         
-          name: "title",
-          label: "Workspace",
-          options: {
-            filter: true,
-            sort: true
-          }
-        },
-        {
-          name: "",
-          label: "Status",
-          options: {
-            filter: true,
-            sort: true
-          }
-        },
-    ]
+      {
+        name: "negative_token_count",
+        label: "Negative Token",
+        options: {
+          filter: true,
+          sort: true
+        }
+      }
+      
+  ]
 
     const options = {
         filterType: "checkbox",
@@ -76,8 +120,9 @@ class ExistingWorkspace extends React.Component {
         filter: false,
         serverSide: true,
       count: this.state.count,
-      selectableRows: false,
+      selectableRows: "none",
       page: this.state.page/this.state.rowsPerPage,
+      onRowClick: rowData => this.handleClick(rowData),
       onTableChange: (action, tableState) => {
         console.log(action, tableState);
 

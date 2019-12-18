@@ -32,13 +32,12 @@ export default class ConfigUpload extends API {
     }
 
     getFormData() {
-        
         const formData = new FormData();
 
             formData.append('file', this.file);
             formData.append('name', this.name);
             
-        return formData;
+        return this.file;
     }
 
     getHeaders() {

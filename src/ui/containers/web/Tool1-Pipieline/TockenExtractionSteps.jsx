@@ -25,13 +25,18 @@ class Steps extends React.Component {
       <div>
         <Stepper steps={this.state.steps} activeStep={this.props.activeStep} alternativeLabel style={{ marginTop: "3%",marginRight:'3%' }}/>
         <Grid container spacing={24} style={{  marginLeft: "12%" }}>
-          <Grid item xs={5} sm={5} lg={5} xl={5}>
+          <Grid item xs={3} sm={3} lg={3} xl={3}>
             <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
               Workspace name :
             </Typography>
             <br />
           </Grid>
-          <Grid item xs={6} sm={6} lg={6} xl={6}>
+          <Grid item xs={7} sm={7} lg={7} xl={7}>
+          <Grid container spacing={8}>
+          <Grid item xs={3} sm={3} lg={3} xl={3}>
+          
+                </Grid>
+                <Grid item xs={8} sm={8} lg={8} xl={8}>
             <TextField
               value={this.props.workSpace}
               disabled
@@ -41,8 +46,10 @@ class Steps extends React.Component {
                 this.handleTextChange("workspaceName", event);
               }}
               variant="outlined"
-              style={{ width: "60%" }}
+              style={{ width: "87%" }}
             />
+          </Grid>
+          </Grid>
           </Grid>
         </Grid>
         

@@ -18,6 +18,7 @@ import history from "../../../../web.history";
 import ConfigUpload from "../../../../flux/actions/apis/configupload";
 import UploadApiToken from "../../../../flux/actions/apis/uploadtoken";
 import Snackbar from "../../../components/web/common/Snackbar";
+import Spinner from "../../../components/web/common/Spinner";
 
 class UploadToken extends React.Component {
   constructor(props) {
@@ -30,7 +31,8 @@ class UploadToken extends React.Component {
       negativeToken: "",
       workspaceName: this.props.match.params.name,
       session_id: this.props.match.params.session_id,
-      message: "Step 2 process started successfully",
+      message: "Step 2 process started successfully ",
+      load: false
     };
   }
 
@@ -48,16 +50,16 @@ class UploadToken extends React.Component {
         console.log("----&&&&--", positiveFilepath, negativeFilepath);
         const apiObj = new UploadApiToken(this.state.session_id, this.state.workspaceName, positiveFilepath, negativeFilepath);
 
-         APITransport(apiObj);
+        APITransport(apiObj);
         this.setState({ showLoader: true });
       }
     }
 
     if (prevProps.uploadTokenValue !== this.props.uploadTokenValue) {
-      this.setState({ open: true, files: [], negativeToken: "", positiveToken: "" });
+      this.setState({ open: true,load:false, files: [], negativeToken: "", positiveToken: "" });
 
       setTimeout(() => {
-        history.push(`${process.env.PUBLIC_URL}/Workspace-details`);
+        history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
       }, 3000);
     }
   }
@@ -71,7 +73,7 @@ class UploadToken extends React.Component {
       this.state.positiveToken && APITransport(apiObj);
       const apiObj2 = new ConfigUpload(this.state.negativeToken, "negativeToken");
       this.state.negativeToken && APITransport(apiObj2);
-      this.setState({ showLoader: true });
+      this.setState({ showLoader: true,load: true });
     } else {
       alert("Please upload token file properly");
     }
@@ -94,7 +96,7 @@ class UploadToken extends React.Component {
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
         <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
           <StepDetals workSpace={this.props.match.params.name} activeStep={this.state.activeStep} />
-          <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+          <Grid container spacing={24} style={{ marginTop: "1", marginLeft: "12%" }}>
             <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginTop: "30px" }}>
               <Typography gutterBottom variant="title" component="h2">
                 Positive tokens :
@@ -118,7 +120,7 @@ class UploadToken extends React.Component {
                   />
                 </Grid>
                 <Grid item xs={1} sm={1} lg={1} xl={1}>
-                  <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "30px", marginLeft: "15%" }}>
+                  <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "30px", marginLeft: "15%", paddingLeft:"20%" }}>
                     or
                   </Typography>
                 </Grid>
@@ -160,7 +162,7 @@ class UploadToken extends React.Component {
                   />
                 </Grid>
                 <Grid item xs={1} sm={1} lg={1} xl={1}>
-                  <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "30px", marginLeft: "15%" }}>
+                  <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "30px", marginLeft: "15%", paddingLeft: "20%" }}>
                     or
                   </Typography>
                 </Grid>
@@ -180,16 +182,22 @@ class UploadToken extends React.Component {
               </Grid>
             </Grid>
 
-            <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "56px" }}>
+            <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginTop: "56px" }}>
               <Typography variant="subtitle" color="inherit" style={{ textAlign: "justify", color: "#ACACAC", width: "80%", marginLeft: "2px" }}>
                 {this.state.processData}
               </Typography>
               <br />
             </Grid>
-            <Grid item xs={7} sm={7} lg={7} xl={7} style={{ marginTop: "40px", marginLeft: "30px" }}>
-              <Button variant="contained" color="primary" style={{ width: "60%", height: "56px" }} onClick={this.handleSubmit.bind(this)}>
-                Next
-              </Button>
+
+            <Grid item xs={7} sm={7} lg={7} xl={7}>
+              <Grid container spacing={8}>
+                <Grid item xs={3} sm={3} lg={3} xl={3} />
+                <Grid item xs={8} sm={8} lg={8} xl={8} style={{ marginTop: "40px" }}>
+                  <Button variant="contained" color="primary" style={{ width: "87%", height: "60px" }} onClick={this.handleSubmit.bind(this)}>
+                    Next
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
         </Paper>
@@ -204,6 +212,7 @@ class UploadToken extends React.Component {
             message={this.state.message}
           />
         )}
+         {this.state.load && <Spinner/>}
       </div>
     );
   }
