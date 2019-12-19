@@ -93,17 +93,8 @@ class ExistingWorkspace extends React.Component {
         }
       },
       {
-        name: "token_count",
-        label: "Possitive Token",
-        options: {
-          filter: true,
-          sort: true
-        }
-      },
-        
-      {
-        name: "negative_token_count",
-        label: "Negative Token",
+        name: "sentence_count",
+        label: "Sentence Count",
         options: {
           filter: true,
           sort: true

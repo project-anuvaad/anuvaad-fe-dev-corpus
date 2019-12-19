@@ -23,7 +23,7 @@ class Steps extends React.Component {
   render() {
     return (
       <div>
-        <Stepper steps={this.state.steps} activeStep={this.props.activeStep} alternativeLabel style={{ marginTop: "3%",marginRight:'3%' }}/>
+        <Stepper steps={this.state.steps} activeStep={this.props.activeStep} alternativeLabel style={{ marginTop: "3%",marginRight:'2%' }}/>
         <Grid container spacing={24} style={{  marginLeft: "12%" }}>
           <Grid item xs={3} sm={3} lg={3} xl={3}>
             <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>

@@ -11,12 +11,15 @@ class FileUpload extends React.Component {
 
 
   render() {
-    const { accept, buttonName, value } = this.props;
+    const { accept,disabled, buttonName, value } = this.props;
+    console.log(this.props.disabled)
     return (
       <div style= {{paddingTop:'24px'}}>
+        
         <label >
-          <Button variant="contained" component="span" color="primary" style= {{ width:'70%',marginTop:"-7px",height:'56px'}}>
-        <input
+          <Button variant="contained" component="span" disabled={disabled} color="primary" style= {{ width:'70%',marginTop:"-7px",height:'56px'}}>
+        
+          {!disabled && <input
           
           style={{ display: "none" }}
           accept={accept}
@@ -27,7 +30,7 @@ class FileUpload extends React.Component {
             this.handleTextChange(event);
           }}
         />
-        
+  }
             {buttonName}
           </Button>
         </label>

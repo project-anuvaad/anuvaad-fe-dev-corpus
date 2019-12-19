@@ -14,6 +14,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
 import ConfigUpload from "../../../../flux/actions/apis/configupload";
+import FetchDefaultConfig from "../../../../flux/actions/apis/fetchdefaultconfig";
 import RunExperiment from "../../../../flux/actions/apis/runexperiment";
 import Spinner from "../../../components/web/common/Spinner";
 
@@ -36,6 +37,13 @@ class NewExtraction extends React.Component {
       processData:
         'Press "Start processing" to run the workspace. This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab'
     };
+  }
+
+  componentDidMount() {
+    const { APITransport } = this.props;
+    const apiObj = new FetchDefaultConfig();
+    APITransport(apiObj);
+    this.setState({ showLoader: true });
   }
 
   readFileDataAsBinary(file) {
@@ -82,26 +90,39 @@ class NewExtraction extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.configUplaod !== this.props.configUplaod) {
       this.setState({ files: this.props.configUplaod });
-      const len = this.props.configUplaod.length
-      if (len%2 === 0) {
+      
+      console.log(this.props.configUplaod.configFile && this.props.configUplaod.csvFile)
+      
+      
         
         const configFilepath =
-          this.props.configUplaod[len-1].name == "configFile" ? this.props.configUplaod[len-1].data.filepath : this.props.configUplaod[len-2].data.filepath;
+        "configFile" in this.props.configUplaod && this.props.configUplaod.configFile;
         const csvFilepath =
-          this.props.configUplaod[len-1].name == "csvFile" ? this.props.configUplaod[len-1].data.filepath : this.props.configUplaod[len-2].data.filepath;
+        "csvFile" in this.props.configUplaod && this.props.configUplaod.csvFile;
 
+        console.log(configFilepath,csvFilepath)
+        if(configFilepath && csvFilepath){
         const { APITransport } = this.props;
 
         console.log(configFilepath, csvFilepath)
         const apiObj = new RunExperiment(this.state.workspaceName, configFilepath, csvFilepath);
 
         this.state.csvFile && APITransport(apiObj);
-        this.setState({ showLoader: true });
+        }
+      
       }
+    
+  
+
+    if (prevProps.fetchDefaultConfig !== this.props.fetchDefaultConfig) {
+      console.log("---asdd-",this.props.fetchDefaultConfig.data)
+      this.setState({ defaultConfig: this.props.fetchDefaultConfig.data });
+
+      
     }
 
     if (prevProps.workspaceDetails !== this.props.workspaceDetails) {
-      this.setState({ open: true,load:false, workspaceName: "", configFile: "", csvFile: "", files: [], workspaceName: "", configName: "", csvName: "" });
+      this.setState({ open: true,load:false, workspaceName: "", configFile: "", csvFile: "", files: {}, workspaceName: "", configName: "", csvName: "" });
 
       setTimeout(() => {
         history.push(`${process.env.PUBLIC_URL}/Workspace-details`);
@@ -118,7 +139,7 @@ class NewExtraction extends React.Component {
       this.state.configFile && APITransport(apiObj);
       const apiObj2 = new ConfigUpload(this.state.csvFile, "csvFile");
       this.state.csvFile && APITransport(apiObj2);
-      this.setState({ showLoader: true,load:true });
+      this.setState({ load:true });
     } else {
       alert("Fields should not be empty");
     }
@@ -153,9 +174,12 @@ class NewExtraction extends React.Component {
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
                 Configuration file : &emsp;&emsp;{" "}
+
+                <a  href={this.state.defaultConfig ? ((process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : 'http://auth.anuvaad.org') +  "/download/"+this.state.defaultConfig.path):''} style={{textDecoration:"none"}}>
+                
                 <Link component="button" variant="body2">
                   Download global configuration
-                </Link>
+                </Link></a>
               </Typography>
               <br />
             </Grid>
@@ -239,7 +263,8 @@ const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
   configUplaod: state.configUplaod,
-  workspaceDetails: state.workspaceDetails
+  workspaceDetails: state.workspaceDetails,
+  fetchDefaultConfig: state.fetchDefaultConfig
 });
 
 const mapDispatchToProps = dispatch =>
