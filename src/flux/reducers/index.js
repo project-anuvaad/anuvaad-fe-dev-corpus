@@ -26,6 +26,7 @@ import configUplaod from './configupload';
 import workspaceDetails from './runexperiment';
 import audio from './audio';
 
+import fetchDefaultConfig from './fetchdefaultconfig';
 import hindi from './hindi';
 import marathi from './marathi';
 import telugu from './telugu';
@@ -93,5 +94,6 @@ export default {
     workspaceDetails,
     fetchWorkspace,
     fetchWorkspaceDetails,
-    uploadTokenValue
+    uploadTokenValue,
+    fetchDefaultConfig
 };

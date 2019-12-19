@@ -66,7 +66,7 @@ class SentenceExtraction extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
-                Negative tokens :
+              Extracted sentences :
               </Typography>
               <br />
             </Grid>
@@ -89,7 +89,7 @@ class SentenceExtraction extends React.Component {
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
-                <Typography gutterBottom variant="title" component="h2" style={{  marginTop: "-15px" }}>
+                <Typography gutterBottom variant="title" component="h2" style={{  marginTop: "-20px" }}>
                   Found {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_count                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     : 0 } tokens
               </Typography>
                 </Grid>

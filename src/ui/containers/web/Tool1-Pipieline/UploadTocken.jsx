@@ -10,15 +10,18 @@ import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import StepDetals from "./TockenExtractionSteps";
 import FileUpload from "../../../components/web/common/FileUpload";
 import history from "../../../../web.history";
-import ConfigUpload from "../../../../flux/actions/apis/configupload";
+import tokenUpload from "../../../../flux/actions/apis/configupload";
 import UploadApiToken from "../../../../flux/actions/apis/uploadtoken";
 import Snackbar from "../../../components/web/common/Snackbar";
 import Spinner from "../../../components/web/common/Spinner";
+import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchworkspacedetails";
 
 class UploadToken extends React.Component {
   constructor(props) {
@@ -36,44 +39,61 @@ class UploadToken extends React.Component {
     };
   }
 
+  componentDidMount() {
+    console.log("session",this.props.match.params.session_id);
+    const { APITransport } = this.props;
+    const api = new FetchWorkspaceDetails(this.props.match.params.session_id);
+    APITransport(api);
+  }
+
   componentDidUpdate(prevProps) {
-    if (prevProps.configUplaod !== this.props.configUplaod) {
-      this.setState({ files: this.props.configUplaod });
 
-      if (this.props.configUplaod.length === 2) {
-        const positiveFilepath =
-          this.props.configUplaod[0].name == "positiveToken" ? this.props.configUplaod[0].data.filepath : this.props.configUplaod[1].data.filepath;
-        const negativeFilepath =
-          this.props.configUplaod[0].name == "negativeToken" ? this.props.configUplaod[0].data.filepath : this.props.configUplaod[1].data.filepath;
-
-        const { APITransport } = this.props;
-        console.log("----&&&&--", positiveFilepath, negativeFilepath);
-        const apiObj = new UploadApiToken(this.state.session_id, this.state.workspaceName, positiveFilepath, negativeFilepath);
-
-        APITransport(apiObj);
-        this.setState({ showLoader: true });
-      }
+    if (prevProps.fetchWorkspaceDetails !== this.props.fetchWorkspaceDetails) {
+ 
+      this.setState({ workspaceDetails: this.props.fetchWorkspaceDetails.data });
     }
 
     if (prevProps.uploadTokenValue !== this.props.uploadTokenValue) {
-      this.setState({ open: true,load:false, files: [], negativeToken: "", positiveToken: "" });
+      this.setState({ open: true, load: false, files: [], negativeToken: "", positiveToken: "" });
 
       setTimeout(() => {
         history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
       }, 3000);
     }
+
+    if (prevProps.configUplaod !== this.props.configUplaod) {
+      this.setState({ files: this.props.configUplaod });
+
+      const positiveTockenValue = this.state.positiveChecked ? this.state.positiveToken :( "positiveToken" in this.props.configUplaod) ? this.props.configUplaod.positiveToken:'';
+      const negativeTockenValue = this.state.negativeChecked ? this.state.negativeToken :  ("negativeToken" in this.props.configUplaod) ? this.props.configUplaod.negativeToken:'';
+        console.log(positiveTockenValue,negativeTockenValue)
+      if (positiveTockenValue && negativeTockenValue) {
+        const { APITransport } = this.props;
+        const apiObj = new UploadApiToken(this.state.session_id, this.state.workspaceName,positiveTockenValue,negativeTockenValue );
+        APITransport(apiObj);
+        this.setState({ load: true });
+      }
+    }
   }
 
   handleSubmit() {
-    console.log("---", this.state.workspaceName, this.state.positiveToken, this.state.negativeToken);
     if (this.state.workspaceName && this.state.positiveToken && this.state.negativeToken) {
       const { APITransport } = this.props;
-      console.log("upload", this.state.workspaceName, this.state.positiveToken, this.state.negativeToken);
-      const apiObj = new ConfigUpload(this.state.positiveToken, "positiveToken");
-      this.state.positiveToken && APITransport(apiObj);
-      const apiObj2 = new ConfigUpload(this.state.negativeToken, "negativeToken");
-      this.state.negativeToken && APITransport(apiObj2);
-      this.setState({ showLoader: true,load: true });
+      if (!this.state.positiveChecked) {
+        const apiObj = new tokenUpload(this.state.positiveToken, "positiveToken");
+        this.state.positiveToken && APITransport(apiObj);
+      }
+      if (!this.state.negativeChecked) {
+        const apiObj2 = new tokenUpload(this.state.negativeToken, "negativeToken");
+        this.state.negativeToken && APITransport(apiObj2);
+        this.setState({ load: true });
+      }
+      if (this.state.positiveChecked && this.state.negativeChecked) {
+        const apiObj = new UploadApiToken(this.state.session_id, this.state.workspaceName, this.state.positiveToken, this.state.negativeToken);
+
+        APITransport(apiObj);
+        this.setState({ load: true });
+      }
     } else {
       alert("Please upload token file properly");
     }
@@ -82,11 +102,21 @@ class UploadToken extends React.Component {
   }
 
   handleChange = (key, event) => {
-    console.log("====", event.target.files[0].name, key);
+    
     this.setState({
       [key]: event.target.files[0],
       positiveToken: key == "positiveToken" ? event.target.files[0].name : this.state.positiveToken,
       negativeToken: key == "negativeToken" ? event.target.files[0].name : this.state.negativeToken
+    });
+  };
+
+  handleSwitchChange = name => event => {
+    
+    this.setState({
+      [name]: event.target.checked,
+      positiveToken: name == "positiveChecked" ? (event.target.checked ? this.state.workspaceDetails.token_file : "") : this.state.positiveToken,
+      negativeToken:
+        name == "negativeChecked" ? (event.target.checked ? this.state.workspaceDetails.negative_token_file : "") : this.state.negativeToken
     });
   };
 
@@ -96,7 +126,7 @@ class UploadToken extends React.Component {
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
         <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
           <StepDetals workSpace={this.props.match.params.name} activeStep={this.state.activeStep} />
-          <Grid container spacing={24} style={{ marginTop: "1", marginLeft: "12%" }}>
+          <Grid container spacing={24} style={{ marginTop: "1%", marginLeft: "12%" }}>
             <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginTop: "30px" }}>
               <Typography gutterBottom variant="title" component="h2">
                 Positive tokens :
@@ -105,11 +135,32 @@ class UploadToken extends React.Component {
             </Grid>
             <Grid item xs={7} sm={7} lg={7} xl={7}>
               <Grid container spacing={8}>
-                <Grid item xs={3} sm={3} lg={3} xl={3}>
-                  <FileUpload accept=".csv" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="positiveToken" />
+                <Grid item xs={2} sm={2} lg={2} xl={2} style={{ paddingTop: "24px" }}>
+                  <FormControlLabel
+                    control={<Checkbox checked={this.state.positiveChecked} color="primary" onChange={this.handleSwitchChange("positiveChecked")} />}
+                    label="Default"
+                  />
+                </Grid>
+                <Grid item xs={1} sm={1} lg={1} xl={1}>
+                  <Typography gutterBottom variant="title" component="h2" style={{ paddingTop: "28px" }}>
+                    or
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={3} xl={3}>
+                  <FileUpload
+                    accept=".csv"
+                    buttonName="Upload"
+                    disabled={this.state.positiveChecked}
+                    handleChange={this.handleChange.bind(this)}
+                    name="positiveToken"
+                  />
+                </Grid>
+
+                <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "-35px" }}>
+                  <br />
+                  <br />
+
                   <TextField
                     value={this.state.positiveToken}
                     id="outlined-name"
@@ -118,24 +169,6 @@ class UploadToken extends React.Component {
                     variant="outlined"
                     style={{ width: "100%" }}
                   />
-                </Grid>
-                <Grid item xs={1} sm={1} lg={1} xl={1}>
-                  <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "30px", marginLeft: "15%", paddingLeft:"20%" }}>
-                    or
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginTop: "-21px" }}>
-                  <br />
-                  <br />
-                  <Select style={{ width: "100%" }} input={<OutlinedInput id="outlined-age-simple" />}>
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
                 </Grid>
               </Grid>
             </Grid>
@@ -147,11 +180,32 @@ class UploadToken extends React.Component {
             </Grid>
             <Grid item xs={7} sm={7} lg={7} xl={7}>
               <Grid container spacing={8}>
-                <Grid item xs={3} sm={3} lg={3} xl={3}>
-                  <FileUpload accept=".csv" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="negativeToken" />
+                <Grid item xs={2} sm={2} lg={2} xl={2} style={{ paddingTop: "24px" }}>
+                  <FormControlLabel
+                    control={<Checkbox checked={this.state.negativeChecked} color="primary" onChange={this.handleSwitchChange("negativeChecked")} />}
+                    label="Default"
+                  />
+                </Grid>
+                <Grid item xs={1} sm={1} lg={1} xl={1}>
+                  <Typography gutterBottom variant="title" component="h2" style={{ paddingTop: "28px" }}>
+                    or
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={3} xl={3}>
+                  <FileUpload
+                    accept=".csv"
+                    disabled={this.state.negativeChecked}
+                    buttonName="Upload"
+                    handleChange={this.handleChange.bind(this)}
+                    name="negativeToken"
+                  />
+                </Grid>
+
+                <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "-35px" }}>
+                  <br />
+                  <br />
+
                   <TextField
                     value={this.state.negativeToken}
                     id="outlined-name"
@@ -160,24 +214,6 @@ class UploadToken extends React.Component {
                     variant="outlined"
                     style={{ width: "100%" }}
                   />
-                </Grid>
-                <Grid item xs={1} sm={1} lg={1} xl={1}>
-                  <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "30px", marginLeft: "15%", paddingLeft: "20%" }}>
-                    or
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginTop: "-21px" }}>
-                  <br />
-                  <br />
-                  <Select style={{ width: "100%" }} input={<OutlinedInput id="outlined-age-simple" />}>
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
                 </Grid>
               </Grid>
             </Grid>
@@ -212,7 +248,7 @@ class UploadToken extends React.Component {
             message={this.state.message}
           />
         )}
-         {this.state.load && <Spinner/>}
+        {this.state.load && <Spinner />}
       </div>
     );
   }
@@ -222,7 +258,8 @@ const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
   configUplaod: state.configUplaod,
-  uploadTokenValue: state.uploadTokenValue
+  uploadTokenValue: state.uploadTokenValue,
+  fetchWorkspaceDetails: state.fetchWorkspaceDetails
 });
 
 const mapDispatchToProps = dispatch =>
