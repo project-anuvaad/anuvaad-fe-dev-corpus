@@ -193,7 +193,7 @@ class ViewTranslate extends React.Component {
                         if (tableMeta.rowData) {
                             return (
                                 <div style={{ width: '120px' }}>
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <a href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://developers.anuvaad.org') + "/corpus/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><Tooltip title="Download"><DeleteOutlinedIcon style={{ width: "24", height: "24", marginRight: '8%', color: 'black' }} /></Tooltip></a> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <a href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://developers.anuvaad.org/corpus') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><Tooltip title="Download"><DeleteOutlinedIcon style={{ width: "24", height: "24", marginRight: '8%', color: 'black' }} /></Tooltip></a> : ''}
                                     {/* {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''}  */}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Delete"><DeleteIcon style={{ width: "24", height: "24", cursor: 'pointer', marginLeft: '10%' }} onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }}  > </DeleteIcon></Tooltip> : ''}
                                 </div>
