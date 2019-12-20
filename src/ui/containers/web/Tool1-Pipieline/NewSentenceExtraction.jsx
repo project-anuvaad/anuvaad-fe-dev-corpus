@@ -28,7 +28,7 @@ class NewExtraction extends React.Component {
       configName: "",
       csvName: "",
       value: 1,
-      load:false,
+      load: false,
 
       message: "Process started, This might be long running operation, kindly look the status of your workspace under Here",
 
@@ -47,20 +47,26 @@ class NewExtraction extends React.Component {
   }
 
   readFileDataAsBinary(file) {
-
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
-      reader.onload = (event) => {
+      reader.onload = event => {
         resolve(event.target.result);
       };
 
-      reader.onerror = (err) => {
+      reader.onerror = err => {
         reject(err);
       };
 
       reader.readAsBinaryString(file);
     });
+  }
+
+  renderMessage() {
+    if (this.props.apistatus.message) {
+      this.setState({ load: false });
+      return <Snackbar message={this.props.apistatus.message} variant={this.props.apistatus.error ? "error" : "success"} />;
+    }
   }
 
   handleChange = (key, event) => {
@@ -72,7 +78,7 @@ class NewExtraction extends React.Component {
       this.setState({
         [key]: result
       });
-    })
+    });
     // this.setState({
     //   [key]: new Blob(event.target.files[0]),
     //   configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
@@ -90,39 +96,35 @@ class NewExtraction extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.configUplaod !== this.props.configUplaod) {
       this.setState({ files: this.props.configUplaod });
-      
-      console.log(this.props.configUplaod.configFile && this.props.configUplaod.csvFile)
-      
-      
-        
-        const configFilepath =
-        "configFile" in this.props.configUplaod && this.props.configUplaod.configFile;
-        const csvFilepath =
-        "csvFile" in this.props.configUplaod && this.props.configUplaod.csvFile;
 
-        console.log(configFilepath,csvFilepath)
-        if(configFilepath && csvFilepath){
+      const configFilepath = "configFile" in this.props.configUplaod && this.props.configUplaod.configFile;
+      const csvFilepath = "csvFile" in this.props.configUplaod && this.props.configUplaod.csvFile;
+
+      if (configFilepath && csvFilepath) {
         const { APITransport } = this.props;
 
-        console.log(configFilepath, csvFilepath)
         const apiObj = new RunExperiment(this.state.workspaceName, configFilepath, csvFilepath);
 
         this.state.csvFile && APITransport(apiObj);
-        }
-      
       }
-    
-  
+    }
 
     if (prevProps.fetchDefaultConfig !== this.props.fetchDefaultConfig) {
-      console.log("---asdd-",this.props.fetchDefaultConfig.data)
       this.setState({ defaultConfig: this.props.fetchDefaultConfig.data });
-
-      
     }
 
     if (prevProps.workspaceDetails !== this.props.workspaceDetails) {
-      this.setState({ open: true,load:false, workspaceName: "", configFile: "", csvFile: "", files: {}, workspaceName: "", configName: "", csvName: "" });
+      this.setState({
+        open: true,
+        load: false,
+        workspaceName: "",
+        configFile: "",
+        csvFile: "",
+        files: {},
+        workspaceName: "",
+        configName: "",
+        csvName: ""
+      });
 
       setTimeout(() => {
         history.push(`${process.env.PUBLIC_URL}/Workspace-details`);
@@ -139,7 +141,7 @@ class NewExtraction extends React.Component {
       this.state.configFile && APITransport(apiObj);
       const apiObj2 = new ConfigUpload(this.state.csvFile, "csvFile");
       this.state.csvFile && APITransport(apiObj2);
-      this.setState({ load:true });
+      this.setState({ load: true });
     } else {
       alert("Fields should not be empty");
     }
@@ -174,12 +176,20 @@ class NewExtraction extends React.Component {
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
                 Configuration file : &emsp;&emsp;{" "}
-
-                <a  href={this.state.defaultConfig ? ((process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : 'http://auth.anuvaad.org') +  "/download/"+this.state.defaultConfig.path):''} style={{textDecoration:"none"}}>
-                
-                <Link component="button" variant="body2">
-                  Download global configuration
-                </Link></a>
+                <a
+                  href={
+                    this.state.defaultConfig
+                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" 
+                        }/download/${ 
+                        this.state.defaultConfig.path}`
+                      : ""
+                  }
+                  style={{ textDecoration: "none" }}
+                >
+                  <Link component="button" variant="body2">
+                    Download global configuration
+                  </Link>
+                </a>
               </Typography>
               <br />
             </Grid>
@@ -243,6 +253,9 @@ class NewExtraction extends React.Component {
             </Grid>
           </Grid>
         </Paper>
+
+        {this.renderMessage()}
+
         {this.state.open && (
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -253,7 +266,8 @@ class NewExtraction extends React.Component {
             message={this.state.message}
           />
         )}
-        {this.state.load && <Spinner/>}
+
+        {this.state.load && <Spinner />}
       </div>
     );
   }

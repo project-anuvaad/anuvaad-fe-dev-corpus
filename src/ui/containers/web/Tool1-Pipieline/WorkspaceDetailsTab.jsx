@@ -11,31 +11,30 @@ class ParentTab extends React.Component {
     super(props);
     this.state = {
       value: 2,
-      tabItem : ["Existing workspaces","Run Experiment","Processing"]
+      tabItem: ["Existing workspaces", "Run Experiment", "Processing"]
     };
   }
 
- 
-
-  handleValueChange(value){
-    
-    if (value==0){
-        history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
-      }
-      else if(value==1) {
-        history.push(`${process.env.PUBLIC_URL}/new-extraction`);
-      }
-      else if(value==2) {
-        history.push(`${process.env.PUBLIC_URL}/Workspace-details`);
-      }
-    
-  };
+  handleValueChange(value) {
+    if (value == 0) {
+      history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
+    } else if (value == 1) {
+      history.push(`${process.env.PUBLIC_URL}/new-extraction`);
+    } else if (value == 2) {
+      history.push(`${process.env.PUBLIC_URL}/Workspace-details`);
+    }
+  }
 
   render() {
     return (
       <div>
-        <Tab tabItem={this.state.tabItem} handleChange={this.handleValueChange.bind(this)}  activeStep={this.props.activeStep}  style={this.props.style}  color={"primary"}/>
-        
+        <Tab
+          tabItem={this.state.tabItem}
+          handleChange={this.handleValueChange.bind(this)}
+          activeStep={this.props.activeStep}
+          style={this.props.style}
+          color="primary"
+        />
       </div>
     );
   }
