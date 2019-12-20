@@ -33,13 +33,13 @@ class DataPipeline extends React.Component {
   render() {
     return (
       <div>
-        <Grid container spacing={1}>
+        <Grid container spacing={8}>
           <Grid container item xs={12} spacing={3} id="cardGrid" style={{ marginLeft: "8%", marginTop:'2%' }}>
             <React.Fragment>
             {this.state.tools.map((text, index) => (
                 
-              <Grid item xs={12} sm={4} className="slideUp" style={{ marginTop:'2%' }}>
-                <Card style={{ width: "65%" }}>
+              <Grid key = {index} item xs={12} sm={4} className="slideUp" style={{ marginTop:'2%' }}>
+                <Card style={{ width: "345px" }}>
                   <CardContent>
                     <Typography variant="h5" component="h2" color="textSecondary" gutterBottom>
                       {text}

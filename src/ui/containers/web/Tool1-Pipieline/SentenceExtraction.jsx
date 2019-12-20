@@ -22,35 +22,27 @@ class SentenceExtraction extends React.Component {
     };
   }
 
- 
-
-
   componentDidMount() {
-    console.log("--", this.props.match.params.session_id)
     const { APITransport } = this.props;
-    let api = new FetchWorkspaceDetails(
-        this.props.match.params.session_id,
-      );
-      APITransport(api);
+    const api = new FetchWorkspaceDetails(this.props.match.params.session_id);
+    APITransport(api);
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspaceDetails !== this.props.fetchWorkspaceDetails) {
-      console.log("----",this.props.fetchWorkspaceDetails.data)
-      this.setState({ workspaceDetails: this.props.fetchWorkspaceDetails.data});
+      this.setState({ workspaceDetails: this.props.fetchWorkspaceDetails.data });
     }
   }
 
-  handleClick=()=>{
+  handleClick = () => {
     this.setState({
-        activeStep:3
-    })
-  }
+      activeStep: 3
+    });
+  };
 
   handleChange = (key, event) => {
-    console.log(event.target.files[0], key);
     this.setState({
-        activeStep:3,
+      activeStep: 3,
       [key]: event.target.files[0],
       configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
       csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
@@ -64,37 +56,41 @@ class SentenceExtraction extends React.Component {
         <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
           <StepDetals workSpace={this.props.match.params.name} activeStep={this.state.activeStep} />
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
-            <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginTop: "10px" }}>
+            <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
-              Extracted sentences :
+                Extracted sentences :
               </Typography>
               <br />
             </Grid>
-            <Grid item xs={7} sm={7} lg={7} xl={7} style={{  marginTop: "30px" }}>
-            <Grid container spacing={8}>
-            <Grid item xs={3} sm={3} lg={3} xl={3}>
-          
-          </Grid>
+            <Grid item xs={7} sm={7} lg={7} xl={7} style={{ marginTop: "30px" }}>
+              <Grid container spacing={8}>
+                <Grid item xs={1} sm={1} lg={1} xl={1} />
 
-          
-
-                <Grid item xs={4} sm={4} lg={4} xl={4} >
-
-                <a  href={(process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : 'http://auth.anuvaad.org') +  "/download/"+ (this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file : '')} style={{textDecoration:"none"}}>
-                <Button variant="contained" color="primary" onClick={this.handleClick}  style={{ width: "85%", height: "56px", marginTop: "-30px" }}>
-                    Download & View
-                  </Button> </a>
-
-                
+                <Grid item xs={4} sm={4} lg={4} xl={4}>
+                  <a
+                    href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+                      this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file : ""
+                    }`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleClick}
+                      style={{ width: "85%", height: "56px", marginTop: "-30px" }}
+                    >
+                      Download & View
+                    </Button>{" "}
+                  </a>
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
-                <Typography gutterBottom variant="title" component="h2" style={{  marginTop: "-20px" }}>
-                  Found {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_count                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     : 0 } tokens
-              </Typography>
+                  <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "-20px" }}>
+                    Found {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_count : 0} tokens
+                  </Typography>
                 </Grid>
               </Grid>
-              </Grid>
+            </Grid>
           </Grid>
         </Paper>
       </div>

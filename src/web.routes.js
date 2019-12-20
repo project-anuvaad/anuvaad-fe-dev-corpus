@@ -43,104 +43,293 @@ import TockenExtraction from "./ui/containers/web/Tool1-Pipieline/TockenExtracti
 import ApplyTocken from "./ui/containers/web/Tool1-Pipieline/ApplyTocken";
 import UploadTocken from "./ui/containers/web/Tool1-Pipieline/UploadTocken";
 
-const PrivateRoute = ({ component: Component, userRoles, title, drawer,showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
-
-
-  <Route {...rest} render={props => (authenticate(userRoles) ? <Layout dontShowLoader={dontShowLoader} showLogo={showLogo} component={Component} title={title} forDemo={forDemo} drawer={drawer} {...props} /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
-
+const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      authenticate(userRoles) ? (
+        <Layout
+          dontShowLoader={dontShowLoader}
+          showLogo={showLogo}
+          component={Component}
+          title={title}
+          forDemo={forDemo}
+          drawer={drawer}
+          {...props}
+        />
+      ) : (
+        <Redirect to={`${process.env.PUBLIC_URL}/logout`} />
+      )
+    }
+  />
 );
 
-
 const PresidentRoute = ({ component: Component, userRoles, title, authenticate, ...rest }) => (
-
-
   <Route {...rest} render={props => (authenticate(userRoles) ? <Component /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
-
 );
 
 class AppRoutes extends React.Component {
-  authenticateUser = (allowedRoles) => {
+  authenticateUser = allowedRoles => {
     let count = 0;
     const token = localStorage.getItem("token");
     if (localStorage.getItem("roles")) {
-      const userRoles = JSON.parse(localStorage.getItem("roles"))
+      const userRoles = JSON.parse(localStorage.getItem("roles"));
       if (token) {
         if (allowedRoles && Array.isArray(allowedRoles)) {
-          allowedRoles.map((allowedRole) => {
-            userRoles.map((userRole) => {
+          allowedRoles.map(allowedRole => {
+            userRoles.map(userRole => {
               if (userRole == allowedRole) {
-                count = count + 1
+                count += 1;
               }
-            })
-          })
+            });
+          });
           if (count > 0) {
             return true;
           }
-        }
-        else {
+        } else {
           return true;
         }
       }
       return false;
-    } else {
-      alert('Something Went wrong. Please try again')
-    }
-  }
+    } 
+      alert("Something Went wrong. Please try again");
+    
+  };
 
   render() {
     const roles = localStorage.getItem("roles");
     return (
-      <Router history={history} basename={'/dev'}>
+      <Router history={history} basename="/dev">
         <div>
           <Switch>
             <Route exact path={`${process.env.PUBLIC_URL}/`} component={Home} />
             <Route exact path={`${process.env.PUBLIC_URL}/callback`} component={Callback} />
             <Route exact path={`${process.env.PUBLIC_URL}/logout`} component={Logout} />
 
-            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/anuvaad-translate`} userRoles={['user']} forDemo drawer={true} title="Anuvaad Translate" component={TPresident} authenticate={this.authenticateUser} />
+            <PrivateRoute
+              exact
+              path={`${process.env.PUBLIC_URL}/anuvaad-translate`}
+              userRoles={["user"]}
+              forDemo
+              drawer
+              title="Anuvaad Translate"
+              component={TPresident}
+              authenticate={this.authenticateUser}
+            />
 
-            <PrivateRoute exact path={`${process.env.PUBLIC_URL}/translate`} dontShowLoader forDemo title="SUVAS - Supreme Court Vidhik Anuvaad System" userRoles={['user']} component={TranslatePresident} authenticate={this.authenticateUser} />
+            <PrivateRoute
+              exact
+              path={`${process.env.PUBLIC_URL}/translate`}
+              dontShowLoader
+              forDemo
+              title="SUVAS - Supreme Court Vidhik Anuvaad System"
+              userRoles={["user"]}
+              component={TranslatePresident}
+              authenticate={this.authenticateUser}
+            />
 
             <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/dashboard`} title="Translate" component={DashboardTamil} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/view-corpus/:basename`} title="Corpus Details" userRoles={['grader', 'dev']} component={GradeViewCorpus} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/:basename/:modelid`} title="Benchmark" userRoles={['grader', 'dev']} component={BenchmarkGrade} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/graderreport`} title="Grader Report" component={GraderReport} userRoles={['admin']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/comparison-report`} title="Comparison Report" component={ComparisonReport} userRoles={['admin']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/benchmarktranslate`} userRoles={['analyzer']} component={FileTranslate} title="File Upload" authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/texttranslate`} userRoles={['analyzer']} component={GraderTranslate} title="Translate" authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/view-translations/:basename`} component={ViewTranslations} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/corpus`} component={Corp} title="Corpus List" userRoles={['grader', 'dev']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/benchmark`} component={Benchmark} userRoles={['grader', 'dev']} title="Benchmark" authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`} title="Corpus Details" userRoles={['editor', 'dev']} component={Corpus} authenticate={this.authenticateUser} />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/dashboard`}
+              title="Translate"
+              component={DashboardTamil}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/view-corpus/:basename`}
+              title="Corpus Details"
+              userRoles={["grader", "dev"]}
+              component={GradeViewCorpus}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/:basename/:modelid`}
+              title="Benchmark"
+              userRoles={["grader", "dev"]}
+              component={BenchmarkGrade}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/graderreport`}
+              title="Grader Report"
+              component={GraderReport}
+              userRoles={["admin"]}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/comparison-report`}
+              title="Comparison Report"
+              component={ComparisonReport}
+              userRoles={["admin"]}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/benchmarktranslate`}
+              userRoles={["analyzer"]}
+              component={FileTranslate}
+              title="File Upload"
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/texttranslate`}
+              userRoles={["analyzer"]}
+              component={GraderTranslate}
+              title="Translate"
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/view-translations/:basename`}
+              component={ViewTranslations}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/corpus`}
+              component={Corp}
+              title="Corpus List"
+              userRoles={["grader", "dev"]}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/benchmark`}
+              component={Benchmark}
+              userRoles={["grader", "dev"]}
+              title="Benchmark"
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`}
+              title="Corpus Details"
+              userRoles={["editor", "dev"]}
+              component={Corpus}
+              authenticate={this.authenticateUser}
+            />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translations`} component={Translations} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/translate-v1`} component={Translate} authenticate={this.authenticateUser} />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/upload-audio`} component={UploadAudio} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/qna`} title="Q&A" userRoles={['editor']} component={QnA} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/newcorpus`} title="Parallel Corpus" userRoles={['dev']} component={newcorpus} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/create-corpus`} title="Create Corpus" userRoles={['dev']} component={createcorpus} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/pdftranslate`} showLogo title="SUVAS-Translate File" component={PdfTranslate} userRoles={['editor', 'user']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/userdirectory`} title="User Directory" component={UserDirectory} userRoles={['admin']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/edittranslate`} title="Document View" component={EditTranslate} userRoles={['notactive']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/viewtranslate`} showLogo title="Documents" component={ViewTranslate} userRoles={['editor', 'user']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/view-doc/:basename`} title="Document Details" component={ViewDoc} userRoles={['editor']} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/existing-workspace`} title="STAGE 1, TOOLCHAIN" component={ExistingWorkspace}  authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/Workspace-details`} title="STAGE 1, TOOLCHAIN" component={WorkspaceDetails}  authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/apply-token/:name/:session_id`} title="STAGE 1, TOOLCHAIN" component={ApplyTocken}  authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/data-pipeline-tools`} title="DATA PIPELINE DASHBOARD" component={DataPipeline}  authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/upload-token/:name/:session_id`} title="STAGE 1, TOOLCHAIN" component={UploadTocken}  authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/sentence-extraction/:name/:session_id`} title="STAGE 1, TOOLCHAIN" component={SentenceExtraction}  authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/new-extraction`} title="STAGE 1, TOOLCHAIN" component={NewSentenceExtraction}  authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/token-extraction`} title="STAGE 1, TOOLCHAIN" component={TockenExtraction}  authenticate={this.authenticateUser} />
-            
-            
-             <PrivateRoute path={`${process.env.PUBLIC_URL}/Sentence-Extraction`} title="STAGE 1, TOOLCHAIN" component={ExtractionSteps}  authenticate={this.authenticateUser} />
-            
-           
-           
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser} />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/qna`}
+              title="Q&A"
+              userRoles={["editor"]}
+              component={QnA}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/newcorpus`}
+              title="Parallel Corpus"
+              userRoles={["dev"]}
+              component={newcorpus}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/create-corpus`}
+              title="Create Corpus"
+              userRoles={["dev"]}
+              component={createcorpus}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/pdftranslate`}
+              showLogo
+              title="SUVAS-Translate File"
+              component={PdfTranslate}
+              userRoles={["editor", "user"]}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/userdirectory`}
+              title="User Directory"
+              component={UserDirectory}
+              userRoles={["admin"]}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/edittranslate`}
+              title="Document View"
+              component={EditTranslate}
+              userRoles={["notactive"]}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/viewtranslate`}
+              showLogo
+              title="Documents"
+              component={ViewTranslate}
+              userRoles={["editor", "user"]}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/view-doc/:basename`}
+              title="Document Details"
+              component={ViewDoc}
+              userRoles={["editor"]}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/existing-workspace`}
+              title="STAGE 1, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={ExistingWorkspace}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/Workspace-details`}
+              title="STAGE 1, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={WorkspaceDetails}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/apply-token/:name/:session_id`}
+              title="STAGE 1, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={ApplyTocken}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/data-pipeline-tools`}
+              title="DATA PIPELINE DASHBOARD"
+              userRoles={["dev"]}
+              component={DataPipeline}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/upload-token/:name/:session_id`}
+              title="STAGE 1, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={UploadTocken}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/sentence-extraction/:name/:session_id`}
+              title="STAGE 1, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={SentenceExtraction}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/new-extraction`}
+              title="STAGE 1, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={NewSentenceExtraction}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/token-extraction`}
+              title="STAGE 1, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={TockenExtraction}
+              authenticate={this.authenticateUser}
+            />
 
-             
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/Sentence-Extraction`}
+              title="STAGE 1, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={ExtractionSteps}
+              authenticate={this.authenticateUser}
+            />
+
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser} />
           </Switch>
         </div>
       </Router>
@@ -157,7 +346,4 @@ const mapStateToProps = state => ({
   apistatus: state.apistatus
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(AppRoutes);
+export default connect(mapStateToProps, null)(AppRoutes);
