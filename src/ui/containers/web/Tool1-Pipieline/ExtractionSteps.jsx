@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
 import { timingSafeEqual } from "crypto";
+import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
@@ -18,6 +19,9 @@ class ExtractionWorkspace extends React.Component {
       value: 2,
       page: 0,
       rowsPerPage: 10,
+      serverSideFilterList: [],
+      filters: [],
+      filter: "",
       time: new Date().toLocaleTimeString()
     };
   }
@@ -31,11 +35,18 @@ class ExtractionWorkspace extends React.Component {
     clearTimeout(this.intervalID);
   }
 
-  handleFetchWorkspace = () => {
+  handleFetchWorkspace = val => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING");
+    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", this.state.filter);
     APITransport(apiObj);
-    this.setState({ showLoader: true });
+    this.setState({ showLoader: true, filter:val });
+  };
+
+  handleReset = val => {
+    const { APITransport } = this.props;
+    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", val);
+    APITransport(apiObj);
+    this.setState({ showLoader: true, filter: val });
   };
 
   componentDidUpdate(prevProps) {
@@ -53,9 +64,16 @@ class ExtractionWorkspace extends React.Component {
     }
   };
 
+  handleFilterSubmit = filterList => () => {
+    console.log(filterList);
+    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", filterList);
+    this.props.APITransport(apiObj);
+    this.setState({ showLoader: true, filter: filterList });
+  };
+
   changePage = (page, rowsPerPage) => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(rowsPerPage, page + 1, "PROCESSING");
+    const apiObj = new FetchWorkspace(rowsPerPage, page + 1, "PROCESSING", this.state.filter);
     APITransport(apiObj);
     this.setState({ page, rowsPerPage });
   };
@@ -71,14 +89,16 @@ class ExtractionWorkspace extends React.Component {
         label: "Workspace",
         options: {
           filter: true,
-          sort: true
+          sort: false,
+          filterList: this.state.filters[0]
         }
       },
       {
         name: "session_id",
         label: "id",
         options: {
-          display: "excluded"
+          display: "excluded",
+          filter: false
         }
       },
       {
@@ -86,22 +106,53 @@ class ExtractionWorkspace extends React.Component {
         label: "Status",
         options: {
           filter: true,
-          sort: true
+          sort: false,
+          filter: false
+        }
+      },
+      {
+        name: "created_at",
+        label: "Created At",
+        options: {
+          filter: true,
+          sort: false,
+          filter: false
         }
       }
+
+      
     ];
 
     const options = {
-      filterType: "checkbox",
+      filter: true,
+      serverSideFilterList: this.state.serverSideFilterList,
+      filterType: "textField",
+      responsive: "scrollMaxHeight",
       download: false,
       print: false,
       fixedHeader: true,
-      filter: false,
+      search: false,
       serverSide: true,
       count: this.state.count,
       selectableRows: "none",
       page: this.state.page / this.state.rowsPerPage,
       onRowClick: rowData => this.handleClick(rowData),
+      onFilterDialogOpen: () => {
+        console.log("filter dialog opened");
+      },
+      onFilterDialogClose: () => {},
+      onFilterChange: (column, filterList, type, reset) => {
+        if (type === "reset") {
+          this.handleReset("");
+        }
+      },
+      customFilterDialogFooter: filterList => (
+        <div style={{ marginTop: "40px" }}>
+          <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
+            Apply Filters
+          </Button>
+        </div>
+      ),
       onTableChange: (action, tableState) => {
         switch (action) {
           case "changePage":
