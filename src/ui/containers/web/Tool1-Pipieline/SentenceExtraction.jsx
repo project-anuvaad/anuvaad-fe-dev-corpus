@@ -86,7 +86,7 @@ class SentenceExtraction extends React.Component {
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
                   <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "-20px" }}>
-                    Found {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_count : 0} tokens
+                    Found {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_count : 0} sentences
                   </Typography>
                 </Grid>
               </Grid>
