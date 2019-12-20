@@ -102,6 +102,15 @@ class ExistingWorkspace extends React.Component {
           filter: true,
           sort: true
         }
+      },
+      {
+        name: "created_at",
+        label: "Created At",
+        options: {
+          filter: true,
+          sort: false,
+          filter: false
+        }
       }
     ];
 
