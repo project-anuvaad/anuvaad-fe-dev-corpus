@@ -7,11 +7,12 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Snackbar from "@material-ui/core/Snackbar";
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
+import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteOutlinedIcon from '@material-ui/icons/VerticalAlignBottom';
 import UploadIcon from '@material-ui/icons/VerticalAlignTop';
 import MUIDataTable from "mui-datatables";
-import FileUpload from "../../components/web/common/FileUpload";
+import FileUpload from "../../components/web/common/FileUploadWithIcon";
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -212,11 +213,11 @@ class ViewTranslate extends React.Component {
                         if (tableMeta.rowData) {
                             console.log(tableMeta.rowData)
                             return (
-                                <div style={{ width: '300px' }}>
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <a href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><Tooltip title="Download"><DeleteOutlinedIcon style={{ width: "24", height: "24", marginRight: '8%', color: 'black' }} /></Tooltip></a> : ''}
+                                <div style={{ width: '180px' }}>
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Download"><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip>: ''}
                                     {/* {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''}  */}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Delete"><DeleteIcon style={{ width: "24", height: "24", cursor: 'pointer', marginLeft: '10%' }} onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }}  > </DeleteIcon></Tooltip> : ''}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <FileUpload buttonStyle={{marginLeft: '60px'}} divStyle={{display: 'inline-block'}} accept=".docx" buttonName={tableMeta.rowData[7] ? 'Reupload' : "Upload"} handleChange={(name, event)=>this.handleTranslatedUpload(event,tableMeta.rowData[0])} name="configFile" /> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Delete"><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Upload"><FileUpload title={'Upload'} id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? {color: 'green'} : null} accept=".docx" handleChange={(name, event)=>this.handleTranslatedUpload(event,tableMeta.rowData[0])} /></Tooltip> : ''}
                                     
                                 </div>
                             );
