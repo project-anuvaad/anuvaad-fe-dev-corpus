@@ -22,8 +22,11 @@ import graderReport from './graderreport';
 import comparisonreport from './comparisonreport';
 import benchmarkTranslate from './benchmarktranslate';
 import translation from './translation';
+import configUplaod from './configupload';
+import workspaceDetails from './runexperiment';
 import audio from './audio';
 
+import fetchDefaultConfig from './fetchdefaultconfig';
 import hindi from './hindi';
 import marathi from './marathi';
 import telugu from './telugu';
@@ -40,7 +43,11 @@ import deletefile from './delete';
 import userList from './userdirectory';
 import userRoles from './userroles';
 import addUser from './adduser';
+import fetchWorkspace from './fetchworkspace';
+import fetchWorkspaceDetails from './fetchworkspacedetails';
 import updatePasswordstatus from './updatepassword';
+
+import uploadTokenValue from './uploadtoken';
 
 export default {
     login,
@@ -83,4 +90,10 @@ export default {
     marathi,
     kannada,
     gujarati,
+    configUplaod,
+    workspaceDetails,
+    fetchWorkspace,
+    fetchWorkspaceDetails,
+    uploadTokenValue,
+    fetchDefaultConfig
 };
