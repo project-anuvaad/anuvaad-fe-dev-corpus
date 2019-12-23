@@ -27,7 +27,7 @@ export default class UploadBenchmark extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/upload-benchmark`;
+        return `${super.apiEndPointAuto()}/save-benchmark`;
     }
 
     getFormData() {

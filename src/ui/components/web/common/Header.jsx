@@ -440,7 +440,7 @@ class Header extends React.Component {
                       button
                       onClick={event => {
                         this.handleDrawerClose();
-                        history.push("/pdftranslate");
+                        history.push("/doctranslate");
                       }}
                     >
                       <ListItemIcon>
