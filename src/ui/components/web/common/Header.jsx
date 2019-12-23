@@ -224,8 +224,8 @@ class Header extends React.Component {
                     />
                   </ListItem>
                   <Divider />
-
-                  <ListItem
+                  {role && Array.isArray(role) && role.includes("dev") && (
+                    <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
                       onClick={event => {
@@ -245,7 +245,7 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
-
+                  )}
                   {role && Array.isArray(role) && role.includes("user") && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}

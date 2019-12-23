@@ -229,8 +229,7 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdftranslate`}
-              showLogo
-              title="SUVAS-Translate File"
+              title="Translate File"
               component={PdfTranslate}
               userRoles={["editor", "user"]}
               authenticate={this.authenticateUser}
@@ -251,7 +250,6 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/viewtranslate`}
-              showLogo
               title="Documents"
               component={ViewTranslate}
               userRoles={["editor", "user"]}
