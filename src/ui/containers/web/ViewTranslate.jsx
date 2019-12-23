@@ -71,7 +71,7 @@ class ViewTranslate extends React.Component {
         });
     }
 
-    handleRefresh(){
+    handleRefresh() {
         const { APITransport } = this.props;
         const apiObj = new FetchTranslations();
         APITransport(apiObj);
@@ -94,7 +94,7 @@ class ViewTranslate extends React.Component {
         this.setState({ open: false, snack: false });
     };
 
-    handleTranslatedUpload(event, basename){
+    handleTranslatedUpload(event, basename) {
         const { APITransport } = this.props;
         const api = new UploadTranslatedFile(basename, event.target.files[0])
         APITransport(api);
@@ -108,12 +108,12 @@ class ViewTranslate extends React.Component {
             this.componentDidMount()
         }
 
-        
+
     }
 
     render() {
 
-        
+
         const columns = [
             {
                 name: "basename",
@@ -165,23 +165,23 @@ class ViewTranslate extends React.Component {
                     display: 'excluded',
                 }
             },
-        
-        {
-            name: "eta",
-            label: "ETA",
-            options: {
-                display: 'excluded',
-            }
-        },{
-            name: "translate_uploaded",
-            label: "Translateuploaded",
-            options: {
-                display: 'excluded',
-            }
-        },
-            
 
-            
+            {
+                name: "eta",
+                label: "ETA",
+                options: {
+                    display: 'excluded',
+                }
+            }, {
+                name: "translate_uploaded",
+                label: "Translateuploaded",
+                options: {
+                    display: 'excluded',
+                }
+            },
+
+
+
             {
                 name: "Status",
                 options: {
@@ -190,12 +190,12 @@ class ViewTranslate extends React.Component {
                     empty: true,
                     customBodyRender: (value, tableMeta, updateValue) => {
                         if (tableMeta.rowData) {
-                            const result = tableMeta.rowData[6]*1000 - (Date.now()- new Date(tableMeta.rowData[2]));
+                            const result = tableMeta.rowData[6] * 1000 - (Date.now() - new Date(tableMeta.rowData[2]));
                             return (
-                                
+
                                 <div style={{ width: '120px' }}>
-                                     {(tableMeta.rowData[5] !== 'COMPLETED' && tableMeta.rowData[6]) ? (result > 0 ? <div> <ProgressBar val={result} eta= {tableMeta.rowData[6]*1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)}/> </div>: tableMeta.rowData[5] ): tableMeta.rowData[5]}
-                                     
+                                    {(tableMeta.rowData[5] !== 'COMPLETED' && tableMeta.rowData[6]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[6] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[5]) : tableMeta.rowData[5]}
+
                                 </div>
                             );
                         }
@@ -211,14 +211,13 @@ class ViewTranslate extends React.Component {
                     empty: true,
                     customBodyRender: (value, tableMeta, updateValue) => {
                         if (tableMeta.rowData) {
-                            console.log(tableMeta.rowData)
                             return (
-                                <div style={{ width: '180px' }}>
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Download"><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip>: ''}
+                                <div style={{ width: '180px', marginLeft: '-20px' }}>
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Download"><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
                                     {/* {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''}  */}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Delete"><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Upload"><FileUpload title={'Upload'} id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? {color: 'green'} : null} accept=".docx" handleChange={(name, event)=>this.handleTranslatedUpload(event,tableMeta.rowData[0])} /></Tooltip> : ''}
-                                    
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Upload"><FileUpload title={'Upload'} id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
+
                                 </div>
                             );
                         }
@@ -240,9 +239,9 @@ class ViewTranslate extends React.Component {
         return (
             <div>
                 <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
-          <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
-                <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { history.push("/doctranslate") }}>
-                    <AddIcon /> Translate
+                    <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+                    <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { history.push("/doctranslate") }}>
+                        <AddIcon /> Translate
                 </Fab>
                 </Toolbar>
 
