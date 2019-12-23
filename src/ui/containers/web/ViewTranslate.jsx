@@ -9,12 +9,15 @@ import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteOutlinedIcon from '@material-ui/icons/VerticalAlignBottom';
+import UploadIcon from '@material-ui/icons/VerticalAlignTop';
 import MUIDataTable from "mui-datatables";
+import FileUpload from "../../components/web/common/FileUpload";
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import DeleteFile from "../../../flux/actions/apis/deletefile";
+import UploadTranslatedFile from "../../../flux/actions/apis/uploadTranslatedFile";
 import FetchTranslations from "../../../flux/actions/apis/fetchtranslation";
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import history from "../../../web.history";
@@ -48,6 +51,7 @@ class ViewTranslate extends React.Component {
             message: ''
 
         }
+        this.handleTranslatedUpload = this.handleTranslatedUpload.bind(this)
     }
 
     componentDidMount() {
@@ -89,9 +93,18 @@ class ViewTranslate extends React.Component {
         this.setState({ open: false, snack: false });
     };
 
+    handleTranslatedUpload(event, basename){
+        const { APITransport } = this.props;
+        const api = new UploadTranslatedFile(basename, event.target.files[0])
+        APITransport(api);
+    }
+
     componentDidUpdate(prevProps, nexpProps) {
         if (prevProps.fetchtranslation !== this.props.fetchtranslation) {
             this.setState({ fetchtranslation: this.props.fetchtranslation })
+        }
+        if (prevProps.uploadTranslated !== this.props.uploadTranslated) {
+            this.componentDidMount()
         }
 
         
@@ -158,6 +171,12 @@ class ViewTranslate extends React.Component {
             options: {
                 display: 'excluded',
             }
+        },{
+            name: "translate_uploaded",
+            label: "Translateuploaded",
+            options: {
+                display: 'excluded',
+            }
         },
             
 
@@ -191,11 +210,14 @@ class ViewTranslate extends React.Component {
                     empty: true,
                     customBodyRender: (value, tableMeta, updateValue) => {
                         if (tableMeta.rowData) {
+                            console.log(tableMeta.rowData)
                             return (
-                                <div style={{ width: '120px' }}>
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <a href={(process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : 'http://documents.anuvaad.org') + "/corpus/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><Tooltip title="Download"><DeleteOutlinedIcon style={{ width: "24", height: "24", marginRight: '8%', color: 'black' }} /></Tooltip></a> : ''}
+                                <div style={{ width: '300px' }}>
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <a href={(process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><Tooltip title="Download"><DeleteOutlinedIcon style={{ width: "24", height: "24", marginRight: '8%', color: 'black' }} /></Tooltip></a> : ''}
                                     {/* {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''}  */}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Delete"><DeleteIcon style={{ width: "24", height: "24", cursor: 'pointer', marginLeft: '10%' }} onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }}  > </DeleteIcon></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <FileUpload buttonStyle={{marginLeft: '60px'}} divStyle={{display: 'inline-block'}} accept=".docx" buttonName={tableMeta.rowData[7] ? 'Reupload' : "Upload"} handleChange={(name, event)=>this.handleTranslatedUpload(event,tableMeta.rowData[0])} name="configFile" /> : ''}
+                                    
                                 </div>
                             );
                         }
@@ -218,7 +240,7 @@ class ViewTranslate extends React.Component {
             <div>
                 <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
           <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
-                <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { history.push("/pdftranslate") }}>
+                <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { history.push("/doctranslate") }}>
                     <AddIcon /> Translate
                 </Fab>
                 </Toolbar>
@@ -269,6 +291,7 @@ const mapStateToProps = state => ({
     user: state.login,
     apistatus: state.apistatus,
     fetchtranslation: state.fetchtranslation,
+    uploadTranslated: state.uploadTranslated
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

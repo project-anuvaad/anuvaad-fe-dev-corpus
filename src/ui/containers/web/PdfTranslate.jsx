@@ -16,7 +16,7 @@ import Typography from '../../components/web/common/Typography';
 import { white, blueGrey50,darkBlack } from "material-ui/styles/colors"
 
 
-class PdfTranslate extends React.Component {
+class doctranslate extends React.Component {
   state = {
     source: "",
     target: '',
@@ -170,4 +170,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   APITransport,
   PdfTranslation: APITransport,
 }, dispatch);
-export default (connect(mapStateToProps, mapDispatchToProps)(PdfTranslate));
+export default (connect(mapStateToProps, mapDispatchToProps)(doctranslate));

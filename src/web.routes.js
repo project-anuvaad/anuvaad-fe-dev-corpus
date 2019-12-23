@@ -228,7 +228,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/pdftranslate`}
+              path={`${process.env.PUBLIC_URL}/doctranslate`}
               title="Translate File"
               component={PdfTranslate}
               userRoles={["editor", "user"]}
