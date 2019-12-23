@@ -218,7 +218,7 @@ class Header extends React.Component {
                           color="inherit"
                           className={classes.flex}
                         >
-                          ANUVAAD
+                          SUVAS
                       </Typography>
                       }
                     />

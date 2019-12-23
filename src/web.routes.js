@@ -131,7 +131,8 @@ class AppRoutes extends React.Component {
             <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/dashboard`}
-              title="Translate"
+              showLogo
+              title="SUVAS - Translate"
               component={DashboardTamil}
               authenticate={this.authenticateUser}
             />
@@ -229,7 +230,8 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/doctranslate`}
-              title="Translate File"
+              showLogo
+              title="SUVAS - Translate File"
               component={PdfTranslate}
               userRoles={["editor", "user"]}
               authenticate={this.authenticateUser}
@@ -250,7 +252,8 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/viewtranslate`}
-              title="Documents"
+              showLogo
+              title="SUVAS - Documents"
               component={ViewTranslate}
               userRoles={["editor", "user"]}
               authenticate={this.authenticateUser}
