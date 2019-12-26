@@ -26,9 +26,9 @@ import GraderReport from "./ui/containers/web/GraderReport";
 import GraderTranslate from "./ui/containers/web/SentenceTranslate";
 import FileTranslate from "./ui/containers/web/GraderTranslate";
 import ComparisonReport from "./ui/containers/web/ComparisonReport";
-import WorkspaceDetails from "./ui/containers/web/Tool1-Pipieline/ExtractionSteps";
-import ExtractionSteps from "./ui/containers/web/Tool1-Pipieline/NewSentenceExtraction";
-import NewSentenceExtraction from "./ui/containers/web/Tool1-Pipieline/NewSentenceExtraction";
+import WorkspaceDetails from "./ui/containers/web/Tool1-Pipeline/ExtractionSteps";
+import ExtractionSteps from "./ui/containers/web/Tool1-Pipeline/NewSentenceExtraction";
+import NewSentenceExtraction from "./ui/containers/web/Tool1-Pipeline/NewSentenceExtraction";
 import PdfTranslate from "./ui/containers/web/PdfTranslate";
 import EditTranslate from "./ui/containers/web/EditTranslate";
 import ViewTranslate from "./ui/containers/web/ViewTranslate";
@@ -37,12 +37,14 @@ import ViewDoc from "./ui/containers/web/ViewDoc";
 import TranslatePresident from "./ui/containers/web/TranslateJudgement";
 import DataPipeline from "./ui/containers/web/DataPipeline";
 import TPresident from "./ui/containers/web/TPresident";
-import ExistingWorkspace from "./ui/containers/web/Tool1-Pipieline/ExistingWorkspace";
-import SentenceExtraction from "./ui/containers/web/Tool1-Pipieline/SentenceExtraction";
-import TockenExtraction from "./ui/containers/web/Tool1-Pipieline/TockenExtraction";
-import ApplyTocken from "./ui/containers/web/Tool1-Pipieline/ApplyTocken";
-import UploadTocken from "./ui/containers/web/Tool1-Pipieline/UploadTocken";
+import ExistingWorkspace from "./ui/containers/web/Tool1-Pipeline/ExistingWorkspace";
+import SentenceExtraction from "./ui/containers/web/Tool1-Pipeline/SentenceExtraction";
+import TockenExtraction from "./ui/containers/web/Tool1-Pipeline/TockenExtraction";
+import ApplyTocken from "./ui/containers/web/Tool1-Pipeline/ApplyTocken";
+import UploadTocken from "./ui/containers/web/Tool1-Pipeline/UploadTocken";
+import ProcessingWorkspace from "./ui/containers/web/Tool2-Pipeline/ProcessingWorkspace";
 
+import CreateWorkspace from "./ui/containers/web/Tool2-Pipeline/CreateWorkspace";
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
   <Route
     {...rest}
@@ -324,6 +326,24 @@ class AppRoutes extends React.Component {
               title="STAGE 1, TOOLCHAIN"
               userRoles={["dev"]}
               component={ExtractionSteps}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage2/processing-workspace`}
+              title="STAGE 1, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={ProcessingWorkspace}
+              authenticate={this.authenticateUser}
+            />
+
+
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage2/create-workspace`}
+              title="STAGE 1, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={CreateWorkspace}
               authenticate={this.authenticateUser}
             />
 
