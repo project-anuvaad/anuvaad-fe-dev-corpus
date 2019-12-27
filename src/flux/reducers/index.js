@@ -46,7 +46,7 @@ import addUser from './adduser';
 import fetchWorkspace from './fetchworkspace';
 import fetchWorkspaceDetails from './fetchworkspacedetails';
 import updatePasswordstatus from './updatepassword';
-
+import createWorkspaceDetails from './createworkspace';
 import uploadTokenValue from './uploadtoken';
 import uploadTranslated from './uploadTranslatedFile';
 
@@ -97,5 +97,6 @@ export default {
     fetchWorkspaceDetails,
     uploadTokenValue,
     fetchDefaultConfig,
-    uploadTranslated
+    uploadTranslated,
+    createWorkspaceDetails
 };
