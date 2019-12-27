@@ -45,6 +45,7 @@ import UploadTocken from "./ui/containers/web/Tool1-Pipeline/UploadTocken";
 import ProcessingWorkspace from "./ui/containers/web/Tool2-Pipeline/ProcessingWorkspace";
 
 import CreateWorkspace from "./ui/containers/web/Tool2-Pipeline/CreateWorkspace";
+import DownloadSentence from "./ui/containers/web/Tool2-Pipeline/DownloadSentence";
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
   <Route
     {...rest}
@@ -328,6 +329,14 @@ class AppRoutes extends React.Component {
               title="STAGE 1, TOOLCHAIN"
               userRoles={["dev"]}
               component={ExtractionSteps}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage2/download-sentence`}
+              title="STAGE 2, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={DownloadSentence}
               authenticate={this.authenticateUser}
             />
 

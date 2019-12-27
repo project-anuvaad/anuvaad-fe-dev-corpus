@@ -9,18 +9,20 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
 import Snackbar from "../../../components/web/common/Snackbar";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
 import Spinner from "../../../components/web/common/Spinner";
+import Select from '../../../components/web/common/SimpleSelect';
+import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
 
 class CreateWorkspace extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
         value: 1,
+        target: "",
 
       csvData:
         "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",
@@ -29,7 +31,22 @@ class CreateWorkspace extends React.Component {
   }
 
   
+  componentDidMount() {
+    const { APITransport } = this.props;
+    const apiObj = new FetchLanguage();
+    APITransport(apiObj);
+    
+  }
 
+  componentDidUpdate(prevProps) {
+
+    if (prevProps.supportLanguage !== this.props.supportLanguage) {
+      console.log("sssss",this.props.supportLanguage)
+      this.setState({
+        language: this.props.supportLanguage
+      })
+    }
+  }
   
 
   handleTextChange(key, event) {
@@ -41,9 +58,13 @@ class CreateWorkspace extends React.Component {
 
   
 
-  handleSource(modelLanguage, supportLanguage) {
-    console.log("test");
-  }
+  handleSelectChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  
+
+  
 
   handleSubmit() {
      history.push(`${process.env.PUBLIC_URL}/stage2/processing-workspace`);
@@ -81,29 +102,9 @@ class CreateWorkspace extends React.Component {
               <br />
             </Grid>
             <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
-              <Select style={{ width: "60%",marginTop:'10px' }} input={<OutlinedInput />}>
-                {["hindi", "english"].map(item => (
-                  <MenuItem key={item} value={item}>
-                    {item}
-                  </MenuItem>
-                ))}
-              </Select>
+            <Select id={"outlined-age-simple"} MenuItemValues={ this.state.language } handleChange={this.handleSelectChange} value={this.state.target} name="target"/> 
             </Grid>
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                Select source language :
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
-              <Select style={{ width: "60%",marginTop:'20px' }} input={<OutlinedInput />} >
-                {["hindi", "english"].map(item => (
-                  <MenuItem key={item} value={item}>
-                    {item}
-                  </MenuItem>
-                ))}
-              </Select>
-            </Grid>
+            
 
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography
@@ -122,7 +123,7 @@ class CreateWorkspace extends React.Component {
                 style={{ width: "60%", marginTop: "6%", height: "56px" }}
                 onClick={this.handleSubmit.bind(this)}
               >
-                Start processing
+                Next
               </Button>
             </Grid>
           </Grid>
@@ -137,7 +138,8 @@ const mapStateToProps = state => ({
   apistatus: state.apistatus,
   configUplaod: state.configUplaod,
   workspaceDetails: state.workspaceDetails,
-  fetchDefaultConfig: state.fetchDefaultConfig
+  fetchDefaultConfig: state.fetchDefaultConfig,
+  supportLanguage: state.supportLanguage,
 });
 
 const mapDispatchToProps = dispatch =>

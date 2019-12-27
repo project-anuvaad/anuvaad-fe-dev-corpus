@@ -39,7 +39,7 @@ class ExtractionWorkspace extends React.Component {
     const { APITransport } = this.props;
     const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", this.state.filter);
     APITransport(apiObj);
-    this.setState({ showLoader: true, filter:val });
+    this.setState({ showLoader: true, filter: val });
   };
 
   handleReset = val => {
@@ -104,7 +104,15 @@ class ExtractionWorkspace extends React.Component {
         name: "step",
         label: "Status",
         options: {
-          
+          sort: false,
+          filter: false
+        }
+      },
+      {
+        name: "username",
+        label: "Created by",
+        options: {
+          filter: false,
           sort: false,
           filter: false
         }
@@ -113,23 +121,20 @@ class ExtractionWorkspace extends React.Component {
         name: "created_at",
         label: "Created At",
         options: {
-          
           sort: false,
           filter: false
         }
       }
-
-      
     ];
 
     const options = {
       filter: true,
       serverSideFilterList: this.state.serverSideFilterList,
       filterType: "textField",
-      
+
       download: false,
       print: false,
-      fixedHeaderOptions: {xAxis: false, yAxis: true},
+      fixedHeaderOptions: { xAxis: false, yAxis: true },
       search: false,
       serverSide: true,
       count: this.state.count,

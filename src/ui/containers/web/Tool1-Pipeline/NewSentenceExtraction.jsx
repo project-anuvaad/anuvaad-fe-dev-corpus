@@ -111,7 +111,8 @@ class NewExtraction extends React.Component {
     }
 
     if (prevProps.fetchDefaultConfig !== this.props.fetchDefaultConfig) {
-      this.setState({ defaultConfig: this.props.fetchDefaultConfig.data });
+      console.log(this.props.fetchDefaultConfig.data)
+      this.setState({ defaultConfig: this.props.fetchDefaultConfig.data[0], defaultCsv: this.props.fetchDefaultConfig.data[1]});
     }
 
     if (prevProps.workspaceDetails !== this.props.workspaceDetails) {
@@ -215,8 +216,22 @@ class NewExtraction extends React.Component {
               </Typography>
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                CSV file :
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
+                CSV file : &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <a
+                  href={
+                    this.state.defaultConfig
+                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" 
+                        }/download/${ 
+                        this.state.defaultCsv.path}`
+                      : ""
+                  }
+                  style={{ textDecoration: "none" }}
+                >
+                  <Link component="button" variant="body2">
+                    Download sample csv
+                  </Link>
+                </a>
               </Typography>
               <br />
             </Grid>
