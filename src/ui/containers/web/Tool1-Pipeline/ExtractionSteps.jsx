@@ -28,7 +28,7 @@ class ExtractionWorkspace extends React.Component {
 
   componentDidMount() {
     this.handleFetchWorkspace();
-    this.intervalID = setInterval(this.handleFetchWorkspace, 10000);
+    this.intervalID = setInterval(this.handleFetchWorkspace, 3000);
   }
 
   componentWillUnmount() {
@@ -57,15 +57,14 @@ class ExtractionWorkspace extends React.Component {
 
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    if (rowData[2] == "At Step2") {
-      history.push(`${`${process.env.PUBLIC_URL}/Sentence-Extraction` + "/"}${rowData[0]}/${rowData[1]}`);
-    } else if (rowData[2] == "At Step1") {
+    if (rowData[2] == "At Step1") {
       history.push(`${`${process.env.PUBLIC_URL}/apply-token` + "/"}${rowData[0]}/${rowData[1]}`);
     }
   };
 
   handleFilterSubmit = filterList => () => {
     console.log(filterList);
+    clearTimeout(this.intervalID);
     const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", filterList);
     this.props.APITransport(apiObj);
     this.setState({ showLoader: true, filter: filterList });
@@ -105,7 +104,7 @@ class ExtractionWorkspace extends React.Component {
         name: "step",
         label: "Status",
         options: {
-          filter: true,
+          
           sort: false,
           filter: false
         }
@@ -114,7 +113,7 @@ class ExtractionWorkspace extends React.Component {
         name: "created_at",
         label: "Created At",
         options: {
-          filter: true,
+          
           sort: false,
           filter: false
         }
@@ -127,10 +126,10 @@ class ExtractionWorkspace extends React.Component {
       filter: true,
       serverSideFilterList: this.state.serverSideFilterList,
       filterType: "textField",
-      responsive: "scrollMaxHeight",
+      
       download: false,
       print: false,
-      fixedHeader: true,
+      fixedHeaderOptions: {xAxis: false, yAxis: true},
       search: false,
       serverSide: true,
       count: this.state.count,
@@ -138,7 +137,7 @@ class ExtractionWorkspace extends React.Component {
       page: this.state.page / this.state.rowsPerPage,
       onRowClick: rowData => this.handleClick(rowData),
       onFilterDialogOpen: () => {
-        console.log("filter dialog opened");
+        clearTimeout(this.intervalID);
       },
       onFilterDialogClose: () => {},
       onFilterChange: (column, filterList, type, reset) => {
