@@ -9,7 +9,7 @@ class SimpleSelect extends React.Component {
 
   render() {
     const { id, MenuItemValues, handleChange, value, name } = this.props;
-
+    console.log( this.props.MenuItemValues)
     return (
       <form>
         <FormControl>
@@ -22,7 +22,8 @@ class SimpleSelect extends React.Component {
               <OutlinedInput name={name} id={id} />
             }
           >
-            {MenuItemValues.map((item) => (
+            {MenuItemValues &&
+            MenuItemValues.map((item) => (
               <MenuItem value={item}>{item.language_name}</MenuItem>
             ))}
           </Select>
