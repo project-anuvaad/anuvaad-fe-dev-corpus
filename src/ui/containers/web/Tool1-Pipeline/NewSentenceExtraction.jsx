@@ -30,7 +30,7 @@ class NewExtraction extends React.Component {
       value: 1,
       load: false,
 
-      message: "Process started, This might be long running operation, kindly look the status of your workspace under Here",
+      message: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
 
       csvData:
         "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",

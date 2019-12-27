@@ -266,6 +266,7 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/existing-workspace`}
+              dontShowLoader
               title="STAGE 1, TOOLCHAIN"
               userRoles={["dev"]}
               component={ExistingWorkspace}
@@ -273,6 +274,7 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/Workspace-details`}
+              dontShowLoader
               title="STAGE 1, TOOLCHAIN"
               userRoles={["dev"]}
               component={WorkspaceDetails}
