@@ -129,7 +129,7 @@ class NewExtraction extends React.Component {
       });
 
       setTimeout(() => {
-        history.push(`${process.env.PUBLIC_URL}/Workspace-details`);
+        history.push(`${process.env.PUBLIC_URL}/workspace-details`);
       }, 3000);
       //
     }
