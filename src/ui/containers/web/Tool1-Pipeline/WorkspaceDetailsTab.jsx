@@ -21,7 +21,7 @@ class ParentTab extends React.Component {
     } else if (value == 1) {
       history.push(`${process.env.PUBLIC_URL}/new-extraction`);
     } else if (value == 2) {
-      history.push(`${process.env.PUBLIC_URL}/Workspace-details`);
+      history.push(`${process.env.PUBLIC_URL}/workspace-details`);
     }
   }
 
