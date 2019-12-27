@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
 import { timingSafeEqual } from "crypto";
+import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
-import { Button } from "@material-ui/core";
 
 class ExistingWorkspace extends React.Component {
   intervalID;
@@ -35,7 +35,7 @@ class ExistingWorkspace extends React.Component {
 
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "","At Step2");
+    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "", "At Step2");
     APITransport(apiObj);
     this.setState({ showLoader: true });
   };
@@ -48,23 +48,24 @@ class ExistingWorkspace extends React.Component {
 
   handleReset = val => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "","At Step2", val);
+    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "", "At Step2", val);
     APITransport(apiObj);
     this.setState({ filter: val });
   };
 
   changePage = (page, rowsPerPage) => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(rowsPerPage, page + 1, "","At Step2");
+    const apiObj = new FetchWorkspace(rowsPerPage, page + 1, "", "At Step2");
     APITransport(apiObj);
     this.setState({ page, rowsPerPage });
   };
+
   handleFilterSubmit = filterList => () => {
     console.log(filterList);
     clearTimeout(this.intervalID);
     const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "", "At Step2", filterList);
     this.props.APITransport(apiObj);
-    this.setState({  filter: filterList });
+    this.setState({ filter: filterList });
   };
 
   handleClick = rowData => {
@@ -119,6 +120,15 @@ class ExistingWorkspace extends React.Component {
         options: {
           filter: false,
           sort: true
+        }
+      },
+      {
+        name: "username",
+        label: "Created By",
+        options: {
+          filter: false,
+          sort: false,
+          filter: false
         }
       },
       {
