@@ -17,7 +17,7 @@ class ParentTab extends React.Component {
 
   handleValueChange(value) {
     if (value == 0) {
-      history.push(`${process.env.PUBLIC_URL}/stage2/Workspace-details`);
+      history.push(`${process.env.PUBLIC_URL}/stage2/workspace-details`);
     } else if (value == 1) {
       history.push(`${process.env.PUBLIC_URL}/stage2/create-workspace`);
     } else if (value == 2) {

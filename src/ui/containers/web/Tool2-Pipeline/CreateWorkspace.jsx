@@ -17,6 +17,7 @@ import Spinner from "../../../components/web/common/Spinner";
 import Select from '../../../components/web/common/SimpleSelect';
 import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
 
+import SaveWorkspace from "../../../../flux/actions/apis/createworkspace";
 class CreateWorkspace extends React.Component {
   constructor(props) {
     super(props);
@@ -46,6 +47,13 @@ class CreateWorkspace extends React.Component {
         language: this.props.supportLanguage
       })
     }
+
+    if (prevProps.createWorkspaceDetails !== this.props.createWorkspaceDetails) {
+      console.log("sssss",this.props.createWorkspaceDetails)
+      this.setState({
+        response: this.props.createWorkspaceDetails
+      })
+    }
   }
   
 
@@ -58,11 +66,18 @@ class CreateWorkspace extends React.Component {
 
   
 
-  handleSelectChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  handleSubmit = () => {
+    
 
-  
+  if (this.state.workspaceName  && this.state.target) {
+    
+    const apiObj2 = new SaveWorkspace(this.state.workspaceName, this.state.target);
+    this.state.csvFile && APITransport(apiObj2);
+    this.setState({ load: true });
+  } else {
+    alert("Fields should not be empty");
+  }
+}
 
   
 
@@ -140,6 +155,7 @@ const mapStateToProps = state => ({
   workspaceDetails: state.workspaceDetails,
   fetchDefaultConfig: state.fetchDefaultConfig,
   supportLanguage: state.supportLanguage,
+  createWorkspaceDetails: state.createWorkspaceDetails
 });
 
 const mapDispatchToProps = dispatch =>
