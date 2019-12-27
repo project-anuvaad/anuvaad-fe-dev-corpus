@@ -71,7 +71,7 @@ class ExistingWorkspace extends React.Component {
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
     if (rowData[2] == "At Step2") {
-      history.push(`${`${process.env.PUBLIC_URL}/Sentence-Extraction` + "/"}${rowData[0]}/${rowData[1]}`);
+      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
     }
   };
 

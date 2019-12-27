@@ -274,7 +274,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/Workspace-details`}
+              path={`${process.env.PUBLIC_URL}/workspace-details`}
               dontShowLoader
               title="STAGE 1, TOOLCHAIN"
               userRoles={["dev"]}
@@ -325,7 +325,7 @@ class AppRoutes extends React.Component {
             />
 
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/Sentence-Extraction`}
+              path={`${process.env.PUBLIC_URL}/sentence-extraction`}
               title="STAGE 1, TOOLCHAIN"
               userRoles={["dev"]}
               component={ExtractionSteps}
@@ -352,7 +352,7 @@ class AppRoutes extends React.Component {
 
 <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/create-workspace`}
-              title="STAGE 1, TOOLCHAIN"
+              title="STAGE 2, TOOLCHAIN"
               userRoles={["dev"]}
               component={CreateWorkspace}
               authenticate={this.authenticateUser}
