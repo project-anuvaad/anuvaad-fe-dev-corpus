@@ -28,7 +28,7 @@ class ProcessingWorkspace extends React.Component {
       workspaceName: "",
       configName: "",
       csvName: "",
-      value: 1,
+      value: 2,
       load: false,
 
       message: "Process started, This might be long running operation, kindly look the status of your workspace under Here",
