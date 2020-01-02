@@ -24,6 +24,7 @@ class CreateWorkspace extends React.Component {
     this.state = {
         value: 1,
         target: "",
+        workspaceName:'',
 
       csvData:
         "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",
@@ -49,10 +50,7 @@ class CreateWorkspace extends React.Component {
     }
 
     if (prevProps.createWorkspaceDetails !== this.props.createWorkspaceDetails) {
-      console.log("sssss",this.props.createWorkspaceDetails)
-      this.setState({
-        response: this.props.createWorkspaceDetails
-      })
+      history.push(`${process.env.PUBLIC_URL}/stage2/processing-workspace`);
     }
   }
   
@@ -64,25 +62,24 @@ class CreateWorkspace extends React.Component {
     });
   }
 
-  
-
-  handleSubmit = () => {
-    
-
-  if (this.state.workspaceName  && this.state.target) {
-    
-    const apiObj2 = new SaveWorkspace(this.state.workspaceName, this.state.target);
-    this.state.csvFile && APITransport(apiObj2);
-    this.setState({ load: true });
-  } else {
-    alert("Fields should not be empty");
-  }
-}
+  handleSelectChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+ 
 
   
 
   handleSubmit() {
-     history.push(`${process.env.PUBLIC_URL}/stage2/processing-workspace`);
+    const { APITransport } = this.props;
+    console.log(this.state.workspaceName  , this.state.target.language_code)
+    if (this.state.workspaceName  && this.state.target.language_code) {
+    
+      const apiObj2 = new SaveWorkspace(this.state.workspaceName, this.state.target.language_code);
+       APITransport(apiObj2);
+      this.setState({ load: true });
+    } else {
+      alert("Fields should not be empty");
+    }
   }
 
   render() {

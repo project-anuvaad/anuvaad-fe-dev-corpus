@@ -26,7 +26,7 @@ import GraderReport from "./ui/containers/web/GraderReport";
 import GraderTranslate from "./ui/containers/web/SentenceTranslate";
 import FileTranslate from "./ui/containers/web/GraderTranslate";
 import ComparisonReport from "./ui/containers/web/ComparisonReport";
-import WorkspaceDetails from "./ui/containers/web/Tool1-Pipeline/ExtractionSteps";
+import ExistingWorkspaceDetails from "./ui/containers/web/Tool1-Pipeline/ExtractionSteps";
 import ExtractionSteps from "./ui/containers/web/Tool1-Pipeline/NewSentenceExtraction";
 import NewSentenceExtraction from "./ui/containers/web/Tool1-Pipeline/NewSentenceExtraction";
 import PdfTranslate from "./ui/containers/web/PdfTranslate";
@@ -46,6 +46,10 @@ import ProcessingWorkspace from "./ui/containers/web/Tool2-Pipeline/ProcessingWo
 
 import CreateWorkspace from "./ui/containers/web/Tool2-Pipeline/CreateWorkspace";
 import DownloadSentence from "./ui/containers/web/Tool2-Pipeline/DownloadSentence";
+import WorkspaceDetails from "./ui/containers/web/Tool2-Pipeline/WorkspaceDetails";
+
+
+
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
   <Route
     {...rest}
@@ -278,7 +282,7 @@ class AppRoutes extends React.Component {
               dontShowLoader
               title="STAGE 1, TOOLCHAIN"
               userRoles={["dev"]}
-              component={WorkspaceDetails}
+              component={ExistingWorkspaceDetails}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
@@ -345,6 +349,15 @@ class AppRoutes extends React.Component {
               title="STAGE 1, TOOLCHAIN"
               userRoles={["dev"]}
               component={ProcessingWorkspace}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage2/workspace-details`}
+              dontShowLoader
+              title="STAGE 2, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={WorkspaceDetails}
               authenticate={this.authenticateUser}
             />
 
