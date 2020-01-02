@@ -17,6 +17,7 @@ import ConfigUpload from "../../../../flux/actions/apis/configupload";
 import FetchDefaultConfig from "../../../../flux/actions/apis/fetchdefaultconfig";
 import RunExperiment from "../../../../flux/actions/apis/runexperiment";
 import Spinner from "../../../components/web/common/Spinner";
+import ExistingWorkspace from "./ExistingWorkspace";
 
 class ProcessingWorkspace extends React.Component {
   constructor(props) {
@@ -174,45 +175,9 @@ class ProcessingWorkspace extends React.Component {
                 style={{ width: "60%" }}
               />
             </Grid>
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                Configuration file : &emsp;&emsp;{" "}
-                <a
-                  href={
-                    this.state.defaultConfig
-                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" 
-                        }/download/${ 
-                        this.state.defaultConfig.path}`
-                      : ""
-                  }
-                  style={{ textDecoration: "none" }}
-                >
-                  <Link component="button" variant="body2">
-                    Download global configuration
-                  </Link>
-                </a>
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ marginTop: "-7px", height: "56px" }}>
-              <Grid container spacing={8}>
-                <Grid item xs={4} sm={4} lg={4} xl={4}>
-                  <FileUpload accept=".yaml" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="configFile" />
-                </Grid>
 
-                <Grid item xs={4} sm={4} lg={4} xl={4}>
-                  <TextField value={this.state.configName} id="outlined-name" disabled margin="normal" variant="outlined" style={{ width: "80%" }} />
-                </Grid>
-              </Grid>
-            </Grid>
             <Grid item xs={12} sm={12} lg={12} xl={12}>
-              <Typography
-                variant="subtitle2"
-                color="inherit"
-                style={{ textAlign: "justify", color: "#ACACAC", marginRight: "28%", marginTop: "40px" }}
-              >
-                {this.state.csvData}
-              </Typography>
+              <ExistingWorkspace/>
             </Grid>
             
 
