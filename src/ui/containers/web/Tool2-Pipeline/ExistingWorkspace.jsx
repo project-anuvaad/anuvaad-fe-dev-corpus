@@ -20,7 +20,8 @@ class ExistingWorkspace extends React.Component {
       page: 0,
       rowsPerPage: 10,
       serverSideFilterList: [],
-      filters: []
+      filters: [],
+      workspaces: []
     };
   }
 
@@ -35,14 +36,14 @@ class ExistingWorkspace extends React.Component {
 
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "");
+    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "");
     APITransport(apiObj);
     this.setState({ showLoader: true });
   };
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspace !== this.props.fetchWorkspace) {
-      this.setState({ name: this.props.fetchWorkspace.data, count: this.props.fetchWorkspace.count });
+      this.setState({ workspaces: this.props.fetchWorkspace.data, count: this.props.fetchWorkspace.count });
     }
   }
 
@@ -68,7 +69,7 @@ class ExistingWorkspace extends React.Component {
     this.setState({ filter: filterList });
   };
 
-  
+
 
   handleChange = value => {
     this.setState({ value });
@@ -138,14 +139,15 @@ class ExistingWorkspace extends React.Component {
     ];
 
     const options = {
-        
-      filterType: "textField",
+
+      filterType: "checkbox",
       download: false,
       print: false,
       search: false,
       filter: false,
       viewColumns: false,
       selectableRows: "multiple",
+      rowsSelected: this.props.selectedWorkspaces,
       serverSide: true,
       selectableRowsHeader: false,
       count: this.state.count,
@@ -155,7 +157,18 @@ class ExistingWorkspace extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => {},
+      onRowsSelect: (currentRowsSelected, allRowsSelected) => {
+        let selectedItems = []
+        if (allRowsSelected && allRowsSelected.length > 0) {
+          allRowsSelected.map((selected) => {
+            selectedItems.push(this.state.workspaces[selected.index])
+          })
+        }
+        if (this.props.handleWorkspaceSelected) {
+          this.props.handleWorkspaceSelected(selectedItems)
+        }
+      },
+      onFilterDialogClose: () => { },
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -183,9 +196,9 @@ class ExistingWorkspace extends React.Component {
 
     return (
       <div>
-        
-        <div style={{  marginRight: "28%", marginTop: "40px" }}>
-          <MUIDataTable  data={this.state.name} columns={columns} options={options} />
+
+        <div style={{ marginRight: "28%", marginTop: "40px" }}>
+          <MUIDataTable data={this.state.workspaces} columns={columns} options={options} />
         </div>
       </div>
     );
