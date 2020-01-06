@@ -6,7 +6,7 @@ import API from "./api";
 import C from "../constants";
 
 export default class AddUser extends API {
-    constructor(username, firstname, lastname, password,email, roles, timeout = 2000) {
+    constructor(username, firstname, lastname, password,email, roles,courtId, timeout = 2000) {
         super('POST', timeout, false);
         this.type = C.ADD_USER;
        
@@ -16,6 +16,7 @@ export default class AddUser extends API {
         this.password = password
         this.email = email
         this.roles = roles
+        this.courtId = courtId
 
         this.usercreate = {}
 
@@ -46,7 +47,8 @@ export default class AddUser extends API {
         lastname: this.lastname,
        password:  this.password,
         email: this.email,
-        roles: this.roles
+        roles: this.roles,
+        high_court_code: this.courtId
         };
       }
       

@@ -36,7 +36,7 @@ import malayalam from './malayalam';
 import kannada from './kannada';
 import gujarati from './gujarati';
 import bengali from './bengali';
-
+import courtList from './fetchcourtlist';
 import fetchtranslation from './viewtranslate';
 
 import deletefile from './delete';
@@ -98,5 +98,6 @@ export default {
     uploadTokenValue,
     fetchDefaultConfig,
     uploadTranslated,
-    createWorkspaceDetails
+    createWorkspaceDetails,
+    courtList
 };
