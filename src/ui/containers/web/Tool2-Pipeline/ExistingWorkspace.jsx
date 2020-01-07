@@ -6,7 +6,7 @@ import MUIDataTable from "mui-datatables";
 import { timingSafeEqual } from "crypto";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
-import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
+import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
 
@@ -20,14 +20,13 @@ class ExistingWorkspace extends React.Component {
       page: 0,
       rowsPerPage: 10,
       serverSideFilterList: [],
-      filters: [],
-      workspaces: []
+      filters: []
     };
   }
 
   componentDidMount() {
     this.handleFetchWorkspace();
-    // this.intervalID = setInterval(this.handleFetchWorkspace, 10000);
+    this.intervalID = setInterval(this.handleFetchWorkspace, 10000);
   }
 
   componentWillUnmount() {
@@ -36,27 +35,27 @@ class ExistingWorkspace extends React.Component {
 
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "");
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "");
     APITransport(apiObj);
     this.setState({ showLoader: true });
   };
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspace !== this.props.fetchWorkspace) {
-      this.setState({ workspaces: this.props.fetchWorkspace.data, count: this.props.fetchWorkspace.count });
+      this.setState({ name: this.props.fetchWorkspace.data, count: this.props.fetchWorkspace.count });
     }
   }
 
   handleReset = val => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", val);
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", val);
     APITransport(apiObj);
     this.setState({ filter: val });
   };
 
   changePage = (page, rowsPerPage) => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(rowsPerPage, page + 1, "PROCESSING", "");
+    const apiObj = new FetchMTWorkspace(rowsPerPage, page + 1, "PROCESSED", "");
     APITransport(apiObj);
     this.setState({ page, rowsPerPage });
   };
@@ -64,12 +63,17 @@ class ExistingWorkspace extends React.Component {
   handleFilterSubmit = filterList => () => {
     console.log(filterList);
     clearTimeout(this.intervalID);
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", filterList);
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", filterList);
     this.props.APITransport(apiObj);
     this.setState({ filter: filterList });
   };
 
-
+  handleClick = rowData => {
+    this.setState({ workSpacename: rowData[0], id: rowData[1] });
+    
+      history.push(`${`${process.env.PUBLIC_URL}/stage2/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
+    
+  };
 
   handleChange = value => {
     this.setState({ value });
@@ -139,36 +143,20 @@ class ExistingWorkspace extends React.Component {
     ];
 
     const options = {
-
-      filterType: "checkbox",
+      filterType: "textField",
       download: false,
       print: false,
       search: false,
-      filter: false,
-      viewColumns: false,
-      selectableRows: "multiple",
-      rowsSelected: this.props.selectedWorkspaces,
+      filter: true,
       serverSide: true,
-      selectableRowsHeader: false,
       count: this.state.count,
-      selectableRowsHeader: false,
+      selectableRows: "none",
       page: this.state.page / this.state.rowsPerPage,
-      disableToolbarSelect: true,
+      onRowClick: rowData => this.handleClick(rowData),
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onRowsSelect: (currentRowsSelected, allRowsSelected) => {
-        let selectedItems = []
-        if (allRowsSelected && allRowsSelected.length > 0) {
-          allRowsSelected.map((selected) => {
-            selectedItems.push(this.state.workspaces[selected.index])
-          })
-        }
-        if (this.props.handleWorkspaceSelected) {
-          this.props.handleWorkspaceSelected(selectedItems)
-        }
-      },
-      onFilterDialogClose: () => { },
+      onFilterDialogClose: () => {},
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -196,9 +184,9 @@ class ExistingWorkspace extends React.Component {
 
     return (
       <div>
-
-        <div style={{ marginRight: "28%", marginTop: "40px" }}>
-          <MUIDataTable data={this.state.workspaces} columns={columns} options={options} />
+        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
+        <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+          <MUIDataTable title="Processing Workspaces" data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );

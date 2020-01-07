@@ -16,7 +16,7 @@ class WorkspaceDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      value: 2,
       page: 0,
       rowsPerPage: 10,
       serverSideFilterList: [],
@@ -118,8 +118,7 @@ class WorkspaceDetails extends React.Component {
         name: "sentence_count",
         label: "Sentence Count",
         options: {
-          filter: false,
-          sort: true
+          display: "excluded"
         }
       },
       {

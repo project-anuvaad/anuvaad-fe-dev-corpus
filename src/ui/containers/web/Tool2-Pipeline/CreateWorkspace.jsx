@@ -14,10 +14,12 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
 import Spinner from "../../../components/web/common/Spinner";
-import Select from '../../../components/web/common/SimpleSelect';
 import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
-import ExistingWorkspace from "./ExistingWorkspace";
-import SaveWorkspace from "../../../../flux/actions/apis/createworkspace";
+import ProcessingWorkspace from "./ProcessingWorkspace";
+import MTProcessWorkspace from "../../../../flux/actions/apis/createworkspace";
+import Select from "@material-ui/core/Select";
+
+
 class CreateWorkspace extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +29,7 @@ class CreateWorkspace extends React.Component {
       selectedWorkspaces: [],
       workspaceName: '',
       step: 1,
+      message1: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
       csvData:
         "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",
       processData: 'Press "Next" to select relevant input workspaces'
@@ -56,7 +59,15 @@ class CreateWorkspace extends React.Component {
     }
 
     if (prevProps.createWorkspaceDetails !== this.props.createWorkspaceDetails) {
-      history.push(`${process.env.PUBLIC_URL}/stage2/processing-workspace`);
+      this.setState({
+        open: true,
+      });
+
+      setTimeout(() => {
+        history.push(`${process.env.PUBLIC_URL}/stage2/workspace-details`);
+      }, 3000);
+      
+      
     }
   }
 
@@ -77,9 +88,15 @@ class CreateWorkspace extends React.Component {
     this.setState({
       selectedWorkspaces: selectedWorkspaces
     })
+
   }
 
-
+  handleProcessSubmit() {
+    const { APITransport } = this.props;
+      const apiObj2 = new MTProcessWorkspace(this.state.selectedWorkspaces,this.state.workspaceName, this.state.target.language_code);
+      APITransport(apiObj2);
+      this.setState({ load: true });
+  }
 
 
   handleSubmit() {
@@ -89,9 +106,6 @@ class CreateWorkspace extends React.Component {
       this.setState({
         step: 2
       })
-      // const apiObj2 = new SaveWorkspace(this.state.workspaceName, this.state.target.language_code);
-      // APITransport(apiObj2);
-      // this.setState({ load: true });
     } else {
       alert("Fields should not be empty");
     }
@@ -130,7 +144,22 @@ class CreateWorkspace extends React.Component {
                 <br />
               </Grid>
               <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
-                <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" />
+
+              <Select
+            style={{ width: '60%' }}
+            value={this.state.target}
+
+            onChange={this.handleSelectChange}
+            input={
+              <OutlinedInput name="target" id="outlined-age-simple" />
+            }
+          >
+            {this.state.language &&
+            this.state.language.map((item) => (
+              <MenuItem value={item}>{item.language_name}</MenuItem>
+            ))}
+          </Select>
+                {/* <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" /> */}
               </Grid>
 
 
@@ -180,7 +209,7 @@ class CreateWorkspace extends React.Component {
               </Grid>
 
               <Grid item xs={12} sm={12} lg={12} xl={12}>
-                <ExistingWorkspace handleWorkspaceSelected={this.handleWorkspaceSelected.bind(this)} selectedWorkspaces={this.state.selectedWorkspaces}/>
+                <ProcessingWorkspace handleWorkspaceSelected={this.handleWorkspaceSelected.bind(this)} selectedWorkspaces={this.state.selectedWorkspaces}/>
               </Grid>
 
 
@@ -188,7 +217,7 @@ class CreateWorkspace extends React.Component {
                 <Typography
                   variant="subtitle2"
                   color="inherit"
-                  style={{ textAlign: "justify", color: "#ACACAC", marginTop: "7%", width: "80%", marginLeft: "2px" }}
+                  style={{ textAlign: "justify", color: "#ACACAC", marginTop: "11%", width: "80%", marginLeft: "2px" }}
                 >
                   {this.state.processData}
                 </Typography>
@@ -199,13 +228,25 @@ class CreateWorkspace extends React.Component {
                   variant="contained"
                   color="primary"
                   style={{ width: "60%", marginTop: "6%", height: "56px" }}
-                  onClick={this.handleSubmit.bind(this)}
+                  onClick={this.handleProcessSubmit.bind(this)}
                 >
                   Start processing
               </Button>
               </Grid>
             </Grid>
           </Paper>
+          
+        }
+
+{this.state.open && 
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={this.state.open}
+            autoHideDuration={3000}
+            onClose={this.handleClose}
+            variant="success"
+            message={this.state.message1}
+          />
         }
       </div>
     );
