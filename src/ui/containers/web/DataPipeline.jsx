@@ -25,7 +25,7 @@ class DataPipeline extends React.Component {
     history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
     }
     else if(value=="Stage 2"){
-      history.push(`${process.env.PUBLIC_URL}/stage2/processing-workspace`);
+      history.push(`${process.env.PUBLIC_URL}/stage2/existing-workspace`);
       }
     else{
 
@@ -48,7 +48,7 @@ class DataPipeline extends React.Component {
                       {text}
                     </Typography>
                     <ConfigProvider colors={["green", "green"]}>
-                      <Avatar onClick={() => { this.handleClick(text)}} value="DataSource" size={150} round="100px" />
+                      <Avatar  value="DataSource" size={150} round="100px" />
                     </ConfigProvider>
                     <ConfigProvider colors={["#003f5c", "#003f5c"]} style={{ marginLeft: "15px" }}>
                       <Avatar onClick={() => { this.handleClick(text)}} value=" Toolchain " size={150} />
