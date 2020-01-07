@@ -300,7 +300,7 @@ class UserUpdate extends React.Component {
                 </Button>
               {userDetails[1] ?
                  
-                <Button variant="contained" disabled={userDetails[1] ? (this.state.userpassword.length > 5 ? false : true) : (this.state.firstname && this.state.lastname && this.state.userid && this.state.email && this.state.high_court_code ? false : true)} onClick={() => { this.handlePasswordSubmit(userDetails[0]) }} color="primary" aria-label="edit" style={{ width: '40%', marginBottom: '4%', marginTop: '4%', marginLeft: '5%' }}>
+                <Button variant="contained" onClick={() => { this.handlePasswordSubmit(userDetails[0]) }} color="primary" aria-label="edit" style={{ width: '40%', marginBottom: '4%', marginTop: '4%', marginLeft: '5%' }}>
                   Update
                 </Button>:
                 
