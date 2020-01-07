@@ -24,6 +24,9 @@ class DataPipeline extends React.Component {
     if(value=="Stage 1"){
     history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
     }
+    else if(value=="Stage 2"){
+      history.push(`${process.env.PUBLIC_URL}/stage2/processing-workspace`);
+      }
     else{
 
         alert("Still inprogress")

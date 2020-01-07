@@ -38,6 +38,8 @@ class UserDirectory extends React.Component {
             snack: false,
             message: '',
             user: {},
+            openValue: false,
+            openDialog: false,
             newUser: false,
             loginUser: localStorage.getItem('userDetails').split(" ")[0]
 
@@ -52,12 +54,12 @@ class UserDirectory extends React.Component {
         const { APITransport } = this.props;
         const apiObj = new UserDelete(name, status);
         APITransport(apiObj);
-        this.setState({ open: false, showLoader: true })
+        this.setState({ open: false, openDialog: false, showLoader: true,openValue: false })
         const apiObj1 = new UserDirectoryList();
         APITransport(apiObj1)
         var a =
             this.setState({ showLoader: true, message: this.state.name + (this.state.status === "DELETE" ? " user deactivated successfully!" : " user activated successfully!") })
-        setTimeout(() => { this.setState({ snack: true }) }, 700)
+        
         return false;
     };
 
@@ -77,18 +79,19 @@ class UserDirectory extends React.Component {
         }
     }
     handleClick=(rowData)=>{
-        console.log("---")
-        rowData[1]!== this.state.loginUser?
+        
+        rowData[1]!== this.state.loginUser ? 
         this.setState({openValue:true,user:rowData, newUser: rowData[0] ? false : true})
         :''
-        console.log("---",this.state.newUser)
+        
 
     }
 
 
     handleSubmit = (value, name, status) => {
-        console.log("op",this.state.openValue)
+        
         this.setState({
+            openDialog: true,
             open: true,
             openValue: false,
             value, name, status
@@ -98,7 +101,7 @@ class UserDirectory extends React.Component {
 
     handleClose=()=>{
         
-        this.setState({open:false, snack:false, openValue: false})
+        this.setState({open:false, snack:false, openValue: false,openDialog: false})
     }
 
     render() {
@@ -199,6 +202,13 @@ class UserDirectory extends React.Component {
 
                     }
                 }
+            },
+            {
+                name: "high_court_code",
+                label: "court name",
+                options: {
+                    display: 'excluded',
+                }
             }
 
 
@@ -208,16 +218,14 @@ class UserDirectory extends React.Component {
             filterType: 'checkbox',
             download: false,
             print: false,
-            fixedHeader: true,
             filter: false,
             selectableRows: 'none',
             rowsPerPage: 10,
-
             onRowClick: rowData => this.handleClick(rowData)
         };
 
-        console.log("user",this.state.openValue)
-            const val = this.state.openValue? 8 : 12
+        console.log("user",this.state.status)
+            const val = this.state.openValue  ? 8 : 12
         return (
             <div>
                 
@@ -230,15 +238,15 @@ class UserDirectory extends React.Component {
                             <MUIDataTable title={"User Management"} data={this.state.userList} columns={columns} options={options} />
                         </div>
                     </Grid>
-                    <Grid item xs={4} sm={4} lg={4} xl={4}>
-
+                    <Grid item xs={4} sm={4} lg={4} xl={4} >
+                    
                         <UserUpdate userDetails={this.state.user} openValue={this.state.openValue} handleCancel={this.handleCancel} newUser={this.state.newUser} />
-
+                    
                     </Grid>
 
                 </Grid>
 
-                {this.state.open &&
+                {this.state.openDialog &&
                 <DeleteUser value={this.state.value} name={this.state.name} handleClickOpen= {this.handleClickOpen} open={this.state.open} status={this.state.status} handleClose={this.handleClose.bind(this)}/>
                 }
 

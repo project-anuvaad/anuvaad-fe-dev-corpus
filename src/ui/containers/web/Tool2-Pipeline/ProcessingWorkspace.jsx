@@ -17,8 +17,9 @@ import ConfigUpload from "../../../../flux/actions/apis/configupload";
 import FetchDefaultConfig from "../../../../flux/actions/apis/fetchdefaultconfig";
 import RunExperiment from "../../../../flux/actions/apis/runexperiment";
 import Spinner from "../../../components/web/common/Spinner";
+import ExistingWorkspace from "./ExistingWorkspace";
 
-class NewExtraction extends React.Component {
+class ProcessingWorkspace extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,13 +28,13 @@ class NewExtraction extends React.Component {
       workspaceName: "",
       configName: "",
       csvName: "",
-      value: 1,
+      value: 2,
       load: false,
 
       message: "Process started, This might be long running operation, kindly look the status of your workspace under Here",
 
       csvData:
-        "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",
+        "Based upon the filtering criterion at the time creating workspace, following workspace are eligible as input to start the processing. Please select one or multiple workspace to start. You can also, upload new configuration file by downloading and edit it.",
       processData:
         'Press "Start processing" to run the workspace. This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab'
     };
@@ -128,7 +129,7 @@ class NewExtraction extends React.Component {
       });
 
       setTimeout(() => {
-        history.push(`${process.env.PUBLIC_URL}/Workspace-details`);
+        history.push(`${process.env.PUBLIC_URL}/workspace-details`);
       }, 3000);
       //
     }
@@ -157,7 +158,7 @@ class NewExtraction extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                Enter workspace name :
+                Workspace name :
               </Typography>
               <br />
             </Grid>
@@ -174,63 +175,11 @@ class NewExtraction extends React.Component {
                 style={{ width: "60%" }}
               />
             </Grid>
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                Configuration file : &emsp;&emsp;{" "}
-                <a
-                  href={
-                    this.state.defaultConfig
-                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" 
-                        }/download/${ 
-                        this.state.defaultConfig.path}`
-                      : ""
-                  }
-                  style={{ textDecoration: "none" }}
-                >
-                  <Link component="button" variant="body2">
-                    Download global configuration
-                  </Link>
-                </a>
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ marginTop: "-7px", height: "56px" }}>
-              <Grid container spacing={8}>
-                <Grid item xs={4} sm={4} lg={4} xl={4}>
-                  <FileUpload accept=".yaml" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="configFile" />
-                </Grid>
 
-                <Grid item xs={4} sm={4} lg={4} xl={4}>
-                  <TextField value={this.state.configName} id="outlined-name" disabled margin="normal" variant="outlined" style={{ width: "80%" }} />
-                </Grid>
-              </Grid>
-            </Grid>
             <Grid item xs={12} sm={12} lg={12} xl={12}>
-              <Typography
-                variant="subtitle2"
-                color="inherit"
-                style={{ textAlign: "justify", color: "#ACACAC", marginRight: "28%", marginTop: "40px" }}
-              >
-                {this.state.csvData}
-              </Typography>
+              <ExistingWorkspace/>
             </Grid>
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                CSV file :
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <Grid container spacing={8}>
-                <Grid item xs={4} sm={4} lg={4} xl={4}>
-                  <FileUpload accept=".csv" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="csvFile" />
-                </Grid>
-
-                <Grid item xs={4} sm={4} lg={4} xl={4}>
-                  <TextField value={this.state.csvName} id="outlined-name" disabled margin="normal" variant="outlined" style={{ width: "80%" }} />
-                </Grid>
-              </Grid>
-            </Grid>
+            
 
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography
@@ -291,4 +240,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewExtraction));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProcessingWorkspace));

@@ -36,7 +36,7 @@ import malayalam from './malayalam';
 import kannada from './kannada';
 import gujarati from './gujarati';
 import bengali from './bengali';
-
+import courtList from './fetchcourtlist';
 import fetchtranslation from './viewtranslate';
 
 import deletefile from './delete';
@@ -46,7 +46,7 @@ import addUser from './adduser';
 import fetchWorkspace from './fetchworkspace';
 import fetchWorkspaceDetails from './fetchworkspacedetails';
 import updatePasswordstatus from './updatepassword';
-
+import createWorkspaceDetails from './createworkspace';
 import uploadTokenValue from './uploadtoken';
 import uploadTranslated from './uploadTranslatedFile';
 
@@ -97,5 +97,7 @@ export default {
     fetchWorkspaceDetails,
     uploadTokenValue,
     fetchDefaultConfig,
-    uploadTranslated
+    uploadTranslated,
+    createWorkspaceDetails,
+    courtList
 };
