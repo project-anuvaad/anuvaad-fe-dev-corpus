@@ -136,7 +136,7 @@ class ViewTranslate extends React.Component {
                 options: {
                     filter: true,
                     sort: true,
-                    sortDirection: 'desc'
+                    sortDirection: 'asc'
                 }
             },
 
@@ -188,6 +188,7 @@ class ViewTranslate extends React.Component {
                     filter: true,
                     sort: false,
                     empty: true,
+                   
                     customBodyRender: (value, tableMeta, updateValue) => {
                         if (tableMeta.rowData) {
                             const result = tableMeta.rowData[6] * 1000 - (Date.now() - new Date(tableMeta.rowData[2]));
@@ -209,7 +210,8 @@ class ViewTranslate extends React.Component {
                     filter: true,
                     sort: false,
                     empty: true,
-                    customBodyRender: (value, tableMeta, updateValue) => {
+
+                   customBodyRender: (value, tableMeta, updateValue) => {
                         if (tableMeta.rowData) {
                             return (
                                 <div style={{ width: '180px', marginLeft: '-20px' }}>
@@ -233,7 +235,9 @@ class ViewTranslate extends React.Component {
             print: false,
             fixedHeader: true,
             filter: false,
-            selectableRows: 'none'
+            selectableRows: 'none',
+            customSort: (data, colIndex, order) => { return data.sort((a, b) => { if (colIndex === 2 ) { return (new Date(a.data[colIndex]) < new Date(b.data[colIndex]) ? -1: 1 ) * (order === 'desc' ? 1 : -1); } else { return (a.data[colIndex] < b.data[colIndex] ? -1: 1 ) * (order === 'desc' ? 1 : -1); } }); }
+            
         };
 
         return (
