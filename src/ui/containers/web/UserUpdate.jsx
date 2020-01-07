@@ -298,12 +298,14 @@ class UserUpdate extends React.Component {
               <Button variant="contained" onClick={() => { handleCancel(false) }} color="primary" aria-label="edit" style={{ width: '40%', marginLeft: '-13%', marginBottom: '4%', marginTop: '4%' }}>
                 Cancel
                 </Button>
-              {!userDetails[1] ?
-                <Button variant="contained" disabled={userDetails[1] ? (this.state.userpassword.length > 5 ? false : true) : (this.state.firstname && this.state.lastname && this.state.userid && this.state.email && this.state.high_court_code ? false : true)} onClick={() => {this.handleSubmit()}} color="primary" aria-label="edit" style={{ width: '40%', marginBottom: '4%', marginTop: '4%', marginLeft: '5%' }}>
-                  Add
-                </Button> :
+              {userDetails[1] ?
+                 
                 <Button variant="contained" disabled={userDetails[1] ? (this.state.userpassword.length > 5 ? false : true) : (this.state.firstname && this.state.lastname && this.state.userid && this.state.email && this.state.high_court_code ? false : true)} onClick={() => { this.handlePasswordSubmit(userDetails[0]) }} color="primary" aria-label="edit" style={{ width: '40%', marginBottom: '4%', marginTop: '4%', marginLeft: '5%' }}>
                   Update
+                </Button>:
+                
+                <Button variant="contained" disabled={userDetails[1] ? (this.state.userpassword.length > 5 ? false : true) : (this.state.firstname && this.state.lastname && this.state.userid && this.state.email && this.state.high_court_code ? false : true)} onClick={() => {this.handleSubmit()}} color="primary" aria-label="edit" style={{ width: '40%', marginBottom: '4%', marginTop: '4%', marginLeft: '5%' }}>
+                  Add
                 </Button>}
             </form>
             {this.state.value ? handleCancel(false) : ''}
