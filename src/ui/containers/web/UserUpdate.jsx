@@ -26,6 +26,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import UserDirectoryList from "../../../flux/actions/apis/userdirectory";
 
 class UserUpdate extends React.Component {
   constructor(props) {
@@ -53,8 +54,10 @@ class UserUpdate extends React.Component {
 
     
     const { APITransport } = this.props;
+    
     const apiObj = new UserRolesList();
     APITransport(apiObj);
+    
     const apiObj1 = new FetchCourtList();
     APITransport(apiObj1);
     this.setState({ showLoader: true })
@@ -99,19 +102,18 @@ class UserUpdate extends React.Component {
 
     if (prevProps.addUser !== this.props.addUser) {
       const { APITransport } = this.props;
-    const apiObj = new UserRolesList();
+    const apiObj = new UserDirectoryList();
     APITransport(apiObj);
        this.setState({value:true,open: true, snackMessage : "New user added successfully"})
   }
 
   if (prevProps.updatePasswordstatus !== this.props.updatePasswordstatus) {
     const { APITransport } = this.props;
-  const apiObj = new UserRolesList();
+  const apiObj = new UserDirectoryList();
   APITransport(apiObj);
      this.setState({value:true,open: true, snackMessage :"Updated password successfully"})
 }
     if (prevProps.courtList !== this.props.courtList) {
-      console.log(this.props.courtList)
       this.setState({ courtList: this.props.courtList
        })
        setTimeout(()=>{this.setState({value:true})}, 1000);
