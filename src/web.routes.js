@@ -46,6 +46,9 @@ import UploadTocken from "./ui/containers/web/Tool1-Pipeline/UploadTocken";
 import Tool2ExistingWorkspace from "./ui/containers/web/Tool2-Pipeline/ExistingWorkspace";
 
 import CreateWorkspace from "./ui/containers/web/Tool2-Pipeline/CreateWorkspace";
+
+import SentenceQualityCheck from "./ui/containers/web/Tool3-Pipeline/SentenceQualityCheck";
+import Tool3CreateWorkspace from "./ui/containers/web/Tool3-Pipeline/CreateWorkspace";
 import DownloadSentence from "./ui/containers/web/Tool2-Pipeline/DownloadSentence";
 import WorkspaceDetails from "./ui/containers/web/Tool2-Pipeline/WorkspaceDetails";
 
@@ -370,6 +373,23 @@ class AppRoutes extends React.Component {
               component={WorkspaceDetails}
               authenticate={this.authenticateUser}
             />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage3/create-workspace`}
+              title="STAGE 3, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={Tool3CreateWorkspace}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage3/sentence-qaulity`}
+              title="STAGE 3, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={SentenceQualityCheck}
+              authenticate={this.authenticateUser}
+            />
+
 
 
 
