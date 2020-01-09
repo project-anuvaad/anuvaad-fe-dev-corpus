@@ -146,6 +146,7 @@ class ProcessingWorkspace extends React.Component {
       search: false,
       filter: false,
       viewColumns: false,
+      responsive: 'scrollMaxHeight',
       selectableRows: "multiple",
       // rowsSelected: this.state.selectedWorkspaces,
       serverSide: true,

@@ -33,9 +33,8 @@ class CreateWorkspace extends React.Component {
       language:[],
       step: 1,
       message1: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
-      csvData:
-        "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",
-      processData: 'Press "Next" to select relevant input workspaces'
+      csvData:"Select stages of datastore where you want Composer to look at.",
+        processData: 'Press "Next" to select relevant input workspaces'
     };
   }
 
@@ -221,8 +220,16 @@ handleChange = (key, event) => {
           </Select>
                 {/* <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" /> */}
               </Grid>
-
-
+              
+              <Grid item xs={12} sm={12} lg={12} xl={12}>
+              <Typography
+                variant="subtitle2"
+                color="inherit"
+                style={{ textAlign: "justify", color: "#ACACAC", marginRight: "28%", marginTop: "40px" }}
+              >
+                {this.state.csvData}
+              </Typography>
+            </Grid>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography
                   variant="subtitle2"
