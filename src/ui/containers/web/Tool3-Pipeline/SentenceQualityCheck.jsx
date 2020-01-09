@@ -7,18 +7,10 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import MenuItem from "@material-ui/core/MenuItem";
-import Link from "@material-ui/core/Link";
-import Select from "@material-ui/core/Select";
 import Snackbar from "../../../components/web/common/Snackbar";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
-import history from "../../../../web.history";
-import FileUpload from "../../../components/web/common/FileUpload";
-import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
-import ProcessingWorkspace from "./ProcessingWorkspace";
-import MTProcessWorkspace from "../../../../flux/actions/apis/createworkspace";
+
 
 class SentenceQualityCheck extends React.Component {
   constructor(props) {

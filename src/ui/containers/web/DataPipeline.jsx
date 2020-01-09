@@ -51,10 +51,10 @@ class DataPipeline extends React.Component {
                       {text}
                     </Typography>
                     <ConfigProvider colors={["green", "green"]}>
-                      <Avatar  value="DataSource" size={150} round="100px" />
+                      <Avatar  value="DataSource" size={150} round="100px" style={{cursor: "pointer"}}/>
                     </ConfigProvider>
                     <ConfigProvider colors={["#003f5c", "#003f5c"]} style={{ marginLeft: "15px" }}>
-                      <Avatar onClick={() => { this.handleClick(text)}} value=" Toolchain " size={150} />
+            <Avatar onClick={() => { this.handleClick(text)}} value=" Toolchain " size={150} style={{cursor: "pointer"}}/>
                     </ConfigProvider>
                   </CardContent>
                 </Card>

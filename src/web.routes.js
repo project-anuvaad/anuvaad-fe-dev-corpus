@@ -49,6 +49,7 @@ import CreateWorkspace from "./ui/containers/web/Tool2-Pipeline/CreateWorkspace"
 
 import SentenceQualityCheck from "./ui/containers/web/Tool3-Pipeline/SentenceQualityCheck";
 import Tool3CreateWorkspace from "./ui/containers/web/Tool3-Pipeline/CreateWorkspace";
+import Tool4CreateWorkspace from "./ui/containers/web/Tool4-Pipeline/CreateWorkspace";
 import DownloadSentence from "./ui/containers/web/Tool2-Pipeline/DownloadSentence";
 import WorkspaceDetails from "./ui/containers/web/Tool2-Pipeline/WorkspaceDetails";
 
@@ -358,7 +359,7 @@ class AppRoutes extends React.Component {
             />
 
 <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/stage2/sentence-extraction`}
+              path={`${process.env.PUBLIC_URL}/stage2/sentence-extraction/:name/:session_id`}
               title="STAGE 2, TOOLCHAIN"
               userRoles={["dev"]}
               component={Tool2SentenceExtraction}
@@ -379,6 +380,14 @@ class AppRoutes extends React.Component {
               title="STAGE 3, TOOLCHAIN"
               userRoles={["dev"]}
               component={Tool3CreateWorkspace}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage4/create-workspace`}
+              title="STAGE 4, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={Tool4CreateWorkspace}
               authenticate={this.authenticateUser}
             />
 

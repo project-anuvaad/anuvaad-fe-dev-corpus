@@ -33,12 +33,6 @@ class SentenceExtraction extends React.Component {
     }
   }
 
-  handleClick = () => {
-    this.setState({
-      activeStep: 3
-    });
-  };
-
   handleChange = (key, event) => {
     this.setState({
       activeStep: 3,
@@ -49,6 +43,7 @@ class SentenceExtraction extends React.Component {
   };
 
   render() {
+      console.log("name",this.props)
     return (
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
@@ -86,10 +81,12 @@ class SentenceExtraction extends React.Component {
             <Grid item xs={7} sm={7} lg={7} xl={7} style={{ marginTop: "30px" }}>
               <Grid container spacing={8}>
                 
-
+              {this.state.workspaceDetails &&
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
                   <a
-                    href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+
+                  
+                    href={ `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
                       this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file : ""
                     }`}
                     style={{ textDecoration: "none" }}
@@ -97,13 +94,13 @@ class SentenceExtraction extends React.Component {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={this.handleClick}
                       style={{ width: "85%", height: "56px", marginTop: "-30px" }}
                     >
                       Download & View
                     </Button>{" "}
                   </a>
                 </Grid>
+  }
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
                   <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "-20px" }}>
