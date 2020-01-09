@@ -5,7 +5,7 @@ import API from "./api";
 import C from "../constants";
 
 export default class FetchMTWorkspace extends API {
-    constructor(pagesize, pageno, status,step,filter, timeout = 2000) {
+    constructor(pagesize, pageno, status,step,filter,target, timeout = 2000) {
         super('GET', timeout, false);
         this.type = C.FETCH_WORKSPACE;
         this.pagesize = pagesize;
@@ -13,6 +13,7 @@ export default class FetchMTWorkspace extends API {
     this.status = status;
     this.filter = filter;
     this.step = step;
+    this.target = target;
         this.fetch_workspace = {}
     }
 
@@ -41,6 +42,10 @@ let url = this.filter ?
  else if(this.status){
     url = url + `&status=${this.status}`
  }
+console.log("lcode",this.target)
+ if(this.target){
+    url= url+`&target_language=${this.target}`
+}
         return url
     }
 

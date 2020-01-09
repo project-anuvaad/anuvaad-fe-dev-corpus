@@ -6,7 +6,7 @@ import MUIDataTable from "mui-datatables";
 import { timingSafeEqual } from "crypto";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
-import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
+import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
 
@@ -36,7 +36,8 @@ class ProcessingWorkspace extends React.Component {
 
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "");
+    console.log("target--------",this.props.target.language_code)
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "","",this.props.target.language_code);
     APITransport(apiObj);
     this.setState({ showLoader: true });
   };
@@ -49,14 +50,14 @@ class ProcessingWorkspace extends React.Component {
 
   handleReset = val => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", val);
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", val, this.props.target.language_code);
     APITransport(apiObj);
     this.setState({ filter: val });
   };
 
   changePage = (page, rowsPerPage) => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(rowsPerPage, page + 1, "PROCESSED", "");
+    const apiObj = new FetchMTWorkspace(rowsPerPage, page + 1, "PROCESSED", "");
     APITransport(apiObj);
     this.setState({ page, rowsPerPage });
   };
@@ -64,7 +65,7 @@ class ProcessingWorkspace extends React.Component {
   handleFilterSubmit = filterList => () => {
     console.log(filterList);
     clearTimeout(this.intervalID);
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", filterList);
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", filterList, this.props.target.language_code);
     this.props.APITransport(apiObj);
     this.setState({ filter: filterList });
   };

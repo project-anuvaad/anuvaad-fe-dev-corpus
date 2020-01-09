@@ -101,7 +101,6 @@ class CreateWorkspace extends React.Component {
 
   handleSubmit() {
     const { APITransport } = this.props;
-    console.log(this.state.workspaceName, this.state.target.language_code)
     if (this.state.workspaceName && this.state.target.language_code) {
       this.setState({
         step: 2
