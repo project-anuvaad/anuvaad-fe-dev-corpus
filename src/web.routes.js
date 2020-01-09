@@ -39,12 +39,17 @@ import DataPipeline from "./ui/containers/web/DataPipeline";
 import TPresident from "./ui/containers/web/TPresident";
 import ExistingWorkspace from "./ui/containers/web/Tool1-Pipeline/ExistingWorkspace";
 import SentenceExtraction from "./ui/containers/web/Tool1-Pipeline/SentenceExtraction";
+import Tool2SentenceExtraction from "./ui/containers/web/Tool2-Pipeline/SentenceExtraction";
 import TockenExtraction from "./ui/containers/web/Tool1-Pipeline/TockenExtraction";
 import ApplyTocken from "./ui/containers/web/Tool1-Pipeline/ApplyTocken";
 import UploadTocken from "./ui/containers/web/Tool1-Pipeline/UploadTocken";
-import ProcessingWorkspace from "./ui/containers/web/Tool2-Pipeline/ProcessingWorkspace";
+import Tool2ExistingWorkspace from "./ui/containers/web/Tool2-Pipeline/ExistingWorkspace";
 
 import CreateWorkspace from "./ui/containers/web/Tool2-Pipeline/CreateWorkspace";
+
+import SentenceQualityCheck from "./ui/containers/web/Tool3-Pipeline/SentenceQualityCheck";
+import Tool3CreateWorkspace from "./ui/containers/web/Tool3-Pipeline/CreateWorkspace";
+import Tool4CreateWorkspace from "./ui/containers/web/Tool4-Pipeline/CreateWorkspace";
 import DownloadSentence from "./ui/containers/web/Tool2-Pipeline/DownloadSentence";
 import WorkspaceDetails from "./ui/containers/web/Tool2-Pipeline/WorkspaceDetails";
 
@@ -345,10 +350,19 @@ class AppRoutes extends React.Component {
             />
 
 <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/stage2/processing-workspace`}
-              title="STAGE 1, TOOLCHAIN"
+              path={`${process.env.PUBLIC_URL}/stage2/existing-workspace`}
+              dontShowLoader
+              title="STAGE 2, TOOLCHAIN"
               userRoles={["dev"]}
-              component={ProcessingWorkspace}
+              component={Tool2ExistingWorkspace}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage2/sentence-extraction/:name/:session_id`}
+              title="STAGE 2, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={Tool2SentenceExtraction}
               authenticate={this.authenticateUser}
             />
 
@@ -360,6 +374,31 @@ class AppRoutes extends React.Component {
               component={WorkspaceDetails}
               authenticate={this.authenticateUser}
             />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage3/create-workspace`}
+              title="STAGE 3, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={Tool3CreateWorkspace}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage4/create-workspace`}
+              title="STAGE 4, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={Tool4CreateWorkspace}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage3/sentence-qaulity`}
+              title="STAGE 3, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={SentenceQualityCheck}
+              authenticate={this.authenticateUser}
+            />
+
 
 
 

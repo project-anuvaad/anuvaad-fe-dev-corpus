@@ -10,13 +10,13 @@ import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
 
-class WorkspaceDetails extends React.Component {
+class ExistingWorkspace extends React.Component {
   intervalID;
 
   constructor(props) {
     super(props);
     this.state = {
-      value: 2,
+      value: 0,
       page: 0,
       rowsPerPage: 10,
       serverSideFilterList: [],
@@ -35,7 +35,7 @@ class WorkspaceDetails extends React.Component {
 
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
-    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "");
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "");
     APITransport(apiObj);
     this.setState({ showLoader: true });
   };
@@ -48,14 +48,14 @@ class WorkspaceDetails extends React.Component {
 
   handleReset = val => {
     const { APITransport } = this.props;
-    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", val);
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", val);
     APITransport(apiObj);
     this.setState({ filter: val });
   };
 
   changePage = (page, rowsPerPage) => {
     const { APITransport } = this.props;
-    const apiObj = new FetchMTWorkspace(rowsPerPage, page + 1, "PROCESSING", "");
+    const apiObj = new FetchMTWorkspace(rowsPerPage, page + 1, "PROCESSED", "");
     APITransport(apiObj);
     this.setState({ page, rowsPerPage });
   };
@@ -63,16 +63,16 @@ class WorkspaceDetails extends React.Component {
   handleFilterSubmit = filterList => () => {
     console.log(filterList);
     clearTimeout(this.intervalID);
-    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", filterList);
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", filterList);
     this.props.APITransport(apiObj);
     this.setState({ filter: filterList });
   };
 
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    if (rowData[2] == "At Step2") {
-      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
-    }
+    console.log(rowData[0])
+      history.push(`${`${process.env.PUBLIC_URL}/stage2/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
+    
   };
 
   handleChange = value => {
@@ -118,8 +118,8 @@ class WorkspaceDetails extends React.Component {
         name: "sentence_count",
         label: "Sentence Count",
         options: {
-          display: "excluded",
-          filter: false
+          filter: false,
+          sort: true
         }
       },
       {
@@ -208,4 +208,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WorkspaceDetails));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExistingWorkspace));

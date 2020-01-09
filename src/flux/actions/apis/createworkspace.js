@@ -5,12 +5,13 @@ import API from "./api";
 import C from "../constants";
 
 export default class RunExperiment extends API {
-  constructor(workspaceName, language, timeout = 2000) {
+  constructor(selectedworkspace, workspaceName, language, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
     this.type = C.CREATEWORKSPACE;
     this.title = workspaceName;
     this.target_lang = language;
+    this.selected_workspaces = selectedworkspace;
   }
 
   toString() {
@@ -32,7 +33,8 @@ export default class RunExperiment extends API {
     return {
       mt_workspace: {
         title: this.title,
-        target_lang: this.target_lang
+        target_language: this.target_lang,
+        selected_workspaces: this.selected_workspaces
       }
     };
   }
