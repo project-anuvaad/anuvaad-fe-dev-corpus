@@ -33,7 +33,7 @@ export default class RunExperiment extends API {
     return {
       mt_workspace: {
         title: this.title,
-        target_lang: this.target_lang,
+        target_language: this.target_lang,
         selected_workspaces: this.selected_workspaces
       }
     };
