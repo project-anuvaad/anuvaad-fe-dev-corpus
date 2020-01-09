@@ -134,7 +134,7 @@ handleChange = (key, event) => {
 
   handleSubmit() {
     const { APITransport } = this.props;
-    console.log(this.state.workspaceName, this.state.target.language_code)
+    
     if (this.state.workspaceName && this.state.target.language_code) {
       this.setState({
         step: 2
@@ -300,7 +300,7 @@ handleChange = (key, event) => {
             </Grid>
 
               <Grid item xs={12} sm={12} lg={12} xl={12}>
-                <ProcessingWorkspace handleWorkspaceSelected={this.handleWorkspaceSelected.bind(this)} selectedWorkspaces={this.state.selectedWorkspaces}/>
+                <ProcessingWorkspace handleWorkspaceSelected={this.handleWorkspaceSelected.bind(this)} target={this.state.target} selectedWorkspaces={this.state.selectedWorkspaces}/>
               </Grid>
 
 
@@ -308,7 +308,7 @@ handleChange = (key, event) => {
                 <Typography
                   variant="subtitle2"
                   color="inherit"
-                  style={{ textAlign: "justify", color: "#ACACAC", marginTop: "11%", width: "80%", marginLeft: "2px" }}
+                  style={{ textAlign: "justify", color: "#ACACAC", marginTop: "8%", width: "80%", marginLeft: "2px" }}
                 >
                   {this.state.processData}
                 </Typography>

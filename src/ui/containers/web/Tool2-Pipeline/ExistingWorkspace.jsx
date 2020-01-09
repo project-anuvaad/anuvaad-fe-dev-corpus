@@ -186,7 +186,7 @@ class ExistingWorkspace extends React.Component {
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title="Processing Workspaces" data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title="Existing Workspaces" data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );

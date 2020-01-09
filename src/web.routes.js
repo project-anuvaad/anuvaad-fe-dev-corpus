@@ -44,7 +44,7 @@ import TockenExtraction from "./ui/containers/web/Tool1-Pipeline/TockenExtractio
 import ApplyTocken from "./ui/containers/web/Tool1-Pipeline/ApplyTocken";
 import UploadTocken from "./ui/containers/web/Tool1-Pipeline/UploadTocken";
 import Tool2ExistingWorkspace from "./ui/containers/web/Tool2-Pipeline/ExistingWorkspace";
-
+import Tool3ExistingWorkspace from "./ui/containers/web/Tool3-Pipeline/ExistingWorkspace";
 import CreateWorkspace from "./ui/containers/web/Tool2-Pipeline/CreateWorkspace";
 
 import SentenceQualityCheck from "./ui/containers/web/Tool3-Pipeline/SentenceQualityCheck";
@@ -355,6 +355,15 @@ class AppRoutes extends React.Component {
               title="STAGE 2, TOOLCHAIN"
               userRoles={["dev"]}
               component={Tool2ExistingWorkspace}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage3/existing-workspace`}
+              dontShowLoader
+              title="STAGE 3, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={Tool3ExistingWorkspace}
               authenticate={this.authenticateUser}
             />
 

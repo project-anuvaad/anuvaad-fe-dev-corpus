@@ -7,8 +7,21 @@ import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import Typography from "@material-ui/core/Typography";
 import CardContent from "@material-ui/core/CardContent";
+import { withStyles } from '@material-ui/core'
 import history from "../../../web.history";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
+
+
+let styles = {
+  card:{
+    width:'345px',
+    transition: 'transform .2s',
+    '&:hover':{
+      transform: 'scale(1.1)' 
+    }}
+}
+
+
 
 class DataPipeline extends React.Component {
   constructor(props) {
@@ -37,6 +50,9 @@ class DataPipeline extends React.Component {
   };
 
   render() {
+
+    let { classes } = this.props;
+
     return (
       <div>
         <Grid container spacing={8}>
@@ -45,13 +61,13 @@ class DataPipeline extends React.Component {
             {this.state.tools.map((text, index) => (
                 
               <Grid key = {index} item xs={12} sm={4} className="slideUp" style={{ marginTop:'2%' }}>
-                <Card style={{ width: "345px" }}>
+                <Card  className={classes.card}>
                   <CardContent>
                     <Typography variant="h5" component="h2" color="textSecondary" gutterBottom>
                       {text}
                     </Typography>
                     <ConfigProvider colors={["green", "green"]}>
-                      <Avatar  value="DataSource" size={150} round="100px" style={{cursor: "pointer"}}/>
+                      <Avatar  value="DataSource" size={150} round="100px" style={{cursor: "pointer",styles}}/>
                     </ConfigProvider>
                     <ConfigProvider colors={["#003f5c", "#003f5c"]} style={{ marginLeft: "15px" }}>
             <Avatar onClick={() => { this.handleClick(text)}} value=" Toolchain " size={150} style={{cursor: "pointer"}}/>
@@ -84,4 +100,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DataPipeline));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(DataPipeline)));
