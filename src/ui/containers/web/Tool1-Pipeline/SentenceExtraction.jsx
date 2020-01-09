@@ -65,7 +65,6 @@ class SentenceExtraction extends React.Component {
             <Grid item xs={7} sm={7} lg={7} xl={7} style={{ marginTop: "30px" }}>
               <Grid container spacing={8}>
                 <Grid item xs={1} sm={1} lg={1} xl={1} />
-                {this.state.workspaceDetails && (
                   <Grid item xs={4} sm={4} lg={4} xl={4}>
                     <a
                       href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
@@ -83,11 +82,10 @@ class SentenceExtraction extends React.Component {
                       </Button>{" "}
                     </a>
                   </Grid>
-                )}
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
                   <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "-20px" }}>
-                    Found {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_count : 0} sentences
+                    Found {this.state.workspaceDetails && this.state.workspaceDetails.sentence_count} sentences
                   </Typography>
                 </Grid>
               </Grid>
