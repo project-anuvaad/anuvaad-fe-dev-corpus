@@ -52,7 +52,7 @@ import Tool3CreateWorkspace from "./ui/containers/web/Tool3-Pipeline/CreateWorks
 import Tool4CreateWorkspace from "./ui/containers/web/Tool4-Pipeline/CreateWorkspace";
 import DownloadSentence from "./ui/containers/web/Tool2-Pipeline/DownloadSentence";
 import WorkspaceDetails from "./ui/containers/web/Tool2-Pipeline/WorkspaceDetails";
-
+import Tool3WorkspaceDetails from "./ui/containers/web/Tool3-Pipeline/WorkspaceDetails";
 
 
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
@@ -408,6 +408,15 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
 
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage3/workspace-details`}
+              dontShowLoader
+              title="STAGE #, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={Tool3WorkspaceDetails}
+              authenticate={this.authenticateUser}
+            />
 
 
 
