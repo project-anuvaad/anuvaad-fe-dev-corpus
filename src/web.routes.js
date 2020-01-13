@@ -412,7 +412,7 @@ class AppRoutes extends React.Component {
 <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/workspace-details`}
               dontShowLoader
-              title="STAGE #, TOOLCHAIN"
+              title="STAGE 3, TOOLCHAIN"
               userRoles={["dev"]}
               component={Tool3WorkspaceDetails}
               authenticate={this.authenticateUser}
