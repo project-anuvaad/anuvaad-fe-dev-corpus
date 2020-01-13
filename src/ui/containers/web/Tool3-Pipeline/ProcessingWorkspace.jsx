@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
-import { timingSafeEqual } from "crypto";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
@@ -36,7 +35,7 @@ class ProcessingWorkspace extends React.Component {
 
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
-    console.log("target--------",this.props.target.language_code)
+
     const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "","",this.props.target.language_code);
     APITransport(apiObj);
     this.setState({ showLoader: true });
