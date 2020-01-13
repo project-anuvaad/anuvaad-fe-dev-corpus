@@ -90,7 +90,8 @@
 		"prettier-eslint": "^8.8.2",
 		"prettier-eslint-cli": "^4.7.1",
 		"react-csv-downloader": "^1.4.0",
-		"react-test-renderer": "16.4.1"
+		"react-test-renderer": "16.4.1",
+		"webpack": "^3.1.0"
 	},
 	"scripts": {
 		"start": "react-scripts start",
