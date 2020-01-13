@@ -31,9 +31,9 @@ export default class FetchMTWorkspace extends API {
 
     apiEndPoint() {
 let url = this.filter ? 
-`${super.apiEndPointAuto()}/fetch-mt-workspace?pagesize=${
+`${super.apiEndPointAuto()}/fetch-search-replace-workspace?pagesize=${
    this.pagesize
- }&pageno=${this.pageno}&search_param=${this.filter}` : `${super.apiEndPointAuto()}/fetch-mt-workspace?pagesize=${
+ }&pageno=${this.pageno}&search_param=${this.filter}` : `${super.apiEndPointAuto()}/fetch-search-replace-workspace?pagesize=${
    this.pagesize
  }&pageno=${this.pageno}`
  if(this.step){

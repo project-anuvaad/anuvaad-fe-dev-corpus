@@ -44,7 +44,7 @@ import TockenExtraction from "./ui/containers/web/Tool1-Pipeline/TockenExtractio
 import ApplyTocken from "./ui/containers/web/Tool1-Pipeline/ApplyTocken";
 import UploadTocken from "./ui/containers/web/Tool1-Pipeline/UploadTocken";
 import Tool2ExistingWorkspace from "./ui/containers/web/Tool2-Pipeline/ExistingWorkspace";
-
+import Tool3ExistingWorkspace from "./ui/containers/web/Tool3-Pipeline/ExistingWorkspace";
 import CreateWorkspace from "./ui/containers/web/Tool2-Pipeline/CreateWorkspace";
 
 import SentenceQualityCheck from "./ui/containers/web/Tool3-Pipeline/SentenceQualityCheck";
@@ -52,7 +52,7 @@ import Tool3CreateWorkspace from "./ui/containers/web/Tool3-Pipeline/CreateWorks
 import Tool4CreateWorkspace from "./ui/containers/web/Tool4-Pipeline/CreateWorkspace";
 import DownloadSentence from "./ui/containers/web/Tool2-Pipeline/DownloadSentence";
 import WorkspaceDetails from "./ui/containers/web/Tool2-Pipeline/WorkspaceDetails";
-
+import Tool3WorkspaceDetails from "./ui/containers/web/Tool3-Pipeline/WorkspaceDetails";
 
 
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
@@ -359,6 +359,15 @@ class AppRoutes extends React.Component {
             />
 
 <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage3/existing-workspace`}
+              dontShowLoader
+              title="STAGE 3, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={Tool3ExistingWorkspace}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/sentence-extraction/:name/:session_id`}
               title="STAGE 2, TOOLCHAIN"
               userRoles={["dev"]}
@@ -399,6 +408,15 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
 
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage3/workspace-details`}
+              dontShowLoader
+              title="STAGE #, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={Tool3WorkspaceDetails}
+              authenticate={this.authenticateUser}
+            />
 
 
 
