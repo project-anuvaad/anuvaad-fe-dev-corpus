@@ -70,15 +70,8 @@ class ExistingWorkspace extends React.Component {
 
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    if(this.props.match.path!=="/stage3/data-source"){
-      history.push(`${`${process.env.PUBLIC_URL}/stage2/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
-      
-    }
-    else{
-      console.log("out---")
-      history.push(`${`${process.env.PUBLIC_URL}/stage3/data-source/`}${rowData[0]}/${rowData[1]}`);
-    }
-     
+    console.log("result11111",rowData[0],rowData[1])
+      history.push(`${`${process.env.PUBLIC_URL}/stage2/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
     
   };
 
@@ -87,8 +80,6 @@ class ExistingWorkspace extends React.Component {
   };
 
   render() {
-
-    
     const columns = [
       {
         name: "title",
@@ -193,10 +184,9 @@ class ExistingWorkspace extends React.Component {
 
     return (
       <div>
-        {this.props.match.path!=="/stage3/data-source" && 
-        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />}
+        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={this.props.match.path==="/stage3/data-source"?"Data Source":"Existing Workspaces"} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title="Existing Workspaces" data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );
