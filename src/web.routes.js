@@ -46,9 +46,7 @@ import UploadTocken from "./ui/containers/web/Tool1-Pipeline/UploadTocken";
 import Tool2ExistingWorkspace from "./ui/containers/web/Tool2-Pipeline/ExistingWorkspace";
 import Tool3ExistingWorkspace from "./ui/containers/web/Tool3-Pipeline/ExistingWorkspace";
 import CreateWorkspace from "./ui/containers/web/Tool2-Pipeline/CreateWorkspace";
-import DataSource from "./ui/containers/web/Tool1-Pipeline/DataSource";
-import Stage3DataPipelineDownload from "./ui/containers/web/Tool3-Pipeline/DataPipelineDownload";
-import DataPipelineDownload from "./ui/containers/web/Tool2-Pipeline/DataPipelineDownload";
+
 import SentenceQualityCheck from "./ui/containers/web/Tool3-Pipeline/SentenceQualityCheck";
 import Tool3CreateWorkspace from "./ui/containers/web/Tool3-Pipeline/CreateWorkspace";
 import Tool4CreateWorkspace from "./ui/containers/web/Tool4-Pipeline/CreateWorkspace";
@@ -429,53 +427,6 @@ class AppRoutes extends React.Component {
               component={CreateWorkspace}
               authenticate={this.authenticateUser}
             />
-            <PrivateRoute
-
-
-              path={`${process.env.PUBLIC_URL}/stage2/data-source/:name/:session_id`}
-              title="STAGE 2, DATASOURCE"
-              userRoles={["dev"]}
-              component={DataPipelineDownload}
-              authenticate={this.authenticateUser}
-            />
-
-<PrivateRoute
-
-
-path={`${process.env.PUBLIC_URL}/data-source`}
-title="STAGE 1, DATASOURCE"
-userRoles={["dev"]}
-component={DataSource}
-authenticate={this.authenticateUser}
-/>
-            <PrivateRoute
-
-
-path={`${process.env.PUBLIC_URL}/stage3/data-source/:name/:session_id`}
-title="STAGE 3, DATASOURCE"
-userRoles={["dev"]}
-component={Stage3DataPipelineDownload}
-authenticate={this.authenticateUser}
-/>
-
-<PrivateRoute
-              path={`${process.env.PUBLIC_URL}/stage2/data-source`}
-              dontShowLoader
-              title="STAGE 2, DATASOURCE"
-              userRoles={["dev"]}
-              component={ExistingWorkspace}
-              authenticate={this.authenticateUser}
-            />
-
-<PrivateRoute
-              path={`${process.env.PUBLIC_URL}/stage3/data-source`}
-              dontShowLoader
-              title="STAGE 3, DATASOURCE"
-              userRoles={["dev"]}
-              component={Tool2ExistingWorkspace}
-              authenticate={this.authenticateUser}
-            />
-            
 
             <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser} />
           </Switch>
