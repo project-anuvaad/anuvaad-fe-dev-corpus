@@ -10,7 +10,15 @@ import Paper from "@material-ui/core/Paper";
 import Snackbar from "../../../components/web/common/Snackbar";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
+import { withStyles } from '@material-ui/core';
 
+
+let styles = {
+    multilineColor:{
+        color:"#9C27B0",
+        fontSize:25
+    }
+  }
 
 class SentenceQualityCheck extends React.Component {
   constructor(props) {
@@ -18,6 +26,7 @@ class SentenceQualityCheck extends React.Component {
     this.state = {
       value: 1,
       target: "",
+      source: 'sajsih',
       selectedWorkspaces: [],
       workspaceName: "",
       sourceLanguage: [],
@@ -30,9 +39,6 @@ class SentenceQualityCheck extends React.Component {
     };
   }
 
-  componentDidMount() {}
-
-  componentDidUpdate(prevProps) {}
 
   handleSubmit() {
     const { APITransport } = this.props;
@@ -47,6 +53,7 @@ class SentenceQualityCheck extends React.Component {
   }
 
   render() {
+    let { classes } = this.props;
     return (
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
@@ -64,9 +71,7 @@ class SentenceQualityCheck extends React.Component {
                 required
                 id="outlined-name"
                 margin="normal"
-                onChange={event => {
-                  this.handleTextChange("workspaceName", event);
-                }}
+                
                 variant="outlined"
                 style={{ width: "60%" }}
               />
@@ -84,9 +89,7 @@ class SentenceQualityCheck extends React.Component {
                 required
                 id="outlined-name"
                 margin="normal"
-                onChange={event => {
-                  this.handleTextChange("workspaceName", event);
-                }}
+                
                 variant="outlined"
                 style={{ width: "60%" }}
               />
@@ -100,15 +103,18 @@ class SentenceQualityCheck extends React.Component {
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <TextField
+              
                 value={this.state.source}
                 required
                 id="outlined-name"
                 margin="normal"
-                onChange={event => {
-                  this.handleTextChange("workspaceName", event);
+                InputProps={{
+                    classes: {
+                        input: classes.multilineColor
+                    }
                 }}
                 variant="outlined"
-                style={{ width: "60%" }}
+                style={{ width: "60%",fontColor:'red' }}
               />
             </Grid>
 
@@ -124,9 +130,7 @@ class SentenceQualityCheck extends React.Component {
                 required
                 id="outlined-name"
                 margin="normal"
-                onChange={event => {
-                  this.handleTextChange("workspaceName", event);
-                }}
+                
                 variant="outlined"
                 style={{ width: "60%" }}
               />
@@ -196,4 +200,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SentenceQualityCheck));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, mapDispatchToProps)(SentenceQualityCheck)));
