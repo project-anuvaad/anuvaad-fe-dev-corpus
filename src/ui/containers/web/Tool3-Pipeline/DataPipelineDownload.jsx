@@ -7,11 +7,12 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
-import TabDetals from "./WorkspaceDetailsTab";
-import StepDetails from "./TockenExtractionSteps";
-import FileUpload from "../../../components/web/common/FileUpload";
+import Toolbar from "@material-ui/core/Toolbar";
+import BackIcon from "@material-ui/icons/ChevronLeft";
 import history from "../../../../web.history";
-import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchworkspacedetails";
+
+import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchmtworkspacedetails";
+import TextField from "@material-ui/core/TextField";
 
 class SentenceExtraction extends React.Component {
   constructor(props) {
@@ -30,15 +31,11 @@ class SentenceExtraction extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspaceDetails !== this.props.fetchWorkspaceDetails) {
+
+        console.log("result",this.props.fetchWorkspaceDetails)
       this.setState({ workspaceDetails: this.props.fetchWorkspaceDetails.data });
     }
   }
-
-  handleClick = () => {
-    this.setState({
-      activeStep: 3
-    });
-  };
 
   handleChange = (key, event) => {
     this.setState({
@@ -50,14 +47,47 @@ class SentenceExtraction extends React.Component {
   };
 
   render() {
-    console.log("----",this.props)
+      console.log("name",this.props)
     return (
       <div>
-        {this.props.match.path!=="/stage2/data-source" && 
-  <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} /> }
+        <Toolbar style={{  marginRight: "8%", marginTop: "20px" }}>
+          <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+          
+            <Button
+              variant="extendedFab"
+              color="primary"
+              
+              onClick={() => {
+                history.push(`${process.env.PUBLIC_URL}/stage3/data-source`);
+              }}
+            >
+              <BackIcon /> Back
+            </Button>
+        </Toolbar>
         <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
-        {this.props.match.path!=="/stage2/data-source" && 
-          <StepDetails workSpace={this.props.match.params.name} activeStep={this.state.activeStep} />}
+        <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+              <Grid item xs={4} sm={4} lg={4} xl={4}>
+                <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                  Workspace name :
+              </Typography>
+                <br />
+              </Grid>
+              <Grid item xs={7} sm={7} lg={7} xl={7}>
+                <TextField
+                disabled
+                  value={this.props.match.params.name} 
+                  required
+                  id="outlined-name"
+                  margin="normal"
+                  onChange={event => {
+                    this.handleTextChange("workspaceName", event);
+                  }}
+                  variant="outlined"
+                  style={{ width: "60%" }}
+                />
+              </Grid>
+              </Grid>
+          
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
@@ -67,24 +97,26 @@ class SentenceExtraction extends React.Component {
             </Grid>
             <Grid item xs={7} sm={7} lg={7} xl={7} style={{ marginTop: "30px" }}>
               <Grid container spacing={8}>
-                <Grid item xs={1} sm={1} lg={1} xl={1} />
-                  <Grid item xs={4} sm={4} lg={4} xl={4}>
-                    <a
-                      href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
-                        this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file : ""
-                      }`}
-                      style={{ textDecoration: "none" }}
+                
+              
+                <Grid item xs={4} sm={4} lg={4} xl={4}>
+                  <a
+
+                  
+                    href={ `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+                      this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file : ""
+                    }`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      style={{ width: "85%", height: "56px", marginTop: "-30px" }}
                     >
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={this.handleClick}
-                        style={{ width: "85%", height: "56px", marginTop: "-30px" }}
-                      >
-                        Download & View
-                      </Button>{" "}
-                    </a>
-                  </Grid>
+                      Download & View
+                    </Button>{" "}
+                  </a>
+                </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
                   <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "-20px" }}>
