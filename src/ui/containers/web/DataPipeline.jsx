@@ -41,13 +41,30 @@ class DataPipeline extends React.Component {
       history.push(`${process.env.PUBLIC_URL}/stage2/existing-workspace`);
       }
       else if(value=="Stage 3"){
-        history.push(`${process.env.PUBLIC_URL}/stage3/create-workspace`);
+        history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
         }
     else{
 
         alert("Still inprogress")
     }
   };
+
+  handleDataClick = (value) => {
+    console.log(value)
+    if(value=="Stage 1"){
+      history.push(`${process.env.PUBLIC_URL}/data-source`);
+      }
+   else if(value=="Stage 2"){
+    history.push(`${process.env.PUBLIC_URL}/stage2/data-source`);
+    }
+    else if(value=="Stage 3"){
+      history.push(`${process.env.PUBLIC_URL}/stage3/data-source`);
+      }
+  else{
+
+      alert("Still inprogress")
+  }
+};
 
   render() {
 
@@ -67,7 +84,7 @@ class DataPipeline extends React.Component {
                       {text}
                     </Typography>
                     <ConfigProvider colors={["green", "green"]}>
-                      <Avatar  value="DataSource" size={150} round="100px" style={{cursor: "pointer",styles}}/>
+                      <Avatar onClick={() => { this.handleDataClick(text)}} value="DataSource" size={150} round="100px" style={{cursor: "pointer",styles}}/>
                     </ConfigProvider>
                     <ConfigProvider colors={["#003f5c", "#003f5c"]} style={{ marginLeft: "15px" }}>
             <Avatar onClick={() => { this.handleClick(text)}} value=" Toolchain " size={150} style={{cursor: "pointer"}}/>
