@@ -69,9 +69,17 @@ class ExistingWorkspace extends React.Component {
   };
 
   handleClick = rowData => {
+    
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    if (rowData[2] == "At Step2") {
-      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
+    if (rowData[2] == "At Step2" && rowData[3]=="PROCESSED") {
+      if(this.props.match.path!=="/stage2/data-source"){
+      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
+      
+    }
+    else{
+      console.log("out---")
+      history.push(`${`${process.env.PUBLIC_URL}/stage2/data-source/`}${rowData[0]}/${rowData[1]}`);
+    }
     }
   };
 
@@ -80,6 +88,7 @@ class ExistingWorkspace extends React.Component {
   };
 
   render() {
+    console.log(this.props.match.path==="/stage2/data-source")
     const columns = [
       {
         name: "title",
@@ -184,9 +193,10 @@ class ExistingWorkspace extends React.Component {
 
     return (
       <div>
-        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
+        {this.props.match.path !=="/stage2/data-source" &&
+        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />}
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title="Processing Workspaces" data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={this.props.match.path ==="/stage2/data-source"? "Data Source": "Existing Workspaces"} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );

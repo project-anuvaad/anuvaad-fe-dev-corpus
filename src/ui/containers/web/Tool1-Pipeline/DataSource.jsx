@@ -6,27 +6,29 @@ import MUIDataTable from "mui-datatables";
 import { timingSafeEqual } from "crypto";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
-import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
+import FetchMTWorkspace from "../../../../flux/actions/apis/fetchworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
 
-class WorkspaceDetails extends React.Component {
+class DataSource extends React.Component {
   intervalID;
 
   constructor(props) {
     super(props);
     this.state = {
-      value: 2,
+      value: 0,
       page: 0,
       rowsPerPage: 10,
       serverSideFilterList: [],
-      filters: []
+      filters: [],
+      download: false,
+      fileId: ''
     };
   }
 
   componentDidMount() {
     this.handleFetchWorkspace();
-    this.intervalID = setInterval(this.handleFetchWorkspace, 10000);
+    
   }
 
   componentWillUnmount() {
@@ -35,7 +37,7 @@ class WorkspaceDetails extends React.Component {
 
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
-    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "");
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "", "");
     APITransport(apiObj);
     this.setState({ showLoader: true });
   };
@@ -48,14 +50,14 @@ class WorkspaceDetails extends React.Component {
 
   handleReset = val => {
     const { APITransport } = this.props;
-    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", val);
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "", "", val);
     APITransport(apiObj);
     this.setState({ filter: val });
   };
 
   changePage = (page, rowsPerPage) => {
     const { APITransport } = this.props;
-    const apiObj = new FetchMTWorkspace(rowsPerPage, page + 1, "PROCESSING", "");
+    const apiObj = new FetchMTWorkspace(rowsPerPage, page + 1, "", "");
     APITransport(apiObj);
     this.setState({ page, rowsPerPage });
   };
@@ -63,23 +65,32 @@ class WorkspaceDetails extends React.Component {
   handleFilterSubmit = filterList => () => {
     console.log(filterList);
     clearTimeout(this.intervalID);
-    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", filterList);
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "", "", filterList);
     this.props.APITransport(apiObj);
     this.setState({ filter: filterList });
   };
 
+
   handleClick = rowData => {
-    this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    if (rowData[2] == "At Step2") {
-      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
-    }
+      this.setState({download:true, fileId: rowData[4]})
+      var link = document.createElement('a');
+      link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" + "/download/")+ rowData[4];
+      document.body.appendChild(link);
+      link.click();   
+    
   };
+
+ 
+
+ 
 
   handleChange = value => {
     this.setState({ value });
   };
 
   render() {
+
+    
     const columns = [
       {
         name: "title",
@@ -99,32 +110,8 @@ class WorkspaceDetails extends React.Component {
         }
       },
       {
-        name: "step",
-        label: "step",
-        options: {
-          filter: false,
-          display: "excluded"
-        }
-      },
-      {
-        name: "status",
-        label: "Status",
-        options: {
-          filter: false,
-          sort: false
-        }
-      },
-      {
-        name: "sentence_count",
-        label: "Sentence Count",
-        options: {
-          display: "excluded",
-          filter: false
-        }
-      },
-      {
         name: "username",
-        label: "Created By",
+        label: "Uploaded by",
         options: {
           filter: false,
           sort: false,
@@ -133,10 +120,18 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "created_at",
-        label: "Created At",
+        label: "Uploaded At",
         options: {
           filter: false,
           sort: false,
+          filter: false
+        }
+      },
+      {
+        name: "paragraph_file_location",
+        label: "Paragraph",
+        options: {
+          display: "excluded",
           filter: false
         }
       }
@@ -184,10 +179,12 @@ class WorkspaceDetails extends React.Component {
 
     return (
       <div>
-        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
+        
+        
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title="Processing Workspaces" data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title="Data Source" data={this.state.name} columns={columns} options={options} />
         </div>
+        {this.state.download && <a href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/`+ this.state.fileId }/>}
       </div>
     );
   }
@@ -208,4 +205,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WorkspaceDetails));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DataSource));

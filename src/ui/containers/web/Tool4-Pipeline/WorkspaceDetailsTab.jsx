@@ -17,11 +17,11 @@ class ParentTab extends React.Component {
 
   handleValueChange(value) {
     if (value == 0) {
-      history.push(`${process.env.PUBLIC_URL}/stage2/existing-workspace`);
+      history.push(`${process.env.PUBLIC_URL}/stage4/existing-workspace`);
     } else if (value == 1) {
-      history.push(`${process.env.PUBLIC_URL}/stage2/create-workspace`);
+      history.push(`${process.env.PUBLIC_URL}/stage4/create-workspace`);
     } else if (value == 2) {
-      history.push(`${process.env.PUBLIC_URL}/stage2/workspace-details`);
+      history.push(`${process.env.PUBLIC_URL}/stage4/workspace-details`);
     }
   }
 

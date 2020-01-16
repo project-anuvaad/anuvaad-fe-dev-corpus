@@ -13,7 +13,8 @@ import Snackbar from "../../../components/web/common/Snackbar";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
-import Spinner from "../../../components/web/common/Spinner";
+import Link from "@material-ui/core/Link";
+import FileUpload from "../../../components/web/common/FileUpload";
 import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
 import ProcessingWorkspace from "./ProcessingWorkspace";
 import MTProcessWorkspace from "../../../../flux/actions/apis/createworkspace";
@@ -28,11 +29,12 @@ class CreateWorkspace extends React.Component {
       target: "",
       selectedWorkspaces: [],
       workspaceName: '',
+      sourceLanguage:[],
+      language:[],
       step: 1,
       message1: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
-      csvData:
-        "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",
-      processData: 'Press "Next" to select relevant input workspaces'
+      csvData:"Select stages of datastore where you want Composer to look at.",
+        processData: 'Press "Next" to select relevant input workspaces'
     };
   }
 
@@ -44,17 +46,21 @@ class CreateWorkspace extends React.Component {
 
   }
 
+
   componentDidUpdate(prevProps) {
 
     if (prevProps.supportLanguage !== this.props.supportLanguage) {
-      let languages = []
+      let languages = [], sourceLanguages = [];
       this.props.supportLanguage.map((lang) => {
         if (lang.language_code !== 'en') {
           languages.push(lang)
         }
+        else {
+          sourceLanguages.push(lang)
+        }
       })
       this.setState({
-        language: languages
+        language: languages, sourceLanguage: sourceLanguages
       })
     }
 
@@ -71,7 +77,33 @@ class CreateWorkspace extends React.Component {
     }
   }
 
+  readFileDataAsBinary(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
 
+      reader.onload = event => {
+        resolve(event.target.result);
+      };
+
+      reader.onerror = err => {
+        reject(err);
+      };
+
+      reader.readAsBinaryString(file);
+    });
+  }
+
+handleChange = (key, event) => {
+    this.setState({
+      configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
+      csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
+    });
+    this.readFileDataAsBinary(event.target.files[0]).then((result, err) => {
+      this.setState({
+        [key]: result
+      });
+    });
+  };
   handleTextChange(key, event) {
     this.setState({
       [key]: event.target.value,
@@ -101,6 +133,7 @@ class CreateWorkspace extends React.Component {
 
   handleSubmit() {
     const { APITransport } = this.props;
+    console.log(this.state.workspaceName, this.state.target.language_code)
     if (this.state.workspaceName && this.state.target.language_code) {
       this.setState({
         step: 2
@@ -116,7 +149,7 @@ class CreateWorkspace extends React.Component {
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
         {this.state.step === 1 ?
           <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
-            <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
                   Enter workspace name :
@@ -136,6 +169,33 @@ class CreateWorkspace extends React.Component {
                   style={{ width: "60%" }}
                 />
               </Grid>
+
+              <Grid item xs={5} sm={5} lg={5} xl={5}>
+                <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
+                  Select source language : &emsp;&emsp;{" "}
+                </Typography>
+                <br />
+              </Grid>
+              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
+
+              <Select
+            style={{ width: '60%', marginTop: "5px" }}
+            value={this.state.source}
+
+            onChange={this.handleSelectChange}
+            input={
+              <OutlinedInput name="source" id="outlined-age-simple" />
+            }
+          >
+            {this.state.language &&
+            this.state.sourceLanguage.map((item) => (
+              <MenuItem key= {item.language_name} value={item}>{item.language_name}</MenuItem>
+            ))}
+          </Select>
+               
+              </Grid>
+
+              
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
                   Select target language : &emsp;&emsp;{" "}
@@ -145,7 +205,7 @@ class CreateWorkspace extends React.Component {
               <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
 
               <Select
-            style={{ width: '60%' }}
+            style={{ width: '60%', marginTop: "5px" }}
             value={this.state.target}
 
             onChange={this.handleSelectChange}
@@ -160,8 +220,16 @@ class CreateWorkspace extends React.Component {
           </Select>
                 {/* <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" /> */}
               </Grid>
-
-
+              
+              <Grid item xs={12} sm={12} lg={12} xl={12}>
+              <Typography
+                variant="subtitle2"
+                color="inherit"
+                style={{ textAlign: "justify", color: "#ACACAC", marginRight: "28%", marginTop: "40px" }}
+              >
+                {this.state.csvData}
+              </Typography>
+            </Grid>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography
                   variant="subtitle2"
@@ -187,25 +255,56 @@ class CreateWorkspace extends React.Component {
           :
           <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
             <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                  Workspace name :
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                Enter workspace name :
               </Typography>
-                <br />
+              <br />
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <TextField
+                value={this.state.workspaceName}
+                required
+                id="outlined-name"
+                margin="normal"
+                onChange={event => {
+                  this.handleTextChange("workspaceName", event);
+                }}
+                variant="outlined"
+                style={{ width: "60%" }}
+              />
+            </Grid>
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
+                Configuration file : &emsp;&emsp;{" "}
+                <a
+                  href={
+                    this.state.defaultConfig
+                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" 
+                        }/download/${ 
+                        this.state.defaultConfig.path}`
+                      : ""
+                  }
+                  style={{ textDecoration: "none" }}
+                >
+                  <Link component="button" variant="body2">
+                    Download global configuration
+                  </Link>
+                </a>
+              </Typography>
+              <br />
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ marginTop: "-7px", height: "56px" }}>
+              <Grid container spacing={8}>
+                <Grid item xs={4} sm={4} lg={4} xl={4}>
+                  <FileUpload accept=".yaml" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="configFile" />
+                </Grid>
+
+                <Grid item xs={4} sm={4} lg={4} xl={4}>
+                  <TextField value={this.state.configName} id="outlined-name" disabled margin="normal" variant="outlined" style={{ width: "80%" }} />
+                </Grid>
               </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <TextField
-                  value={this.state.workspaceName}
-                  required
-                  id="outlined-name"
-                  margin="normal"
-                  onChange={event => {
-                    this.handleTextChange("workspaceName", event);
-                  }}
-                  variant="outlined"
-                  style={{ width: "60%" }}
-                />
-              </Grid>
+            </Grid>
 
               <Grid item xs={12} sm={12} lg={12} xl={12}>
                 <ProcessingWorkspace handleWorkspaceSelected={this.handleWorkspaceSelected.bind(this)} selectedWorkspaces={this.state.selectedWorkspaces}/>

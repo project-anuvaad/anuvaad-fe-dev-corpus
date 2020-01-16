@@ -5,13 +5,14 @@ import API from "./api";
 import C from "../constants";
 
 export default class RunExperiment extends API {
-  constructor(selectedworkspace, workspaceName, language, timeout = 2000) {
+  constructor(selectedworkspace, workspaceName, language,filepath, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
     this.type = C.CREATEWORKSPACE;
     this.title = workspaceName;
     this.target_lang = language;
     this.selected_workspaces = selectedworkspace;
+    this.filepath = filepath;
   }
 
   toString() {
@@ -26,15 +27,17 @@ export default class RunExperiment extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/save-mt-workspace`;
+    return `${super.apiEndPointAuto()}/save-search-replace-workspace`;
   }
 
   getBody() {
+    console.log(this.title,this.target_lang,this.selected_workspaces,this.filepath)
     return {
-      mt_workspace: {
+      search_replace_workspace: {
         title: this.title,
         target_language: this.target_lang,
-        selected_workspaces: this.selected_workspaces
+        selected_mt_workspaces: this.selected_workspaces,
+        config_file_location: this.filepath
       }
     };
   }

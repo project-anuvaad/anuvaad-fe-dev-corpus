@@ -102,9 +102,7 @@ class NewExtraction extends React.Component {
 
       if (configFilepath && csvFilepath) {
         const { APITransport } = this.props;
-
         const apiObj = new RunExperiment(this.state.workspaceName, configFilepath, csvFilepath);
-
         this.state.csvFile && APITransport(apiObj);
         
       }
