@@ -55,7 +55,7 @@ class doctranslate extends React.Component {
     }
 
     if (prevProps.translation !== this.props.translation) {
-      // history.push("/viewtranslate")
+      history.push("/viewtranslate")
       this.setState({
         translation: this.props.translation
       })
