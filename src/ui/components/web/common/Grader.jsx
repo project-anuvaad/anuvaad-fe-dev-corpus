@@ -5,7 +5,6 @@ import { withStyles } from "@material-ui/core/styles";
 import NewCorpusStyle from "../../../styles/web/Newcorpus";
 import Typography from "@material-ui/core/Typography";
 import StarRatingComponent from "react-star-rating-component";
-import ReadMoreReact from 'read-more-react';
 
 class Grader extends React.Component {
     constructor(props) {

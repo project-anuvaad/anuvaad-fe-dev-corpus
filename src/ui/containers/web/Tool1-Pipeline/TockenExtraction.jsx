@@ -30,8 +30,8 @@ class TokenExtraction extends React.Component {
     console.log(event.target.files[0], key);
     this.setState({
       [key]: event.target.files[0],
-      configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
-      csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
+      configName: key === "configFile" ? event.target.files[0].name : this.state.configName,
+      csvName: key === "csvFile" ? event.target.files[0].name : this.state.csvName
     });
   };
 

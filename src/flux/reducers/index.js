@@ -77,7 +77,6 @@ export default {
     translation,
     fetchtranslation,
     deletefile,
-    updatePasswordstatus,
     audio,
     userList,
     userRoles,
