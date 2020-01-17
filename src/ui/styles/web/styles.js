@@ -1,6 +1,6 @@
 
 const drawerWidth = 240;
-
+let logo = require('../../../assets/logo.png')
 
 const GlobalStyles = theme => ({
   container: {
@@ -82,19 +82,19 @@ const GlobalStyles = theme => ({
   editButton: {
     width: "70%"
   },
-  // hide: {
-  //   display: "none"
-  // },
+  hide: {
+    display: "none"
+  },
   drawer: {
     width: '140px',
     flexShrink: 0
   },
-  // drawerPaper: {
+  drawerPaper: {
 
-  //   width: '282px',
-  //   backgroundColor: '#335995'
+    width: '282px',
+    backgroundColor: '#335995'
 
-  // },
+  },
   drawerHeader: {
     display: "flex",
     alignItems: "center",
@@ -141,13 +141,13 @@ const GlobalStyles = theme => ({
     color: 'white'
   },
 
-  // content: {
-  //   background: theme.palette.background.default,
-  //   flexGrow: 1,
-  //   backgroundColor: theme.palette.background.default,
-  //   padding: theme.spacing.unit * 3,
-  //   marginTop: '3%'
-  // }
+  content: {
+    background: theme.palette.background.default,
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+    marginTop: '3%'
+  }
 });
 
 
