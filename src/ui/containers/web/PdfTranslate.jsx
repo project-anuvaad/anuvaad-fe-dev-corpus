@@ -82,7 +82,7 @@ class doctranslate extends React.Component {
         item.target_language_code === this.state.target.language_code && item.source_language_code === this.state.source.language_code && item.is_primary ?
           model = item : ''))
       const { APITransport } = this.props;
-      const apiObj = new PdfTranslation(this.state.source.language_name, this.state.target.language_name, this.state.files, model);
+      const apiObj = new PdfTranslation(this.state.source.language_name, this.state.target.language_name, this.state.files, model,this.state.source.language_code, this.state.target.language_code);
       APITransport(apiObj);
       this.setState({ showLoader: true })
       
