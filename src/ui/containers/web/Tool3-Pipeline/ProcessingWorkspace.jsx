@@ -6,8 +6,6 @@ import MUIDataTable from "mui-datatables";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
-import TabDetals from "./WorkspaceDetailsTab";
-import history from "../../../../web.history";
 
 class ProcessingWorkspace extends React.Component {
   intervalID;
@@ -123,8 +121,7 @@ class ProcessingWorkspace extends React.Component {
         label: "Created By",
         options: {
           filter: false,
-          sort: false,
-          filter: false
+          sort: false
         }
       },
       {
@@ -132,8 +129,7 @@ class ProcessingWorkspace extends React.Component {
         label: "Created At",
         options: {
           filter: false,
-          sort: false,
-          filter: false
+          sort: false
         }
       }
     ];
@@ -203,7 +199,7 @@ class ProcessingWorkspace extends React.Component {
     return (
       <div>
 
-        <div style={{ marginRight: "28%", marginTop: "40px" }}>
+        <div style={{ marginRight: "23.2%", marginTop: "40px" }}>
           <MUIDataTable data={this.state.workspaces} columns={columns} options={options} />
         </div>
       </div>

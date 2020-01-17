@@ -71,7 +71,7 @@ class WorkspaceDetails extends React.Component {
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
     if (rowData[2] == "At Step2") {
-      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
+      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction/` }${rowData[0]}/${rowData[1]}`);
     }
   };
 
@@ -127,8 +127,7 @@ class WorkspaceDetails extends React.Component {
         label: "Created By",
         options: {
           filter: false,
-          sort: false,
-          filter: false
+          sort: false
         }
       },
       {
@@ -136,8 +135,7 @@ class WorkspaceDetails extends React.Component {
         label: "Created At",
         options: {
           filter: false,
-          sort: false,
-          filter: false
+          sort: false
         }
       }
     ];

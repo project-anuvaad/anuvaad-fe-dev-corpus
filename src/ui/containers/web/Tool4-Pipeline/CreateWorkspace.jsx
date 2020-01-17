@@ -51,18 +51,18 @@ class CreateWorkspace extends React.Component {
 
     if (prevProps.supportLanguage !== this.props.supportLanguage) {
       let languages = [], sourceLanguages = [];
-      this.props.supportLanguage.map((lang) => {
-        if (lang.language_code !== 'en') {
-          languages.push(lang)
-        }
-        else {
-          sourceLanguages.push(lang)
-        }
-      })
-      this.setState({
-        language: languages, sourceLanguage: sourceLanguages
-      })
-    }
+      this.props.supportLanguage.map(lang => (
+        lang.language_code !== "en"? 
+           languages.push(lang)
+         :
+           sourceLanguages.push(lang)
+         
+       ))
+       this.setState({
+         language: languages,
+         sourceLanguage: sourceLanguages
+       });
+     }
 
     if (prevProps.createWorkspaceDetails !== this.props.createWorkspaceDetails) {
       this.setState({
@@ -95,8 +95,8 @@ class CreateWorkspace extends React.Component {
 
 handleChange = (key, event) => {
     this.setState({
-      configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
-      csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
+      configName: key === "configFile" ? event.target.files[0].name : this.state.configName,
+      csvName: key === "csvFile" ? event.target.files[0].name : this.state.csvName
     });
     this.readFileDataAsBinary(event.target.files[0]).then((result, err) => {
       this.setState({
@@ -132,7 +132,7 @@ handleChange = (key, event) => {
 
 
   handleSubmit() {
-    const { APITransport } = this.props;
+
     console.log(this.state.workspaceName, this.state.target.language_code)
     if (this.state.workspaceName && this.state.target.language_code) {
       this.setState({

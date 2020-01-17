@@ -11,7 +11,7 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Updatepassword from "../../../flux/actions/apis/updateadminpassword";
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { white, blueGrey50, darkBlack } from "material-ui/styles/colors";
+import {blueGrey50 } from "material-ui/styles/colors";
 import UserRolesList from "../../../flux/actions/apis/userroles";
 import FetchCourtList from "../../../flux/actions/apis/fetchcourtlist";
 import AddUser from "../../../flux/actions/apis/adduser";
@@ -66,7 +66,6 @@ class UserUpdate extends React.Component {
 
 
   handleSubmit = () => {
-    var model = '';
     
       const { APITransport } = this.props;
       const apiObj = new AddUser(this.state.userid, this.state.firstname, this.state.lastname, this.state.userpassword,this.state.email, this.state.roles, this.state.high_court_code);
@@ -177,8 +176,6 @@ class UserUpdate extends React.Component {
   }
   render() {
     var { openValue, handleCancel, newUser, userDetails } = this.props;
-    console.log("sajish",this.props.openValue)
-    var { userDetails } = this.state;
     return (
       <div>
         {openValue &&
@@ -243,7 +240,7 @@ class UserUpdate extends React.Component {
                     multiple={true}
                     style={{ minWidth: 160, align: 'right', maxWidth: 160 }}
                     value={this.state.roles ? this.state.roles : []}
-                    onChange={this.handleSelectModelChange}
+                    // onChange={this.handleSelectModelChange}
                     onChange={(event) => { this.handleSelectModelChange('roles', event) }}
                     renderValue={selected => selected.join(', ')}
                     input={<OutlinedInput name={this.state.roles} id="select-multiple-checkbox" />} >

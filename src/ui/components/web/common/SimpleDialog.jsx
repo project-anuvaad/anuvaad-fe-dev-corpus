@@ -9,7 +9,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 export default class SimpleDialog extends React.Component {
@@ -17,7 +16,7 @@ export default class SimpleDialog extends React.Component {
 
     render() {
 
-        var {value, name, message,value,  handleSubmit,handleClose, open,title, status} = this.props
+        var {value, message,  handleSubmit,handleClose, open,title, status} = this.props
         return (
             <div>
             
