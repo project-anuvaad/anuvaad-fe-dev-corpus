@@ -4,7 +4,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Snackbar from "@material-ui/core/Snackbar";
 import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
@@ -28,7 +27,7 @@ import ProgressBar from "../../components/web/common/ProgressBar";
 import Fab from '@material-ui/core/Fab';
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
-import { Line, Circle } from 'rc-progress';
+import Snackbar from "../../components/web/common/Snackbar";
 
 var file = "";
 class ViewTranslate extends React.Component {
@@ -83,8 +82,7 @@ class ViewTranslate extends React.Component {
         const apiObj = new DeleteFile(basename);
         APITransport(apiObj);
         this.setState({ open: false, showLoader: true })
-        const apiObj1 = new FetchTranslations();
-        APITransport(apiObj1)
+        
         this.setState({ showLoader: true, message: this.state.filename + " file deleted successfully!" })
         setTimeout(() => { this.setState({ snack: true }) }, 700)
         return false;
@@ -106,6 +104,12 @@ class ViewTranslate extends React.Component {
         }
         if (prevProps.uploadTranslated !== this.props.uploadTranslated) {
             this.componentDidMount()
+        }
+        if (prevProps.deletefile !== this.props.deletefile) {
+            this.setState({snack:true })
+            const apiObj1 = new FetchTranslations();
+        this.props.APITransport(apiObj1)
+            setTimeout(() => { this.setState({ snack: false }) }, 700)
         }
 
 
@@ -218,7 +222,7 @@ class ViewTranslate extends React.Component {
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Download"><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
                                     {/* {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''}  */}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Delete"><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Upload"><FileUpload title={'Upload'} id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Upload"><FileUpload  id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
 
                                 </div>
                             );
@@ -233,7 +237,6 @@ class ViewTranslate extends React.Component {
             filterType: 'checkbox',
             download: false,
             print: false,
-            fixedHeader: true,
             filter: false,
             selectableRows: 'none',
             customSort: (data, colIndex, order) => { return data.sort((a, b) => { if (colIndex === 2 ) { return (new Date(a.data[colIndex]) < new Date(b.data[colIndex]) ? -1: 1 ) * (order === 'desc' ? 1 : -1); } else { return (a.data[colIndex] < b.data[colIndex] ? -1: 1 ) * (order === 'desc' ? 1 : -1); } }); }
@@ -277,14 +280,17 @@ class ViewTranslate extends React.Component {
                 }
 
 
-                {this.state.snack && this.state.message &&
-                    <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.snack} onClose={this.handleClose} autoHideDuration={3000} >
-                        <MySnackbarContentWrapper
-                            onClose={this.handleClose}
-                            variant="success"
-                            message={this.state.message} />
-                    </Snackbar>
-                }
+{this.state.snack && (
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={this.state.open}
+            autoHideDuration={6000}
+            onClose={this.handleClose}
+            variant="success"
+            message={this.state.message}
+          />
+        )}
+                
             </div>
 
         );
@@ -295,7 +301,8 @@ const mapStateToProps = state => ({
     user: state.login,
     apistatus: state.apistatus,
     fetchtranslation: state.fetchtranslation,
-    uploadTranslated: state.uploadTranslated
+    uploadTranslated: state.uploadTranslated,
+    deletefile : state.deletefile
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
