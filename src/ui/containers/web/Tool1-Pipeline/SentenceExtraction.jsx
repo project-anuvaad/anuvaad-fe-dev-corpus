@@ -9,8 +9,6 @@ import Button from "@material-ui/core/Button";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import StepDetails from "./TockenExtractionSteps";
-import FileUpload from "../../../components/web/common/FileUpload";
-import history from "../../../../web.history";
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchworkspacedetails";
 
 class SentenceExtraction extends React.Component {
@@ -44,8 +42,8 @@ class SentenceExtraction extends React.Component {
     this.setState({
       activeStep: 3,
       [key]: event.target.files[0],
-      configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
-      csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
+      configName: key ==="configFile" ? event.target.files[0].name : this.state.configName,
+      csvName: key === "csvFile" ? event.target.files[0].name : this.state.csvName
     });
   };
 

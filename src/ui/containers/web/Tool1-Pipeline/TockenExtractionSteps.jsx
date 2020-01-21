@@ -5,8 +5,6 @@ import { bindActionCreators } from "redux";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import Paper from "@material-ui/core/Paper";
-import TabDetals from "./WorkspaceDetailsTab";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Stepper from "../../../components/web/common/Stepper";
 

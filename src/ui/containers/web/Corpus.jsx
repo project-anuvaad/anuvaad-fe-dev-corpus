@@ -18,7 +18,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Accept from '@material-ui/icons/Spellcheck';
 import Close from '@material-ui/icons/Close';
-import TablePagination from "@material-ui/core/TablePagination";
 import EditIcon from '@material-ui/icons/Edit';
 import Input from "@material-ui/core/Input";
 import Tooltip from '@material-ui/core/Tooltip';
@@ -26,7 +25,7 @@ import UpdateSentencesStatus from "../../../flux/actions/apis/update-sentenses-s
 import SourceTranslate from "../../../flux/actions/apis/source-translate";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { white, blueGrey50,darkBlack } from "material-ui/styles/colors";
+import { blueGrey50,darkBlack } from "material-ui/styles/colors";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -104,8 +103,8 @@ class Corpus extends React.Component {
 
     handleFilter = (inputStatus) => { 
         
-        let accuracy= inputStatus.item== 'RED' ? 'bad': inputStatus.item== 'YELLOW' ? 'medium' : inputStatus.item== 'GREEN' ? 'good': inputStatus
-        if(accuracy==inputStatus){
+        let accuracy= inputStatus.item=== 'RED' ? 'bad': inputStatus.item=== 'YELLOW' ? 'medium' : inputStatus.item=== 'GREEN' ? 'good': inputStatus
+        if(accuracy===inputStatus){
             this.setState({
                 inputStatus,
                 anchorEl:null,
@@ -132,7 +131,7 @@ class Corpus extends React.Component {
 
     handleActionButton(index, action) {
         let sentences = this.state.sentences;
-        let color1 = ''
+
         sentences[index].isEditable = false
         sentences[index].status = action === "ACCEPTED" ? 'ACCEPTED' : (action === 'REJECTED' ? 'REJECTED' : '')
         this.setState({ backColor: 'green' })
@@ -154,8 +153,8 @@ class Corpus extends React.Component {
 
     handleSaveButton(index) {
         let sentences = this.state.sentences
-        sentences[index].isdialog = false,
-        sentences[index].isEditable = false,
+        sentences[index].isdialog = false
+        sentences[index].isEditable = false
             sentences[index].status = "EDITED"
         this.setState({
             openExpand:false,
@@ -272,14 +271,14 @@ class Corpus extends React.Component {
     };
     handleColor(color) {
         let color1 = 'grey'
-        return color == 'ACCEPTED' ? 'green' : (color == 'EDITED' ? '#2c6b96' : (color == "REJECTED" ? "red" : (color == "PROCESSING" ? '#f1de7f' : (color == "PENDING" ? 'grey' : ''))))
+        return color === 'ACCEPTED' ? 'green' : (color === 'EDITED' ? '#2c6b96' : (color === "REJECTED" ? "red" : (color === "PROCESSING" ? '#f1de7f' : (color === "PENDING" ? 'grey' : ''))))
     }
 
     colorValidate = (e, ocrValue,status) => {
         let splitRow;
         let word;
         let colorWord = [];
-        if (ocrValue && ocrValue.length > 0 && (status!="EDITED") && (status!="ACCEPTED")) {
+        if (ocrValue && ocrValue.length > 0 && (status!=="EDITED") && (status!=="ACCEPTED")) {
             splitRow = e.split(' ')
             for (word in ocrValue) {
                 if (ocrValue[word] >= 70) {
@@ -298,7 +297,7 @@ class Corpus extends React.Component {
 
     handleClickExpand(event,value){
         this.setState({openExpand:event})
-        if(this.state.sourceTranslate==""){
+        if(this.state.sourceTranslate===""){
         this.setState({
             sourceTranslate:value
         })

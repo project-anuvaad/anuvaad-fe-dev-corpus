@@ -1,16 +1,10 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import Zoom from '@material-ui/core/Zoom';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 class AppCard extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-    handleZoom() {
-
-    }
+   
     render() {
         let { header, index, body, bigsize, style, title, fontSize, showSmall, showZoomed } = this.props
         return (

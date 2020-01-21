@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
-import { timingSafeEqual } from "crypto";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
@@ -69,17 +68,14 @@ class ExistingWorkspace extends React.Component {
   };
 
   handleClick = rowData => {
-    
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    if (rowData[2] == "At Step2" && rowData[3]=="PROCESSED") {
-      if(this.props.match.path!=="/stage2/data-source"){
-      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
-      
-    }
-    else{
-      console.log("out---")
-      history.push(`${`${process.env.PUBLIC_URL}/stage2/data-source/`}${rowData[0]}/${rowData[1]}`);
-    }
+    if (rowData[2] === "At Step2" && rowData[3] === "PROCESSED") {
+      if (this.props.match.path !== "/stage2/data-source") {
+        history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
+      } else {
+        console.log("out---");
+        history.push(`${`${process.env.PUBLIC_URL}/stage2/data-source/`}${rowData[0]}/${rowData[1]}`);
+      }
     }
   };
 
@@ -88,7 +84,7 @@ class ExistingWorkspace extends React.Component {
   };
 
   render() {
-    console.log(this.props.match.path==="/stage2/data-source")
+    console.log(this.props.match.path === "/stage2/data-source");
     const columns = [
       {
         name: "title",
@@ -136,8 +132,7 @@ class ExistingWorkspace extends React.Component {
         label: "Created By",
         options: {
           filter: false,
-          sort: false,
-          filter: false
+          sort: false
         }
       },
       {
@@ -145,8 +140,7 @@ class ExistingWorkspace extends React.Component {
         label: "Created At",
         options: {
           filter: false,
-          sort: false,
-          filter: false
+          sort: false
         }
       }
     ];
@@ -193,10 +187,16 @@ class ExistingWorkspace extends React.Component {
 
     return (
       <div>
-        {this.props.match.path !=="/stage2/data-source" &&
-        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />}
+        {this.props.match.path !== "/stage2/data-source" && (
+          <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
+        )}
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={this.props.match.path ==="/stage2/data-source"? "Data Source": "Existing Workspaces"} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable
+            title={this.props.match.path === "/stage2/data-source" ? "Data Source" : "Existing Workspaces"}
+            data={this.state.name}
+            columns={columns}
+            options={options}
+          />
         </div>
       </div>
     );

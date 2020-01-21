@@ -10,8 +10,7 @@ import Snackbars from '../../components/web/common/Snackbar'
 import Theme from "../../theme/web/theme-default";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
-import logo from '../../../assets/logo.png'
-import UserAuth from "../../../flux/actions/apis/userprofile";
+
 
 
 class App extends React.Component {

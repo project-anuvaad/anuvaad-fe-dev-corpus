@@ -1,7 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-
-import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
@@ -130,7 +128,7 @@ class Corp extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div style={{ width: "90px" }}>
-                  {tableMeta.rowData[6] == "COMPLETED" && this.state.role.includes("editor") && (
+                  {tableMeta.rowData[6] === "COMPLETED" && this.state.role.includes("editor") && (
                     <Tooltip title="Edit Sentence">
                       <EditIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
@@ -142,7 +140,7 @@ class Corp extends React.Component {
                       </EditIcon>
                     </Tooltip>
                   )}
-                  {tableMeta.rowData[6] == "COMPLETED" && this.state.role.includes("grader") && (
+                  {tableMeta.rowData[6] === "COMPLETED" && this.state.role.includes("grader") && (
                     <Tooltip title="Grade Sentence">
                       <GradeIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
@@ -154,7 +152,7 @@ class Corp extends React.Component {
                       </GradeIcon>
                     </Tooltip>
                   )}
-                  {tableMeta.rowData[6] == "COMPLETED" && this.state.role.includes("dev") && (
+                  {tableMeta.rowData[6] === "COMPLETED" && this.state.role.includes("dev") && (
                     <Tooltip title="View Sentence">
                       <ViewIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}

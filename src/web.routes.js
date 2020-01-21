@@ -78,9 +78,9 @@ const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo
   />
 );
 
-const PresidentRoute = ({ component: Component, userRoles, title, authenticate, ...rest }) => (
-  <Route {...rest} render={props => (authenticate(userRoles) ? <Component /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
-);
+// const PresidentRoute = ({ component: Component, userRoles, title, authenticate, ...rest }) => (
+//   <Route {...rest} render={props => (authenticate(userRoles) ? <Component /> : <Redirect to={`${process.env.PUBLIC_URL}/logout`} />)} />
+// );
 
 class AppRoutes extends React.Component {
   authenticateUser = allowedRoles => {
@@ -92,7 +92,7 @@ class AppRoutes extends React.Component {
         if (allowedRoles && Array.isArray(allowedRoles)) {
           allowedRoles.map(allowedRole => {
             userRoles.map(userRole => {
-              if (userRole == allowedRole) {
+              if (userRole === allowedRole) {
                 count += 1;
               }
             });
@@ -111,7 +111,7 @@ class AppRoutes extends React.Component {
   };
 
   render() {
-    const roles = localStorage.getItem("roles");
+    // const roles = localStorage.getItem("roles");
     return (
       <Router history={history} basename="/dev">
         <div>

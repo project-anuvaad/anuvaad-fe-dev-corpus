@@ -34,13 +34,13 @@ class DataPipeline extends React.Component {
 
   handleClick = (value) => {
       console.log(value)
-    if(value=="Stage 1"){
+    if(value==="Stage 1"){
     history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
     }
-    else if(value=="Stage 2"){
+    else if(value==="Stage 2"){
       history.push(`${process.env.PUBLIC_URL}/stage2/existing-workspace`);
       }
-      else if(value=="Stage 3"){
+      else if(value==="Stage 3"){
         history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
         }
     else{
@@ -51,13 +51,13 @@ class DataPipeline extends React.Component {
 
   handleDataClick = (value) => {
     console.log(value)
-    if(value=="Stage 1"){
+    if(value==="Stage 1"){
       history.push(`${process.env.PUBLIC_URL}/data-source`);
       }
-   else if(value=="Stage 2"){
+   else if(value==="Stage 2"){
     history.push(`${process.env.PUBLIC_URL}/stage2/data-source`);
     }
-    else if(value=="Stage 3"){
+    else if(value==="Stage 3"){
       history.push(`${process.env.PUBLIC_URL}/stage3/data-source`);
       }
   else{

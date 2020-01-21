@@ -7,18 +7,17 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
+import { withStyles } from "@material-ui/core";
 import Snackbar from "../../../components/web/common/Snackbar";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
-import { withStyles } from '@material-ui/core';
 
-
-let styles = {
-    multilineColor:{
-        color:"#9C27B0",
-        fontSize:25
-    }
+const styles = {
+  multilineColor: {
+    color: "#9C27B0",
+    fontSize: 18
   }
+};
 
 class SentenceQualityCheck extends React.Component {
   constructor(props) {
@@ -26,7 +25,8 @@ class SentenceQualityCheck extends React.Component {
     this.state = {
       value: 1,
       target: "",
-      source: 'sajsih',
+      source: "sajsih",
+      sentenceDetails: 'Source ngram: learned counsel", Target ngram: "सीखा वकील", Replacement ngram: "विद्वान  वकील"',
       selectedWorkspaces: [],
       workspaceName: "",
       sourceLanguage: [],
@@ -39,9 +39,7 @@ class SentenceQualityCheck extends React.Component {
     };
   }
 
-
   handleSubmit() {
-    const { APITransport } = this.props;
     console.log(this.state.workspaceName, this.state.target.language_code);
     if (this.state.workspaceName && this.state.target.language_code) {
       this.setState({
@@ -53,7 +51,7 @@ class SentenceQualityCheck extends React.Component {
   }
 
   render() {
-    let { classes } = this.props;
+    const { classes } = this.props;
     return (
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
@@ -71,15 +69,21 @@ class SentenceQualityCheck extends React.Component {
                 required
                 id="outlined-name"
                 margin="normal"
-                
+                multiline
                 variant="outlined"
                 style={{ width: "60%" }}
               />
             </Grid>
 
-            <Grid item xs={4} sm={4} lg={4} xl={4}>
+            <Grid item xs={2} sm={2} lg={2} xl={2}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "90%", paddingTop: "30px" }}>
+                Found sentences :
+              </Typography>
+              <br />
+            </Grid>
+            <Grid item xs={2} sm={2} lg={2} xl={2}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-              Found sentences :
+                1000/2000
               </Typography>
               <br />
             </Grid>
@@ -89,7 +93,12 @@ class SentenceQualityCheck extends React.Component {
                 required
                 id="outlined-name"
                 margin="normal"
-                
+                multiline
+                InputProps={{
+                  classes: {
+                    input: classes.multilineColor
+                  }
+                }}
                 variant="outlined"
                 style={{ width: "60%" }}
               />
@@ -97,30 +106,30 @@ class SentenceQualityCheck extends React.Component {
 
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-              Source sentence :
+                Source sentence :
               </Typography>
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <TextField
-              
                 value={this.state.source}
                 required
                 id="outlined-name"
                 margin="normal"
+                multiline
                 InputProps={{
-                    classes: {
-                        input: classes.multilineColor
-                    }
+                  classes: {
+                    input: classes.multilineColor
+                  }
                 }}
                 variant="outlined"
-                style={{ width: "60%",fontColor:'red' }}
+                style={{ width: "60%", fontColor: "red" }}
               />
             </Grid>
 
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-              Target sentence :
+                Target sentence :
               </Typography>
               <br />
             </Grid>
@@ -130,7 +139,12 @@ class SentenceQualityCheck extends React.Component {
                 required
                 id="outlined-name"
                 margin="normal"
-                
+                multiline
+                InputProps={{
+                  classes: {
+                    input: classes.multilineColor
+                  }
+                }}
                 variant="outlined"
                 style={{ width: "60%" }}
               />
@@ -144,19 +158,19 @@ class SentenceQualityCheck extends React.Component {
               >
                 {this.state.csvData}
               </Typography>
-              </Grid>
+            </Grid>
 
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Button
                 variant="contained"
                 color="primary"
-                style={{ width: "70%",marginLeft:'40px', marginTop: "3%", height: "56px" }}
+                style={{ width: "70%", marginLeft: "40px", marginTop: "3%", height: "56px" }}
                 onClick={this.handleSubmit.bind(this)}
               >
                 Ignore and Next
               </Button>
-              </Grid>
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
+            </Grid>
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Button
                 variant="contained"
                 color="primary"
@@ -165,11 +179,10 @@ class SentenceQualityCheck extends React.Component {
               >
                 Accept and Next
               </Button>
-              </Grid>
-            
+            </Grid>
           </Grid>
         </Paper>
-        
+
         {this.state.open && (
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}

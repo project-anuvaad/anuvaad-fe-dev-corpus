@@ -1,39 +1,30 @@
-import React from 'react';
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import React from "react";
+import Paper from "@material-ui/core/Paper";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 
-var tabItem=["Existing workspaces","Run Experiment","Processing"]
 class CenteredTabs extends React.Component {
-  
-
-  handleChange=(event,value)=> {
-    console.log(value)
-    this.props.handleChange(value)
+  handleChange = (event, value) => {
+    console.log(value);
+    this.props.handleChange(value);
   };
 
   render() {
-    
     return (
-      <Paper style = {this.props.style}>
+      <Paper style={this.props.style}>
         <Tabs
-          
           value={this.props.activeStep}
           onChange={this.handleChange}
           indicatorColor={this.props.color}
           textColor={this.props.color}
-          color ={this.props.color}
+          color={this.props.color}
           centered
         >
-            {typeof(this.props.tabItem)!="undefined" && this.props.tabItem.map(label => (
-            <Tab key={label} label = {label}/>
-          ))}
-        </Tabs>  
+          {typeof this.props.tabItem !== "undefined" && this.props.tabItem.map(label => <Tab key={label} label={label} />)}
+        </Tabs>
       </Paper>
-      
     );
   }
 }
 
-
-export default (CenteredTabs);
+export default CenteredTabs;

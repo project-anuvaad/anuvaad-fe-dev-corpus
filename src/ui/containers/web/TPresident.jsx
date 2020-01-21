@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import Button from "@material-ui/core/Button";
 import Grid from '@material-ui/core/Grid';
 import $ from 'jquery';
@@ -19,7 +19,7 @@ import { withRouter } from "react-router-dom";
 import C from '../../../flux/actions/constants'
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
-import { blueGrey50, darkBlack } from "material-ui/styles/colors";
+import { blueGrey50} from "material-ui/styles/colors";
 const langs = [
   { label: 'Hindi', code: 'hi', type: C.HINDI },
   { label: 'Bengali', code: 'bn', type: C.BENGALI },
@@ -59,7 +59,9 @@ class Translate extends React.Component {
         this.setState({
           [lang.label.toLowerCase()]: this.props[lang.label.toLowerCase()]
         })
+       
       }
+      
     })
   }
 
@@ -147,7 +149,7 @@ class Translate extends React.Component {
           <div>
             <textarea className='idbox' rows='5' cols='50' placeholder='Please enter text here...' onChange={(event) => { this.handleTextChange('sentence', event) }} />
             <div >
-              <Button onClick={this.handleSubmit}
+              <Button
                 variant="contained" color="primary"
                 style={{
                   width: '25%',
