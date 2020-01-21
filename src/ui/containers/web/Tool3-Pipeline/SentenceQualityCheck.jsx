@@ -32,6 +32,7 @@ class SentenceQualityCheck extends React.Component {
       sourceLanguage: [],
       language: [],
       step: 1,
+      count:  1,
       message1: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
       csvData:
         '"Accept and Next", will qualify current sentence pair by replacing target sentence with the eligible token. This action makes current sentence pair as "good sentence pair". This means HT step will be skipped for this sentence pair',
@@ -39,19 +40,25 @@ class SentenceQualityCheck extends React.Component {
     };
   }
 
-  handleSubmit() {
-    console.log(this.state.workspaceName, this.state.target.language_code);
-    if (this.state.workspaceName && this.state.target.language_code) {
-      this.setState({
-        step: 2
-      });
-    } else {
-      alert("Fields should not be empty");
-    }
+
+  componentDidMount() {
+    console.log("test",this.props.match.params.session_id)
+    this.handleSubmit()
+    
+  }
+
+  handleSubmit=(value,event) => {
+    const { APITransport } = this.props;
+    // const apiObj = new FetchSentence(id, sentenceCount);
+    // APITransport(apiObj);
+
+    this.setState({count: this.state.count+1})
+    
   }
 
   render() {
     const { classes } = this.props;
+    console.log("params",this.props.match)
     return (
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
@@ -59,13 +66,13 @@ class SentenceQualityCheck extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                Enter workspace name :
+                Workspace name :
               </Typography>
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <TextField
-                value={this.state.workspaceName}
+                value={this.props.match.params.name}
                 required
                 id="outlined-name"
                 margin="normal"
@@ -83,7 +90,7 @@ class SentenceQualityCheck extends React.Component {
             </Grid>
             <Grid item xs={2} sm={2} lg={2} xl={2}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                1000/2000
+    {this.state.count}/2000
               </Typography>
               <br />
             </Grid>
@@ -164,8 +171,9 @@ class SentenceQualityCheck extends React.Component {
               <Button
                 variant="contained"
                 color="primary"
+                value= "rejected"
                 style={{ width: "70%", marginLeft: "40px", marginTop: "3%", height: "56px" }}
-                onClick={this.handleSubmit.bind(this)}
+                onClick ={(event) => { this.handleSubmit('rejected', event) }}
               >
                 Ignore and Next
               </Button>
@@ -173,9 +181,10 @@ class SentenceQualityCheck extends React.Component {
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Button
                 variant="contained"
+                value = "accepted"
                 color="primary"
                 style={{ width: "70%", marginTop: "3%", height: "56px" }}
-                onClick={this.handleSubmit.bind(this)}
+                onClick ={(event) => { this.handleSubmit('accepted', event) }}
               >
                 Accept and Next
               </Button>

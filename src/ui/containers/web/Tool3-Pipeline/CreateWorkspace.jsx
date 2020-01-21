@@ -76,8 +76,12 @@ class CreateWorkspace extends React.Component {
     }
 
     if (prevProps.fetchDefaultConfig !== this.props.fetchDefaultConfig) {
-      console.log(this.props.fetchDefaultConfig.data);
-      this.setState({ defaultConfig: this.props.fetchDefaultConfig.data[0], defaultCsv: this.props.fetchDefaultConfig.data[1] });
+      let data="";
+      this.props.fetchDefaultConfig.data.map(item => (
+        data= item.use==="SEARCH_REPLACE"&& item
+        
+      ))
+      this.setState({ defaultConfig: data });
     }
 
     if (prevProps.configUplaod !== this.props.configUplaod) {

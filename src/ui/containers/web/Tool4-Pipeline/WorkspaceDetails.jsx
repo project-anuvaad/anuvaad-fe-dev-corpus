@@ -5,26 +5,27 @@ import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
-import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
+import FetchSearchReplaceWorkspace from "../../../../flux/actions/apis/fetchsearchreplaceworkspace";
+import TabDetals from "./WorkspaceDetailsTab";
+import history from "../../../../web.history";
 
-class ProcessingWorkspace extends React.Component {
+class WorkspaceDetails extends React.Component {
   intervalID;
 
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      value: 2,
       page: 0,
       rowsPerPage: 10,
       serverSideFilterList: [],
-      filters: [],
-      workspaces: []
+      filters: []
     };
   }
 
   componentDidMount() {
     this.handleFetchWorkspace();
-    // this.intervalID = setInterval(this.handleFetchWorkspace, 10000);
+    this.intervalID = setInterval(this.handleFetchWorkspace, 10000);
   }
 
   componentWillUnmount() {
@@ -33,27 +34,27 @@ class ProcessingWorkspace extends React.Component {
 
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "");
+    const apiObj = new FetchSearchReplaceWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "");
     APITransport(apiObj);
     this.setState({ showLoader: true });
   };
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspace !== this.props.fetchWorkspace) {
-      this.setState({ workspaces: this.props.fetchWorkspace.data, count: this.props.fetchWorkspace.count });
+      this.setState({ name: this.props.fetchWorkspace.data, count: this.props.fetchWorkspace.count });
     }
   }
 
   handleReset = val => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", val);
+    const apiObj = new FetchSearchReplaceWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", val);
     APITransport(apiObj);
     this.setState({ filter: val });
   };
 
   changePage = (page, rowsPerPage) => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(rowsPerPage, page + 1, "PROCESSED", "");
+    const apiObj = new FetchSearchReplaceWorkspace(rowsPerPage, page + 1, "PROCESSING", "");
     APITransport(apiObj);
     this.setState({ page, rowsPerPage });
   };
@@ -61,12 +62,17 @@ class ProcessingWorkspace extends React.Component {
   handleFilterSubmit = filterList => () => {
     console.log(filterList);
     clearTimeout(this.intervalID);
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", filterList);
+    const apiObj = new FetchSearchReplaceWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", filterList);
     this.props.APITransport(apiObj);
     this.setState({ filter: filterList });
   };
 
-
+  handleClick = rowData => {
+    this.setState({ workSpacename: rowData[0], id: rowData[1] });
+    if (rowData[2] === "At Step2") {
+      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
+    }
+  };
 
   handleChange = value => {
     this.setState({ value });
@@ -111,8 +117,8 @@ class ProcessingWorkspace extends React.Component {
         name: "sentence_count",
         label: "Sentence Count",
         options: {
-          filter: false,
-          sort: true
+          display: "excluded",
+          filter: false
         }
       },
       {
@@ -134,43 +140,20 @@ class ProcessingWorkspace extends React.Component {
     ];
 
     const options = {
-
-      filterType: "checkbox",
+      filterType: "textField",
       download: false,
       print: false,
       search: false,
-      filter: false,
-      viewColumns: false,
-      selectableRows: "multiple",
-      responsive: 'scrollMaxHeight',
-      // rowsSelected: this.state.selectedWorkspaces,
+      filter: true,
       serverSide: true,
       count: this.state.count,
-      selectableRowsHeader: false,
+      selectableRows: "none",
       page: this.state.page / this.state.rowsPerPage,
-      disableToolbarSelect: true,
+      onRowClick: rowData => this.handleClick(rowData),
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-
-      rowsSelected: this.state.rowsSelected,
-      onRowsSelect: (rowsSelected, allRows) => {
-        // console.log(rowsSelected, allRows);
-        let selectedItems = []
-        this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });
-        if (allRows && allRows.length > 0) {
-          allRows.map((selected) => {
-                selectedItems.push(this.state.workspaces[selected.index])
-              })
-            }
-            this.setState({selectedWorkspaces : selectedItems})
-            if (this.props.handleWorkspaceSelected) {
-              this.props.handleWorkspaceSelected(selectedItems)
-            }
-          
-      },
-
-      onFilterDialogClose: () => { },
+      onFilterDialogClose: () => {},
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -198,9 +181,9 @@ class ProcessingWorkspace extends React.Component {
 
     return (
       <div>
-
-        <div style={{ marginRight: "28%", marginTop: "40px" }}>
-          <MUIDataTable data={this.state.workspaces} columns={columns} options={options} />
+        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
+        <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+          <MUIDataTable title="Processing Workspaces" data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );
@@ -222,4 +205,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProcessingWorkspace));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WorkspaceDetails));
