@@ -26,7 +26,7 @@ export default class Translation extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/corpus/remove-process`;
+        return `${super.apiEndPointAuto()}/remove-process`;
     }
 
     getFormData() {
@@ -38,7 +38,8 @@ export default class Translation extends API {
     getHeaders() {
         return {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                'Authorization': 'Bearer ' + decodeURI(localStorage.getItem('token')),
             }
         }
     }
