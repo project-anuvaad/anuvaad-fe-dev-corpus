@@ -6,11 +6,12 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import TextField from "@material-ui/core/TextField";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
-import {CopyToClipboard} from 'react-copy-to-clipboard';
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchsearchreplacedetails";
-import TextField from "@material-ui/core/TextField";
+import Snackbar from "../../../components/web/common/Snackbar";
 
 class SentenceExtraction extends React.Component {
   constructor(props) {
@@ -22,6 +23,14 @@ class SentenceExtraction extends React.Component {
     };
   }
 
+  handleCopySubmit() {
+    this.setState({open:true})
+    setTimeout(() => {
+      this.setState({open:false})
+    }, 1500);
+
+  }
+
   componentDidMount() {
     const { APITransport } = this.props;
     const api = new FetchWorkspaceDetails(this.props.match.params.session_id);
@@ -30,11 +39,15 @@ class SentenceExtraction extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspaceDetails !== this.props.fetchWorkspaceDetails) {
-
-        console.log("result------",this.props.fetchWorkspaceDetails.data)
-      this.setState({ workspaceDetails: this.props.fetchWorkspaceDetails.data, detail : this.props.fetchWorkspaceDetails.data.sentence_file_full_path });
+      console.log("result------", this.props.fetchWorkspaceDetails.data);
+      this.setState({
+        workspaceDetails: this.props.fetchWorkspaceDetails.data,
+        detail: this.props.fetchWorkspaceDetails.data.sentence_file_full_path
+      });
     }
   }
+
+  
 
   handleChange = (key, event) => {
     this.setState({
@@ -46,34 +59,34 @@ class SentenceExtraction extends React.Component {
   };
 
   render() {
-      console.log("name",this.props)
+    console.log("name", this.props);
     return (
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
         <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
-        <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
-              <Grid item xs={4} sm={4} lg={4} xl={4}>
-                <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                  Workspace name :
+          <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+            <Grid item xs={4} sm={4} lg={4} xl={4}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                Workspace name :
               </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={7} sm={7} lg={7} xl={7}>
-                <TextField
+              <br />
+            </Grid>
+            <Grid item xs={7} sm={7} lg={7} xl={7}>
+              <TextField
                 disabled
-                  value={this.props.match.params.name} 
-                  required
-                  id="outlined-name"
-                  margin="normal"
-                  onChange={event => {
-                    this.handleTextChange("workspaceName", event);
-                  }}
-                  variant="outlined"
-                  style={{ width: "63%" }}
-                />
-              </Grid>
-              </Grid>
-          
+                value={this.props.match.params.name}
+                required
+                id="outlined-name"
+                margin="normal"
+                onChange={event => {
+                  this.handleTextChange("workspaceName", event);
+                }}
+                variant="outlined"
+                style={{ width: "63%" }}
+              />
+            </Grid>
+          </Grid>
+
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
@@ -83,22 +96,14 @@ class SentenceExtraction extends React.Component {
             </Grid>
             <Grid item xs={7} sm={7} lg={7} xl={7} style={{ marginTop: "30px" }}>
               <Grid container spacing={8}>
-                
-              
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
                   <a
-
-                  
-                    href={ `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+                    href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
                       this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file : ""
                     }`}
                     style={{ textDecoration: "none" }}
                   >
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ width: "85%", height: "56px", marginTop: "-30px" }}
-                    >
+                    <Button variant="contained" color="primary" style={{ width: "85%", height: "56px", marginTop: "-30px" }}>
                       Download & View
                     </Button>{" "}
                   </a>
@@ -120,33 +125,32 @@ class SentenceExtraction extends React.Component {
               </Typography>
               <br />
             </Grid>
-            <Grid item xs={7} sm={7} lg={7} xl={7} >
+            <Grid item xs={7} sm={7} lg={7} xl={7}>
               <Grid container spacing={8}>
-                
-              
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
-                {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file_full_path : ""
-                    }
-                 
+                  {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file_full_path : ""}
                 </Grid>
 
-                <Grid item xs={2} sm={2} lg={2} xl={2}style={{ marginTop: "30px" }}>
-                <CopyToClipboard text={this.state.detail}
-          onCopy={() => this.setState({copied: true})}>
-                <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ width: "80%", height: "56px", marginTop: "-30px" }}
-                    >
+                <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "30px" }}>
+                  <CopyToClipboard text={this.state.detail} onCopy={() => this.setState({ copied: true })}>
+                    <Button variant="contained" color="primary" style={{ width: "80%", height: "56px", marginTop: "-30px" }} onClick={this.handleCopySubmit.bind(this)}>
                       Copy
                     </Button>
-                    
-                    </CopyToClipboard>
-                    
+                  </CopyToClipboard>
+                  {this.state.open && (
+                    <Snackbar
+                      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                      open={this.state.open}
+                      autoHideDuration={300}
+                      onClose={this.handleClose}
+                      variant="success"
+                      message="Copied!"
+                    />
+                  )}
                 </Grid>
               </Grid>
             </Grid>
-            </Grid>
+          </Grid>
         </Paper>
       </div>
     );
