@@ -7,9 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
@@ -111,17 +108,17 @@ class UploadToken extends React.Component {
   handleChange = (key, event) => {
     this.setState({
       [key]: event.target.files[0],
-      positiveToken: key == "positiveToken" ? event.target.files[0].name : this.state.positiveToken,
-      negativeToken: key == "negativeToken" ? event.target.files[0].name : this.state.negativeToken
+      positiveToken: key === "positiveToken" ? event.target.files[0].name : this.state.positiveToken,
+      negativeToken: key === "negativeToken" ? event.target.files[0].name : this.state.negativeToken
     });
   };
 
   handleSwitchChange = name => event => {
     this.setState({
       [name]: event.target.checked,
-      positiveToken: name == "positiveChecked" ? (event.target.checked ? this.state.workspaceDetails.token_file : "") : this.state.positiveToken,
+      positiveToken: name === "positiveChecked" ? (event.target.checked ? this.state.workspaceDetails.token_file : "") : this.state.positiveToken,
       negativeToken:
-        name == "negativeChecked" ? (event.target.checked ? this.state.workspaceDetails.negative_token_file : "") : this.state.negativeToken
+        name === "negativeChecked" ? (event.target.checked ? this.state.workspaceDetails.negative_token_file : "") : this.state.negativeToken
     });
   };
 

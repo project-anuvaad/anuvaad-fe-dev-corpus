@@ -49,6 +49,8 @@ import updatePasswordstatus from './updatepassword';
 import createWorkspaceDetails from './createworkspace';
 import uploadTokenValue from './uploadtoken';
 import uploadTranslated from './uploadTranslatedFile';
+import fetchSearch from './fetchsearchreplace';
+import sentenceReplace from './sentencereplace';
 
 export default {
     login,
@@ -77,7 +79,6 @@ export default {
     translation,
     fetchtranslation,
     deletefile,
-    updatePasswordstatus,
     audio,
     userList,
     userRoles,
@@ -99,5 +100,7 @@ export default {
     fetchDefaultConfig,
     uploadTranslated,
     createWorkspaceDetails,
-    courtList
+    courtList,
+    fetchSearch,
+    sentenceReplace
 };

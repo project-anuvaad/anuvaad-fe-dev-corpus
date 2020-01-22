@@ -3,12 +3,10 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
-import { timingSafeEqual } from "crypto";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
-import TabDetals from "./WorkspaceDetailsTab";
-import history from "../../../../web.history";
+
 
 class ProcessingWorkspace extends React.Component {
   intervalID;
@@ -123,8 +121,7 @@ class ProcessingWorkspace extends React.Component {
         label: "Created By",
         options: {
           filter: false,
-          sort: false,
-          filter: false
+          sort: false
         }
       },
       {
@@ -132,8 +129,7 @@ class ProcessingWorkspace extends React.Component {
         label: "Created At",
         options: {
           filter: false,
-          sort: false,
-          filter: false
+          sort: false
         }
       }
     ];
