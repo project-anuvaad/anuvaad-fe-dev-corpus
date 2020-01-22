@@ -40,6 +40,7 @@ import TPresident from "./ui/containers/web/TPresident";
 import ExistingWorkspace from "./ui/containers/web/Tool1-Pipeline/ExistingWorkspace";
 import SentenceExtraction from "./ui/containers/web/Tool1-Pipeline/SentenceExtraction";
 import Tool2SentenceExtraction from "./ui/containers/web/Tool2-Pipeline/SentenceExtraction";
+import Tool3SentenceExtraction from "./ui/containers/web/Tool3-Pipeline/SentenceExtraction";
 import TockenExtraction from "./ui/containers/web/Tool1-Pipeline/TockenExtraction";
 import ApplyTocken from "./ui/containers/web/Tool1-Pipeline/ApplyTocken";
 import UploadTocken from "./ui/containers/web/Tool1-Pipeline/UploadTocken";
@@ -374,6 +375,14 @@ class AppRoutes extends React.Component {
               title="STAGE 2, TOOLCHAIN"
               userRoles={["dev"]}
               component={Tool2SentenceExtraction}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage3/sentence-extraction/:name/:session_id`}
+              title="STAGE 3, TOOLCHAIN"
+              userRoles={["dev"]}
+              component={Tool3SentenceExtraction}
               authenticate={this.authenticateUser}
             />
 
