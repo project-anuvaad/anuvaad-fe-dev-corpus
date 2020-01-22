@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
-
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchsearchreplacedetails";
 import TextField from "@material-ui/core/TextField";
 
@@ -17,7 +17,8 @@ class SentenceExtraction extends React.Component {
     super(props);
     this.state = {
       value: 1,
-      activeStep: 2
+      activeStep: 2,
+      copied: false
     };
   }
 
@@ -31,7 +32,7 @@ class SentenceExtraction extends React.Component {
     if (prevProps.fetchWorkspaceDetails !== this.props.fetchWorkspaceDetails) {
 
         console.log("result------",this.props.fetchWorkspaceDetails.data)
-      this.setState({ workspaceDetails: this.props.fetchWorkspaceDetails.data });
+      this.setState({ workspaceDetails: this.props.fetchWorkspaceDetails.data, detail : this.props.fetchWorkspaceDetails.data.sentence_file_full_path });
     }
   }
 
@@ -68,7 +69,7 @@ class SentenceExtraction extends React.Component {
                     this.handleTextChange("workspaceName", event);
                   }}
                   variant="outlined"
-                  style={{ width: "60%" }}
+                  style={{ width: "63%" }}
                 />
               </Grid>
               </Grid>
@@ -111,6 +112,41 @@ class SentenceExtraction extends React.Component {
               </Grid>
             </Grid>
           </Grid>
+
+          <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+            <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
+              <Typography gutterBottom variant="title" component="h2">
+                File path :
+              </Typography>
+              <br />
+            </Grid>
+            <Grid item xs={7} sm={7} lg={7} xl={7} >
+              <Grid container spacing={8}>
+                
+              
+                <Grid item xs={6} sm={6} lg={6} xl={6}>
+                {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file_full_path : ""
+                    }
+                 
+                </Grid>
+
+                <Grid item xs={2} sm={2} lg={2} xl={2}style={{ marginTop: "30px" }}>
+                <CopyToClipboard text={this.state.detail}
+          onCopy={() => this.setState({copied: true})}>
+                <Button
+                      variant="contained"
+                      color="primary"
+                      style={{ width: "80%", height: "56px", marginTop: "-30px" }}
+                    >
+                      Copy
+                    </Button>
+                    
+                    </CopyToClipboard>
+                    
+                </Grid>
+              </Grid>
+            </Grid>
+            </Grid>
         </Paper>
       </div>
     );
