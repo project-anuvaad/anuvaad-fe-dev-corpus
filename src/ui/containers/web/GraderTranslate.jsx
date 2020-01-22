@@ -11,11 +11,8 @@ import { withStyles } from "@material-ui/core/styles";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import GraderViewBenchmark from "./GraderViewBenchmark";
 import CreateBenchmark from "./UploadBenchmark";
-import SearchIcon from "@material-ui/icons/Search";
 import UploadFile from "@material-ui/icons/CloudUpload";
 import Typography from "@material-ui/core/Typography";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import TextField from "@material-ui/core/TextField";
 import Snackbars from "../../components/web/common/Snackbar";
 
 

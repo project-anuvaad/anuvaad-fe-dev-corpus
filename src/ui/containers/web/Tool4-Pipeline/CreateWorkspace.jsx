@@ -19,7 +19,8 @@ import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
 import ProcessingWorkspace from "./ProcessingWorkspace";
 import MTProcessWorkspace from "../../../../flux/actions/apis/createworkspace";
 import Select from "@material-ui/core/Select";
-
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 class CreateWorkspace extends React.Component {
   constructor(props) {
@@ -51,18 +52,18 @@ class CreateWorkspace extends React.Component {
 
     if (prevProps.supportLanguage !== this.props.supportLanguage) {
       let languages = [], sourceLanguages = [];
-      this.props.supportLanguage.map((lang) => {
-        if (lang.language_code !== 'en') {
-          languages.push(lang)
-        }
-        else {
-          sourceLanguages.push(lang)
-        }
-      })
-      this.setState({
-        language: languages, sourceLanguage: sourceLanguages
-      })
-    }
+      this.props.supportLanguage.map(lang => (
+        lang.language_code !== "en"? 
+           languages.push(lang)
+         :
+           sourceLanguages.push(lang)
+         
+       ))
+       this.setState({
+         language: languages,
+         sourceLanguage: sourceLanguages
+       });
+     }
 
     if (prevProps.createWorkspaceDetails !== this.props.createWorkspaceDetails) {
       this.setState({
@@ -76,6 +77,10 @@ class CreateWorkspace extends React.Component {
       
     }
   }
+
+  handleValueChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
 
   readFileDataAsBinary(file) {
     return new Promise((resolve, reject) => {
@@ -95,8 +100,8 @@ class CreateWorkspace extends React.Component {
 
 handleChange = (key, event) => {
     this.setState({
-      configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
-      csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
+      configName: key === "configFile" ? event.target.files[0].name : this.state.configName,
+      csvName: key === "csvFile" ? event.target.files[0].name : this.state.csvName
     });
     this.readFileDataAsBinary(event.target.files[0]).then((result, err) => {
       this.setState({
@@ -132,7 +137,7 @@ handleChange = (key, event) => {
 
 
   handleSubmit() {
-    const { APITransport } = this.props;
+
     console.log(this.state.workspaceName, this.state.target.language_code)
     if (this.state.workspaceName && this.state.target.language_code) {
       this.setState({
@@ -225,11 +230,47 @@ handleChange = (key, event) => {
               <Typography
                 variant="subtitle2"
                 color="inherit"
-                style={{ textAlign: "justify", color: "#ACACAC", marginRight: "28%", marginTop: "40px" }}
+                style={{ textAlign: "center", color: "#ACACAC", marginRight: "28%", marginTop: "5px" }}
               >
                 {this.state.csvData}
               </Typography>
             </Grid>
+
+            <FormControlLabel
+                style={{ marginLeft: "0%", width: "26%", marginRight: "5%" }}
+                control={
+                  <Checkbox
+                    color="default"
+                    checked={this.state.checkedMachine}
+                    value="checkedMachine"
+                    onChange={this.handleValueChange("checkedMachine")}
+                  />
+                }
+                label="After MT"
+              />
+             
+                <FormControlLabel
+                  style={{ marginLeft: "0%", width: "23%", marginRight: "5%" }}
+                  control={
+                    <Checkbox color="default" checked={this.state.showSplitted} value="showSplitted" onChange={this.handleValueChange("showSplitted")} />
+                  }
+                  label="After HT"
+                />
+             
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="default"
+                      checked={this.state.checkedSubwords}
+                      value="checkedSubwords"
+                      onChange={this.handleValueChange("checkedSubwords")}
+                    />
+                  }
+                  label="After Tool3"
+                />
+             
+
+
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography
                   variant="subtitle2"
