@@ -8,16 +8,22 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 import Snackbar from "../../../components/web/common/Snackbar";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
+import FetchSearch from "../../../../flux/actions/apis/fetchsearchreplace";
+import FetchSearchReplace from "../../../../flux/actions/apis/sentencereplace";
+import history from "../../../../web.history";
 
-const styles = {
-  multilineColor: {
+
+const styles = theme => ({
+  card: {
     color: "#9C27B0",
     fontSize: 18
   }
-};
+});
 
 class SentenceQualityCheck extends React.Component {
   constructor(props) {
@@ -25,14 +31,15 @@ class SentenceQualityCheck extends React.Component {
     this.state = {
       value: 1,
       target: "",
-      source: "sajsih",
-      sentenceDetails: 'Source ngram: learned counsel", Target ngram: "सीखा वकील", Replacement ngram: "विद्वान  वकील"',
+      source: "",
+      sentence: "",
+      sentenceDetails: '',
       selectedWorkspaces: [],
       workspaceName: "",
       sourceLanguage: [],
       language: [],
       step: 1,
-      count:  1,
+      count: 1,
       message1: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
       csvData:
         '"Accept and Next", will qualify current sentence pair by replacing target sentence with the eligible token. This action makes current sentence pair as "good sentence pair". This means HT step will be skipped for this sentence pair',
@@ -40,25 +47,44 @@ class SentenceQualityCheck extends React.Component {
     };
   }
 
-
   componentDidMount() {
-    console.log("test",this.props.match.params.session_id)
-    this.handleSubmit()
-    
-  }
-
-  handleSubmit=(value,event) => {
     const { APITransport } = this.props;
-    // const apiObj = new FetchSentence(id, sentenceCount);
-    // APITransport(apiObj);
-
-    this.setState({count: this.state.count+1})
-    
+    const apiObj = new FetchSearch(this.props.match.params.session_id);
+    APITransport(apiObj);
   }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.fetchSearch !== this.props.fetchSearch) {
+      this.setState({ sentence: this.props.fetchSearch });
+    }
+
+    if (prevProps.sentenceReplace !== this.props.sentenceReplace) {
+      if (this.state.sentence.found_sentences !== 1) {
+        const { APITransport } = this.props;
+        const apiObj = new FetchSearch(this.props.match.params.session_id);
+        APITransport(apiObj);
+      } else {
+        this.setState({ open: true, sentence: {}, message1: "Process completed Successfully" });
+        setTimeout(() => {
+          history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
+        }, 2000);
+      }
+    }
+  }
+
+  handleSubmit = (value, val) => {
+    console.log(val);
+    if (val) {
+      value.accepted = true;
+    }
+    const { APITransport } = this.props;
+    const apiObj = new FetchSearchReplace(value);
+    APITransport(apiObj);
+  };
 
   render() {
     const { classes } = this.props;
-    console.log("params",this.props.match)
+    console.log("params", this.props.match);
     return (
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
@@ -71,15 +97,12 @@ class SentenceQualityCheck extends React.Component {
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <TextField
-                value={this.props.match.params.name}
-                required
-                id="outlined-name"
-                margin="normal"
-                multiline
-                variant="outlined"
-                style={{ width: "60%" }}
-              />
+            <Card  style={{ width: "70%" }} className={classes.card}>
+                    <CardContent>
+                      {this.props.match.params.name}
+
+                    </CardContent>
+                  </Card>
             </Grid>
 
             <Grid item xs={2} sm={2} lg={2} xl={2}>
@@ -90,25 +113,19 @@ class SentenceQualityCheck extends React.Component {
             </Grid>
             <Grid item xs={2} sm={2} lg={2} xl={2}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-    {this.state.count}/2000
+                {this.state.sentence.found_sentences && this.state.sentence.found_sentences +" / "+ this.state.sentence.total_sentences}
               </Typography>
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <TextField
-                value={this.state.sentenceDetails}
-                required
-                id="outlined-name"
-                margin="normal"
-                multiline
-                InputProps={{
-                  classes: {
-                    input: classes.multilineColor
-                  }
-                }}
-                variant="outlined"
-                style={{ width: "60%" }}
-              />
+            <Card  style={{ width: "70%" }} className={classes.card}>
+                    <CardContent>
+                     
+                      {this.state.sentence.found_sentences && 'Source ngram : '+this.state.sentence.source_search+   ', Target ngram : '+this.state.sentence.target_search+', Replacement ngram : '+this.state.sentence.replace}
+                      
+                    
+                    </CardContent>
+                  </Card>
             </Grid>
 
             <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -118,20 +135,15 @@ class SentenceQualityCheck extends React.Component {
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <TextField
-                value={this.state.source}
-                required
-                id="outlined-name"
-                margin="normal"
-                multiline
-                InputProps={{
-                  classes: {
-                    input: classes.multilineColor
-                  }
-                }}
-                variant="outlined"
-                style={{ width: "60%", fontColor: "red" }}
-              />
+
+            <Card  style={{ width: "70%" }} className={classes.card}>
+                    <CardContent>
+                      
+                      {this.state.sentence.source}
+                      
+                    
+                    </CardContent>
+                  </Card>
             </Grid>
 
             <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -141,27 +153,37 @@ class SentenceQualityCheck extends React.Component {
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <TextField
-                value={this.state.target}
-                required
-                id="outlined-name"
-                margin="normal"
-                multiline
-                InputProps={{
-                  classes: {
-                    input: classes.multilineColor
-                  }
-                }}
-                variant="outlined"
-                style={{ width: "60%" }}
-              />
+            <Card  style={{ width: "70%" }} className={classes.card}>
+                    <CardContent>
+                      
+                      {this.state.sentence.target}
+                      
+                    
+                    </CardContent>
+                  </Card>
+            </Grid>
+
+            <Grid item xs={4} sm={4} lg={4} xl={4}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                Replaced sentence :
+              </Typography>
+              <br />
+            </Grid>
+            <Grid item xs={8} sm={8} lg={8} xl={8}>
+            <Card  style={{ width: "70%" }} className={classes.card}>
+                    <CardContent>
+                {this.state.sentence.updated}
+                      
+                    
+                    </CardContent>
+                  </Card>
             </Grid>
 
             <Grid item xs={12} sm={12} lg={12} xl={12}>
               <Typography
                 variant="subtitle2"
                 color="inherit"
-                style={{ textAlign: "center", color: "#ACACAC", marginRight: "28%", marginTop: "40px" }}
+                style={{ textAlign: "center", color: "#ACACAC", marginRight: "20%", marginTop: "10px" }}
               >
                 {this.state.csvData}
               </Typography>
@@ -171,22 +193,26 @@ class SentenceQualityCheck extends React.Component {
               <Button
                 variant="contained"
                 color="primary"
-                value= "rejected"
-                style={{ width: "70%", marginLeft: "40px", marginTop: "3%", height: "56px" }}
-                onClick ={(event) => { this.handleSubmit('rejected', event) }}
+                value="rejected"
+                style={{ width: "80%", marginLeft: "40px", marginTop: "3%", height: "56px" }}
+                onClick={event => {
+                  this.handleSubmit(this.state.sentence, false);
+                }}
               >
-                Ignore and Next
+                {this.state.sentence.found_sentences > 1 ? "Ignore and Next": "Ignore"}
               </Button>
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Button
                 variant="contained"
-                value = "accepted"
+                value="accepted"
                 color="primary"
-                style={{ width: "70%", marginTop: "3%", height: "56px" }}
-                onClick ={(event) => { this.handleSubmit('accepted', event) }}
+                style={{ width: "80%", marginTop: "3%", height: "56px" }}
+                onClick={event => {
+                  this.handleSubmit(this.state.sentence, true);
+                }}
               >
-                Accept and Next
+                {this.state.sentence.found_sentences && this.state.sentence.found_sentences > 1 ? "Accept and Next" : "Accept"}
               </Button>
             </Grid>
           </Grid>
@@ -196,7 +222,7 @@ class SentenceQualityCheck extends React.Component {
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
             open={this.state.open}
-            autoHideDuration={3000}
+            autoHideDuration={2000}
             onClose={this.handleClose}
             variant="success"
             message={this.state.message1}
@@ -210,7 +236,9 @@ class SentenceQualityCheck extends React.Component {
 const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
-  configUplaod: state.configUplaod
+  configUplaod: state.configUplaod,
+  fetchSearch: state.fetchSearch,
+  sentenceReplace: state.sentenceReplace
 });
 
 const mapDispatchToProps = dispatch =>
