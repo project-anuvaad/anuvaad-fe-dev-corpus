@@ -55,11 +55,12 @@ class SentenceQualityCheck extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchSearch !== this.props.fetchSearch) {
-      this.setState({ sentence: this.props.fetchSearch });
+      console.log("result-----",this.props.fetchSearch)
+      this.setState({ sentence: this.props.fetchSearch.data, count: this.props.fetchSearch.count});
     }
 
     if (prevProps.sentenceReplace !== this.props.sentenceReplace) {
-      if (this.state.sentence.found_sentences !== 1) {
+      if (this.state.count !== 1) {
         const { APITransport } = this.props;
         const apiObj = new FetchSearch(this.props.match.params.session_id);
         APITransport(apiObj);
@@ -199,7 +200,7 @@ class SentenceQualityCheck extends React.Component {
                   this.handleSubmit(this.state.sentence, false);
                 }}
               >
-                {this.state.sentence.found_sentences > 1 ? "Ignore and Next": "Ignore"}
+                {this.state.count > 1 ? "Ignore and Next": "Ignore"}
               </Button>
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
@@ -212,7 +213,7 @@ class SentenceQualityCheck extends React.Component {
                   this.handleSubmit(this.state.sentence, true);
                 }}
               >
-                {this.state.sentence.found_sentences && this.state.sentence.found_sentences > 1 ? "Accept and Next" : "Accept"}
+                { this.state.count > 1 ? "Accept and Next" : "Accept"}
               </Button>
             </Grid>
           </Grid>

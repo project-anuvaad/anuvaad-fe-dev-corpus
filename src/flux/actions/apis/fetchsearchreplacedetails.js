@@ -7,7 +7,7 @@ export default class FetchWorkspaceDetails extends API {
     this.session_id = session;
     
     this.workspace = null;
-    this.type = C.FETCH_SEARCH_REPLACE;
+    this.type = C.FETCH_WORKSPACE_DETAILS;
   }
 
   toString() {
@@ -22,7 +22,7 @@ export default class FetchWorkspaceDetails extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/fetch-search-replace-sentence?session_id=${this.session_id}`;
+    return `${super.apiEndPointAuto()}/fetch-search-replace-workspace-detail?session_id=${this.session_id}`;
   }
 
   getBody() {
