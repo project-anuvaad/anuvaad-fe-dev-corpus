@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 
-import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchsearchreplaceworkspace";
+import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchsearchreplacedetails";
 import TextField from "@material-ui/core/TextField";
 
 class SentenceExtraction extends React.Component {
@@ -28,10 +28,10 @@ class SentenceExtraction extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.fetchWorkspace !== this.props.fetchWorkspace) {
+    if (prevProps.fetchWorkspaceDetails !== this.props.fetchWorkspaceDetails) {
 
-        console.log("result------",this.props.fetchWorkspace)
-      this.setState({ workspaceDetails: this.props.fetchWorkspace.data });
+        console.log("result------",this.props.fetchWorkspaceDetails.data)
+      this.setState({ workspaceDetails: this.props.fetchWorkspaceDetails.data });
     }
   }
 
@@ -120,7 +120,7 @@ class SentenceExtraction extends React.Component {
 const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
-  fetchWorkspace: state.fetchWorkspace
+  fetchWorkspaceDetails: state.fetchWorkspaceDetails
 });
 
 const mapDispatchToProps = dispatch =>
