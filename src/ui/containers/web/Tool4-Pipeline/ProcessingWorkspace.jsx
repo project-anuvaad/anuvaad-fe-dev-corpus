@@ -66,8 +66,6 @@ class ProcessingWorkspace extends React.Component {
     this.setState({ filter: filterList });
   };
 
-
-
   handleChange = value => {
     this.setState({ value });
   };
@@ -134,16 +132,15 @@ class ProcessingWorkspace extends React.Component {
     ];
 
     const options = {
-
       filterType: "checkbox",
       download: false,
       print: false,
       search: false,
       filter: false,
       viewColumns: false,
+      selectableRowsOnClick: true,
       selectableRows: "multiple",
-      responsive: 'scrollMaxHeight',
-      // rowsSelected: this.state.selectedWorkspaces,
+      responsive: "scrollMaxHeight",
       serverSide: true,
       count: this.state.count,
       selectableRowsHeader: false,
@@ -155,22 +152,20 @@ class ProcessingWorkspace extends React.Component {
 
       rowsSelected: this.state.rowsSelected,
       onRowsSelect: (rowsSelected, allRows) => {
-        // console.log(rowsSelected, allRows);
-        let selectedItems = []
+        const selectedItems = [];
         this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });
         if (allRows && allRows.length > 0) {
-          allRows.map((selected) => {
-                selectedItems.push(this.state.workspaces[selected.index])
-              })
-            }
-            this.setState({selectedWorkspaces : selectedItems})
-            if (this.props.handleWorkspaceSelected) {
-              this.props.handleWorkspaceSelected(selectedItems)
-            }
-          
+          allRows.map(selected => {
+            selectedItems.push(this.state.workspaces[selected.index]);
+          });
+        }
+        this.setState({ selectedWorkspaces: selectedItems });
+        if (this.props.handleWorkspaceSelected) {
+          this.props.handleWorkspaceSelected(selectedItems);
+        }
       },
 
-      onFilterDialogClose: () => { },
+      onFilterDialogClose: () => {},
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -198,7 +193,6 @@ class ProcessingWorkspace extends React.Component {
 
     return (
       <div>
-
         <div style={{ marginRight: "28%", marginTop: "40px" }}>
           <MUIDataTable data={this.state.workspaces} columns={columns} options={options} />
         </div>
