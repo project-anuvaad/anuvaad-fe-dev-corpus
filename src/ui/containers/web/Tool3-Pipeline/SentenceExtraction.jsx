@@ -24,11 +24,10 @@ class SentenceExtraction extends React.Component {
   }
 
   handleCopySubmit() {
-    this.setState({open:true})
+    this.setState({ open: true });
     setTimeout(() => {
-      this.setState({open:false})
+      this.setState({ open: false });
     }, 1500);
-
   }
 
   componentDidMount() {
@@ -42,12 +41,11 @@ class SentenceExtraction extends React.Component {
       console.log("result------", this.props.fetchWorkspaceDetails.data);
       this.setState({
         workspaceDetails: this.props.fetchWorkspaceDetails.data,
-        detail: this.props.fetchWorkspaceDetails.data.sentence_file_full_path
+        sourceDetail: this.props.fetchWorkspaceDetails.data.source_file_full_path,
+        targetDetail: this.props.fetchWorkspaceDetails.data.target_file_full_path,
       });
     }
   }
-
-  
 
   handleChange = (key, event) => {
     this.setState({
@@ -117,40 +115,86 @@ class SentenceExtraction extends React.Component {
               </Grid>
             </Grid>
           </Grid>
+          {this.state.workspaceDetails && this.state.workspaceDetails.source_file_full_path && (
+            <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+              <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
+                <Typography gutterBottom variant="title" component="h2">
+                  Source file path :
+                </Typography>
+                <br />
+              </Grid>
+              <Grid item xs={7} sm={7} lg={7} xl={7}>
+                <Grid container spacing={8}>
+                  <Grid item xs={6} sm={6} lg={6} xl={6}>
+                    {this.state.workspaceDetails ? this.state.workspaceDetails.source_file_full_path : ""}
+                  </Grid>
 
-          <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
-            <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
-              <Typography gutterBottom variant="title" component="h2">
-                File path :
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={7} sm={7} lg={7} xl={7}>
-              <Grid container spacing={8}>
-                <Grid item xs={6} sm={6} lg={6} xl={6}>
-                  {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file_full_path : ""}
-                </Grid>
-
-                <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "30px" }}>
-                  <CopyToClipboard text={this.state.detail} onCopy={() => this.setState({ copied: true })}>
-                    <Button variant="contained" color="primary" style={{ width: "80%", height: "56px", marginTop: "-30px" }} onClick={this.handleCopySubmit.bind(this)}>
-                      Copy
-                    </Button>
-                  </CopyToClipboard>
-                  {this.state.open && (
-                    <Snackbar
-                      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                      open={this.state.open}
-                      autoHideDuration={300}
-                      onClose={this.handleClose}
-                      variant="success"
-                      message="Copied!"
-                    />
-                  )}
+                  <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "30px" }}>
+                    <CopyToClipboard text={this.state.sourceDetail} onCopy={() => this.setState({ copied: true })}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ width: "80%", height: "56px", marginTop: "-30px" }}
+                        onClick={this.handleCopySubmit.bind(this)}
+                      >
+                        Copy
+                      </Button>
+                    </CopyToClipboard>
+                    {this.state.open && (
+                      <Snackbar
+                        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                        open={this.state.open}
+                        autoHideDuration={300}
+                        onClose={this.handleClose}
+                        variant="success"
+                        message="Copied!"
+                      />
+                    )}
+                  </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          )}
+          {this.state.workspaceDetails && this.state.workspaceDetails.target_file_full_path && (
+            <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+              <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
+                <Typography gutterBottom variant="title" component="h2">
+                  Target file path :
+                </Typography>
+                <br />
+              </Grid>
+              <Grid item xs={7} sm={7} lg={7} xl={7}>
+                <Grid container spacing={8}>
+                  <Grid item xs={6} sm={6} lg={6} xl={6}>
+                    {this.state.workspaceDetails ? this.state.workspaceDetails.target_file_full_path : ""}
+                  </Grid>
+
+                  <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "30px" }}>
+                    <CopyToClipboard text={this.state.targetDetail} onCopy={() => this.setState({ copied: true })}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ width: "80%", height: "56px", marginTop: "-30px" }}
+                        onClick={this.handleCopySubmit.bind(this)}
+                      >
+                        Copy
+                      </Button>
+                    </CopyToClipboard>
+                    {this.state.open && (
+                      <Snackbar
+                        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                        open={this.state.open}
+                        autoHideDuration={300}
+                        onClose={this.handleClose}
+                        variant="success"
+                        message="Copied!"
+                      />
+                    )}
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          )}
         </Paper>
       </div>
     );
