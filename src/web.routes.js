@@ -57,7 +57,9 @@ import Tool4CreateWorkspace from "./ui/containers/web/Tool4-Pipeline/CreateWorks
 import DownloadSentence from "./ui/containers/web/Tool2-Pipeline/DownloadSentence";
 import WorkspaceDetails from "./ui/containers/web/Tool2-Pipeline/WorkspaceDetails";
 import Tool3WorkspaceDetails from "./ui/containers/web/Tool3-Pipeline/WorkspaceDetails";
+import Tool3CreateDataSource from "./ui/containers/web/Tool3-Pipeline/CreateDataSource";
 import Tool4WorkspaceDetails from "./ui/containers/web/Tool4-Pipeline/WorkspaceDetails";
+import Tool3DataSource from "./ui/containers/web/Tool3-Pipeline/DataSource";
 
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
   <Route
@@ -445,6 +447,13 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage3/create-datasource`}
+              title="STAGE 3, DATASOURCE"
+              userRoles={["dev"]}
+              component={Tool3CreateDataSource}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/data-source/:name/:session_id`}
               title="STAGE 2, DATASOURCE"
               userRoles={["dev"]}
@@ -490,7 +499,7 @@ class AppRoutes extends React.Component {
               dontShowLoader
               title="STAGE 3, DATASOURCE"
               userRoles={["dev"]}
-              component={Tool2ExistingWorkspace}
+              component={Tool3DataSource}
               authenticate={this.authenticateUser}
             />
 
