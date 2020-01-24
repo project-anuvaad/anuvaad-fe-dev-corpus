@@ -188,7 +188,7 @@ class CreateWorkspace extends React.Component {
           Add DataSource
         </Typography>
         <br />
-            <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+            <Grid container spacing={24} style={{ marginTop: "1%", marginLeft: "12%" }}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
                   Enter workspace name :
