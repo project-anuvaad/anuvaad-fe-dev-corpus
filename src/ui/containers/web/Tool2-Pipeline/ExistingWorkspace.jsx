@@ -190,10 +190,10 @@ class ExistingWorkspace extends React.Component {
 
     return (
       <div>
-        {this.props.match.path!=="/stage2/datasource" && 
+        {this.props.match.path!=="/stage3/datasource" && 
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />}
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={this.props.match.path==="/stage2/datasource"?"Data Source":"Existing Workspaces"} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={this.props.match.path==="/stage3/datasource"?"Data Source":"Existing Workspaces"} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );
