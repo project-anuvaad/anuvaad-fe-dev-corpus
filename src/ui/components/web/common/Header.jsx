@@ -535,7 +535,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <InsertChart style={{ color: "white" }} />
+                      <ActionDelete style={{ color: "white" }} />
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
