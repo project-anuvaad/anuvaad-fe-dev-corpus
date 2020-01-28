@@ -41,6 +41,7 @@ class DataSource extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspace !== this.props.fetchWorkspace) {
+      
       this.setState({ name: this.props.fetchWorkspace.data, count: this.props.fetchWorkspace.count });
     }
   }
@@ -70,6 +71,7 @@ class DataSource extends React.Component {
 
   handleClick = rowData => {
       this.setState({download:true, fileId: rowData[4]})
+      console.log(rowData)
       var link = document.createElement('a');
       link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" + "/download/")+ rowData[4];
       document.body.appendChild(link);
@@ -123,8 +125,8 @@ class DataSource extends React.Component {
         }
       },
       {
-        name: "paragraph_file_location",
-        label: "Paragraph",
+        name: "sentence_file",
+        label: "sentence_file",
         options: {
           display: "excluded",
           filter: false
