@@ -58,9 +58,11 @@ import DownloadSentence from "./ui/containers/web/Tool2-Pipeline/DownloadSentenc
 import WorkspaceDetails from "./ui/containers/web/Tool2-Pipeline/WorkspaceDetails";
 import Tool3WorkspaceDetails from "./ui/containers/web/Tool3-Pipeline/WorkspaceDetails";
 import Tool3CreateDataSource from "./ui/containers/web/Tool3-Pipeline/CreateDataSource";
+import Tool2CreateDataSource from "./ui/containers/web/Tool2-Pipeline/CreateDataSource";
 import Tool4WorkspaceDetails from "./ui/containers/web/Tool4-Pipeline/WorkspaceDetails";
 import Tool3DataSource from "./ui/containers/web/Tool3-Pipeline/DataSource";
 
+import Stage2DataSource from "./ui/containers/web/Tool2-Pipeline/DataSource";
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
   <Route
     {...rest}
@@ -447,6 +449,13 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage2/create-datasource`}
+              title="STAGE 2, DATASOURCE"
+              userRoles={["dev"]}
+              component={Tool2CreateDataSource}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/create-datasource`}
               title="STAGE 3, DATASOURCE"
               userRoles={["dev"]}
@@ -454,7 +463,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/stage2/data-source/:name/:session_id`}
+              path={`${process.env.PUBLIC_URL}/stage2/datasource/:name/:session_id`}
               title="STAGE 2, DATASOURCE"
               userRoles={["dev"]}
               component={DataPipelineDownload}
@@ -471,14 +480,14 @@ class AppRoutes extends React.Component {
             />
 
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/data-source`}
+              path={`${process.env.PUBLIC_URL}/datasource`}
               title="STAGE 1, DATASOURCE"
               userRoles={["dev"]}
               component={DataSource}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/stage3/data-source/:name/:session_id`}
+              path={`${process.env.PUBLIC_URL}/stage3/datasource/:name/:session_id`}
               title="STAGE 3, DATASOURCE"
               userRoles={["dev"]}
               component={Stage3DataPipelineDownload}
@@ -486,16 +495,16 @@ class AppRoutes extends React.Component {
             />
 
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/stage2/data-source`}
+              path={`${process.env.PUBLIC_URL}/stage2/datasource`}
               dontShowLoader
               title="STAGE 2, DATASOURCE"
               userRoles={["dev"]}
-              component={ExistingWorkspace}
+              component={Stage2DataSource}
               authenticate={this.authenticateUser}
             />
 
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/stage3/data-source`}
+              path={`${process.env.PUBLIC_URL}/stage3/datasource`}
               dontShowLoader
               title="STAGE 3, DATASOURCE"
               userRoles={["dev"]}

@@ -48,11 +48,11 @@ class DataPipeline extends React.Component {
   handleDataClick = value => {
     console.log(value);
     if (value === "Stage 1") {
-      history.push(`${process.env.PUBLIC_URL}/data-source`);
+      history.push(`${process.env.PUBLIC_URL}/datasource`);
     } else if (value === "Stage 2") {
-      history.push(`${process.env.PUBLIC_URL}/stage2/data-source`);
+      history.push(`${process.env.PUBLIC_URL}/stage2/datasource`);
     } else if (value === "Stage 3") {
-      history.push(`${process.env.PUBLIC_URL}/stage3/data-source`);
+      history.push(`${process.env.PUBLIC_URL}/stage3/datasource`);
     } else {
       alert("Still inprogress");
     }

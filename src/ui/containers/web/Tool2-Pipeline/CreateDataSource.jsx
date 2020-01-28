@@ -7,17 +7,12 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import MenuItem from "@material-ui/core/MenuItem";
-import Link from "@material-ui/core/Link";
-import Select from "@material-ui/core/Select";
 import Snackbar from "../../../components/web/common/Snackbar";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import history from "../../../../web.history";
-import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
 import FileUpload from "../../../components/web/common/FileUpload";
 import ConfigUpload from "../../../../flux/actions/apis/configupload";
-import SaveDataSource from "../../../../flux/actions/apis/savedatasource";
+import SaveDataSource from "../../../../flux/actions/apis/savetool2datasource";
 import Toolbar from "@material-ui/core/Toolbar";
 import BackIcon from "@material-ui/icons/ChevronLeft";
 import { blueGrey50} from "material-ui/styles/colors";
@@ -41,29 +36,10 @@ class CreateWorkspace extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const { APITransport } = this.props;
-    const apiObj = new FetchLanguage();
-    APITransport(apiObj);
-    
-  }
+  
 
   componentDidUpdate(prevProps) {
-    if (prevProps.supportLanguage !== this.props.supportLanguage) {
-      const languages = [];
-      const sourceLanguages = [];
-      this.props.supportLanguage.map(lang => (
-        lang.language_code !== "en" ?
-          languages.push(lang)
-          :
-          sourceLanguages.push(lang)
-
-      ))
-      this.setState({
-        language: languages,
-        sourceLanguage: sourceLanguages
-      });
-    }
+    
 
     if (prevProps.configUplaod !== this.props.configUplaod) {
         this.setState({ files: this.props.configUplaod });
@@ -73,8 +49,8 @@ class CreateWorkspace extends React.Component {
         if (csvFilepath) {
           const { APITransport } = this.props;
 
-          console.log(",",this.state.workspaceName, this.state.source, this.state.target, csvFilepath)
-          const apiObj2 = new SaveDataSource(this.state.workspaceName, this.state.source, this.state.target, csvFilepath);
+          console.log("file path---", csvFilepath)
+          const apiObj2 = new SaveDataSource(this.state.workspaceName, csvFilepath);
           APITransport(apiObj2);
         }
       }
@@ -84,7 +60,7 @@ class CreateWorkspace extends React.Component {
         open: true
       });
       setTimeout(() => {
-        history.push(`${process.env.PUBLIC_URL}/stage3/datasource`);
+        history.push(`${process.env.PUBLIC_URL}/stage2/datasource`);
       }, 3000);
     }
   }
@@ -104,8 +80,8 @@ class CreateWorkspace extends React.Component {
 
 
   handleSubmit() {
-      console.log(this.state.workspaceName , this.state.source , this.state.target , this.state.csvName)
-    if (this.state.workspaceName && this.state.source && this.state.target && this.state.csvName) {
+      console.log(this.state.workspaceName , this.state.csvName)
+    if (this.state.workspaceName  && this.state.csvName) {
         const { APITransport } = this.props;
 
         const apiObj = new ConfigUpload(this.state.csvFile, "csvFile");
@@ -118,18 +94,18 @@ class CreateWorkspace extends React.Component {
 
   readFileDataAsBinary(file) {
     return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-  
-        reader.onload = event => {
-          resolve(event.target.result);
-        };
-  
-        reader.onerror = err => {
-          reject(err);
-        };
-  
-        reader.readAsText(file, 'UTF8');
-      });
+      const reader = new FileReader();
+
+      reader.onload = event => {
+        resolve(event.target.result);
+      };
+
+      reader.onerror = err => {
+        reject(err);
+      };
+
+      reader.readAsBinaryString(file);
+    });
   }
 
   renderMessage() {
@@ -164,7 +140,7 @@ class CreateWorkspace extends React.Component {
               color="primary"
               
               onClick={() => {
-                history.push(`${process.env.PUBLIC_URL}/stage3/datasource`);
+                history.push(`${process.env.PUBLIC_URL}/stage2/datasource`);
               }}
             >
               <BackIcon /> Back
@@ -208,52 +184,6 @@ class CreateWorkspace extends React.Component {
                   style={{ width: "60%" }}
                 />
               </Grid>
-
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                  Select source language : &emsp;&emsp;{" "}
-                </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
-                <Select
-                  style={{ width: "60%", marginTop: "5px" }}
-                  value={this.state.source}
-                  onChange={this.handleSelectChange}
-                  input={<OutlinedInput name="source" id="outlined-age-simple" />}
-                >
-                  {this.state.language &&
-                    this.state.sourceLanguage.map(item => (
-                      <MenuItem key={item.language_name} value={item}>
-                        {item.language_name}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </Grid>
-
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                  Select target language : &emsp;&emsp;{" "}
-                </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
-                <Select
-                  style={{ width: "60%", marginTop: "5px" }}
-                  value={this.state.target}
-                  onChange={this.handleSelectChange}
-                  input={<OutlinedInput name="target" id="outlined-age-simple" />}
-                >
-                  {this.state.language &&
-                    this.state.language.map(item => (
-                      <MenuItem key={item.language_name} value={item}>
-                        {item.language_name}
-                      </MenuItem>
-                    ))}
-                </Select>
-                {/* <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" /> */}
-              </Grid>
-            
 
               <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
@@ -318,7 +248,6 @@ const mapStateToProps = state => ({
   apistatus: state.apistatus,
   configUplaod: state.configUplaod,
   fetchDefaultConfig: state.fetchDefaultConfig,
-  supportLanguage: state.supportLanguage,
   createWorkspaceDetails: state.createWorkspaceDetails
 });
 
