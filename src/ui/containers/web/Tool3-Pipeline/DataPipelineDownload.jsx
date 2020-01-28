@@ -58,7 +58,7 @@ class SentenceExtraction extends React.Component {
               color="primary"
               
               onClick={() => {
-                history.push(`${process.env.PUBLIC_URL}/stage3/data-source`);
+                history.push(`${process.env.PUBLIC_URL}/stage3/datasource`);
               }}
             >
               <BackIcon /> Back
