@@ -19,7 +19,8 @@ import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
 import ProcessingWorkspace from "./ProcessingWorkspace";
 import MTProcessWorkspace from "../../../../flux/actions/apis/createworkspace";
 import Select from "@material-ui/core/Select";
-
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 class CreateWorkspace extends React.Component {
   constructor(props) {
@@ -76,6 +77,10 @@ class CreateWorkspace extends React.Component {
       
     }
   }
+
+  handleValueChange = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
 
   readFileDataAsBinary(file) {
     return new Promise((resolve, reject) => {
@@ -225,11 +230,47 @@ handleChange = (key, event) => {
               <Typography
                 variant="subtitle2"
                 color="inherit"
-                style={{ textAlign: "justify", color: "#ACACAC", marginRight: "28%", marginTop: "40px" }}
+                style={{ textAlign: "center", color: "#ACACAC", marginRight: "28%", marginTop: "5px" }}
               >
                 {this.state.csvData}
               </Typography>
             </Grid>
+
+            <FormControlLabel
+                style={{ marginLeft: "0%", width: "26%", marginRight: "5%" }}
+                control={
+                  <Checkbox
+                    color="default"
+                    checked={this.state.checkedMachine}
+                    value="checkedMachine"
+                    onChange={this.handleValueChange("checkedMachine")}
+                  />
+                }
+                label="After MT"
+              />
+             
+                <FormControlLabel
+                  style={{ marginLeft: "0%", width: "23%", marginRight: "5%" }}
+                  control={
+                    <Checkbox color="default" checked={this.state.showSplitted} value="showSplitted" onChange={this.handleValueChange("showSplitted")} />
+                  }
+                  label="After HT"
+                />
+             
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      color="default"
+                      checked={this.state.checkedSubwords}
+                      value="checkedSubwords"
+                      onChange={this.handleValueChange("checkedSubwords")}
+                    />
+                  }
+                  label="After Tool3"
+                />
+             
+
+
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography
                   variant="subtitle2"

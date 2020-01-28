@@ -5,17 +5,17 @@ import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
-import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
+import FetchSearchReplaceWorkspace from "../../../../flux/actions/apis/fetchsearchreplaceworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
 
-class ExistingWorkspace extends React.Component {
+class WorkspaceDetails extends React.Component {
   intervalID;
 
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      value: 2,
       page: 0,
       rowsPerPage: 10,
       serverSideFilterList: [],
@@ -34,7 +34,7 @@ class ExistingWorkspace extends React.Component {
 
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
-    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "");
+    const apiObj = new FetchSearchReplaceWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "");
     APITransport(apiObj);
     this.setState({ showLoader: true });
   };
@@ -47,14 +47,14 @@ class ExistingWorkspace extends React.Component {
 
   handleReset = val => {
     const { APITransport } = this.props;
-    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", val);
+    const apiObj = new FetchSearchReplaceWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", val);
     APITransport(apiObj);
     this.setState({ filter: val });
   };
 
   changePage = (page, rowsPerPage) => {
     const { APITransport } = this.props;
-    const apiObj = new FetchMTWorkspace(rowsPerPage, page + 1, "PROCESSED", "");
+    const apiObj = new FetchSearchReplaceWorkspace(rowsPerPage, page + 1, "PROCESSING", "");
     APITransport(apiObj);
     this.setState({ page, rowsPerPage });
   };
@@ -62,23 +62,16 @@ class ExistingWorkspace extends React.Component {
   handleFilterSubmit = filterList => () => {
     console.log(filterList);
     clearTimeout(this.intervalID);
-    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", filterList);
+    const apiObj = new FetchSearchReplaceWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", filterList);
     this.props.APITransport(apiObj);
     this.setState({ filter: filterList });
   };
 
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    if(this.props.match.path!=="/stage3/datasource"){
-      history.push(`${`${process.env.PUBLIC_URL}/stage2/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
-      
+    if (rowData[2] === "At Step2") {
+      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
     }
-    else{
-      console.log("out---")
-      history.push(`${`${process.env.PUBLIC_URL}/stage3/datasource/`}${rowData[0]}/${rowData[1]}`);
-    }
-     
-    
   };
 
   handleChange = value => {
@@ -86,8 +79,6 @@ class ExistingWorkspace extends React.Component {
   };
 
   render() {
-
-    
     const columns = [
       {
         name: "title",
@@ -126,8 +117,8 @@ class ExistingWorkspace extends React.Component {
         name: "sentence_count",
         label: "Sentence Count",
         options: {
-          filter: false,
-          sort: true
+          display: "excluded",
+          filter: false
         }
       },
       {
@@ -190,10 +181,9 @@ class ExistingWorkspace extends React.Component {
 
     return (
       <div>
-        {this.props.match.path!=="/stage2/datasource" && 
-        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />}
+        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={this.props.match.path==="/stage2/datasource"?"Data Source":"Existing Workspaces"} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title="Processing Workspaces" data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );
@@ -215,4 +205,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ExistingWorkspace));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WorkspaceDetails));
