@@ -525,6 +525,29 @@ class Header extends React.Component {
                     </ListItem>
                   )}
 
+{role && Array.isArray(role) && role.includes("admin") && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/feedback`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <InsertChart style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Feedback 
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+
                   <ListItem
                     style={{ paddingTop: "17%", paddingBottom: "17%", marginTop: "43%", marginLeft: "82%", width: "18%" }}
                     button
