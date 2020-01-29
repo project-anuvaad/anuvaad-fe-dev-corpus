@@ -38,7 +38,7 @@ import gujarati from './gujarati';
 import bengali from './bengali';
 import courtList from './fetchcourtlist';
 import fetchtranslation from './viewtranslate';
-
+import feedbackQuestions from './feedbackquestions';
 import deletefile from './delete';
 import userList from './userdirectory';
 import userRoles from './userroles';
@@ -102,5 +102,6 @@ export default {
     createWorkspaceDetails,
     courtList,
     fetchSearch,
-    sentenceReplace
+    sentenceReplace,
+    feedbackQuestions
 };
