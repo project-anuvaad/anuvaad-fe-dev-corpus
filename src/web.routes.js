@@ -34,6 +34,7 @@ import EditTranslate from "./ui/containers/web/EditTranslate";
 import ViewTranslate from "./ui/containers/web/ViewTranslate";
 import UserDirectory from "./ui/containers/web/UserDirectory";
 import ViewDoc from "./ui/containers/web/ViewDoc";
+import AddQuestion from "./ui/containers/web/AddQuestion";
 import TranslatePresident from "./ui/containers/web/TranslateJudgement";
 import DataPipeline from "./ui/containers/web/DataPipeline";
 import TPresident from "./ui/containers/web/TPresident";
@@ -279,6 +280,13 @@ class AppRoutes extends React.Component {
               title="Document Details"
               component={ViewDoc}
               userRoles={["editor"]}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/feedback`}
+              title="Add Feedback Questions"
+              userRoles={["admin"]}
+              component={AddQuestion}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
