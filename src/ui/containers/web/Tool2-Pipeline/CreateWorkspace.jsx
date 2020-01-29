@@ -5,6 +5,8 @@ import { bindActionCreators } from "redux";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
@@ -66,8 +68,8 @@ class CreateWorkspace extends React.Component {
       setTimeout(() => {
         history.push(`${process.env.PUBLIC_URL}/stage2/workspace-details`);
       }, 3000);
-      
-      
+
+
     }
   }
 
@@ -93,163 +95,178 @@ class CreateWorkspace extends React.Component {
 
   handleProcessSubmit() {
     const { APITransport } = this.props;
-      const apiObj2 = new MTProcessWorkspace(this.state.selectedWorkspaces,this.state.workspaceName, this.state.target.language_code);
-      APITransport(apiObj2);
-      this.setState({ load: true });
+    const apiObj2 = new MTProcessWorkspace(this.state.selectedWorkspaces, this.state.workspaceName,this.state.useLatest, this.state.target.language_code);
+    APITransport(apiObj2);
+    this.setState({ load: true });
+  }
+
+  handleCheckboxChange = name => event => {
+    this.setState({ [name]: event.target.checked });
   }
 
 
-  handleSubmit() {
-    const { APITransport } = this.props;
-    if (this.state.workspaceName && this.state.target.language_code) {
-      this.setState({
-        step: 2
-      })
-    } else {
-      alert("Fields should not be empty");
-    }
-  }
 
-  render() {
-    return (
-      <div>
-        <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
-        {this.state.step === 1 ?
-          <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
-            <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                  Enter workspace name :
+handleSubmit() {
+  const { APITransport } = this.props;
+  if (this.state.workspaceName && this.state.target.language_code) {
+    this.setState({
+      step: 2
+    })
+  } else {
+    alert("Fields should not be empty");
+  }
+}
+
+render() {
+  return (
+    <div>
+      <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
+      {this.state.step === 1 ?
+        <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
+          <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                Enter workspace name :
               </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <TextField
-                  value={this.state.workspaceName}
-                  required
-                  id="outlined-name"
-                  margin="normal"
-                  onChange={event => {
-                    this.handleTextChange("workspaceName", event);
-                  }}
-                  variant="outlined"
-                  style={{ width: "60%" }}
-                />
-              </Grid>
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                  Select target language : &emsp;&emsp;{" "}
-                </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
+              <br />
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <TextField
+                value={this.state.workspaceName}
+                required
+                id="outlined-name"
+                margin="normal"
+                onChange={event => {
+                  this.handleTextChange("workspaceName", event);
+                }}
+                variant="outlined"
+                style={{ width: "60%" }}
+              />
+            </Grid>
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
+                Select target language : &emsp;&emsp;{" "}
+              </Typography>
+              <br />
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
 
               <Select
-            style={{ width: '60%' }}
-            value={this.state.target}
+                style={{ width: '60%' }}
+                value={this.state.target}
 
-            onChange={this.handleSelectChange}
-            input={
-              <OutlinedInput name="target" id="outlined-age-simple" />
-            }
-          >
-            {this.state.language &&
-            this.state.language.map((item) => (
-              <MenuItem key= {item.language_name} value={item}>{item.language_name}</MenuItem>
-            ))}
-          </Select>
-                {/* <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" /> */}
-              </Grid>
-
-
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography
-                  variant="subtitle2"
-                  color="inherit"
-                  style={{ textAlign: "justify", color: "#ACACAC", marginTop: "10%", width: "80%", marginLeft: "2px" }}
-                >
-                  {this.state.processData}
-                </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ width: "60%", marginTop: "6%", height: "56px" }}
-                  onClick={this.handleSubmit.bind(this)}
-                >
-                  Next
-              </Button>
-              </Grid>
+                onChange={this.handleSelectChange}
+                input={
+                  <OutlinedInput name="target" id="outlined-age-simple" />
+                }
+              >
+                {this.state.language &&
+                  this.state.language.map((item) => (
+                    <MenuItem key={item.language_name} value={item}>{item.language_name}</MenuItem>
+                  ))}
+              </Select>
+              {/* <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" /> */}
             </Grid>
-          </Paper>
-          :
-          <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
-            <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                  Workspace name :
+            <Grid item xs={5} sm={5} lg={5} xl={5} style={{ height: "56px" }}>
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
+              <FormControlLabel
+                control={
+                  <Checkbox value="useLatest" checked={this.state.useLatest} onChange={this.handleCheckboxChange('useLatest')} />
+                }
+                label="Use Latest Translation"
+              />
+            </Grid>
+
+
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
+              <Typography
+                variant="subtitle2"
+                color="inherit"
+                style={{ textAlign: "justify", color: "#ACACAC", marginTop: "10%", width: "80%", marginLeft: "2px" }}
+              >
+                {this.state.processData}
               </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <TextField
-                  value={this.state.workspaceName}
-                  required
-                  id="outlined-name"
-                  margin="normal"
-                  onChange={event => {
-                    this.handleTextChange("workspaceName", event);
-                  }}
-                  variant="outlined"
-                  style={{ width: "60%" }}
-                />
-              </Grid>
-
-              <Grid item xs={12} sm={12} lg={12} xl={12}>
-                <ProcessingWorkspace handleWorkspaceSelected={this.handleWorkspaceSelected.bind(this)} selectedWorkspaces={this.state.selectedWorkspaces}/>
-              </Grid>
-
-
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography
-                  variant="subtitle2"
-                  color="inherit"
-                  style={{ textAlign: "justify", color: "#ACACAC", marginTop: "11%", width: "80%", marginLeft: "2px" }}
-                >
-                  {this.state.processData}
-                </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ width: "60%", marginTop: "6%", height: "56px" }}
-                  onClick={this.handleProcessSubmit.bind(this)}
-                >
-                  Start processing
-              </Button>
-              </Grid>
+              <br />
             </Grid>
-          </Paper>
-          
-        }
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ width: "60%", marginTop: "6%", height: "56px" }}
+                onClick={this.handleSubmit.bind(this)}
+              >
+                Next
+              </Button>
+            </Grid>
+          </Grid>
+        </Paper>
+        :
+        <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
+          <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                Workspace name :
+              </Typography>
+              <br />
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <TextField
+                value={this.state.workspaceName}
+                required
+                id="outlined-name"
+                margin="normal"
+                onChange={event => {
+                  this.handleTextChange("workspaceName", event);
+                }}
+                variant="outlined"
+                style={{ width: "60%" }}
+              />
+            </Grid>
 
-{this.state.open && 
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={this.state.open}
-            autoHideDuration={3000}
-            onClose={this.handleClose}
-            variant="success"
-            message={this.state.message1}
-          />
-        }
-      </div>
-    );
-  }
+            <Grid item xs={12} sm={12} lg={12} xl={12}>
+              <ProcessingWorkspace handleWorkspaceSelected={this.handleWorkspaceSelected.bind(this)} selectedWorkspaces={this.state.selectedWorkspaces} />
+            </Grid>
+
+
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
+              <Typography
+                variant="subtitle2"
+                color="inherit"
+                style={{ textAlign: "justify", color: "#ACACAC", marginTop: "11%", width: "80%", marginLeft: "2px" }}
+              >
+                {this.state.processData}
+              </Typography>
+              <br />
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ width: "60%", marginTop: "6%", height: "56px" }}
+                onClick={this.handleProcessSubmit.bind(this)}
+              >
+                Start processing
+              </Button>
+            </Grid>
+          </Grid>
+        </Paper>
+
+      }
+
+      {this.state.open &&
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={this.state.open}
+          autoHideDuration={3000}
+          onClose={this.handleClose}
+          variant="success"
+          message={this.state.message1}
+        />
+      }
+    </div>
+  );
+}
 }
 
 const mapStateToProps = state => ({
