@@ -58,13 +58,13 @@ class FeedbackForm extends React.Component {
 
   handleRadioChange = (i, event) => {
     const a = [...this.state.questionList];
-    a[i].score = event.target.value;
+    a[i].answer = event.target.value;
     this.setState({ questionList: a });
   };
 
   changeRating(newRating, name) {
     const a = [...this.state.questionList];
-    a[name].score = newRating;
+    a[name].answer = newRating;
     this.setState({ questionList: a });
   }
 
@@ -80,7 +80,7 @@ class FeedbackForm extends React.Component {
         <Grid item xs={6} sm={6} lg={6} xl={6} style={{ paddingTop: "27px" }}>
           {el.type === "Rating" ? (
             <StarRatings
-              rating={this.state.questionList[i].score ? this.state.questionList[i].score : 0}
+              rating={this.state.questionList[i].answer ? this.state.questionList[i].answer : 0}
               starRatedColor="red"
               name={i}
               changeRating={this.changeRating.bind(this)}
@@ -91,7 +91,7 @@ class FeedbackForm extends React.Component {
               <RadioGroup
                 aria-label="position"
                 style={{ height: "20px" }}
-                value={this.state.questionList[i].score && this.state.questionList[i].score}
+                value={this.state.questionList[i].answer && this.state.questionList[i].answer}
                 onChange={this.handleRadioChange.bind(this, i)}
                 row
               >
