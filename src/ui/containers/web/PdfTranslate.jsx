@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import PdfTranslation from "../../../flux/actions/apis/translation";
+import FetchFeedbackPending from "../../../flux/actions/apis/fetchfeedbackpending";
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import history from "../../../web.history";
 import Button from "../../components/web/common/Button";
@@ -29,7 +30,10 @@ class doctranslate extends React.Component {
   };
 
   componentDidMount() {
+
     const { APITransport } = this.props;
+    const api = new FetchFeedbackPending();
+    APITransport(api);
     const apiObj = new FetchLanguage();
     APITransport(apiObj);
     this.setState({ showLoader: true })
@@ -45,7 +49,15 @@ class doctranslate extends React.Component {
         language: this.props.supportLanguage
       })
     }
+    
 
+    if (prevProps.feedbackQuestions !== this.props.feedbackQuestions) {
+
+      console.log("feedback",this.props.feedbackQuestions)
+      if(Object.getOwnPropertyNames(this.props.feedbackQuestions).length !== 0){
+        history.push("/feedback-form")
+      }
+    }
     
 
     if (prevProps.langModel !== this.props.langModel) {
@@ -148,7 +160,7 @@ class doctranslate extends React.Component {
             </Grid>
 
 
-            <Button value={"Submit"} color={'secondary'} variant={"contained"} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} style={{ width: '100%' }} />
+            <Button value={"Submit"} color={'primary'} variant={"contained"} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} style={{ width: '100%' }} />
             {/* }}  */}
           </div>} style={{ width: '40%', marginLeft: '26%', marginTop: '2%', paddingBottom: '1%', minWidth: '450px' }}
         />
@@ -163,7 +175,8 @@ const mapStateToProps = state => ({
   apistatus: state.apistatus,
   translation: state.translation,
   supportLanguage: state.supportLanguage,
-  langModel: state.langModel
+  langModel: state.langModel,
+  feedbackQuestions: state.feedbackQuestions
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

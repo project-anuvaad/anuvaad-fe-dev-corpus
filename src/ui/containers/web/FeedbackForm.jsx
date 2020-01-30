@@ -11,10 +11,12 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
-import FetchQuestions from "../../../flux/actions/apis/fetchquestions";
-import APITransport from "../../../flux/actions/apitransport/apitransport";
 import Button from "@material-ui/core/Button";
-
+import FetchQuestions from "../../../flux/actions/apis/fetchfeedbackpending";
+import SaveFeedback from "../../../flux/actions/apis/savefeedback";
+import APITransport from "../../../flux/actions/apitransport/apitransport";
+import history from "../../../web.history";
+import Snackbar from "../../components/web/common/Snackbar";
 class FeedbackForm extends React.Component {
   intervalID;
 
@@ -23,7 +25,8 @@ class FeedbackForm extends React.Component {
     this.state = {
       value: "var",
       questionList: [],
-      rating: 0
+      rating: 0,
+      title:''
     };
   }
 
@@ -35,19 +38,25 @@ class FeedbackForm extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.feedbackQuestions !== this.props.feedbackQuestions) {
-      console.log("dddd---", this.props.feedbackQuestions);
-      this.setState({ questionList: this.props.feedbackQuestions });
+      this.setState({ questionList: this.props.feedbackQuestions.feedback_questions, title: this.props.feedbackQuestions.title, basename: this.props.feedbackQuestions.basename });
+    }
+    if (prevProps.createWorkspaceDetails !== this.props.createWorkspaceDetails) {
+      this.setState({ open: true, message1: "Feedback Submitted successfully!" });
+      setTimeout(() => {
+        this.setState({ open: false });
+        history.push("/doctranslate")
+      }, 3000);
     }
   }
 
   handleSubmit() {
-    
-      console.log("please add question properly", this.state.questionList);
-    
+    console.log("submitted", this.state.questionList);
+    const { APITransport } = this.props;
+    const apiObj = new SaveFeedback(this.state.questionList,this.state.basename);
+    APITransport(apiObj);
   }
 
   handleRadioChange = (i, event) => {
-    console.log("---", event, i);
     const a = [...this.state.questionList];
     a[i].score = event.target.value;
     this.setState({ questionList: a });
@@ -60,7 +69,7 @@ class FeedbackForm extends React.Component {
   }
 
   form() {
-    return this.state.questionList.map((el, i) => (
+    return  this.state.questionList.map((el, i) => (
       <Grid container spacing={24} style={{ marginTop: "1 %", marginLeft: "12%" }} key={i}>
         <Grid item xs={5} sm={5} lg={5} xl={5}>
           <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
@@ -86,8 +95,8 @@ class FeedbackForm extends React.Component {
                 onChange={this.handleRadioChange.bind(this, i)}
                 row
               >
-                <FormControlLabel value="yes" control={<Radio style={{ color: "red",marginLeft:'10%'}} />} label="Yes" labelPlacement="end" />
-                <FormControlLabel value="no" control={<Radio style={{ color: "red",marginLeft:'100%' }} />} label="No" labelPlacement="end" />
+                <FormControlLabel value="yes" control={<Radio style={{ color: "red", marginLeft: "10%" }} />} label="Yes" labelPlacement="end" />
+                <FormControlLabel value="no" control={<Radio style={{ color: "red", marginLeft: "100%" }} />} label="No" labelPlacement="end" />
               </RadioGroup>
             </FormControl>
           )}
@@ -97,9 +106,9 @@ class FeedbackForm extends React.Component {
   }
 
   render() {
-    console.log("gg", this.state.questionList);
     return (
       <div>
+       { Object.getOwnPropertyNames(this.props.feedbackQuestions).length ? 
         <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "1%", paddingTop: "5px", paddingBottom: "3%" }} elevation={4}>
           <Typography
             gutterBottom
@@ -107,13 +116,13 @@ class FeedbackForm extends React.Component {
             component="h2"
             style={{
               marginTop: "-.7%",
-              paddingLeft: "44%",
+              paddingLeft: "33%",
               background: blueGrey50,
               paddingTop: "25px",
               paddingBottom: "16px"
             }}
           >
-            FeedBack Form
+            FeedBack for {this.state.title}
           </Typography>
           {this.form()}
 
@@ -127,31 +136,39 @@ class FeedbackForm extends React.Component {
               <br />
             </Grid>
 
-            
-            
-              <Grid item xs={4} sm={4} lg={4} xl={4}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ width: "81%", marginTop: "6%", height: "56px" }}
-                  onClick={this.handleSubmit.bind(this)}
-                >
-                  Submit
-                </Button>
-              </Grid>
-            
+            <Grid item xs={4} sm={4} lg={4} xl={4}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ width: "62%", marginTop: "6%", height: "56px" }}
+                onClick={this.handleSubmit.bind(this)}
+              >
+                Submit
+              </Button>
+            </Grid>
           </Grid>
-        </Paper>
+        </Paper>:''}
+
+        {this.state.open && (
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={this.state.open}
+            autoHideDuration={3000}
+            onClose={this.handleClose}
+            variant="success"
+            message={this.state.message1}
+          />
+        )}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.login,
-  apistatus: state.apistatus,
-  fetchWorkspace: state.fetchWorkspace,
-  feedbackQuestions: state.feedbackQuestions
+  feedbackQuestions: state.feedbackQuestions,
+  createWorkspaceDetails: state.createWorkspaceDetails,
+  
+
 });
 
 const mapDispatchToProps = dispatch =>
