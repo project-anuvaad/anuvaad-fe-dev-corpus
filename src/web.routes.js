@@ -503,7 +503,7 @@ class AppRoutes extends React.Component {
 <PrivateRoute
               path={`${process.env.PUBLIC_URL}/feedback-form`}
               title="FeedbackForm"
-              userRoles={["admin"]}
+              userRoles={["dev"]}
               component={FeedbackForm}
               authenticate={this.authenticateUser}
             />
