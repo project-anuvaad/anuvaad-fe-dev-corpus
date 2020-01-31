@@ -10,9 +10,6 @@ class FileUpload extends React.Component {
         this.props.handleChange(this.props.name, event);
     };
 
-    handleClick = event => {
-        this.props.handleClick();
-    };
 
 
     render() {
@@ -20,7 +17,6 @@ class FileUpload extends React.Component {
         return (
             
             <div style={{ display: 'inline-block' }}>
-                {!value ?
                 <label title={title}>
                     <IconButton title={title} style={iconStyle ? iconStyle : {}} color="primary" component="span">
                         <input
@@ -36,9 +32,6 @@ class FileUpload extends React.Component {
                         {icon}
                     </IconButton>
                 </label>
-    :<IconButton title={title} style={iconStyle ? iconStyle : {}} color="primary" component="span" onClick={event => {
-        this.handleClick();
-    }}>{icon} </IconButton>}
             </div>
                         
         );
