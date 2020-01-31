@@ -17,6 +17,7 @@ import SaveFeedback from "../../../flux/actions/apis/savefeedback";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 import Snackbar from "../../components/web/common/Snackbar";
+
 class FeedbackForm extends React.Component {
   intervalID;
 
@@ -26,7 +27,7 @@ class FeedbackForm extends React.Component {
       value: "var",
       questionList: [],
       rating: 0,
-      title:''
+      title: ""
     };
   }
 
@@ -38,13 +39,21 @@ class FeedbackForm extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.feedbackQuestions !== this.props.feedbackQuestions) {
-      this.setState({ questionList: this.props.feedbackQuestions.feedback_questions, title: this.props.feedbackQuestions.title, basename: this.props.feedbackQuestions.basename });
+      this.setState({
+        questionList: this.props.feedbackQuestions.feedback_questions,
+        title: this.props.feedbackQuestions.title,
+        basename: this.props.feedbackQuestions.basename
+      });
     }
     if (prevProps.createWorkspaceDetails !== this.props.createWorkspaceDetails) {
       this.setState({ open: true, message1: "Feedback Submitted successfully!" });
       setTimeout(() => {
         this.setState({ open: false });
-        history.push("/doctranslate")
+        if (this.props.match.params.page == "translate") {
+          history.push("/doctranslate");
+        } else if (this.props.match.params.page == "upload") {
+          history.push("/viewtranslate");
+        }
       }, 3000);
     }
   }
@@ -52,7 +61,7 @@ class FeedbackForm extends React.Component {
   handleSubmit() {
     console.log("submitted", this.state.questionList);
     const { APITransport } = this.props;
-    const apiObj = new SaveFeedback(this.state.questionList,this.state.basename);
+    const apiObj = new SaveFeedback(this.state.questionList, this.state.basename);
     APITransport(apiObj);
   }
 
@@ -69,7 +78,7 @@ class FeedbackForm extends React.Component {
   }
 
   form() {
-    return  this.state.questionList.map((el, i) => (
+    return this.state.questionList.map((el, i) => (
       <Grid container spacing={24} style={{ marginTop: "1 %", marginLeft: "12%" }} key={i}>
         <Grid item xs={5} sm={5} lg={5} xl={5}>
           <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
@@ -108,46 +117,49 @@ class FeedbackForm extends React.Component {
   render() {
     return (
       <div>
-       { Object.getOwnPropertyNames(this.props.feedbackQuestions).length ? 
-        <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "1%", paddingTop: "5px", paddingBottom: "3%" }} elevation={4}>
-          <Typography
-            gutterBottom
-            variant="title"
-            component="h2"
-            style={{
-              marginTop: "-.7%",
-              paddingLeft: "33%",
-              background: blueGrey50,
-              paddingTop: "25px",
-              paddingBottom: "16px"
-            }}
-          >
-            FeedBack for {this.state.title}
-          </Typography>
-          {this.form()}
+        {Object.getOwnPropertyNames(this.props.feedbackQuestions).length ? (
+          <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "1%", paddingTop: "5px", paddingBottom: "3%" }} elevation={4}>
+            <Typography
+              gutterBottom
+              variant="title"
+              component="h2"
+              style={{
+                marginTop: "-.7%",
+                paddingLeft: "33%",
+                background: blueGrey50,
+                paddingTop: "25px",
+                paddingBottom: "16px"
+              }}
+            >
+              FeedBack for {this.state.title}
+            </Typography>
+            {this.form()}
 
-          <Grid container spacing={24} style={{ marginTop: "1 %", marginLeft: "12%" }}>
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography
-                variant="subtitle2"
-                color="inherit"
-                style={{ textAlign: "justify", color: "#ACACAC", marginTop: "10%", width: "80%", marginLeft: "2px" }}
-              />
-              <br />
-            </Grid>
+            <Grid container spacing={24} style={{ marginTop: "1 %", marginLeft: "12%" }}>
+              <Grid item xs={5} sm={5} lg={5} xl={5}>
+                <Typography
+                  variant="subtitle2"
+                  color="inherit"
+                  style={{ textAlign: "justify", color: "#ACACAC", marginTop: "10%", width: "80%", marginLeft: "2px" }}
+                />
+                <br />
+              </Grid>
 
-            <Grid item xs={4} sm={4} lg={4} xl={4}>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ width: "62%", marginTop: "6%", height: "56px" }}
-                onClick={this.handleSubmit.bind(this)}
-              >
-                Submit
-              </Button>
+              <Grid item xs={4} sm={4} lg={4} xl={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ width: "62%", marginTop: "6%", height: "56px" }}
+                  onClick={this.handleSubmit.bind(this)}
+                >
+                  Submit
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </Paper>:''}
+          </Paper>
+        ) : (
+          ""
+        )}
 
         {this.state.open && (
           <Snackbar
@@ -166,9 +178,7 @@ class FeedbackForm extends React.Component {
 
 const mapStateToProps = state => ({
   feedbackQuestions: state.feedbackQuestions,
-  createWorkspaceDetails: state.createWorkspaceDetails,
-  
-
+  createWorkspaceDetails: state.createWorkspaceDetails
 });
 
 const mapDispatchToProps = dispatch =>
