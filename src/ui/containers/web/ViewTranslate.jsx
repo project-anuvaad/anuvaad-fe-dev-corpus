@@ -28,6 +28,7 @@ import Fab from '@material-ui/core/Fab';
 import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import Snackbar from "../../components/web/common/Snackbar";
+import FetchFeedbackPending from "../../../flux/actions/apis/fetchfeedbackpending";
 
 var file = "";
 class ViewTranslate extends React.Component {
@@ -48,7 +49,8 @@ class ViewTranslate extends React.Component {
             value: '',
             filename: '',
             snack: false,
-            message: ''
+            message: '',
+            value: false
 
         }
         this.handleTranslatedUpload = this.handleTranslatedUpload.bind(this)
@@ -56,6 +58,8 @@ class ViewTranslate extends React.Component {
 
     componentDidMount() {
         const { APITransport } = this.props;
+    const api = new FetchFeedbackPending();
+    APITransport(api);
         const apiObj = new FetchTranslations();
         APITransport(apiObj);
         this.setState({ showLoader: true })
@@ -92,7 +96,17 @@ class ViewTranslate extends React.Component {
         this.setState({ open: false, snack: false });
     };
 
+    handleClick = () => {
+
+        this.setState({ value : false})
+        if(Object.getOwnPropertyNames(this.state.feedbackQuestions).length !== 0){
+              history.push("/feedback-form/upload")
+        }
+    };
+
     handleTranslatedUpload(event, basename) {
+
+        console.log("upload---")
         const { APITransport } = this.props;
         const api = new UploadTranslatedFile(basename, event.target.files[0])
         APITransport(api);
@@ -111,6 +125,15 @@ class ViewTranslate extends React.Component {
         this.props.APITransport(apiObj1)
             setTimeout(() => { this.setState({ snack: false }) }, 700)
         }
+
+        if (prevProps.feedbackQuestions !== this.props.feedbackQuestions) {
+
+            console.log("feedback",this.props.feedbackQuestions)
+            this.setState({feedbackQuestions: this.props.feedbackQuestions})
+            if(Object.getOwnPropertyNames(this.props.feedbackQuestions).length !== 0){
+                this.setState({value: true})
+            }
+          }
 
 
     }
@@ -222,7 +245,7 @@ class ViewTranslate extends React.Component {
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Download"><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
                                     {/* {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''}  */}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Delete"><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Upload"><FileUpload  id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Upload"><FileUpload  id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" value={this.state.value} handleClick={()=>this.handleClick()} handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
 
                                 </div>
                             );
@@ -302,7 +325,8 @@ const mapStateToProps = state => ({
     apistatus: state.apistatus,
     fetchtranslation: state.fetchtranslation,
     uploadTranslated: state.uploadTranslated,
-    deletefile : state.deletefile
+    deletefile : state.deletefile,
+    feedbackQuestions: state.feedbackQuestions
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

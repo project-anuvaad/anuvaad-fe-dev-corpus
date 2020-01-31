@@ -55,7 +55,7 @@ class doctranslate extends React.Component {
 
       console.log("feedback",this.props.feedbackQuestions)
       if(Object.getOwnPropertyNames(this.props.feedbackQuestions).length !== 0){
-        history.push("/feedback-form")
+        history.push("/feedback-form/translate")
       }
     }
     
