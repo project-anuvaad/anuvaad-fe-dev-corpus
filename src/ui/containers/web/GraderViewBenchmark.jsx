@@ -9,11 +9,9 @@ import Grid from "@material-ui/core/Grid";
 import Grader from "../../components/web/common/Grader";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
  import AppBar from "../../components/web/common/Appbar";
- import Divider from "@material-ui/core/Divider";
  import Switch from '@material-ui/core/Switch';
 class BenchmarkGrade extends React.Component {
   constructor(props) {
@@ -200,7 +198,7 @@ class BenchmarkGrade extends React.Component {
         </Grid>
         
           {this.state.sentences.map((value, i) => {
-            var val = i == 0 ? "A" : "B";
+            var val = i === 0 ? "A" : "B";
             return <Grid item xs={6} sm={6} lg={6} xl={6}>
               <Grader title={"Model " + val} index={i} description={value.target} handleStarClick={this.onStarClick.bind(this)} data={value} handleStarClick={this.onStarClick.bind(this)} handleStarClick={this.onStarClick.bind(this)} meaning={"rating"} structure={"context_rating"} vocabulary={"spelling_rating"} />
             </Grid>

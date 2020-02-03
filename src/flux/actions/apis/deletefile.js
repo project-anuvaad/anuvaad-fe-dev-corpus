@@ -21,12 +21,12 @@ export default class Translation extends API {
     processResponse(res) {
         super.processResponse(res)
         if (res.data) {
-            this.pdf_translate = res.data;
+            this.pdf_translate = res;
         }
     }
 
     apiEndPoint() {
-        return process.env.REACT_APP_DOWNLOAD_URL ? `${process.env.REACT_APP_DOWNLOAD_URL}/corpus/remove-process` : `${super.apiEndPointAuto()}/corpus/remove-process`;
+        return `${super.apiEndPointAuto()}/remove-process`;
     }
 
     getFormData() {
@@ -38,7 +38,8 @@ export default class Translation extends API {
     getHeaders() {
         return {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                'Authorization': 'Bearer ' + decodeURI(localStorage.getItem('token')),
             }
         }
     }

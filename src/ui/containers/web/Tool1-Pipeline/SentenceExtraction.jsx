@@ -9,8 +9,6 @@ import Button from "@material-ui/core/Button";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import StepDetails from "./TockenExtractionSteps";
-import FileUpload from "../../../components/web/common/FileUpload";
-import history from "../../../../web.history";
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchworkspacedetails";
 
 class SentenceExtraction extends React.Component {
@@ -44,8 +42,8 @@ class SentenceExtraction extends React.Component {
     this.setState({
       activeStep: 3,
       [key]: event.target.files[0],
-      configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
-      csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
+      configName: key ==="configFile" ? event.target.files[0].name : this.state.configName,
+      csvName: key === "csvFile" ? event.target.files[0].name : this.state.csvName
     });
   };
 
@@ -53,10 +51,10 @@ class SentenceExtraction extends React.Component {
     console.log("----",this.props)
     return (
       <div>
-        {this.props.match.path!=="/stage2/data-source" && 
+        {this.props.match.path!=="/stage2/datasource" && 
   <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} /> }
         <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
-        {this.props.match.path!=="/stage2/data-source" && 
+        {this.props.match.path!=="/stage2/datasource" && 
           <StepDetails workSpace={this.props.match.params.name} activeStep={this.state.activeStep} />}
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>

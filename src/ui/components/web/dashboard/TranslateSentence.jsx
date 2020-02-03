@@ -1,11 +1,11 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
-import { white, blueGrey50,darkBlack } from "material-ui/styles/colors";
-import { LineChart, Line, ResponsiveContainer } from "recharts";
+import { blueGrey50,darkBlack } from "material-ui/styles/colors";
+import { ResponsiveContainer } from "recharts";
 import { typography } from "material-ui/styles";
 import Typography from '@material-ui/core/Typography';
 const TranslateSentence = props => {
-  const { title, data, role } = props;
+  const { title, data} = props;
   const styles = {
     paper: {
       backgroundColor: blueGrey50,

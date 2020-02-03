@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
-import { timingSafeEqual } from "crypto";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
@@ -70,13 +69,13 @@ class ExistingWorkspace extends React.Component {
 
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    if(this.props.match.path!=="/stage3/data-source"){
+    if(this.props.match.path!=="/stage3/datasource"){
       history.push(`${`${process.env.PUBLIC_URL}/stage2/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
       
     }
     else{
       console.log("out---")
-      history.push(`${`${process.env.PUBLIC_URL}/stage3/data-source/`}${rowData[0]}/${rowData[1]}`);
+      history.push(`${`${process.env.PUBLIC_URL}/stage3/datasource/`}${rowData[0]}/${rowData[1]}`);
     }
      
     
@@ -136,8 +135,7 @@ class ExistingWorkspace extends React.Component {
         label: "Created By",
         options: {
           filter: false,
-          sort: false,
-          filter: false
+          sort: false
         }
       },
       {
@@ -145,8 +143,7 @@ class ExistingWorkspace extends React.Component {
         label: "Created At",
         options: {
           filter: false,
-          sort: false,
-          filter: false
+          sort: false
         }
       }
     ];
@@ -193,10 +190,10 @@ class ExistingWorkspace extends React.Component {
 
     return (
       <div>
-        {this.props.match.path!=="/stage3/data-source" && 
+        {this.props.match.path!=="/stage3/datasource" && 
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />}
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={this.props.match.path==="/stage3/data-source"?"Data Source":"Existing Workspaces"} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={this.props.match.path==="/stage3/datasource"?"Data Source":"Existing Workspaces"} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );

@@ -71,8 +71,8 @@ class NewExtraction extends React.Component {
 
   handleChange = (key, event) => {
     this.setState({
-      configName: key == "configFile" ? event.target.files[0].name : this.state.configName,
-      csvName: key == "csvFile" ? event.target.files[0].name : this.state.csvName
+      configName: key === "configFile" ? event.target.files[0].name : this.state.configName,
+      csvName: key === "csvFile" ? event.target.files[0].name : this.state.csvName
     });
     this.readFileDataAsBinary(event.target.files[0]).then((result, err) => {
       this.setState({
@@ -121,7 +121,6 @@ class NewExtraction extends React.Component {
         configFile: "",
         csvFile: "",
         files: {},
-        workspaceName: "",
         configName: "",
         csvName: ""
       });
