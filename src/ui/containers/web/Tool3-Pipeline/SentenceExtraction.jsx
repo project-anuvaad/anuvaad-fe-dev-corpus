@@ -84,7 +84,6 @@ class SentenceExtraction extends React.Component {
               />
             </Grid>
           </Grid>
-
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
@@ -98,7 +97,7 @@ class SentenceExtraction extends React.Component {
                   <a
                     href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
                       this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file : ""
-                    }`}
+                      }`}
                     style={{ textDecoration: "none" }}
                   >
                     <Button variant="contained" color="primary" style={{ width: "85%", height: "56px", marginTop: "-30px" }}>
@@ -112,6 +111,21 @@ class SentenceExtraction extends React.Component {
                     Found {this.state.workspaceDetails && this.state.workspaceDetails.sentence_count} sentences
                   </Typography>
                 </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+            <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
+              <Typography gutterBottom variant="title" component="h2">
+                Rejected sentences :
+              </Typography>
+              <br />
+            </Grid>
+            <Grid item xs={7} sm={7} lg={7} xl={7} style={{ marginTop: "30px" }}>
+              <Grid container spacing={8}>
+                <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "-20px" }}>
+                  {this.state.workspaceDetails && this.state.workspaceDetails.sentence_count_rejected}
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
