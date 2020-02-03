@@ -55,8 +55,8 @@ class SentenceQualityCheck extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchSearch !== this.props.fetchSearch) {
-      console.log("result-----",this.props.fetchSearch)
-      this.setState({ sentence: this.props.fetchSearch.data, count: this.props.fetchSearch.count});
+      console.log("result-----", this.props.fetchSearch)
+      this.setState({ sentence: this.props.fetchSearch.data, count: this.props.fetchSearch.count });
     }
 
     if (prevProps.sentenceReplace !== this.props.sentenceReplace) {
@@ -98,12 +98,12 @@ class SentenceQualityCheck extends React.Component {
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-            <Card  style={{ width: "70%" }} className={classes.card}>
-                    <CardContent>
-                      {this.props.match.params.name}
+              <Card style={{ width: "70%" }} className={classes.card}>
+                <CardContent>
+                  {this.props.match.params.name}
 
-                    </CardContent>
-                  </Card>
+                </CardContent>
+              </Card>
             </Grid>
 
             <Grid item xs={2} sm={2} lg={2} xl={2}>
@@ -114,19 +114,26 @@ class SentenceQualityCheck extends React.Component {
             </Grid>
             <Grid item xs={2} sm={2} lg={2} xl={2}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                {this.state.sentence.found_sentences && this.state.sentence.found_sentences +" / "+ this.state.sentence.total_sentences}
+                {this.state.sentence.found_sentences && this.state.sentence.found_sentences + " / " + this.state.sentence.total_sentences}
               </Typography>
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-            <Card  style={{ width: "70%" }} className={classes.card}>
-                    <CardContent>
-                     
-                      {this.state.sentence.found_sentences && 'Source ngram : '+this.state.sentence.source_search+   ', Target ngram : '+this.state.sentence.target_search+', Replacement ngram : '+this.state.sentence.replace}
-                      
-                    
-                    </CardContent>
-                  </Card>
+              <Card style={{ width: "70%" }} className={classes.card}>
+                <CardContent>
+
+                  {this.state.sentence.found_sentences &&
+                    this.state.sentence.changes && Array.isArray(this.state.sentence.changes) ?
+                    this.state.sentence.changes.map((changes) => {
+                    return (<p>{'Source ngram : ' + changes.source_search + ', Target ngram : ' + changes.target_search + ', Replacement ngram : ' + changes.replace }</p>) 
+                    })
+                     :
+                    'Source ngram : ' + this.state.sentence.source_search + ', Target ngram : ' + this.state.sentence.target_search + ', Replacement ngram : ' + this.state.sentence.replace
+                  }
+
+
+                </CardContent>
+              </Card>
             </Grid>
 
             <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -137,14 +144,14 @@ class SentenceQualityCheck extends React.Component {
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
 
-            <Card  style={{ width: "70%" }} className={classes.card}>
-                    <CardContent>
-                      
-                      {this.state.sentence.source}
-                      
-                    
-                    </CardContent>
-                  </Card>
+              <Card style={{ width: "70%" }} className={classes.card}>
+                <CardContent>
+
+                  {this.state.sentence.source}
+
+
+                </CardContent>
+              </Card>
             </Grid>
 
             <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -154,14 +161,14 @@ class SentenceQualityCheck extends React.Component {
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-            <Card  style={{ width: "70%" }} className={classes.card}>
-                    <CardContent>
-                      
-                      {this.state.sentence.target}
-                      
-                    
-                    </CardContent>
-                  </Card>
+              <Card style={{ width: "70%" }} className={classes.card}>
+                <CardContent>
+
+                  {this.state.sentence.target}
+
+
+                </CardContent>
+              </Card>
             </Grid>
 
             <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -171,13 +178,13 @@ class SentenceQualityCheck extends React.Component {
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-            <Card  style={{ width: "70%" }} className={classes.card}>
-                    <CardContent>
-                {this.state.sentence.updated}
-                      
-                    
-                    </CardContent>
-                  </Card>
+              <Card style={{ width: "70%" }} className={classes.card}>
+                <CardContent>
+                  {this.state.sentence.updated}
+
+
+                </CardContent>
+              </Card>
             </Grid>
 
             <Grid item xs={12} sm={12} lg={12} xl={12}>
@@ -200,7 +207,7 @@ class SentenceQualityCheck extends React.Component {
                   this.handleSubmit(this.state.sentence, false);
                 }}
               >
-                {this.state.count > 1 ? "Ignore and Next": "Ignore"}
+                {this.state.count > 1 ? "Ignore and Next" : "Ignore"}
               </Button>
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
@@ -213,7 +220,7 @@ class SentenceQualityCheck extends React.Component {
                   this.handleSubmit(this.state.sentence, true);
                 }}
               >
-                { this.state.count > 1 ? "Accept and Next" : "Accept"}
+                {this.state.count > 1 ? "Accept and Next" : "Accept"}
               </Button>
             </Grid>
           </Grid>
