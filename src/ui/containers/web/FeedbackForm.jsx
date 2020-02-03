@@ -80,20 +80,20 @@ class FeedbackForm extends React.Component {
   form() {
     return this.state.questionList.map((el, i) => (
       <Grid container spacing={24} style={{ marginTop: "1 %", marginLeft: "12%" }} key={i}>
-        <Grid item xs={5} sm={5} lg={5} xl={5}>
+        <Grid item xs={4} sm={4} lg={4} xl={4}>
           <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
             {el.question}
           </Typography>
           <br />
         </Grid>
-        <Grid item xs={6} sm={6} lg={6} xl={6} style={{ paddingTop: "27px" }}>
+        <Grid item xs={7} sm={7} lg={7} xl={7} style={{ paddingTop: "27px" }}>
           {el.type === "Rating" ? (
             <StarRatings
               rating={this.state.questionList[i].answer ? this.state.questionList[i].answer : 0}
               starRatedColor="red"
               name={i}
               changeRating={this.changeRating.bind(this)}
-              numberOfStars={5}
+              numberOfStars={10}
             />
           ) : (
             <FormControl component="fieldset">
