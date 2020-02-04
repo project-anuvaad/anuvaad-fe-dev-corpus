@@ -23,6 +23,7 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import TranslateSentence from "../../components/web/dashboard/TranslateSentence";
 import Chip from "@material-ui/core/Chip";
 import { Tooltip } from "@material-ui/core";
+import { translate } from '../../../assets/localisation';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -195,7 +196,7 @@ class Dashboard extends React.Component {
       <div>
         <Paper style={{ marginLeft: "25%", width: "50%", marginTop: "4%" }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
-            Translate
+            {translate('dashboard.page.heading.message')}
           </Typography>
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
