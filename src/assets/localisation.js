@@ -1,5 +1,7 @@
 var localization_EN_Data = {
-    'dashboard.page.heading.message': 'Translate'
+    'dashboard.page.heading.title': 'Translate',
+    'dashboard.page.label.source' : 'Please select source language'
+    
 }
 
 
