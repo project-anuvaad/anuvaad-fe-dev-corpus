@@ -63,7 +63,8 @@ var localization_EN_Data = {
     'newCorpus.page.text.domain':"Domain*",
     'newCorpus.page.text.comment':"Comment*",
     'newCorpus.page.text.tryAgain':'Try Again !!!',
-    'commonCorpus.page.text.corpusAdded':'Corpus added successfully'
+    'commonCorpus.page.text.corpusAdded':'Corpus added successfully',
+    'common.page.text.addDropFile':"Please Add/Drop txt file here"
 
 
 
