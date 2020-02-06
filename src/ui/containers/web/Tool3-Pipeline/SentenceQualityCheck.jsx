@@ -15,8 +15,8 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import FetchSearch from "../../../../flux/actions/apis/fetchsearchreplace";
 import FetchSearchReplace from "../../../../flux/actions/apis/sentencereplace";
+import AcceptAll from "../../../../flux/actions/apis/acceptallsentence";
 import history from "../../../../web.history";
-
 
 const styles = theme => ({
   card: {
@@ -33,7 +33,7 @@ class SentenceQualityCheck extends React.Component {
       target: "",
       source: "",
       sentence: "",
-      sentenceDetails: '',
+      sentenceDetails: "",
       selectedWorkspaces: [],
       workspaceName: "",
       sourceLanguage: [],
@@ -55,11 +55,17 @@ class SentenceQualityCheck extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchSearch !== this.props.fetchSearch) {
-      console.log("result-----", this.props.fetchSearch)
+      if (!Object.getOwnPropertyNames(this.props.fetchSearch.data).length) {
+        this.setState({ open: true, sentence: {}, message1: "Process completed Successfully" });
+        setTimeout(() => {
+          history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
+        }, 2000);
+      }
       this.setState({ sentence: this.props.fetchSearch.data, count: this.props.fetchSearch.count });
     }
 
     if (prevProps.sentenceReplace !== this.props.sentenceReplace) {
+      console.log("-------", this.state.count);
       if (this.state.count !== 1) {
         const { APITransport } = this.props;
         const apiObj = new FetchSearch(this.props.match.params.session_id);
@@ -74,12 +80,19 @@ class SentenceQualityCheck extends React.Component {
   }
 
   handleSubmit = (value, val) => {
-    console.log(val);
+    console.log(value);
     if (val) {
       value.accepted = true;
     }
     const { APITransport } = this.props;
     const apiObj = new FetchSearchReplace(value);
+    APITransport(apiObj);
+  };
+
+  handleSubmitAll = (value, val) => {
+    console.log("=======", value);
+    const { APITransport } = this.props;
+    const apiObj = new AcceptAll(value);
     APITransport(apiObj);
   };
 
@@ -99,10 +112,7 @@ class SentenceQualityCheck extends React.Component {
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <Card style={{ width: "70%" }} className={classes.card}>
-                <CardContent>
-                  {this.props.match.params.name}
-
-                </CardContent>
+                <CardContent>{this.props.match.params.name}</CardContent>
               </Card>
             </Grid>
 
@@ -114,24 +124,21 @@ class SentenceQualityCheck extends React.Component {
             </Grid>
             <Grid item xs={2} sm={2} lg={2} xl={2}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                {this.state.sentence.found_sentences && this.state.sentence.found_sentences + " / " + this.state.sentence.total_sentences}
+                {this.state.sentence.found_sentences && `${this.state.sentence.found_sentences} / ${this.state.sentence.total_sentences}`}
               </Typography>
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <Card style={{ width: "70%" }} className={classes.card}>
                 <CardContent>
-
-                  {this.state.sentence.found_sentences &&
-                    this.state.sentence.changes && Array.isArray(this.state.sentence.changes) ?
-                    this.state.sentence.changes.map((changes) => {
-                    return (<p>{'Source ngram : ' + changes.source_search + ', Target ngram : ' + changes.target_search + ', Replacement ngram : ' + changes.replace }</p>) 
-                    })
-                     :
-                    'Source ngram : ' + this.state.sentence.source_search + ', Target ngram : ' + this.state.sentence.target_search + ', Replacement ngram : ' + this.state.sentence.replace
-                  }
-
-
+                  {this.state.sentence.source &&
+                    (this.state.sentence.found_sentences && this.state.sentence.changes && Array.isArray(this.state.sentence.changes)
+                      ? this.state.sentence.changes.map(changes => (
+                          <p key={changes.source_search}>
+                            {`Source ngram : ${changes.source_search}, Target ngram : ${changes.target_search}, Replacement ngram : ${changes.replace}`}
+                          </p>
+                        ))
+                      : `Source ngram : ${this.state.sentence.source_search}, Target ngram : ${this.state.sentence.target_search}, Replacement ngram : ${this.state.sentence.replace}`)}
                 </CardContent>
               </Card>
             </Grid>
@@ -143,14 +150,8 @@ class SentenceQualityCheck extends React.Component {
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-
               <Card style={{ width: "70%", marginTop: "15px" }} className={classes.card}>
-                <CardContent>
-
-                  {this.state.sentence.source}
-
-
-                </CardContent>
+                <CardContent>{this.state.sentence.source}</CardContent>
               </Card>
             </Grid>
 
@@ -162,12 +163,7 @@ class SentenceQualityCheck extends React.Component {
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <Card style={{ width: "70%" }} className={classes.card}>
-                <CardContent>
-
-                  {this.state.sentence.target}
-
-
-                </CardContent>
+                <CardContent>{this.state.sentence.target}</CardContent>
               </Card>
             </Grid>
 
@@ -179,11 +175,7 @@ class SentenceQualityCheck extends React.Component {
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <Card style={{ width: "70%" }} className={classes.card}>
-                <CardContent>
-                  {this.state.sentence.updated}
-
-
-                </CardContent>
+                <CardContent>{this.state.sentence.updated}</CardContent>
               </Card>
             </Grid>
 
@@ -197,12 +189,12 @@ class SentenceQualityCheck extends React.Component {
               </Typography>
             </Grid>
 
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
+            <Grid item xs={3} sm={3} lg={3} xl={3}>
               <Button
                 variant="contained"
                 color="primary"
                 value="rejected"
-                style={{ width: "80%", marginLeft: "40px", marginTop: "3%", height: "56px" }}
+                style={{ width: "90%", marginLeft: "50px", marginTop: "3%", height: "56px" }}
                 onClick={event => {
                   this.handleSubmit(this.state.sentence, false);
                 }}
@@ -210,17 +202,30 @@ class SentenceQualityCheck extends React.Component {
                 {this.state.count > 1 ? "Ignore and Next" : "Ignore"}
               </Button>
             </Grid>
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
+            <Grid item xs={3} sm={3} lg={3} xl={3}>
               <Button
                 variant="contained"
                 value="accepted"
                 color="primary"
-                style={{ width: "80%", marginTop: "3%", height: "56px" }}
+                style={{ width: "90%", marginLeft: "25px", marginTop: "3%", height: "56px" }}
                 onClick={event => {
                   this.handleSubmit(this.state.sentence, true);
                 }}
               >
                 {this.state.count > 1 ? "Accept and Next" : "Accept"}
+              </Button>
+            </Grid>
+            <Grid item xs={3} sm={3} lg={3} xl={3}>
+              <Button
+                variant="contained"
+                value="accepted"
+                color="primary"
+                style={{ width: "90%", marginTop: "3%", height: "56px" }}
+                onClick={event => {
+                  this.handleSubmitAll(this.state.sentence, true);
+                }}
+              >
+                Accept All
               </Button>
             </Grid>
           </Grid>
