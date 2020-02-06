@@ -22,6 +22,7 @@ import Select from "@material-ui/core/Select";
 import Stepper from "../../components/web/common/Stepper";
 import { white, blueGrey50,darkBlack } from "material-ui/styles/colors"
 import MenuItem from '@material-ui/core/MenuItem';
+import { translate } from '../../../assets/localisation';
 
 
 class Newcorpus extends React.Component {
@@ -113,7 +114,7 @@ class Newcorpus extends React.Component {
             return <div>
             <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-          <Typography value='' variant="title" style={{ marginLeft: '12%', paddingTop: '14%' }} >Please select source language :</Typography>
+          <Typography value='' variant="title" style={{ marginLeft: '12%', paddingTop: '14%' }} >{translate('common.page.label.source')}</Typography>
         
         </Grid>
         <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
@@ -135,12 +136,12 @@ class Newcorpus extends React.Component {
             </Grid><br/>
             {this.state.val>1 ?
             <DropzoneArea 
-        onDrop={this.handleSource} showPreviewsInDropzone={true} style={{marginTop:'0%'}} acceptedFiles={['.pdf']} dropzoneText="Please Add/Drop pdf file here" filesLimit={1}
+        onDrop={this.handleSource} showPreviewsInDropzone={true} style={{marginTop:'0%'}} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={1}
         ></DropzoneArea>:''
             }
             
             <DropzoneArea 
-        onDrop={this.handleSource} showPreviewsInDropzone={true} style={{marginTop:'0%'}} acceptedFiles={['.pdf']} dropzoneText="Please Add/Drop pdf file here" filesLimit={1}
+        onDrop={this.handleSource} showPreviewsInDropzone={true} style={{marginTop:'0%'}} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={1}
         ></DropzoneArea>
                 </div>
             
@@ -149,7 +150,7 @@ class Newcorpus extends React.Component {
             return <div>
             <Grid container spacing={8} >
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-          <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '5%', paddingTop: '14%' }} >Please select Target language :</Typography>
+          <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '5%', paddingTop: '14%' }} >{translate('common.page.label.target')}</Typography>
         
         </Grid>
         <Grid item xs={3} sm={3} lg={2} xl={2}><br/><br/>
@@ -170,7 +171,7 @@ class Newcorpus extends React.Component {
             </Grid>
             </Grid><br/>
             <DropzoneArea Dropzoneiles=""
-        onDrop={this.handleTarget} id="source" showPreviewsInDropzone={true} acceptedFiles={['.pdf']} dropzoneText="Please Add/Drop pdf file here" filesLimit={2}
+        onDrop={this.handleTarget} id="source" showPreviewsInDropzone={true} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={2}
         ></DropzoneArea>
                 </div>;
   
@@ -204,13 +205,13 @@ class Newcorpus extends React.Component {
         let domainError="";
         let commentError="";
         if(!this.state.add_name){
-            nameError="Name shouldn't be empty"
+            nameError=translate('common.page.error.nameError')
         }
         if(!this.state.domain){
-        domainError="Domain shouldn't be empty"
+        domainError=translate('common.page.error.domainError')
         }
         if(!this.state.comment){
-            commentError="Comment Shouldn't be empty"
+            commentError=translate('common.page.error.commentError')
         }
         this.setState({
             nameError, domainError, commentError
@@ -234,7 +235,8 @@ class Newcorpus extends React.Component {
           warning:''
         }));}
       else{
-        this.setState({warning:" * Fields shouldn't be empty "})
+        this.setState({warning:translate('common.page.label.pageWarning')
+      })
         
       }
       };
@@ -288,7 +290,7 @@ class Newcorpus extends React.Component {
 <form method="post">                  
                   </form>
                   
-                            <Button variant="contained" color="primary" className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? "Cancel": "Back"} </Button>
+                            <Button variant="contained" color="primary" className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ?     translate('common.page.button.cancel'): translate('common.page.button.Next')} </Button>
                             <Button variant="contained" color="primary" className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) :this.handleNext}> {this.state.activeStep === 2 ? 'Create Corpus' :"Next"}</Button>
                             <div style={{color:'red' , marginLeft:"30%"}}>{this.state.warning}</div>
                 </Paper>

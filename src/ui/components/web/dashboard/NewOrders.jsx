@@ -4,6 +4,7 @@ import { blueGrey50,darkBlack } from "material-ui/styles/colors";
 import { ResponsiveContainer } from "recharts";
 import { typography } from "material-ui/styles";
 import Typography from '@material-ui/core/Typography';
+import { translate } from "../../../../assets/localisation";
 const NewOrders = props => {
   const { title, data, status } = props;
   const styles = {
@@ -40,8 +41,8 @@ const NewOrders = props => {
                      <Typography variant="h6" gutterBottom style={{ color: darkBlack,marginLeft:"75px"}} >{item.tgt}</Typography>
                      
                      {status && <div>
-                     <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"75px"}} >Input Subwords&nbsp; &nbsp; : {item.input_subwords? item.input_subwords: 'NA'}</Typography>
-                     <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"75px"}} >Output Subwords&nbsp;: {item.output_subwords? item.output_subwords : 'NA'}</Typography> </div>}
+                     <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"75px"}} >{translate('neworders.page.label.inputSubwords')}&nbsp; &nbsp; : {item.input_subwords? item.input_subwords: 'NA'}</Typography>
+                     <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"75px"}} >{translate('neworders.page.label.outputSubwords')}&nbsp;: {item.output_subwords? item.output_subwords : 'NA'}</Typography> </div>}
                   
                   <br/>
                 
