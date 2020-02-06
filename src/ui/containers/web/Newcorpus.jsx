@@ -45,7 +45,7 @@ class Newcorpus extends React.Component {
             englishFile:[],
             comment:'',
             open: false,
-            message:'Corpus added successfully',
+            message:translate('commonCorpus.page.text.corpusAdded'),
             token: false,
             activeStep: 0,
             val:0,
@@ -178,24 +178,24 @@ class Newcorpus extends React.Component {
           case 2: 
               
             return <div ><FormControl fullWidth>
-            <InputLabel htmlFor="Add Name">Output filename*</InputLabel>
+            <InputLabel htmlFor="Add Name">{translate('newCorpus.page.text.outputFilename')}</InputLabel>
             <Input id="name" required  onChange={(event) => {this.handleTextChange('add_name', event)}} />
             <div style={{color:'red'}}>{this.state.nameError}</div>
             </FormControl>
         
         <FormControl fullWidth>
-            <InputLabel htmlFor="Domain">Domain*</InputLabel>
+            <InputLabel htmlFor="Domain">{translate('newCorpus.page.text.domain')}</InputLabel>
             <Input id="domain"  onChange={(event) => {this.handleTextChange('domain', event)}} />
             <div style={{color:'red'}}>{this.state.domainError}</div>
         </FormControl>
         <FormControl fullWidth>
-            <InputLabel htmlFor="Comment">Comment*</InputLabel>
+            <InputLabel htmlFor="Comment">{translate('newCorpus.page.text.comment')}</InputLabel>
             <Input id="comment"  onChange={(event) => {this.handleTextChange('comment', event)}} />
             <div style={{color:'red'}}>{this.state.commentError}</div>
         </FormControl>
     </div>;
           default:
-            return 'Try Again !!!';
+            return translate('newCorpus.page.text.tryAgain');
         }
     }
     
@@ -272,14 +272,14 @@ class Newcorpus extends React.Component {
                 
                 <Paper className={classes.paper} elevation={2}>
                 <Typography gutterBottom variant="title" component="h2" style={{marginTop:'-3.7%',paddingLeft:'35%',background:blueGrey50,paddingTop:'13px',paddingBottom:'13px',marginLeft:'-4%',marginRight:'-3.7%'}}>
-                    Create Corpus List
+                {translate('newCorpus.page.text.createCorpus')}
                 </Typography><br/>
                 <Stepper steps={["Add Source file",'Add target file','Add file details']} activeStep={this.state.activeStep} alternativeLabel></Stepper>
                     
 
                     {this.state.activeStep === 3 ? (
           <div>
-            <Typography >All steps completed</Typography>
+            <Typography >{translate('newCorpus.page.text.allStepsCompleted')}</Typography>
             
           </div>
         ) : (
@@ -290,8 +290,8 @@ class Newcorpus extends React.Component {
 <form method="post">                  
                   </form>
                   
-                            <Button variant="contained" color="primary" className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ?     translate('common.page.button.cancel'): translate('common.page.button.Next')} </Button>
-                            <Button variant="contained" color="primary" className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) :this.handleNext}> {this.state.activeStep === 2 ? 'Create Corpus' :"Next"}</Button>
+                            <Button variant="contained" color="primary" className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ?     translate('common.page.button.cancel'): translate('common.page.button.next')} </Button>
+                            <Button variant="contained" color="primary" className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) :this.handleNext}> {this.state.activeStep === 2 ? 'Create Corpus' :translate('common.page.button.next')}}</Button>
                             <div style={{color:'red' , marginLeft:"30%"}}>{this.state.warning}</div>
                 </Paper>
                 

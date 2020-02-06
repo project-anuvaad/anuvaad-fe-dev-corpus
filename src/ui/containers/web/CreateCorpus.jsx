@@ -39,7 +39,7 @@ class Createcorpus extends React.Component {
 
       comment: "",
       open: false,
-      message: "Corpus added successfully",
+      message: translate('commonCorpus.page.text.corpusAdded'),
       token: false,
 
       val: 0,
@@ -97,16 +97,16 @@ class Createcorpus extends React.Component {
     let commentError = "";
     let languageError = "";
     if (!this.state.add_name) {
-      nameError = "Name shouldn't be empty";
+      nameError = translate('common.page.error.nameError');
     }
     if (!this.state.domain) {
-      domainError = "Domain shouldn't be empty";
+      domainError = translate('common.page.error.domainError');
     }
     if (!this.state.comment) {
-      commentError = "Comment Shouldn't be empty";
+      commentError = translate('common.page.error.commentError');
     }
     if (!this.state.language) {
-      languageError = "Language shouldn't be empty";
+      languageError = translate('common.page.error.languageError');
     }
     this.setState({
       nameError,
@@ -224,10 +224,10 @@ class Createcorpus extends React.Component {
 
         <Button variant="contained" color="primary" className={classes.button} onClick={this.handleBack}>
           {" "}
-          Cancel{" "}
+          {translate('common.page.button.cancel')}{" "}
         </Button>
         <Button variant="contained" color="primary" className={classes.buttons} onClick={this.handleSubmit.bind(this)}>
-          Submit
+        {translate('common.page.button.submit')}
         </Button>
 
         <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}>
