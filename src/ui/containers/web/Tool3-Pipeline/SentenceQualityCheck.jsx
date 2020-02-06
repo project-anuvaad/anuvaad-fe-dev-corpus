@@ -225,7 +225,7 @@ class SentenceQualityCheck extends React.Component {
                   this.handleSubmitAll(this.state.sentence, true);
                 }}
               >
-                Accept All {this.state.sentence && this.state.sentence.changes.length>0 && this.state.sentence.changes[0].source_search}
+                Accept All {this.state.sentence.changes && this.state.sentence.changes.length>0 && this.state.sentence.changes[0].source_search}
               </Button>
             </Grid>
           </Grid>
