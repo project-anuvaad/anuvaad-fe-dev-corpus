@@ -144,7 +144,7 @@ class SentenceQualityCheck extends React.Component {
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
 
-              <Card style={{ width: "70%" }} className={classes.card}>
+              <Card style={{ width: "70%", marginTop: "15px" }} className={classes.card}>
                 <CardContent>
 
                   {this.state.sentence.source}
