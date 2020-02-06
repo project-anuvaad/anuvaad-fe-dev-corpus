@@ -14,6 +14,7 @@ var localization_EN_Data = {
     'common.page.error.nameError':"Name shouldn't be empty",
     'common.page.error.domainError':"Domain shouldn't be empty",
     'common.page.error.commentError':"Comment Shouldn't be empty",
+    'common.page.error.languageError':"Language shouldn't be empty",
     'common.page.label.addDropFile':"Please Add/Drop pdf file here",
     'common.page.label.pageWarning':" * Fields shouldn't be empty ",
     'common.page.label.enterWorkspace':"Enter workspace name :",
@@ -55,7 +56,14 @@ var localization_EN_Data = {
     'common.page.processData.gotoStep2':'Press "Next" to goto Step 2',
     'common.page.message.step2Completed':"Step 2 process started successfully ",
     'common.page.alert.fileUpload':"Please upload token file properly",
-    'common.page.select.fromPrevious':"Select from previous"
+    'common.page.select.fromPrevious':"Select from previous",
+    'newCorpus.page.text.createCorpus':"Create Corpus List",
+    'newCorpus.page.text.allStepsCompleted':"All steps completed",
+    'newCorpus.page.text.outputFilename':"Output filename*",
+    'newCorpus.page.text.domain':"Domain*",
+    'newCorpus.page.text.comment':"Comment*",
+    'newCorpus.page.text.tryAgain':'Try Again !!!',
+    'commonCorpus.page.text.corpusAdded':'Corpus added successfully'
 
 
 
