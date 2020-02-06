@@ -13,7 +13,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import BackIcon from "@material-ui/icons/ChevronLeft";
 import history from "../../../../web.history";
 
-class SentenceExtraction extends React.Component {
+class DataPipelineDownload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -143,4 +143,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SentenceExtraction));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DataPipelineDownload));

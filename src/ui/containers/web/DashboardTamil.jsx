@@ -201,7 +201,7 @@ class Dashboard extends React.Component {
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <Typography value="" variant="title" gutterBottom={true} style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                Please select source language{" "}
+    {translate('common.page.label.source')}{" "}
               </Typography>
             </Grid>
 
@@ -222,7 +222,7 @@ class Dashboard extends React.Component {
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <Typography value="" variant="title" gutterBottom={true} style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                Please select target language &nbsp;
+              {translate('common.page.label.target')}&nbsp;
               </Typography>
             </Grid>
             <Grid item xs={3} sm={3} lg={3} xl={3}>
@@ -312,7 +312,7 @@ class Dashboard extends React.Component {
                     onChange={this.handleChange("checkedMachine")}
                   />
                 }
-                label="Machine Translated"
+                label={translate('dashboard.page.checkbox.mt')}
               />
               {role.includes("dev") && (
                 <FormControlLabel
@@ -320,7 +320,7 @@ class Dashboard extends React.Component {
                   control={
                     <Checkbox color="default" checked={this.state.showSplitted} value="showSplitted" onChange={this.handleChange("showSplitted")} />
                   }
-                  label="Show , splitted"
+                  label={translate('dashboard.page.checkbox.splitted')}
                 />
               )}
               {role.includes("dev") && (
@@ -333,7 +333,7 @@ class Dashboard extends React.Component {
                       onChange={this.handleChange("checkedSubwords")}
                     />
                   }
-                  label="Input and Output Subwords"
+                  label= {translate('dashboard.page.checkbox.ioSubwords')}
                 />
               )}
 
@@ -344,7 +344,7 @@ class Dashboard extends React.Component {
                 aria-label="edit"
                 style={{ marginLeft: "1.3%", width: "44%", marginBottom: "4%", marginTop: "4%", marginRight: "5%" }}
               >
-                Clear
+                {translate('common.page.button.clear')}
               </Button>
               <Button
                 variant="contained"
@@ -353,7 +353,7 @@ class Dashboard extends React.Component {
                 aria-label="edit"
                 style={{ width: "44%", marginBottom: "4%", marginTop: "4%" }}
               >
-                Submit
+                {translate('common.page.button.submit')}
               </Button>
             </Grid>
           </div>
