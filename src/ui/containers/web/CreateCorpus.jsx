@@ -218,7 +218,7 @@ class Createcorpus extends React.Component {
           id="source"
           showPreviewsInDropzone={true}
           acceptedFiles={[".txt"]}
-          dropzoneText="Please Add/Drop txt file here"
+          dropzoneText={translate('common.page.text.addDropFile')}
           filesLimit={1}
         ></DropzoneArea>
 
