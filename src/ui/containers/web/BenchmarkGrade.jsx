@@ -27,6 +27,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+import { translate } from '../../../assets/localisation';
 const theme = createMuiTheme();
 class BenchmarkGrade extends React.Component {
   constructor(props) {
@@ -103,7 +104,7 @@ class BenchmarkGrade extends React.Component {
 
   handleStatusChange = event => {
     var value = this.state.tocken ? (this.state.apiCall ? true : false) : true;
-    event.target.value === "ALL" ? this.setState({ AllPageNumber: this.state.offset + 1 }) : "";
+    event.target.value === translate('common.page.text.all') ? this.setState({ AllPageNumber: this.state.offset + 1 }) : "";
     this.setState({ inputStatus: event.target.value, offset: 0, dialogOpen: this.state.tocken ? true : false });
     if (value) {
       let api = new FetchBenchmarkModel(
@@ -231,13 +232,13 @@ class BenchmarkGrade extends React.Component {
           this.state.sentences.map((row, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row">
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText="Read more" readLessText="">
+                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText={translate('common.page.text.readMore')}readLessText="">
                   {row.source}
                 </ReadMoreAndLess>
               </TableCell>
               <TableCell>
                 
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText="Read more" readLessText="">
+                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText={translate('common.page.text.readMore')}readLessText="">
                   {row.target}
                 </ReadMoreAndLess>
               </TableCell>
@@ -332,7 +333,7 @@ class BenchmarkGrade extends React.Component {
             <Toolbar style={{ marginRight: "-1.2%" }}>
               <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
               <Typography variant="h6" gutterBottom>
-                Rows per page:&nbsp;&nbsp;&nbsp;&nbsp;
+              {translate('common.page.text.rowsPerPage')}&nbsp;&nbsp;&nbsp;&nbsp;
                 <Select width="50%" value={this.state.pageCount} onChange={this.handleSelectChange} displayEmpty>
                   <MenuItem value={5}>5</MenuItem>
                   <MenuItem value={10}>10</MenuItem>
@@ -352,14 +353,14 @@ class BenchmarkGrade extends React.Component {
                   </Grid>
                   <Grid item xs={3} sm={3} lg={3} xl={3}>
                     <Typography variant="title" color="inherit" style={{ paddingBottom: "8px", flex: 1 }}>
-                    {this.state.pending ? (this.state.count && "Number of sentences pending : ") + (this.state.pending && this.state.pending) : this.state.pending ===0 &&"Completed"}
+                    {this.state.pending ? (this.state.count &&  translate('benchMarkGrade.page.label.noOfSentencesPending')) + (this.state.pending && this.state.pending) : this.state.pending ===0 &&"Completed"}
                     </Typography>
                   </Grid>
                   <Grid item xs={3} sm={3} lg={2} xl={2}>
-                    Status Filter :&nbsp;&nbsp;&nbsp;
+                  {translate('benchmark.page.text.statusFilter')}&nbsp;&nbsp;&nbsp;
                     <Select value={this.state.inputStatus} onChange={this.handleStatusChange} displayEmpty>
-                      <MenuItem value={"ALL"}>All</MenuItem>
-                      <MenuItem value={"PENDING"}>Pending</MenuItem>
+                      <MenuItem value={"ALL"}>{translate('common.page.text.all')}</MenuItem>
+                      <MenuItem value={"PENDING"}>{translate('common.page.text.pending')}</MenuItem>
                     </Select>
                   </Grid>
                   <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -405,8 +406,8 @@ class BenchmarkGrade extends React.Component {
             {this.state.dialogOpen && this.state.tocken && (
               <Dialog
                 open={this.state.dialogOpen}
-                message={"Do you want to save your changes?"}
-                title="Save Changes"
+                message={translate('benchMarkGrade.page.text.doYouWantSaveChanges')}
+                title={translate('common.page.label.saveChanges')}
                 value={this.state.sentences}
                 handleSubmit={this.handleSubmit}
                 handleClose={this.handleClose}
@@ -423,7 +424,7 @@ class BenchmarkGrade extends React.Component {
                 aria-label="edit"
                 style={{ width: "170px", marginBottom: "4%", marginTop: "1px" }}
               >
-                Save
+                 {translate('common.page.button.save')}
               </Button>
             </Toolbar>
           </div>

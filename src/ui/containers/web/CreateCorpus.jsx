@@ -159,12 +159,12 @@ class Createcorpus extends React.Component {
             marginRight: "-2.3%"
           }}
         >
-          Create Corpus
+          {translate('common.page.label.createCorpus')}
         </Typography>
         <br />
         <div style={{ Top: "5px", PaddingBottom: "5px" }}>
           <FormControl fullWidth>
-            <InputLabel htmlFor="Add Name">Output Corpusname*</InputLabel>
+            <InputLabel htmlFor="Add Name">{translate('common.page.label.outputCorpusname')}</InputLabel>
             <Input
               id="name"
               required
@@ -177,7 +177,7 @@ class Createcorpus extends React.Component {
         </div>
 
         <FormControl fullWidth>
-          <InputLabel htmlFor="Domain">Domain*</InputLabel>
+          <InputLabel htmlFor="Domain"> {translate('newCorpus.page.text.domain')}</InputLabel>
           <Input
             id="domain"
             required
@@ -188,7 +188,7 @@ class Createcorpus extends React.Component {
           <span style={{ color: "red" }}>{this.state.domainError}</span>
         </FormControl>
         <FormControl fullWidth>
-          <InputLabel htmlFor="Comment">Language*</InputLabel>
+          <InputLabel htmlFor="Comment">{translate('common.page.label.language')}</InputLabel>
           <Input
             id="comment"
             required
@@ -199,7 +199,7 @@ class Createcorpus extends React.Component {
           <span style={{ color: "red" }}>{this.state.languageError}</span>
         </FormControl>
         <FormControl fullWidth>
-          <InputLabel htmlFor="Comment">Description*</InputLabel>
+          <InputLabel htmlFor="Comment">{translate('common.page.label.description')}</InputLabel>
           <Input
             id="comment"
             required

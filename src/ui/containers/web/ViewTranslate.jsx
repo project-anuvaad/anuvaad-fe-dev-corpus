@@ -29,6 +29,7 @@ import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import Snackbar from "../../components/web/common/Snackbar";
 import FetchFeedbackPending from "../../../flux/actions/apis/fetchfeedbackpending";
+import { translate } from '../../../assets/localisation';
 
 var file = "";
 class ViewTranslate extends React.Component {
@@ -138,14 +139,14 @@ class ViewTranslate extends React.Component {
         const columns = [
             {
                 name: "basename",
-                label: "basename",
+                label: translate('common.page.label.basename'),
                 options: {
                     display: 'excluded',
                 }
             },
             {
                 name: "name",
-                label: "Transfer Files",
+                label:  translate('common.page.label.transferFiles'),
                 options: {
                     filter: true,
                     sort: true,
@@ -153,7 +154,7 @@ class ViewTranslate extends React.Component {
             },
             {
                 name: "created_on",
-                label: "Timestamp",
+                label:  translate('common.page.label.timeStamp'),
                 options: {
                     filter: true,
                     sort: true,
@@ -163,7 +164,7 @@ class ViewTranslate extends React.Component {
 
             {
                 name: "sourceLang",
-                label: "Source Language",
+                label: translate('common.page.label.sourceLanguage'),
                 options: {
                     filter: true,
                     sort: true,
@@ -172,7 +173,7 @@ class ViewTranslate extends React.Component {
 
             {
                 name: "targetLang",
-                label: "Target Language",
+                label: translate(' common.page.label.targetLanguage'),
                 options: {
                     filter: true,
                     sort: true,
@@ -181,7 +182,7 @@ class ViewTranslate extends React.Component {
 
             {
                 name: "status",
-                label: "Status",
+                label: translate("common.page.table.status"),
                 options: {
                     display: 'excluded',
                 }
@@ -189,13 +190,13 @@ class ViewTranslate extends React.Component {
 
             {
                 name: "eta",
-                label: "ETA",
+                label: translate('viewTranslate.page.label.eta'),
                 options: {
                     display: 'excluded',
                 }
             }, {
                 name: "translate_uploaded",
-                label: "Translateuploaded",
+                label: translate('viewTranslate.page.label.translateUpLoaded'),
                 options: {
                     display: 'excluded',
                 }
