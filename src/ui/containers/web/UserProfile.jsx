@@ -145,13 +145,13 @@ class UserProfile extends React.Component {
       <div>
         <Paper style={{ marginLeft: "23%", width: "46%", marginTop: "5%" }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
-            My Profile{" "}
+          {translate('common.page.label.myProfile')}{" "}
           </Typography>
 
           <Grid container spacing={4}>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "10.5%" }}>
-                First Name{" "}
+              {translate('common.page.label.firstName')}{" "}
               </Typography>
             </Grid>
             <Grid item xs={6} sm={6} lg={6} xl={6}>
@@ -165,7 +165,7 @@ class UserProfile extends React.Component {
             <Grid container spacing={4}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
-                  Last Name{" "}
+                {translate('common.page.label.lastName')}{" "}
                 </Typography>
               </Grid>
               <Grid item xs={6} sm={6} lg={6} xl={6}>
@@ -180,7 +180,7 @@ class UserProfile extends React.Component {
             <Grid container spacing={4}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
-                  Email ID{" "}
+                {translate('common.page.label.email')}{" "}
                 </Typography>
               </Grid>
               <Grid item xs={6} sm={6} lg={6} xl={6}>
@@ -215,7 +215,7 @@ class UserProfile extends React.Component {
               variant="h5"
               style={{ color: darkBlack, background: blueGrey50, paddingLeft: "28%", paddingBottom: "12px", paddingTop: "8px" }}
             >
-              Change Password
+             {translate('userProfile.page.label.changePassword')}
             </Typography>
 
             <DialogContent>
@@ -281,7 +281,7 @@ class UserProfile extends React.Component {
                       aria-label="edit"
                       style={{ width: "50%", marginBottom: "4%", marginTop: "4%" }}
                     >
-                      Cancel
+                     {translate('common.page.button.cancel')}
                     </Button>
                     <Button
                       variant="contained"
@@ -291,7 +291,7 @@ class UserProfile extends React.Component {
                       aria-label="edit"
                       style={{ width: "50%", marginBottom: "4%", marginTop: "4%" }}
                     >
-                      Submit
+                    {translate('common.page.button.submit')}
                     </Button>
                   </DialogActions>
                 </div>

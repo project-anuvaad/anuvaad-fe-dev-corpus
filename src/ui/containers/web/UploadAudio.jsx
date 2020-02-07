@@ -148,7 +148,7 @@ class UploadAudio extends React.Component {
                   maxFileSize={20000000}
                   style={{ marginTop: "20%" }}
                   acceptedFiles={[".mp3", ".wav", ".flac"]}
-                  dropzoneText="Drop audio file here or click here to locate the audi file(.mp3 or .wav or .flac)"
+                  dropzoneText={translate('uploadBenchmark.page.label.dropAudio')}
                   filesLimit={1}
                 />
               </Grid>

@@ -66,7 +66,7 @@ class Corp extends React.Component {
                   history.push(`${process.env.PUBLIC_URL}/translate`);
                 }}
               >
-                <AddIcon /> Translate
+                <AddIcon /> {translate('dashboard.page.heading.message')}
               </Button>
             </Grid>
           </Grid>
@@ -80,7 +80,7 @@ class Corp extends React.Component {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="right">Name</TableCell>
+                    <TableCell align="right">{translate('common.page.label.name')}</TableCell>
                     <TableCell align="right">Created On</TableCell>
                     <TableCell align="right">Status</TableCell>
                     <TableCell align="right">Action</TableCell>
