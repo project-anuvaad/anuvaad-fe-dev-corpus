@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { translate } from '../../../assets/localisation';
 
 class ComparisonReport extends React.Component {
   constructor(props) {
@@ -75,7 +76,7 @@ class ComparisonReport extends React.Component {
     const Table1columns = [
       {
         name: "model_name",
-        label: "Model Name",
+        label: translate('common.page.label.modelName'),
         options: {
           filter: false,
           sort: true,
@@ -85,7 +86,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "categories",
-        label: "record",
+        label:  translate('common.page.label.record'),
         options: {
           filter: false,
           display: "excluded"
@@ -95,7 +96,7 @@ class ComparisonReport extends React.Component {
       
       {
         name: "source_lang",
-        label: "Source",
+        label: translate('common.page.label.source'),
         options: {
           filter: true,
           sort: true
@@ -104,7 +105,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "target_lang",
-        label: "Target",
+        label: translate('common.page.label.target'),
         options: {
           filter: true,
           sort: true
@@ -113,7 +114,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "sentence_count",
-        label: "Sentence Count",
+        label: translate("common.page.table.sentenceCount"),
         options: {
           filter: false,
           sort: true
@@ -121,7 +122,7 @@ class ComparisonReport extends React.Component {
       },
       {
         name: "word_count",
-        label: "Word Count",
+        label: translate('common.page.label.wordCount'),
         options: {
           filter: false,
           sort: true
@@ -131,7 +132,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "rating",
-        label: "Meaning of sentence",
+        label:  translate('common.page.label.meaningOfSentence'),
         options: {
           filter: false,
           sort: true
@@ -139,7 +140,7 @@ class ComparisonReport extends React.Component {
       },
       {
         name: "context_rating",
-        label: "Structure of sentence",
+        label: translate('common.page.label.structureOfsentence'),
 
         options: {
           filter: false,
@@ -149,7 +150,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "spelling_rating",
-        label: "Vocabulary / Lexicon",
+        label: translate('common.page.label.vocabulary'),
         options: {
           filter: false,
           sort: true
@@ -185,7 +186,7 @@ class ComparisonReport extends React.Component {
     const Table2columns = [
       {
         name: "category_name",
-        label: "Category Name",
+        label: translate('common.page.label.categoryName'),
         options: {
           filter: true,
           sort: true,
@@ -195,7 +196,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "records",
-        label: "record",
+        label: translate('common.page.label.record'),
         options: {
           display: "excluded"
         }
@@ -217,7 +218,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "rating",
-        label: "Meaning of sentence",
+        label: translate('common.page.label.meaningOfSentence'),
         options: {
           filter: true,
           sort: true
@@ -226,7 +227,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "context_rating",
-        label: "Structure of sentence",
+        label: translate('common.page.label.structureOfsentence'),
         options: {
           filter: true,
           sort: true
@@ -234,7 +235,7 @@ class ComparisonReport extends React.Component {
       },
       {
         name: "spelling_rating",
-        label: "Vocabulary / Lexicon",
+        label: translate('common.page.label.vocabulary'),
         options: {
           filter: true,
           sort: true
@@ -243,7 +244,7 @@ class ComparisonReport extends React.Component {
       ,
       {
         name: "name_accuracy_rating",
-        label: "Names Accuracy",
+        label: translate('common.page.label.nameAccuracy'),
         options: {
           display: "excluded"
         }
@@ -278,7 +279,7 @@ class ComparisonReport extends React.Component {
     const Table3columns = [
       {
         name: "category_name",
-        label: "Category Name",
+        label: translate('common.page.label.categoryName'),
         options: {
           filter: true,
           sort: true,
@@ -288,7 +289,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "source",
-        label: "Source",
+        label: translate('common.page.label.source'),
         options: {
           filter: true,
           sort: true
@@ -297,7 +298,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "target",
-        label: "Target",
+        label: translate('common.page.label.target'),
         options: {
           filter: true,
           sort: true
@@ -306,7 +307,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "rating",
-        label: "Meaning of sentence",
+        label: translate('common.page.label.meaningOfSentence'),
         options: {
           filter: true,
           sort: true
@@ -315,7 +316,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "context_rating",
-        label: "Structure of sentence",
+        label: translate('common.page.label.structureOfsentence'),
         options: {
           filter: true,
           sort: true
@@ -323,7 +324,7 @@ class ComparisonReport extends React.Component {
       },
       {
         name: "spelling_rating",
-        label: "Vocabulary / Lexicon",
+        label: translate('common.page.label.vocabulary'),
         options: {
           filter: true,
           sort: true
@@ -332,7 +333,7 @@ class ComparisonReport extends React.Component {
       ,
       {
         name: "name_accuracy_rating",
-        label: "Names Accuracy",
+        label: translate('common.page.label.nameAccuracy'),
         options: {
           display: "excluded"
         }
@@ -342,7 +343,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "name_accuracy_rating",
-        label: "Names Accuracy",
+        label: translate('common.page.label.nameAccuracy'),
         options: {
           display: this.state.detailedReport && this.state.detailedReport[0].category_name !== "Names Benchmark" ? "excluded" : "true"
         }
@@ -350,7 +351,7 @@ class ComparisonReport extends React.Component {
       ,
       {
         name: "comments",
-        label: "Comments",
+        label: translate('common.page.label.comment'),
         options: {
           filter: true,
           sort: true
@@ -427,7 +428,7 @@ class ComparisonReport extends React.Component {
 
               <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "2%", marginTop: "38px" }}>
                 <Typography variant="title" color="inherit">
-                  To Date :
+                {translate('common.page.label.toDate')}
                 </Typography>
               </Grid>
               <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "-8%", marginTop: "20px" }}>
@@ -454,7 +455,7 @@ class ComparisonReport extends React.Component {
                   aria-label="edit"
                   style={{ width: "170px", marginLeft: "50%", marginBottom: "4%", marginTop: "1px" }}
                 >
-                  Submit
+                  {translate('common.page.button.submit')}
                 </Button>
               </Grid>
             </Grid>
@@ -473,7 +474,7 @@ class ComparisonReport extends React.Component {
                 this.handleClose( this.state.tockenValue ? "tockenValue" : "tocken");
               }}
             >
-              <CloseIcon /> Back
+              <CloseIcon /> {translate('common.page.button.back')}
             </Fab>
 
 
@@ -482,7 +483,7 @@ class ComparisonReport extends React.Component {
             {! this.state.tockenValue ?(
               <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
               <MUIDataTable
-                title={this.state.title? this.state.title:"Category details"}
+                title={this.state.title? this.state.title: translate('common.page.title.categoryDetails')}
                 data={this.state.categoryReport ? this.state.categoryReport : []}
                 columns={Table2columns}
                 options={options1}
