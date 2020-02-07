@@ -88,7 +88,7 @@ class ViewTranslate extends React.Component {
         APITransport(apiObj);
         this.setState({ open: false, showLoader: true })
         
-        this.setState({ showLoader: true, message: this.state.filename + " file deleted successfully!" })
+        this.setState({ showLoader: true, message: this.state.filename +  translate('viewTranslate.page.label.FileDeleteMessage')})
         setTimeout(() => { this.setState({ snack: true }) }, 700)
         return false;
     };
@@ -283,15 +283,15 @@ class ViewTranslate extends React.Component {
                         aria-describedby="alert-dialog-slide-description"
                     >
                         <DialogTitle id="alert-dialog-slide-title">
-                            Delete
+                        {translate('common.page.label.delete')}
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-slide-description">
-                                Are you sure you want to delete {this.state.filename} file?
+                            {translate('viewTranslate.page.label.areYouWantTodelete')} {this.state.filename}  {translate('viewTranslate.page.label.file')}
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.handleClose} color="primary">No</Button>
+                            <Button onClick={this.handleClose} color="primary">{translate('common.page.label.no')}</Button>
                             <Button onClick={(event) => { this.handleClickOpen(file) }} color="primary">Yes</Button>
                         </DialogActions>
                     </Dialog>

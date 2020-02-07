@@ -71,7 +71,7 @@ class QnA extends React.Component {
                 this.handleTextChange("par", event);
               }}
               id="standard-multiline-static"
-              label="English Paragraph"
+              label={translate('qan.page.label.englishPara')}
               multiline
               style={{ width: "100%" }}
               margin="normal"
@@ -84,7 +84,7 @@ class QnA extends React.Component {
                   this.handleTextChange("question1", event);
                 }}
                 id="standard-multiline-static"
-                label="Question1"
+                label={translate('qan.page.label.question1')}
                 style={{ width: "100%" }}
                 margin="normal"
               />
@@ -92,7 +92,7 @@ class QnA extends React.Component {
                 <CircularProgress />
               ) : (
                 <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
-                  Ans : {this.state.answer1}
+                  {localization('common.page.button.submit')} {this.state.answer1}
                 </Typography>
               )}
             </Grid>
@@ -102,7 +102,7 @@ class QnA extends React.Component {
                   this.handleTextChange("question2", event);
                 }}
                 id="standard-multiline-static"
-                label="Question2"
+                label={translate('qan.page.label.question2')}
                 style={{ width: "100%" }}
                 margin="normal"
               />
@@ -110,7 +110,7 @@ class QnA extends React.Component {
                 <CircularProgress />
               ) : (
                 <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
-                  Ans : {this.state.answer2}
+                  {localization('common.page.button.submit')} {this.state.answer2}
                 </Typography>
               )}
             </Grid>
@@ -121,7 +121,7 @@ class QnA extends React.Component {
                   this.handleTextChange("question3", event);
                 }}
                 id="standard-multiline-static"
-                label="Question3"
+                label={translate('qan.page.label.question3')}
                 style={{ width: "100%" }}
                 margin="normal"
               />
@@ -129,7 +129,7 @@ class QnA extends React.Component {
                 <CircularProgress />
               ) : (
                 <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
-                  Ans : {this.state.answer3}
+                  {localization('common.page.button.submit')} {this.state.answer3}
                 </Typography>
               )}
             </Grid>
@@ -139,7 +139,7 @@ class QnA extends React.Component {
                   this.handleTextChange("question4", event);
                 }}
                 id="standard-multiline-static"
-                label="Question4"
+                label={translate('qan.page.label.question4')}
                 style={{ width: "100%" }}
                 margin="normal"
               />
@@ -147,14 +147,14 @@ class QnA extends React.Component {
                 <CircularProgress />
               ) : (
                 <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
-                  Ans : {this.state.answer4}
+                  {translate('common.page.label.ans')} {this.state.answer4}
                 </Typography>
               )}
             </Grid>
             <br></br>
             <Grid item xs={12} sm={12} lg={12} xl={12}>
               <Button onClick={this.handleSubmit.bind(this)} variant="contained" color="primary">
-                Submit
+              {localization('common.page.button.submit')}
               </Button>
             </Grid>
           </Grid>
