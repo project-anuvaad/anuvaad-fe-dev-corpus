@@ -34,7 +34,7 @@ class ProcessingWorkspace extends React.Component {
 
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "");
+    const apiObj = new FetchWorkspace("", "", "PROCESSED", "");
     APITransport(apiObj);
     this.setState({ showLoader: true });
   };
@@ -45,27 +45,9 @@ class ProcessingWorkspace extends React.Component {
     }
   }
 
-  handleReset = val => {
-    const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", val);
-    APITransport(apiObj);
-    this.setState({ filter: val });
-  };
+  
 
-  changePage = (page, rowsPerPage) => {
-    const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(rowsPerPage, page + 1, "PROCESSED", "");
-    APITransport(apiObj);
-    this.setState({ page, rowsPerPage });
-  };
 
-  handleFilterSubmit = filterList => () => {
-    console.log(filterList);
-    clearTimeout(this.intervalID);
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", filterList);
-    this.props.APITransport(apiObj);
-    this.setState({ filter: filterList });
-  };
 
 
 
@@ -144,8 +126,9 @@ class ProcessingWorkspace extends React.Component {
       viewColumns: false,
       responsive: 'scrollMaxHeight',
       selectableRows: "multiple",
-      // rowsSelected: this.state.selectedWorkspaces,
-      serverSide: true,
+      rowsSelected: this.state.selectedWorkspaces,
+      rowsPerPage: 10,
+      
       count: this.state.count,
       selectableRowsHeader: false,
       page: this.state.page / this.state.rowsPerPage,
@@ -156,7 +139,7 @@ class ProcessingWorkspace extends React.Component {
 
       rowsSelected: this.state.rowsSelected,
       onRowsSelect: (rowsSelected, allRows) => {
-        // console.log(rowsSelected, allRows);
+        
         let selectedItems = []
         this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });
         if (allRows && allRows.length > 0) {
@@ -166,35 +149,12 @@ class ProcessingWorkspace extends React.Component {
             }
             this.setState({selectedWorkspaces : selectedItems})
             if (this.props.handleWorkspaceSelected) {
+              console.log("-----",selectedItems)
               this.props.handleWorkspaceSelected(selectedItems)
-            }
-          
-      },
-
-      onFilterDialogClose: () => { },
-      onFilterChange: (column, filterList, type, reset) => {
-        if (type === "reset") {
-          this.handleReset("");
-        }
-      },
-      customFilterDialogFooter: filterList => (
-        <div style={{ marginTop: "40px" }}>
-          <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            Apply Filters
-          </Button>
-        </div>
-      ),
-      onTableChange: (action, tableState) => {
-        switch (action) {
-          case "changePage":
-            this.changePage(tableState.page, tableState.rowsPerPage);
-            break;
-
-          case "changeRowsPerPage":
-            this.changePage(tableState.page, tableState.rowsPerPage);
-            break;
-        }
+            }   
       }
+
+     
     };
 
     return (
