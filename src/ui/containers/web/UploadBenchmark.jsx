@@ -134,7 +134,7 @@ class UploadBenchmarkfile extends React.Component {
         
         <div style={{ Top: "15px", PaddingBottom: "5px" }}>
           <FormControl fullWidth>
-            <InputLabel htmlFor="Add Name">Filename/Title*</InputLabel>
+            <InputLabel htmlFor="Add Name">{translate('uploadBenchmark.page.label.fileNameTitle')}</InputLabel>
             <Input
             value={this.state.add_name}
             style={{width:'200%'}}
@@ -162,8 +162,8 @@ class UploadBenchmarkfile extends React.Component {
                     }}
                     displayEmpty
                   >
-                    <MenuItem value={"English"}>English</MenuItem>
-                    <MenuItem value={"Hindi"}>Hindi</MenuItem>
+                    <MenuItem value={"English"}>{translate('common.page.label.english')}</MenuItem>
+                    <MenuItem value={"Hindi"}>{translate('common.page.label.hindi')}</MenuItem>
                   </Select>
 
                 </Toolbar>
@@ -177,13 +177,13 @@ class UploadBenchmarkfile extends React.Component {
           id="source"
           showPreviewsInDropzone={true}
           acceptedFiles={[".txt"]}
-          dropzoneText="Please Drag and drop txt file(only)"
+          dropzoneText={translate('uploadBenchmark.page.label.pleaseDrag&Drop')}
           filesLimit={1}
         ></DropzoneArea>
         </div>
 
         <Button variant="contained" color="primary" className={classes.buttons} onClick={this.handleSubmit.bind(this)}>
-          Submit
+        {translate('common.page.button.submit')}
         </Button>
 
         

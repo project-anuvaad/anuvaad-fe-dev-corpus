@@ -131,7 +131,7 @@ class FeedbackForm extends React.Component {
                 paddingBottom: "16px"
               }}
             >
-              FeedBack for {this.state.title}
+              {translate('feedbackForm.page.label.feedbacFor')} {this.state.title}
             </Typography>
             {this.form()}
 
@@ -152,7 +152,7 @@ class FeedbackForm extends React.Component {
                   style={{ width: "62%", marginTop: "6%", height: "56px" }}
                   onClick={this.handleSubmit.bind(this)}
                 >
-                  Submit
+                  {translate('common.page.button.submit')}
                 </Button>
               </Grid>
             </Grid>

@@ -109,14 +109,14 @@ class UserDirectory extends React.Component {
         const columns = [
             {
                 name: "id",
-                label: "id",
+                label: translate('common.page.label.id'),
                 options: {
                     display: 'excluded',
                 }
             },
             {
                 name: "username",
-                label: "Username",
+                label: translate('common.page.label.userName'),
                 options: {
                     filter: true,
                     sort: true,
@@ -125,7 +125,7 @@ class UserDirectory extends React.Component {
             },
             {
                 name: "firstname",
-                label: "First Name",
+                label: translate('common.page.label.firstName'),
                 options: {
                     filter: true,
                     sort: true,
@@ -133,7 +133,7 @@ class UserDirectory extends React.Component {
             },
             {
                 name: "lastname",
-                label: "Last Name",
+                label: translate('common.page.label.lastName'),
                 options: {
                     display: 'excluded',
                 }
@@ -143,7 +143,7 @@ class UserDirectory extends React.Component {
 
 
                 name: "email",
-                label: "Email ID",
+                label: translate('common.page.label.email'),
                 options: {
                     filter: true,
                     sort: true,
@@ -151,7 +151,7 @@ class UserDirectory extends React.Component {
             },
             {
                 name: "roles",
-                label: "Roles",
+                label: translate('common.page.label.role'),
                 options: {
                     display: 'excluded',
                 }
@@ -176,7 +176,7 @@ class UserDirectory extends React.Component {
             },
             {
                 name: "isActive",
-                label: "Active",
+                label:translate('common.page.label.active'),
                 options: {
                     display: 'excluded',
                 }
@@ -194,7 +194,7 @@ class UserDirectory extends React.Component {
                                 <div >
                                     {tableMeta.rowData[1] !== this.state.loginUser ?
                                         <Button variant="contained" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1], tableMeta.rowData[7] ? "DELETE" : "ACTIVE") }} color={tableMeta.rowData[7] ? "" : 'primary'} aria-label="edit" style={{ width: '170px', marginLeft: '-13%', marginBottom: '4%', marginTop: '4%' }}>
-                                            {tableMeta.rowData[7] ? "Deactivate" : "Activate"}
+                                            {tableMeta.rowData[7] ?   translate('userDirectory.page.label.deactivated') : translate('userDirectory.page.label.deactivated')}
                                         </Button> : ''}
                                 </div>
                             );
@@ -230,12 +230,12 @@ class UserDirectory extends React.Component {
             <div>
                 
                 <Fab variant="extended" color="primary" aria-label="Add" style={{  marginLeft :this.state.newUser ? "1":"-2.5%" ,marginTop: '1%' }} onClick={() => this.handleClick([])}>
-                    <AddIcon /> Add User
+                    <AddIcon />{translate('userDirectory.page.label.addUser')}
                 </Fab>
                 <Grid container spacing={24} style={{ padding: 24 }}>
                     <Grid item xs={val} sm={val} lg={val} xl={val}>
                         <div style={{ marginLeft: val == 8 ? '-6%' : '-4%', marginRight: '3%', marginTop: '10px' }}>
-                            <MUIDataTable title={"User Management"} data={this.state.userList} columns={columns} options={options} />
+                            <MUIDataTable title={translate('userDirectory.page.label.userManagement')} data={this.state.userList} columns={columns} options={options} />
                         </div>
                     </Grid>
                     <Grid item xs={4} sm={4} lg={4} xl={4} >

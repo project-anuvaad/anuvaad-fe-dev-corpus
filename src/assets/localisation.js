@@ -98,7 +98,7 @@ var localization_EN_Data = {
     'common.page.text.pending':"Pending",
     'benchMarkGrade.page.label.noOfSentencesPending':"Number of sentences pending : ",
     'benchMarkGrade.page.text.doYouWantSaveChanges':"Do you want to save your changes?",
-    'common.page.label.name':"name",
+    'common.page.label.name':"Name",
     'common.page.label.category':"Category",
     'common.page.label.saveChanges':"Save Changes",
     'common.page.label.language':"Language*",
@@ -154,7 +154,24 @@ var localization_EN_Data = {
     'userProfile.page.message.oldPasswordNewPasswordDifferentAlert':"Old password and new password should be different",
     'userProfile.page.message.passwordSameAlert':"New password and repeat password should be equal",
     'userProfile.page.message.passwordTooShortAlert':"New password is too short(min 6 char)",
-    'userProfile.page.message.enterCorrectPasswordAlert':"Please enter correct current password"
+    'userProfile.page.message.enterCorrectPasswordAlert':"Please enter correct current password",
+    'feedbackForm.page.label.feedbacFor':"FeedBack for",
+    'common.page.label.myProfile':"My Profile",
+    'userProfile.page.label.changePassword':"Change Password",
+   'common.page.label.id' :"id",
+   'common.page.label.userName':"Username",
+   'common.page.label.role':"Roles",
+   'common.page.label.active':"Active",
+   'userDirectory.page.label.deactivated':"Deactivate",
+   'userDirectory.page.label.activate':"Activate",
+   'userDirectory.page.label.userManagement':"User Management",
+   'userDirectory.page.label.addUser':"Add User",
+   'uploadBenchmark.page.label.fileNameTitle':"Filename/Title*",
+   'common.page.label.english':"English",
+   'common.page.label.hindi':"Hindi",
+   'uploadBenchmark.page.label.pleaseDrag&Drop':"Please Drag and drop txt file(only)",
+   'uploadBenchmark.page.label.dropAudio':"Drop audio file here or click here to locate the audi file(.mp3 or .wav or .flac)"
+
 
 
 
