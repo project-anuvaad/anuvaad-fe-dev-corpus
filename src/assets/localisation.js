@@ -123,7 +123,19 @@ var localization_EN_Data = {
     'common.page.label.sourceLanguage':"Source Language",
     ' common.page.label.targetLanguage':"Target Language",
     'viewTranslate.page.label.eta':"ETA",
-    'viewTranslate.page.label.translateUpLoaded':"Translateuploaded"
+    'viewTranslate.page.label.translateUpLoaded':"Translateuploaded",
+    'viewTranslate.page.label.FileDeleteMessage': "file deleted successfully!" ,
+    'common.page.label.delete':"Delete",
+    'viewTranslate.page.label.areYouWantTodelete':"Are you sure you want to delete",
+    'viewTranslate.page.label.file':"file?",
+    'common.page.label.no':"No",
+    'common.page.label.ans':"Ans :",
+    'qan.page.label.englishPara':"English Paragraph",
+    'qan.page.label.question1':"Question1",
+    'qan.page.label.question2':"Question2",
+    'qan.page.label.question3':"Question3",
+    'qan.page.label.question4':"Question4",
+
 
 
 
