@@ -39,6 +39,7 @@ class SentenceQualityCheck extends React.Component {
       sourceLanguage: [],
       language: [],
       step: 1,
+      check: false,
       count: 1,
       message1: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
       csvData:
@@ -55,19 +56,27 @@ class SentenceQualityCheck extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchSearch !== this.props.fetchSearch) {
-      if (!Object.getOwnPropertyNames(this.props.fetchSearch.data).length) {
+      if (!Object.getOwnPropertyNames(this.props.fetchSearch.data).length ) {
+
+        if(this.state.check){
         this.setState({ open: true, sentence: {}, message1: "Process completed Successfully" });
         setTimeout(() => {
           history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
         }, 2000);
       }
+      else{
+        alert("Workspace is empty")
+        history.push(`${process.env.PUBLIC_URL}/stage3/workspace-details`);
+      }
+      }
       this.setState({ sentence: this.props.fetchSearch.data, count: this.props.fetchSearch.count });
     }
 
     if (prevProps.sentenceReplace !== this.props.sentenceReplace) {
-      console.log("-------", this.state.count);
+      console.log("-------sentence", this.props.sentenceReplace);
       if (this.state.count !== 1) {
         const { APITransport } = this.props;
+        this.setState({ check: true})
         const apiObj = new FetchSearch(this.props.match.params.session_id);
         APITransport(apiObj);
       } else {
@@ -92,8 +101,13 @@ class SentenceQualityCheck extends React.Component {
   handleSubmitAll = (value, val) => {
     console.log("=======", value);
     const { APITransport } = this.props;
+    if(value.changes && value.changes.length>0){
     const apiObj = new AcceptAll(value);
     APITransport(apiObj);
+    }
+    else{
+      alert("there is no sentence here to accept")
+    }
   };
 
   render() {

@@ -32,7 +32,7 @@ export default class AcceptAllSentence extends API {
     
     return {
         processId: this.workspace.processId,
-        source_search: this.workspace.changes[0].source_search
+        source_search: this.workspace.changes && this.workspace.changes.length>0 && this.workspace.changes[0].source_search
 
     };
   }
