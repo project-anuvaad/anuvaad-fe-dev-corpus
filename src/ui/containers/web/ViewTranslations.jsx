@@ -146,7 +146,7 @@ class Corpus extends React.Component {
         <Grid container spacing={24} style={{ padding: 24 }}>
           <Grid item xs={12} sm={12} lg={12} xl={12}>
             <Typography component="h2" variant="title" gutterBottom>
-              Translations
+            {translate('common.page.label.translation')}
             </Typography>
           </Grid>
           {/* <CSVDownload data={csvData} target="_blank" /> */}
@@ -158,8 +158,8 @@ class Corpus extends React.Component {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Source</TableCell>
-                      <TableCell align="right">Target</TableCell>
+                      <TableCell>{translate('common.page.label.source')}</TableCell>
+                      <TableCell align="right">{translate('common.page.label.target')}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

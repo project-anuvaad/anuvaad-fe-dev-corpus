@@ -77,13 +77,13 @@ class UserProfile extends React.Component {
     if (prevProps.updatePasswordstatus !== this.props.updatePasswordstatus) {
       if (this.props.updatePasswordstatus.http.status === 400) {
         this.setState({
-          message: "Current password is wrong. Please try again",
+          message: translate('userProfile.page.message.passwordErroeTryAgain'),
           status: this.props.updatePasswordstatus.http.status
         });
       } else if (this.props.updatePasswordstatus.http.status === 200) {
         this.setState({
           open: true,
-          messageSnack: "Successfully changed password. Please login with your new Password",
+          messageSnack:  translate('userProfile.page.message.passwordChangeSuccessLogin'),
           status: this.props.updatePasswordstatus.http.status
         });
 
@@ -120,22 +120,22 @@ class UserProfile extends React.Component {
             // setTimeout(()=>{history.push("{this.handleClose();history.push(`${process.env.PUBLIC_URL}/logout`)}")},200
           } else {
             this.setState({
-              message: "Old password and new password should be different"
+              message: translate('userProfile.page.message.oldPasswordNewPasswordDifferentAlert')
             });
           }
         } else {
           this.setState({
-            message: "New password and repeat password should be equal"
+            message: translate('userProfile.page.message.passwordSameAlert')
           });
         }
       } else {
         this.setState({
-          message: "New password is too short(min 6 char)"
+          message: translate('userProfile.page.message.passwordTooShortAlert')
         });
       }
     } else {
       this.setState({
-        message: "Please enter correct current password"
+        message: translate('userProfile.page.message.enterCorrectPasswordAlert')
       });
     }
   };
