@@ -29,6 +29,7 @@ class NewExtraction extends React.Component {
       csvName: "",
       value: 1,
       load: false,
+      count :1,
 
       message: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
 
@@ -93,24 +94,29 @@ class NewExtraction extends React.Component {
     });
   }
 
+  renderApi(){
+    console.log("----",this.state.count)
+    if(this.state.count === 2){
+    const { APITransport } = this.props;
+        const apiObj = new RunExperiment(this.state.workspaceName,"configFile" in this.props.configUplaod && this.props.configUplaod.configFile, "csvFile" in this.props.configUplaod && this.props.configUplaod.csvFile);
+        this.state.csvFile && APITransport(apiObj);
+        this.setState({count:1})
+    }
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.configUplaod !== this.props.configUplaod) {
-      this.setState({ files: this.props.configUplaod });
-
+      this.setState({ files: this.props.configUplaod,count: this.state.count+1 });
+      console.log("-",this.state.count)
       const configFilepath = "configFile" in this.props.configUplaod && this.props.configUplaod.configFile;
       const csvFilepath = "csvFile" in this.props.configUplaod && this.props.configUplaod.csvFile;
 
-      if (configFilepath && csvFilepath) {
-        const { APITransport } = this.props;
-        const apiObj = new RunExperiment(this.state.workspaceName, configFilepath, csvFilepath);
-        this.state.csvFile && APITransport(apiObj);
-        
-      }
+      this.renderApi();
     }
 
     if (prevProps.fetchDefaultConfig !== this.props.fetchDefaultConfig) {
-      console.log(this.props.fetchDefaultConfig.data)
-      this.setState({ defaultConfig: this.props.fetchDefaultConfig.data[0], defaultCsv: this.props.fetchDefaultConfig.data[1]});
+      console.log(this.props.fetchDefaultConfig.data);
+      this.setState({ defaultConfig: this.props.fetchDefaultConfig.data[0], defaultCsv: this.props.fetchDefaultConfig.data[1] });
     }
 
     if (prevProps.workspaceDetails !== this.props.workspaceDetails) {
@@ -178,9 +184,9 @@ class NewExtraction extends React.Component {
                 <a
                   href={
                     this.state.defaultConfig
-                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" 
-                        }/download/${ 
-                        this.state.defaultConfig.path}`
+                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+                          this.state.defaultConfig.path
+                        }`
                       : ""
                   }
                   style={{ textDecoration: "none" }}
@@ -218,9 +224,9 @@ class NewExtraction extends React.Component {
                 <a
                   href={
                     this.state.defaultConfig
-                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" 
-                        }/download/${ 
-                        this.state.defaultCsv.path}`
+                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+                          this.state.defaultCsv.path
+                        }`
                       : ""
                   }
                   style={{ textDecoration: "none" }}
