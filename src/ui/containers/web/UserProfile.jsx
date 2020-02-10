@@ -21,6 +21,7 @@ import Updatepassword from "../../../flux/actions/apis/updatepassword";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 import MySnackbarContentWrapper from "../../components/web/common/Snackbar";
+import { translate } from '../../../assets/localisation';
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -77,13 +78,13 @@ class UserProfile extends React.Component {
     if (prevProps.updatePasswordstatus !== this.props.updatePasswordstatus) {
       if (this.props.updatePasswordstatus.http.status === 400) {
         this.setState({
-          message: translate('userProfile.page.message.passwordErroeTryAgain'),
+          message: translate('userProfile.page.message.TryAgain'),
           status: this.props.updatePasswordstatus.http.status
         });
       } else if (this.props.updatePasswordstatus.http.status === 200) {
         this.setState({
           open: true,
-          messageSnack:  translate('userProfile.page.message.passwordChangeSuccessLogin'),
+          messageSnack: translate('userProfile.page.message.passwordChangeSuccessLogin'),
           status: this.props.updatePasswordstatus.http.status
         });
 
@@ -120,7 +121,7 @@ class UserProfile extends React.Component {
             // setTimeout(()=>{history.push("{this.handleClose();history.push(`${process.env.PUBLIC_URL}/logout`)}")},200
           } else {
             this.setState({
-              message: translate('userProfile.page.message.oldPasswordNewPasswordDifferentAlert')
+              message: translate('userProfile.page.message.passwordMismatchAlert')
             });
           }
         } else {
@@ -145,13 +146,13 @@ class UserProfile extends React.Component {
       <div>
         <Paper style={{ marginLeft: "23%", width: "46%", marginTop: "5%" }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
-          {translate('common.page.label.myProfile')}{" "}
+            {translate('common.page.label.myProfile')}{" "}
           </Typography>
 
           <Grid container spacing={4}>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "10.5%" }}>
-              {translate('common.page.label.firstName')}{" "}
+                {translate('common.page.label.firstName')}{" "}
               </Typography>
             </Grid>
             <Grid item xs={6} sm={6} lg={6} xl={6}>
@@ -165,7 +166,7 @@ class UserProfile extends React.Component {
             <Grid container spacing={4}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
-                {translate('common.page.label.lastName')}{" "}
+                  {translate('common.page.label.lastName')}{" "}
                 </Typography>
               </Grid>
               <Grid item xs={6} sm={6} lg={6} xl={6}>
@@ -180,7 +181,7 @@ class UserProfile extends React.Component {
             <Grid container spacing={4}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
-                {translate('common.page.label.email')}{" "}
+                  {translate('common.page.label.email')}{" "}
                 </Typography>
               </Grid>
               <Grid item xs={6} sm={6} lg={6} xl={6}>
@@ -215,7 +216,7 @@ class UserProfile extends React.Component {
               variant="h5"
               style={{ color: darkBlack, background: blueGrey50, paddingLeft: "28%", paddingBottom: "12px", paddingTop: "8px" }}
             >
-             {translate('userProfile.page.label.changePassword')}
+              {translate('userProfile.page.label.changePassword')}
             </Typography>
 
             <DialogContent>
@@ -281,7 +282,7 @@ class UserProfile extends React.Component {
                       aria-label="edit"
                       style={{ width: "50%", marginBottom: "4%", marginTop: "4%" }}
                     >
-                     {translate('common.page.button.cancel')}
+                      {translate('common.page.button.cancel')}
                     </Button>
                     <Button
                       variant="contained"
@@ -291,7 +292,7 @@ class UserProfile extends React.Component {
                       aria-label="edit"
                       style={{ width: "50%", marginBottom: "4%", marginTop: "4%" }}
                     >
-                    {translate('common.page.button.submit')}
+                      {translate('common.page.button.submit')}
                     </Button>
                   </DialogActions>
                 </div>
@@ -299,8 +300,8 @@ class UserProfile extends React.Component {
             </DialogContent>
           </Dialog>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
     );
   }

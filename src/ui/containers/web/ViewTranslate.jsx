@@ -173,7 +173,7 @@ class ViewTranslate extends React.Component {
 
             {
                 name: "targetLang",
-                label: translate(' common.page.label.targetLanguage'),
+                label: translate('common.page.label.targetLanguage'),
                 options: {
                     filter: true,
                     sort: true,
@@ -287,7 +287,7 @@ class ViewTranslate extends React.Component {
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-slide-description">
-                            {translate('viewTranslate.page.label.areYouWantTodelete')} {this.state.filename}  {translate('viewTranslate.page.label.file')}
+                            {translate('viewTranslate.page.label.deleteRequest')} {this.state.filename}  {translate('viewTranslate.page.label.file')}
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

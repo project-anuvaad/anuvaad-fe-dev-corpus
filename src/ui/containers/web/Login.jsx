@@ -59,7 +59,7 @@ class Login extends React.Component {
         history.push(`${process.env.PUBLIC_URL}/corpus`);
       }, 1000);
     } else {
-      alert("Wrong credentials");
+      alert(translate('login.page.alert.wrongCredentials'));
     }
     // APITransporter(apiObj);
   };
@@ -73,11 +73,11 @@ class Login extends React.Component {
             <Paper className={classes.paper}>
               <form method="post">
                 <FormControl fullWidth>
-                  <InputLabel htmlFor="email">Name</InputLabel>
+                  <InputLabel htmlFor="email">{translate('common.page.label.name')}</InputLabel>
                   <Input id="email" floatingLabelText="E-mail" onChange={this.processInputReceived("email")} />
                 </FormControl>
                 <FormControl fullWidth>
-                  <InputLabel htmlFor="password">Password</InputLabel>
+                  <InputLabel htmlFor="password">{translate('common.page.label.password')}</InputLabel>
                   <Input id="password" floatingLabelText="Password" type="password" onChange={this.processInputReceived("password")} />
                 </FormControl>
                 <div>
@@ -89,12 +89,12 @@ class Login extends React.Component {
                         iconclassName={classes.checkRemember.iconclassName}
                       />
                     }
-                    label="Remember me"
+                    label={translate('login.page.label.remeberMe')}
                   />
 
                   {/* <Link to="/"> */}
                   <Button variant="contained" onClick={this.processLoginButtonPressed} color="secondary" aria-label="edit">
-                    Login
+                  {translate('common.page.button.login')}
                   </Button>
                   {/* </Link> */}
                 </div>

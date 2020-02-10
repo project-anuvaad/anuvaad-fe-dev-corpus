@@ -243,7 +243,7 @@ class Dashboard extends React.Component {
             <Grid container spacing={8}>
               <Grid item xs={8} sm={8} lg={8} xl={8}>
                 <Typography value="" variant="title" gutterBottom={true} style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                  Please select model{" "}
+                {translate('common.page.label.pleaseSelectModel')}{" "}
                 </Typography>
               </Grid>
               <Grid item xs={3} sm={3} lg={3} xl={3}>

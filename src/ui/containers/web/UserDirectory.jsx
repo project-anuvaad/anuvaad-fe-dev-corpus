@@ -17,6 +17,7 @@ import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import UserUpdate from "./UserUpdate";
 import Button from "@material-ui/core/Button";
+import { translate } from '../../../assets/localisation';
 var file = "";
 class UserDirectory extends React.Component {
     constructor(props) {
@@ -54,12 +55,12 @@ class UserDirectory extends React.Component {
         const { APITransport } = this.props;
         const apiObj = new UserDelete(name, status);
         APITransport(apiObj);
-        this.setState({ open: false, openDialog: false, showLoader: true,openValue: false })
+        this.setState({ open: false, openDialog: false, showLoader: true, openValue: false })
         const apiObj1 = new UserDirectoryList();
         APITransport(apiObj1)
         var a =
             this.setState({ showLoader: true, message: this.state.name + (this.state.status === "DELETE" ? " user deactivated successfully!" : " user activated successfully!") })
-        
+
         return false;
     };
 
@@ -78,18 +79,18 @@ class UserDirectory extends React.Component {
             })
         }
     }
-    handleClick=(rowData)=>{
-        
-        rowData[1]!== this.state.loginUser ? 
-        this.setState({openValue:true,user:rowData, newUser: rowData[0] ? false : true})
-        :''
-        
+    handleClick = (rowData) => {
+
+        rowData[1] !== this.state.loginUser ?
+            this.setState({ openValue: true, user: rowData, newUser: rowData[0] ? false : true })
+            : ''
+
 
     }
 
 
     handleSubmit = (value, name, status) => {
-        
+
         this.setState({
             openDialog: true,
             open: true,
@@ -99,9 +100,9 @@ class UserDirectory extends React.Component {
         });
     }
 
-    handleClose=()=>{
-        
-        this.setState({open:false, snack:false, openValue: false,openDialog: false})
+    handleClose = () => {
+
+        this.setState({ open: false, snack: false, openValue: false, openDialog: false })
     }
 
     render() {
@@ -176,7 +177,7 @@ class UserDirectory extends React.Component {
             },
             {
                 name: "isActive",
-                label:translate('common.page.label.active'),
+                label: translate('common.page.label.active'),
                 options: {
                     display: 'excluded',
                 }
@@ -194,7 +195,7 @@ class UserDirectory extends React.Component {
                                 <div >
                                     {tableMeta.rowData[1] !== this.state.loginUser ?
                                         <Button variant="contained" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1], tableMeta.rowData[7] ? "DELETE" : "ACTIVE") }} color={tableMeta.rowData[7] ? "" : 'primary'} aria-label="edit" style={{ width: '170px', marginLeft: '-13%', marginBottom: '4%', marginTop: '4%' }}>
-                                            {tableMeta.rowData[7] ?   translate('userDirectory.page.label.deactivated') : translate('userDirectory.page.label.deactivated')}
+                                            {tableMeta.rowData[7] ? translate('userDirectory.page.label.deactivated') : translate('userDirectory.page.label.deactivated')}
                                         </Button> : ''}
                                 </div>
                             );
@@ -224,12 +225,12 @@ class UserDirectory extends React.Component {
             onRowClick: rowData => this.handleClick(rowData)
         };
 
-        console.log("user",this.state.status)
-            const val = this.state.openValue  ? 8 : 12
+        console.log("user", this.state.status)
+        const val = this.state.openValue ? 8 : 12
         return (
             <div>
-                
-                <Fab variant="extended" color="primary" aria-label="Add" style={{  marginLeft :this.state.newUser ? "1":"-2.5%" ,marginTop: '1%' }} onClick={() => this.handleClick([])}>
+
+                <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: this.state.newUser ? "1" : "-2.5%", marginTop: '1%' }} onClick={() => this.handleClick([])}>
                     <AddIcon />{translate('userDirectory.page.label.addUser')}
                 </Fab>
                 <Grid container spacing={24} style={{ padding: 24 }}>
@@ -239,15 +240,15 @@ class UserDirectory extends React.Component {
                         </div>
                     </Grid>
                     <Grid item xs={4} sm={4} lg={4} xl={4} >
-                    
+
                         <UserUpdate userDetails={this.state.user} openValue={this.state.openValue} handleCancel={this.handleCancel} newUser={this.state.newUser} />
-                    
+
                     </Grid>
 
                 </Grid>
 
                 {this.state.openDialog &&
-                <DeleteUser value={this.state.value} name={this.state.name} handleClickOpen= {this.handleClickOpen} open={this.state.open} status={this.state.status} handleClose={this.handleClose.bind(this)}/>
+                    <DeleteUser value={this.state.value} name={this.state.name} handleClickOpen={this.handleClickOpen} open={this.state.open} status={this.state.status} handleClose={this.handleClose.bind(this)} />
                 }
 
 

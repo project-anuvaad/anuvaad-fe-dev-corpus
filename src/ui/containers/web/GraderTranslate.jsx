@@ -167,7 +167,7 @@ class GarderTranslate extends React.Component {
                     }}
                   >
                     <UploadFile fontSize="large" />
-                    &nbsp;&nbsp;&nbsp;Upload File
+                    &nbsp;&nbsp;&nbsp;{translate('common.page.label.uploadFile')}
                     
                   </Button>
                 </div>
