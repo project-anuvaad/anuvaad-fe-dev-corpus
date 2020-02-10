@@ -12,6 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import Toolbar from "@material-ui/core/Toolbar";
 import BackIcon from "@material-ui/icons/ChevronLeft";
 import history from "../../../../web.history";
+import { translate } from '../../../../assets/localisation';
 
 class DataPipelineDownload extends React.Component {
   constructor(props) {
