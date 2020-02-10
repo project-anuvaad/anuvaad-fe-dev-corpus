@@ -17,6 +17,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
+import { translate } from '../../../assets/localisation';
 class SentenceTranslate extends React.Component {
   constructor(props) {
     super(props);

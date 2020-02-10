@@ -21,6 +21,7 @@ import C from '../../../flux/actions/constants'
 import Fab from '@material-ui/core/Fab';
 import Zoom from '@material-ui/core/Zoom';
 import CloseIcon from '@material-ui/icons/Close';
+import { translate } from '../../../assets/localisation';
 
 const langs = [
   { label: 'Hindi', code: 'hi', type: C.HINDI },
