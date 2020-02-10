@@ -1,4 +1,5 @@
 import React from 'react';
+import { translate } from '../../../assets/localisation';
 
 const NotFound = () => (
   <div>
@@ -6,6 +7,6 @@ const NotFound = () => (
       <center>{translate('notFound.page.text.notFoundError')}</center>
     </div>
   </div>
-  );
+);
 
 export default NotFound;

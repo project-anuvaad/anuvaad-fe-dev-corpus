@@ -3,6 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import { white, grey900, grey500 } from "material-ui/styles/colors";
 import { BarChart, Bar, ResponsiveContainer, XAxis } from "recharts";
 import GlobalStyles from "../../../styles/web/styles";
+import { translate } from '../../../../assets/localisation';
 
 const MonthlySales = props => {
   const { data } = props;

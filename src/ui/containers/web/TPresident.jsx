@@ -19,7 +19,8 @@ import { withRouter } from "react-router-dom";
 import C from '../../../flux/actions/constants'
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
-import { blueGrey50} from "material-ui/styles/colors";
+import { blueGrey50 } from "material-ui/styles/colors";
+import { translate } from '../../../assets/localisation';
 const langs = [
   { label: 'Hindi', code: 'hi', type: C.HINDI },
   { label: 'Bengali', code: 'bn', type: C.BENGALI },
@@ -59,9 +60,9 @@ class Translate extends React.Component {
         this.setState({
           [lang.label.toLowerCase()]: this.props[lang.label.toLowerCase()]
         })
-       
+
       }
-      
+
     })
   }
 
@@ -178,7 +179,7 @@ class Translate extends React.Component {
                 </React.Fragment>
               </Grid> */}
 
-              <Grid container item xs={this.state.showZoomed ? 6 : 8} sm={this.state.showZoomed ? 6 : 8} lg={this.state.showZoomed ? 6 : 8} xl={this.state.showZoomed ? 6 : 8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll',marginBottom:'10px', paddingBottom:'10px'}} id="cards">
+              <Grid container item xs={this.state.showZoomed ? 6 : 8} sm={this.state.showZoomed ? 6 : 8} lg={this.state.showZoomed ? 6 : 8} xl={this.state.showZoomed ? 6 : 8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll', marginBottom: '10px', paddingBottom: '10px' }} id="cards">
                 <React.Fragment>
                   {this.state.showZoomed &&
                     <Zoom in={this.state.zoom} timeout={700}>

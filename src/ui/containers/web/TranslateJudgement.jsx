@@ -17,6 +17,7 @@ import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import C from "../../../flux/actions/constants";
 import SCImage from "../../../assets/icon.jpg";
+import { translate } from '../../../assets/localisation';
 
 const langs = [
   { label: "Hindi", labelSecondary: "हिन्दी", code: "hi", type: C.HINDI, color: "#ff8000" },
@@ -172,20 +173,20 @@ class Translate extends React.Component {
             </div>
           </div>
         ) : (
-          !this.state.showLangLayout && (
-            <div className="fadeUp">
-              <textarea
-                className="idbox"
-                rows="5"
-                cols="50"
-                placeholder={translate('common.page.placeholder.enterTextHere')}
-                onChange={event => {
-                  this.handleTextChange("sentence", event);
-                }}
-              />
-            </div>
-          )
-        )}
+            !this.state.showLangLayout && (
+              <div className="fadeUp">
+                <textarea
+                  className="idbox"
+                  rows="5"
+                  cols="50"
+                  placeholder={translate('common.page.placeholder.enterTextHere')}
+                  onChange={event => {
+                    this.handleTextChange("sentence", event);
+                  }}
+                />
+              </div>
+            )
+          )}
         <div>
           {this.state.showLangLayout ? (
             <Grid container spacing={16} style={{ paddingLeft: "1%" }}>
@@ -246,24 +247,24 @@ class Translate extends React.Component {
               >
                 <React.Fragment>
                   {langs.map((lang, index) => (
-                      <Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className="slideUp">
-                        <AppCard
-                          cardKey={lang.label}
-                          header={`${lang.label  } - ${  lang.labelSecondary}`}
-                          handleExpandClick={this.handleExpandClick.bind(this)}
-                          expanded={this.state[lang.label]}
-                          color={lang.color}
-                          body={
-                            this.state[lang.label.toLowerCase()] &&
+                    <Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className="slideUp">
+                      <AppCard
+                        cardKey={lang.label}
+                        header={`${lang.label} - ${lang.labelSecondary}`}
+                        handleExpandClick={this.handleExpandClick.bind(this)}
+                        expanded={this.state[lang.label]}
+                        color={lang.color}
+                        body={
+                          this.state[lang.label.toLowerCase()] &&
                             this.state[lang.label.toLowerCase()] &&
                             Array.isArray(this.state[lang.label.toLowerCase()])
-                              ? this.state[lang.label.toLowerCase()].map((elem) => elem.tgt + (index === 0 && elem.tgt.indexOf("।") < 0 && elem.tgt.indexOf("?") < 0 ? "। " : " "))
-                              : ""
-                          }
-                          style={{ background: lang.color }}
-                        />
-                      </Grid>
-                    ))}
+                            ? this.state[lang.label.toLowerCase()].map((elem) => elem.tgt + (index === 0 && elem.tgt.indexOf("।") < 0 && elem.tgt.indexOf("?") < 0 ? "। " : " "))
+                            : ""
+                        }
+                        style={{ background: lang.color }}
+                      />
+                    </Grid>
+                  ))}
                 </React.Fragment>
               </Grid>
             </Grid>
