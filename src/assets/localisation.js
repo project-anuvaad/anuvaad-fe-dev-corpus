@@ -53,7 +53,7 @@ var localization_EN_Data = {
     'common.page.label.addDataSource':"Add DataSource",
     'common.page.processData.pressNext':'Press "Next" to extract sentences',
     'common.page.label.found': "Found",
-    'common.page.label.tokens':"tockens",
+    'common.page.label.tokens':"tokens",
     'common.page.processData.gotoStep2':"Press Next to goto Step 2",
     'common.page.message.step2Completed':"Step 2 process started successfully ",
     'common.page.alert.fileUpload':"Please upload token file properly",

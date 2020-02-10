@@ -10,6 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchworkspacedetails";
+import { translate } from '../../../../assets/localisation';
 
 class DownloadSentence extends React.Component {
   constructor(props) {
@@ -70,7 +71,7 @@ class DownloadSentence extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
-              {translated('sentenceExtraction.page.label.ExtractedSent')}
+              {translate('sentenceExtraction.page.label.ExtractedSent')}
               </Typography>
               <br />
             </Grid>
