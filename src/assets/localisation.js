@@ -219,7 +219,9 @@ var localization_EN_Data = {
    'translation.page.label.translationList':"Translation List",
    'corpus.page.title.reject':"Reject",
    'userUpdate.page.label.selectRole':"Select Role",
-   'userUpdate.page.label.selectHighCourt':"Select High Court"
+   'userUpdate.page.label.selectHighCourt':"Select High Court",
+   'monthlySales.page.label.monthlysales':"Monthly Sales",
+   'recentlyProducts.page.label.view':"View"
 
 
 
