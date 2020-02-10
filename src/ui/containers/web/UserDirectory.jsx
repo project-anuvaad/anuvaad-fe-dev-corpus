@@ -59,7 +59,7 @@ class UserDirectory extends React.Component {
         const apiObj1 = new UserDirectoryList();
         APITransport(apiObj1)
         var a =
-            this.setState({ showLoader: true, message: this.state.name + (this.state.status === "DELETE" ? " user deactivated successfully!" : " user activated successfully!") })
+            this.setState({ showLoader: true, message: this.state.name + (this.state.status === "DELETE" ? translate('userDirectory.page.message.deactivated') : translate('userDirectory.page.message.activated')) })
 
         return false;
     };
@@ -206,7 +206,7 @@ class UserDirectory extends React.Component {
             },
             {
                 name: "high_court_code",
-                label: "court name",
+                label: translate('userDirectory.page.label.courtName'),
                 options: {
                     display: 'excluded',
                 }

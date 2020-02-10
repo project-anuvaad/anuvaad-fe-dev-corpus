@@ -187,7 +187,7 @@ class GarderTranslate extends React.Component {
           </Grid>
         </Grid>
         { this.state.value>0 &&
-      (<Snackbars message={this.state.message} variant={this.props.apistatus.error ? translate('common.page.text.error'):translate('common.page.text.success')} openValue={true}/>
+      (<Snackbars message={this.state.message} variant={this.props.apistatus.error ? "error":"success"} openValue={true}/>
      
       )}
       </div>

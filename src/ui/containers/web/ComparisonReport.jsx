@@ -39,12 +39,11 @@ class ComparisonReport extends React.Component {
   }
 
   handleClick = rowData => {
-    console.log(rowData[0])
-    this.setState({ tocken: true, categoryReport: rowData ? rowData[1]: '', title:rowData[0]  });
+    this.setState({ tocken: true, categoryReport: rowData ? rowData[1] : '', title: rowData[0] });
   };
 
-  handleClickModel= rowData => {
-    this.setState({ tockenValue: true, detailedReport: rowData ? rowData[1]: '' });
+  handleClickModel = rowData => {
+    this.setState({ tockenValue: true, detailedReport: rowData ? rowData[1] : '' });
   };
 
   handleSubmit() {
@@ -63,7 +62,7 @@ class ComparisonReport extends React.Component {
     }
   }
   handleClose = value => {
-    
+
     this.setState({ [value]: false });
   };
   handleTextChange(key, event) {
@@ -86,14 +85,14 @@ class ComparisonReport extends React.Component {
 
       {
         name: "categories",
-        label:  translate('common.page.label.record'),
+        label: translate('common.page.label.record'),
         options: {
           filter: false,
           display: "excluded"
         }
       },
 
-      
+
       {
         name: "source_lang",
         label: translate('common.page.label.source'),
@@ -132,7 +131,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "rating",
-        label:  translate('common.page.label.meaningOfSentence'),
+        label: translate('common.page.label.sentenceMeaning'),
         options: {
           filter: false,
           sort: true
@@ -171,7 +170,7 @@ class ComparisonReport extends React.Component {
       }
     ];
 
-   
+
     const options1 = {
       filterType: "dropdown",
       download: false,
@@ -179,8 +178,8 @@ class ComparisonReport extends React.Component {
       fixedHeader: true,
       filter: true,
       selectableRows: "none",
-     
-      onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : !this.state.tockenValue ? rowData => this.handleClickModel(rowData):''
+
+      onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : !this.state.tockenValue ? rowData => this.handleClickModel(rowData) : ''
     };
 
     const Table2columns = [
@@ -202,7 +201,7 @@ class ComparisonReport extends React.Component {
         }
       },
 
-    
+
 
       {
         name: "Total Sentence",
@@ -218,7 +217,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "rating",
-        label: translate('common.page.label.meaningOfSentence'),
+        label: translate('common.page.label.sentenceMeaning'),
         options: {
           filter: true,
           sort: true
@@ -307,7 +306,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "rating",
-        label: translate('common.page.label.meaningOfSentence'),
+        label: translate('common.page.label.sentenceMeaning'),
         options: {
           filter: true,
           sort: true
@@ -339,7 +338,7 @@ class ComparisonReport extends React.Component {
         }
       },
 
-      
+
 
       {
         name: "name_accuracy_rating",
@@ -357,9 +356,9 @@ class ComparisonReport extends React.Component {
           sort: true
         }
       }
-      
+
     ];
-    
+
     const options2 = {
       filterType: "checkbox",
       print: false,
@@ -409,7 +408,7 @@ class ComparisonReport extends React.Component {
             <Grid container spacing={24} style={{ padding: 5 }}>
               <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "16%", marginTop: "38px" }}>
                 <Typography variant="title" color="inherit">
-                  From Date :
+                  {translate('common.page.label.fromDate')}
                 </Typography>
               </Grid>
               <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "-8%", marginTop: "20px", width: "40px" }}>
@@ -428,7 +427,7 @@ class ComparisonReport extends React.Component {
 
               <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "2%", marginTop: "38px" }}>
                 <Typography variant="title" color="inherit">
-                {translate('common.page.label.toDate')}
+                  {translate('common.page.label.toDate')}
                 </Typography>
               </Grid>
               <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "-8%", marginTop: "20px" }}>
@@ -460,51 +459,51 @@ class ComparisonReport extends React.Component {
               </Grid>
             </Grid>
             <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-              <MUIDataTable title={"Comparison Report"} data={this.state.graderDetails ? this.state.graderDetails: []} columns={Table1columns} options={options1} />
+              <MUIDataTable title={translate('common.page.title.comparisonReport')} data={this.state.graderDetails ? this.state.graderDetails : []} columns={Table1columns} options={options1} />
             </div>
           </div>
         ) : (
-          <div>
-            <Fab
-              variant="extended"
-              color="primary"
-              aria-label="Add"
-              style={{ marginLeft: "-4%", marginTop: "1%" }}
-              onClick={() => {
-                this.handleClose( this.state.tockenValue ? "tockenValue" : "tocken");
-              }}
-            >
-              <CloseIcon /> {translate('common.page.button.back')}
-            </Fab>
+            <div>
+              <Fab
+                variant="extended"
+                color="primary"
+                aria-label="Add"
+                style={{ marginLeft: "-4%", marginTop: "1%" }}
+                onClick={() => {
+                  this.handleClose(this.state.tockenValue ? "tockenValue" : "tocken");
+                }}
+              >
+                <CloseIcon /> {translate('common.page.button.back')}
+              </Fab>
 
 
-            
 
-            {! this.state.tockenValue ?(
-              <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-              <MUIDataTable
-                title={this.state.title? this.state.title: translate('common.page.title.categoryDetails')}
-                data={this.state.categoryReport ? this.state.categoryReport : []}
-                columns={Table2columns}
-                options={options1}
-              />
-              </div>
-            ) : (
-              <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-                <MUIDataTable
-                  title={this.state.detailedReport && this.state.detailedReport[0].category_name}
-                  data={this.state.detailedReport ? this.state.detailedReport : []}
-                  columns={Table3columns}
-                  options={options2}
-                />
-              </div>
 
-            
-            
-          
-        )}
-          </div>
-        )}
+              {!this.state.tockenValue ? (
+                <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+                  <MUIDataTable
+                    title={this.state.title ? this.state.title : translate('common.page.title.categoryDetails')}
+                    data={this.state.categoryReport ? this.state.categoryReport : []}
+                    columns={Table2columns}
+                    options={options1}
+                  />
+                </div>
+              ) : (
+                  <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+                    <MUIDataTable
+                      title={this.state.detailedReport && this.state.detailedReport[0].category_name}
+                      data={this.state.detailedReport ? this.state.detailedReport : []}
+                      columns={Table3columns}
+                      options={options2}
+                    />
+                  </div>
+
+
+
+
+                )}
+            </div>
+          )}
       </div>
     );
   }
