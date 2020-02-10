@@ -79,7 +79,7 @@ class ApplyToken extends React.Component {
 
                 <Grid item xs={5} sm={5} lg={5} xl={5}>
                   <Typography gutterBottom variant="title" component="h2">
-                    Found {this.state.workspaceDetails.token_count ? this.state.workspaceDetails.token_count : 0} tokens
+                  {translate('common.page.label.found')} {this.state.workspaceDetails.token_count ? this.state.workspaceDetails.token_count : 0} {translate('common.page.label.tokens')}
                   </Typography>
                 </Grid>
               </Grid>

@@ -8,6 +8,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
+import { translate } from '../../../../assets/localisation';
 
 class ExistingWorkspace extends React.Component {
   intervalID;
