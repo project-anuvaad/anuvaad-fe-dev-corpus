@@ -89,7 +89,7 @@ class CreateWorkspace extends React.Component {
         this.state.csvName && APITransport(apiObj);
         this.setState({ load: true });
     } else {
-      alert("Fields should not be empty");
+      alert(translate('common.page.label.pageWarning'));
     }
   }
 
@@ -188,7 +188,7 @@ class CreateWorkspace extends React.Component {
 
               <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                CSV file : &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+              {translate('common.page.label.csvFile')} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 
               </Typography>
               <br />

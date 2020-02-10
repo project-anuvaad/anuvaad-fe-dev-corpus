@@ -220,7 +220,7 @@ class NewSentanceExtraction extends React.Component {
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                {translate('newSentenceExtraction.page.label.csvFile')} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                {translate('common.page.label.csvFile')} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 <a
                   href={
                     this.state.defaultConfig

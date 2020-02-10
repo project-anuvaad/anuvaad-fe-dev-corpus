@@ -22,7 +22,7 @@ var localization_EN_Data = {
     'newSentenceExtraction.page.label.confiFile':"Configuration file :",
     'newSentenceExtraction.page.link.globalConfig':"Download global configuration",
     'common.page.button.upload':"Upload",
-    'newSentenceExtraction.page.label.csvFile':"CSV file :",
+    'common.page.label.csvFile':"CSV file :",
     'newSentenceExtraction.page.link.SampleCsv':"Download sample csv",
     'common.page.button.start':"Start processing",
     'sentenceExtraction.page.label.ExtractedSent':"Extracted sentences :",
