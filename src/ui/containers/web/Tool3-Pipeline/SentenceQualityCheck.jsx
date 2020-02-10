@@ -88,6 +88,15 @@ class SentenceQualityCheck extends React.Component {
     }
   }
 
+  handleTextChange(key, event) {
+    var sentenceList = this.state.sentence
+    sentenceList[key] = event.target.value
+    this.setState({
+      sentence: sentenceList,
+      name: key
+    });
+  }
+
   handleSubmit = (value, val) => {
     console.log(value);
     if (val) {
@@ -131,7 +140,7 @@ class SentenceQualityCheck extends React.Component {
             </Grid>
 
             <Grid item xs={2} sm={2} lg={2} xl={2}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "90%", paddingTop: "30px" }}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "100%", paddingTop: "30px" }}>
                 Found sentences :
               </Typography>
               <br />
@@ -176,9 +185,23 @@ class SentenceQualityCheck extends React.Component {
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Card style={{ width: "70%" }} className={classes.card}>
-                <CardContent>{this.state.sentence.target}</CardContent>
-              </Card>
+
+            <TextField
+                  value={this.state.sentence.target ? this.state.sentence.target:''}
+                  required
+                  multiline
+                  id="outlined-name"
+                  margin="normal"
+                  
+                  onChange={event => {
+                    this.handleTextChange('target', event);
+                  }}
+                  variant="outlined"
+                  style={{ width: "70%" }}
+                />
+              
+               
+              
             </Grid>
 
             <Grid item xs={4} sm={4} lg={4} xl={4}>
