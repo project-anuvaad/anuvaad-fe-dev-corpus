@@ -96,7 +96,7 @@ var localization_EN_Data = {
     'benchmark.page.text.statusFilter':"Status Filter :",
     'common.page.text.all':"All",
     'common.page.text.pending':"Pending",
-    'benchMarkGrade.page.label.noOfSentencesPending':"Number of sentences pending : ",
+    'benchMarkGrade.page.label.sentencesPending':"Number of sentences pending : ",
     'benchMarkGrade.page.alert.SaveChangesalert':"Do you want to save your changes?",
     'common.page.label.name':"Name",
     'common.page.label.category':"Category",
