@@ -30,7 +30,6 @@ class UploadAudio extends React.Component {
 
   start = () => {
     if (this.state.isBlocked) {
-      console.log("Permission Denied");
     } else {
       Mp3Recorder.start()
         .then(() => {

@@ -55,7 +55,7 @@ class Corp extends React.Component {
       <Grid container spacing={24} style={{ padding: 30 }}>
         <Grid item xs={12} sm={12} lg={12} xl={12}>
           <Typography gutterBottom variant="title" component="h2">
-            Translation List
+          {translate('translation.page.label.translationList')}
           </Typography>
           <Grid container direction="row" justify="flex-end" alignItems="right">
             <Grid item xs={1} sm={1} lg={1} xl={1}>

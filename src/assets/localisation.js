@@ -75,7 +75,7 @@ var localization_EN_Data = {
     'common.page.text.rowsPerPage':"Rows per page:",
     'corpus.page.text.alignmentAccuracy':"Alignment Accuracy",
     'common.page.text.download':"DOWNLOAD",
-    'common.page.label.basename':"basename",
+    'common.page.label.basename':"Basename",
     'viewCorpus.page.label.fileName':"File Name",
     'viewCorpus.page.label.domain':"Domain",
     'common.page.label.sentence':"Sentences",
@@ -212,7 +212,14 @@ var localization_EN_Data = {
    'notFound.page.text.notFoundError':"404 Page Not Found",
    'sentenceTranslate.page.text.translateTxt':"Translate Text",
    'sentenceTranslate.page.label.translateTo':"Translate to",
-   'sentenceTranslate.page.placeholder.textTranslate':"Enter the text to translate"
+   'sentenceTranslate.page.placeholder.textTranslate':"Enter the text to translate",
+   'common.page.placeholder.enterTextHere':'Please enter text here...',
+   'translateJundgement.page.placeholder.enterEnglishText':"Please enter English text to translate...",
+   'common.page.label.completed':"Completed",
+   'translation.page.label.translationList':"Translation List",
+   'corpus.page.title.reject':"Reject",
+   'userUpdate.page.label.selectRole':"Select Role",
+   'userUpdate.page.label.selectHighCourt':"Select High Court"
 
 
 

@@ -104,7 +104,7 @@ class BenchmarkGrade extends React.Component {
 
   handleStatusChange = event => {
     var value = this.state.tocken ? (this.state.apiCall ? true : false) : true;
-    event.target.value === translate('common.page.text.all') ? this.setState({ AllPageNumber: this.state.offset + 1 }) : "";
+    event.target.value === "ALL" ? this.setState({ AllPageNumber: this.state.offset + 1 }) : "";
     this.setState({ inputStatus: event.target.value, offset: 0, dialogOpen: this.state.tocken ? true : false });
     if (value) {
       let api = new FetchBenchmarkModel(
@@ -353,7 +353,7 @@ class BenchmarkGrade extends React.Component {
                   </Grid>
                   <Grid item xs={3} sm={3} lg={3} xl={3}>
                     <Typography variant="title" color="inherit" style={{ paddingBottom: "8px", flex: 1 }}>
-                      {this.state.pending ? (this.state.count && translate('benchMarkGrade.page.label.sentencesPending')) + (this.state.pending && this.state.pending) : this.state.pending === 0 && "Completed"}
+                      {this.state.pending ? (this.state.count && translate('benchMarkGrade.page.label.sentencesPending')) + (this.state.pending && this.state.pending) : this.state.pending === 0 && translate('common.page.label.completed')}
                     </Typography>
                   </Grid>
                   <Grid item xs={3} sm={3} lg={2} xl={2}>

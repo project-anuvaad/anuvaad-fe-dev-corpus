@@ -232,7 +232,7 @@ class UserUpdate extends React.Component {
 
               <Grid container spacing={8} >
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
-                  <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', marginTop: '12px' }} >Select Role </Typography>
+                  <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', marginTop: '12px' }} >{translate('userUpdate.page.label.selectRole')} </Typography>
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -268,7 +268,7 @@ class UserUpdate extends React.Component {
 
               <Grid container spacing={8} >
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
-                  <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', marginTop: '12px' }} >Select High Court </Typography>
+                  <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', marginTop: '12px' }} >{translate('userUpdate.page.label.selectHighCourt')} </Typography>
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
