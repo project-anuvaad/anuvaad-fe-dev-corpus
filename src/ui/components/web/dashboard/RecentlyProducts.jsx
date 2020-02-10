@@ -33,7 +33,7 @@ const RecentlyProducts = props => {
 
   const rightIconMenu = (
     <IconMenu iconButtonElement={iconButtonElement}>
-      <MenuItem>View</MenuItem>
+      <MenuItem>{translate('recentlyProducts.page.label.view')}</MenuItem>
     </IconMenu>
   );
 
