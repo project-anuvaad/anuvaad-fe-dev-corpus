@@ -189,6 +189,7 @@ class SentenceQualityCheck extends React.Component {
             <TextField
                   value={this.state.sentence.target ? this.state.sentence.target:''}
                   required
+                  multiline
                   id="outlined-name"
                   margin="normal"
                   
