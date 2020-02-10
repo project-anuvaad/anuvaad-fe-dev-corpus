@@ -141,7 +141,7 @@ class Translate extends React.Component {
               className="idbox"
               rows="5"
               cols="50"
-              placeholder="Please enter English text to translate..."
+              placeholder={translate('translateJundgement.page.placeholder.enterEnglishText')}
               onChange={event => {
                 this.handleTextChange("sentence", event);
               }}
@@ -157,7 +157,7 @@ class Translate extends React.Component {
                 }}
                 onClick={this.state.sentence && this.handleOnClick.bind(this)}
               >
-                Translate
+                {translate('dashboard.page.heading.title')}
               </Button>
               <img
                 src={SCImage}
@@ -178,7 +178,7 @@ class Translate extends React.Component {
                 className="idbox"
                 rows="5"
                 cols="50"
-                placeholder="Please enter text here..."
+                placeholder={translate('common.page.placeholder.enterTextHere')}
                 onChange={event => {
                   this.handleTextChange("sentence", event);
                 }}
