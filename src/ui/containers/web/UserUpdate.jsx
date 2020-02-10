@@ -27,6 +27,7 @@ import Input from '@material-ui/core/Input';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import UserDirectoryList from "../../../flux/actions/apis/userdirectory";
+import { translate } from '../../../assets/localisation';
 
 class UserUpdate extends React.Component {
   constructor(props) {

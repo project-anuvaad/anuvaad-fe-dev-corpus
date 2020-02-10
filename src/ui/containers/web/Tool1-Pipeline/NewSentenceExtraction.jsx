@@ -186,7 +186,7 @@ class NewSentanceExtraction extends React.Component {
                   style={{ textDecoration: "none" }}
                 >
                   <Link component="button" variant="body2">
-                    {translate('newSentenceExtraction.page.label.downloadGlobalConfi')}
+                    {translate('newSentenceExtraction.page.link.globalConfig')}
                   </Link>
                 </a>
               </Typography>
@@ -226,7 +226,7 @@ class NewSentanceExtraction extends React.Component {
                   style={{ textDecoration: "none" }}
                 >
                   <Link component="button" variant="body2">
-                    {translate('newSentenceExtraction.page.label.downloadSampleCsv')}
+                    {translate('newSentenceExtraction.page.link.SampleCsv')}
                   </Link>
                 </a>
               </Typography>

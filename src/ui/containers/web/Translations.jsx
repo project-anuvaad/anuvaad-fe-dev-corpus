@@ -19,6 +19,7 @@ import NewCorpusStyle from "../../styles/web/Newcorpus";
 import history from "../../../web.history";
 import FetchTranslations from "../../../flux/actions/apis/translations";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
+import { translate } from '../../../assets/localisation';
 
 class Corp extends React.Component {
   constructor(props) {

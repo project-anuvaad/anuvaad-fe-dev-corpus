@@ -12,6 +12,7 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import Button from "../../components/web/common/Button";
 import Paper from "../../components/web/common/Paper";
 import Typography from "../../components/web/common/Typography";
+import { translate } from '../../../assets/localisation';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 

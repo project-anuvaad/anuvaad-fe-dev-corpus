@@ -353,7 +353,7 @@ class BenchmarkGrade extends React.Component {
                   </Grid>
                   <Grid item xs={3} sm={3} lg={3} xl={3}>
                     <Typography variant="title" color="inherit" style={{ paddingBottom: "8px", flex: 1 }}>
-                    {this.state.pending ? (this.state.count &&  translate('benchMarkGrade.page.label.noOfSentencesPending')) + (this.state.pending && this.state.pending) : this.state.pending ===0 &&"Completed"}
+                    {this.state.pending ? (this.state.count &&  translate('benchMarkGrade.page.label.sentencesPending')) + (this.state.pending && this.state.pending) : this.state.pending ===0 &&"Completed"}
                     </Typography>
                   </Grid>
                   <Grid item xs={3} sm={3} lg={2} xl={2}>
@@ -406,7 +406,7 @@ class BenchmarkGrade extends React.Component {
             {this.state.dialogOpen && this.state.tocken && (
               <Dialog
                 open={this.state.dialogOpen}
-                message={translate('benchMarkGrade.page.text.doYouWantSaveChanges')}
+                message={translate('benchMarkGrade.page.alert.SaveChangesalert')}
                 title={translate('common.page.label.saveChanges')}
                 value={this.state.sentences}
                 handleSubmit={this.handleSubmit}

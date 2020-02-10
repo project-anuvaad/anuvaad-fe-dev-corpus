@@ -17,6 +17,7 @@ import SaveFeedback from "../../../flux/actions/apis/savefeedback";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 import Snackbar from "../../components/web/common/Snackbar";
+import { translate } from '../../../assets/localisation';
 
 class FeedbackForm extends React.Component {
   intervalID;
@@ -46,7 +47,7 @@ class FeedbackForm extends React.Component {
       });
     }
     if (prevProps.createWorkspaceDetails !== this.props.createWorkspaceDetails) {
-      this.setState({ open: true, message1: "Feedback Submitted successfully!" });
+      this.setState({ open: true, message1: translate('feedback.page.text.feedbackSubmitted') });
       setTimeout(() => {
         this.setState({ open: false });
         if (this.props.match.params.page == "translate") {
@@ -96,19 +97,19 @@ class FeedbackForm extends React.Component {
               numberOfStars={10}
             />
           ) : (
-            <FormControl component="fieldset">
-              <RadioGroup
-                aria-label="position"
-                style={{ height: "20px" }}
-                value={this.state.questionList[i].answer && this.state.questionList[i].answer}
-                onChange={this.handleRadioChange.bind(this, i)}
-                row
-              >
-                <FormControlLabel value="yes" control={<Radio style={{ color: "red", marginLeft: "10%" }} />} label="Yes" labelPlacement="end" />
-                <FormControlLabel value="no" control={<Radio style={{ color: "red", marginLeft: "100%" }} />} label="No" labelPlacement="end" />
-              </RadioGroup>
-            </FormControl>
-          )}
+              <FormControl component="fieldset">
+                <RadioGroup
+                  aria-label="position"
+                  style={{ height: "20px" }}
+                  value={this.state.questionList[i].answer && this.state.questionList[i].answer}
+                  onChange={this.handleRadioChange.bind(this, i)}
+                  row
+                >
+                  <FormControlLabel value="yes" control={<Radio style={{ color: "red", marginLeft: "10%" }} />} label={translate('common.page.label.yes')} labelPlacement="end" />
+                  <FormControlLabel value="no" control={<Radio style={{ color: "red", marginLeft: "100%" }} />} label={translate('common.page.label.no')} labelPlacement="end" />
+                </RadioGroup>
+              </FormControl>
+            )}
         </Grid>
       </Grid>
     ));
@@ -158,8 +159,8 @@ class FeedbackForm extends React.Component {
             </Grid>
           </Paper>
         ) : (
-          ""
-        )}
+            ""
+          )}
 
         {this.state.open && (
           <Snackbar
