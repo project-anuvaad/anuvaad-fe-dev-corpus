@@ -67,7 +67,6 @@ class GraderReport extends React.Component {
     }
   }
   handleClose = value => {
-    console.log("va", value);
     this.setState({ [value]: false });
   };
 
@@ -156,7 +155,7 @@ class GraderReport extends React.Component {
 
       {
         name: "rating",
-        label: translate('common.page.label.meaningOfSentence'),
+        label: translate('common.page.label.sentenceMeaning'),
         options: {
           filter: true,
           sort: true

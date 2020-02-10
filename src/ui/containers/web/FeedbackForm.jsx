@@ -60,8 +60,7 @@ class FeedbackForm extends React.Component {
   }
 
   handleSubmit() {
-    console.log("submitted", this.state.questionList);
-    const { APITransport } = this.props;
+const { APITransport } = this.props;
     const apiObj = new SaveFeedback(this.state.questionList, this.state.basename);
     APITransport(apiObj);
   }

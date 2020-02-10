@@ -19,7 +19,6 @@ import { withRouter } from "react-router-dom";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Input from "@material-ui/core/Input";
 import history from "../../../web.history";
-
 import { DropzoneArea } from "material-ui-dropzone";
 import Select from "../../components/web/common/Select";
 import Stepper from "../../components/web/common/Stepper";

@@ -110,7 +110,7 @@ var localization_EN_Data = {
     'corpus.page.title.hide':"Hide",
     'common.page.label.record':"record",
     'common.page.label.wordCount':"Word Count",
-    'common.page.label.meaningOfSentence':"Meaning of sentence",
+    'common.page.label.sentenceMeaning':"Meaning of sentence",
     'common.page.label.structureOfsentence':"Structure of sentence",
     'common.page.label.vocabulary':"Vocabulary / Lexicon",
     'common.page.label.modelName':"Model Name",
@@ -195,7 +195,24 @@ var localization_EN_Data = {
    'feedback.page.text.feedbackSubmitted':"Feedback Submitted successfully!",
    'common.page.label.yes':"Yes",
    'common.page.label.stillinprogress':"Still inprogress",
-   'common.page.label.pleaseSelectModel':"Please select model"
+   'common.page.label.pleaseSelectModel':"Please select model",
+   'common.page.title.comparisonReport':"Comparison Report",
+   'userDirectory.page.message.deactivated':" user deactivated successfully!",
+   'userDirectory.page.message.activated':" user activated successfully!",
+   'addQuestion.page.message.questionListUpdated':"Question list updated successfully",
+   'addQuestion.page.message.deleteList':"Deleted from the list",
+   'addQuestion.page.alert.questionError':"please add question properly",
+   'addQuestion.page.label.question':"Question :",
+   'addQuestion.page.label.questionType':"Question Type :",
+   'addQuestion.page.label.addQuestion':"Add Questions",
+   'userDirectory.page.label.courtName':"court name",
+   'benchmarkGrade.page.label.totalGrade':" Total Grade : ",
+   'common.page.title.accept':"Accept",
+   'common.page.title.edit':"Edit",
+   'notFound.page.text.notFoundError':"404 Page Not Found",
+   'sentenceTranslate.page.text.translateTxt':"Translate Text",
+   'sentenceTranslate.page.label.translateTo':"Translate to",
+   'sentenceTranslate.page.placeholder.textTranslate':"Enter the text to translate"
 
 
 

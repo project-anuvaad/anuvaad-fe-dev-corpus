@@ -345,12 +345,12 @@ class Corpus extends React.Component {
 
                         <div style={{ width: '95px' }}>
 
-                            <Tooltip title="Accept" disableTriggerFocus={true}><Accept style={{ cursor: 'pointer', marginRight: '5px', color: "green" }} onClick={() => {
+                            <Tooltip title={translate('common.page.title.accept')} disableTriggerFocus={true}><Accept style={{ cursor: 'pointer', marginRight: '5px', color: "green" }} onClick={() => {
                                 { this.state.lock ? '' : this.handleActionButton(index, "ACCEPTED") }
 
                             }} />
                             </Tooltip>
-                            <Tooltip title="Edit" disableTriggerFocus={true}><EditIcon style={{ cursor: 'pointer', marginRight: '5px', color: '#335995', fontSize: '30px' }} onClick={() => {
+                            <Tooltip title={translate('common.page.title.edit')} disableTriggerFocus={true}><EditIcon style={{ cursor: 'pointer', marginRight: '5px', color: '#335995', fontSize: '30px' }} onClick={() => {
                                 this.handleOpen(index)
                             }}
                             /></Tooltip>
@@ -390,9 +390,9 @@ class Corpus extends React.Component {
                                                 <div>
                                                     <Typography variant="h6" gutterBottom style={{}}>
                                                         {translate('commonCorpus.page.text.machineTranslatedReference')} &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
-                                                {this.state.openExpand ? <Tooltip title= {translate('corpus.page.title.expand')}disableTriggerFocus={true}><ExpandMore style={{ color: 'blue' }} onClick={() => {
+                                                {this.state.openExpand ? <Tooltip title={translate('corpus.page.title.expand')} disableTriggerFocus={true}><ExpandMore style={{ color: 'blue' }} onClick={() => {
                                                             this.handleClickExpand(false)
-                                                        }} /></Tooltip> : <Tooltip title={translate('corpus.page.title.expand')}disableTriggerFocus={true}><ExpandLess style={{ color: 'blue' }} onClick={() => {
+                                                        }} /></Tooltip> : <Tooltip title={translate('corpus.page.title.expand')} disableTriggerFocus={true}><ExpandLess style={{ color: 'blue' }} onClick={() => {
                                                             this.handleClickExpand(true, row.translation)
                                                         }} /></Tooltip>}
                                                     </Typography> </div>

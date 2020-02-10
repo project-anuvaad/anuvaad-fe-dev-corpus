@@ -10,14 +10,11 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 // import {Link} from 'react-router';
-
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core";
 import ThemeDefault from "../../theme/web/theme-default";
-
 import LoginStyles from "../../styles/web/LoginStyles";
-
 import LoginAPI from "../../../flux/actions/apis/login";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
@@ -94,7 +91,7 @@ class Login extends React.Component {
 
                   {/* <Link to="/"> */}
                   <Button variant="contained" onClick={this.processLoginButtonPressed} color="secondary" aria-label="edit">
-                  {translate('common.page.button.login')}
+                    {translate('common.page.button.login')}
                   </Button>
                   {/* </Link> */}
                 </div>
