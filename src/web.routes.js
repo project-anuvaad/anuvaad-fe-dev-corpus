@@ -497,7 +497,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
 
-            <PrivateRoutes
+            <PrivateRoute
               path={`${process.env.PUBLIC_URL}/feedback-form/:page`}
               title="FeedbackForm"
               component={FeedbackForm}
