@@ -24,19 +24,19 @@ class DataSource extends React.Component {
     return (
       <div>
 
-<Toolbar style={{  marginRight: "1.5%", marginTop: "20px" }}>
+        <Toolbar style={{ marginRight: "1.5%", marginTop: "20px" }}>
           <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
-          
-            <Button
-              variant="extendedFab"
-              color="primary"
-              
-              onClick={() => {
-                history.push(`${process.env.PUBLIC_URL}/stage3/create-datasource`);
-              }}
-            >
-              <AddIcon /> Add datasource
-            </Button>
+
+          <Button
+            variant="extendedFab"
+            color="primary"
+
+            onClick={() => {
+              history.push(`${process.env.PUBLIC_URL}/stage3/create-datasource`);
+            }}
+          >
+            <AddIcon /> {translate('common.page.label.addDataSource')}
+          </Button>
         </Toolbar>
 
         <WorkspaceDetails />

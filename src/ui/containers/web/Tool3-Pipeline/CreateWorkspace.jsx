@@ -34,10 +34,10 @@ class CreateWorkspace extends React.Component {
       sourceLanguage: [],
       language: [],
       step: 1,
-      message1: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
+      message1: translate('common.page.label.message'),
       csvData:
-        "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",
-      processData: 'Press "Next" to select relevant input workspaces'
+      translate('common.page.label.csvData'),
+      processData: translate('common.page.processData.pressNextToSelect')
     };
   }
 
@@ -158,7 +158,7 @@ class CreateWorkspace extends React.Component {
         step: 2
       });
     } else {
-      alert("Fields should not be empty");
+      alert(translate('common.page.label.pageWarning'));
     }
   }
 
@@ -177,7 +177,7 @@ class CreateWorkspace extends React.Component {
             <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                  Enter workspace name :
+                {translate('common.page.label.enterWorkspace')}
                 </Typography>
                 <br />
               </Grid>
@@ -197,7 +197,7 @@ class CreateWorkspace extends React.Component {
 
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                  Select source language : &emsp;&emsp;{" "}
+                {translate('common.page.label.sourceLang')} &emsp;&emsp;{" "}
                 </Typography>
                 <br />
               </Grid>
@@ -219,7 +219,7 @@ class CreateWorkspace extends React.Component {
 
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                  Select target language : &emsp;&emsp;{" "}
+                {translate('common.page.label.targetLang')} &emsp;&emsp;{" "}
                 </Typography>
                 <br />
               </Grid>
@@ -257,7 +257,7 @@ class CreateWorkspace extends React.Component {
                   style={{ width: "60%", marginTop: "6%", height: "56px" }}
                   onClick={this.handleSubmit.bind(this)}
                 >
-                  Next
+                  {translate('common.page.button.next')}
                 </Button>
               </Grid>
             </Grid>
@@ -267,7 +267,7 @@ class CreateWorkspace extends React.Component {
               <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
                 <Grid item xs={5} sm={5} lg={5} xl={5}>
                   <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                    Workspace name :
+                  {translate('common.page.label.workSpaceName')}
                 </Typography>
                   <br />
                 </Grid>
@@ -286,7 +286,7 @@ class CreateWorkspace extends React.Component {
                 </Grid>
                 <Grid item xs={5} sm={5} lg={5} xl={5}>
                   <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                    Configuration file : &emsp;&emsp;{" "}
+                  {translate('newSentenceExtraction.page.label.confiFile')} &emsp;&emsp;{" "}
                     <a
                       href={
                         this.state.defaultConfig
@@ -298,7 +298,7 @@ class CreateWorkspace extends React.Component {
                       style={{ textDecoration: "none" }}
                     >
                       <Link component="button" variant="body2">
-                        Download global configuration
+                      {translate('newSentenceExtraction.page.link.globalConfig')}
                     </Link>
                     </a>
                   </Typography>
@@ -351,7 +351,7 @@ class CreateWorkspace extends React.Component {
                         style={{ width: "80%", marginTop: "6%", height: "56px" }}
                         onClick={this.handleBack.bind(this)}
                       >
-                        Back
+                        {translate('common.page.button.back')}
                     </Button>
                     </Grid>
                     <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -362,7 +362,7 @@ class CreateWorkspace extends React.Component {
                         style={{ width: "80%", marginTop: "6%", height: "56px" }}
                         onClick={this.handleProcessSubmit.bind(this)}
                       >
-                        Start processing
+                        {translate('common.page.button.start')}
                     </Button>
                     </Grid>
                   </Grid>

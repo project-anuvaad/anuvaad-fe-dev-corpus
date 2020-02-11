@@ -70,16 +70,16 @@ class ExistingWorkspace extends React.Component {
 
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    if(this.props.match.path!=="/stage3/datasource"){
+    if (this.props.match.path !== "/stage3/datasource") {
       history.push(`${`${process.env.PUBLIC_URL}/stage2/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
-      
+
     }
-    else{
+    else {
       console.log("out---")
       history.push(`${`${process.env.PUBLIC_URL}/stage3/datasource/`}${rowData[0]}/${rowData[1]}`);
     }
-     
-    
+
+
   };
 
   handleChange = value => {
@@ -88,7 +88,7 @@ class ExistingWorkspace extends React.Component {
 
   render() {
 
-    
+
     const columns = [
       {
         name: "title",
@@ -163,7 +163,7 @@ class ExistingWorkspace extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => {},
+      onFilterDialogClose: () => { },
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -172,7 +172,7 @@ class ExistingWorkspace extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-          {translate('common.page.button.applyFilter')}
+            {translate('common.page.button.applyFilter')}
           </Button>
         </div>
       ),
@@ -191,10 +191,10 @@ class ExistingWorkspace extends React.Component {
 
     return (
       <div>
-        {this.props.match.path!=="/stage3/datasource" && 
-        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />}
+        {this.props.match.path !== "/stage3/datasource" &&
+          <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />}
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={this.props.match.path==="/stage3/datasource"?"Data Source":"Existing Workspaces"} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={this.props.match.path === "/stage3/datasource" ? "Data Source" : "Existing Workspaces"} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );

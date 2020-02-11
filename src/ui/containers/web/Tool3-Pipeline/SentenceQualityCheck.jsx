@@ -41,10 +41,10 @@ class SentenceQualityCheck extends React.Component {
       step: 1,
       check: false,
       count: 1,
-      message1: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
+      message1: translate('common.page.label.message'),
       csvData:
-        '"Accept and Next", will qualify current sentence pair by replacing target sentence with the eligible token. This action makes current sentence pair as "good sentence pair". This means HT step will be skipped for this sentence pair',
-      processData: 'Press "Next" to select relevant input workspaces'
+        translate('tool3.sentenceExtraction.label.htStepSkipped'),
+      processData: translate('common.page.processData.pressNextToSelect')
     };
   }
 
@@ -56,18 +56,18 @@ class SentenceQualityCheck extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchSearch !== this.props.fetchSearch) {
-      if (!Object.getOwnPropertyNames(this.props.fetchSearch.data).length ) {
+      if (!Object.getOwnPropertyNames(this.props.fetchSearch.data).length) {
 
-        if(this.state.check){
-        this.setState({ open: true, sentence: {}, message1: "Process completed Successfully" });
-        setTimeout(() => {
-          history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
-        }, 2000);
-      }
-      else{
-        alert("Workspace is empty")
-        history.push(`${process.env.PUBLIC_URL}/stage3/workspace-details`);
-      }
+        if (this.state.check) {
+          this.setState({ open: true, sentence: {}, message1: translate('common.page.label.processCompleted') });
+          setTimeout(() => {
+            history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
+          }, 2000);
+        }
+        else {
+          alert(translate('tool3.sentenceQualityCheck.label.workspaceEmpty'))
+          history.push(`${process.env.PUBLIC_URL}/stage3/workspace-details`);
+        }
       }
       this.setState({ sentence: this.props.fetchSearch.data, count: this.props.fetchSearch.count });
     }
@@ -76,11 +76,11 @@ class SentenceQualityCheck extends React.Component {
       console.log("-------sentence", this.props.sentenceReplace);
       if (this.state.count !== 1) {
         const { APITransport } = this.props;
-        this.setState({ check: true})
+        this.setState({ check: true })
         const apiObj = new FetchSearch(this.props.match.params.session_id);
         APITransport(apiObj);
       } else {
-        this.setState({ open: true, sentence: {}, message1: "Process completed Successfully" });
+        this.setState({ open: true, sentence: {}, message1: translate('common.page.label.processCompleted') });
         setTimeout(() => {
           history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
         }, 2000);
@@ -110,12 +110,12 @@ class SentenceQualityCheck extends React.Component {
   handleSubmitAll = (value, val) => {
     console.log("=======", value);
     const { APITransport } = this.props;
-    if(value.changes && value.changes.length>0){
-    const apiObj = new AcceptAll(value);
-    APITransport(apiObj);
+    if (value.changes && value.changes.length > 0) {
+      const apiObj = new AcceptAll(value);
+      APITransport(apiObj);
     }
-    else{
-      alert("there is no sentence here to accept")
+    else {
+      alert(translate('tool3.sentenceQualityCheck.label.noSentenceToAccept'))
     }
   };
 
@@ -129,7 +129,7 @@ class SentenceQualityCheck extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                Workspace name :
+                {translate('common.page.label.workSpaceName')}
               </Typography>
               <br />
             </Grid>
@@ -141,7 +141,7 @@ class SentenceQualityCheck extends React.Component {
 
             <Grid item xs={2} sm={2} lg={2} xl={2}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "100%", paddingTop: "30px" }}>
-                Found sentences :
+                {translate('tool3.sentenceQualityCheck.label.foundSentences')}
               </Typography>
               <br />
             </Grid>
@@ -157,10 +157,10 @@ class SentenceQualityCheck extends React.Component {
                   {this.state.sentence.source &&
                     (this.state.sentence.found_sentences && this.state.sentence.changes && Array.isArray(this.state.sentence.changes)
                       ? this.state.sentence.changes.map(changes => (
-                          <p key={changes.source_search}>
-                            {`Source ngram : ${changes.source_search}, Target ngram : ${changes.target_search}, Replacement ngram : ${changes.replace}`}
-                          </p>
-                        ))
+                        <p key={changes.source_search}>
+                          {`Source ngram : ${changes.source_search}, Target ngram : ${changes.target_search}, Replacement ngram : ${changes.replace}`}
+                        </p>
+                      ))
                       : `Source ngram : ${this.state.sentence.source_search}, Target ngram : ${this.state.sentence.target_search}, Replacement ngram : ${this.state.sentence.replace}`)}
                 </CardContent>
               </Card>
@@ -168,7 +168,7 @@ class SentenceQualityCheck extends React.Component {
 
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                Source sentence :
+                {translate('commonCorpus.page.text.sourceSentence')}
               </Typography>
               <br />
             </Grid>
@@ -180,33 +180,33 @@ class SentenceQualityCheck extends React.Component {
 
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                Target sentence :
+                {translate('commonCorpus.page.text.targetSentence')}
               </Typography>
               <br />
             </Grid>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
 
-            <TextField
-                  value={this.state.sentence.target ? this.state.sentence.target:''}
-                  required
-                  multiline
-                  id="outlined-name"
-                  margin="normal"
-                  
-                  onChange={event => {
-                    this.handleTextChange('target', event);
-                  }}
-                  variant="outlined"
-                  style={{ width: "70%" }}
-                />
-              
-               
-              
+              <TextField
+                value={this.state.sentence.target ? this.state.sentence.target : ''}
+                required
+                multiline
+                id="outlined-name"
+                margin="normal"
+
+                onChange={event => {
+                  this.handleTextChange('target', event);
+                }}
+                variant="outlined"
+                style={{ width: "70%" }}
+              />
+
+
+
             </Grid>
 
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                Replaced sentence :
+                {translate('tool3.sentenceQualityCheck.label.replacedSentence')}
               </Typography>
               <br />
             </Grid>
@@ -262,7 +262,7 @@ class SentenceQualityCheck extends React.Component {
                   this.handleSubmitAll(this.state.sentence, true);
                 }}
               >
-                Accept All {this.state.sentence.changes && this.state.sentence.changes.length>0 && this.state.sentence.changes[0].source_search}
+                {translate('tool3.sentenceQualityCheck.label.acceptAll')} {this.state.sentence.changes && this.state.sentence.changes.length > 0 && this.state.sentence.changes[0].source_search}
               </Button>
             </Grid>
           </Grid>

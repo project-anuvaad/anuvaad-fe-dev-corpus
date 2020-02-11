@@ -221,7 +221,24 @@ var localization_EN_Data = {
    'userUpdate.page.label.selectRole':"Select Role",
    'userUpdate.page.label.selectHighCourt':"Select High Court",
    'monthlySales.page.label.monthlysales':"Monthly Sales",
-   'recentlyProducts.page.label.view':"View"
+   'recentlyProducts.page.label.view':"View",
+   'tool1.datasource.label.uploadBy':"Uploaded by",
+   'too1.datasource.label.uploadedAt':"Uploaded At",
+   'common.page.label.sentenceFile':"sentence_file",
+   'common.page.label.useLatestTranslate':"Use Latest Translation",
+   'common.page.label.selectWorkspaceFrom':"Please select workspace from above list",
+   'tool3.sentenceExtraction.label.rejectedSentences':"Rejected sentences :",
+   'tool3.sentenceExtraction.label.sourceFilePath':"Source file path :",
+   'common.page.button.copy':"Copy",
+   'tool3.sentenceExtraction.label.targetFilePath':"Target file path :",
+   'tool3.sentenceExtraction.label.htStepSkipped':'"Accept and Next", will qualify current sentence pair by replacing target sentence with the eligible token. This action makes current sentence pair as "good sentence pair". This means HT step will be skipped for this sentence pair',
+   'tool3.sentenceQualityCheck.label.noSentenceToAccept':"there is no sentence here to accept",
+   'tool3.sentenceQualityCheck.label.foundSentences':"Found sentences :",
+   'tool3.sentenceQualityCheck.label.replacedSentence':"Replaced sentence :",
+   'tool3.sentenceQualityCheck.label.acceptAll':"Accept All",
+   'tool3.sentenceQualityCheck.label.workspaceEmpty':"Workspace is empty",
+   'common.page.label.processCompleted':"Process completed Successfully"
+
 
 
 
