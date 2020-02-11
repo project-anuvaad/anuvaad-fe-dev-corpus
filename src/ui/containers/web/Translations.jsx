@@ -19,6 +19,7 @@ import NewCorpusStyle from "../../styles/web/Newcorpus";
 import history from "../../../web.history";
 import FetchTranslations from "../../../flux/actions/apis/translations";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
+import { translate } from '../../../assets/localisation';
 
 class Corp extends React.Component {
   constructor(props) {
@@ -54,7 +55,7 @@ class Corp extends React.Component {
       <Grid container spacing={24} style={{ padding: 30 }}>
         <Grid item xs={12} sm={12} lg={12} xl={12}>
           <Typography gutterBottom variant="title" component="h2">
-            Translation List
+          {translate('translation.page.label.translationList')}
           </Typography>
           <Grid container direction="row" justify="flex-end" alignItems="right">
             <Grid item xs={1} sm={1} lg={1} xl={1}>
@@ -66,7 +67,7 @@ class Corp extends React.Component {
                   history.push(`${process.env.PUBLIC_URL}/translate`);
                 }}
               >
-                <AddIcon /> Translate
+                <AddIcon /> {translate('dashboard.page.heading.message')}
               </Button>
             </Grid>
           </Grid>
@@ -80,7 +81,7 @@ class Corp extends React.Component {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="right">Name</TableCell>
+                    <TableCell align="right">{translate('common.page.label.name')}</TableCell>
                     <TableCell align="right">Created On</TableCell>
                     <TableCell align="right">Status</TableCell>
                     <TableCell align="right">Action</TableCell>

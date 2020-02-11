@@ -14,6 +14,7 @@ import { typography } from "material-ui/styles";
 import Wallpaper from "material-ui/svg-icons/device/wallpaper";
 import Typography from "@material-ui/core/Typography";
 import Tooltip from '@material-ui/core/Tooltip';
+import { translate } from '../../../../assets/localisation';
 const RecentlyProducts = props => {
   const { data, title } = props;
   const styles = {
@@ -33,7 +34,7 @@ const RecentlyProducts = props => {
 
   const rightIconMenu = (
     <IconMenu iconButtonElement={iconButtonElement}>
-      <MenuItem>View</MenuItem>
+      <MenuItem>{translate('recentlyProducts.page.label.view')}</MenuItem>
     </IconMenu>
   );
 

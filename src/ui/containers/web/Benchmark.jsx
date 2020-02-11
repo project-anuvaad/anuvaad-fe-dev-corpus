@@ -18,6 +18,7 @@ import GradeIcon from "@material-ui/icons/Grade";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import Select from "../../components/web/common/Select";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
+import { translate } from '../../../assets/localisation';
 
 class Benchmark extends React.Component {
   constructor(props) {
@@ -114,14 +115,14 @@ class Benchmark extends React.Component {
     const columns = [
       {
         name: "basename",
-        label: "basename",
+        label: translate('common.page.label.basename'),
         options: {
           display: "excluded"
         }
       },
       {
         name: "name",
-        label: "Category",
+        label:  translate('common.page.label.category'),
         options: {
           filter: true,
           sort: true
@@ -130,7 +131,7 @@ class Benchmark extends React.Component {
 
       {
         name: "no_of_sentences",
-        label: "Sentences",
+        label: translate('common.page.label.sentence'),
         options: {
           filter: true,
           sort: true
@@ -138,7 +139,7 @@ class Benchmark extends React.Component {
       },
       {
         name: "source_lang",
-        label: "Source",
+        label: translate('common.page.label.source'),
         options: {
           filter: true,
           sort: true
@@ -209,7 +210,7 @@ class Benchmark extends React.Component {
 
       {
         name: "created_on",
-        label: "Timestamp",
+        label: translate('common.page.label.timeStamp'),
         options: {
           filter: true,
           sort: true,
@@ -230,7 +231,7 @@ class Benchmark extends React.Component {
               return (
                 <div style={{ width: "90px" }}>
                   {this.state[targetname] && this.state[modelname] && (
-                    <Tooltip title="Grade Sentence">
+                    <Tooltip title={translate('common.page.title.gradeSentence')}>
                       <GradeIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
                         onClick={() => {
@@ -264,7 +265,7 @@ class Benchmark extends React.Component {
           <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
         </Toolbar>
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={"Documents"} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate('common.page.title.document')} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );

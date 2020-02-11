@@ -3,6 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import { white, grey900, grey500 } from "material-ui/styles/colors";
 import { BarChart, Bar, ResponsiveContainer, XAxis } from "recharts";
 import GlobalStyles from "../../../styles/web/styles";
+import { translate } from '../../../../assets/localisation';
 
 const MonthlySales = props => {
   const { data } = props;
@@ -26,7 +27,7 @@ const MonthlySales = props => {
 
   return (
     <Paper style={styles.paper}>
-      <div style={{ ...GlobalStyles.title, ...styles.header }}>Monthly Sales</div>
+      <div style={{ ...GlobalStyles.title, ...styles.header }}>{translate('monthlySales.page.label.monthlysales')}</div>
       <div style={styles.div}>
         <ResponsiveContainer>
           <BarChart data={data}>

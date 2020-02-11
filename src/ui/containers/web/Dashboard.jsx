@@ -167,17 +167,17 @@ class Dashboard extends React.Component {
     const { APITransport, NMTApi } = this.props;
     role.includes("dev")
       ? this.state.modelLanguage.map(item =>
-          item.target_language_code === this.state.target &&
+        item.target_language_code === this.state.target &&
           item.source_language_code === this.state.source &&
           this.state.model.includes(item.model_name)
-            ? model.push(item)
-            : []
-        )
+          ? model.push(item)
+          : []
+      )
       : this.state.modelLanguage.map(item =>
-          item.target_language_code === this.state.target && item.source_language_code === this.state.source && model.length < 1 && item.is_primary
-            ? model.push(item)
-            : []
-        );
+        item.target_language_code === this.state.target && item.source_language_code === this.state.source && model.length < 1 && item.is_primary
+          ? model.push(item)
+          : []
+      );
     const apiObj = new AutoML(this.state.text, this.state.source, this.state.target);
     const nmt = new NMT(this.state.text, model, true, this.state.target, this.state.showSplitted);
     NMTApi(nmt);
@@ -201,7 +201,7 @@ class Dashboard extends React.Component {
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <Typography value="" variant="title" gutterBottom={true} style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-              {translate('dashboard.page.label.source')}{" "}
+                {translate('common.page.label.sourceLang')}{" "}
               </Typography>
             </Grid>
 
@@ -222,7 +222,7 @@ class Dashboard extends React.Component {
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <Typography value="" variant="title" gutterBottom={true} style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                Please select target language &nbsp;
+                {translate('common.page.label.targetLang')}&nbsp;
               </Typography>
             </Grid>
             <Grid item xs={3} sm={3} lg={3} xl={3}>
@@ -243,7 +243,7 @@ class Dashboard extends React.Component {
             <Grid container spacing={8}>
               <Grid item xs={8} sm={8} lg={8} xl={8}>
                 <Typography value="" variant="title" gutterBottom={true} style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                  Please select model{" "}
+                  {translate('common.page.label.pleaseSelectModel')}{" "}
                 </Typography>
               </Grid>
               <Grid item xs={3} sm={3} lg={3} xl={3}>
@@ -261,18 +261,18 @@ class Dashboard extends React.Component {
                 >
                   {this.state.source && this.state.target
                     ? this.handleModel(this.state.modelLanguage, this.state.source, this.state.target).map(item => (
-                        <Tooltip
-                          placement="right"
-                          enterDelay={200}
-                          key={item.model_id}
-                          value={item.model_name}
-                          title={item.description ? item.description : "NA"}
-                        >
-                          <MenuItem key={item.model_id} value={item.model_name}>
-                            {item.model_name}
-                          </MenuItem>
-                        </Tooltip>
-                      ))
+                      <Tooltip
+                        placement="right"
+                        enterDelay={200}
+                        key={item.model_id}
+                        value={item.model_name}
+                        title={item.description ? item.description : "NA"}
+                      >
+                        <MenuItem key={item.model_id} value={item.model_name}>
+                          {item.model_name}
+                        </MenuItem>
+                      </Tooltip>
+                    ))
                     : []}
                   >
                 </SelectModel>
@@ -293,7 +293,7 @@ class Dashboard extends React.Component {
                 <TextField
                   value={this.state.text}
                   id="standard-multiline-static"
-                  placeholder="Enter Text Here ......"
+                  placeholder={translate('dashboard.page.alternatetext.enterTextHere')}
                   style={{ width: "96%" }}
                   multiline
                   onChange={event => {
@@ -312,7 +312,7 @@ class Dashboard extends React.Component {
                     onChange={this.handleChange("checkedMachine")}
                   />
                 }
-                label="Machine Translated"
+                label={translate('dashboard.page.checkbox.mt')}
               />
               {role.includes("dev") && (
                 <FormControlLabel
@@ -320,7 +320,7 @@ class Dashboard extends React.Component {
                   control={
                     <Checkbox color="default" checked={this.state.showSplitted} value="showSplitted" onChange={this.handleChange("showSplitted")} />
                   }
-                  label="Show , splitted"
+                  label={translate('dashboard.page.checkbox.splitted')}
                 />
               )}
               {role.includes("dev") && (
@@ -333,7 +333,7 @@ class Dashboard extends React.Component {
                       onChange={this.handleChange("checkedSubwords")}
                     />
                   }
-                  label="Input and Output Subwords"
+                  label={translate('dashboard.page.checkbox.ioSubwords')}
                 />
               )}
 
@@ -344,7 +344,7 @@ class Dashboard extends React.Component {
                 aria-label="edit"
                 style={{ marginLeft: "1.3%", width: "44%", marginBottom: "4%", marginTop: "4%", marginRight: "5%" }}
               >
-                Clear
+                {translate('common.page.button.clear')}
               </Button>
               <Button
                 variant="contained"
@@ -353,7 +353,7 @@ class Dashboard extends React.Component {
                 aria-label="edit"
                 style={{ width: "44%", marginBottom: "4%", marginTop: "4%" }}
               >
-                Submit
+                {translate('common.page.button.submit')}
               </Button>
             </Grid>
           </div>
