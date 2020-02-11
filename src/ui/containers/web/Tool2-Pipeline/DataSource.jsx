@@ -9,6 +9,7 @@ import WorkspaceDetails from "../Tool1-Pipeline/ExistingWorkspace";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import history from "../../../../web.history";
+import { translate } from '../../../../assets/localisation';
 
 class DataSource extends React.Component {
   intervalID;
@@ -35,7 +36,7 @@ class DataSource extends React.Component {
                 history.push(`${process.env.PUBLIC_URL}/stage2/create-datasource`);
               }}
             >
-              <AddIcon /> Add datasource
+              <AddIcon /> {translate('common.page.label.addDataSource')}
             </Button>
         </Toolbar>
 
