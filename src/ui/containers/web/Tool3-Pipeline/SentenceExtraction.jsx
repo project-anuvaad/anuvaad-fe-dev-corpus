@@ -12,6 +12,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchsearchreplacedetails";
 import Snackbar from "../../../components/web/common/Snackbar";
+import { translate } from '../../../../assets/localisation';
 
 class SentenceExtraction extends React.Component {
   constructor(props) {

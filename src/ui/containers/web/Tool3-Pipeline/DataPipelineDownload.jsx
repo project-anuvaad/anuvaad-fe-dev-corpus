@@ -10,7 +10,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Toolbar from "@material-ui/core/Toolbar";
 import BackIcon from "@material-ui/icons/ChevronLeft";
 import history from "../../../../web.history";
-
+import { translate } from '../../../../assets/localisation';
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchmtworkspacedetails";
 import TextField from "@material-ui/core/TextField";
 

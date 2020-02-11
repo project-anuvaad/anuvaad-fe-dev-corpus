@@ -21,6 +21,7 @@ import SaveDataSource from "../../../../flux/actions/apis/savedatasource";
 import Toolbar from "@material-ui/core/Toolbar";
 import BackIcon from "@material-ui/icons/ChevronLeft";
 import { blueGrey50} from "material-ui/styles/colors";
+import { translate } from '../../../../assets/localisation';
 
 class CreateWorkspace extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class CreateWorkspace extends React.Component {
       file:[],
       message1: translate('common.page.message1.fileAdded'),
       csvData:
-      translatge('common.page.label.csvData'),
+      translate('common.page.label.csvData'),
       processData: translate('common.page.processData.pressNextToSelect')
     };
   }
