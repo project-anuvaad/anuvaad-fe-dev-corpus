@@ -6,7 +6,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Tab from "../../../components/web/common/Tab";
 import history from "../../../../web.history";
 
-class ParentTab extends React.Component {
+class WorkspaceDetailsTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,4 +54,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ParentTab));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WorkspaceDetailsTab));

@@ -8,9 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
-
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchmtworkspacedetails";
 import TextField from "@material-ui/core/TextField";
+import { translate } from '../../../../assets/localisation';
 
 class SentenceExtraction extends React.Component {
   constructor(props) {

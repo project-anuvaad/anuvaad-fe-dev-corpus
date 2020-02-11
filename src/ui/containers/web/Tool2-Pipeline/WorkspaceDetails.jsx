@@ -9,6 +9,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
+import { translate } from '../../../../assets/localisation';
 
 class WorkspaceDetails extends React.Component {
   intervalID;
@@ -163,7 +164,7 @@ class WorkspaceDetails extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            Apply Filters
+          {translate('common.page.button.applyFilter')}
           </Button>
         </div>
       ),

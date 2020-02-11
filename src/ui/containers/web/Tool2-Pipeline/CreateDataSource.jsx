@@ -16,6 +16,7 @@ import SaveDataSource from "../../../../flux/actions/apis/savetool2datasource";
 import Toolbar from "@material-ui/core/Toolbar";
 import BackIcon from "@material-ui/icons/ChevronLeft";
 import { blueGrey50} from "material-ui/styles/colors";
+import { translate } from '../../../../assets/localisation';
 
 class CreateWorkspace extends React.Component {
   constructor(props) {
@@ -29,10 +30,10 @@ class CreateWorkspace extends React.Component {
       sourceLanguage: [],
       language: [],
       file:[],
-      message1: 'file added successfully',
+      message1: translate('tool2.page.message1.fileadded'),
       csvData:
-        "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",
-      processData: 'Press "Next" to select relevant input workspaces'
+      translate('newSentenceExtraction.page.label.csvData'),
+      processData: translate('common.page.processData.pressNextToSelect')
     };
   }
 
@@ -88,7 +89,7 @@ class CreateWorkspace extends React.Component {
         this.state.csvName && APITransport(apiObj);
         this.setState({ load: true });
     } else {
-      alert("Fields should not be empty");
+      alert(translate('common.page.label.pageWarning'));
     }
   }
 
@@ -143,7 +144,7 @@ class CreateWorkspace extends React.Component {
                 history.push(`${process.env.PUBLIC_URL}/stage2/datasource`);
               }}
             >
-              <BackIcon /> Back
+              <BackIcon /> {translate('common.page.button.back')}
             </Button>
         </Toolbar>
         
@@ -161,13 +162,13 @@ class CreateWorkspace extends React.Component {
             
           }}
         >
-          Add DataSource
-        </Typography>
+          {translate('common.page.label.addDataSource')}      
+          </Typography>
         <br />
             <Grid container spacing={24} style={{ marginTop: "1 %", marginLeft: "12%" }}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                  Enter workspace name :
+                {translate('common.page.label.enterWorkspace')}
                 </Typography>
                 <br />
               </Grid>
@@ -187,7 +188,7 @@ class CreateWorkspace extends React.Component {
 
               <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                CSV file : &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+              {translate('common.page.label.csvFile')} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 
               </Typography>
               <br />
@@ -221,7 +222,7 @@ class CreateWorkspace extends React.Component {
                   style={{ width: "60%", marginTop: "6%", height: "56px" }}
                   onClick={this.handleSubmit.bind(this)}
                 >
-                  Submit
+                  {translate('common.page.button.submit')}
                 </Button>
               </Grid>
             </Grid>

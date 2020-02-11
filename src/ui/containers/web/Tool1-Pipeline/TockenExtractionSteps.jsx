@@ -7,8 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Stepper from "../../../components/web/common/Stepper";
+import { translate } from '../../../../assets/localisation';
 
-class Steps extends React.Component {
+class TockenExtractionSteps extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +26,7 @@ class Steps extends React.Component {
         <Grid container spacing={24} style={{  marginLeft: "12%" }}>
           <Grid item xs={4} sm={4} lg={4} xl={4}>
             <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-              Workspace name :
+            {translate('common.page.label.workSpaceName')}
             </Typography>
             <br />
           </Grid>
@@ -69,4 +70,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Steps));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TockenExtractionSteps));

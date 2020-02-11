@@ -6,6 +6,7 @@ import MUIDataTable from "mui-datatables";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchMTWorkspace from "../../../../flux/actions/apis/fetchworkspace";
+import { translate } from '../../../../assets/localisation';
 
 class DataSource extends React.Component {
   intervalID;
@@ -25,7 +26,7 @@ class DataSource extends React.Component {
 
   componentDidMount() {
     this.handleFetchWorkspace();
-    
+
   }
 
   componentWillUnmount() {
@@ -41,7 +42,7 @@ class DataSource extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspace !== this.props.fetchWorkspace) {
-      
+
       this.setState({ name: this.props.fetchWorkspace.data, count: this.props.fetchWorkspace.count });
     }
   }
@@ -70,18 +71,18 @@ class DataSource extends React.Component {
 
 
   handleClick = rowData => {
-      this.setState({download:true, fileId: rowData[4]})
-      console.log(rowData)
-      var link = document.createElement('a');
-      link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" + "/download/")+ rowData[4];
-      document.body.appendChild(link);
-      link.click();   
-    
+    this.setState({ download: true, fileId: rowData[4] })
+    console.log(rowData)
+    var link = document.createElement('a');
+    link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" + "/download/") + rowData[4];
+    document.body.appendChild(link);
+    link.click();
+
   };
 
- 
 
- 
+
+
 
   handleChange = value => {
     this.setState({ value });
@@ -89,7 +90,7 @@ class DataSource extends React.Component {
 
   render() {
 
-    
+
     const columns = [
       {
         name: "title",
@@ -148,7 +149,7 @@ class DataSource extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => {},
+      onFilterDialogClose: () => { },
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -157,7 +158,7 @@ class DataSource extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            Apply Filters
+            {translate('common.page.button.applyFilter')}
           </Button>
         </div>
       ),
@@ -176,12 +177,12 @@ class DataSource extends React.Component {
 
     return (
       <div>
-        
-        
+
+
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title="Data Source" data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate('common.page.data.dataSource')} data={this.state.name} columns={columns} options={options} />
         </div>
-        {this.state.download && <a href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/`+ this.state.fileId }/>}
+        {this.state.download && <a href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/` + this.state.fileId} />}
       </div>
     );
   }

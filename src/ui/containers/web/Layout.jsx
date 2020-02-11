@@ -56,7 +56,7 @@ class App extends React.Component {
 
   render() {
     const { classes, theme, title, drawer, showLogo, forDemo, dontShowLoader } = this.props;
-    console.log("--------",this.props.dontShowLoader)
+    console.log("--------", this.props.dontShowLoader)
     const Component = this.props.component; // eslint-disable-line
     return (
       <MuiThemeProvider theme={Theme}>
