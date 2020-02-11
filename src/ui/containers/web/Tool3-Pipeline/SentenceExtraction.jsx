@@ -39,7 +39,6 @@ class SentenceExtraction extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspaceDetails !== this.props.fetchWorkspaceDetails) {
-      console.log("result------", this.props.fetchWorkspaceDetails.data);
       this.setState({
         workspaceDetails: this.props.fetchWorkspaceDetails.data,
         sourceDetail: this.props.fetchWorkspaceDetails.data.source_file_full_path,
