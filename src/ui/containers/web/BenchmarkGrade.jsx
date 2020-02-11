@@ -232,13 +232,13 @@ class BenchmarkGrade extends React.Component {
           this.state.sentences.map((row, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row">
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText={translate('common.page.text.readMore')} readLessText="">
+                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText={translate('commonCorpus.page.text.readMore')} readLessText="">
                   {row.source}
                 </ReadMoreAndLess>
               </TableCell>
               <TableCell>
 
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText={translate('common.page.text.readMore')} readLessText="">
+                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText={translate('commonCorpus.page.text.readMore')} readLessText="">
                   {row.target}
                 </ReadMoreAndLess>
               </TableCell>
