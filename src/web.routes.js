@@ -66,9 +66,6 @@ import Tool3DataSource from "./ui/containers/web/Tool3-Pipeline/DataSource";
 import Stage2DataSource from "./ui/containers/web/Tool2-Pipeline/DataSource";
 import FeedbackForm from "./ui/containers/web/FeedbackForm";
 
-
-
-
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
   <Route
     {...rest}
@@ -395,7 +392,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
 
-<PrivateRoute
+            <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/sentence-extraction/:name/:session_id`}
               title="STAGE 3, TOOLCHAIN"
               userRoles={["dev"]}
@@ -500,13 +497,13 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
 
-<PrivateRoute
+            <PrivateRoutes
               path={`${process.env.PUBLIC_URL}/feedback-form/:page`}
               title="FeedbackForm"
               component={FeedbackForm}
               authenticate={this.authenticateUser}
             />
-            
+
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/datasource/:name/:session_id`}
               title="STAGE 3, DATASOURCE"
