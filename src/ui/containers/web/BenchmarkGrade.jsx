@@ -27,6 +27,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import TextField from '@material-ui/core/TextField';
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+import { translate } from '../../../assets/localisation';
 const theme = createMuiTheme();
 class BenchmarkGrade extends React.Component {
   constructor(props) {
@@ -53,7 +54,7 @@ class BenchmarkGrade extends React.Component {
         "how good the contextual meaning of the sentence",
         "How well sequenced and properly framed the output is, given the meaning was conveyed",
         "Vocabulary/Lexicon- This  captures two things- first, proper words to express the meaning of those sentences, including correct proper nouns(names, places etc.). Secondly, it includes if the output contains more better words i.e a better synonym, this is helpful in relative comparison, when you want to give more weight to न्यायाधीश in comparison to जस्टिस",
-        this.props.match.params.basename ==="1570785751"?"How much accurately name are translated": "Aggrecate Score", "Aggrecate Score"
+        this.props.match.params.basename === "1570785751" ? "How much accurately name are translated" : "Aggrecate Score", "Aggrecate Score"
       ],
 
       role: JSON.parse(localStorage.getItem("roles"))
@@ -63,13 +64,13 @@ class BenchmarkGrade extends React.Component {
   componentDidMount() {
     console.log(this.props.match.params)
     this.setState({
-      TableHeaderValues:[
+      TableHeaderValues: [
         "Source Sentence",
         "Target Sentence",
         "Meaning of sentence",
         "Structure of sentence",
         "Vocabulary / Lexicon",
-        this.props.match.params.basename ==="1570785751"? "Names Accuracy":"Aggregate score",
+        this.props.match.params.basename === "1570785751" ? "Names Accuracy" : "Aggregate score",
         "Aggregate score",
         "Comments"
       ]
@@ -156,7 +157,7 @@ class BenchmarkGrade extends React.Component {
     }
   }
 
-  handleChange = (name,index) => event => {
+  handleChange = (name, index) => event => {
     console.log(event.target.value, name)
     let sentence = this.state.sentences;
     sentence[index].comments = event.target.value;
@@ -164,7 +165,7 @@ class BenchmarkGrade extends React.Component {
     this.setState({ comments: event.target.value, sentences: sentence, tocken: true });
 
     console.log(this.state.sentences)
-    
+
   };
 
   handleStarClick(nextValue, prevValue, name) {
@@ -195,7 +196,7 @@ class BenchmarkGrade extends React.Component {
 
   handleSubmit = () => {
 
-    console.log("this.state.comment")
+
     let api = new UpdateSentencesGrade(this.state.sentences, this.props.match.params.modelid);
     this.setState({ dialogOpen: false, apiCall: true, tocken: false });
     this.props.APITransport(api);
@@ -211,15 +212,15 @@ class BenchmarkGrade extends React.Component {
     const result =
       this.props.match.params.basename === "1570785239"
         ? ((this.state.score.context_rating ? this.state.score.context_rating * 2 : 0) +
-            (this.state.score.spelling_rating ? this.state.score.spelling_rating * 6 : 0) +
-            (this.state.score.grammer_grade ? this.state.score.grammer_grade * 2 : 0)) /
-          10
+          (this.state.score.spelling_rating ? this.state.score.spelling_rating * 6 : 0) +
+          (this.state.score.grammer_grade ? this.state.score.grammer_grade * 2 : 0)) /
+        10
         : this.props.match.params.basename === "1570785751" ? ((this.state.score.context_rating ? this.state.score.context_rating * 2 : 0) +
-        (this.state.score.spelling_rating ? this.state.score.spelling_rating * 1 : 0) +
-        (this.state.score.grammer_grade ? this.state.score.grammer_grade * 1 : 0)+ (this.state.score.name_accuracy_rating ? this.state.score.name_accuracy_rating * 6 : 0)) /
-      10  :
-        
-        (this.state.score.context_rating * 6 + this.state.score.grammer_grade * 3 + this.state.score.spelling_rating * 1) / 10;
+          (this.state.score.spelling_rating ? this.state.score.spelling_rating * 1 : 0) +
+          (this.state.score.grammer_grade ? this.state.score.grammer_grade * 1 : 0) + (this.state.score.name_accuracy_rating ? this.state.score.name_accuracy_rating * 6 : 0)) /
+          10 :
+
+          (this.state.score.context_rating * 6 + this.state.score.grammer_grade * 3 + this.state.score.spelling_rating * 1) / 10;
     return result;
   }
 
@@ -231,13 +232,13 @@ class BenchmarkGrade extends React.Component {
           this.state.sentences.map((row, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row">
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText="Read more" readLessText="">
+                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText={translate('common.page.text.readMore')} readLessText="">
                   {row.source}
                 </ReadMoreAndLess>
               </TableCell>
               <TableCell>
-                
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText="Read more" readLessText="">
+
+                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText={translate('common.page.text.readMore')} readLessText="">
                   {row.target}
                 </ReadMoreAndLess>
               </TableCell>
@@ -277,29 +278,29 @@ class BenchmarkGrade extends React.Component {
               </TableCell>
 
               {this.props.match.params.basename === "1570785751" &&
-              <TableCell>
-                <div style={{ width: "110px" }}>
-                  <StarRatingComponent
-                    name={index.toString()}
-                    starCount={5}
-                    value={row.name_accuracy_rating ? row.name_accuracy_rating : 0}
-                    onStarClick={this.handleNameStarClick.bind(this)}
-                  />
-                </div>
-              </TableCell>
+                <TableCell>
+                  <div style={{ width: "110px" }}>
+                    <StarRatingComponent
+                      name={index.toString()}
+                      starCount={5}
+                      value={row.name_accuracy_rating ? row.name_accuracy_rating : 0}
+                      onStarClick={this.handleNameStarClick.bind(this)}
+                    />
+                  </div>
+                </TableCell>
               }
 
               <TableCell>
                 <div style={{ width: "40px" }}>
-                  { this.props.match.params.basename === "1570785239"
+                  {this.props.match.params.basename === "1570785239"
                     ? ((row.context_rating ? row.context_rating * 2 : 0) +
-                        (row.spelling_rating ? row.spelling_rating * 6 : 0) +
-                        (row.rating ? row.rating * 2 : 0)) /
-                      10
+                      (row.spelling_rating ? row.spelling_rating * 6 : 0) +
+                      (row.rating ? row.rating * 2 : 0)) /
+                    10
                     : this.props.match.params.basename === "1570785751" ? ((row.context_rating ? row.context_rating * 2 : 0) +
-                    (row.spelling_rating ? row.spelling_rating * 1 : 0) +
-                    (row.rating ? row.rating * 1 : 0) + (row.name_accuracy_rating ? row.name_accuracy_rating * 6 : 0)) /
-                  10:((row.context_rating ? row.context_rating * 6 : 0) +
+                      (row.spelling_rating ? row.spelling_rating * 1 : 0) +
+                      (row.rating ? row.rating * 1 : 0) + (row.name_accuracy_rating ? row.name_accuracy_rating * 6 : 0)) /
+                      10 : ((row.context_rating ? row.context_rating * 6 : 0) +
                         (row.spelling_rating ? row.spelling_rating * 1 : 0) +
                         (row.rating ? row.rating * 3 : 0)) /
                       10}
@@ -307,16 +308,16 @@ class BenchmarkGrade extends React.Component {
               </TableCell>
               <TableCell>
                 <div style={{ width: "210px" }}>
-                <TextField
-          id="standard-multiline-flexible"
-          
-          multiline
-          rowsMax="4"
-          value={row.comments?row.comments:''}
-          onChange={this.handleChange('comments',index)}
-          
-          margin="normal"
-        />
+                  <TextField
+                    id="standard-multiline-flexible"
+
+                    multiline
+                    rowsMax="4"
+                    value={row.comments ? row.comments : ''}
+                    onChange={this.handleChange('comments', index)}
+
+                    margin="normal"
+                  />
                 </div>
               </TableCell>
             </TableRow>
@@ -332,7 +333,7 @@ class BenchmarkGrade extends React.Component {
             <Toolbar style={{ marginRight: "-1.2%" }}>
               <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
               <Typography variant="h6" gutterBottom>
-                Rows per page:&nbsp;&nbsp;&nbsp;&nbsp;
+                {translate('common.page.text.rowsPerPage')}&nbsp;&nbsp;&nbsp;&nbsp;
                 <Select width="50%" value={this.state.pageCount} onChange={this.handleSelectChange} displayEmpty>
                   <MenuItem value={5}>5</MenuItem>
                   <MenuItem value={10}>10</MenuItem>
@@ -347,19 +348,19 @@ class BenchmarkGrade extends React.Component {
                 <Grid container spacing={24} style={{ padding: 5 }}>
                   <Grid item xs={3} sm={3} lg={3} xl={3}>
                     <Typography variant="title" color="inherit" style={{ paddingBottom: "8px", paddingLeft: "15px", flex: 1 }}>
-                      {this.state.pending === 0 ? " Total Grade : " + this.calculateScore() : null}
+                      {this.state.pending === 0 ? translate('benchmarkGrade.page.label.totalGrade') + this.calculateScore() : null}
                     </Typography>
                   </Grid>
                   <Grid item xs={3} sm={3} lg={3} xl={3}>
                     <Typography variant="title" color="inherit" style={{ paddingBottom: "8px", flex: 1 }}>
-                    {this.state.pending ? (this.state.count && "Number of sentences pending : ") + (this.state.pending && this.state.pending) : this.state.pending ===0 &&"Completed"}
+                      {this.state.pending ? (this.state.count && translate('benchMarkGrade.page.label.sentencesPending')) + (this.state.pending && this.state.pending) : this.state.pending === 0 && translate('common.page.label.completed')}
                     </Typography>
                   </Grid>
                   <Grid item xs={3} sm={3} lg={2} xl={2}>
-                    Status Filter :&nbsp;&nbsp;&nbsp;
+                    {translate('benchmark.page.text.statusFilter')}&nbsp;&nbsp;&nbsp;
                     <Select value={this.state.inputStatus} onChange={this.handleStatusChange} displayEmpty>
-                      <MenuItem value={"ALL"}>All</MenuItem>
-                      <MenuItem value={"PENDING"}>Pending</MenuItem>
+                      <MenuItem value={"ALL"}>{translate('common.page.text.all')}</MenuItem>
+                      <MenuItem value={"PENDING"}>{translate('common.page.text.pending')}</MenuItem>
                     </Select>
                   </Grid>
                   <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -382,16 +383,16 @@ class BenchmarkGrade extends React.Component {
                 <TableHead>
                   <TableRow>
                     {this.state.TableHeaderValues.map((item, index) => {
-                      return ( 
-                        this.props.match.params.basename ==="1570785751" ? 
+                      return (
+                        this.props.match.params.basename === "1570785751" ?
 
-                        
-                        <Tooltip placement="top-start" enterDelay={200} key={item} title={this.state.TableHeaderDescription[index]}>
-                          <TableCell width="45%">{item}</TableCell>
-                        </Tooltip>: index !=5 && <Tooltip placement="top-start" enterDelay={200} key={item} title={this.state.TableHeaderDescription[index]}>
-                          <TableCell width="45%">{item}</TableCell>
-                        </Tooltip>
-                        );
+
+                          <Tooltip placement="top-start" enterDelay={200} key={item} title={this.state.TableHeaderDescription[index]}>
+                            <TableCell width="45%">{item}</TableCell>
+                          </Tooltip> : index != 5 && <Tooltip placement="top-start" enterDelay={200} key={item} title={this.state.TableHeaderDescription[index]}>
+                            <TableCell width="45%">{item}</TableCell>
+                          </Tooltip>
+                      );
                     })}
                   </TableRow>
                 </TableHead>
@@ -405,8 +406,8 @@ class BenchmarkGrade extends React.Component {
             {this.state.dialogOpen && this.state.tocken && (
               <Dialog
                 open={this.state.dialogOpen}
-                message={"Do you want to save your changes?"}
-                title="Save Changes"
+                message={translate('benchMarkGrade.page.alert.SaveChangesalert')}
+                title={translate('common.page.label.saveChanges')}
                 value={this.state.sentences}
                 handleSubmit={this.handleSubmit}
                 handleClose={this.handleClose}
@@ -423,7 +424,7 @@ class BenchmarkGrade extends React.Component {
                 aria-label="edit"
                 style={{ width: "170px", marginBottom: "4%", marginTop: "1px" }}
               >
-                Save
+                {translate('common.page.button.save')}
               </Button>
             </Toolbar>
           </div>

@@ -10,6 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchworkspacedetails";
+import { translate } from '../../../../assets/localisation';
 
 class DownloadSentence extends React.Component {
   constructor(props) {
@@ -55,7 +56,7 @@ class DownloadSentence extends React.Component {
           <Grid container spacing={24} style={{ marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                Workspace name :
+              {translate('common.page.label.workSpaceName')}
               </Typography>
               <br />
             </Grid>
@@ -70,7 +71,7 @@ class DownloadSentence extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
-                Extracted sentences :
+              {translate('sentenceExtraction.page.label.ExtractedSent')}
               </Typography>
               <br />
             </Grid>
@@ -89,14 +90,14 @@ class DownloadSentence extends React.Component {
                       onClick={this.handleClick}
                       style={{ width: "85%", height: "56px", marginTop: "-30px" }}
                     >
-                      Download & View
+                      {translate('common.page.button.download&View')}
                     </Button>{" "}
                   </a>
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
                   <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "-20px" }}>
-                    Found {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_count : 0} sentences
+                  {translate('common.page.label.found')} {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_count : 0} {translate('common.page.label.sentence')}
                   </Typography>
                 </Grid>
               </Grid>

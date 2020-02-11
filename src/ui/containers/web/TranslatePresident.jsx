@@ -21,6 +21,7 @@ import C from '../../../flux/actions/constants'
 import Fab from '@material-ui/core/Fab';
 import Zoom from '@material-ui/core/Zoom';
 import CloseIcon from '@material-ui/icons/Close';
+import { translate } from '../../../assets/localisation';
 
 const langs = [
   { label: 'Hindi', code: 'hi', type: C.HINDI },
@@ -148,7 +149,7 @@ class TranslatePresident extends React.Component {
       <div className="App">
         {!this.state.showLayout ?
           <div>
-            <textarea className='idbox' rows='5' cols='50' placeholder='Please enter text here...' onChange={(event) => { this.handleTextChange('sentence', event) }} />
+            <textarea className='idbox' rows='5' cols='50' placeholder={translate('common.page.placeholder.enterTextHere')} onChange={(event) => { this.handleTextChange('sentence', event) }} />
             <div >
               <Button onClick={this.handleSubmit}
                 variant="contained" color="primary"
@@ -156,21 +157,21 @@ class TranslatePresident extends React.Component {
                   width: '25%',
                   height: 50,
 
-                }} onClick={this.handleOnClick.bind(this)}>Translate</Button>
+                }} onClick={this.handleOnClick.bind(this)}>{translate('dashboard.page.heading.title')}</Button>
             </div>
           </div> :
           (!this.state.showLangLayout && <div className={'fadeUp'}>
-            <textarea className='idbox' rows='5' cols='50' placeholder='Please enter text here...' onChange={(event) => { this.handleTextChange('sentence', event) }} />
+            <textarea className='idbox' rows='5' cols='50' placeholder={translate('common.page.placeholder.enterTextHere')} onChange={(event) => { this.handleTextChange('sentence', event) }} />
           </div>)
         }
         <div>
           {this.state.showLangLayout ?
-            <Grid container spacing={4} style={{ paddingLeft: '1%', paddingRight: '1%'  ,marginBottom:'10px'}}>
+            <Grid container spacing={4} style={{ paddingLeft: '1%', paddingRight: '1%', marginBottom: '10px' }}>
               <Grid container item xs={12} spacing={1}>
                 <Paper id='paper'>
                   {this.state.showZoomed &&
                     <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '42px' : '20px', transition: 'transform .5s' }}>
-                      {'English'}
+                      {translate('common.page.label.english')}
                     </Typography>
                   }
                   <Typography id='title' gutterBottom style={{ color: '#4c4c4c', fontSize: this.state.showZoomed ? '42px' : '20px', transition: 'transform .5s' }}>
