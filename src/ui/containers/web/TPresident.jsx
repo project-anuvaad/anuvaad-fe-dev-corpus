@@ -19,7 +19,8 @@ import { withRouter } from "react-router-dom";
 import C from '../../../flux/actions/constants'
 import Fab from '@material-ui/core/Fab';
 import CloseIcon from '@material-ui/icons/Close';
-import { blueGrey50} from "material-ui/styles/colors";
+import { blueGrey50 } from "material-ui/styles/colors";
+import { translate } from '../../../assets/localisation';
 const langs = [
   { label: 'Hindi', code: 'hi', type: C.HINDI },
   { label: 'Bengali', code: 'bn', type: C.BENGALI },
@@ -59,9 +60,9 @@ class Translate extends React.Component {
         this.setState({
           [lang.label.toLowerCase()]: this.props[lang.label.toLowerCase()]
         })
-       
+
       }
-      
+
     })
   }
 
@@ -147,7 +148,7 @@ class Translate extends React.Component {
       <div className="App">
         {!this.state.showLayout ?
           <div>
-            <textarea className='idbox' rows='5' cols='50' placeholder='Please enter text here...' onChange={(event) => { this.handleTextChange('sentence', event) }} />
+            <textarea className='idbox' rows='5' cols='50' placeholder={translate('common.page.placeholder.enterTextHere')} onChange={(event) => { this.handleTextChange('sentence', event) }} />
             <div >
               <Button
                 variant="contained" color="primary"
@@ -159,14 +160,14 @@ class Translate extends React.Component {
             </div>
           </div> :
           (!this.state.showLangLayout && <div className={'fadeUp'}>
-            <textarea className='idbox' rows='5' cols='50' placeholder='Please enter text here...' onChange={(event) => { this.handleTextChange('sentence', event) }} />
+            <textarea className='idbox' rows='5' cols='50' placeholder={translate('common.page.placeholder.enterTextHere')} onChange={(event) => { this.handleTextChange('sentence', event) }} />
           </div>)
         }
         <div>
           {this.state.showLangLayout ?
             <Grid container spacing={16}>
               <Grid container item xs={this.state.showZoomed ? 6 : 4} sm={this.state.showZoomed ? 6 : 4} lg={this.state.showZoomed ? 6 : 4} xl={this.state.showZoomed ? 6 : 4} spacing={1}>
-                <AppCard title handleHover={() => { }} handleHoverOut={() => { }} header={"English"} body={this.state.sentence} fontSize={this.state.showZoomed ? '40px' : '20px'} showZoomed={this.state.showZoomed} style={{ minWidth: '100%', marginTop: '50%', background: blueGrey50, minHeight: window.innerHeight + 7 - window.innerHeight / 5 }}>
+                <AppCard title handleHover={() => { }} handleHoverOut={() => { }} header={translate('common.page.label.english')} body={this.state.sentence} fontSize={this.state.showZoomed ? '40px' : '20px'} showZoomed={this.state.showZoomed} style={{ minWidth: '100%', marginTop: '50%', background: blueGrey50, minHeight: window.innerHeight + 7 - window.innerHeight / 5 }}>
 
                 </AppCard>
               </Grid>
@@ -178,7 +179,7 @@ class Translate extends React.Component {
                 </React.Fragment>
               </Grid> */}
 
-              <Grid container item xs={this.state.showZoomed ? 6 : 8} sm={this.state.showZoomed ? 6 : 8} lg={this.state.showZoomed ? 6 : 8} xl={this.state.showZoomed ? 6 : 8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll',marginBottom:'10px', paddingBottom:'10px'}} id="cards">
+              <Grid container item xs={this.state.showZoomed ? 6 : 8} sm={this.state.showZoomed ? 6 : 8} lg={this.state.showZoomed ? 6 : 8} xl={this.state.showZoomed ? 6 : 8} spacing={1} style={{ height: window.innerHeight - window.innerHeight / 10, overflowY: 'scroll', marginBottom: '10px', paddingBottom: '10px' }} id="cards">
                 <React.Fragment>
                   {this.state.showZoomed &&
                     <Zoom in={this.state.zoom} timeout={700}>

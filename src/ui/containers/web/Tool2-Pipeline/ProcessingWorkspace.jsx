@@ -6,6 +6,7 @@ import MUIDataTable from "mui-datatables";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
+import { translate } from '../../../../assets/localisation';
 
 
 class ProcessingWorkspace extends React.Component {

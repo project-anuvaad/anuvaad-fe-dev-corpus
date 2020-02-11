@@ -14,8 +14,7 @@ import CreateBenchmark from "./UploadBenchmark";
 import UploadFile from "@material-ui/icons/CloudUpload";
 import Typography from "@material-ui/core/Typography";
 import Snackbars from "../../components/web/common/Snackbar";
-
-
+import { translate } from '../../../assets/localisation';
 import ScrollArea from "react-scrollbar";
 const styles = theme => ({
   search: {
@@ -45,9 +44,9 @@ class GarderTranslate extends React.Component {
       name: [],
       apiCalled: false,
       file: {},
-      message: "Benchmark added successfully",
-      filesMessage:"No Records Found",
-      renderPageMessage:'Please select a file from the left pane or upload a new file to start.',
+      message: translate('gradeTranslate.page.text.benchmarkAdded'),
+      filesMessage:translate('gradeTranslate.page.text.noRecordsFound'),
+      renderPageMessage:translate('gradeTranslate.page.text.pleaseselectFile'),
       role: JSON.parse(localStorage.getItem("roles")),
       sentences: [],
       createBenchmark: false
@@ -168,7 +167,7 @@ class GarderTranslate extends React.Component {
                     }}
                   >
                     <UploadFile fontSize="large" />
-                    &nbsp;&nbsp;&nbsp;Upload File
+                    &nbsp;&nbsp;&nbsp;{translate('common.page.label.uploadFile')}
                     
                   </Button>
                 </div>
@@ -188,7 +187,7 @@ class GarderTranslate extends React.Component {
           </Grid>
         </Grid>
         { this.state.value>0 &&
-      (<Snackbars message={this.state.message} variant={this.props.apistatus.error ? 'error':'success'} openValue={true}/>
+      (<Snackbars message={this.state.message} variant={this.props.apistatus.error ? "error":"success"} openValue={true}/>
      
       )}
       </div>

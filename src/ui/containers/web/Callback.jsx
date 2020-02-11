@@ -5,6 +5,7 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import UserAuth from "../../../flux/actions/apis/userprofile";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { translate } from '../../../assets/localisation';
 
 class Callback extends React.Component {
   componentDidUpdate(prevProps) {
@@ -50,7 +51,7 @@ class Callback extends React.Component {
   }
 
   render() {
-    return <div>Redirecting Please wait..</div>;
+    return <div>{translate('common.page.text.rediecting')}</div>;
   }
 }
 

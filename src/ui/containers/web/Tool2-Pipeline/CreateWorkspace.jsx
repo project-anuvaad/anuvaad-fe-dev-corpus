@@ -20,6 +20,8 @@ import Spinner from "../../../components/web/common/Spinner";
 import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
 import ProcessingWorkspace from "./ProcessingWorkspace";
 import MTProcessWorkspace from "../../../../flux/actions/apis/createworkspace";
+import { translate } from '../../../../assets/localisation';
+
 
 class CreateWorkspace extends React.Component {
   constructor(props) {
@@ -30,10 +32,10 @@ class CreateWorkspace extends React.Component {
       selectedWorkspaces: [],
       workspaceName: "",
       step: 1,
-      message1: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
+      message1: translate('common.page.label.message') ,
       csvData:
-        "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",
-      processData: 'Press "Next" to select relevant input workspaces'
+      translate('common.page.label.csvData')  ,
+      processData: translate('common.page.processData.pressNextToSelect')
     };
   }
 

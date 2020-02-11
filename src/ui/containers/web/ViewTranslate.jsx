@@ -29,6 +29,7 @@ import Typography from "@material-ui/core/Typography";
 import Toolbar from "@material-ui/core/Toolbar";
 import Snackbar from "../../components/web/common/Snackbar";
 import FetchFeedbackPending from "../../../flux/actions/apis/fetchfeedbackpending";
+import { translate } from '../../../assets/localisation';
 
 var file = "";
 class ViewTranslate extends React.Component {
@@ -87,7 +88,7 @@ class ViewTranslate extends React.Component {
         APITransport(apiObj);
         this.setState({ open: false, showLoader: true })
         
-        this.setState({ showLoader: true, message: this.state.filename + " file deleted successfully!" })
+        this.setState({ showLoader: true, message: this.state.filename +  translate('viewTranslate.page.label.FileDeleteMessage')})
         setTimeout(() => { this.setState({ snack: true }) }, 700)
         return false;
     };
@@ -138,14 +139,14 @@ class ViewTranslate extends React.Component {
         const columns = [
             {
                 name: "basename",
-                label: "basename",
+                label: translate('common.page.label.basename'),
                 options: {
                     display: 'excluded',
                 }
             },
             {
                 name: "name",
-                label: "Transfer Files",
+                label:  translate('common.page.label.transferFiles'),
                 options: {
                     filter: true,
                     sort: true,
@@ -153,7 +154,7 @@ class ViewTranslate extends React.Component {
             },
             {
                 name: "created_on",
-                label: "Timestamp",
+                label:  translate('common.page.label.timeStamp'),
                 options: {
                     filter: true,
                     sort: true,
@@ -163,7 +164,7 @@ class ViewTranslate extends React.Component {
 
             {
                 name: "sourceLang",
-                label: "Source Language",
+                label: translate('common.page.label.sourceLanguage'),
                 options: {
                     filter: true,
                     sort: true,
@@ -172,7 +173,7 @@ class ViewTranslate extends React.Component {
 
             {
                 name: "targetLang",
-                label: "Target Language",
+                label: translate('common.page.label.targetLanguage'),
                 options: {
                     filter: true,
                     sort: true,
@@ -181,7 +182,7 @@ class ViewTranslate extends React.Component {
 
             {
                 name: "status",
-                label: "Status",
+                label: translate("common.page.table.status"),
                 options: {
                     display: 'excluded',
                 }
@@ -189,13 +190,13 @@ class ViewTranslate extends React.Component {
 
             {
                 name: "eta",
-                label: "ETA",
+                label: translate('viewTranslate.page.label.eta'),
                 options: {
                     display: 'excluded',
                 }
             }, {
                 name: "translate_uploaded",
-                label: "Translateuploaded",
+                label: translate('viewTranslate.page.label.translateUpLoaded'),
                 options: {
                     display: 'excluded',
                 }
@@ -239,8 +240,8 @@ class ViewTranslate extends React.Component {
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Download Source"><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Download Translated"><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
                                     {/* {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''}  */}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Delete"><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Upload"><FileUpload  id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" value={this.state.value} handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.label.delete')}><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.button.upload')}><FileUpload  id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" value={this.state.value} handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
 
                                 </div>
                             );
@@ -266,7 +267,7 @@ class ViewTranslate extends React.Component {
                 <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
                     <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
                     <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { history.push("/doctranslate") }}>
-                        <AddIcon /> Translate
+                        <AddIcon /> {translate('dashboard.page.heading.title')}
                 </Fab>
                 </Toolbar>
 
@@ -283,15 +284,15 @@ class ViewTranslate extends React.Component {
                         aria-describedby="alert-dialog-slide-description"
                     >
                         <DialogTitle id="alert-dialog-slide-title">
-                            Delete
+                        {translate('common.page.label.delete')}
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-slide-description">
-                                Are you sure you want to delete {this.state.filename} file?
+                            {translate('viewTranslate.page.label.deleteRequest')} {this.state.filename}  {translate('viewTranslate.page.label.file')}
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={this.handleClose} color="primary">No</Button>
+                            <Button onClick={this.handleClose} color="primary">{translate('common.page.label.no')}</Button>
                             <Button onClick={(event) => { this.handleClickOpen(file) }} color="primary">Yes</Button>
                         </DialogActions>
                     </Dialog>
