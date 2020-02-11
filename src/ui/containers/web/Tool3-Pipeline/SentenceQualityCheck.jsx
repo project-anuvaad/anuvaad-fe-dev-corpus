@@ -17,6 +17,7 @@ import FetchSearch from "../../../../flux/actions/apis/fetchsearchreplace";
 import FetchSearchReplace from "../../../../flux/actions/apis/sentencereplace";
 import AcceptAll from "../../../../flux/actions/apis/acceptallsentence";
 import history from "../../../../web.history";
+import { translate } from '../../../../assets/localisation';
 
 const styles = theme => ({
   card: {

@@ -9,6 +9,7 @@ import WorkspaceDetails from "../Tool2-Pipeline/ExistingWorkspace";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import history from "../../../../web.history";
+import { translate } from '../../../../assets/localisation';
 
 class DataSource extends React.Component {
   intervalID;

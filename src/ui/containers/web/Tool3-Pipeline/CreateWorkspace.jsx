@@ -21,6 +21,7 @@ import ProcessingWorkspace from "./ProcessingWorkspace";
 import SaveWorkspace from "../../../../flux/actions/apis/savesearchreplaceworkspace";
 import FetchDefaultConfig from "../../../../flux/actions/apis/fetchdefaultconfig";
 import ConfigUpload from "../../../../flux/actions/apis/configupload";
+import { translate } from '../../../../assets/localisation';
 
 class CreateWorkspace extends React.Component {
   constructor(props) {
