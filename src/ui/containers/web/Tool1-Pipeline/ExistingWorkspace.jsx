@@ -98,7 +98,7 @@ class ExistingWorkspace extends React.Component {
       },
       {
         name: "session_id",
-    
+
         options: {
           display: "excluded",
           filter: false
@@ -122,7 +122,7 @@ class ExistingWorkspace extends React.Component {
       },
       {
         name: "sentence_count",
-        label:translate("common.page.table.sentenceCount"),
+        label: translate("common.page.table.sentenceCount"),
         options: {
           filter: false,
           sort: true
@@ -138,7 +138,7 @@ class ExistingWorkspace extends React.Component {
       },
       {
         name: "created_at",
-        label:translate("common.page.table.createdAt"), 
+        label: translate("common.page.table.createdAt"),
         options: {
           filter: false,
           sort: false
@@ -160,7 +160,7 @@ class ExistingWorkspace extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => {},
+      onFilterDialogClose: () => { },
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -169,7 +169,7 @@ class ExistingWorkspace extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-          {translate('common.page.button.applyFilter')}
+            {translate('common.page.button.applyFilter')}
           </Button>
         </div>
       ),

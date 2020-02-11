@@ -32,7 +32,7 @@ class UploadToken extends React.Component {
       negativeToken: "",
       workspaceName: this.props.match.params.name,
       session_id: this.props.match.params.session_id,
-      message:  translate('common.page.message.step2Completed'),
+      message: translate('common.page.message.step2Completed'),
       load: false,
       positiveChecked: false,
       negativeChecked: false
@@ -64,13 +64,13 @@ class UploadToken extends React.Component {
       const positiveTockenValue = this.state.positiveChecked
         ? this.state.positiveToken
         : "positiveToken" in this.props.configUplaod
-        ? this.props.configUplaod.positiveToken
-        : "";
+          ? this.props.configUplaod.positiveToken
+          : "";
       const negativeTockenValue = this.state.negativeChecked
         ? this.state.negativeToken
         : "negativeToken" in this.props.configUplaod
-        ? this.props.configUplaod.negativeToken
-        : "";
+          ? this.props.configUplaod.negativeToken
+          : "";
 
       if (positiveTockenValue && negativeTockenValue) {
         const { APITransport } = this.props;
@@ -132,7 +132,7 @@ class UploadToken extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "1%", marginLeft: "12%" }}>
             <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "30px" }}>
               <Typography gutterBottom variant="title" component="h2">
-              {translate('common.page.label.positiveTocken')}
+                {translate('common.page.label.positiveTocken')}
               </Typography>
               <br />
             </Grid>
@@ -146,7 +146,7 @@ class UploadToken extends React.Component {
               <Grid container spacing={8}>
                 <Grid item xs={1} sm={1} lg={1} xl={1}>
                   <Typography gutterBottom variant="title" component="h2" style={{ paddingTop: "28px" }}>
-                  {translate('uploadTocken.page.label.or')}
+                    {translate('uploadTocken.page.label.or')}
                   </Typography>
                 </Grid>
 
@@ -177,7 +177,7 @@ class UploadToken extends React.Component {
             </Grid>
             <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "30px" }}>
               <Typography gutterBottom variant="title" component="h2">
-              {translate('uploadTocken.page.label.negativeTocken')}
+                {translate('uploadTocken.page.label.negativeTocken')}
               </Typography>
               <br />
             </Grid>
@@ -191,7 +191,7 @@ class UploadToken extends React.Component {
               <Grid container spacing={8}>
                 <Grid item xs={1} sm={1} lg={1} xl={1}>
                   <Typography gutterBottom variant="title" component="h2" style={{ paddingTop: "28px" }}>
-                  {translate('uploadTocken.page.label.or')}
+                    {translate('uploadTocken.page.label.or')}
                   </Typography>
                 </Grid>
 
@@ -233,7 +233,7 @@ class UploadToken extends React.Component {
                 <Grid item xs={1} sm={1} lg={1} xl={1} />
                 <Grid item xs={8} sm={8} lg={8} xl={8} style={{ marginTop: "40px" }}>
                   <Button variant="contained" color="primary" style={{ width: "87%", height: "60px" }} onClick={this.handleSubmit.bind(this)}>
-                  {translate('common.page.button.next')}
+                    {translate('common.page.button.next')}
                   </Button>
                 </Grid>
               </Grid>

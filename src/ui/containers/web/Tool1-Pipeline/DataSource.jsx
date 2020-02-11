@@ -94,7 +94,7 @@ class DataSource extends React.Component {
     const columns = [
       {
         name: "title",
-        label: "Workspace",
+        label: translate("common.page.table.workspace"),
         options: {
           filter: true,
           sort: true,
@@ -103,7 +103,7 @@ class DataSource extends React.Component {
       },
       {
         name: "session_id",
-        label: "id",
+        label: translate('common.page.label.id'),
         options: {
           display: "excluded",
           filter: false
@@ -111,7 +111,7 @@ class DataSource extends React.Component {
       },
       {
         name: "username",
-        label: "Uploaded by",
+        label: translate('tool1.datasource.label.uploadBy'),
         options: {
           filter: false,
           sort: false
@@ -119,7 +119,7 @@ class DataSource extends React.Component {
       },
       {
         name: "created_at",
-        label: "Uploaded At",
+        label: translate('too1.datasource.label.uploadedAt'),
         options: {
           filter: false,
           sort: false
@@ -127,7 +127,7 @@ class DataSource extends React.Component {
       },
       {
         name: "sentence_file",
-        label: "sentence_file",
+        label: translate('common.page.label.sentenceFile'),
         options: {
           display: "excluded",
           filter: false

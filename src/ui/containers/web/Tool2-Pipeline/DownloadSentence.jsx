@@ -56,7 +56,7 @@ class DownloadSentence extends React.Component {
           <Grid container spacing={24} style={{ marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-              {translate('common.page.label.workSpaceName')}
+                {translate('common.page.label.workSpaceName')}
               </Typography>
               <br />
             </Grid>
@@ -71,7 +71,7 @@ class DownloadSentence extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
-              {translate('sentenceExtraction.page.label.ExtractedSent')}
+                {translate('sentenceExtraction.page.label.ExtractedSent')}
               </Typography>
               <br />
             </Grid>
@@ -81,7 +81,7 @@ class DownloadSentence extends React.Component {
                   <a
                     href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
                       this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file : ""
-                    }`}
+                      }`}
                     style={{ textDecoration: "none" }}
                   >
                     <Button
@@ -97,7 +97,7 @@ class DownloadSentence extends React.Component {
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
                   <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "-20px" }}>
-                  {translate('common.page.label.found')} {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_count : 0} {translate('common.page.label.sentence')}
+                    {translate('common.page.label.found')} {this.state.workspaceDetails ? this.state.workspaceDetails.sentence_count : 0} {translate('common.page.label.sentence')}
                   </Typography>
                 </Grid>
               </Grid>

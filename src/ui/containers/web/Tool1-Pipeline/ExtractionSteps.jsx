@@ -86,7 +86,7 @@ class ExtractionSteps extends React.Component {
     const columns = [
       {
         name: "title",
-        label:  translate("common.page.table.workspace"),
+        label: translate("common.page.table.workspace"),
         options: {
           filter: true,
           sort: false,
@@ -102,7 +102,7 @@ class ExtractionSteps extends React.Component {
       },
       {
         name: "step",
-        label:translate("common.page.table.status") ,
+        label: translate("common.page.table.status"),
         options: {
           sort: false,
           filter: false
@@ -119,7 +119,7 @@ class ExtractionSteps extends React.Component {
       },
       {
         name: "created_at",
-        label: translate('common.page.table.createdAt') ,
+        label: translate('common.page.table.createdAt'),
         options: {
           sort: false,
           filter: false
@@ -144,7 +144,7 @@ class ExtractionSteps extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => {},
+      onFilterDialogClose: () => { },
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -153,7 +153,7 @@ class ExtractionSteps extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-          {translate('common.page.button.applyFilter')}
+            {translate('common.page.button.applyFilter')}
           </Button>
         </div>
       ),

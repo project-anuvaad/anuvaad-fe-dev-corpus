@@ -46,7 +46,7 @@ class ProcessingWorkspace extends React.Component {
     }
   }
 
-  
+
 
 
 
@@ -60,7 +60,7 @@ class ProcessingWorkspace extends React.Component {
     const columns = [
       {
         name: "title",
-        label: "Workspace",
+        label: translate("common.page.table.workspace"),
         options: {
           filter: true,
           sort: true,
@@ -69,7 +69,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "session_id",
-        label: "id",
+        label: translate('common.page.label.id'),
         options: {
           display: "excluded",
           filter: false
@@ -77,7 +77,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "step",
-        label: "step",
+        label: translate("common.page.table.step"),
         options: {
           filter: false,
           display: "excluded"
@@ -85,7 +85,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "status",
-        label: "Status",
+        label: translate("common.page.table.status"),
         options: {
           filter: false,
           sort: false
@@ -93,7 +93,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "sentence_count",
-        label: "Sentence Count",
+        label: translate("common.page.table.sentenceCount"),
         options: {
           filter: false,
           sort: true
@@ -101,7 +101,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "username",
-        label: "Created By",
+        label: translate("common.page.table.username"),
         options: {
           filter: false,
           sort: false
@@ -109,7 +109,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "created_at",
-        label: "Created At",
+        label: translate('common.page.table.createdAt'),
         options: {
           filter: false,
           sort: false
@@ -129,7 +129,7 @@ class ProcessingWorkspace extends React.Component {
       selectableRows: "multiple",
       rowsSelected: this.state.selectedWorkspaces,
       rowsPerPage: 10,
-      
+
       count: this.state.count,
       selectableRowsHeader: false,
       page: this.state.page / this.state.rowsPerPage,
@@ -140,22 +140,22 @@ class ProcessingWorkspace extends React.Component {
 
       rowsSelected: this.state.rowsSelected,
       onRowsSelect: (rowsSelected, allRows) => {
-        
+
         let selectedItems = []
         this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });
         if (allRows && allRows.length > 0) {
           allRows.map((selected) => {
-                selectedItems.push(this.state.workspaces[selected.index])
-              })
-            }
-            this.setState({selectedWorkspaces : selectedItems})
-            if (this.props.handleWorkspaceSelected) {
-              console.log("-----",selectedItems)
-              this.props.handleWorkspaceSelected(selectedItems)
-            }   
+            selectedItems.push(this.state.workspaces[selected.index])
+          })
+        }
+        this.setState({ selectedWorkspaces: selectedItems })
+        if (this.props.handleWorkspaceSelected) {
+          console.log("-----", selectedItems)
+          this.props.handleWorkspaceSelected(selectedItems)
+        }
       }
 
-     
+
     };
 
     return (
