@@ -92,7 +92,6 @@ var localization_EN_Data = {
     'gradeTranslate.page.text.pleaseselectFile':"Please select a file from the left pane or upload a new file to start.",
     'common.page.text.success':'success',
     'common.page.text.error':'error',
-    'common.page.text.readMore':"Read more" ,
     'benchmark.page.text.statusFilter':"Status Filter :",
     'common.page.text.all':"All",
     'common.page.text.pending':"Pending",
