@@ -69,9 +69,8 @@ class ExistingWorkspace extends React.Component {
 
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    console.log(rowData[0])
+    console.log(rowData[0]);
     history.push(`${`${process.env.PUBLIC_URL}/stage3/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
-
   };
 
   handleChange = value => {
@@ -181,7 +180,9 @@ class ExistingWorkspace extends React.Component {
 
     return (
       <div>
-        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
+        {this.props.match.path !== "/stage4/datasource" && (
+          <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
+        )}
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
           <MUIDataTable title={translate('common.tools.title.processingWorkspaces')} data={this.state.name} columns={columns} options={options} />
         </div>
