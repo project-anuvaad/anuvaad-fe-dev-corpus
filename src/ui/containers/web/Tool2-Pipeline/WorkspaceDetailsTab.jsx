@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Tab from "../../../components/web/common/Tab";
 import history from "../../../../web.history";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class ParentTab extends React.Component {
   constructor(props) {
