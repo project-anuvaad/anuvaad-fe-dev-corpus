@@ -8,7 +8,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class ExistingWorkspace extends React.Component {
   intervalID;
@@ -160,7 +160,7 @@ class ExistingWorkspace extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => { },
+      onFilterDialogClose: () => {},
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -169,7 +169,7 @@ class ExistingWorkspace extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            {translate('common.page.button.applyFilter')}
+            {translate("common.page.button.applyFilter")}
           </Button>
         </div>
       ),
@@ -193,7 +193,11 @@ class ExistingWorkspace extends React.Component {
         )}
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
           <MUIDataTable
-            title={this.props.match.path === "/stage2/datasource" ? translate("common.page.data.dataSource") : translate("common.page.table.existingWorkspace")}
+            title={
+              this.props.match.path === "/stage2/datasource"
+                ? translate("common.page.data.dataSource")
+                : translate("common.page.table.existingWorkspace")
+            }
             data={this.state.name}
             columns={columns}
             options={options}

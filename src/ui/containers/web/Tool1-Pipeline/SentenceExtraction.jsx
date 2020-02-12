@@ -10,7 +10,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import StepDetails from "./TockenExtractionSteps";
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchworkspacedetails";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class SentenceExtraction extends React.Component {
   constructor(props) {
@@ -49,18 +49,19 @@ class SentenceExtraction extends React.Component {
   };
 
   render() {
-    console.log("----", this.props)
     return (
       <div>
-        {this.props.match.path !== "/stage2/datasource" &&
-          <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />}
+        {this.props.match.path !== "/stage2/datasource" && (
+          <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
+        )}
         <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
-          {this.props.match.path !== "/stage2/datasource" &&
-            <StepDetails workSpace={this.props.match.params.name} activeStep={this.state.activeStep} />}
+          {this.props.match.path !== "/stage2/datasource" && (
+            <StepDetails workSpace={this.props.match.params.name} activeStep={this.state.activeStep} />
+          )}
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
-                {translate('sentenceExtraction.page.label.ExtractedSent')}
+                {translate("sentenceExtraction.page.label.ExtractedSent")}
               </Typography>
               <br />
             </Grid>
@@ -71,7 +72,7 @@ class SentenceExtraction extends React.Component {
                   <a
                     href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
                       this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file : ""
-                      }`}
+                    }`}
                     style={{ textDecoration: "none" }}
                   >
                     <Button
@@ -80,14 +81,15 @@ class SentenceExtraction extends React.Component {
                       onClick={this.handleClick}
                       style={{ width: "85%", height: "56px", marginTop: "-30px" }}
                     >
-                      {translate('common.page.button.download&View')}
+                      {translate("common.page.button.download&View")}
                     </Button>{" "}
                   </a>
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
                   <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "-20px" }}>
-                    {translate('common.page.label.found')} {this.state.workspaceDetails && this.state.workspaceDetails.sentence_count} {translate('common.page.label.sentence')}
+                    {translate("common.page.label.found")} {this.state.workspaceDetails && this.state.workspaceDetails.sentence_count}{" "}
+                    {translate("common.page.label.sentence")}
                   </Typography>
                 </Grid>
               </Grid>
