@@ -3,11 +3,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
-import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
-import { translate } from '../../../../assets/localisation';
-
+import { translate } from "../../../../assets/localisation";
 
 class ProcessingWorkspace extends React.Component {
   intervalID;
@@ -46,12 +44,6 @@ class ProcessingWorkspace extends React.Component {
     }
   }
 
-
-
-
-
-
-
   handleChange = value => {
     this.setState({ value });
   };
@@ -69,7 +61,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "session_id",
-        label: translate('common.page.label.id'),
+        label: translate("common.page.label.id"),
         options: {
           display: "excluded",
           filter: false
@@ -109,7 +101,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "created_at",
-        label: translate('common.page.table.createdAt'),
+        label: translate("common.page.table.createdAt"),
         options: {
           filter: false,
           sort: false
@@ -118,14 +110,13 @@ class ProcessingWorkspace extends React.Component {
     ];
 
     const options = {
-
       filterType: "checkbox",
       download: false,
       print: false,
       search: false,
       filter: false,
       viewColumns: false,
-      responsive: 'scrollMaxHeight',
+      responsive: "scrollMaxHeight",
       selectableRows: "multiple",
       rowsSelected: this.state.selectedWorkspaces,
       rowsPerPage: 10,
@@ -140,27 +131,22 @@ class ProcessingWorkspace extends React.Component {
 
       rowsSelected: this.state.rowsSelected,
       onRowsSelect: (rowsSelected, allRows) => {
-
-        let selectedItems = []
+        const selectedItems = [];
         this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });
         if (allRows && allRows.length > 0) {
-          allRows.map((selected) => {
-            selectedItems.push(this.state.workspaces[selected.index])
-          })
+          allRows.map(selected => {
+            selectedItems.push(this.state.workspaces[selected.index]);
+          });
         }
-        this.setState({ selectedWorkspaces: selectedItems })
+        this.setState({ selectedWorkspaces: selectedItems });
         if (this.props.handleWorkspaceSelected) {
-          console.log("-----", selectedItems)
-          this.props.handleWorkspaceSelected(selectedItems)
+          this.props.handleWorkspaceSelected(selectedItems);
         }
       }
-
-
     };
 
     return (
       <div>
-
         <div style={{ marginRight: "28%", marginTop: "40px" }}>
           <MUIDataTable data={this.state.workspaces} columns={columns} options={options} />
         </div>
