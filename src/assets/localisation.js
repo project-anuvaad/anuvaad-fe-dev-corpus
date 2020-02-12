@@ -265,7 +265,17 @@ var localization_EN_Data = {
    'dashbord.page.title.anuvaadModel':"Anuvaad Model",
    'viewTranslate.page.title.downloadSource':"Download Source",
    'viewTranslate.page.title.downloadTranslate':"Download Translated",
-
+   'header.page.heading.welcome':"Welcome",
+   'header.page.heading.MyProfile':"My Profile",
+   'header.page.heading.logout':"Logout",
+   'header.page.heading.anuvaad':"ANUVAAD",
+   'header.page.heading.dataPipeline':"Data Pipeline",
+   'header.page.heading.uploadFile':"Upload File",
+   'header.page.heading.benchMark':"Benchmark",
+   'header.page.heading.qnA':"QnA",
+   'header.page.heading.feedBack':"Feedback",
+   'header.page.heading.translation':"Translation",
+   //'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 }
 
 var localization_HI_Data = {
@@ -534,7 +544,17 @@ var localization_HI_Data = {
    'webroutes.page.title.feedbackForm':"प्रतिक्रिया फॉर्म",
    'webroutes.page.title.dataPipeLine':"डाटा पाइप लाइन डैशबोर्ड",
    'viewTranslate.page.title.downloadSource':"स्रोत डाउनलोड करें",
-   'viewTranslate.page.title.downloadTranslate':"अनुवादित डाउनलोड करें "
+   'viewTranslate.page.title.downloadTranslate':"अनुवादित डाउनलोड करें ",
+   'header.page.heading.welcome':"स्वागत है",
+   'header.page.heading.MyProfile':"मेरी प्रोफाइल",
+   'header.page.heading.logout':"लॉग आउट",
+   'header.page.heading.anuvaad':"ANUVAAD",
+   'header.page.heading.dataPipeline':"डेटा पाइपलाइ",
+   'header.page.heading.uploadFile':"दस्तावेज अपलोड करें",
+   'header.page.heading.benchMark':"बेंचमार्क",
+   'header.page.heading.qnA':"क्यू n ए",
+   'header.page.heading.feedBack':"प्रतिपुष्टि",
+   'header.page.heading.translation':"अनुवाद"
    
 }
 
