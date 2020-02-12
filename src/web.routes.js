@@ -59,10 +59,11 @@ import DownloadSentence from "./ui/containers/web/Tool2-Pipeline/DownloadSentenc
 import WorkspaceDetails from "./ui/containers/web/Tool2-Pipeline/WorkspaceDetails";
 import Tool3WorkspaceDetails from "./ui/containers/web/Tool3-Pipeline/WorkspaceDetails";
 import Tool3CreateDataSource from "./ui/containers/web/Tool3-Pipeline/CreateDataSource";
+import Tool4CreateDataSource from "./ui/containers/web/Tool4-Pipeline/CreateDataSource";
 import Tool2CreateDataSource from "./ui/containers/web/Tool2-Pipeline/CreateDataSource";
 import Tool4WorkspaceDetails from "./ui/containers/web/Tool4-Pipeline/WorkspaceDetails";
 import Tool3DataSource from "./ui/containers/web/Tool3-Pipeline/DataSource";
-
+import Tool4DataSource from "./ui/containers/web/Tool4-Pipeline/DataSource";
 import Stage2DataSource from "./ui/containers/web/Tool2-Pipeline/DataSource";
 import FeedbackForm from "./ui/containers/web/FeedbackForm";
 
@@ -472,6 +473,15 @@ class AppRoutes extends React.Component {
               component={Tool3CreateDataSource}
               authenticate={this.authenticateUser}
             />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage4/create-datasource`}
+              title="STAGE 4, DATASOURCE"
+              userRoles={["dev"]}
+              component={Tool3CreateDataSource}
+              authenticate={this.authenticateUser}
+            />
+
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/datasource/:name/:session_id`}
               title="STAGE 2, DATASOURCE"
@@ -527,6 +537,15 @@ class AppRoutes extends React.Component {
               title="STAGE 3, DATASOURCE"
               userRoles={["dev"]}
               component={Tool3DataSource}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage4/datasource`}
+              dontShowLoader
+              title="STAGE 4, DATASOURCE"
+              userRoles={["dev"]}
+              component={Tool4DataSource}
               authenticate={this.authenticateUser}
             />
 
