@@ -9,8 +9,10 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
-import Link from "@material-ui/core/Link";
 import Select from "@material-ui/core/Select";
+import Toolbar from "@material-ui/core/Toolbar";
+import BackIcon from "@material-ui/icons/ChevronLeft";
+import { blueGrey50 } from "material-ui/styles/colors";
 import Snackbar from "../../../components/web/common/Snackbar";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import history from "../../../../web.history";
@@ -18,10 +20,7 @@ import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
 import FileUpload from "../../../components/web/common/FileUpload";
 import ConfigUpload from "../../../../flux/actions/apis/configupload";
 import SaveDataSource from "../../../../flux/actions/apis/savedatasource";
-import Toolbar from "@material-ui/core/Toolbar";
-import BackIcon from "@material-ui/icons/ChevronLeft";
-import { blueGrey50} from "material-ui/styles/colors";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class CreateWorkspace extends React.Component {
   constructor(props) {
@@ -30,15 +29,14 @@ class CreateWorkspace extends React.Component {
       value: 1,
       target: "",
       source: "",
-      csvName: '',
+      csvName: "",
       workspaceName: "",
       sourceLanguage: [],
       language: [],
-      file:[],
-      message1: translate('common.page.message1.fileAdded'),
-      csvData:
-      translate('common.page.label.csvData'),
-      processData: translate('common.page.processData.pressNextToSelect')
+      file: [],
+      message1: translate("common.page.message1.fileAdded"),
+      csvData: translate("common.page.label.csvData"),
+      processData: translate("common.page.processData.pressNextToSelect")
     };
   }
 
@@ -46,20 +44,13 @@ class CreateWorkspace extends React.Component {
     const { APITransport } = this.props;
     const apiObj = new FetchLanguage();
     APITransport(apiObj);
-    
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.supportLanguage !== this.props.supportLanguage) {
       const languages = [];
       const sourceLanguages = [];
-      this.props.supportLanguage.map(lang => (
-        lang.language_code !== "en" ?
-          languages.push(lang)
-          :
-          sourceLanguages.push(lang)
-
-      ))
+      this.props.supportLanguage.map(lang => (lang.language_code !== "en" ? languages.push(lang) : sourceLanguages.push(lang)));
       this.setState({
         language: languages,
         sourceLanguage: sourceLanguages
@@ -67,18 +58,17 @@ class CreateWorkspace extends React.Component {
     }
 
     if (prevProps.configUplaod !== this.props.configUplaod) {
-        this.setState({ files: this.props.configUplaod });
-  
-        const csvFilepath = "csvFile" in this.props.configUplaod && this.props.configUplaod.csvFile;
-  
-        if (csvFilepath) {
-          const { APITransport } = this.props;
+      this.setState({ files: this.props.configUplaod });
 
-          console.log(",",this.state.workspaceName, this.state.source, this.state.target, csvFilepath)
-          const apiObj2 = new SaveDataSource(this.state.workspaceName, this.state.source, this.state.target, csvFilepath);
-          APITransport(apiObj2);
-        }
+      const csvFilepath = "csvFile" in this.props.configUplaod && this.props.configUplaod.csvFile;
+
+      if (csvFilepath) {
+        const { APITransport } = this.props;
+
+        const apiObj2 = new SaveDataSource(this.state.workspaceName, this.state.source, this.state.target, csvFilepath);
+        APITransport(apiObj2);
       }
+    }
 
     if (prevProps.createWorkspaceDetails !== this.props.createWorkspaceDetails) {
       this.setState({
@@ -89,8 +79,6 @@ class CreateWorkspace extends React.Component {
       }, 3000);
     }
   }
-  
-
 
   handleTextChange(key, event) {
     this.setState({
@@ -103,34 +91,32 @@ class CreateWorkspace extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-
   handleSubmit() {
-      console.log(this.state.workspaceName , this.state.source , this.state.target , this.state.csvName)
     if (this.state.workspaceName && this.state.source && this.state.target && this.state.csvName) {
-        const { APITransport } = this.props;
+      const { APITransport } = this.props;
 
-        const apiObj = new ConfigUpload(this.state.csvFile, "csvFile");
-        this.state.csvName && APITransport(apiObj);
-        this.setState({ load: true });
+      const apiObj = new ConfigUpload(this.state.csvFile, "csvFile");
+      this.state.csvName && APITransport(apiObj);
+      this.setState({ load: true });
     } else {
-      alert(translate('common.page.label.pageWarning'));
+      alert(translate("common.page.label.pageWarning"));
     }
   }
 
   readFileDataAsBinary(file) {
     return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-  
-        reader.onload = event => {
-          resolve(event.target.result);
-        };
-  
-        reader.onerror = err => {
-          reject(err);
-        };
-  
-        reader.readAsText(file, 'UTF8');
-      });
+      const reader = new FileReader();
+
+      reader.onload = event => {
+        resolve(event.target.result);
+      };
+
+      reader.onerror = err => {
+        reject(err);
+      };
+
+      reader.readAsText(file, "UTF8");
+    });
   }
 
   renderMessage() {
@@ -142,124 +128,118 @@ class CreateWorkspace extends React.Component {
 
   handleChange = (key, event) => {
     this.setState({
-        configName: key === "configFile" ? event.target.files[0].name : this.state.configName,
-        csvName: key === "csvFile" ? event.target.files[0].name : this.state.csvName
-      });
+      configName: key === "configFile" ? event.target.files[0].name : this.state.configName,
+      csvName: key === "csvFile" ? event.target.files[0].name : this.state.csvName
+    });
     this.readFileDataAsBinary(event.target.files[0]).then((result, err) => {
       this.setState({
         [key]: result
       });
     });
-}
-
-  
+  };
 
   render() {
     return (
       <div>
-         <Toolbar style={{  marginRight: "8.5%", marginTop: "20px",marginBottom:'15px' }}>
-          <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
-          
-            <Button
-              variant="extendedFab"
-              color="primary"
-              
-              onClick={() => {
-                history.push(`${process.env.PUBLIC_URL}/stage3/datasource`);
-              }}
-            >
-              <BackIcon /> {translate('common.page.button.back')}
-            </Button>
+        <Toolbar style={{ marginRight: "8.5%", marginTop: "20px", marginBottom: "15px" }}>
+          <Typography variant="title" color="inherit" style={{ flex: 1 }} />
+
+          <Button
+            variant="extendedFab"
+            color="primary"
+            onClick={() => {
+              history.push(`${process.env.PUBLIC_URL}/stage3/datasource`);
+            }}
+          >
+            <BackIcon /> {translate("common.page.button.back")}
+          </Button>
         </Toolbar>
-        
-          <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "1%", paddingTop: "5px", paddingBottom: "3%" }} elevation={4}>
+
+        <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "1%", paddingTop: "5px", paddingBottom: "3%" }} elevation={4}>
           <Typography
-          gutterBottom
-          variant="title"
-          component="h2"
-          style={{
-            marginTop: "-.7%",
-            paddingLeft: "40%",
-            background: blueGrey50,
-            paddingTop: "25px",
-            paddingBottom: "16px",
-            
-          }}
-        >
-          {translate('common.page.label.addDataSource')}
-        </Typography>
-        <br />
-            <Grid container spacing={24} style={{ marginTop: "1 %", marginLeft: "12%" }}>
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                {translate('common.page.label.enterWorkspace')}
-                </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <TextField
-                  value={this.state.workspaceName}
-                  required
-                  id="outlined-name"
-                  margin="normal"
-                  onChange={event => {
-                    this.handleTextChange("workspaceName", event);
-                  }}
-                  variant="outlined"
-                  style={{ width: "60%" }}
-                />
-              </Grid>
+            gutterBottom
+            variant="title"
+            component="h2"
+            style={{
+              marginTop: "-.7%",
+              paddingLeft: "40%",
+              background: blueGrey50,
+              paddingTop: "25px",
+              paddingBottom: "16px"
+            }}
+          >
+            {translate("common.page.label.addDataSource")}
+          </Typography>
+          <br />
+          <Grid container spacing={24} style={{ marginTop: "1 %", marginLeft: "12%" }}>
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                {translate("common.page.label.enterWorkspace")}
+              </Typography>
+              <br />
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <TextField
+                value={this.state.workspaceName}
+                required
+                id="outlined-name"
+                margin="normal"
+                onChange={event => {
+                  this.handleTextChange("workspaceName", event);
+                }}
+                variant="outlined"
+                style={{ width: "60%" }}
+              />
+            </Grid>
 
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                {translate('common.page.label.sourceLang')} &emsp;&emsp;{" "}
-                </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
-                <Select
-                  style={{ width: "60%", marginTop: "5px" }}
-                  value={this.state.source}
-                  onChange={this.handleSelectChange}
-                  input={<OutlinedInput name="source" id="outlined-age-simple" />}
-                >
-                  {this.state.language &&
-                    this.state.sourceLanguage.map(item => (
-                      <MenuItem key={item.language_name} value={item}>
-                        {item.language_name}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </Grid>
-
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                {translate('common.page.label.targetLang')} &emsp;&emsp;{" "}
-                </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
-                <Select
-                  style={{ width: "60%", marginTop: "5px" }}
-                  value={this.state.target}
-                  onChange={this.handleSelectChange}
-                  input={<OutlinedInput name="target" id="outlined-age-simple" />}
-                >
-                  {this.state.language &&
-                    this.state.language.map(item => (
-                      <MenuItem key={item.language_name} value={item}>
-                        {item.language_name}
-                      </MenuItem>
-                    ))}
-                </Select>
-                {/* <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" /> */}
-              </Grid>
-            
-
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-              {translate('common.page.label.csvFile')} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                
+                {translate("common.page.label.sourceLang")} &emsp;&emsp;{" "}
+              </Typography>
+              <br />
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
+              <Select
+                style={{ width: "60%", marginTop: "5px" }}
+                value={this.state.source}
+                onChange={this.handleSelectChange}
+                input={<OutlinedInput name="source" id="outlined-age-simple" />}
+              >
+                {this.state.language &&
+                  this.state.sourceLanguage.map(item => (
+                    <MenuItem key={item.language_name} value={item}>
+                      {item.language_name}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </Grid>
+
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
+                {translate("common.page.label.targetLang")} &emsp;&emsp;{" "}
+              </Typography>
+              <br />
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
+              <Select
+                style={{ width: "60%", marginTop: "5px" }}
+                value={this.state.target}
+                onChange={this.handleSelectChange}
+                input={<OutlinedInput name="target" id="outlined-age-simple" />}
+              >
+                {this.state.language &&
+                  this.state.language.map(item => (
+                    <MenuItem key={item.language_name} value={item}>
+                      {item.language_name}
+                    </MenuItem>
+                  ))}
+              </Select>
+              {/* <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" /> */}
+            </Grid>
+
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
+              <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
+                {translate("common.page.label.csvFile")} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
               </Typography>
               <br />
             </Grid>
@@ -275,29 +255,26 @@ class CreateWorkspace extends React.Component {
               </Grid>
             </Grid>
 
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography
-                  variant="subtitle2"
-                  color="inherit"
-                  style={{ textAlign: "justify", color: "#ACACAC", marginTop: "10%", width: "80%", marginLeft: "2px" }}
-                >
-                  
-                </Typography>
-                <br />
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  style={{ width: "60%", marginTop: "6%", height: "56px" }}
-                  onClick={this.handleSubmit.bind(this)}
-                >
-                  {translate('common.page.button.submit')}
-                </Button>
-              </Grid>
+            <Grid item xs={5} sm={5} lg={5} xl={5}>
+              <Typography
+                variant="subtitle2"
+                color="inherit"
+                style={{ textAlign: "justify", color: "#ACACAC", marginTop: "10%", width: "80%", marginLeft: "2px" }}
+              />
+              <br />
             </Grid>
-          </Paper>
-        
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ width: "60%", marginTop: "6%", height: "56px" }}
+                onClick={this.handleSubmit.bind(this)}
+              >
+                {translate("common.page.button.submit")}
+              </Button>
+            </Grid>
+          </Grid>
+        </Paper>
 
         {this.state.open && (
           <Snackbar

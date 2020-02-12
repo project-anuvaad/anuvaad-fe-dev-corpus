@@ -6,7 +6,7 @@ import MUIDataTable from "mui-datatables";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchMTWorkspace from "../../../../flux/actions/apis/fetchworkspace";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class DataSource extends React.Component {
   intervalID;
@@ -20,13 +20,12 @@ class DataSource extends React.Component {
       serverSideFilterList: [],
       filters: [],
       download: false,
-      fileId: ''
+      fileId: ""
     };
   }
 
   componentDidMount() {
     this.handleFetchWorkspace();
-
   }
 
   componentWillUnmount() {
@@ -42,7 +41,6 @@ class DataSource extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspace !== this.props.fetchWorkspace) {
-
       this.setState({ name: this.props.fetchWorkspace.data, count: this.props.fetchWorkspace.count });
     }
   }
@@ -69,28 +67,20 @@ class DataSource extends React.Component {
     this.setState({ filter: filterList });
   };
 
-
   handleClick = rowData => {
-    this.setState({ download: true, fileId: rowData[4] })
-    console.log(rowData)
-    var link = document.createElement('a');
+    this.setState({ download: true, fileId: rowData[4] });
+    console.log(rowData);
+    const link = document.createElement("a");
     link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" + "/download/") + rowData[4];
     document.body.appendChild(link);
     link.click();
-
   };
-
-
-
-
 
   handleChange = value => {
     this.setState({ value });
   };
 
   render() {
-
-
     const columns = [
       {
         name: "title",
@@ -103,7 +93,7 @@ class DataSource extends React.Component {
       },
       {
         name: "session_id",
-        label: translate('common.page.label.id'),
+        label: translate("common.page.label.id"),
         options: {
           display: "excluded",
           filter: false
@@ -111,7 +101,7 @@ class DataSource extends React.Component {
       },
       {
         name: "username",
-        label: translate('tool1.datasource.label.uploadBy'),
+        label: translate("tool1.datasource.label.uploadBy"),
         options: {
           filter: false,
           sort: false
@@ -119,7 +109,7 @@ class DataSource extends React.Component {
       },
       {
         name: "created_at",
-        label: translate('too1.datasource.label.uploadedAt'),
+        label: translate("too1.datasource.label.uploadedAt"),
         options: {
           filter: false,
           sort: false
@@ -127,7 +117,7 @@ class DataSource extends React.Component {
       },
       {
         name: "sentence_file",
-        label: translate('common.page.label.sentenceFile'),
+        label: translate("common.page.label.sentenceFile"),
         options: {
           display: "excluded",
           filter: false
@@ -149,7 +139,7 @@ class DataSource extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => { },
+      onFilterDialogClose: () => {},
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -158,7 +148,7 @@ class DataSource extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            {translate('common.page.button.applyFilter')}
+            {translate("common.page.button.applyFilter")}
           </Button>
         </div>
       ),
@@ -177,12 +167,12 @@ class DataSource extends React.Component {
 
     return (
       <div>
-
-
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={translate('common.page.data.dataSource')} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate("common.page.data.dataSource")} data={this.state.name} columns={columns} options={options} />
         </div>
-        {this.state.download && <a href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/` + this.state.fileId} />}
+        {this.state.download && (
+          <a href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${  this.state.fileId}`} />
+        )}
       </div>
     );
   }

@@ -8,7 +8,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchSearchReplaceWorkspace from "../../../../flux/actions/apis/fetchsearchreplaceworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class WorkspaceDetails extends React.Component {
   intervalID;
@@ -61,7 +61,6 @@ class WorkspaceDetails extends React.Component {
   };
 
   handleFilterSubmit = filterList => () => {
-    console.log(filterList);
     clearTimeout(this.intervalID);
     const apiObj = new FetchSearchReplaceWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", filterList);
     this.props.APITransport(apiObj);
@@ -92,7 +91,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "session_id",
-        label: translate('common.page.label.id'),
+        label: translate("common.page.label.id"),
         options: {
           display: "excluded",
           filter: false
@@ -103,7 +102,7 @@ class WorkspaceDetails extends React.Component {
         label: translate("common.page.table.status"),
         options: {
           filter: false,
-          filter: false,
+          filter: false
         }
       },
       {
@@ -130,7 +129,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "created_at",
-        label: translate('common.page.table.createdAt'),
+        label: translate("common.page.table.createdAt"),
         options: {
           filter: false,
           sort: false
@@ -152,7 +151,7 @@ class WorkspaceDetails extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => { },
+      onFilterDialogClose: () => {},
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -161,7 +160,7 @@ class WorkspaceDetails extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            {translate('common.page.button.applyFilter')}
+            {translate("common.page.button.applyFilter")}
           </Button>
         </div>
       ),
@@ -182,7 +181,7 @@ class WorkspaceDetails extends React.Component {
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={translate('common.tools.title.processingWorkspaces')} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate("common.tools.title.processingWorkspaces")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );

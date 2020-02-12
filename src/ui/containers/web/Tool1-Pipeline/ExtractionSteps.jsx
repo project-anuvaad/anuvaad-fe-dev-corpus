@@ -9,7 +9,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class ExtractionSteps extends React.Component {
   intervalID;
@@ -110,7 +110,7 @@ class ExtractionSteps extends React.Component {
       },
       {
         name: "username",
-        label: translate('common.page.table.username'),
+        label: translate("common.page.table.username"),
         options: {
           filter: false,
           sort: false,
@@ -119,7 +119,7 @@ class ExtractionSteps extends React.Component {
       },
       {
         name: "created_at",
-        label: translate('common.page.table.createdAt'),
+        label: translate("common.page.table.createdAt"),
         options: {
           sort: false,
           filter: false
@@ -144,7 +144,7 @@ class ExtractionSteps extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => { },
+      onFilterDialogClose: () => {},
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -153,7 +153,7 @@ class ExtractionSteps extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            {translate('common.page.button.applyFilter')}
+            {translate("common.page.button.applyFilter")}
           </Button>
         </div>
       ),
@@ -174,7 +174,7 @@ class ExtractionSteps extends React.Component {
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={translate('common.tools.title.processingWorkspaces')} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate("common.tools.title.processingWorkspaces")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );

@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Stepper from "../../../components/web/common/Stepper";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class TockenExtractionSteps extends React.Component {
   constructor(props) {
@@ -22,11 +22,11 @@ class TockenExtractionSteps extends React.Component {
   render() {
     return (
       <div>
-        <Stepper steps={this.state.steps} activeStep={this.props.activeStep} alternativeLabel style={{ marginTop: "3%", marginRight: '2%' }} />
+        <Stepper steps={this.state.steps} activeStep={this.props.activeStep} alternativeLabel style={{ marginTop: "3%", marginRight: "2%" }} />
         <Grid container spacing={24} style={{ marginLeft: "12%" }}>
           <Grid item xs={4} sm={4} lg={4} xl={4}>
             <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-              {translate('common.page.label.workSpaceName')}
+              {translate("common.page.label.workSpaceName")}
             </Typography>
             <br />
           </Grid>
@@ -49,7 +49,6 @@ class TockenExtractionSteps extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-
       </div>
     );
   }
