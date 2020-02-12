@@ -11,7 +11,7 @@ import TabDetals from "./WorkspaceDetailsTab";
 import StepDetals from "./TockenExtractionSteps";
 import FileUpload from "../../../components/web/common/FileUpload";
 import history from "../../../../web.history";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class TokenExtraction extends React.Component {
   constructor(props) {
@@ -44,7 +44,7 @@ class TokenExtraction extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2">
-                {translate('tockenExtraction.page.label.enterPositiveTocken')}
+                {translate("tockenExtraction.page.label.enterPositiveTocken")}
               </Typography>
               <br />
             </Grid>
@@ -56,14 +56,14 @@ class TokenExtraction extends React.Component {
 
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
                   <Typography gutterBottom variant="title" component="h2">
-                    {translate('tockenExtraction.page.label.foundTocken')}
+                    {translate("tockenExtraction.page.label.foundTocken")}
                   </Typography>
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5} style={{ marginTop: "40px" }}>
               <Typography gutterBottom variant="title" component="h2">
-                {translate('tockenExtraction.page.label.enterNegativeTocken')}
+                {translate("tockenExtraction.page.label.enterNegativeTocken")}
               </Typography>
               <br />
             </Grid>
@@ -75,7 +75,7 @@ class TokenExtraction extends React.Component {
 
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
                   <Typography gutterBottom variant="title" component="h2">
-                    {translate('tockenExtraction.page.label.foundTocken')}
+                    {translate("tockenExtraction.page.label.foundTocken")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -83,13 +83,13 @@ class TokenExtraction extends React.Component {
 
             <Grid item xs={5} sm={5} lg={5} xl={5} style={{ marginTop: "56px" }}>
               <Typography variant="subtitle" color="inherit" style={{ textAlign: "justify", color: "#ACACAC", width: "80%", marginLeft: "2px" }}>
-                {translate('common.page.processData.gotoStep2')}
+                {translate("common.page.processData.gotoStep2")}
               </Typography>
               <br />
             </Grid>
             <Grid item xs={6} sm={6} lg={6} xl={6} style={{ marginTop: "40px" }}>
               <Button variant="contained" color="primary" style={{ width: "60%", height: "56px" }} onClick={this.handleSubmit.bind(this)}>
-                {translate('common.page.button.next')}
+                {translate("common.page.button.next")}
               </Button>
             </Grid>
           </Grid>

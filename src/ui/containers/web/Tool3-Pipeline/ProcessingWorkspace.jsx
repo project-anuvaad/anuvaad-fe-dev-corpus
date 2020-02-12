@@ -6,7 +6,7 @@ import MUIDataTable from "mui-datatables";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class ProcessingWorkspace extends React.Component {
   intervalID;
@@ -61,14 +61,11 @@ class ProcessingWorkspace extends React.Component {
   };
 
   handleFilterSubmit = filterList => () => {
-    console.log(filterList);
     clearTimeout(this.intervalID);
     const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", filterList, this.props.target.language_code);
     this.props.APITransport(apiObj);
     this.setState({ filter: filterList });
   };
-
-
 
   handleChange = value => {
     this.setState({ value });
@@ -87,7 +84,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "session_id",
-        label: translate('common.page.label.id'),
+        label: translate("common.page.label.id"),
         options: {
           display: "excluded",
           filter: false
@@ -127,7 +124,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "created_at",
-        label: translate('common.page.table.createdAt'),
+        label: translate("common.page.table.createdAt"),
         options: {
           filter: false,
           sort: false
@@ -136,7 +133,6 @@ class ProcessingWorkspace extends React.Component {
     ];
 
     const options = {
-
       filterType: "checkbox",
       download: false,
       print: false,
@@ -156,22 +152,20 @@ class ProcessingWorkspace extends React.Component {
 
       rowsSelected: this.state.rowsSelected,
       onRowsSelect: (rowsSelected, allRows) => {
-        // console.log(rowsSelected, allRows);
-        let selectedItems = []
+        const selectedItems = [];
         this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });
         if (allRows && allRows.length > 0) {
-          allRows.map((selected) => {
-            selectedItems.push(this.state.workspaces[selected.index])
-          })
+          allRows.map(selected => {
+            selectedItems.push(this.state.workspaces[selected.index]);
+          });
         }
-        this.setState({ selectedWorkspaces: selectedItems })
+        this.setState({ selectedWorkspaces: selectedItems });
         if (this.props.handleWorkspaceSelected) {
-          this.props.handleWorkspaceSelected(selectedItems)
+          this.props.handleWorkspaceSelected(selectedItems);
         }
-
       },
 
-      onFilterDialogClose: () => { },
+      onFilterDialogClose: () => {},
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -180,7 +174,7 @@ class ProcessingWorkspace extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            {translate('common.page.button.applyFilter')}
+            {translate("common.page.button.applyFilter")}
           </Button>
         </div>
       ),
@@ -199,7 +193,6 @@ class ProcessingWorkspace extends React.Component {
 
     return (
       <div>
-
         <div style={{ marginRight: "23.2%", marginTop: "40px" }}>
           <MUIDataTable data={this.state.workspaces} columns={columns} options={options} />
         </div>
