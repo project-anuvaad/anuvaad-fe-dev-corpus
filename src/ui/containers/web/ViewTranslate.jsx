@@ -182,7 +182,6 @@ class ViewTranslate extends React.Component {
 
             {
                 name: "status",
-                label: translate("common.page.table.status"),
                 options: {
                     display: 'excluded',
                 }
@@ -206,6 +205,7 @@ class ViewTranslate extends React.Component {
 
             {
                 name: "Status",
+                label: translate('common.page.table.status'),
                 options: {
                     filter: true,
                     sort: false,
@@ -228,6 +228,7 @@ class ViewTranslate extends React.Component {
             },
             {
                 name: "Action",
+                label:translate('common.page.label.action'),
                 options: {
                     filter: true,
                     sort: false,
@@ -237,8 +238,8 @@ class ViewTranslate extends React.Component {
                         if (tableMeta.rowData) {
                             return (
                                 <div style={{ width: '240px', marginLeft: '-20px' }}>
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Download Source"><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title="Download Translated"><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadSource')}><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadTranslate')}><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
                                     {/* {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''}  */}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.label.delete')}><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.button.upload')}><FileUpload  id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" value={this.state.value} handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
@@ -272,7 +273,7 @@ class ViewTranslate extends React.Component {
                 </Toolbar>
 
                 <div style={{ marginLeft: '-4%', marginRight: '3%', marginTop: '40px' }}>
-                    <MUIDataTable title={"Documents"} data={this.state.fetchtranslation} columns={columns} options={options} />
+                    <MUIDataTable title={ translate('common.page.title.document')} data={this.state.fetchtranslation} columns={columns} options={options} />
                 </div>
 
                 {this.state.open &&
