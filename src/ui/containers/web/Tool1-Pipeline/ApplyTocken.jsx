@@ -11,14 +11,14 @@ import TabDetals from "./WorkspaceDetailsTab";
 import StepDetals from "./TockenExtractionSteps";
 import history from "../../../../web.history";
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchworkspacedetails";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class ApplyToken extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       value: 1,
-      processData: translate('common.page.processData.pressNext'),
+      processData: translate("common.page.processData.pressNext"),
       activeStep: 0,
       workspaceDetails: ""
     };
@@ -57,7 +57,7 @@ class ApplyToken extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2">
-                {translate('common.page.label.positiveTocken')}
+                {translate("common.page.label.positiveTocken")}
               </Typography>
               <br />
             </Grid>
@@ -68,18 +68,19 @@ class ApplyToken extends React.Component {
                   <a
                     href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
                       this.state.workspaceDetails.token_file
-                      }`}
+                    }`}
                     style={{ textDecoration: "none" }}
                   >
                     <Button variant="contained" color="primary" style={{ width: "85%", height: "56px" }}>
-                      {translate('common.page.button.download&View')}
+                      {translate("common.page.button.download&View")}
                     </Button>{" "}
                   </a>
                 </Grid>
 
                 <Grid item xs={5} sm={5} lg={5} xl={5}>
                   <Typography gutterBottom variant="title" component="h2">
-                  {translate('common.page.label.found')} {this.state.workspaceDetails.token_count ? this.state.workspaceDetails.token_count : 0} {translate('common.page.label.tokens')}
+                    {translate("common.page.label.found")} {this.state.workspaceDetails.token_count ? this.state.workspaceDetails.token_count : 0}{" "}
+                    {translate("common.page.label.tokens")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -87,7 +88,7 @@ class ApplyToken extends React.Component {
 
             <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "40px" }}>
               <Typography gutterBottom variant="title" component="h2">
-                {translate('uploadTocken.page.label.negativeTocken')}
+                {translate("uploadTocken.page.label.negativeTocken")}
               </Typography>
               <br />
             </Grid>
@@ -98,18 +99,20 @@ class ApplyToken extends React.Component {
                   <a
                     href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
                       this.state.workspaceDetails.negative_token_file
-                      }`}
+                    }`}
                     style={{ textDecoration: "none" }}
                   >
                     <Button variant="contained" color="primary" style={{ width: "85%", height: "56px" }}>
-                      {translate('common.page.button.download&View')}
+                      {translate("common.page.button.download&View")}
                     </Button>{" "}
                   </a>
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
                   <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "10px" }}>
-                    {translate('common.page.label.found')}{this.state.workspaceDetails.negative_token_count ? this.state.workspaceDetails.negative_token_count : 0} {translate('common.page.label.tokens')}
+                    {translate("common.page.label.found")}
+                    {this.state.workspaceDetails.negative_token_count ? this.state.workspaceDetails.negative_token_count : 0}{" "}
+                    {translate("common.page.label.tokens")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -126,7 +129,7 @@ class ApplyToken extends React.Component {
                 <Grid item xs={1} sm={1} lg={1} xl={1} />
                 <Grid item xs={8} sm={8} lg={8} xl={8} style={{ marginTop: "40px" }}>
                   <Button variant="contained" color="primary" style={{ width: "87%", height: "60px" }} onClick={this.handleSubmit.bind(this)}>
-                    {translate('common.page.button.next')}
+                    {translate("common.page.button.next")}
                   </Button>
                 </Grid>
               </Grid>
