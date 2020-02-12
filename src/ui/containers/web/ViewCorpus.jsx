@@ -121,6 +121,7 @@ class Corp extends React.Component {
 
       {
         name: "Action",
+        label: translate('common.page.label.action') ,
         options: {
           filter: true,
           sort: false,
