@@ -6,10 +6,23 @@ import UserAuth from "../../../flux/actions/apis/userprofile";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { translate } from '../../../assets/localisation';
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
+import Theme from "../../theme/web/theme-default";
 
 class Callback extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: true
+    }
+    this.handleButtonClick = this.handleButtonClick.bind(this)
+  }
   componentDidUpdate(prevProps) {
-    if (prevProps.userProfile !== this.props.userProfile) {
+    if (prevProps.userProfile !== this.props.userProfile && localStorage.getItem("lang" + this.props.userProfile.id)) {
       if (this.props.userProfile.isActive) {
         localStorage.setItem("userDetails", this.props.userProfile.firstname + " " + this.props.userProfile.lastname);
         localStorage.setItem("userProfile", JSON.stringify(this.props.userProfile));
@@ -32,6 +45,10 @@ class Callback extends React.Component {
           history.push(`${process.env.PUBLIC_URL}/dashboard`);
         }
       }
+    }else if(this.state.loading && this.props.userProfile && this.props.userProfile.id && !localStorage.getItem("lang" + this.props.userProfile.id)){
+      this.setState({
+        loading: false
+      })
     }
   }
 
@@ -49,9 +66,81 @@ class Callback extends React.Component {
       }
     });
   }
+  handleButtonClick(lang) {
+
+    if (this.props.userProfile.isActive) {
+      localStorage.setItem("userDetails", this.props.userProfile.firstname + " " + this.props.userProfile.lastname);
+      localStorage.setItem("lang" + this.props.userProfile.id, lang)
+      localStorage.setItem("userProfile", JSON.stringify(this.props.userProfile));
+      if (this.props.userProfile.roles === null) {
+        localStorage.setItem("roles", JSON.stringify(["editor"]));
+      } else {
+        localStorage.setItem("roles", JSON.stringify(this.props.userProfile.roles));
+      }
+      var role = JSON.parse(localStorage.getItem('roles'));
+      if (role && Array.isArray(role) && role.includes('analyzer')) {
+        history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`);
+      }
+      else if (role && Array.isArray(role) && role.includes('admin')) {
+        history.push(`${process.env.PUBLIC_URL}/comparison-report`);
+      }
+      else if (role && Array.isArray(role) && role.includes('user')) {
+        history.push(`${process.env.PUBLIC_URL}/translate`);
+      }
+      else {
+        history.push(`${process.env.PUBLIC_URL}/dashboard`);
+      }
+    }
+  }
 
   render() {
-    return <div>{translate('common.page.text.rediecting')}</div>;
+    return (
+      <MuiThemeProvider theme={Theme}>
+        {!this.state.loading ?
+          <Paper style={{ marginLeft: "30%", width: "30%", marginTop: "4%", textAlign: 'center', padding: '5%' }} >
+            <Grid container spacing={8} style={{ paddingTop: '4%' }}>
+              <Grid item xs={12} sm={12} lg={12} xl={12}  >
+                <Typography variant="title">
+                  Select Your Preferred Language{" "}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid container spacing={8} style={{ marginTop: '4%' }}>
+              <Grid item xs={12} sm={12} lg={12} xl={12}>
+
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={event => {
+                    this.handleButtonClick('en');
+                  }}
+                >
+                  English
+    </Button>
+
+              </Grid>
+            </Grid>
+            <Grid container spacing={8} style={{ marginTop: '4%' }}>
+              <Grid item xs={12} sm={12} lg={12} xl={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  onClick={event => {
+                    this.handleButtonClick('hi');
+                  }}
+                >
+                  हिन्दी
+      </Button>
+              </Grid>
+            </Grid>
+          </Paper>
+          :
+          <div>{'Loading Please wait..'}</div>
+        }
+      </MuiThemeProvider>
+    );
   }
 }
 

@@ -12,6 +12,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchsearchreplacedetails";
 import Snackbar from "../../../components/web/common/Snackbar";
+import { translate } from "../../../../assets/localisation";
 
 class SentenceExtraction extends React.Component {
   constructor(props) {
@@ -38,11 +39,10 @@ class SentenceExtraction extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspaceDetails !== this.props.fetchWorkspaceDetails) {
-      console.log("result------", this.props.fetchWorkspaceDetails.data);
       this.setState({
         workspaceDetails: this.props.fetchWorkspaceDetails.data,
         sourceDetail: this.props.fetchWorkspaceDetails.data.source_file_full_path,
-        targetDetail: this.props.fetchWorkspaceDetails.data.target_file_full_path,
+        targetDetail: this.props.fetchWorkspaceDetails.data.target_file_full_path
       });
     }
   }
@@ -57,7 +57,6 @@ class SentenceExtraction extends React.Component {
   };
 
   render() {
-    console.log("name", this.props);
     return (
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
@@ -65,7 +64,7 @@ class SentenceExtraction extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                Workspace name :
+                {translate("common.page.label.workSpaceName")}
               </Typography>
               <br />
             </Grid>
@@ -87,7 +86,7 @@ class SentenceExtraction extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
-                Extracted sentences :
+                {translate("sentenceExtraction.page.label.ExtractedSent")}
               </Typography>
               <br />
             </Grid>
@@ -97,18 +96,19 @@ class SentenceExtraction extends React.Component {
                   <a
                     href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
                       this.state.workspaceDetails ? this.state.workspaceDetails.sentence_file : ""
-                      }`}
+                    }`}
                     style={{ textDecoration: "none" }}
                   >
                     <Button variant="contained" color="primary" style={{ width: "85%", height: "56px", marginTop: "-30px" }}>
-                      Download & View
+                      {translate("common.page.button.download&View")}
                     </Button>{" "}
                   </a>
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
                   <Typography gutterBottom variant="title" component="h2" style={{ marginTop: "-20px" }}>
-                    Found {this.state.workspaceDetails && this.state.workspaceDetails.sentence_count} sentences
+                    {translate("common.page.label.found")} {this.state.workspaceDetails && this.state.workspaceDetails.sentence_count}{" "}
+                    {translate("common.page.label.sentence")}
                   </Typography>
                 </Grid>
               </Grid>
@@ -117,7 +117,7 @@ class SentenceExtraction extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
               <Typography gutterBottom variant="title" component="h2">
-                Rejected sentences :
+                {translate("tool3.sentenceExtraction.label.rejectedSentences")}
               </Typography>
               <br />
             </Grid>
@@ -133,7 +133,7 @@ class SentenceExtraction extends React.Component {
             <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
               <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
                 <Typography gutterBottom variant="title" component="h2">
-                  Source file path :
+                  {translate("tool3.sentenceExtraction.label.sourceFilePath")}
                 </Typography>
                 <br />
               </Grid>
@@ -151,7 +151,7 @@ class SentenceExtraction extends React.Component {
                         style={{ width: "80%", height: "56px", marginTop: "-30px" }}
                         onClick={this.handleCopySubmit.bind(this)}
                       >
-                        Copy
+                        {translate("common.page.button.copy")}
                       </Button>
                     </CopyToClipboard>
                     {this.state.open && (
@@ -173,7 +173,7 @@ class SentenceExtraction extends React.Component {
             <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
               <Grid item xs={4} sm={4} lg={4} xl={4} style={{ marginTop: "10px" }}>
                 <Typography gutterBottom variant="title" component="h2">
-                  Target file path :
+                  {translate("tool3.sentenceExtraction.label.targetFilePath")}
                 </Typography>
                 <br />
               </Grid>
@@ -191,7 +191,7 @@ class SentenceExtraction extends React.Component {
                         style={{ width: "80%", height: "56px", marginTop: "-30px" }}
                         onClick={this.handleCopySubmit.bind(this)}
                       >
-                        Copy
+                        {translate("common.page.button.copy")}
                       </Button>
                     </CopyToClipboard>
                     {this.state.open && (
