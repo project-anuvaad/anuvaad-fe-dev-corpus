@@ -131,7 +131,7 @@ const { APITransport } = this.props;
                 paddingBottom: "16px"
               }}
             >
-              {translate('feedbackForm.page.label.feedbacFor')} {this.state.title}
+              {translate('feedbackForm.page.label.feedbackFor')} {this.state.title}
             </Typography>
             {this.form()}
 
