@@ -275,6 +275,14 @@ var localization_EN_Data = {
    'header.page.heading.qnA':"QnA",
    'header.page.heading.feedBack':"Feedback",
    'header.page.heading.translation':"Translation",
+   'userProfile.page.placeholder.confirmPassword':"Confirm New Password*",
+   'userProfile.page.placeholder.newPassword':"New Password*",
+   'userProfile.page.placeholder.oldPassword':"Old Password*",
+   'userProfile.page.placeholder.resetPassword':"Reset Password",
+   'webroutes.page.title.profile':"Profile",
+   'common.page.label.maxScore':'Maximum Score',
+   'common.page.label.selectLanguage':'Select Language',
+   'GraderReport.page.title.graderDetails':"Grader Details"
    //'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 }
 
@@ -397,7 +405,7 @@ var localization_HI_Data = {
     'common.page.label.categoryName':"श्रेणी नाम",
     'common.page.label.nameAccuracy':"नाम सटीकता",
     'common.page.label.comment':"टिप्पणियाँ",
-    'common.page.label.toDate':"तारीख तक :",
+    'common.page.label.toDate':"अंत तारीख :",
     'common.page.title.categoryDetails':"श्रेणी विवरण",
     'common.page.label.transferFiles':"फ़ाइलें स्थानांतरित करें",
     'common.page.label.sourceLanguage':"स्रोत भाषा",
@@ -410,7 +418,7 @@ var localization_HI_Data = {
     'viewTranslate.page.label.file':"फ़ाइल?",
     'common.page.label.no':"नहीं",
     'common.page.label.ans':"उत्तर :",
-    'qan.page.placeholder.englishPara':"अंग्रेजी पैराग्राफ",
+    'qan.page.placeholder.englishPara':"अंग्रेजी अनुच्छेद",
     'qan.page.placeholder.question1':"प्रश्न 1",
     'qan.page.placeholder.question2':"प्रश्न 2",
     'qan.page.placeholder.question3':"प्रश्न 3",
@@ -426,7 +434,7 @@ var localization_HI_Data = {
     'common.page.label.password':"कुंजिका",
     'common.page.label.email':"ईमेल आईडी",
     'common.page.button.update':"अपडेट करें",
-    'common.page.button.add':"जोड़ना",
+    'common.page.button.add':"जोड़े",
     'userTranslate.page.message.newUserAdded':"नए उपयोगकर्ता को सफलतापूर्वक जोड़ा गया",
     'userTranslate.page.message.passwordpdatedSuccess':"पासवर्ड सफलतापूर्वक अपडेट किया गया",
     'userProfile.page.message.TryAgain':"वर्तमान पासवर्ड गलत है। कृपया पुन: प्रयास करें",
@@ -435,7 +443,7 @@ var localization_HI_Data = {
     'userProfile.page.message.passwordSameAlert':"नया पासवर्ड और रिपीट पासवर्ड बराबर होना चाहिए",
     'userProfile.page.message.passwordTooShortAlert':"नया पासवर्ड बहुत छोटा है (न्यूनतम 6 वर्ण)",
     'userProfile.page.message.enterCorrectPasswordAlert':"कृपया सही वर्तमान पासवर्ड दर्ज करें",
-    'feedbackForm.page.label.feedbacFor':"फीडबैक के लिए",
+    'feedbackForm.page.label.feedbacFor':"प्रतिपुष्टि के लिए",
     'common.page.label.myProfile':"मेरी प्रोफाइल",
     'userProfile.page.label.changePassword':"पासवर्ड बदलें",
    'common.page.label.id' :"आईडी",
@@ -466,13 +474,13 @@ var localization_HI_Data = {
    'common.page.label.context':"प्रसंग",
    'common.page.label.rating':"रेटिंग",
    'gradeReport.page.label.spelling':"शब्द-विन्यास",
-   'common.page.label.fromDate':"तारीख से :",
+   'common.page.label.fromDate':"प्रारंभ तारीख :",
    'gradeReport.page.label.categoryValue':"श्रेणी मूल्य",
    'common.page.label.tockenValue':"टोकन मूल्य" ,
    'common.page.label.close':"बंद करे",
    'gradeReport.page.label.modelDetails':"मॉडल विवरण",
    'gradeReport.page.label.gradedRecords':"रिकॉर्ड किए गए",
-   'feedback.page.text.feedbackSubmitted':"प्रतिक्रिया सफलतापूर्वक प्रस्तुत की गई!",
+   'feedback.page.text.feedbackSubmitted':"प्रतिक्रिया सफलतापूर्वक जमा की गई!",
    'common.page.label.yes':"हाँ",
    'common.page.label.stillinprogress':"अभी तक चालू है",
    'common.page.label.pleaseSelectModel':"कृपया मॉडल का चयन करें",
@@ -548,21 +556,30 @@ var localization_HI_Data = {
    'header.page.heading.welcome':"स्वागत है",
    'header.page.heading.MyProfile':"मेरी प्रोफाइल",
    'header.page.heading.logout':"लॉग आउट",
-   'header.page.heading.anuvaad':"ANUVAAD",
-   'header.page.heading.dataPipeline':"डेटा पाइपलाइ",
+   'header.page.heading.anuvaad':"अनुवाद",
+   'header.page.heading.dataPipeline':"डेटा पाइपलाइन",
    'header.page.heading.uploadFile':"दस्तावेज अपलोड करें",
    'header.page.heading.benchMark':"बेंचमार्क",
-   'header.page.heading.qnA':"क्यू n ए",
+   'header.page.heading.qnA':"सवाल जवाब",
    'header.page.heading.feedBack':"प्रतिपुष्टि",
-   'header.page.heading.translation':"अनुवाद"
+   'header.page.heading.translation':"अनुवाद",
+   'userProfile.page.placeholder.confirmPassword':"पासवर्ड की पुष्टि कीजिये*",
+   'userProfile.page.placeholder.newPassword':"नया पासवर्ड*",
+   'userProfile.page.placeholder.oldPassword':"पुराना पासवर्ड*",
+   'userProfile.page.placeholder.resetPassword':"पासवर्ड बदलें",
+   'webroutes.page.title.profile':"प्रोफ़ाइल",
+   'common.page.label.maxScore':'अधिकतम अंक',
+   'common.page.label.selectLanguage':'भाषा का चयन करें',
+   'GraderReport.page.title.graderDetails':"ग्रेडर विवरण",
+
    
 }
 
 
 export function translate(locale_text) {
-    if(localStorage.getItem("lang")){
-        console.log(localStorage.getItem("lang"))
-        switch(localStorage.getItem("lang")){
+    let lang = localStorage.getItem('lang'+JSON.parse(localStorage.getItem("userProfile")).id)
+    if(lang){
+        switch(lang){
             case 'hi':
                 return localization_HI_Data[locale_text] || locale_text
             case 'en':

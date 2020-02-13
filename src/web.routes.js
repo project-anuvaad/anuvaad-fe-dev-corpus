@@ -152,7 +152,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
 
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title={translate('webroutes.page.title.profile')}component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/dashboard`}
               title={translate('dashboard.page.heading.title')}
