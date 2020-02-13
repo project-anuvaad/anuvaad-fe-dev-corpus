@@ -282,7 +282,12 @@ var localization_EN_Data = {
    'webroutes.page.title.profile':"Profile",
    'common.page.label.maxScore':'Maximum Score',
    'common.page.label.selectLanguage':'Select Language',
-   'GraderReport.page.title.graderDetails':"Grader Details"
+   'GraderReport.page.title.graderDetails':"Grader Details",
+   'gradeReport.page.muiNoTitle.sorryRecordNotFound':"Sorry, no matching records found",
+   'graderReport.page.muiTable.rowsPerPages':"Rows per page:",
+   'graderReport.page.muiTable.search':"Search",
+   'graderReport.page.muiTable.viewColumns':"View Columns",
+   'graderReport.page.muiTable.filterTable':"Filter Table"
    //'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 }
 
@@ -571,6 +576,11 @@ var localization_HI_Data = {
    'common.page.label.maxScore':'अधिकतम अंक',
    'common.page.label.selectLanguage':'भाषा का चयन करें',
    'GraderReport.page.title.graderDetails':"ग्रेडर विवरण",
+   'gradeReport.page.muiNoTitle.sorryRecordNotFound':"क्षमा करें, कोई मिलान रिकॉर्ड नहीं मिला",
+   'graderReport.page.muiTable.rowsPerPages':"प्रति पृष्ठ पंक्तियाँ:",
+   'graderReport.page.muiTable.search':"खोज",
+   'graderReport.page.muiTable.viewColumns':"कॉलम देखें",
+   'graderReport.page.muiTable.filterTable':"फ़िल्टर तालिका"
 
    
 }
