@@ -159,6 +159,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "Maximum Score",
+        label: translate('common.page.label.maxScore'),
         options: {
           filter: false,
           sort: false,
@@ -195,7 +196,6 @@ class ComparisonReport extends React.Component {
 
       {
         name: "records",
-        label: translate('common.page.label.record'),
         options: {
           display: "excluded"
         }

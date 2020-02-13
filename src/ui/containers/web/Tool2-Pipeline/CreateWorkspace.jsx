@@ -16,12 +16,10 @@ import Snackbar from "../../../components/web/common/Snackbar";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
-import Spinner from "../../../components/web/common/Spinner";
 import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
 import ProcessingWorkspace from "./ProcessingWorkspace";
 import MTProcessWorkspace from "../../../../flux/actions/apis/createworkspace";
-import { translate } from '../../../../assets/localisation';
-
+import { translate } from "../../../../assets/localisation";
 
 class CreateWorkspace extends React.Component {
   constructor(props) {
@@ -32,10 +30,9 @@ class CreateWorkspace extends React.Component {
       selectedWorkspaces: [],
       workspaceName: "",
       step: 1,
-      message1: translate('common.page.label.message') ,
-      csvData:
-      translate('common.page.label.csvData')  ,
-      processData: translate('common.page.processData.pressNextToSelect')
+      message1: translate("common.page.label.message"),
+      csvData: translate("common.page.label.csvData"),
+      processData: translate("common.page.processData.pressNextToSelect")
     };
   }
 
@@ -88,9 +85,7 @@ class CreateWorkspace extends React.Component {
 
   handleProcessSubmit() {
     const { APITransport } = this.props;
-    console.log("DDD", this.state.selectedWorkspaces);
     if (this.state.selectedWorkspaces && this.state.selectedWorkspaces.length > 0) {
-      console.log(this.state.selectedWorkspaces);
       const apiObj2 = new MTProcessWorkspace(
         this.state.selectedWorkspaces,
         this.state.workspaceName,
@@ -100,7 +95,7 @@ class CreateWorkspace extends React.Component {
       APITransport(apiObj2);
       this.setState({ load: true });
     } else {
-      alert("Please select workspace from above list");
+      alert(translate("common.page.label.selectWorkspaceFromList"));
     }
   }
 
@@ -115,7 +110,7 @@ class CreateWorkspace extends React.Component {
         step: 2
       });
     } else {
-      alert("Fields should not be empty");
+      alert(translate("common.page.label.pageWarning"));
     }
   }
 
@@ -128,7 +123,7 @@ class CreateWorkspace extends React.Component {
             <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                  Enter workspace name :
+                  {translate("common.page.label.enterWorkspace")}
                 </Typography>
                 <br />
               </Grid>
@@ -147,7 +142,7 @@ class CreateWorkspace extends React.Component {
               </Grid>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                  Select target language : &emsp;&emsp;{" "}
+                  {translate("common.page.label.targetLang")} &emsp;&emsp;{" "}
                 </Typography>
                 <br />
               </Grid>
@@ -171,7 +166,7 @@ class CreateWorkspace extends React.Component {
               <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
                 <FormControlLabel
                   control={<Checkbox value="useLatest" checked={this.state.useLatest} onChange={this.handleCheckboxChange("useLatest")} />}
-                  label="Use Latest Translation"
+                  label={translate("common.page.label.useLatestTranslate")}
                 />
               </Grid>
 
@@ -192,7 +187,7 @@ class CreateWorkspace extends React.Component {
                   style={{ width: "60%", marginTop: "6%", height: "56px" }}
                   onClick={this.handleSubmit.bind(this)}
                 >
-                  Next
+                  {translate("common.page.button.next")}
                 </Button>
               </Grid>
             </Grid>
@@ -202,7 +197,7 @@ class CreateWorkspace extends React.Component {
             <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                  Workspace name :
+                  {translate("common.page.label.workSpaceName")}
                 </Typography>
                 <br />
               </Grid>
@@ -244,7 +239,7 @@ class CreateWorkspace extends React.Component {
                   style={{ width: "60%", marginTop: "6%", height: "56px" }}
                   onClick={this.handleProcessSubmit.bind(this)}
                 >
-                  Start processing
+                  {translate("common.page.button.start")}
                 </Button>
               </Grid>
             </Grid>

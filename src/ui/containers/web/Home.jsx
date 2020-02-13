@@ -21,7 +21,7 @@ class Home extends React.Component {
   }
 
   render() {
-    return <div>{translate('common.page.text.rediecting')}</div>;
+    return <div>{'Redirecting Please wait..'}</div>;
   }
 }
 
