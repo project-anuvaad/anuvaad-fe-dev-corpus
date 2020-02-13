@@ -216,6 +216,18 @@ class UserDirectory extends React.Component {
         ];
 
         const options = {
+            textLabels: {
+                body: {
+                  noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
+                },
+                toolbar: {
+                  search: translate('graderReport.page.muiTable.search'),
+                  viewColumns: translate('graderReport.page.muiTable.viewColumns')
+                },
+                pagination: {
+                  rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
+                }
+              },
             filterType: 'checkbox',
             download: false,
             print: false,
