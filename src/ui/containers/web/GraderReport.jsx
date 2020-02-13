@@ -122,7 +122,19 @@ class GraderReport extends React.Component {
       filter: false,
       selectableRows: "none",
 
-      onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : ""
+      onRowClick: !this.state.tocken ? rowData => this.handleClick(rowData) : "",
+      textLabels: {
+        body: {
+          noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
+        },
+        toolbar: {
+          search: translate('graderReport.page.muiTable.search'),
+          viewColumns: translate('graderReport.page.muiTable.viewColumns')
+        },
+        pagination: {
+          rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
+        }
+      }
     };
 
     const Table4columns = [
