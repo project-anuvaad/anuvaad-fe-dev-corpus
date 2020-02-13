@@ -27,7 +27,8 @@ import { Button } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import ActionDelete from "@material-ui/icons/QuestionAnswer";
 import GroupIcon from "@material-ui/icons/Group";
-import logo from '../../../../assets/logo.png'
+import logo from '../../../../assets/logo.png';
+import { translate } from '../../../../../src/assets/localisation';
 
 const styles = {
   root: {
@@ -48,7 +49,7 @@ class Header extends React.Component {
     open: false,
     auth: true,
     anchorEl: null,
-    heading: "Translation",
+    heading: translate('header.page.heading.translation'),
     name: localStorage.getItem("userDetails"),
     userName: ""
   };
@@ -70,14 +71,14 @@ class Header extends React.Component {
   handleDrawerTranslate = () => {
     this.setState({
       open: false,
-      heading: "Translation"
+      heading: translate('header.page.heading.translation')
     });
   };
 
   handleDrawerDoc = () => {
     this.setState({
       open: false,
-      heading: "Documents"
+      heading: translate('common.page.title.document')
     });
   };
   handleDrawerClose() {
@@ -130,7 +131,7 @@ class Header extends React.Component {
                 right: "130px"
               }}
             >
-              Welcome {this.state.name} [{useRole}]
+              {translate('header.page.heading.welcome')} {this.state.name} [{useRole}]
             </Typography>
 
             {this.state.drawerClose}
@@ -166,7 +167,7 @@ class Header extends React.Component {
                       history.push(`${process.env.PUBLIC_URL}/profile`);
                     }}
                   >
-                    My Profile
+                   {translate('header.page.heading.MyProfile')}
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -174,7 +175,7 @@ class Header extends React.Component {
                       history.push(`${process.env.PUBLIC_URL}/logout`);
                     }}
                   >
-                    Logout
+                   {translate('header.page.heading.logout')}
                   </MenuItem>
                 </Menu>
               </div>
@@ -218,7 +219,7 @@ class Header extends React.Component {
                           color="inherit"
                           className={classes.flex}
                         >
-                          ANUVAAD
+                          {translate('header.page.heading.anuvaad')}
                       </Typography>
                       }
                     />
@@ -240,7 +241,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Data Pipeline
+                            {translate('header.page.heading.dataPipeline')}
                         </Typography>
                         }
                       />
@@ -262,7 +263,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Translate
+                            {translate('dashboard.page.heading.title')}
                         </Typography>
                         }
                       />
@@ -284,7 +285,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Translate
+                           {translate('dashboard.page.heading.title')}
                         </Typography>
                         }
                       />
@@ -321,7 +322,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Upload File
+                           {translate('header.page.heading.uploadFile')}
                         </Typography>
                         }
                       />
@@ -343,7 +344,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Corpus
+                            {translate('commonCorpus.page.button.corpus')}
                         </Typography>
                         }
                       />
@@ -365,7 +366,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Corpus List
+                            {translate('webroutes.page.title.corpusList')}
                         </Typography>
                         }
                       />
@@ -387,7 +388,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Benchmark
+                           {translate('header.page.heading.benchMark')}
                         </Typography>
                         }
                       />
@@ -403,7 +404,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={(
                           <Typography type="body2" style={{ color: '#FFFFFF' }}>
-                            Grader Reports
+                            {translate('webroutes.page.title.graderReport')}
           							</Typography>
                         )}
                       />
@@ -427,7 +428,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Comparison Reports
+                            {translate('common.page.title.comparisonReport')}
                         </Typography>
                         }
                       />
@@ -450,7 +451,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Translate File
+                            {translate('webroutes.page.title.translateFile')}
                         </Typography>
                         }
                       />
@@ -472,7 +473,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Documents
+                            {translate('common.page.title.document')}
                         </Typography>
                         }
                       />
@@ -495,7 +496,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            User Management
+                            {translate('userDirectory.page.label.userManagement')}
                         </Typography>
                         }
                       />
@@ -518,7 +519,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            QnA
+                            {translate('header.page.heading.qnA')}
                         </Typography>
                         }
                       />
@@ -541,7 +542,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Feedback 
+                            {translate('header.page.heading.feedBack')} 
                         </Typography>
                         }
                       />

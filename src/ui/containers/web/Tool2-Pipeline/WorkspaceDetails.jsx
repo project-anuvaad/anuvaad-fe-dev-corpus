@@ -3,13 +3,12 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
-import { timingSafeEqual } from "crypto";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
-import { translate } from '../../../../assets/localisation';
+import { translate } from "../../../../assets/localisation";
 
 class WorkspaceDetails extends React.Component {
   intervalID;
@@ -72,7 +71,7 @@ class WorkspaceDetails extends React.Component {
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
     if (rowData[2] == "At Step2") {
-      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction/` }${rowData[0]}/${rowData[1]}`);
+      history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
     }
   };
 
@@ -84,7 +83,7 @@ class WorkspaceDetails extends React.Component {
     const columns = [
       {
         name: "title",
-        label: "Workspace",
+        label: translate("common.page.table.workspace"),
         options: {
           filter: true,
           sort: true,
@@ -93,7 +92,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "session_id",
-        label: "id",
+        label: translate("common.page.label.id"),
         options: {
           display: "excluded",
           filter: false
@@ -101,7 +100,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "step",
-        label: "step",
+        label: translate("common.page.table.step"),
         options: {
           filter: false,
           display: "excluded"
@@ -109,7 +108,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "status",
-        label: "Status",
+        label: translate("common.page.table.status"),
         options: {
           filter: false,
           sort: false
@@ -117,7 +116,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "sentence_count",
-        label: "Sentence Count",
+        label: translate("common.page.table.sentenceCount"),
         options: {
           display: "excluded",
           filter: false
@@ -125,7 +124,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "username",
-        label: "Created By",
+        label: translate("common.page.table.username"),
         options: {
           filter: false,
           sort: false
@@ -133,7 +132,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "created_at",
-        label: "Created At",
+        label: translate("common.page.table.createdAt"),
         options: {
           filter: false,
           sort: false
@@ -164,7 +163,7 @@ class WorkspaceDetails extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-          {translate('common.page.button.applyFilter')}
+            {translate("common.page.button.applyFilter")}
           </Button>
         </div>
       ),
@@ -185,7 +184,7 @@ class WorkspaceDetails extends React.Component {
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title="Processing Workspaces" data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate("common.tools.title.processingWorkspaces")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );

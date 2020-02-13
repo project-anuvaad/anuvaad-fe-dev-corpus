@@ -253,35 +253,30 @@ class GraderReport extends React.Component {
 
       {
         name: "records",
-        label: translate('common.page.label.records'),
         options: {
           display: "excluded"
         }
       },
       {
         name: "context_rating",
-        label: translate('common.page.label.context'),
         options: {
           display: "excluded"
         }
       },
       {
         name: "name_accuracy_rating",
-        label: translate('common.page.label.nameAccuracy'),
         options: {
           display: "excluded"
         }
       },
       {
         name: "rating",
-        label: translate('common.page.label.rating'),
         options: {
           display: "excluded"
         }
       },
       {
         name: "spelling_rating",
-        label: translate('gradeReport.page.label.spelling'),
         options: {
           display: "excluded"
         }
@@ -394,7 +389,7 @@ class GraderReport extends React.Component {
               </Grid>
             </Grid>
             <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-              <MUIDataTable title={"Grader Details"} data={this.state.graderDetails ? this.state.graderDetails : []} columns={Table1columns} options={options1} />
+              <MUIDataTable title={translate('GraderReport.page.title.graderDetails')} data={this.state.graderDetails ? this.state.graderDetails : []} columns={Table1columns} options={options1} />
             </div>
           </div>
         ) : (

@@ -134,7 +134,6 @@ class UserDirectory extends React.Component {
             },
             {
                 name: "lastname",
-                label: translate('common.page.label.lastName'),
                 options: {
                     display: 'excluded',
                 }
@@ -152,7 +151,7 @@ class UserDirectory extends React.Component {
             },
             {
                 name: "roles",
-                label: translate('common.page.label.role'),
+
                 options: {
                     display: 'excluded',
                 }
@@ -160,6 +159,7 @@ class UserDirectory extends React.Component {
 
             {
                 name: "Roles",
+                label: translate('common.page.label.role'),
                 options: {
                     filter: true,
                     sort: false,
@@ -177,7 +177,6 @@ class UserDirectory extends React.Component {
             },
             {
                 name: "isActive",
-                label: translate('common.page.label.active'),
                 options: {
                     display: 'excluded',
                 }
@@ -185,6 +184,7 @@ class UserDirectory extends React.Component {
 
             {
                 name: "Action",
+                label: translate('common.page.label.action'),
                 options: {
                     filter: true,
                     sort: false,
