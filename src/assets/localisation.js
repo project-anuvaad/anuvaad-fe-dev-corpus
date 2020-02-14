@@ -287,7 +287,9 @@ var localization_EN_Data = {
    'graderReport.page.muiTable.rowsPerPages':"Rows per page:",
    'graderReport.page.muiTable.search':"Search",
    'graderReport.page.muiTable.viewColumns':"View Columns",
-   'graderReport.page.muiTable.filterTable':"Filter Table"
+   'graderReport.page.muiTable.filterTable':"Filter Table",
+   'common.page.label.newlyExtracted':'Newly Extracted :',
+   'common.page.label.existingSentence':'Existing Sentence :'
    //'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 }
 
@@ -580,7 +582,9 @@ var localization_HI_Data = {
    'graderReport.page.muiTable.rowsPerPages':"प्रति पृष्ठ पंक्तियाँ:",
    'graderReport.page.muiTable.search':"खोज",
    'graderReport.page.muiTable.viewColumns':"कॉलम देखें",
-   'graderReport.page.muiTable.filterTable':"फ़िल्टर तालिका"
+   'graderReport.page.muiTable.filterTable':"फ़िल्टर तालिका",
+   'common.page.label.newlyExtracted':'नई निकाली गई :',
+   'common.page.label.existingSentence':'मौजूदा सजा :'
 
    
 }

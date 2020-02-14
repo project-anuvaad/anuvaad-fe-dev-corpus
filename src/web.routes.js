@@ -545,6 +545,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/anuvaad-editor`}
               title="Anuvaad Editor"
+              dontShowLoader
               userRoles={["dev"]}
               component={AnuvaadEditor}
               authenticate={this.authenticateUser}
