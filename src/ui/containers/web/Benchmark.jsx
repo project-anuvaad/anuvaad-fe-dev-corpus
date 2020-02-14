@@ -147,7 +147,7 @@ class Benchmark extends React.Component {
       },
       {
         name: "Target",
-
+        label:translate('common.page.label.target'),
         options: {
           filter: true,
           sort: false,
@@ -173,7 +173,7 @@ class Benchmark extends React.Component {
 
       {
         name: "Model",
-
+        label:translate('common.page.label.models'),
         options: {
           filter: true,
           sort: false,
@@ -220,6 +220,7 @@ class Benchmark extends React.Component {
 
       {
         name: "Action",
+        label:translate('common.page.label.action'),
         options: {
           filter: true,
           sort: false,

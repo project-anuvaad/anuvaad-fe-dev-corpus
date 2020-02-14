@@ -22,6 +22,9 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 import MySnackbarContentWrapper from "../../components/web/common/Snackbar";
 import { translate } from '../../../assets/localisation';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from "@material-ui/core/Select";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -33,6 +36,7 @@ class UserProfile extends React.Component {
       status: "",
       open: false,
       messageSnack: "",
+      lang: localStorage.getItem('lang'+JSON.parse(localStorage.getItem("userProfile")).id),
 
       userDetails: JSON.parse(localStorage.getItem("userProfile"))
     };
@@ -140,6 +144,14 @@ class UserProfile extends React.Component {
       });
     }
   };
+  handleChangeLanguage(event) {
+    let userProfile = JSON.parse(localStorage.getItem("userProfile"))
+    localStorage.setItem('lang'+userProfile.id, event.target.value)
+    this.setState({
+      lang: event.target.value
+    })
+    window.location.reload()
+  }
 
   render() {
     return (
@@ -193,9 +205,38 @@ class UserProfile extends React.Component {
                 </Typography>
               </Grid>
             </Grid>
+
+            <Grid container spacing={4}>
+              <Grid item xs={5} sm={5} lg={5} xl={5}>
+                <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
+                  {translate('common.page.label.selectLanguage')}{" "}
+                </Typography>
+              </Grid>
+              <Grid item xs={6} sm={6} lg={6} xl={6}>
+                <br />
+                <br />
+
+                <Select gutterBottom="true"
+                  name="selectlanguage"
+                  style={{ marginLeft: "12%", marginTop: "-1%", minWidth: 120 }}
+                  id={"outlined-age-simple"}
+                  value={this.state.lang}
+                  onChange={this.handleChangeLanguage.bind(this)}
+                  input={
+                    <OutlinedInput name='english' id="outlined-age-simple" />
+                  }
+                >
+                  <MenuItem value="en">English</MenuItem>
+                  <MenuItem value="hi">हिंदी</MenuItem>
+
+
+                </Select>
+              </Grid>
+            </Grid>
+
           </Grid>
           <div style={{ marginLeft: "90%", paddingBottom: "20px" }}>
-            <Tooltip title="Reset Password">
+            <Tooltip title={translate('userProfile.page.placeholder.resetPassword')}>
               <Fab aria-haspopup="true" onClick={this.handleReset} color="primary" size="medium">
                 <AccountCircle />
               </Fab>
@@ -226,7 +267,7 @@ class UserProfile extends React.Component {
               <form method="post">
                 <FormControl fullWidth>
                   <TextField
-                    placeholder={"Old Password*"}
+                    placeholder={translate('userProfile.page.placeholder.oldPassword')}
                     error
                     value={this.state.oldpassword}
                     required
@@ -242,7 +283,7 @@ class UserProfile extends React.Component {
                 <FormControl fullWidth>
                   <TextField
                     id={this.state.newpassword}
-                    placeholder={"New Password*"}
+                    placeholder={translate('userProfile.page.placeholder.newPassword')}
                     required
                     value={this.state.newpassword}
                     type="password"
@@ -256,7 +297,7 @@ class UserProfile extends React.Component {
                 </FormControl>
                 <FormControl fullWidth>
                   <TextField
-                    placeholder={"Confirm New Password*"}
+                    placeholder={translate('userProfile.page.placeholder.confirmPassword')}
                     value={this.state.repassword}
                     required
                     id="outlined-required"

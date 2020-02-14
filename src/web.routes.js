@@ -68,6 +68,7 @@ import Tool3DataSource from "./ui/containers/web/Tool3-Pipeline/DataSource";
 import Tool4DataSource from "./ui/containers/web/Tool4-Pipeline/DataSource";
 import Stage2DataSource from "./ui/containers/web/Tool2-Pipeline/DataSource";
 import FeedbackForm from "./ui/containers/web/FeedbackForm";
+import { translate } from '../src/assets/localisation';
 
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
   <Route
@@ -118,7 +119,7 @@ class AppRoutes extends React.Component {
       }
       return false;
     }
-    alert("Something Went wrong. Please try again");
+    alert(translate('webroutes.page.alert.somethingWentWrongTryAgain'));
   };
 
   render() {
@@ -137,7 +138,7 @@ class AppRoutes extends React.Component {
               userRoles={["user"]}
               forDemo
               drawer
-              title="Anuvaad Translate"
+              title={translate('webroutes.page.title.anuvaadTranslate')}
               component={TPresident}
               authenticate={this.authenticateUser}
             />
@@ -147,43 +148,43 @@ class AppRoutes extends React.Component {
               path={`${process.env.PUBLIC_URL}/translate`}
               dontShowLoader
               forDemo
-              title="SUVAS - Supreme Court Vidhik Anuvaad System"
+              title={translate('webroutes.page.title.suvas')}
               userRoles={["user"]}
               component={TranslatePresident}
               authenticate={this.authenticateUser}
             />
 
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title="Profile" component={UserProfile} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title={translate('webroutes.page.title.profile')}component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/dashboard`}
-              title="Translate"
+              title={translate('dashboard.page.heading.title')}
               component={DashboardTamil}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/view-corpus/:basename`}
-              title="Corpus Details"
+              title={translate('webroutes.page.title.corpusDetails')}
               userRoles={["grader", "dev"]}
               component={GradeViewCorpus}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/:basename/:modelid`}
-              title="Benchmark"
+              title={translate('webroutes.page.title.benchmark')}
               userRoles={["grader", "dev"]}
               component={BenchmarkGrade}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/graderreport`}
-              title="Grader Report"
+              title={translate('webroutes.page.title.graderReport')}
               component={GraderReport}
               userRoles={["admin"]}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/comparison-report`}
-              title="Comparison Report"
+              title= {translate('common.page.title.comparisonReport')}
               component={ComparisonReport}
               userRoles={["admin"]}
               authenticate={this.authenticateUser}
@@ -192,14 +193,14 @@ class AppRoutes extends React.Component {
               path={`${process.env.PUBLIC_URL}/benchmarktranslate`}
               userRoles={["analyzer"]}
               component={FileTranslate}
-              title="File Upload"
+              title={translate('webroutes.page.title.fileUpload')}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/texttranslate`}
               userRoles={["analyzer"]}
               component={GraderTranslate}
-              title="Translate"
+              title={translate('dashboard.page.heading.title')}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
@@ -210,7 +211,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/corpus`}
               component={Corp}
-              title="Corpus List"
+              title={translate('webroutes.page.title.corpusList')}
               userRoles={["grader", "dev"]}
               authenticate={this.authenticateUser}
             />
@@ -218,12 +219,12 @@ class AppRoutes extends React.Component {
               path={`${process.env.PUBLIC_URL}/benchmark`}
               component={Benchmark}
               userRoles={["grader", "dev"]}
-              title="Benchmark"
+              title={translate('webroutes.page.title.benchmark')}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`}
-              title="Corpus Details"
+              title={translate('webroutes.page.title.corpusDetails')}
               userRoles={["editor", "dev"]}
               component={Corpus}
               authenticate={this.authenticateUser}
@@ -233,63 +234,63 @@ class AppRoutes extends React.Component {
             <PrivateRoute path={`${process.env.PUBLIC_URL}/upload-audio`} component={UploadAudio} authenticate={this.authenticateUser} />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/qna`}
-              title="Q&A"
+              title={translate('webroutes.page.title.q&a')}
               userRoles={["editor"]}
               component={QnA}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/newcorpus`}
-              title="Parallel Corpus"
+              title={translate('webroutes.page.title.parallelCorpus')}
               userRoles={["dev"]}
               component={newcorpus}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/create-corpus`}
-              title="Create Corpus"
+              title={translate('common.page.label.createCorpus')}
               userRoles={["dev"]}
               component={createcorpus}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/doctranslate`}
-              title="Translate File"
+              title={translate('webroutes.page.title.translateFile')}
               component={PdfTranslate}
               userRoles={["editor", "user"]}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/userdirectory`}
-              title="User Directory"
+              title={translate('webroutes.page.title.userDirectory')}
               component={UserDirectory}
               userRoles={["admin"]}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/edittranslate`}
-              title="Document View"
+              title={translate('webroutes.page.title.documentView')}
               component={EditTranslate}
               userRoles={["notactive"]}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/viewtranslate`}
-              title="Documents"
+              title={translate('common.page.title.document')}
               component={ViewTranslate}
               userRoles={["editor", "user"]}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/view-doc/:basename`}
-              title="Document Details"
+              title={translate('webroutes.page.title.documentDetails')}
               component={ViewDoc}
               userRoles={["editor"]}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/feedback`}
-              title="Add Feedback Questions"
+              title={translate('webroutes.page.title.addFeedbackQuestion')}
               userRoles={["admin"]}
               component={AddQuestion}
               authenticate={this.authenticateUser}
@@ -297,7 +298,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/existing-workspace`}
               dontShowLoader
-              title="STAGE 1, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage1Toolchain')}
               userRoles={["dev"]}
               component={ExistingWorkspace}
               authenticate={this.authenticateUser}
@@ -305,49 +306,49 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/workspace-details`}
               dontShowLoader
-              title="STAGE 1, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage1Toolchain')}
               userRoles={["dev"]}
               component={ExistingWorkspaceDetails}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/apply-token/:name/:session_id`}
-              title="STAGE 1, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage1Toolchain')}
               userRoles={["dev"]}
               component={ApplyTocken}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/data-pipeline-tools`}
-              title="DATA PIPELINE DASHBOARD"
+              title={translate('webroutes.page.title.dataPipeLine')}
               userRoles={["dev"]}
               component={DataPipeline}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/upload-token/:name/:session_id`}
-              title="STAGE 1, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage1Toolchain')}
               userRoles={["dev"]}
               component={UploadTocken}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/sentence-extraction/:name/:session_id`}
-              title="STAGE 1, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage1Toolchain')}
               userRoles={["dev"]}
               component={SentenceExtraction}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/new-extraction`}
-              title="STAGE 1, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage1Toolchain')}
               userRoles={["dev"]}
               component={NewSentenceExtraction}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/token-extraction`}
-              title="STAGE 1, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage1Toolchain')}
               userRoles={["dev"]}
               component={TockenExtraction}
               authenticate={this.authenticateUser}
@@ -355,7 +356,7 @@ class AppRoutes extends React.Component {
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/sentence-extraction`}
-              title="STAGE 1, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage1Toolchain')}
               userRoles={["dev"]}
               component={ExtractionSteps}
               authenticate={this.authenticateUser}
@@ -363,7 +364,7 @@ class AppRoutes extends React.Component {
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/download-sentence`}
-              title="STAGE 2, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage2Toolchain')}
               userRoles={["dev"]}
               component={DownloadSentence}
               authenticate={this.authenticateUser}
@@ -372,7 +373,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/existing-workspace`}
               dontShowLoader
-              title="STAGE 2, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage2Toolchain')}
               userRoles={["dev"]}
               component={Tool2ExistingWorkspace}
               authenticate={this.authenticateUser}
@@ -381,7 +382,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/existing-workspace`}
               dontShowLoader
-              title="STAGE 3, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage3Toolchain')}
               userRoles={["dev"]}
               component={Tool3ExistingWorkspace}
               authenticate={this.authenticateUser}
@@ -389,7 +390,7 @@ class AppRoutes extends React.Component {
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/sentence-extraction/:name/:session_id`}
-              title="STAGE 2, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage2Toolchain')}
               userRoles={["dev"]}
               component={Tool2SentenceExtraction}
               authenticate={this.authenticateUser}
@@ -397,7 +398,7 @@ class AppRoutes extends React.Component {
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/sentence-extraction/:name/:session_id`}
-              title="STAGE 3, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage3Toolchain')}
               userRoles={["dev"]}
               component={Tool3SentenceExtraction}
               authenticate={this.authenticateUser}
@@ -406,7 +407,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/workspace-details`}
               dontShowLoader
-              title="STAGE 2, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage2Toolchain')}
               userRoles={["dev"]}
               component={WorkspaceDetails}
               authenticate={this.authenticateUser}
@@ -414,7 +415,7 @@ class AppRoutes extends React.Component {
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/create-workspace`}
-              title="STAGE 3, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage3Toolchain')}
               userRoles={["dev"]}
               component={Tool3CreateWorkspace}
               authenticate={this.authenticateUser}
@@ -422,7 +423,7 @@ class AppRoutes extends React.Component {
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage4/create-workspace`}
-              title="STAGE 4, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage4Toolchain')}
               userRoles={["dev"]}
               component={Tool4CreateWorkspace}
               authenticate={this.authenticateUser}
@@ -430,7 +431,7 @@ class AppRoutes extends React.Component {
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/sentence-qaulity/:name/:session_id`}
-              title="STAGE 3, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage3Toolchain')}
               userRoles={["dev"]}
               component={SentenceQualityCheck}
               authenticate={this.authenticateUser}
@@ -439,7 +440,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/workspace-details`}
               dontShowLoader
-              title="STAGE 3, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage3Toolchain')}
               userRoles={["dev"]}
               component={Tool3WorkspaceDetails}
               authenticate={this.authenticateUser}
@@ -448,7 +449,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage4/workspace-details`}
               dontShowLoader
-              title="STAGE 4, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage4Toolchain')}
               userRoles={["dev"]}
               component={Tool4WorkspaceDetails}
               authenticate={this.authenticateUser}
@@ -456,7 +457,7 @@ class AppRoutes extends React.Component {
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/create-workspace`}
-              title="STAGE 2, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage2Toolchain')}
               userRoles={["dev"]}
               component={CreateWorkspace}
               authenticate={this.authenticateUser}
@@ -486,7 +487,7 @@ class AppRoutes extends React.Component {
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/datasource/:name/:session_id`}
-              title="STAGE 2, DATASOURCE"
+              title={translate('webroutes.page.title.stage2dataSource')}
               userRoles={["dev"]}
               component={DataPipelineDownload}
               authenticate={this.authenticateUser}
@@ -495,7 +496,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage4/existing-workspace`}
               dontShowLoader
-              title="STAGE 4, TOOLCHAIN"
+              title={translate('webroutes.page.title.stage4Toolchain')}
               userRoles={["dev"]}
               component={Tool4ExistingWorkspace}
               authenticate={this.authenticateUser}
@@ -503,7 +504,7 @@ class AppRoutes extends React.Component {
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/datasource`}
-              title="STAGE 1, DATASOURCE"
+              title={translate('webroutes.page.title.stage1dataSource')}
               userRoles={["dev"]}
               component={DataSource}
               authenticate={this.authenticateUser}
@@ -511,14 +512,14 @@ class AppRoutes extends React.Component {
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/feedback-form/:page`}
-              title="FeedbackForm"
+              title={translate('webroutes.page.title.feedbackForm')}
               component={FeedbackForm}
               authenticate={this.authenticateUser}
             />
 
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/datasource/:name/:session_id`}
-              title="STAGE 3, DATASOURCE"
+              title={translate('webroutes.page.title.stage3dataSource')}
               userRoles={["dev"]}
               component={Stage3DataPipelineDownload}
               authenticate={this.authenticateUser}
@@ -527,7 +528,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/datasource`}
               dontShowLoader
-              title="STAGE 2, DATASOURCE"
+              title={translate('webroutes.page.title.stage2dataSource')}
               userRoles={["dev"]}
               component={Stage2DataSource}
               authenticate={this.authenticateUser}
@@ -536,7 +537,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/datasource`}
               dontShowLoader
-              title="STAGE 3, DATASOURCE"
+              title={translate('webroutes.page.title.stage3dataSource')}
               userRoles={["dev"]}
               component={Tool3DataSource}
               authenticate={this.authenticateUser}
@@ -560,7 +561,7 @@ class AppRoutes extends React.Component {
 <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage4/datasource`}
               dontShowLoader
-              title="STAGE 4, DATASOURCE"
+              title={translate('webroutes.page.title.stage4dataSource')}
               userRoles={["dev"]}
               component={Tool4DataSource}
               authenticate={this.authenticateUser}

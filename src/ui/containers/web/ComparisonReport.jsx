@@ -159,6 +159,7 @@ class ComparisonReport extends React.Component {
 
       {
         name: "Maximum Score",
+        label: translate('common.page.label.maxScore'),
         options: {
           filter: false,
           sort: false,
@@ -172,6 +173,20 @@ class ComparisonReport extends React.Component {
 
 
     const options1 = {
+      textLabels: {
+          body: {
+            noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
+          },
+        toolbar: {
+          search: translate('graderReport.page.muiTable.search'),
+          viewColumns: translate('graderReport.page.muiTable.viewColumns'),
+          filterTable: translate('graderReport.page.muiTable.filterTable'),
+        },
+        pagination: {
+          rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
+        },
+        
+      },
       filterType: "dropdown",
       download: false,
       print: false,
@@ -195,7 +210,6 @@ class ComparisonReport extends React.Component {
 
       {
         name: "records",
-        label: translate('common.page.label.record'),
         options: {
           display: "excluded"
         }
