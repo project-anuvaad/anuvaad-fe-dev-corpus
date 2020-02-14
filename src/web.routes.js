@@ -34,6 +34,8 @@ import EditTranslate from "./ui/containers/web/EditTranslate";
 import ViewTranslate from "./ui/containers/web/ViewTranslate";
 import UserDirectory from "./ui/containers/web/UserDirectory";
 import ViewDoc from "./ui/containers/web/ViewDoc";
+import AnuvaadEditor from "./ui/containers/web/TextEditor";
+import AnuvaadModels from "./ui/containers/web/TextModels";
 import AddQuestion from "./ui/containers/web/AddQuestion";
 import TranslatePresident from "./ui/containers/web/TranslateJudgement";
 import DataPipeline from "./ui/containers/web/DataPipeline";
@@ -537,6 +539,21 @@ class AppRoutes extends React.Component {
               title="STAGE 3, DATASOURCE"
               userRoles={["dev"]}
               component={Tool3DataSource}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/anuvaad-editor`}
+              title="Anuvaad Editor"
+              userRoles={["dev"]}
+              component={AnuvaadEditor}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/anuvaad-models`}
+              title="Anuvaad Editor"
+              userRoles={["dev"]}
+              component={AnuvaadModels}
               authenticate={this.authenticateUser}
             />
 
