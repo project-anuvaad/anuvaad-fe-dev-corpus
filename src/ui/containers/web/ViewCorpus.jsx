@@ -121,6 +121,7 @@ class Corp extends React.Component {
 
       {
         name: "Action",
+        label: translate('common.page.label.action') ,
         options: {
           filter: true,
           sort: false,
@@ -174,6 +175,18 @@ class Corp extends React.Component {
     ];
 
     const options = {
+      textLabels: {
+        body: {
+          noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
+        },
+        toolbar: {
+          search: translate('graderReport.page.muiTable.search'),
+          viewColumns: translate('graderReport.page.muiTable.viewColumns')
+        },
+        pagination: {
+          rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
+        }
+      },
       filterType: "checkbox",
       download: false,
       print: false,

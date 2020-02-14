@@ -359,11 +359,11 @@ class Dashboard extends React.Component {
           </div>
           {this.state.nmtText[0] && (
             <div>
-              <NewOrders title="Anuvaad Model" data={this.state.nmtText} status={this.state.checkedSubwords} />
+              <NewOrders title={translate('dashbord.page.title.anuvaadModel')} data={this.state.nmtText} status={this.state.checkedSubwords} />
             </div>
           )}
           {this.state.checkedMachine && this.state.autoMlText && this.state.nmtText && (
-            <TranslateSentence title="Machine Translated" data={this.state.autoMlText} />
+            <TranslateSentence title={translate('dashboard.page.checkbox.mt')} data={this.state.autoMlText} />
           )}
         </Paper>
       </div>
