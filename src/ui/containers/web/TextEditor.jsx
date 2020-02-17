@@ -3,13 +3,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core";
-import MUIRichTextEditor from "mui-rte";
 import Paper from "@material-ui/core/Paper";
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { convertToRaw } from "draft-js";
-import draftToMarkdown from "draftjs-to-markdown";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import CKEditor from "@ckeditor/ckeditor5-react";
 import List from "@material-ui/core/List";
@@ -18,11 +13,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import FetchModels from "../../../flux/actions/apis/fetchenchmarkmodel";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
-import TextareaAutocomplete from 'react-textarea-autocomplete'
+
 class Editor1 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { token: false, value: "" };
+    this.state = { token: false, value: "", isFocus: false };
   }
 
   componentDidMount() {
@@ -37,85 +32,90 @@ class Editor1 extends React.Component {
       console.log("-----", this.props.fetchBenchmarkModel.data);
       this.setState({
         sentences: this.props.fetchBenchmarkModel.data,
-        count: this.props.fetchBenchmarkModel.count,
-        value: this.props.fetchBenchmarkModel.data[0].source
+        count: this.props.fetchBenchmarkModel.count
       });
     }
   }
 
-  handleSelected=(text,index)=>{
-      console.log(text,index)
-      this.setState({value: this.state.value+text , token: false})
+  handleTextChange(key, event) {
+    console.log(key, event);
+    this.setState({
+      [key]: event
+    });
   }
+
+  handleSelected = (event, text, index, editor) => {
+    editor.model.change(writer => {
+      writer.insertText(text, editor.model.document.selection.getFirstPosition());
+    });
+    this.setState({ value: editor.getData(), token: false, isFocus: true });
+  };
 
   handleApiCall(data) {
     const { APITransport } = this.props;
     const api = new FetchModels(1573290229, 17, 5, 1);
     APITransport(api);
     this.setState({ token: true });
-    
-  }
-
-  onEditorStateChange(editorState) {
-    console.log(editorState && draftToMarkdown(convertToRaw(editorState.getCurrentContent())));
-    this.setState({ value: editorState });
-    console.log(this.state.value);
-  }
-
-  handleSave(data) {
-    console.log("data.Model.ImmutableData.EditorState");
   }
 
   render() {
     return (
       <div
-        style={{
-          marginLeft: "12%",
-          marginTop: "5%",
-          width: "70%"
+        onClick={() => {
+          this.setState({ token: false });
         }}
       >
-        <CKEditor style={{height:'40wv'}}
-          editor={ClassicEditor}
-          data={this.state.value}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-
-            editor.editing.view.document.on("keydown", (evt, data) => {
-              console.log(data.keyCode);
-
-              if (data.keyCode === 9) {
-                this.handleApiCall(editor.getData());
-
-                data.preventDefault();
-                evt.stop();
-              }
-              else{
-                this.setState({ token: false });
-              }
-            });
+        <div
+          style={{
+            marginLeft: "12%",
+            marginTop: "5%",
+            width: "70%"
           }}
-          
-        />
+        >
+          <CKEditor
+            editor={ClassicEditor}
+            data={this.state.value}
+            onBlur={(event, editor) => {
+              console.log(this.state.isFocus);
+              if (this.state.isFocus) {
+                editor.editing.view.focus();
+              }
+            }}
+            onChange={(event, editor) => {
+              editor.editing.view.focus();
 
-        { this.state.token && 
+              const data = editor.getData();
+              console.log("changed", editor.model.document.selection.getFirstPosition());
+              this.handleTextChange("value", data);
+              this.setState({ editor, isFocus: false });
 
-<List component="nav" style ={{marginLeft:"30%",marginRight:"20%",marginTop:"-20px"}}>
-{this.state.sentences.map((text, index) => (
-<ListItem button onClick={() => this.handleSelected(text.source,index)} key ={index}>
-  <ListItemText primary={text.source}/>
-</ListItem>
-))}
+              editor.editing.view.document.on("keydown", (evt, data) => {
+                console.log("", editor.getData());
 
+                if (data.keyCode === 9) {
+                  this.handleApiCall(editor.getData());
 
+                  data.preventDefault();
+                  evt.stop();
+                } else {
+                  this.setState({ token: false });
+                }
+              });
+            }}
+          />
 
-  
-
-</List>
-
-
-        }
-        
+          {this.state.token && (
+            <List component="nav" style={{ marginLeft: "30%", marginRight: "20%", marginTop: "-20px" }}>
+              <Paper>
+                {this.state.sentences.map((text, index) => (
+                  <ListItem button onClick={event => this.handleSelected(event, text.source, index, this.state.editor)} key={index}>
+                    <ListItemText primary={text.source} />
+                  </ListItem>
+                ))}
+              </Paper>
+            </List>
+          )}
+        </div>
       </div>
     );
   }
