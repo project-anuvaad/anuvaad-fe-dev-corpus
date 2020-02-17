@@ -1,6 +1,5 @@
 import API from "./api";
 import C from "../constants";
-import { CommunicationStayCurrentLandscape } from "material-ui/svg-icons";
 
 export default class UpdatePassword extends API {
   constructor(id, user_name, old_password, new_password, timeout = 2000) {

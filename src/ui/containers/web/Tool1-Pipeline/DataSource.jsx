@@ -71,7 +71,7 @@ class DataSource extends React.Component {
     this.setState({ download: true, fileId: rowData[4] });
     console.log(rowData);
     const link = document.createElement("a");
-    link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" + "/download/") + rowData[4];
+    link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org/download/") + rowData[4];
     document.body.appendChild(link);
     link.click();
   };
@@ -161,6 +161,7 @@ class DataSource extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
+            default:return null;
         }
       }
     };

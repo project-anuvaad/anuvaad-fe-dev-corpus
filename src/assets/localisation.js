@@ -287,7 +287,18 @@ var localization_EN_Data = {
    'graderReport.page.muiTable.rowsPerPages':"Rows per page:",
    'graderReport.page.muiTable.search':"Search",
    'graderReport.page.muiTable.viewColumns':"View Columns",
-   'graderReport.page.muiTable.filterTable':"Filter Table"
+   'graderReport.page.muiTable.filterTable':"Filter Table",
+   'appbar.page.label.totalSentence':"Total Sentence :",
+   'appbar.page.label.pending':"Pending:",
+   'dataPipeLine.page.tool.stage1':"Stage 1",
+   'dataPipeLine.page.tool.stage2':"Stage 2",
+   'dataPipeLine.page.tool.stage3':"Stage 3",
+   'dataPipeLine.page.tool.stage4':"Stage 4",
+   'dataPipeLine.page.tool.stage5':"Stage 5",
+   'dataPipeLine.page.tool.stage6':"Stage 6",
+   'dataPipeLine.page.tool.stage7':"Stage 7",
+   'dataPipeLine.page.tool.stage8':"Stage 8",
+   'dataPipeLine.page.tool.stage9':"Stage 9",
    //'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 }
 
@@ -302,8 +313,8 @@ var localization_HI_Data = {
     'dashboard.page.checkbox.splitted':"दिखाओ, विभाजित किया हुआ",
     'dashboard.page.checkbox.ioSubwords':"इनपुट और आउटपुट सब-पासवर्ड",
     'dashboard.page.alternatetext.enterTextHere':"पाठ यहां लिखें ......",
-    'neworders.page.label.inputSubwords':"इनपुट सब-पासवर्ड",
-    'neworders.page.label.outputSubwords' :"आउटपुट पासवर्ड",
+    'neworders.page.label.inputSubwords':"इनपुट उप शब्द",
+    'neworders.page.label.outputSubwords' :"आउटपुट उप शब्द",
     'common.page.button.cancel':"रद्द करे",
     'common.page.button.next':"अगला",
     'common.page.error.nameError':"नाम खाली नहीं होना चाहिए",
@@ -580,20 +591,33 @@ var localization_HI_Data = {
    'graderReport.page.muiTable.rowsPerPages':"प्रति पृष्ठ पंक्तियाँ:",
    'graderReport.page.muiTable.search':"खोज",
    'graderReport.page.muiTable.viewColumns':"कॉलम देखें",
-   'graderReport.page.muiTable.filterTable':"फ़िल्टर तालिका"
+   'graderReport.page.muiTable.filterTable':"फ़िल्टर तालिका",
+   'appbar.page.label.totalSentence':"कुल वाक्य :",
+   'appbar.page.label.pending':"रूका हुआ:",
+   'dataPipeLine.page.tool.stage1':"चरण 1",
+   'dataPipeLine.page.tool.stage2':"चरण 2",
+   'dataPipeLine.page.tool.stage3':"चरण 3",
+   'dataPipeLine.page.tool.stage4':"चरण 4",
+   'dataPipeLine.page.tool.stage5':"चरण 5",
+   'dataPipeLine.page.tool.stage6':"चरण 6",
+   'dataPipeLine.page.tool.stage7':"चरण 7",
+   'dataPipeLine.page.tool.stage8':"चरण 8",
+   'dataPipeLine.page.tool.stage9':"चरण 9",
 
    
 }
 
 
 export function translate(locale_text) {
-    let lang = localStorage.getItem('lang'+JSON.parse(localStorage.getItem("userProfile")).id)
+    let lang = localStorage.getItem('lang'+JSON.parse(localStorage.getItem("userProfile") ? localStorage.getItem("userProfile") : '{}').id)
     if(lang){
         switch(lang){
             case 'hi':
                 return localization_HI_Data[locale_text] || locale_text
             case 'en':
                 return localization_EN_Data[locale_text] || locale_text
+            default:
+                return null;
         }
     }else{
         return localization_EN_Data[locale_text] || locale_text

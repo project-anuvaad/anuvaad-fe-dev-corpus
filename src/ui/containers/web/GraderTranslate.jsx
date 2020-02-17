@@ -16,7 +16,9 @@ import Typography from "@material-ui/core/Typography";
 import Snackbars from "../../components/web/common/Snackbar";
 import { translate } from '../../../assets/localisation';
 import ScrollArea from "react-scrollbar";
-const styles = theme => ({
+//const styles =
+ theme => 
+({
   search: {
     borderRadius: theme.shape.borderRadius,
     marginTop: "500px",
@@ -97,7 +99,7 @@ class GarderTranslate extends React.Component {
   }
 
   render() {
-    const { base } = this.props;
+   // const { base } = this.props;
     return (
       <div>
         <Grid container spacing={4}>
@@ -123,13 +125,13 @@ class GarderTranslate extends React.Component {
                         <div
                           style={{
                             backgroundColor: "#F3F3F8",
-                            color: this.state.value === i.name && index == this.state.index ? "#CB1E60" : "black",
+                            color: this.state.value === i.name && index === this.state.index ? "#CB1E60" : "black",
                             marginLeft: "20px",
                             paddingLeft: "50px",
                             paddingTop: "30px",
                             paddingBottom: "10px",
                             cursor: "pointer",
-                            fontWeight: this.state.value === i.name && index == this.state.index ? "bold" : "normal"
+                            fontWeight: this.state.value === i.name && index === this.state.index ? "bold" : "normal"
                           }}
                           key={index}
                         >

@@ -66,9 +66,10 @@ class Benchmark extends React.Component {
     supportLanguage.map(value => (value.language_name === sourceLanguage ? (name = value.language_code) : ""));
 
     modelLanguage.map(item => {
-      item.source_language_code == name
-        ? supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null))
-        : "";
+      item.source_language_code === name
+        && supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null))
+        ;
+        return true;
     });
     var value = new Set(result);
     var target_language = [...value];
@@ -82,6 +83,7 @@ class Benchmark extends React.Component {
     this.state.language.map(value => (value.language_name === source ? (name = value.language_code) : ""));
     modelLanguage.map(item => {
       item.source_language_code === name && item.target_language_code === target ? result.push(item) : null;
+      return true;
     });
     return result;
   }

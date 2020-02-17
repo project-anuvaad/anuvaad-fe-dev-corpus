@@ -11,7 +11,7 @@ import AutoML from "../../../flux/actions/apis/auto_ml";
 import NMT from "../../../flux/actions/apis/nmt";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { white, blueGrey50, darkBlack } from "material-ui/styles/colors";
+import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import Select from "../../components/web/common/Select";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
@@ -53,7 +53,7 @@ class Dashboard extends React.Component {
       nmtTextSP: []
     });
 
-    const { APITransport, MODELApi } = this.props;
+    const { APITransport} = this.props;
     const apiObj = new FetchLanguage();
     APITransport(apiObj);
     this.setState({ showLoader: true });
@@ -137,8 +137,9 @@ class Dashboard extends React.Component {
     var result = [];
     modelLanguage.map(item => {
       item.source_language_code === sourceLanguage
-        ? supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null))
-        : "";
+        && supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null))
+        ;
+        return true;
     });
     var value = new Set(result);
     var target_language = [...value];
@@ -149,6 +150,7 @@ class Dashboard extends React.Component {
     var result = [];
     modelLanguage.map(item => {
       item.source_language_code === source && item.target_language_code === target ? result.push(item) : null;
+      return true;
     });
     return result;
   }
@@ -181,7 +183,7 @@ class Dashboard extends React.Component {
     const apiObj = new AutoML(this.state.text, this.state.source, this.state.target);
     const nmt = new NMT(this.state.text, model, true, this.state.target, this.state.showSplitted);
     NMTApi(nmt);
-    this.state.checkedMachine ? APITransport(apiObj) : "";
+    this.state.checkedMachine && APITransport(apiObj) ;
     this.setState({
       showLoader: true,
       autoMlText: "",

@@ -27,7 +27,7 @@ class DataPipeline extends React.Component {
     super(props);
     this.state = {
       value: 2,
-      tools: ["Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6", "Stage 7", "Stage 8", "Stage 9"]
+      tools: [translate('dataPipeLine.page.tool.stage1'),translate('dataPipeLine.page.tool.stage2') ,translate('dataPipeLine.page.tool.stage3') ,translate('dataPipeLine.page.tool.stage4') ,translate('dataPipeLine.page.tool.stage5') , translate('dataPipeLine.page.tool.stage6'),translate('dataPipeLine.page.tool.stage7') ,translate('dataPipeLine.page.tool.stage8') ,translate('dataPipeLine.page.tool.stage9') ]
     };
   }
 

@@ -69,7 +69,7 @@ class ExistingWorkspace extends React.Component {
 
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    history.push(`${`${process.env.PUBLIC_URL}/stage3/sentence-extraction` + "/"}${rowData[0]}/${rowData[1]}`);
+    history.push(`${`${process.env.PUBLIC_URL}/stage3/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
   };
 
   handleChange = value => {
@@ -186,6 +186,8 @@ class ExistingWorkspace extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
+          default:
+            return null;
         }
       }
     };

@@ -50,9 +50,9 @@ class FeedbackForm extends React.Component {
       this.setState({ open: true, message1: translate('feedback.page.text.feedbackSubmitted') });
       setTimeout(() => {
         this.setState({ open: false });
-        if (this.props.match.params.page == "translate") {
+        if (this.props.match.params.page === "translate") {
           history.push("/doctranslate");
-        } else if (this.props.match.params.page == "upload") {
+        } else if (this.props.match.params.page === "upload") {
           history.push("/viewtranslate");
         }
       }, 3000);

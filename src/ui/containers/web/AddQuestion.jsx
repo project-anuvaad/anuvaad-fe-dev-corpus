@@ -15,7 +15,6 @@ import Fab from "@material-ui/core/Fab";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Snackbar from "../../components/web/common/Snackbar";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
-import history from "../../../web.history";
 import QuestionUpload from "../../../flux/actions/apis/questionupload";
 import FetchQuestions from "../../../flux/actions/apis/fetchquestions";
 import { translate } from '../../../assets/localisation';
@@ -94,6 +93,7 @@ class AddQuestion extends React.Component {
       if (el.question && el.type) {
         count += 1;
       }
+      return true;
     });
 
     if (count === this.state.questionList.length) {

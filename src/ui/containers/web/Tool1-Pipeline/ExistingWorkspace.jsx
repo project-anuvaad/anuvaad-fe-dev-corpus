@@ -195,6 +195,8 @@ class ExistingWorkspace extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
+            default:
+              return null;
         }
       }
     };
