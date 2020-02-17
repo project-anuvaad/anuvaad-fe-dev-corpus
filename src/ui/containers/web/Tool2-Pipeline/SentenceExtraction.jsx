@@ -100,41 +100,39 @@ class SentenceExtraction extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-
-            
           </Grid>
-          <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
-            <Grid item xs={4} sm={4} lg={4} xl={4}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                {translate("common.page.label.newlyExtracted")}
-              </Typography>
-              <br />
+          {this.state.workspaceDetails && this.state.workspaceDetails.report && (
+            <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+              <Grid item xs={4} sm={4} lg={4} xl={4}>
+                <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                  {translate("common.page.label.newlyExtracted")}
+                </Typography>
+                <br />
+              </Grid>
+              <Grid item xs={7} sm={7} lg={7} xl={7}>
+                <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                  {this.state.workspaceDetails && this.state.workspaceDetails.report && this.state.workspaceDetails.report.to_fetch}{" "}
+                  {translate("common.page.label.sentence")}
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={7} sm={7} lg={7} xl={7}>
-            <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-            {this.state.workspaceDetails && this.state.workspaceDetails.report.to_fetch} {" "}
-                    {translate("common.page.label.sentence")}
-            </Typography>
-           
-            
+          )}
+          {this.state.workspaceDetails && this.state.workspaceDetails.report && (
+            <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
+              <Grid item xs={4} sm={4} lg={4} xl={4}>
+                <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                  {translate("common.page.label.existingSentence")}
+                </Typography>
+                <br />
+              </Grid>
+              <Grid item xs={7} sm={7} lg={7} xl={7}>
+                <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                  {this.state.workspaceDetails && this.state.workspaceDetails.report && this.state.workspaceDetails.report.already_present}{" "}
+                  {translate("common.page.label.sentence")}
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-
-          <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
-            <Grid item xs={4} sm={4} lg={4} xl={4}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                {translate("common.page.label.existingSentence")}
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={7} sm={7} lg={7} xl={7}>
-            <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-            {this.state.workspaceDetails && this.state.workspaceDetails.report.already_present} {" "}
-                    {translate("common.page.label.sentence")}
-            </Typography>
-            </Grid>
-          </Grid>
-
+          )}
         </Paper>
       </div>
     );
