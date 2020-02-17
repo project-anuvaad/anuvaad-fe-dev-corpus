@@ -11,7 +11,6 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
-import history from "../../../web.history";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Select from "@material-ui/core/Select";
@@ -164,9 +163,9 @@ class SentenceTranslate extends React.Component {
         <Grid container spacing={4} style={{ padding: "20px", marginTop:"-60px"}}>
         
           {this.state.sentences && this.state.sentences.map((value, i) => {
-            var val = i == 0 ? "A" : "B";
+            var val = i === 0 ? "A" : "B";
             return <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <Grader title={"Model " + val} index={i} description={value.target} handleStarClick={this.onStarClick.bind(this)} data={value} handleStarClick={this.onStarClick.bind(this)} handleStarClick={this.onStarClick.bind(this)} meaning={"rating"} structure={"context_rating"} vocabulary={"spelling_rating"} />
+              <Grader title={"Model " + val} index={i} description={value.target} handleStarClick={this.onStarClick.bind(this)} data={value}  meaning={"rating"} structure={"context_rating"} vocabulary={"spelling_rating"} />
             </Grid>
           })}
         </Grid>

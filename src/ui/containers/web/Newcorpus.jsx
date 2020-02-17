@@ -20,7 +20,7 @@ import history from "../../../web.history";
 import { DropzoneArea } from 'material-ui-dropzone';
 import Select from "@material-ui/core/Select";
 import Stepper from "../../components/web/common/Stepper";
-import { white, blueGrey50, darkBlack } from "material-ui/styles/colors"
+import {  blueGrey50 } from "material-ui/styles/colors"
 import MenuItem from '@material-ui/core/MenuItem';
 import { translate } from '../../../assets/localisation';
 

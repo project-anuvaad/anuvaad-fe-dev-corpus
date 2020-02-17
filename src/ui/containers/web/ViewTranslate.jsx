@@ -21,7 +21,6 @@ import UploadTranslatedFile from "../../../flux/actions/apis/uploadTranslatedFil
 import FetchTranslations from "../../../flux/actions/apis/fetchtranslation";
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import history from "../../../web.history";
-import MySnackbarContentWrapper from "../../components/web/common/Snackbar";
 import Timer from "../../components/web/common/CountDown";
 import ProgressBar from "../../components/web/common/ProgressBar";
 import Fab from '@material-ui/core/Fab';
@@ -51,7 +50,7 @@ class ViewTranslate extends React.Component {
             filename: '',
             snack: false,
             message: '',
-            value: false
+            //value: false
 
         }
         this.handleTranslatedUpload = this.handleTranslatedUpload.bind(this)

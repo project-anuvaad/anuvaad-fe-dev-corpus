@@ -111,8 +111,7 @@ class NewSentanceExtraction extends React.Component {
     if (prevProps.configUplaod !== this.props.configUplaod) {
       this.setState({ files: this.props.configUplaod, count: this.state.count + 1 });
       console.log("-", this.state.count);
-      const configFilepath = "configFile" in this.props.configUplaod && this.props.configUplaod.configFile;
-      const csvFilepath = "csvFile" in this.props.configUplaod && this.props.configUplaod.csvFile;
+      
 
       this.renderApi();
     }

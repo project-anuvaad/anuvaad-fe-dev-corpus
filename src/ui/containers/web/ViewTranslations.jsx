@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -100,7 +99,8 @@ class Corpus extends React.Component {
         if (score.conf) {
           item_count++;
         }
-        count += score.conf ? parseInt(score.conf) : 0;
+        count += score.conf ? parseInt(score.conf,10) : 0;
+        return true;
       });
     }
     if (item_count === 0) {
@@ -134,6 +134,7 @@ class Corpus extends React.Component {
     sentences.map(sentence => {
       const row = [sentence.source, sentence.target];
       downloadData.push(row);
+      return true;
     });
     this.setState({
       downloadData,

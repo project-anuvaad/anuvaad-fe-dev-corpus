@@ -1,8 +1,5 @@
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
 import Snackbar from "@material-ui/core/Snackbar";
 import AddIcon from '@material-ui/icons/Add';
-import Active from '@material-ui/icons/Check';
 import MUIDataTable from "mui-datatables";
 import React from 'react';
 import { connect } from 'react-redux';
@@ -18,7 +15,7 @@ import Grid from '@material-ui/core/Grid';
 import UserUpdate from "./UserUpdate";
 import Button from "@material-ui/core/Button";
 import { translate } from '../../../assets/localisation';
-var file = "";
+//var file = "";
 class UserDirectory extends React.Component {
     constructor(props) {
         super(props)
@@ -58,8 +55,8 @@ class UserDirectory extends React.Component {
         this.setState({ open: false, openDialog: false, showLoader: true, openValue: false })
         const apiObj1 = new UserDirectoryList();
         APITransport(apiObj1)
-        var a =
-            this.setState({ showLoader: true, message: this.state.name + (this.state.status === "DELETE" ? translate('userDirectory.page.message.deactivated') : translate('userDirectory.page.message.activated')) })
+        // var a =
+        //     this.setState({ showLoader: true, message: this.state.name + (this.state.status === "DELETE" ? translate('userDirectory.page.message.deactivated') : translate('userDirectory.page.message.activated')) })
 
         return false;
     };
@@ -81,9 +78,9 @@ class UserDirectory extends React.Component {
     }
     handleClick = (rowData) => {
 
-        rowData[1] !== this.state.loginUser ?
+        rowData[1] !== this.state.loginUser &&
             this.setState({ openValue: true, user: rowData, newUser: rowData[0] ? false : true })
-            : ''
+            
 
 
     }
@@ -247,7 +244,7 @@ class UserDirectory extends React.Component {
                 </Fab>
                 <Grid container spacing={24} style={{ padding: 24 }}>
                     <Grid item xs={val} sm={val} lg={val} xl={val}>
-                        <div style={{ marginLeft: val == 8 ? '-6%' : '-4%', marginRight: '3%', marginTop: '10px' }}>
+                        <div style={{ marginLeft: val === 8 ? '-6%' : '-4%', marginRight: '3%', marginTop: '10px' }}>
                             <MUIDataTable title={translate('userDirectory.page.label.userManagement')} data={this.state.userList} columns={columns} options={options} />
                         </div>
                     </Grid>

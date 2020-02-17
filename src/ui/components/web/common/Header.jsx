@@ -113,7 +113,9 @@ class Header extends React.Component {
         <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
           <Toolbar disableGutters={!open}>
             {forDemo &&
-              <img src={logo} style={{
+              <img src={logo} 
+              alt=""
+              style={{
                 width: '2%',
                 display: 'block',
                 marginLeft: '1%'

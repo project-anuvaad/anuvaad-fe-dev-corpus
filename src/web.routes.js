@@ -59,7 +59,6 @@ import DownloadSentence from "./ui/containers/web/Tool2-Pipeline/DownloadSentenc
 import WorkspaceDetails from "./ui/containers/web/Tool2-Pipeline/WorkspaceDetails";
 import Tool3WorkspaceDetails from "./ui/containers/web/Tool3-Pipeline/WorkspaceDetails";
 import Tool3CreateDataSource from "./ui/containers/web/Tool3-Pipeline/CreateDataSource";
-import Tool4CreateDataSource from "./ui/containers/web/Tool4-Pipeline/CreateDataSource";
 import Tool2CreateDataSource from "./ui/containers/web/Tool2-Pipeline/CreateDataSource";
 import Tool4WorkspaceDetails from "./ui/containers/web/Tool4-Pipeline/WorkspaceDetails";
 import Tool3DataSource from "./ui/containers/web/Tool3-Pipeline/DataSource";
@@ -106,7 +105,9 @@ class AppRoutes extends React.Component {
               if (userRole === allowedRole) {
                 count += 1;
               }
+              return true;
             });
+            return true;
           });
           if (count > 0) {
             return true;

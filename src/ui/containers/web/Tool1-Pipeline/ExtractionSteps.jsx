@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
-import { timingSafeEqual } from "crypto";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
@@ -58,8 +57,8 @@ class ExtractionSteps extends React.Component {
 
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    if (rowData[2] == "At Step1") {
-      history.push(`${`${process.env.PUBLIC_URL}/apply-token` + "/"}${rowData[0]}/${rowData[1]}`);
+    if (rowData[2] === "At Step1") {
+      history.push(`${`${process.env.PUBLIC_URL}/apply-token/`}${rowData[0]}/${rowData[1]}`);
     }
   };
 
@@ -114,7 +113,6 @@ class ExtractionSteps extends React.Component {
         options: {
           filter: false,
           sort: false,
-          filter: false
         }
       },
       {
@@ -128,18 +126,6 @@ class ExtractionSteps extends React.Component {
     ];
 
     const options = {
-      textLabels: {
-        body: {
-          noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
-        },
-        toolbar: {
-          search: translate('graderReport.page.muiTable.search'),
-          viewColumns: translate('graderReport.page.muiTable.viewColumns')
-        },
-        pagination: {
-          rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
-        }
-      },
       filter: true,
       serverSideFilterList: this.state.serverSideFilterList,
       filterType: "textField",
@@ -178,6 +164,8 @@ class ExtractionSteps extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
+            default:
+              return null;
         }
       }
     };
