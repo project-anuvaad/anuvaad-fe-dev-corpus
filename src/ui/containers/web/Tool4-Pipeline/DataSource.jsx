@@ -3,13 +3,13 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
-import Toolbar from "@material-ui/core/Toolbar";
-import AddIcon from "@material-ui/icons/Add";
+// import Toolbar from "@material-ui/core/Toolbar";
+// import AddIcon from "@material-ui/icons/Add";
 import WorkspaceDetails from "../Tool3-Pipeline/ExistingWorkspace";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import history from "../../../../web.history";
-import { translate } from '../../../../assets/localisation';
+// import Typography from "@material-ui/core/Typography";
+// import Button from "@material-ui/core/Button";
+// import history from "../../../../web.history";
+// import { translate } from '../../../../assets/localisation';
 
 class DataSource extends React.Component {
   intervalID;

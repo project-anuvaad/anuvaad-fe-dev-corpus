@@ -15,7 +15,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { CSVLink, CSVDownload } from "react-csv";
+import {  CSVDownload } from "react-csv";
 import StarRatingComponent from "react-star-rating-component";
 import FetchBenchmarkModel from "../../../flux/actions/apis/fetchenchmarkmodel";
 import { Tooltip } from "@material-ui/core";
@@ -104,7 +104,7 @@ class BenchmarkGrade extends React.Component {
 
   handleStatusChange = event => {
     var value = this.state.tocken ? (this.state.apiCall ? true : false) : true;
-    event.target.value === "ALL" ? this.setState({ AllPageNumber: this.state.offset + 1 }) : "";
+    event.target.value === "ALL" && this.setState({ AllPageNumber: this.state.offset + 1 });
     this.setState({ inputStatus: event.target.value, offset: 0, dialogOpen: this.state.tocken ? true : false });
     if (value) {
       let api = new FetchBenchmarkModel(
@@ -170,27 +170,27 @@ class BenchmarkGrade extends React.Component {
 
   handleStarClick(nextValue, prevValue, name) {
     let sentence = this.state.sentences;
-    sentence[parseInt(name)].rating = nextValue;
+    sentence[parseInt(name,10)].rating = nextValue;
     this.setState({ sentences: sentence });
     this.setState({ rating: nextValue, sentences: sentence, tocken: true });
   }
 
   handleNameStarClick(nextValue, prevValue, name) {
     let sentence = this.state.sentences;
-    sentence[parseInt(name)].name_accuracy_rating = nextValue;
+    sentence[parseInt(name,10)].name_accuracy_rating = nextValue;
     this.setState({ sentences: sentence });
     this.setState({ name_accuracy_rating: nextValue, sentences: sentence, tocken: true });
   }
 
   handleSpellStarClick(nextValue, prevValue, name) {
     let sentence = this.state.sentences;
-    sentence[parseInt(name)].spelling_rating = nextValue;
+    sentence[parseInt(name,10)].spelling_rating = nextValue;
     this.setState({ spelling_rating: nextValue, sentences: sentence, tocken: true });
   }
 
   handleContextStarClick(nextValue, prevValue, name) {
     let sentence = this.state.sentences;
-    sentence[parseInt(name)].context_rating = nextValue;
+    sentence[parseInt(name,10)].context_rating = nextValue;
     this.setState({ context_rating: nextValue, sentences: sentence, tocken: true });
   }
 
@@ -389,7 +389,7 @@ class BenchmarkGrade extends React.Component {
 
                           <Tooltip placement="top-start" enterDelay={200} key={item} title={this.state.TableHeaderDescription[index]}>
                             <TableCell width="45%">{item}</TableCell>
-                          </Tooltip> : index != 5 && <Tooltip placement="top-start" enterDelay={200} key={item} title={this.state.TableHeaderDescription[index]}>
+                          </Tooltip> : index !== 5 && <Tooltip placement="top-start" enterDelay={200} key={item} title={this.state.TableHeaderDescription[index]}>
                             <TableCell width="45%">{item}</TableCell>
                           </Tooltip>
                       );

@@ -37,7 +37,7 @@ export default class NMT extends API {
     this.model.map(item => {
       modelArray.push({
         src: this.par,
-        id: parseInt(item.model_id),
+        id: parseInt(item.model_id,10),
         s_id: item.model_name,
         n_id: item.model_name
       });
@@ -46,12 +46,14 @@ export default class NMT extends API {
         spilttedText.map(s => {
           modelArray.push({
             src: s.trim(),
-            id: parseInt(item.model_id),
+            id: parseInt(item.model_id,10),
             s_id: item.model_name + "_Comma Split",
             n_id: item.model_name
           });
+          return true;
         });
       }
+      return true;
     });
     return modelArray;
   }

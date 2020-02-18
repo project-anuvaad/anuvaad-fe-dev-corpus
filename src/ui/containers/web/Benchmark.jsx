@@ -66,9 +66,10 @@ class Benchmark extends React.Component {
     supportLanguage.map(value => (value.language_name === sourceLanguage ? (name = value.language_code) : ""));
 
     modelLanguage.map(item => {
-      item.source_language_code == name
-        ? supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null))
-        : "";
+      item.source_language_code === name
+        && supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null))
+        ;
+        return true;
     });
     var value = new Set(result);
     var target_language = [...value];
@@ -81,7 +82,8 @@ class Benchmark extends React.Component {
     var name = "";
     this.state.language.map(value => (value.language_name === source ? (name = value.language_code) : ""));
     modelLanguage.map(item => {
-      item.source_language_code === name && item.target_language_code === target ? result.push(item) : null;
+      item.source_language_code === name && item.target_language_code === target && result.push(item) ;
+      return true;
     });
     return result;
   }
@@ -252,6 +254,18 @@ class Benchmark extends React.Component {
     ];
 
     const options = {
+      textLabels: {
+        body: {
+          noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
+        },
+        toolbar: {
+          search: translate('graderReport.page.muiTable.search'),
+          viewColumns: translate('graderReport.page.muiTable.viewColumns')
+        },
+        pagination: {
+          rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
+        }
+      },
       filterType: "checkbox",
       download: false,
       print: false,
