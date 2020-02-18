@@ -117,7 +117,6 @@ class DataSource extends React.Component {
       },
       {
         name: "sentence_file",
-        label: translate("common.page.label.sentenceFile"),
         options: {
           display: "excluded",
           filter: false
@@ -172,7 +171,7 @@ class DataSource extends React.Component {
           <MUIDataTable title={translate("common.page.data.dataSource")} data={this.state.name} columns={columns} options={options} />
         </div>
         {this.state.download && (
-          <a  href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${  this.state.fileId}`} />
+          <a dangerouslySetInnerHTML={{ __html: 'test' }} href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${  this.state.fileId}`} />
         )}
       </div>
     );

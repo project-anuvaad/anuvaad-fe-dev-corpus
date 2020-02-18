@@ -106,7 +106,6 @@ class ExistingWorkspace extends React.Component {
       },
       {
         name: "step",
-        label: translate("common.page.table.step"),
         options: {
           filter: false,
           display: "excluded"
