@@ -149,7 +149,7 @@ class Dashboard extends React.Component {
   handleModel(modelLanguage, source, target) {
     var result = [];
     modelLanguage.map(item => {
-      item.source_language_code === source && item.target_language_code === target ? result.push(item) : null;
+      item.source_language_code === source && item.target_language_code === target && result.push(item) ;
       return true;
     });
     return result;
