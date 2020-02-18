@@ -60,8 +60,9 @@ class Translate extends React.Component {
         this.setState({
           [lang.label.toLowerCase()]: this.props[lang.label.toLowerCase()]
         })
-
+        
       }
+      return true;
 
     })
   }
@@ -92,6 +93,7 @@ class Translate extends React.Component {
       let model = this.getModelForLang(lang.code)
       let api = new NMT(this.state.sentence, model, false, null, true, lang.type);
       this.props.TranslateAPI(api);
+      return true;
     })
 
     setTimeout(() => {
@@ -107,6 +109,7 @@ class Translate extends React.Component {
       this.setState({
         [lang.label.toLowerCase()]: null
       })
+      return true;
     })
 
   }
@@ -156,7 +159,7 @@ class Translate extends React.Component {
                   width: '25%',
                   height: 50,
 
-                }} onClick={this.state.sentence && this.handleOnClick.bind(this)}>Translate</Button>
+                }} onClick={this.state.sentence && this.handleOnClick.bind(this)}>{translate('dashboard.page.heading.title')}</Button>
             </div>
           </div> :
           (!this.state.showLangLayout && <div className={'fadeUp'}>
@@ -187,7 +190,7 @@ class Translate extends React.Component {
                     </Zoom>
                   }
                   {langs.map((lang, index) => {
-                    return (<Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className='slideUp' style={{ marginRight: '5%' }}><AppCard index={index} showSmall handleHoverOut={this.clearTimer.bind(this)} handleHover={this.handleCardHover.bind(this)} header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()].map(function (elem) {
+                    return (<Grid item xs={12} sm={12} lg={12} xl={12} className='slideUp' style={{ marginRight: '5%' }}><AppCard index={index} showSmall handleHoverOut={this.clearTimer.bind(this)} handleHover={this.handleCardHover.bind(this)} header={lang.label} body={this.state[lang.label.toLowerCase()] && this.state[lang.label.toLowerCase()] && Array.isArray(this.state[lang.label.toLowerCase()]) ? this.state[lang.label.toLowerCase()].map(function (elem) {
                       return elem.tgt;
                     }) : ''} style={{ raised: true, Height: '100px', background: blueGrey50, marginBottom: '5px' }} /></Grid>)
                   })}

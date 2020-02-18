@@ -1,4 +1,3 @@
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -14,7 +13,7 @@ import DropZone from '../../components/web/common/DropZone';
 import Paper from '../../components/web/common/Paper';
 import Select from '../../components/web/common/SimpleSelect';
 import Typography from '../../components/web/common/Typography';
-import { white, blueGrey50, darkBlack } from "material-ui/styles/colors"
+import { blueGrey50 } from "material-ui/styles/colors"
 
 
 class doctranslate extends React.Component {
@@ -118,11 +117,12 @@ class doctranslate extends React.Component {
     var result = [];
     if (modelLanguage && supportLanguage) {
       modelLanguage.map((item) => {
-        item.source_language_code === sourceLanguage ?
+        item.source_language_code === sourceLanguage &&
           supportLanguage.map((value) => (
             item.target_language_code === value.language_code ?
               result.push(value) : null
-          )) : ''
+          )) 
+          return true;
       })
     }
     var value = new Set(result);

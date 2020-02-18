@@ -1,6 +1,5 @@
 import API from "./api";
 import C from "../constants";
-import questionAnswer from "material-ui/svg-icons/action/question-answer";
 
 export default class RunExperiment extends API {
   constructor(questionList, timeout = 2000) {

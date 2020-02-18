@@ -1,6 +1,5 @@
 import React from "react";
 import CONFIG from "../../../configs/apigw";
-import { translate } from '../../../assets/localisation';
 class Home extends React.Component {
   state = {
     showLoader: false

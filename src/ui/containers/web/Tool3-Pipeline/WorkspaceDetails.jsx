@@ -70,7 +70,7 @@ class WorkspaceDetails extends React.Component {
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
     if (rowData[2] === "EDITING") {
-      history.push(`${`${process.env.PUBLIC_URL}/stage3/sentence-qaulity` + "/"}${rowData[0]}/${rowData[1]}`);
+      history.push(`${`${process.env.PUBLIC_URL}/stage3/sentence-qaulity/`}${rowData[0]}/${rowData[1]}`);
     }
   };
 
@@ -91,7 +91,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "session_id",
-        label: translate("common.page.label.id"),
+
         options: {
           display: "excluded",
           filter: false
@@ -102,7 +102,6 @@ class WorkspaceDetails extends React.Component {
         label: translate("common.page.table.status"),
         options: {
           filter: false,
-          filter: false
         }
       },
       {
@@ -138,6 +137,19 @@ class WorkspaceDetails extends React.Component {
     ];
 
     const options = {
+      textLabels: {
+        body: {
+          noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
+        },
+        toolbar: {
+          search: translate('graderReport.page.muiTable.search'),
+          viewColumns: translate('graderReport.page.muiTable.viewColumns'),
+          filterTable: translate('graderReport.page.muiTable.filterTable'),
+        },
+        pagination: {
+          rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
+        }
+      },
       filterType: "textField",
       download: false,
       print: false,
@@ -151,7 +163,7 @@ class WorkspaceDetails extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => {},
+      onFilterDialogClose: () => { },
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -173,6 +185,7 @@ class WorkspaceDetails extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
+            default:return null;
         }
       }
     };
