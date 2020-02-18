@@ -129,13 +129,14 @@ class ProcessingWorkspace extends React.Component {
         clearTimeout(this.intervalID);
       },
 
-      rowsSelected: this.state.rowsSelected,
+      //rowsSelected: this.state.rowsSelected,
       onRowsSelect: (rowsSelected, allRows) => {
         const selectedItems = [];
         this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });
         if (allRows && allRows.length > 0) {
           allRows.map(selected => {
-            selectedItems.push(this.state.workspaces[selected.index]);
+          selectedItems.push(this.state.workspaces[selected.index]);
+          return true;
           });
         }
         this.setState({ selectedWorkspaces: selectedItems });
@@ -156,9 +157,10 @@ class ProcessingWorkspace extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  user: state.login,
+   user: state.login,
   apistatus: state.apistatus,
   fetchWorkspace: state.fetchWorkspace
+  
 });
 
 const mapDispatchToProps = dispatch =>

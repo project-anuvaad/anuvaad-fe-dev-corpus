@@ -1,6 +1,6 @@
 
 const drawerWidth = 240;
-let logo = require('../../../assets/logo.png')
+//let logo = require('../../../assets/logo.png')
 
 const GlobalStyles = theme => ({
   container: {

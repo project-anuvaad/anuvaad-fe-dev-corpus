@@ -71,7 +71,7 @@ class DataSource extends React.Component {
     this.setState({ download: true, fileId: rowData[4] });
     console.log(rowData);
     const link = document.createElement("a");
-    link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" + "/download/") + rowData[4];
+    link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org/download/") + rowData[4];
     document.body.appendChild(link);
     link.click();
   };
@@ -117,7 +117,6 @@ class DataSource extends React.Component {
       },
       {
         name: "sentence_file",
-        label: translate("common.page.label.sentenceFile"),
         options: {
           display: "excluded",
           filter: false
@@ -161,6 +160,7 @@ class DataSource extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
+            default:return null;
         }
       }
     };
@@ -171,7 +171,7 @@ class DataSource extends React.Component {
           <MUIDataTable title={translate("common.page.data.dataSource")} data={this.state.name} columns={columns} options={options} />
         </div>
         {this.state.download && (
-          <a href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${  this.state.fileId}`} />
+          <a dangerouslySetInnerHTML={{ __html: 'test' }} href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${  this.state.fileId}`} />
         )}
       </div>
     );

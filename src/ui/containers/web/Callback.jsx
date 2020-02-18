@@ -1,16 +1,14 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import history from "../../../web.history";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import UserAuth from "../../../flux/actions/apis/userprofile";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { translate } from '../../../assets/localisation';
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
+import {  MuiThemeProvider } from "@material-ui/core/styles";
 import Theme from "../../theme/web/theme-default";
 
 class Callback extends React.Component {
@@ -64,6 +62,7 @@ class Callback extends React.Component {
         localStorage.removeItem("token");
         history.push(`${process.env.PUBLIC_URL}/logout`);
       }
+      return true;
     });
   }
   handleButtonClick(lang) {

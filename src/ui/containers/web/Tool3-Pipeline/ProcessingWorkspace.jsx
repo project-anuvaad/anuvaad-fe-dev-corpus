@@ -157,6 +157,7 @@ class ProcessingWorkspace extends React.Component {
         if (allRows && allRows.length > 0) {
           allRows.map(selected => {
             selectedItems.push(this.state.workspaces[selected.index]);
+            return true;
           });
         }
         this.setState({ selectedWorkspaces: selectedItems });
@@ -187,6 +188,8 @@ class ProcessingWorkspace extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
+          default:
+                return null;
         }
       }
     };
