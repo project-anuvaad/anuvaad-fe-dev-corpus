@@ -5,8 +5,8 @@ import { bindActionCreators } from "redux";
 import { withStyles } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import CKEditor from "@ckeditor/ckeditor5-react";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import CKEditor from "@ckeditor/ckeditor5-react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -72,7 +72,8 @@ class Editor1 extends React.Component {
             width: "70%"
           }}
         >
-          <CKEditor
+          <div></div>
+          {/* <CKEditor
             editor={ClassicEditor}
             data={this.state.value}
             onBlur={(event, editor) => {
@@ -102,7 +103,7 @@ class Editor1 extends React.Component {
                 }
               });
             }}
-          />
+          /> */}
 
           {this.state.token && (
             <List component="nav" style={{ marginLeft: "30%", marginRight: "20%", marginTop: "-20px" }}>
