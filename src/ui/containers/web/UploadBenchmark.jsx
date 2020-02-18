@@ -1,26 +1,20 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-
-import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import UploadBenchmark from "../../../flux/actions/apis/uploadbenchmark";
 import { translate } from '../../../assets/localisation';
-
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
-
 import { withStyles } from "@material-ui/core";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Input from "@material-ui/core/Input";
-import history from "../../../web.history";
-
 import { DropzoneArea } from "material-ui-dropzone";
 
 

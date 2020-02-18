@@ -8,7 +8,8 @@ export default function (state = {}, action) {
                     var myDate = new Date(t.created_at);
                     console.log(myDate)
                     t.created_at = (myDate.toLocaleString('en-IN', {day:'2-digit',month:'2-digit',year:'numeric', hour: 'numeric', minute: 'numeric',second:'numeric', hour12: false }))
-        })
+        return true;
+    })
             }
             return action.payload;
 
