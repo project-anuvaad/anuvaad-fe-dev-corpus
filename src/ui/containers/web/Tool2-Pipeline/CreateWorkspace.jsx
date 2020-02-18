@@ -49,6 +49,7 @@ class CreateWorkspace extends React.Component {
         if (lang.language_code !== "en") {
           languages.push(lang);
         }
+        return true;
       });
       this.setState({
         language: languages
@@ -104,7 +105,7 @@ class CreateWorkspace extends React.Component {
   };
 
   handleSubmit() {
-    const { APITransport } = this.props;
+    //const { APITransport } = this.props;
     if (this.state.workspaceName && this.state.target.language_code) {
       this.setState({
         step: 2

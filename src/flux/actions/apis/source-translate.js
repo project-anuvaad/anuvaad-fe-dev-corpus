@@ -1,6 +1,6 @@
 import API from "./api";
 import C from "../constants";
-import { CommunicationStayCurrentLandscape } from "material-ui/svg-icons";
+
 
 
 export default class SourceTranslate extends API {

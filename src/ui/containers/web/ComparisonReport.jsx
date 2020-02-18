@@ -257,7 +257,6 @@ class ComparisonReport extends React.Component {
       ,
       {
         name: "name_accuracy_rating",
-        label: translate('common.page.label.nameAccuracy'),
         options: {
           display: "excluded"
         }
@@ -346,7 +345,6 @@ class ComparisonReport extends React.Component {
       ,
       {
         name: "name_accuracy_rating",
-        label: translate('common.page.label.nameAccuracy'),
         options: {
           display: "excluded"
         }

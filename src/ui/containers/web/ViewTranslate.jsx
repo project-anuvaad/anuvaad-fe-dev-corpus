@@ -21,7 +21,6 @@ import UploadTranslatedFile from "../../../flux/actions/apis/uploadTranslatedFil
 import FetchTranslations from "../../../flux/actions/apis/fetchtranslation";
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import history from "../../../web.history";
-import MySnackbarContentWrapper from "../../components/web/common/Snackbar";
 import Timer from "../../components/web/common/CountDown";
 import ProgressBar from "../../components/web/common/ProgressBar";
 import Fab from '@material-ui/core/Fab';
@@ -51,7 +50,7 @@ class ViewTranslate extends React.Component {
             filename: '',
             snack: false,
             message: '',
-            value: false
+            //value: false
 
         }
         this.handleTranslatedUpload = this.handleTranslatedUpload.bind(this)
@@ -59,8 +58,8 @@ class ViewTranslate extends React.Component {
 
     componentDidMount() {
         const { APITransport } = this.props;
-    const api = new FetchFeedbackPending();
-    APITransport(api);
+        const api = new FetchFeedbackPending();
+        APITransport(api);
         const apiObj = new FetchTranslations();
         APITransport(apiObj);
         this.setState({ showLoader: true })
@@ -87,8 +86,8 @@ class ViewTranslate extends React.Component {
         const apiObj = new DeleteFile(basename);
         APITransport(apiObj);
         this.setState({ open: false, showLoader: true })
-        
-        this.setState({ showLoader: true, message: this.state.filename +  translate('viewTranslate.page.label.FileDeleteMessage')})
+
+        this.setState({ showLoader: true, message: this.state.filename + translate('viewTranslate.page.label.FileDeleteMessage') })
         setTimeout(() => { this.setState({ snack: true }) }, 700)
         return false;
     };
@@ -102,9 +101,9 @@ class ViewTranslate extends React.Component {
         const { APITransport } = this.props;
         const api = new UploadTranslatedFile(basename, event.target.files[0])
         APITransport(api);
-        if(Object.getOwnPropertyNames(this.state.feedbackQuestions).length !== 0){
+        if (Object.getOwnPropertyNames(this.state.feedbackQuestions).length !== 0) {
             history.push("/feedback-form/upload")
-      }
+        }
     }
 
     componentDidUpdate(prevProps, nexpProps) {
@@ -115,20 +114,20 @@ class ViewTranslate extends React.Component {
             this.componentDidMount()
         }
         if (prevProps.deletefile !== this.props.deletefile) {
-            this.setState({snack:true })
+            this.setState({ snack: true })
             const apiObj1 = new FetchTranslations();
-        this.props.APITransport(apiObj1)
+            this.props.APITransport(apiObj1)
             setTimeout(() => { this.setState({ snack: false }) }, 700)
         }
 
         if (prevProps.feedbackQuestions !== this.props.feedbackQuestions) {
 
-            console.log("feedback",this.props.feedbackQuestions)
-            this.setState({feedbackQuestions: this.props.feedbackQuestions})
-            if(Object.getOwnPropertyNames(this.props.feedbackQuestions).length !== 0){
-                this.setState({value: true})
+            console.log("feedback", this.props.feedbackQuestions)
+            this.setState({ feedbackQuestions: this.props.feedbackQuestions })
+            if (Object.getOwnPropertyNames(this.props.feedbackQuestions).length !== 0) {
+                this.setState({ value: true })
             }
-          }
+        }
 
 
     }
@@ -146,7 +145,7 @@ class ViewTranslate extends React.Component {
             },
             {
                 name: "name",
-                label:  translate('common.page.label.transferFiles'),
+                label: translate('common.page.label.transferFiles'),
                 options: {
                     filter: true,
                     sort: true,
@@ -154,7 +153,7 @@ class ViewTranslate extends React.Component {
             },
             {
                 name: "created_on",
-                label:  translate('common.page.label.timeStamp'),
+                label: translate('common.page.label.timeStamp'),
                 options: {
                     filter: true,
                     sort: true,
@@ -210,7 +209,7 @@ class ViewTranslate extends React.Component {
                     filter: true,
                     sort: false,
                     empty: true,
-                   
+
                     customBodyRender: (value, tableMeta, updateValue) => {
                         if (tableMeta.rowData) {
                             const result = tableMeta.rowData[6] * 1000 - (Date.now() - new Date(tableMeta.rowData[2]));
@@ -228,13 +227,13 @@ class ViewTranslate extends React.Component {
             },
             {
                 name: "Action",
-                label:translate('common.page.label.action'),
+                label: translate('common.page.label.action'),
                 options: {
                     filter: true,
                     sort: false,
                     empty: true,
 
-                   customBodyRender: (value, tableMeta, updateValue) => {
+                    customBodyRender: (value, tableMeta, updateValue) => {
                         if (tableMeta.rowData) {
                             return (
                                 <div style={{ width: '240px', marginLeft: '-20px' }}>
@@ -242,7 +241,7 @@ class ViewTranslate extends React.Component {
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadTranslate')}><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
                                     {/* {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''}  */}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.label.delete')}><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.button.upload')}><FileUpload  id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" value={this.state.value} handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.button.upload')}><FileUpload id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" value={this.state.value} handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
 
                                 </div>
                             );
@@ -254,13 +253,30 @@ class ViewTranslate extends React.Component {
         ];
 
         const options = {
+
+            textLabels: {
+                body: {
+                    noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
+                },
+                toolbar: {
+                    search: translate('graderReport.page.muiTable.search'),
+                    viewColumns: translate('graderReport.page.muiTable.viewColumns'),
+                    filterTable: translate('graderReport.page.muiTable.filterTable'),
+                },
+                pagination: {
+                    rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
+                }
+            },
             filterType: 'checkbox',
             download: false,
             print: false,
             filter: false,
             selectableRows: 'none',
-            customSort: (data, colIndex, order) => { return data.sort((a, b) => { if (colIndex === 2 ) { return (new Date(a.data[colIndex]) < new Date(b.data[colIndex]) ? -1: 1 ) * (order === 'desc' ? 1 : -1); } else { return (a.data[colIndex] < b.data[colIndex] ? -1: 1 ) * (order === 'desc' ? 1 : -1); } }); }
-            
+            customSort: (data, colIndex, order) => {
+                return data.sort((a, b) => { if (colIndex === 2) { return (new Date(a.data[colIndex]) < new Date(b.data[colIndex]) ? -1 : 1) * (order === 'desc' ? 1 : -1); } else { return (a.data[colIndex] < b.data[colIndex] ? -1 : 1) * (order === 'desc' ? 1 : -1); } });
+            },
+
+
         };
 
         return (
@@ -269,11 +285,11 @@ class ViewTranslate extends React.Component {
                     <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
                     <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { history.push("/doctranslate") }}>
                         <AddIcon /> {translate('dashboard.page.heading.title')}
-                </Fab>
+                    </Fab>
                 </Toolbar>
 
                 <div style={{ marginLeft: '-4%', marginRight: '3%', marginTop: '40px' }}>
-                    <MUIDataTable title={ translate('common.page.title.document')} data={this.state.fetchtranslation} columns={columns} options={options} />
+                    <MUIDataTable title={translate('common.page.title.document')} data={this.state.fetchtranslation} columns={columns} options={options} />
                 </div>
 
                 {this.state.open &&
@@ -285,32 +301,32 @@ class ViewTranslate extends React.Component {
                         aria-describedby="alert-dialog-slide-description"
                     >
                         <DialogTitle id="alert-dialog-slide-title">
-                        {translate('common.page.label.delete')}
+                            {translate('common.page.label.delete')}
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-slide-description">
-                            {translate('viewTranslate.page.label.deleteRequest')} {this.state.filename}  {translate('viewTranslate.page.label.file')}
+                                {translate('viewTranslate.page.label.deleteRequest')} {this.state.filename}  {translate('viewTranslate.page.label.file')}
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={this.handleClose} color="primary">{translate('common.page.label.no')}</Button>
-                            <Button onClick={(event) => { this.handleClickOpen(file) }} color="primary">Yes</Button>
+                            <Button onClick={(event) => { this.handleClickOpen(file) }} color="primary">{translate('common.page.label.yes')}</Button>
                         </DialogActions>
                     </Dialog>
                 }
 
 
-{this.state.snack && (
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={this.state.open}
-            autoHideDuration={6000}
-            onClose={this.handleClose}
-            variant="success"
-            message={this.state.message}
-          />
-        )}
-                
+                {this.state.snack && (
+                    <Snackbar
+                        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                        open={this.state.open}
+                        autoHideDuration={6000}
+                        onClose={this.handleClose}
+                        variant="success"
+                        message={this.state.message}
+                    />
+                )}
+
             </div>
 
         );
@@ -322,7 +338,7 @@ const mapStateToProps = state => ({
     apistatus: state.apistatus,
     fetchtranslation: state.fetchtranslation,
     uploadTranslated: state.uploadTranslated,
-    deletefile : state.deletefile,
+    deletefile: state.deletefile,
     feedbackQuestions: state.feedbackQuestions
 });
 
