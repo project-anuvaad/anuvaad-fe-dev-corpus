@@ -34,7 +34,7 @@ import EditTranslate from "./ui/containers/web/EditTranslate";
 import ViewTranslate from "./ui/containers/web/ViewTranslate";
 import UserDirectory from "./ui/containers/web/UserDirectory";
 import ViewDoc from "./ui/containers/web/ViewDoc";
-import AnuvaadEditor from "./ui/containers/web/TextEditor";
+import AnuvaadEditor from "./ui/containers/web/AnuvaadEditor";
 import AnuvaadModels from "./ui/containers/web/TextModels";
 import AddQuestion from "./ui/containers/web/AddQuestion";
 import TranslatePresident from "./ui/containers/web/TranslateJudgement";
