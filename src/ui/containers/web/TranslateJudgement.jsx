@@ -58,7 +58,9 @@ class Translate extends React.Component {
           const model = this.getModelForLang(lang.code);
           const api = new NMT(this.state.sentence, model, false, null, true, lang.type);
           this.props.TranslateAPI(api);
+         
         }
+        return console.log(prevProps);
       });
     }
     langs.map(lang => {
@@ -70,12 +72,14 @@ class Translate extends React.Component {
           if (this.state[lang.label] && lang.label !== "Hindi") {
             opened = true;
           }
+          return true;
         });
         this.setState({
           Hindi: !!(this.props.hindi && !opened),
           [lang.label.toLowerCase()]: this.props[lang.label.toLowerCase()]
         });
       }
+      return true;
     });
   }
 
@@ -93,6 +97,7 @@ class Translate extends React.Component {
       } else {
         this.setState({ [lang.label]: false });
       }
+      return true;
     });
     this.setState(state => ({ [key]: !this.state[key], key, body }));
   };
@@ -130,6 +135,7 @@ class Translate extends React.Component {
         [lang.label.toLowerCase()]: null,
         [lang.label]: false
       });
+      return true;
     });
   };
 
@@ -149,7 +155,6 @@ class Translate extends React.Component {
             />
             <div>
               <Button
-                onClick={this.handleSubmit}
                 variant="contained"
                 color="primary"
                 style={{
@@ -161,7 +166,8 @@ class Translate extends React.Component {
                 {translate('dashboard.page.heading.title')}
               </Button>
               <img
-                src={SCImage}
+                src={SCImage} 
+                alt=""
                 style={{
                   width: "15%",
                   height: "80%",
@@ -247,7 +253,7 @@ class Translate extends React.Component {
               >
                 <React.Fragment>
                   {langs.map((lang, index) => (
-                    <Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className="slideUp">
+                    <Grid item xs={12} sm={12} lg={12} xl={12} className="slideUp">
                       <AppCard
                         cardKey={lang.label}
                         header={`${lang.label} - ${lang.labelSecondary}`}
@@ -264,6 +270,7 @@ class Translate extends React.Component {
                         style={{ background: lang.color }}
                       />
                     </Grid>
+          
                   ))}
                 </React.Fragment>
               </Grid>

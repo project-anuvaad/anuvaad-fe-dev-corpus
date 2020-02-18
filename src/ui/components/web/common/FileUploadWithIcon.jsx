@@ -1,8 +1,5 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import Videocam from '@material-ui/icons/Videocam';
 
 class FileUpload extends React.Component {
 
@@ -13,7 +10,7 @@ class FileUpload extends React.Component {
 
 
     render() {
-        const { accept, icon, iconStyle, title, value } = this.props;
+        const { accept, icon, iconStyle, title} = this.props;
         return (
             
             <div style={{ display: 'inline-block' }}>

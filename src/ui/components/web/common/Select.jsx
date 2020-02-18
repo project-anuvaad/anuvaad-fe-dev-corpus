@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
