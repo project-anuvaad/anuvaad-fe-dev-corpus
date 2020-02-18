@@ -126,6 +126,19 @@ class ExtractionSteps extends React.Component {
     ];
 
     const options = {
+        textLabels: {
+          body: {
+            noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
+          },
+          toolbar: {
+            search: translate('graderReport.page.muiTable.search'),
+            viewColumns: translate('graderReport.page.muiTable.viewColumns'),
+            filterTable: translate('graderReport.page.muiTable.filterTable'),
+          },
+          pagination: {
+            rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
+          }
+      },
       filter: true,
       serverSideFilterList: this.state.serverSideFilterList,
       filterType: "textField",
@@ -142,7 +155,7 @@ class ExtractionSteps extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => {},
+      onFilterDialogClose: () => { },
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -164,8 +177,8 @@ class ExtractionSteps extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
-            default:
-              return null;
+          default:
+            return null;
         }
       }
     };
