@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import 'babel-polyfill';
 import { Provider } from 'react-redux';
 import storeFactory from './flux/store/store';
-import registerServiceWorker, { unregister } from './registerServiceWorker';
+// import registerServiceWorker, { unregister } from './registerServiceWorker';
 
 import AppRoutes from './web.routes';
 
-unregister()
+// unregister()
 ReactDOM.render(
   <Provider store={storeFactory}>
     <AppRoutes />
@@ -16,5 +16,5 @@ ReactDOM.render(
 );
 
 
-registerServiceWorker();
+// registerServiceWorker();
 
