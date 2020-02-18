@@ -19,7 +19,6 @@ import { withRouter } from "react-router-dom";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Input from "@material-ui/core/Input";
 import history from "../../../web.history";
-
 import { DropzoneArea } from "material-ui-dropzone";
 import Select from "../../components/web/common/Select";
 import Stepper from "../../components/web/common/Stepper";
@@ -39,7 +38,7 @@ class Createcorpus extends React.Component {
 
       comment: "",
       open: false,
-      message: "Corpus added successfully",
+      message: translate('commonCorpus.page.text.corpusAdded'),
       token: false,
 
       val: 0,
@@ -97,16 +96,16 @@ class Createcorpus extends React.Component {
     let commentError = "";
     let languageError = "";
     if (!this.state.add_name) {
-      nameError = "Name shouldn't be empty";
+      nameError = translate('common.page.error.nameError');
     }
     if (!this.state.domain) {
-      domainError = "Domain shouldn't be empty";
+      domainError = translate('common.page.error.domainError');
     }
     if (!this.state.comment) {
-      commentError = "Comment Shouldn't be empty";
+      commentError = translate('common.page.error.commentError');
     }
     if (!this.state.language) {
-      languageError = "Language shouldn't be empty";
+      languageError = translate('common.page.error.languageError');
     }
     this.setState({
       nameError,
@@ -159,12 +158,12 @@ class Createcorpus extends React.Component {
             marginRight: "-2.3%"
           }}
         >
-          Create Corpus
+          {translate('common.page.label.createCorpus')}
         </Typography>
         <br />
         <div style={{ Top: "5px", PaddingBottom: "5px" }}>
           <FormControl fullWidth>
-            <InputLabel htmlFor="Add Name">Output Corpusname*</InputLabel>
+            <InputLabel htmlFor="Add Name">{translate('common.page.label.outputCorpusname')}</InputLabel>
             <Input
               id="name"
               required
@@ -177,7 +176,7 @@ class Createcorpus extends React.Component {
         </div>
 
         <FormControl fullWidth>
-          <InputLabel htmlFor="Domain">Domain*</InputLabel>
+          <InputLabel htmlFor="Domain"> {translate('newCorpus.page.text.domain')}</InputLabel>
           <Input
             id="domain"
             required
@@ -188,7 +187,7 @@ class Createcorpus extends React.Component {
           <span style={{ color: "red" }}>{this.state.domainError}</span>
         </FormControl>
         <FormControl fullWidth>
-          <InputLabel htmlFor="Comment">Language*</InputLabel>
+          <InputLabel htmlFor="Comment">{translate('common.page.label.language')}</InputLabel>
           <Input
             id="comment"
             required
@@ -199,7 +198,7 @@ class Createcorpus extends React.Component {
           <span style={{ color: "red" }}>{this.state.languageError}</span>
         </FormControl>
         <FormControl fullWidth>
-          <InputLabel htmlFor="Comment">Description*</InputLabel>
+          <InputLabel htmlFor="Comment">{translate('common.page.label.description')}</InputLabel>
           <Input
             id="comment"
             required
@@ -218,16 +217,16 @@ class Createcorpus extends React.Component {
           id="source"
           showPreviewsInDropzone={true}
           acceptedFiles={[".txt"]}
-          dropzoneText="Please Add/Drop txt file here"
+          dropzoneText={translate('common.page.text.addDropFile')}
           filesLimit={1}
         ></DropzoneArea>
 
         <Button variant="contained" color="primary" className={classes.button} onClick={this.handleBack}>
           {" "}
-          Cancel{" "}
+          {translate('common.page.button.cancel')}{" "}
         </Button>
         <Button variant="contained" color="primary" className={classes.buttons} onClick={this.handleSubmit.bind(this)}>
-          Submit
+        {translate('common.page.button.submit')}
         </Button>
 
         <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}>

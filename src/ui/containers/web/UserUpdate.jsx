@@ -27,6 +27,7 @@ import Input from '@material-ui/core/Input';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import UserDirectoryList from "../../../flux/actions/apis/userdirectory";
+import { translate } from '../../../assets/localisation';
 
 class UserUpdate extends React.Component {
   constructor(props) {
@@ -103,14 +104,14 @@ class UserUpdate extends React.Component {
       const { APITransport } = this.props;
     const apiObj = new UserDirectoryList();
     APITransport(apiObj);
-       this.setState({value:true,open: true, snackMessage : "New user added successfully"})
+       this.setState({value:true,open: true, snackMessage : translate('userTranslate.page.message.newUserAdded')})
   }
 
   if (prevProps.updatePasswordstatus !== this.props.updatePasswordstatus) {
     const { APITransport } = this.props;
   const apiObj = new UserDirectoryList();
   APITransport(apiObj);
-     this.setState({value:true,open: true, snackMessage :"Updated password successfully"})
+     this.setState({value:true,open: true, snackMessage :translate('userTranslate.page.message.passwordpdatedSuccess')})
 }
     if (prevProps.courtList !== this.props.courtList) {
       this.setState({ courtList: this.props.courtList
@@ -181,34 +182,34 @@ class UserUpdate extends React.Component {
         {openValue &&
           <Paper style={{ marginTop: "10px", marginRight: '30px', marginLeft: '-20px' }}>
             <Typography gutterBottom variant="title" component="h2" style={{ background: blueGrey50, paddingLeft: "35%", paddingTop: '13px', paddingBottom: '13px', width: '65%', marginBottom: '4%' }}>
-              {newUser ? "Add New User" : "Password Update"}
+              {newUser ? translate('userUpdate.page.label.addNewUser') : translate('userUpdate.page.label.passwordUpdated')}
             </Typography><br />
             <form method="post">
 
               <FormControl fullWidth>
                 <TextField id="standard-name" InputProps={{
                   readOnly: userDetails[1] ? true : false,
-                }} label="UserId" value={this.state.userid ? this.state.userid : ''} required type="text" onChange={(event) => { this.handleTextChange('userid', event) }}
+                }} label={translate('userUpdate.page.label.userId')} value={this.state.userid ? this.state.userid : ''} required type="text" onChange={(event) => { this.handleTextChange('userid', event) }}
                   margin="normal" varient="outlined" style={{ marginLeft: '5%', width: '90%', marginBottom: '4%' }}
                 />
 
               </FormControl>
               <FormControl fullWidth>
-                <TextField id={this.state.firstname} label="First Name" InputProps={{ readOnly: userDetails[1] ? true : false }} placeholder={"First Name"} required value={this.state.firstname ? this.state.firstname : ''} type="text" onChange={(event) => { this.handleTextChange('firstname', event) }}
+                <TextField id={this.state.firstname} label={translate('common.page.label.firstName')} InputProps={{ readOnly: userDetails[1] ? true : false }} placeholder={"First Name"} required value={this.state.firstname ? this.state.firstname : ''} type="text" onChange={(event) => { this.handleTextChange('firstname', event) }}
                   margin="normal" varient="outlined" style={{ marginLeft: '5%', width: '90%', marginBottom: '4%' }}
                 />
 
               </FormControl>
               <FormControl fullWidth>
-                <TextField label="Last Name" InputProps={{ readOnly: userDetails[1] ? true : false }} value={this.state.lastname ? this.state.lastname : ''} required id="outlined-required" type="text" onChange={(event) => { this.handleTextChange('lastname', event) }}
+                <TextField label={translate('common.page.label.lastName')} InputProps={{ readOnly: userDetails[1] ? true : false }} value={this.state.lastname ? this.state.lastname : ''} required id="outlined-required" type="text" onChange={(event) => { this.handleTextChange('lastname', event) }}
                   margin="normal" varient="outlined" style={{ marginLeft: '5%', width: '90%', marginBottom: '4%' }}
                 />                </FormControl>
               <FormControl style={{ marginLeft: '5%', width: '90%', marginBottom: '4%' }}>
-                <InputLabel htmlFor="adornment-password">Password* (min 6 char)</InputLabel>
+                <InputLabel htmlFor="adornment-password">{translate('userUpdate.page.label.passwordAlert')}</InputLabel>
                 <Input
 
                   id="adornment-password"
-                  type={this.state.showPassword ? 'text' : 'password'}
+                  type={this.state.showPassword ? translate('common.page.label.text') : translate('common.page.label.password')}
 
                   value={this.state.userpassword}
                   onChange={(event) => { this.handleTextChange('userpassword', event) }}
@@ -225,13 +226,13 @@ class UserUpdate extends React.Component {
                 />
               </FormControl>
               <FormControl fullWidth>
-                <TextField label="Email ID" value={this.state.email ? this.state.email : ''} InputProps={{ readOnly: userDetails[1] ? true : false }} id="outlined-required" type="text" onChange={(event) => { this.handleTextChange('email', event) }}
+                <TextField label={translate('common.page.label.email')} value={this.state.email ? this.state.email : ''} InputProps={{ readOnly: userDetails[1] ? true : false }} id="outlined-required" type="text" onChange={(event) => { this.handleTextChange('email', event) }}
                   margin="normal" varient="outlined" style={{ marginLeft: '5%', width: '90%', marginBottom: '4%' }}
                 />                </FormControl>
 
               <Grid container spacing={8} >
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
-                  <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', marginTop: '12px' }} >Select Role </Typography>
+                  <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', marginTop: '12px' }} >{translate('userUpdate.page.label.selectRole')} </Typography>
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -267,7 +268,7 @@ class UserUpdate extends React.Component {
 
               <Grid container spacing={8} >
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
-                  <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', marginTop: '12px' }} >Select High Court </Typography>
+                  <Typography value='' variant="title" gutterBottom={true} style={{ marginLeft: '12%', marginTop: '12px' }} >{translate('userUpdate.page.label.selectHighCourt')} </Typography>
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -295,16 +296,16 @@ class UserUpdate extends React.Component {
               <span style={{ marginLeft: '20%', color: 'red' }}>{this.state.message}</span>
 
               <Button variant="contained" onClick={() => { handleCancel(false) }} color="primary" aria-label="edit" style={{ width: '40%', marginLeft: '-13%', marginBottom: '4%', marginTop: '4%' }}>
-                Cancel
+              {translate('common.page.button.cancel')}
                 </Button>
               {userDetails[1] ?
                  
                 <Button variant="contained" onClick={() => { this.handlePasswordSubmit(userDetails[0]) }} color="primary" aria-label="edit" style={{ width: '40%', marginBottom: '4%', marginTop: '4%', marginLeft: '5%' }}>
-                  Update
+                  {translate('common.page.button.update')}
                 </Button>:
                 
                 <Button variant="contained" disabled={userDetails[1] ? (this.state.userpassword.length > 5 ? false : true) : (this.state.firstname && this.state.lastname && this.state.userid && this.state.email && this.state.high_court_code ? false : true)} onClick={() => {this.handleSubmit()}} color="primary" aria-label="edit" style={{ width: '40%', marginBottom: '4%', marginTop: '4%', marginLeft: '5%' }}>
-                  Add
+                 {translate('common.page.button.add')}
                 </Button>}
             </form>
             {this.state.value ? handleCancel(false) : ''}

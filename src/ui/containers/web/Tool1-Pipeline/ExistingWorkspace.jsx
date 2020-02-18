@@ -8,6 +8,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
+import { translate } from "../../../../assets/localisation";
 
 class ExistingWorkspace extends React.Component {
   intervalID;
@@ -88,7 +89,7 @@ class ExistingWorkspace extends React.Component {
     const columns = [
       {
         name: "title",
-        label: "Workspace",
+        label: translate("common.page.table.workspace"),
         options: {
           filter: true,
           sort: true,
@@ -97,7 +98,7 @@ class ExistingWorkspace extends React.Component {
       },
       {
         name: "session_id",
-        label: "id",
+
         options: {
           display: "excluded",
           filter: false
@@ -105,7 +106,7 @@ class ExistingWorkspace extends React.Component {
       },
       {
         name: "step",
-        label: "step",
+        label: translate("common.page.table.step"),
         options: {
           filter: false,
           display: "excluded"
@@ -113,7 +114,7 @@ class ExistingWorkspace extends React.Component {
       },
       {
         name: "status",
-        label: "Status",
+        label: translate("common.page.table.status"),
         options: {
           filter: false,
           sort: false
@@ -121,7 +122,7 @@ class ExistingWorkspace extends React.Component {
       },
       {
         name: "sentence_count",
-        label: "Sentence Count",
+        label: translate("common.page.table.sentenceCount"),
         options: {
           filter: false,
           sort: true
@@ -129,7 +130,7 @@ class ExistingWorkspace extends React.Component {
       },
       {
         name: "username",
-        label: "Created By",
+        label: translate("common.page.table.username"),
         options: {
           filter: false,
           sort: false
@@ -137,7 +138,7 @@ class ExistingWorkspace extends React.Component {
       },
       {
         name: "created_at",
-        label: "Created At",
+        label: translate("common.page.table.createdAt"),
         options: {
           filter: false,
           sort: false
@@ -168,7 +169,7 @@ class ExistingWorkspace extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            Apply Filters
+            {translate("common.page.button.applyFilter")}
           </Button>
         </div>
       ),
@@ -192,7 +193,11 @@ class ExistingWorkspace extends React.Component {
         )}
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
           <MUIDataTable
-            title={this.props.match.path === "/stage2/datasource" ? "Data Source" : "Existing Workspaces"}
+            title={
+              this.props.match.path === "/stage2/datasource"
+                ? translate("common.page.data.dataSource")
+                : translate("common.page.table.existingWorkspace")
+            }
             data={this.state.name}
             columns={columns}
             options={options}

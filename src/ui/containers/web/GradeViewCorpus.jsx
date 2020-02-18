@@ -20,13 +20,13 @@ import Typography from "@material-ui/core/Typography";
 import { CSVLink, CSVDownload } from "react-csv";
 import StarRatingComponent from "react-star-rating-component";
 import TablePagination from "@material-ui/core/TablePagination";
-
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
 import Toolbar from "@material-ui/core/Toolbar";
 import MenuItem from "@material-ui/core/MenuItem";
+import { translate } from '../../../assets/localisation';
 
 const theme = createMuiTheme();
 class Corpus extends React.Component {
@@ -114,17 +114,17 @@ class Corpus extends React.Component {
           this.state.sentences.map((row, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row">
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText="Read more" readLessText="">
+                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText={translate('commonCorpus.page.text.readMore')} readLessText="">
                   {row.source}
                 </ReadMoreAndLess>
               </TableCell>
               <TableCell>
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText="Read more" readLessText="">
+                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText={translate('commonCorpus.page.text.readMore')} readLessText="">
                   {row.target}
                 </ReadMoreAndLess>
               </TableCell>
               <TableCell>
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText="Read more" readLessText="">
+                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText={translate('commonCorpus.page.text.readMore')} readLessText="">
                   {row.translation ? row.translation.replace(/&quot;/g, '"') : ""}
                 </ReadMoreAndLess>
               </TableCell>
@@ -178,7 +178,7 @@ class Corpus extends React.Component {
             <Toolbar style={{ marginRight: "-1.2%" }}>
               <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
               <Typography variant="h8" gutterBottom>
-                Rows per page:&nbsp;&nbsp;&nbsp;&nbsp;
+                {translate('common.page.text.rowsPerPage')}&nbsp;&nbsp;&nbsp;&nbsp;
                 <Select width="50%" value={this.state.pageCount} onChange={this.handleSelectChange} displayEmpty>
                   <MenuItem value={5}>5</MenuItem>
                   <MenuItem value={10}>10</MenuItem>

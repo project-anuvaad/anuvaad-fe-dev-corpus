@@ -10,6 +10,7 @@ import CardContent from "@material-ui/core/CardContent";
 import { withStyles } from "@material-ui/core";
 import history from "../../../web.history";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
+import { translate } from "../../../assets/localisation";
 
 const styles = {
   card: {
@@ -31,7 +32,6 @@ class DataPipeline extends React.Component {
   }
 
   handleClick = value => {
-    console.log(value);
     if (value === "Stage 1") {
       history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
     } else if (value === "Stage 2") {
@@ -41,20 +41,21 @@ class DataPipeline extends React.Component {
     } else if (value === "Stage 4") {
       history.push(`${process.env.PUBLIC_URL}/stage4/existing-workspace`);
     } else {
-      alert("Still inprogress");
+      alert(translate("common.page.label.stillinprogress"));
     }
   };
 
   handleDataClick = value => {
-    console.log(value);
     if (value === "Stage 1") {
       history.push(`${process.env.PUBLIC_URL}/datasource`);
     } else if (value === "Stage 2") {
       history.push(`${process.env.PUBLIC_URL}/stage2/datasource`);
     } else if (value === "Stage 3") {
       history.push(`${process.env.PUBLIC_URL}/stage3/datasource`);
+    } else if (value === "Stage 4") {
+      history.push(`${process.env.PUBLIC_URL}/stage4/datasource`);
     } else {
-      alert("Still inprogress");
+      alert(translate("common.page.label.stillinprogress"));
     }
   };
 

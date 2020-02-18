@@ -12,6 +12,7 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import Button from "../../components/web/common/Button";
 import Paper from "../../components/web/common/Paper";
 import Typography from "../../components/web/common/Typography";
+import { translate } from '../../../assets/localisation';
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -29,7 +30,6 @@ class UploadAudio extends React.Component {
 
   start = () => {
     if (this.state.isBlocked) {
-      console.log("Permission Denied");
     } else {
       Mp3Recorder.start()
         .then(() => {
@@ -148,7 +148,7 @@ class UploadAudio extends React.Component {
                   maxFileSize={20000000}
                   style={{ marginTop: "20%" }}
                   acceptedFiles={[".mp3", ".wav", ".flac"]}
-                  dropzoneText="Drop audio file here or click here to locate the audi file(.mp3 or .wav or .flac)"
+                  dropzoneText={translate('uploadBenchmark.page.label.dropAudio')}
                   filesLimit={1}
                 />
               </Grid>
