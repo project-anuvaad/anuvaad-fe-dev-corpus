@@ -98,7 +98,6 @@ class UploadAudio extends React.Component {
   };
 
   handleSubmit = () => {
-    const model = "";
     const { APITransport } = this.props;
     const apiObj = new AudioToText(this.state.files);
     APITransport(apiObj);
@@ -119,8 +118,9 @@ class UploadAudio extends React.Component {
     if (modelLanguage && supportLanguage) {
       modelLanguage.map(item => {
         item.source_language_code === sourceLanguage
-          ? supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null))
-          : "";
+          && supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null))
+          ;
+          return true;
       });
     }
     const value = new Set(result);

@@ -201,7 +201,7 @@ class BenchmarkGrade extends React.Component {
           {this.state.sentences.map((value, i) => {
             var val = i === 0 ? "A" : "B";
             return <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <Grader title={"Model " + val} index={i} description={value.target} handleStarClick={this.onStarClick.bind(this)} data={value} handleStarClick={this.onStarClick.bind(this)} handleStarClick={this.onStarClick.bind(this)} meaning={"rating"} structure={"context_rating"} vocabulary={"spelling_rating"} />
+              <Grader title={"Model " + val} index={i} description={value.target} handleStarClick={this.onStarClick.bind(this)} data={value}  meaning={"rating"} structure={"context_rating"} vocabulary={"spelling_rating"} />
             </Grid>
           })}
         </Grid>

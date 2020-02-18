@@ -27,18 +27,18 @@ class DataPipeline extends React.Component {
     super(props);
     this.state = {
       value: 2,
-      tools: ["Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6", "Stage 7", "Stage 8", "Stage 9"]
+      tools: [translate('dataPipeLine.page.tool.stage1'),translate('dataPipeLine.page.tool.stage2') ,translate('dataPipeLine.page.tool.stage3') ,translate('dataPipeLine.page.tool.stage4') ,translate('dataPipeLine.page.tool.stage5') , translate('dataPipeLine.page.tool.stage6'),translate('dataPipeLine.page.tool.stage7') ,translate('dataPipeLine.page.tool.stage8') ,translate('dataPipeLine.page.tool.stage9') ]
     };
   }
 
   handleClick = value => {
-    if (value === "Stage 1") {
+    if (value === translate('dataPipeLine.page.tool.stage1')) {
       history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
-    } else if (value === "Stage 2") {
+    } else if (value === translate('dataPipeLine.page.tool.stage2')) {
       history.push(`${process.env.PUBLIC_URL}/stage2/existing-workspace`);
-    } else if (value === "Stage 3") {
+    } else if (value === translate('dataPipeLine.page.tool.stage3')) {
       history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
-    } else if (value === "Stage 4") {
+    } else if (value === translate('dataPipeLine.page.tool.stage4')) {
       history.push(`${process.env.PUBLIC_URL}/stage4/existing-workspace`);
     } else {
       alert(translate("common.page.label.stillinprogress"));
@@ -46,13 +46,13 @@ class DataPipeline extends React.Component {
   };
 
   handleDataClick = value => {
-    if (value === "Stage 1") {
+    if (value === translate('dataPipeLine.page.tool.stage1')) {
       history.push(`${process.env.PUBLIC_URL}/datasource`);
-    } else if (value === "Stage 2") {
+    } else if (value === translate('dataPipeLine.page.tool.stage2')) {
       history.push(`${process.env.PUBLIC_URL}/stage2/datasource`);
-    } else if (value === "Stage 3") {
+    } else if (value === translate('dataPipeLine.page.tool.stage3')) {
       history.push(`${process.env.PUBLIC_URL}/stage3/datasource`);
-    } else if (value === "Stage 4") {
+    } else if (value === translate('dataPipeLine.page.tool.stage4')) {
       history.push(`${process.env.PUBLIC_URL}/stage4/datasource`);
     } else {
       alert(translate("common.page.label.stillinprogress"));

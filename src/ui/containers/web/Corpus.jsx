@@ -271,7 +271,7 @@ class Corpus extends React.Component {
         this.props.APITransport(api);
     };
     handleColor(color) {
-        let color1 = 'grey'
+        //let color1 = 'grey'
         return color === 'ACCEPTED' ? 'green' : (color === 'EDITED' ? '#2c6b96' : (color === "REJECTED" ? "red" : (color === "PROCESSING" ? '#f1de7f' : (color === "PENDING" ? 'grey' : ''))))
     }
 
@@ -334,19 +334,19 @@ class Corpus extends React.Component {
                         </ReadMoreAndLess>}
                     </TableCell>
 
-                    <TableCell align="right" width="10%">
+                    {/* <TableCell align="right" width="10%">
                         {row.alignment_accuracy === 'GAPFILLER\n' || row.alignment_accuracy === 'GALECHURCH\n' ?
                             <span variant="fab" style={{ width: '35px', height: '35px', borderRadius: '50%', display: 'inline-block', backgroundColor: 'red', marginRight: '50px' }} />
                             : (row.alignment_accuracy === 'BLEU\n' ? <span style={{ width: '35px', height: '35px', borderRadius: '50%', display: 'inline-block', marginRight: '50px', backgroundColor: 'yellow' }}>    </span>
                                 : <span style={{ width: '35px', height: '35px', borderRadius: '50%', display: 'inline-block', backgroundColor: 'green', marginRight: '50px' }}>    </span>)}
-                    </TableCell>
+                    </TableCell> */}
 
                     <TableCell width="10%">
 
                         <div style={{ width: '95px' }}>
 
                             <Tooltip title={translate('common.page.title.accept')} disableTriggerFocus={true}><Accept style={{ cursor: 'pointer', marginRight: '5px', color: "green" }} onClick={() => {
-                                { this.state.lock ? '' : this.handleActionButton(index, "ACCEPTED") }
+                                 !this.state.lock && this.handleActionButton(index, "ACCEPTED") 
 
                             }} />
                             </Tooltip>
@@ -417,7 +417,7 @@ class Corpus extends React.Component {
                             }
 
                             <Tooltip title={translate('corpus.page.title.reject')} disableTriggerFocus={true}><Close style={{ cursor: 'pointer', marginRight: '5px', color: "red" }} onClick={() => {
-                                { this.state.lock ? '' : this.handleActionButton(index, "REJECTED") }
+                                 !this.state.lock && this.handleActionButton(index, "REJECTED") 
                             }} /></Tooltip>
                         </div>
 
@@ -500,12 +500,12 @@ class Corpus extends React.Component {
 
                             <MuiThemeProvider theme={theme}>
                                 <CssBaseline />
-                                <CsvDownloader
+                                {/* <CsvDownloader
                                     filename="myfile"
                                     separator=";"
 
                                     datas={this.state.sentences}
-                                    text={translate('common.page.text.download')} />
+                                    text={translate('common.page.text.download')} /> */}
                                 <Pagination
                                     align='right'
                                     limit={1}
@@ -524,7 +524,7 @@ class Corpus extends React.Component {
                                         <TableCell width="35%">{translate('commonCorpus.page.text.sourceSentence')}</TableCell>
                                         <TableCell width="35%">{translate('commonCorpus.page.text.targetSentence')}</TableCell>
                                         {/* <TableCell width="27%">Machine translated reference </TableCell> */}
-                                        <TableCell width='10%' align="left" >
+                                        {/* <TableCell width='10%' align="left" >
                                             <Grid container spacing={24} style={{ padding: 5 }}>
                                                 <Grid item xs={8} sm={9} lg={9} xl={9}>
                                                     {translate('corpus.page.text.alignmentAccuracy')}
@@ -535,7 +535,7 @@ class Corpus extends React.Component {
                                                     }} />
                                                 </Grid>
                                             </Grid>
-                                        </TableCell>
+                                        </TableCell> */}
                                         <TableCell width="10%">{translate('common.page.label.action')}</TableCell>
                                         <TableCell width="10%"><div>
                                             <Grid container spacing={24} >
