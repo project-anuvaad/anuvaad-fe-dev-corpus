@@ -310,7 +310,7 @@ class ViewTranslate extends React.Component {
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={this.handleClose} color="primary">{translate('common.page.label.no')}</Button>
-                            <Button onClick={(event) => { this.handleClickOpen(file) }} color="primary">Yes</Button>
+                            <Button onClick={(event) => { this.handleClickOpen(file) }} color="primary">{translate('common.page.label.yes')}</Button>
                         </DialogActions>
                     </Dialog>
                 }

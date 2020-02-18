@@ -97,7 +97,6 @@ class SentenceTranslate extends React.Component {
     const { APITransport } = this.props;
         const apiObj = new BenchmarkTranslate( this.state.text, this.state.source, this.state.target);
         APITransport(apiObj);
-    (this.state.source, this.state.target, this.state.text);
   }
 
   render() {

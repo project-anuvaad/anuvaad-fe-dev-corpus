@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -16,29 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import Snackbars from "../../components/web/common/Snackbar";
 import { translate } from '../../../assets/localisation';
 import ScrollArea from "react-scrollbar";
-//const styles =
- theme => 
-({
-  search: {
-    borderRadius: theme.shape.borderRadius,
-    marginTop: "500px",
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: "300px",
-    width: "100%",
-    open1: true,
-    open: false,
-    value : 0
-  },
-  searchIcon: {
-    marginTop: "500px",
-    marginLeft: "30px",
-    height: "100%",
 
-    pointerEvents: "none",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
 class GarderTranslate extends React.Component {
   constructor(props) {
     super(props);
@@ -117,7 +94,7 @@ class GarderTranslate extends React.Component {
                     backgroundColor: "#F3F3F8"
                   }}
                 >
-                 <Typography variant="h6" color="inherit"style={{ paddingTop: "40px",marginLeft:'15%' }} ><b>Files List</b><br/></Typography>
+                 <Typography variant="h6" color="inherit"style={{ paddingTop: "40px",marginLeft:'15%' }} ><b>{translate('GrdaerTranslate.page.label..filesList')}</b><br/></Typography>
 
                   <ScrollArea>
                     {this.state.name.length>0 ? this.state.name.map((i, index) => {

@@ -346,7 +346,7 @@ class Corpus extends React.Component {
                         <div style={{ width: '95px' }}>
 
                             <Tooltip title={translate('common.page.title.accept')} disableTriggerFocus={true}><Accept style={{ cursor: 'pointer', marginRight: '5px', color: "green" }} onClick={() => {
-                                 this.state.lock ? '' : this.handleActionButton(index, "ACCEPTED") 
+                                 !this.state.lock && this.handleActionButton(index, "ACCEPTED") 
 
                             }} />
                             </Tooltip>
@@ -417,7 +417,7 @@ class Corpus extends React.Component {
                             }
 
                             <Tooltip title={translate('corpus.page.title.reject')} disableTriggerFocus={true}><Close style={{ cursor: 'pointer', marginRight: '5px', color: "red" }} onClick={() => {
-                                 this.state.lock ? '' : this.handleActionButton(index, "REJECTED") 
+                                 !this.state.lock && this.handleActionButton(index, "REJECTED") 
                             }} /></Tooltip>
                         </div>
 

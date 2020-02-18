@@ -106,8 +106,9 @@ class Header extends React.Component {
     const { auth, anchorEl, open } = this.state;
     const openEl = Boolean(anchorEl);
     var role = JSON.parse(localStorage.getItem("roles"));
-    var useRole = new Array();
-    role.map((item, value) => (useRole.push(item), value !== role.length - 1 ? useRole.push(", ") : null));
+    var useRole = [];
+    role.map((item, value) => {useRole.push(item); value !== role.length - 1 && useRole.push(", ")
+    return true; });
     return (
       <div  >
         <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
