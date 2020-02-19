@@ -59,8 +59,10 @@ export default class NMT extends API {
                     n_id: item.model_name
                 });
             }
-            return modelArray;
+            console.log(modelArray)
+            return true
         });
+        return modelArray;
         
     }
 
