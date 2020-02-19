@@ -9,7 +9,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import FetchModels from "../../../flux/actions/apis/fetchenchmarkmodel";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
-import NewCorpusStyle from "../../styles/web/Newcorpus";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 

@@ -302,6 +302,7 @@ var localization_EN_Data = {
    'dataPipeLine.page.tool.stage8':"Stage 8",
    'dataPipeLine.page.tool.stage9':"Stage 9",
    'GrdaerTranslate.page.label..filesList':"Files List",
+    "AnuvaadModels.page.button.startWritting":"Start Writing"
    //'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 }
 
@@ -609,6 +610,8 @@ var localization_HI_Data = {
    'dataPipeLine.page.tool.stage8':"चरण 8",
    'dataPipeLine.page.tool.stage9':"चरण 9",
    'GrdaerTranslate.page.label..filesList':"फ़ाइलें सूची",
+   "AnuvaadModels.page.button.startWritting":"लिखना शुरू करें"
+                          
 
    
 }
