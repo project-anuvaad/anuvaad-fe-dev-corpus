@@ -618,8 +618,8 @@ var localization_HI_Data = {
 
 
 export function translate(locale_text) {
-    let lang = localStorage.getItem('lang'+JSON.parse(localStorage.getItem("userProfile") ? localStorage.getItem("userProfile") : '{}').id)
-    if(lang){
+    if(localStorage.getItem("userProfile") && localStorage.getItem('lang'+JSON.parse(localStorage.getItem("userProfile")).id)){
+        let lang = localStorage.getItem('lang'+JSON.parse(localStorage.getItem("userProfile")).id)
         switch(lang){
             case 'hi':
                 return localization_HI_Data[locale_text] || locale_text
