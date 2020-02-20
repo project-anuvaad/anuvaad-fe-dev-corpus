@@ -338,7 +338,7 @@ class AnuvaadGame extends React.Component {
                   </canvas>
                 </div>
               </Grid>
-              <Grid item xs={1} sm={1} lg={1} xl={1}><ArrowBackIcon style ={{marginTop:'320px',fontSize:'100px',marginLeft:'-10%', color:'red'}}/></Grid>
+              <Grid item xs={1} sm={1} lg={1} xl={1}><ArrowBackIcon style ={{marginTop:'320px',fontSize:'100px',marginLeft:'-35px', color:'red'}}/></Grid>
               {this.state.textValue  && (
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
                   <Typography value="" variant="h4" gutterBottom style={{ marginTop: "30%" , marginRight:'30px'}}>
