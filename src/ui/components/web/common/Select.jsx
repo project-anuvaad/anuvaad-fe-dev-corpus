@@ -10,12 +10,13 @@ class SimpleSelect extends React.Component {
     
 
     render() {
-      const { id, MenuItemValues, handleChange, value, name} = this.props;
+      const { id, MenuItemValues,disabled, handleChange, value, name} = this.props;
 
         return (
           <form>
             <FormControl>
               <Select
+              disabled={disabled}
                 style={{minWidth: 160,align:'right',maxWidth:160}}
                 value={value}
                 onChange={handleChange}
