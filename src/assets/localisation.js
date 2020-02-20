@@ -464,7 +464,7 @@ var localization_HI_Data = {
     'userProfile.page.message.passwordTooShortAlert':"नया पासवर्ड बहुत छोटा है (न्यूनतम 6 वर्ण)",
     'userProfile.page.message.enterCorrectPasswordAlert':"कृपया सही वर्तमान पासवर्ड दर्ज करें",
     'feedbackForm.page.label.feedbackFor':"प्रतिपुष्टि के लिए",
-    'common.page.label.myProfile':"मेरी प्रोफाइल",
+    'common.page.label.myProfile':"मेरा प्रोफाइल",
     'userProfile.page.label.changePassword':"पासवर्ड बदलें",
    'common.page.label.id' :"आईडी",
    'common.page.label.userName':"उपयोगकर्ता नाम",
