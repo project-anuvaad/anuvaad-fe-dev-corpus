@@ -571,7 +571,7 @@ var localization_HI_Data = {
    'viewTranslate.page.title.downloadSource':"स्रोत डाउनलोड करें",
    'viewTranslate.page.title.downloadTranslate':"अनुवादित डाउनलोड करें ",
    'header.page.heading.welcome':"स्वागत है",
-   'header.page.heading.MyProfile':"मेरी प्रोफाइल",
+   'header.page.heading.MyProfile':"मेरा प्रोफाइल",
    'header.page.heading.logout':"लॉग आउट",
    'header.page.heading.anuvaad':"अनुवाद",
    'header.page.heading.dataPipeline':"डेटा पाइपलाइन",
