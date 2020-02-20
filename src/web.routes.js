@@ -296,7 +296,7 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/viewtranslate`}
               showLogo
-              title={"SUVAS - "+translate('common.page.title.document')}
+              title={translate('common.page.title.document')}
               component={ViewTranslate}
               userRoles={["editor", "user"]}
               authenticate={this.authenticateUser}
