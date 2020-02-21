@@ -130,7 +130,7 @@ class ProcessingWorkspace extends React.Component {
       },
 
       rowsSelected: this.state.rowsSelected,
-      onRowsSelect: ( allRows) => {
+      onRowsSelect: (rowsSelected, allRows) => {
         const selectedItems = [];
         this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });
         if (allRows && allRows.length > 0) {
