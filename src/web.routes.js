@@ -20,7 +20,6 @@ import UserProfile from "./ui/containers/web/UserProfile";
 import ViewTranslations from "./ui/containers/web/ViewTranslations";
 import DashboardTamil from "./ui/containers/web/Dashboard";
 import AnuvaadGame from "./ui/containers/web/AnuvaadGame";
-import AnuvaadWheel from "./ui/containers/web/Dashboard";
 import GradeViewCorpus from "./ui/containers/web/GradeViewCorpus";
 import BenchmarkGrade from "./ui/containers/web/BenchmarkGrade";
 import QnA from "./ui/containers/web/QnA";

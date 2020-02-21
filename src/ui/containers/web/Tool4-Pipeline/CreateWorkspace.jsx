@@ -17,10 +17,11 @@ import Link from "@material-ui/core/Link";
 import FileUpload from "../../../components/web/common/FileUpload";
 import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
 import ProcessingWorkspace from "./ProcessingWorkspace";
-import MTProcessWorkspace from "../../../../flux/actions/apis/createworkspace";
+import CompositionWorkspace from "../../../../flux/actions/apis/compostionworkspace";
 import Select from "@material-ui/core/Select";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import ConfigUpload from "../../../../flux/actions/apis/configupload";
 
 class CreateWorkspace extends React.Component {
   constructor(props) {
@@ -31,6 +32,10 @@ class CreateWorkspace extends React.Component {
       selectedWorkspaces: [],
       workspaceName: '',
       sourceLanguage:[],
+      source:'',
+      afterHT: false,
+      afterMT: false,
+      afterTool3: false,
       language:[],
       step: 1,
       message1: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
@@ -65,13 +70,26 @@ class CreateWorkspace extends React.Component {
        });
      }
 
+     if (prevProps.configUplaod !== this.props.configUplaod) {
+      this.setState({ files: this.props.configUplaod });
+
+      const configFilepath = "configFile" in this.props.configUplaod && this.props.configUplaod.configFile;
+      console.log("config",configFilepath)
+      if (configFilepath) {
+        const { APITransport } = this.props;
+        const apiObj2 = new CompositionWorkspace(this.state.selectedWorkspaces,this.state.workspaceName, this.state.target.language_code,configFilepath);
+        APITransport(apiObj2);
+        this.setState({ load: true });
+      }
+    }
+
     if (prevProps.createWorkspaceDetails !== this.props.createWorkspaceDetails) {
       this.setState({
         open: true,
       });
 
       setTimeout(() => {
-        history.push(`${process.env.PUBLIC_URL}/stage2/workspace-details`);
+        history.push(`${process.env.PUBLIC_URL}/stage4/workspace-details`);
       }, 3000);
       
       
@@ -121,7 +139,7 @@ handleChange = (key, event) => {
   };
 
   handleWorkspaceSelected(selectedWorkspaces) {
-    console.log(selectedWorkspaces)
+    console.log("test-----",selectedWorkspaces)
     this.setState({
       selectedWorkspaces: selectedWorkspaces
     })
@@ -129,23 +147,29 @@ handleChange = (key, event) => {
   }
 
   handleProcessSubmit() {
+
     const { APITransport } = this.props;
-      const apiObj2 = new MTProcessWorkspace(this.state.selectedWorkspaces,this.state.workspaceName, this.state.target.language_code);
-      APITransport(apiObj2);
-      this.setState({ load: true });
+
+    const apiObj = new ConfigUpload(this.state.configFile, "configFile");
+    this.state.configFile && APITransport(apiObj);
+    this.setState({ load: true });
+    
   }
 
 
   handleSubmit() {
 
-    console.log(this.state.workspaceName, this.state.target.language_code)
     if (this.state.workspaceName && this.state.target.language_code) {
       this.setState({
         step: 2
-      })
+      });
     } else {
-      alert("Fields should not be empty");
+      alert("");
     }
+
+    console.log(this.state.workspaceName, this.state.target.language_code, this.state.source.language_code, this.state.afterMT, this.state.afterTool3, this.state.afterHT)
+    
+     
   }
 
   render() {
@@ -241,9 +265,9 @@ handleChange = (key, event) => {
                 control={
                   <Checkbox
                     color="default"
-                    checked={this.state.checkedMachine}
-                    value="checkedMachine"
-                    onChange={this.handleValueChange("checkedMachine")}
+                    checked={this.state.afterMT}
+                    value="afterMT"
+                    onChange={this.handleValueChange("afterMT")}
                   />
                 }
                 label="After MT"
@@ -252,7 +276,7 @@ handleChange = (key, event) => {
                 <FormControlLabel
                   style={{ marginLeft: "0%", width: "23%", marginRight: "5%" }}
                   control={
-                    <Checkbox color="default" checked={this.state.showSplitted} value="showSplitted" onChange={this.handleValueChange("showSplitted")} />
+                    <Checkbox color="default" checked={this.state.afterHT} value="afterHT" onChange={this.handleValueChange("afterHT")} />
                   }
                   label="After HT"
                 />
@@ -261,9 +285,9 @@ handleChange = (key, event) => {
                   control={
                     <Checkbox
                       color="default"
-                      checked={this.state.checkedSubwords}
-                      value="checkedSubwords"
-                      onChange={this.handleValueChange("checkedSubwords")}
+                      checked={this.state.afterTool3}
+                      value="afterTool3"
+                      onChange={this.handleValueChange("afterTool3")}
                     />
                   }
                   label="After Tool3"
@@ -298,7 +322,7 @@ handleChange = (key, event) => {
             <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                Enter workspace name :
+                Workspace name :
               </Typography>
               <br />
             </Grid>
@@ -348,7 +372,7 @@ handleChange = (key, event) => {
             </Grid>
 
               <Grid item xs={12} sm={12} lg={12} xl={12}>
-                <ProcessingWorkspace handleWorkspaceSelected={this.handleWorkspaceSelected.bind(this)} selectedWorkspaces={this.state.selectedWorkspaces}/>
+                <ProcessingWorkspace workspaceName={this.state.workspaceName} target={this.state.target.language_code} source = { this.state.source.language_code} mt={ this.state.afterMT} tool3={this.state.afterTool3} ht={this.state.afterHT} handleWorkspaceSelected={this.handleWorkspaceSelected.bind(this)} selectedWorkspaces={this.state.selectedWorkspaces}/>
               </Grid>
 
 

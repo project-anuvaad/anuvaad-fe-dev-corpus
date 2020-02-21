@@ -29,6 +29,7 @@ export default class API {
   }
 
   processResponse(res) {
+    console.log("res",res)
     this.code = res.code;
     this.message = res.message;
     this.domain = res.domain;
