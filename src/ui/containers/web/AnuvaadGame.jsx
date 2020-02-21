@@ -16,7 +16,7 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Chip from "@material-ui/core/Chip";
 import { Tooltip } from "@material-ui/core";
 import Winwheel from "winwheel";
-import { typography } from "material-ui/styles";
+
 import { translate } from "../../../assets/localisation";
 import TranslateSentence from "../../components/web/dashboard/TranslateSentence";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
@@ -27,9 +27,9 @@ import AutoML from "../../../flux/actions/apis/auto_ml";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import NewOrders from "../../components/web/dashboard/NewOrders";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import history from "../../../web.history";
+
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+
 
 class AnuvaadGame extends React.Component {
   constructor(props) {
@@ -338,7 +338,7 @@ class AnuvaadGame extends React.Component {
                   </canvas>
                 </div>
               </Grid>
-              <Grid item xs={1} sm={1} lg={1} xl={1}><ArrowBackIcon style ={{marginTop:'320px',fontSize:'100px',marginLeft:'-35px', color:'red'}}/></Grid>
+              <Grid item xs={1} sm={1} lg={1} xl={1}><ArrowBackIcon style ={{marginTop:'320px',fontSize:'100px',marginLeft:'35px', color:'red'}}/></Grid>
               {this.state.textValue  && (
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
                   <Typography value="" variant="h4" gutterBottom style={{ marginTop: "30%" , marginRight:'30px'}}>

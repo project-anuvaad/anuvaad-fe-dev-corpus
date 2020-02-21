@@ -3,9 +3,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
-import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
-import FetchWorkspace from "../../../../flux/actions/apis/fetchworkspace";
+import FetchWorkspace from "../../../../flux/actions/apis/tool4fetchworkspace";
 
 class ProcessingWorkspace extends React.Component {
   intervalID;
@@ -23,20 +22,17 @@ class ProcessingWorkspace extends React.Component {
   }
 
   componentDidMount() {
-    this.handleFetchWorkspace();
-    // this.intervalID = setInterval(this.handleFetchWorkspace, 10000);
+    const { APITransport } = this.props;
+    const apiObj = new FetchWorkspace(this.props.source, this.props.target, this.props.mt, this.props.ht, this.props.tool3);
+    APITransport(apiObj);
+    this.setState({ showLoader: true });
+    
   }
 
   componentWillUnmount() {
     clearTimeout(this.intervalID);
   }
 
-  handleFetchWorkspace = () => {
-    const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "");
-    APITransport(apiObj);
-    this.setState({ showLoader: true });
-  };
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspace !== this.props.fetchWorkspace) {
@@ -44,27 +40,6 @@ class ProcessingWorkspace extends React.Component {
     }
   }
 
-  handleReset = val => {
-    const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", val);
-    APITransport(apiObj);
-    this.setState({ filter: val });
-  };
-
-  changePage = (page, rowsPerPage) => {
-    const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(rowsPerPage, page + 1, "PROCESSED", "");
-    APITransport(apiObj);
-    this.setState({ page, rowsPerPage });
-  };
-
-  handleFilterSubmit = filterList => () => {
-    console.log(filterList);
-    clearTimeout(this.intervalID);
-    const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", filterList);
-    this.props.APITransport(apiObj);
-    this.setState({ filter: filterList });
-  };
 
   handleChange = value => {
     this.setState({ value });
@@ -166,32 +141,7 @@ class ProcessingWorkspace extends React.Component {
         }
       },
 
-      onFilterDialogClose: () => {},
-      onFilterChange: (column, filterList, type, reset) => {
-        if (type === "reset") {
-          this.handleReset("");
-        }
-      },
-      customFilterDialogFooter: filterList => (
-        <div style={{ marginTop: "40px" }}>
-          <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            Apply Filters
-          </Button>
-        </div>
-      ),
-      onTableChange: (action, tableState) => {
-        switch (action) {
-          case "changePage":
-            this.changePage(tableState.page, tableState.rowsPerPage);
-            break;
-
-          case "changeRowsPerPage":
-            this.changePage(tableState.page, tableState.rowsPerPage);
-            break;
-            default:
-              return null;
-        }
-      }
+      
     };
 
     return (

@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
-import FetchSearchReplaceWorkspace from "../../../../flux/actions/apis/fetchsearchreplaceworkspace";
+import FetchCompositionWorkspace from "../../../../flux/actions/apis/fetchcompositionworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
 
@@ -34,7 +34,7 @@ class WorkspaceDetails extends React.Component {
 
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
-    const apiObj = new FetchSearchReplaceWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "");
+    const apiObj = new FetchCompositionWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "");
     APITransport(apiObj);
     this.setState({ showLoader: true });
   };
@@ -47,14 +47,14 @@ class WorkspaceDetails extends React.Component {
 
   handleReset = val => {
     const { APITransport } = this.props;
-    const apiObj = new FetchSearchReplaceWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", val);
+    const apiObj = new FetchCompositionWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", val);
     APITransport(apiObj);
     this.setState({ filter: val });
   };
 
   changePage = (page, rowsPerPage) => {
     const { APITransport } = this.props;
-    const apiObj = new FetchSearchReplaceWorkspace(rowsPerPage, page + 1, "PROCESSING", "");
+    const apiObj = new FetchCompositionWorkspace(rowsPerPage, page + 1, "PROCESSING", "");
     APITransport(apiObj);
     this.setState({ page, rowsPerPage });
   };
@@ -62,7 +62,7 @@ class WorkspaceDetails extends React.Component {
   handleFilterSubmit = filterList => () => {
     console.log(filterList);
     clearTimeout(this.intervalID);
-    const apiObj = new FetchSearchReplaceWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", filterList);
+    const apiObj = new FetchCompositionWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", filterList);
     this.props.APITransport(apiObj);
     this.setState({ filter: filterList });
   };
