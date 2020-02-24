@@ -118,7 +118,7 @@ class ProcessingWorkspace extends React.Component {
       viewColumns: false,
       responsive: "scrollMaxHeight",
       selectableRows: "multiple",
-      rowsSelected: this.state.selectedWorkspaces,
+      // rowsSelected: this.state.selectedWorkspaces,
       rowsPerPage: 10,
 
       count: this.state.count,
@@ -129,7 +129,7 @@ class ProcessingWorkspace extends React.Component {
         clearTimeout(this.intervalID);
       },
 
-      //rowsSelected: this.state.rowsSelected,
+      rowsSelected: this.state.rowsSelected,
       onRowsSelect: (rowsSelected, allRows) => {
         const selectedItems = [];
         this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });

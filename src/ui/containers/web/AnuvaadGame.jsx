@@ -16,7 +16,7 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Chip from "@material-ui/core/Chip";
 import { Tooltip } from "@material-ui/core";
 import Winwheel from "winwheel";
-import { typography } from "material-ui/styles";
+
 import { translate } from "../../../assets/localisation";
 import TranslateSentence from "../../components/web/dashboard/TranslateSentence";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
@@ -26,10 +26,10 @@ import NMT from "../../../flux/actions/apis/nmt";
 import AutoML from "../../../flux/actions/apis/auto_ml";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import NewOrders from "../../components/web/dashboard/NewOrders";
-import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
-import history from "../../../web.history";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+
 
 class AnuvaadGame extends React.Component {
   constructor(props) {
@@ -51,36 +51,36 @@ class AnuvaadGame extends React.Component {
       showSplitted: false,
       val: true,
       submit: true,
-      result: ["1. This Court, while dealing with the issue for the purpose of deciding the question of obscenity in any book, story or article.",
-      '2. The Cabinet Mission Plan laid foundation for Constitution, functioning and procedure of Constituent Assembly',
-      '3. Every member of the collective has an inherent interest in such a trial.',
-      '4. It will further promote research into the institutional functioning of the courts.',
-      '5. I have no doubt that with adequate finances, in the near future, this ground can become one of the best in the country.',
-      '6. During the first three decades the Council functioned quite effectively and there was phenomenal development of technical education in this period.',
-      '7. A measure to achieve the intended purpose must therefore be suitable and necessary.',
-      '8. The whole approach is erroneous.',
-      '9. Andhra society runs Telugu medium schools outside Andhra Pradesh.',
-      '10. He was threatened that if the money was not paid Narendra would be killed or his daughter would be kidnapped.',
-      '11. To ensure their proper representation, a system of reservation becomes necessary.',
-      '12. Some rules can favour the majority community, others can protect the minorities.',
-      '13. But merely writing down a list of rights is not enough.',
-      '14. On the occasion of Mahavir Jayanti, the god Hanuman was worshipped on Devika beach.',
-      '15. This problem arose when the government sought to pass laws to abolish zamindari system.',
-      '16. The availability of housing for the general public will be increased.',
-      '17. For the appointment of a judge of the High Court also, consultation with the Chief Justice of India was mandatory. ',
-      '18. Over five crore tonnes of food grains was stored in the godowns of the Food Corporation of India.',
-      '19. A team of social scientists studied their poor condition and petitioned the Supreme Court.',
-      '20. In view of the said information, the commission withheld further action awaiting the opinion of the Supreme court in the matter. ',
-      '21. Similarly a game needs an impartial umpire whose decision is accepted by all the players.',
-      '22. Three years later, on 20 and 21 November 2017 articles were published in Caravan which was followed by a flurry of writ petitions. ',
-      '23. In spite of this, the blind faith of some of their devotees continues.',
-      '24. Given the severity of the case support from the cyber crime cell is being sought.',
-      '25. A definition is an explicit statement of the full connotation of a term.',
-      '26. I live in Shopian, which is believed to be a stronghold of terrorists.',
-      '27. Ms. Archana Pathak Dave, learned counsel for the State of Rajasthan.',
-      '28. The demand for a separate district was raised by Mewat Educational and Social Organisation and Mewat Saksharta Samiti in 1996.',
-      '29. Dr. S.S. Dahiya conducted postmortem examination on the dead body of Manju, wife of Pradeep Kumar.',
-      '30. The passion for respect and freedom are the basis of democracy.'
+      result: ["This Court, while dealing with the issue for the purpose of deciding the question of obscenity in any book, story or article.",
+      'The Cabinet Mission Plan laid foundation for Constitution, functioning and procedure of Constituent Assembly',
+      'Every member of the collective has an inherent interest in such a trial.',
+      'It will further promote research into the institutional functioning of the courts.',
+      'I have no doubt that with adequate finances, in the near future, this ground can become one of the best in the country.',
+      'During the first three decades the Council functioned quite effectively and there was phenomenal development of technical education in this period.',
+      'A measure to achieve the intended purpose must therefore be suitable and necessary.',
+      'The whole approach is erroneous.',
+      'Andhra society runs Telugu medium schools outside Andhra Pradesh.',
+      'He was threatened that if the money was not paid Narendra would be killed or his daughter would be kidnapped.',
+      'To ensure their proper representation, a system of reservation becomes necessary.',
+      'Some rules can favour the majority community, others can protect the minorities.',
+      'But merely writing down a list of rights is not enough.',
+      'On the occasion of Mahavir Jayanti, the god Hanuman was worshipped on Devika beach.',
+      'This problem arose when the government sought to pass laws to abolish zamindari system.',
+      'The availability of housing for the general public will be increased.',
+      'For the appointment of a judge of the High Court also, consultation with the Chief Justice of India was mandatory. ',
+      'Over five crore tonnes of food grains was stored in the godowns of the Food Corporation of India.',
+      'A team of social scientists studied their poor condition and petitioned the Supreme Court.',
+      'In view of the said information, the commission withheld further action awaiting the opinion of the Supreme court in the matter. ',
+      'Similarly a game needs an impartial umpire whose decision is accepted by all the players.',
+      'Three years later, on 20 and 21 November 2017 articles were published in Caravan which was followed by a flurry of writ petitions. ',
+      'In spite of this, the blind faith of some of their devotees continues.',
+      'Given the severity of the case support from the cyber crime cell is being sought.',
+      'A definition is an explicit statement of the full connotation of a term.',
+      'I live in Shopian, which is believed to be a stronghold of terrorists.',
+      'Ms. Archana Pathak Dave, learned counsel for the State of Rajasthan.',
+      'The demand for a separate district was raised by Mewat Educational and Social Organisation and Mewat Saksharta Samiti in 1996.',
+      'Dr. S.S. Dahiya conducted postmortem examination on the dead body of Manju, wife of Pradeep Kumar.',
+      'The passion for respect and freedom are the basis of democracy.'
     ]
     };
 
@@ -338,7 +338,7 @@ class AnuvaadGame extends React.Component {
                   </canvas>
                 </div>
               </Grid>
-              <Grid item xs={1} sm={1} lg={1} xl={1}><KeyboardBackspaceIcon style ={{marginTop:'320px',fontSize:'100px',marginLeft:'-10%', color:'red'}}/></Grid>
+              <Grid item xs={1} sm={1} lg={1} xl={1}><ArrowBackIcon style ={{marginTop:'320px',fontSize:'100px',marginLeft:'35px', color:'red'}}/></Grid>
               {this.state.textValue  && (
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
                   <Typography value="" variant="h4" gutterBottom style={{ marginTop: "30%" , marginRight:'30px'}}>
@@ -355,7 +355,7 @@ class AnuvaadGame extends React.Component {
                   <Fab
                     variant="contained"
                     aria-label="edit"
-                    style={{ marginLeft: "52%", width: "10%", marginTop: "-150px", backgroundColor: "green" }}
+                    style={{ marginLeft: "47%", width: "15%",height:'50px', marginTop: "-100px",padding:'70px', backgroundColor: "green" }}
                     onClick={this.startTheWheel.bind(this)}
                   >
                     Start
@@ -367,7 +367,7 @@ class AnuvaadGame extends React.Component {
                   <Fab
                     variant="contained"
                     color="primary"
-                    style={{ marginLeft: "52%", width: "10%", marginTop: "-150px", backgroundColor: "red" }}
+                    style={{ marginLeft: "47%", width: "10%", marginTop:"-100px",padding:'70px', backgroundColor: "red" }}
                     onClick={this.stopTheWheel.bind(this)}
                   >
                     Reset
