@@ -158,7 +158,7 @@ class UserProfile extends React.Component {
       <div>
         <Paper style={{ marginLeft: "23%", width: "46%", marginTop: "5%" }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
-            {translate('common.page.label.myProfile')}{" "}
+            {translate('header.page.heading.MyProfile')}{" "}
           </Typography>
 
           <Grid container spacing={4}>

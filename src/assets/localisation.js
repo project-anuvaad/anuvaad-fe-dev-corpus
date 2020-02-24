@@ -155,7 +155,6 @@ var localization_EN_Data = {
     'userProfile.page.message.passwordTooShortAlert':"New password is too short(min 6 char)",
     'userProfile.page.message.enterCorrectPasswordAlert':"Please enter correct current password",
     'feedbackForm.page.label.feedbackFor':"FeedBack for",
-    'common.page.label.myProfile':"My Profile",
     'userProfile.page.label.changePassword':"Change Password",
    'common.page.label.id' :"id",
    'common.page.label.userName':"Username",
@@ -300,6 +299,8 @@ var localization_EN_Data = {
    'dataPipeLine.page.tool.stage8':"Stage 8",
    'dataPipeLine.page.tool.stage9':"Stage 9",
    'GrdaerTranslate.page.label..filesList':"Files List",
+   'datapipeline.page.label.datasource':"DataSource",
+   'datapipeline.page.label.toolchain':" Toolchain "
    //'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 }
 
@@ -461,7 +462,6 @@ var localization_HI_Data = {
     'userProfile.page.message.passwordTooShortAlert':"नया पासवर्ड बहुत छोटा है (न्यूनतम 6 वर्ण)",
     'userProfile.page.message.enterCorrectPasswordAlert':"कृपया सही वर्तमान पासवर्ड दर्ज करें",
     'feedbackForm.page.label.feedbackFor':"प्रतिपुष्टि के लिए",
-    'common.page.label.myProfile':"मेरा प्रोफाइल",
     'userProfile.page.label.changePassword':"पासवर्ड बदलें",
    'common.page.label.id' :"आईडी",
    'common.page.label.userName':"उपयोगकर्ता नाम",
@@ -605,6 +605,8 @@ var localization_HI_Data = {
    'dataPipeLine.page.tool.stage8':"चरण 8",
    'dataPipeLine.page.tool.stage9':"चरण 9",
    'GrdaerTranslate.page.label..filesList':"फ़ाइलें सूची",
+   'datapipeline.page.label.datasource':"डेटा स्रोत",
+   'datapipeline.page.label.toolchain':" साधन श्रृंखला "
 
    
 }

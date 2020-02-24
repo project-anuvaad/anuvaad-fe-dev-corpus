@@ -78,7 +78,7 @@ class DataPipeline extends React.Component {
                           onClick={() => {
                             this.handleDataClick(text);
                           }}
-                          value="DataSource"
+                          value={translate('datapipeline.page.label.datasource')}
                           size={150}
                           round="100px"
                           style={{ cursor: "pointer", styles }}
@@ -89,7 +89,7 @@ class DataPipeline extends React.Component {
                           onClick={() => {
                             this.handleClick(text);
                           }}
-                          value=" Toolchain "
+                          value= {translate('datapipeline.page.label.toolchain')}
                           size={150}
                           style={{ cursor: "pointer" }}
                         />

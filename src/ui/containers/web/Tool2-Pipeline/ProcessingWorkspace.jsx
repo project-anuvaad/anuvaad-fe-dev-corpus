@@ -129,7 +129,7 @@ class ProcessingWorkspace extends React.Component {
         clearTimeout(this.intervalID);
       },
 
-      //rowsSelected: this.state.rowsSelected,
+      rowsSelected: this.state.rowsSelected,
       onRowsSelect: (rowsSelected, allRows) => {
         const selectedItems = [];
         this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });
