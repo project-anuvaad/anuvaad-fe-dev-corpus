@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import Dialog from "../../components/web/common/Dialog";
+import CONFIGS from "../../../configs/configs";
 
 class ViewDocs extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class ViewDocs extends Component {
     }
 
     loadDocx(basename) {
-        fetch('http://auth.anuvaad.org/download-docx?filename=' + basename + '.docx', {
+        fetch(CONFIGS.BASE_URL_AUTO + '/download-docx?filename=' + basename + '.docx', {
             method: 'GET'
         }).then(response => response.blob())
             .then(blob => {
@@ -48,7 +49,7 @@ class ViewDocs extends Component {
     }
 
     loadDocxTgt(basename) {
-        fetch('http://auth.anuvaad.org/download-docx?filename=' + basename + '_t.docx', {
+        fetch(CONFIGS.BASE_URL_AUTO + '/download-docx?filename=' + basename + '_t.docx', {
             method: 'GET'
         }).then(response => response.blob())
             .then(blob => {
