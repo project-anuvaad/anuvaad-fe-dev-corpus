@@ -32,7 +32,7 @@ class ViewDocs extends Component {
     }
 
     loadDocx(basename) {
-        fetch('http://nlp-nmt-160078446.us-west-2.elb.amazonaws.com/corpus/download-docx?filename=' + basename + '.docx', {
+        fetch('http://auth.anuvaad.org/download-docx?filename=' + basename + '.docx', {
             method: 'GET'
         }).then(response => response.blob())
             .then(blob => {
@@ -48,7 +48,7 @@ class ViewDocs extends Component {
     }
 
     loadDocxTgt(basename) {
-        fetch('http://nlp-nmt-160078446.us-west-2.elb.amazonaws.com/corpus/download-docx?filename=' + basename + '_t.docx', {
+        fetch('http://auth.anuvaad.org/download-docx?filename=' + basename + '_t.docx', {
             method: 'GET'
         }).then(response => response.blob())
             .then(blob => {
