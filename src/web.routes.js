@@ -19,6 +19,7 @@ import UploadAudio from "./ui/containers/web/UploadAudio";
 import UserProfile from "./ui/containers/web/UserProfile";
 import ViewTranslations from "./ui/containers/web/ViewTranslations";
 import DashboardTamil from "./ui/containers/web/Dashboard";
+import AnuvaadGame from "./ui/containers/web/AnuvaadGame";
 import GradeViewCorpus from "./ui/containers/web/GradeViewCorpus";
 import BenchmarkGrade from "./ui/containers/web/BenchmarkGrade";
 import QnA from "./ui/containers/web/QnA";
@@ -160,6 +161,20 @@ class AppRoutes extends React.Component {
               path={`${process.env.PUBLIC_URL}/dashboard`}
               title={translate('dashboard.page.heading.title')}
               component={DashboardTamil}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/anuvaad-wheel`}
+              drawer
+              title="Anuvaad Game"
+              component={AnuvaadGame}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/anuvaad-game`}
+              drawer
+              title="Anuvaad Game"
+              component={AnuvaadGame}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
