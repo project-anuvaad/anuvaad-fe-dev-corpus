@@ -23,7 +23,7 @@ class ProcessingWorkspace extends React.Component {
 
   componentDidMount() {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.props.source, this.props.target, this.props.mt, this.props.ht, this.props.tool3);
+    const apiObj = new FetchWorkspace(this.props.source, this.props.target,"PROCESSED");
     APITransport(apiObj);
     this.setState({ showLoader: true });
     
