@@ -5,11 +5,12 @@ import API from "./api";
 import C from "../constants";
 
 export default class FetchMTWorkspace extends API {
-    constructor(source, target, timeout = 2000) {
+    constructor(source, target,status, timeout = 2000) {
         super('GET', timeout, false);
         this.type = C.FETCH_WORKSPACE;
         this.source = source;
     this.target = target;
+    this.status = status;
     
         this.fetch_workspace = {}
     }
@@ -30,7 +31,7 @@ export default class FetchMTWorkspace extends API {
 let url = 
 `${super.apiEndPointAuto()}/fetch-search-replace-workspace?source=${
    this.source
- }&target_language=${this.target}` 
+ }&target_language=${this.target}&status=${this.status}`
  
         return url
     }

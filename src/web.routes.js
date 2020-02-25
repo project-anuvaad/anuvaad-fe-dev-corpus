@@ -36,6 +36,7 @@ import ViewTranslate from "./ui/containers/web/ViewTranslate";
 import UserDirectory from "./ui/containers/web/UserDirectory";
 import ViewDoc from "./ui/containers/web/ViewDoc";
 import AnuvaadEditor from "./ui/containers/web/AnuvaadEditor";
+import Editor from "./ui/containers/web/Editor";
 import AnuvaadModels from "./ui/containers/web/TextModels";
 import AddQuestion from "./ui/containers/web/AddQuestion";
 import TranslatePresident from "./ui/containers/web/TranslateJudgement";
@@ -564,6 +565,15 @@ class AppRoutes extends React.Component {
               dontShowLoader
               userRoles={["dev"]}
               component={AnuvaadEditor}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/editor`}
+              title="Editor"
+              dontShowLoader
+              userRoles={["dev"]}
+              component={Editor}
               authenticate={this.authenticateUser}
             />
 

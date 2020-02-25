@@ -19,8 +19,6 @@ import FetchLanguage from "../../../../flux/actions/apis/fetchlanguage";
 import ProcessingWorkspace from "./ProcessingWorkspace";
 import CompositionWorkspace from "../../../../flux/actions/apis/compostionworkspace";
 import Select from "@material-ui/core/Select";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import ConfigUpload from "../../../../flux/actions/apis/configupload";
 
 class CreateWorkspace extends React.Component {
@@ -250,7 +248,7 @@ handleChange = (key, event) => {
                 {/* <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" /> */}
               </Grid>
               
-              <Grid item xs={12} sm={12} lg={12} xl={12}>
+              {/* <Grid item xs={12} sm={12} lg={12} xl={12}>
               <Typography
                 variant="subtitle2"
                 color="inherit"
@@ -292,7 +290,7 @@ handleChange = (key, event) => {
                   }
                   label="After Tool3"
                 />
-             
+              */}
 
 
               <Grid item xs={5} sm={5} lg={5} xl={5}>
@@ -372,7 +370,7 @@ handleChange = (key, event) => {
             </Grid>
 
               <Grid item xs={12} sm={12} lg={12} xl={12}>
-                <ProcessingWorkspace workspaceName={this.state.workspaceName} target={this.state.target.language_code} source = { this.state.source.language_code} mt={ this.state.afterMT} tool3={this.state.afterTool3} ht={this.state.afterHT} handleWorkspaceSelected={this.handleWorkspaceSelected.bind(this)} selectedWorkspaces={this.state.selectedWorkspaces}/>
+                <ProcessingWorkspace workspaceName={this.state.workspaceName} target={this.state.target.language_code} source = { this.state.source.language_code} handleWorkspaceSelected={this.handleWorkspaceSelected.bind(this)} selectedWorkspaces={this.state.selectedWorkspaces}/>
               </Grid>
 
 
