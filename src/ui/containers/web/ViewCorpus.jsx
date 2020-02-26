@@ -130,7 +130,7 @@ class Corp extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div style={{ width: "90px" }}>
-                  {tableMeta.rowData[6] === "COMPLETED" && this.state.role.includes("editor") && (
+                  {(tableMeta.rowData[6] === "COMPLETED" || tableMeta.rowData[6] === "IN-PROGRESS") && this.state.role.includes("editor") && (
                     <Tooltip title={translate('viewCorpus.title.viewSentence')}>
                       <EditIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
@@ -142,7 +142,7 @@ class Corp extends React.Component {
                       </EditIcon>
                     </Tooltip>
                   )}
-                  {tableMeta.rowData[6] === "COMPLETED" && this.state.role.includes("grader") && (
+                  {(tableMeta.rowData[6] === "COMPLETED" || tableMeta.rowData[6] === "IN-PROGRESS") && this.state.role.includes("grader") && (
                     <Tooltip title= {translate('common.page.title.gradeSentence')}>
                       <GradeIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
@@ -154,7 +154,7 @@ class Corp extends React.Component {
                       </GradeIcon>
                     </Tooltip>
                   )}
-                  {tableMeta.rowData[6] === "COMPLETED" && this.state.role.includes("dev") && (
+                  {(tableMeta.rowData[6] === "COMPLETED" || tableMeta.rowData[6] === "IN-PROGRESS") && this.state.role.includes("dev") && (
                     <Tooltip title= {translate('viewCorpus.title.viewSentence')}>
                       <ViewIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
