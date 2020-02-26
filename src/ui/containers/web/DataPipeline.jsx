@@ -27,35 +27,47 @@ class DataPipeline extends React.Component {
     super(props);
     this.state = {
       value: 2,
-      tools: [translate('dataPipeLine.page.tool.stage1'),translate('dataPipeLine.page.tool.stage2') ,translate('dataPipeLine.page.tool.stage3') ,translate('dataPipeLine.page.tool.stage4') ,translate('dataPipeLine.page.tool.stage5') , translate('dataPipeLine.page.tool.stage6'),translate('dataPipeLine.page.tool.stage7') ,translate('dataPipeLine.page.tool.stage8') ,translate('dataPipeLine.page.tool.stage9') ]
+      tools: [
+        translate("dataPipeLine.page.tool.stage1"),
+        translate("dataPipeLine.page.tool.stage2"),
+        translate("dataPipeLine.page.tool.stage3"),
+        translate("dataPipeLine.page.tool.stage4"),
+        translate("dataPipeLine.page.tool.stage5"),
+        translate("dataPipeLine.page.tool.stage6"),
+        translate("dataPipeLine.page.tool.stage7"),
+        translate("dataPipeLine.page.tool.stage8"),
+        translate("dataPipeLine.page.tool.stage9")
+      ]
     };
   }
 
   handleClick = value => {
-    if (value === translate('dataPipeLine.page.tool.stage1')) {
-      history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
-    } else if (value === translate('dataPipeLine.page.tool.stage2')) {
-      history.push(`${process.env.PUBLIC_URL}/stage2/existing-workspace`);
-    } else if (value === translate('dataPipeLine.page.tool.stage3')) {
-      history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
-    } else if (value === translate('dataPipeLine.page.tool.stage4')) {
-      history.push(`${process.env.PUBLIC_URL}/stage4/existing-workspace`);
-    } else {
-      alert(translate("common.page.label.stillinprogress"));
+    switch (value) {
+      case translate("dataPipeLine.page.tool.stage1"):
+        return history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
+      case translate("dataPipeLine.page.tool.stage2"):
+        return history.push(`${process.env.PUBLIC_URL}/stage2/existing-workspace`);
+      case translate("dataPipeLine.page.tool.stage3"):
+        return history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
+      case translate("dataPipeLine.page.tool.stage4"):
+        return history.push(`${process.env.PUBLIC_URL}/stage4/existing-workspace`);
+      default:
+        return alert(translate("common.page.label.stillinprogress"));
     }
   };
 
   handleDataClick = value => {
-    if (value === translate('dataPipeLine.page.tool.stage1')) {
-      history.push(`${process.env.PUBLIC_URL}/datasource`);
-    } else if (value === translate('dataPipeLine.page.tool.stage2')) {
-      history.push(`${process.env.PUBLIC_URL}/stage2/datasource`);
-    } else if (value === translate('dataPipeLine.page.tool.stage3')) {
-      history.push(`${process.env.PUBLIC_URL}/stage3/datasource`);
-    } else if (value === translate('dataPipeLine.page.tool.stage4')) {
-      history.push(`${process.env.PUBLIC_URL}/stage4/datasource`);
-    } else {
-      alert(translate("common.page.label.stillinprogress"));
+    switch (value) {
+      case translate("dataPipeLine.page.tool.stage1"):
+        return history.push(`${process.env.PUBLIC_URL}/datasource`);
+      case translate("dataPipeLine.page.tool.stage2"):
+        return history.push(`${process.env.PUBLIC_URL}/stage2/datasource`);
+      case translate("dataPipeLine.page.tool.stage3"):
+        return history.push(`${process.env.PUBLIC_URL}/stage3/datasource`);
+      case translate("dataPipeLine.page.tool.stage4"):
+        return history.push(`${process.env.PUBLIC_URL}/stage4/datasource`);
+      default:
+        return alert(translate("common.page.label.stillinprogress"));
     }
   };
 
