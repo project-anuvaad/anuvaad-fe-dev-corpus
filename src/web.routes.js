@@ -46,6 +46,7 @@ import ExistingWorkspace from "./ui/containers/web/Tool1-Pipeline/ExistingWorksp
 import SentenceExtraction from "./ui/containers/web/Tool1-Pipeline/SentenceExtraction";
 import Tool2SentenceExtraction from "./ui/containers/web/Tool2-Pipeline/SentenceExtraction";
 import Tool3SentenceExtraction from "./ui/containers/web/Tool3-Pipeline/SentenceExtraction";
+import Tool4SentenceExtraction from "./ui/containers/web/Tool4-Pipeline/SentenceExtraction";
 import TockenExtraction from "./ui/containers/web/Tool1-Pipeline/TockenExtraction";
 import ApplyTocken from "./ui/containers/web/Tool1-Pipeline/ApplyTocken";
 import UploadTocken from "./ui/containers/web/Tool1-Pipeline/UploadTocken";
@@ -418,6 +419,14 @@ class AppRoutes extends React.Component {
               title={translate('webroutes.page.title.stage3Toolchain')}
               userRoles={["dev"]}
               component={Tool3SentenceExtraction}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage4/sentence-extraction/:name/:session_id`}
+              title={translate('webroutes.page.title.stage4Toolchain')}
+              userRoles={["dev"]}
+              component={Tool4SentenceExtraction}
               authenticate={this.authenticateUser}
             />
 
