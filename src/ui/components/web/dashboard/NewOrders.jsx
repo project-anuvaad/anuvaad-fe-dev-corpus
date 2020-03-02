@@ -35,7 +35,7 @@ const NewOrders = props => {
           <div>
               {data ?
                 data.map(item=>
-                  <div>
+                  <div key ={item.s_id}>
                     {data.length>1 &&
                      <Typography variant="h6" gutterBottom style={{ color: darkBlack,marginLeft:"65px"}} >{item.s_id}:</Typography>}
                      <Typography variant="h6" gutterBottom style={{ color: darkBlack,marginLeft:"75px"}} >{item.tgt}</Typography>
