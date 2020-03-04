@@ -51,6 +51,8 @@ import uploadTokenValue from './uploadtoken';
 import uploadTranslated from './uploadTranslatedFile';
 import fetchSearch from './fetchsearchreplace';
 import sentenceReplace from './sentencereplace';
+import uploadpdf from './pdfupload';
+import pdfConfigUpload from './pdfuploadfile'
 
 export default {
     login,
@@ -103,5 +105,7 @@ export default {
     courtList,
     fetchSearch,
     sentenceReplace,
-    feedbackQuestions
+    feedbackQuestions,
+    uploadpdf,
+    pdfConfigUpload
 };

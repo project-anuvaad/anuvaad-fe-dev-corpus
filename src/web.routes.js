@@ -70,6 +70,7 @@ import Tool3DataSource from "./ui/containers/web/Tool3-Pipeline/DataSource";
 import Tool4DataSource from "./ui/containers/web/Tool4-Pipeline/DataSource";
 import Stage2DataSource from "./ui/containers/web/Tool2-Pipeline/DataSource";
 import FeedbackForm from "./ui/containers/web/FeedbackForm";
+import PdfUpload from "./ui/containers/web/PdfUpload";
 import { translate } from '../src/assets/localisation';
 
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
@@ -170,6 +171,13 @@ class AppRoutes extends React.Component {
               drawer
               title="Anuvaad Game"
               component={AnuvaadGame}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/pdf-upload`}
+              
+              title="Pdf Uplaod"
+              component={PdfUpload}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
