@@ -43,6 +43,8 @@
 		"react-foundation": "^0.9.6",
 		"react-infinite-scroll-component": "^4.5.3",
 		"react-js-pagination": "^3.0.2",
+		"react-json-to-html": "0.0.3",
+		"react-json-view": "^1.19.1",
 		"react-native": "0.56.0",
 		"react-native-router-flux": "~4.0.0-beta.27",
 		"react-native-simple-radio-button": "^2.7.4",
