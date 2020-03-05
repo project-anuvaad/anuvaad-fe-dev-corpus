@@ -3,15 +3,14 @@ import C from "../constants";
 
 
 export default class RunExperiment extends API {
-  constructor(name,filepath, timeout = 2000) {
-    console.log();
-    super("POST", timeout, false);
+  constructor(name, file, timeout = 2000) {
+    super("POST", timeout, false, "MULTIPART");
     this.type = C.UPLOADPDF;
     this.name = name;
-    this.filepath = filepath;
+    this.file = file;
     this.workspace = []
-    
-    
+
+
   }
 
   toString() {
@@ -29,20 +28,18 @@ export default class RunExperiment extends API {
     return `${super.apiEndPointAuto()}/start-pdf-parse-process`;
   }
 
-  getBody() {
-    return {
-        
-            pdf_path: this.filepath,
-            process_name: this.name
-        
-    };
+  getFormData() {
+    const formData = new FormData();
+    formData.append('pdf_data', this.file);
+    formData.append('process_name', this.name);
+    return formData;
   }
 
   getHeaders() {
     this.headers = {
       headers: {
-        Authorization: `Bearer ${  decodeURI(localStorage.getItem("token"))}`,
-        "Content-Type": "application/json"
+        Authorization: `Bearer ${decodeURI(localStorage.getItem("token"))}`,
+        "Content-Type": "multipart/form-data"
       }
     };
     return this.headers;

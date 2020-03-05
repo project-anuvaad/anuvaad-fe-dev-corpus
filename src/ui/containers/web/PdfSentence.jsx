@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
-import FetchPdf from "../../../flux/actions/apis/fetchpdf";
+import FetchPdfSentence from "../../../flux/actions/apis/fetchpdfsentence";
 import ViewIcon from "@material-ui/icons/Visibility";
 import Tooltip from "@material-ui/core/Tooltip";
 import history from "../../../web.history";
@@ -41,7 +41,7 @@ class PdfUpload extends React.Component {
 
   componentDidMount() {
     const { APITransport } = this.props;
-    const apiObj = new FetchPdf();
+    const apiObj = new FetchPdfSentence(this.props.match.params.session_id);
     APITransport(apiObj);
     this.setState({ showLoader: true });
   }
@@ -53,22 +53,22 @@ class PdfUpload extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.corp !== this.props.corp) {
-      this.setState({ name: this.props.corp });
+    if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
+      this.setState({ name: this.props.fetchPdfSentence });
     }
   }
 
   render() {
     const columns = [
       {
-        name: "basename",
+        name: "_id",
         label: translate('common.page.label.basename'),
         options: {
           display: "excluded"
         }
       },
       {
-        name: "process_name",
+        name: "text",
         label: translate('viewCorpus.page.label.fileName'),
         options: {
           filter: true,
@@ -84,52 +84,41 @@ class PdfUpload extends React.Component {
           sort: true
         }
       },
+//       {
+//         name: "Action",
+//         label: translate('common.page.label.action'),
+//         options: {
+//             filter: true,
+//             sort: false,
+//             empty: true,
 
-      {
-        name: "created_on",
-        label: translate('common.page.label.timeStamp') ,
-        options: {
-          filter: true,
-          sort: true,
-          sortDirection: "desc"
-        }
-      },
+//             customBodyRender: (value, tableMeta, updateValue) => {
+//                 if (tableMeta.rowData) {
+//                     return (
+//                         <div style={{ width: '240px', marginLeft: '-20px' }}>
 
-      {
-        name: "Action",
-        label: translate('common.page.label.action'),
-        options: {
-            filter: true,
-            sort: false,
-            empty: true,
-
-            customBodyRender: (value, tableMeta, updateValue) => {
-                if (tableMeta.rowData) {
-                    return (
-                        <div style={{ width: '240px', marginLeft: '-20px' }}>
-
-<Tooltip title={translate('viewCorpus.title.viewSentence')}>
-                      <EditIcon
-                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
-                        onClick={() => {
-                          history.push(`${process.env.PUBLIC_URL}/parallel-corpus/` + tableMeta.rowData[0]);
-                        }}
-                      >
-                        {" "}
-                      </EditIcon>
-                    </Tooltip>
-                            { <Tooltip title={translate('viewTranslate.page.title.downloadSource')}><IconButton color="secondary" component="a" ><DeleteOutlinedIcon /></IconButton></Tooltip> }
-                            {<Tooltip title={translate('viewTranslate.page.title.downloadTranslate')}><IconButton color="primary" component="a"><DeleteOutlinedIcon /></IconButton></Tooltip> }
-                            {/* {<Tooltip title="View"><IconButton style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </IconButton></Tooltip>} */}
-                            {<Tooltip title={translate('common.page.label.delete')}><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip>}
+// <Tooltip title={translate('viewCorpus.title.viewSentence')}>
+//                       <EditIcon
+//                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
+//                         onClick={() => {
+//                           history.push(`${process.env.PUBLIC_URL}/parallel-corpus/` + tableMeta.rowData[0]);
+//                         }}
+//                       >
+//                         {" "}
+//                       </EditIcon>
+//                     </Tooltip>
+//                             { <Tooltip title={translate('viewTranslate.page.title.downloadSource')}><IconButton color="secondary" component="a" ><DeleteOutlinedIcon /></IconButton></Tooltip> }
+//                             {<Tooltip title={translate('viewTranslate.page.title.downloadTranslate')}><IconButton color="primary" component="a"><DeleteOutlinedIcon /></IconButton></Tooltip> }
+//                             {/* {<Tooltip title="View"><IconButton style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </IconButton></Tooltip>} */}
+//                             {<Tooltip title={translate('common.page.label.delete')}><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip>}
                             
-                        </div>
-                    );
-                }
+//                         </div>
+//                     );
+//                 }
 
-            }
-        }
-    }
+//             }
+//         }
+//     }
 
 
       
@@ -149,35 +138,18 @@ class PdfUpload extends React.Component {
         }
       },
       filterType: "checkbox",
-      onRowClick: rowData => this.handleClick(rowData),
+     
       download: false,
-      expandableRowsOnClick: true,
+      
       print: false,
-      fixedHeader: true,
+      
       filter: false,
       selectableRows: "none"
     };
 
     return (
       <div>
-        <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
-          <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
-          {this.state.role.includes("dev") ? (
-            <Button
-              variant="extendedFab"
-              color="primary"
-              style={{ marginRight: 0 }}
-              aria-label="Add"
-              onClick={() => {
-                history.push(`${process.env.PUBLIC_URL}/newcorpus`);
-              }}
-            >
-              <AddIcon /> {translate('commonCorpus.page.button.corpus')}
-            </Button>
-          ) : (
-            ""
-          )}
-        </Toolbar>
+       
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
           <MUIDataTable title={translate('common.page.title.document')} data={this.state.name} columns={columns} options={options} />
         </div>
@@ -189,7 +161,7 @@ class PdfUpload extends React.Component {
 const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
-  corp: state.corp
+  fetchPdfSentence: state.fetchPdfSentence
 });
 
 const mapDispatchToProps = dispatch =>

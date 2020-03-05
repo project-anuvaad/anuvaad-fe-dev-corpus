@@ -44,8 +44,8 @@ class PdfUpload extends React.Component {
   }
 
   handleClick = rowData => {
-    
-    history.push(`${process.env.PUBLIC_URL}/pdf-sentence`);
+    console.log(rowData)
+    history.push(`${process.env.PUBLIC_URL}/pdf-sentence/`+rowData[0]);
     
   };
 
@@ -58,7 +58,7 @@ class PdfUpload extends React.Component {
   render() {
     const columns = [
       {
-        name: "basename",
+        name: "session_id",
         label: translate('common.page.label.basename'),
         options: {
           display: "excluded"
