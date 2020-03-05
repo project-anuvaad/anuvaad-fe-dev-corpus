@@ -478,7 +478,29 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                           PDF Translate
+                           PDF Sentences
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push("/view-pdf");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <InsertDriveFileIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                           PDF File LIst
                         </Typography>
                         }
                       />

@@ -186,14 +186,14 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/view-pdf`}
               
-              title="Pdf View"
+              title="Pdf Files"
               component={ViewPdf}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/pdf-sentence`}
+              path={`${process.env.PUBLIC_URL}/pdf-sentence/:session_id`}
               
-              title="Pdf View"
+              title="Pdf Sentences"
               component={PdfSentence}
               authenticate={this.authenticateUser}
             />
