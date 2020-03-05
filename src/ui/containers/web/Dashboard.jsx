@@ -64,9 +64,15 @@ class Dashboard extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.automl !== this.props.automl) {
-      this.setState({
-        autoMlText: this.props.automl.text
-      });
+      if (this.props.automl.text && this.props.automl.text.message === "Daily Limit Exceeded") {
+        this.setState({
+          autoMlText: this.props.automl.text.message
+        });
+      } else {
+        this.setState({
+          autoMlText: this.props.automl.text
+        });
+      }
     }
 
     if (prevProps.nmt !== this.props.nmt) {

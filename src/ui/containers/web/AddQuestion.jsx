@@ -17,7 +17,7 @@ import Snackbar from "../../components/web/common/Snackbar";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import QuestionUpload from "../../../flux/actions/apis/questionupload";
 import FetchQuestions from "../../../flux/actions/apis/fetchquestions";
-import { translate } from '../../../assets/localisation';
+import { translate } from "../../../assets/localisation";
 
 class AddQuestion extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class AddQuestion extends React.Component {
       questionType: "",
       question: "",
       questionTypeList: ["Rating", "Yes/No"],
-      message1:translate('addQuestion.page.message.questionListUpdated') ,
+      message1: translate("addQuestion.page.message.questionListUpdated"),
       values: [],
       questionList: [],
       open: false
@@ -45,7 +45,7 @@ class AddQuestion extends React.Component {
     }
 
     if (prevProps.createWorkspaceDetails !== this.props.createWorkspaceDetails) {
-      this.setState({ open: true, message1:translate('addQuestion.page.message.questionListUpdated')  });
+      this.setState({ open: true, message1: translate("addQuestion.page.message.questionListUpdated") });
       setTimeout(() => {
         this.setState({ open: false });
       }, 3000);
@@ -74,7 +74,7 @@ class AddQuestion extends React.Component {
   handleDelete(event, i) {
     const questionList = [...this.state.questionList];
     questionList[i].status = "DELETED";
-    this.setState({ questionList, open: true, message1: translate('addQuestion.page.message.deleteList') });
+    this.setState({ questionList, open: true, message1: translate("addQuestion.page.message.deleteList") });
     setTimeout(() => {
       this.setState({ open: false });
     }, 3000);
@@ -100,7 +100,7 @@ class AddQuestion extends React.Component {
       const apiObj = new QuestionUpload(this.state.questionList);
       APITransport(apiObj);
     } else {
-      alert(translate('addQuestion.page.alert.questionError'));
+      alert(translate("addQuestion.page.alert.questionError"));
     }
   }
 
@@ -111,7 +111,7 @@ class AddQuestion extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "1 %", marginLeft: "12%" }}>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-              {translate('addQuestion.page.label.question')}
+                {translate("addQuestion.page.label.question")}
               </Typography>
               <br />
             </Grid>
@@ -130,12 +130,12 @@ class AddQuestion extends React.Component {
                 style={{ width: "60%" }}
               />{" "}
               <Fab
-              color= "red"
+                color="red"
                 aria-label="Delete"
                 onClick={event => {
                   this.handleDelete(event, i);
                 }}
-                style={{ marginTop: "2.1%",backgroundColor:'white',color:'red' }}
+                style={{ marginTop: "2.1%", backgroundColor: "white", color: "red" }}
               >
                 <DeleteIcon />
               </Fab>
@@ -143,7 +143,7 @@ class AddQuestion extends React.Component {
 
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-              {translate('addQuestion.page.label.questionType')} &emsp;&emsp;{" "}
+                {translate("addQuestion.page.label.questionType")} &emsp;&emsp;{" "}
               </Typography>
               <br />
             </Grid>
@@ -184,7 +184,7 @@ class AddQuestion extends React.Component {
               paddingBottom: "16px"
             }}
           >
-            {translate('addQuestion.page.label.addQuestion')}
+            {translate("addQuestion.page.label.addQuestion")}
           </Typography>
           <br />
           {this.form()}
@@ -205,7 +205,7 @@ class AddQuestion extends React.Component {
                 style={{ width: "80%", marginTop: "6%", height: "56px" }}
                 onClick={this.addClick.bind(this)}
               >
-                {translate('common.page.button.add')}
+                {translate("common.page.button.add")}
               </Button>
             </Grid>
             {this.state.questionList.length > 0 && (
@@ -216,7 +216,7 @@ class AddQuestion extends React.Component {
                   style={{ width: "81%", marginTop: "6%", height: "56px" }}
                   onClick={this.handleSubmit.bind(this)}
                 >
-                 {translate('common.page.button.submit')}
+                  {translate("common.page.button.submit")}
                 </Button>
               </Grid>
             )}

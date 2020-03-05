@@ -46,6 +46,7 @@ import ExistingWorkspace from "./ui/containers/web/Tool1-Pipeline/ExistingWorksp
 import SentenceExtraction from "./ui/containers/web/Tool1-Pipeline/SentenceExtraction";
 import Tool2SentenceExtraction from "./ui/containers/web/Tool2-Pipeline/SentenceExtraction";
 import Tool3SentenceExtraction from "./ui/containers/web/Tool3-Pipeline/SentenceExtraction";
+import Tool4SentenceExtraction from "./ui/containers/web/Tool4-Pipeline/SentenceExtraction";
 import TockenExtraction from "./ui/containers/web/Tool1-Pipeline/TockenExtraction";
 import ApplyTocken from "./ui/containers/web/Tool1-Pipeline/ApplyTocken";
 import UploadTocken from "./ui/containers/web/Tool1-Pipeline/UploadTocken";
@@ -69,6 +70,10 @@ import Tool3DataSource from "./ui/containers/web/Tool3-Pipeline/DataSource";
 import Tool4DataSource from "./ui/containers/web/Tool4-Pipeline/DataSource";
 import Stage2DataSource from "./ui/containers/web/Tool2-Pipeline/DataSource";
 import FeedbackForm from "./ui/containers/web/FeedbackForm";
+import PdfUpload from "./ui/containers/web/PdfUpload";
+import ViewPdf from "./ui/containers/web/ViewPdfFile";
+
+import PdfSentence from "./ui/containers/web/PdfSentence";
 import { translate } from '../src/assets/localisation';
 
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
@@ -169,6 +174,27 @@ class AppRoutes extends React.Component {
               drawer
               title="Anuvaad Game"
               component={AnuvaadGame}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/pdf-upload`}
+              
+              title="Pdf Uplaod"
+              component={PdfUpload}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/view-pdf`}
+              
+              title="Pdf Files"
+              component={ViewPdf}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/pdf-sentence/:session_id`}
+              
+              title="Pdf Sentences"
+              component={PdfSentence}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
@@ -418,6 +444,14 @@ class AppRoutes extends React.Component {
               title={translate('webroutes.page.title.stage3Toolchain')}
               userRoles={["dev"]}
               component={Tool3SentenceExtraction}
+              authenticate={this.authenticateUser}
+            />
+
+<PrivateRoute
+              path={`${process.env.PUBLIC_URL}/stage4/sentence-extraction/:name/:session_id`}
+              title={translate('webroutes.page.title.stage4Toolchain')}
+              userRoles={["dev"]}
+              component={Tool4SentenceExtraction}
               authenticate={this.authenticateUser}
             />
 
