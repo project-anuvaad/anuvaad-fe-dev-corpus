@@ -71,6 +71,9 @@ import Tool4DataSource from "./ui/containers/web/Tool4-Pipeline/DataSource";
 import Stage2DataSource from "./ui/containers/web/Tool2-Pipeline/DataSource";
 import FeedbackForm from "./ui/containers/web/FeedbackForm";
 import PdfUpload from "./ui/containers/web/PdfUpload";
+import ViewPdf from "./ui/containers/web/ViewPdfFile";
+
+import PdfSentence from "./ui/containers/web/PdfSentence";
 import { translate } from '../src/assets/localisation';
 
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
@@ -178,6 +181,20 @@ class AppRoutes extends React.Component {
               
               title="Pdf Uplaod"
               component={PdfUpload}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/view-pdf`}
+              
+              title="Pdf View"
+              component={ViewPdf}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/pdf-sentence`}
+              
+              title="Pdf View"
+              component={PdfSentence}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
