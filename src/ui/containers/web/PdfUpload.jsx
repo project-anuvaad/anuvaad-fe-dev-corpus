@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import PdfFileUpload from "../../../flux/actions/apis/pdffileupload";
+import history from "../../../web.history";
 
 const styles = theme => ({
     paper: {
@@ -67,6 +68,10 @@ class PdfUpload extends Component {
             val
           );
            APITransport(apiObj);
+           setTimeout(() => {
+            history.push(`${process.env.PUBLIC_URL}/view-pdf`);
+          }, 2000);
+
           
         }
       
@@ -76,10 +81,9 @@ class PdfUpload extends Component {
           this.setState({ filesPath: this.props.pdfConfigUpload.filepath});
           
           this.renderApi(this.props.pdfConfigUpload.filepath);
-          
-    
-          
         }
+
+       
     }
 
     readFileDataAsBinary(file) {
@@ -153,6 +157,8 @@ class PdfUpload extends Component {
 
 const mapStateToProps = state => ({
     pdfConfigUpload: state.pdfConfigUpload,
+    pdfConfigUpload: state.pdfConfigUpload
+
   });
   
   const mapDispatchToProps = dispatch =>

@@ -110,6 +110,9 @@ class NewSentanceExtraction extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.configUplaod !== this.props.configUplaod) {
       this.setState({ files: this.props.configUplaod, count: this.state.count + 1 });
+      console.log("-", this.state.count);
+      
+
       this.renderApi();
     }
 

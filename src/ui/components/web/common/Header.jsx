@@ -29,6 +29,7 @@ import ActionDelete from "@material-ui/icons/QuestionAnswer";
 import GroupIcon from "@material-ui/icons/Group";
 import logo from '../../../../assets/logo.png';
 import { translate } from '../../../../../src/assets/localisation';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 
 const styles = {
   root: {
@@ -455,6 +456,29 @@ class Header extends React.Component {
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
                             {translate('webroutes.page.title.translateFile')}
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+
+{role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push("/pdf-upload");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <InsertDriveFileIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                           PDF Translate
                         </Typography>
                         }
                       />
