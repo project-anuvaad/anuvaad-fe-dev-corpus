@@ -1,5 +1,3 @@
-import "regenerator-runtime/runtime";
-import "core-js-pure/stable";
 import React, { Component } from "react";
 import { DropzoneArea } from "material-ui-dropzone";
 import Paper from "@material-ui/core/Paper";
@@ -132,7 +130,7 @@ class PdfUpload extends Component {
           <Grid container spacing={24} style={{ marginLeft: "12%" }}>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "85%", paddingTop: "30px", paddingBottom: "30px" }}>
-                Enter file name :
+                Enter file name
               </Typography>
               <br />
             </Grid>
