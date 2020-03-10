@@ -5,8 +5,6 @@ import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import FetchPdf from "../../../flux/actions/apis/fetchpdf";
-import ViewIcon from "@material-ui/icons/Visibility";
-import Tooltip from "@material-ui/core/Tooltip";
 import history from "../../../web.history";
 import AddIcon from "@material-ui/icons/Add";
 import { withStyles } from "@material-ui/core/styles";
@@ -14,8 +12,6 @@ import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Typography from "@material-ui/core/Typography";
 import MUIDataTable from "mui-datatables";
 import Toolbar from "@material-ui/core/Toolbar";
-import GradeIcon from "@material-ui/icons/Grade";
-import EditIcon from "@material-ui/icons/BorderColor";
 import { translate } from '../../../assets/localisation';
 
 class PdfUpload extends React.Component {
@@ -90,9 +86,7 @@ class PdfUpload extends React.Component {
           sort: true,
           sortDirection: "desc"
         }
-      },
-
-      
+      }, 
     ];
 
     const options = {
@@ -132,7 +126,7 @@ class PdfUpload extends React.Component {
                 history.push(`${process.env.PUBLIC_URL}/pdf-upload`);
               }}
             >
-              <AddIcon /> Upload
+              <AddIcon />{translate('common.page.button.upload')}
             </Button>
           ) : (
             ""
