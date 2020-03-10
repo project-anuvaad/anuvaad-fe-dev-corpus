@@ -179,21 +179,21 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdf-upload`}
               
-              title="Pdf Uplaod"
+              title={translate('webroutes.page.title.pdfSentences')}
               component={PdfUpload}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/view-pdf`}
               
-              title="Pdf Files"
+              title={translate('webroutes.page.title.pdfList')}
               component={ViewPdf}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdf-sentence/:session_id`}
               
-              title="Pdf Sentences"
+              title={translate('webroutes.page.title.pdfSentences')}
               component={PdfSentence}
               authenticate={this.authenticateUser}
             />
