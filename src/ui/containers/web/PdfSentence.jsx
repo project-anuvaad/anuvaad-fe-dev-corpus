@@ -5,7 +5,6 @@ import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import FetchPdfSentence from "../../../flux/actions/apis/fetchpdfsentence";
-import Tooltip from "@material-ui/core/Tooltip";
 import { withStyles } from "@material-ui/core/styles";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Typography from "@material-ui/core/Typography";
@@ -16,10 +15,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import { translate } from '../../../assets/localisation';
-import DeleteOutlinedIcon from '@material-ui/icons/AlarmAdd';
-import IconButton from "@material-ui/core/IconButton";
-import EditIcon from "@material-ui/icons/BorderColor";
-import DeleteIcon from '@material-ui/icons/AlarmAdd';
 import Input from "@material-ui/core/Input";
 import Paper from '@material-ui/core/Paper';
 
@@ -98,7 +93,7 @@ handleRowClick = rowData => {
       },
       {
         name: "text",
-        label: translate('viewCorpus.page.label.fileName'),
+        label: translate('common.page.label.sentence'),
         options: {
           filter: true,
           sort: true
@@ -112,32 +107,32 @@ handleRowClick = rowData => {
           filter: true,
           sort: true
         }
-      },
-      {
-        name: "Action",
-        label: translate('common.page.label.action'),
-        options: {
-            filter: true,
-            sort: false,
-            empty: true,
+       },
+    //   {
+    //     name: "Action",
+    //     label: translate('common.page.label.action'),
+    //     options: {
+    //         filter: true,
+    //         sort: false,
+    //         empty: true,
 
-            customBodyRender: (value, tableMeta, updateValue) => {
-                if (tableMeta.rowData) {
-                    return (
-                        <div style={{ width: '240px', marginLeft: '-20px' }}>
+    //         customBodyRender: (value, tableMeta, updateValue) => {
+    //             if (tableMeta.rowData) {
+    //                 return (
+    //                     <div style={{ width: '240px', marginLeft: '-20px' }}>
 
-                            { <Tooltip title={"Edit"}><IconButton color="primary" component="a" onClick={(event) => { this.handleClick() }}><EditIcon /></IconButton></Tooltip> }
-                            {/* {<Tooltip title={translate('viewTranslate.page.title.downloadTranslate')}><IconButton color="primary" component="a"><DeleteOutlinedIcon /></IconButton></Tooltip> }
-                             {<Tooltip title="View"><IconButton style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </IconButton></Tooltip>}
-                            {<Tooltip title={translate('common.page.label.delete')}><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit() }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip>}
-                             */}
-                        </div>
-                    );
-                }
+    //                         { <Tooltip title={"Edit"}><IconButton color="primary" component="a" onClick={(event) => { this.handleClick() }}><EditIcon /></IconButton></Tooltip> }
+    //                         {/* {<Tooltip title={translate('viewTranslate.page.title.downloadTranslate')}><IconButton color="primary" component="a"><DeleteOutlinedIcon /></IconButton></Tooltip> }
+    //                          {<Tooltip title="View"><IconButton style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </IconButton></Tooltip>}
+    //                         {<Tooltip title={translate('common.page.label.delete')}><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit() }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip>}
+    //                          */}
+    //                     </div>
+    //                 );
+    //             }
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
 
 
       

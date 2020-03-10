@@ -8,7 +8,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+// import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Grid from "@material-ui/core/Grid";
 import AccountCircle from "@material-ui/icons/AccountBox";
@@ -478,7 +478,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                           PDF Sentences
+                           {translate('webroutes.page.title.pdfSentences')}
                         </Typography>
                         }
                       />
@@ -500,7 +500,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                           PDF File LIst
+                           {translate('webroutes.page.title.pdfList')}
                         </Typography>
                         }
                       />
@@ -598,7 +598,7 @@ class Header extends React.Component {
                     </ListItem>
                   )}
 
-                  <ListItem
+                  {/* <ListItem
                     style={{ paddingTop: "17%", paddingBottom: "17%", marginTop: "43%", marginLeft: "82%", width: "18%" }}
                     button
                     onClick={event => {
@@ -608,7 +608,7 @@ class Header extends React.Component {
                     <ListItemIcon>
                       <ChevronLeftIcon style={{ color: "white" }} />
                     </ListItemIcon>
-                  </ListItem>
+                  </ListItem> */}
                 </List>
               </Drawer>
 

@@ -76,6 +76,7 @@ var localization_EN_Data = {
     'corpus.page.text.alignmentAccuracy':"Alignment Accuracy",
     'common.page.text.download':"DOWNLOAD",
     'common.page.label.basename':"Basename",
+    'common.page.label.filename':"Enter Filename",
     'viewCorpus.page.label.fileName':"File Name",
     'viewCorpus.page.label.domain':"Domain",
     'common.page.label.sentence':"Sentences",
@@ -303,7 +304,9 @@ var localization_EN_Data = {
    'dataPipeLine.page.tool.stage9':"Stage 9",
    'GrdaerTranslate.page.label..filesList':"Files List",
     "AnuvaadModels.page.button.startWritting":"Start Writing",
-    'feedback.page.text.feedbackAlert':"Please give your feedback for all the questions"
+    'feedback.page.text.feedbackAlert':"Please give your feedback for all the questions",
+    'webroutes.page.title.pdfList':'PDF File list',
+   'webroutes.page.title.pdfSentences': 'PDF Sentences',
    //'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 }
 
@@ -612,7 +615,10 @@ var localization_HI_Data = {
    'dataPipeLine.page.tool.stage9':"चरण 9",
    'GrdaerTranslate.page.label..filesList':"फ़ाइलें सूची",
    "AnuvaadModels.page.button.startWritting":"लिखना शुरू करें",
-   'feedback.page.text.feedbackAlert':"कृपया सभी प्रश्नों के लिए अपनी प्रतिक्रिया दें"
+   'feedback.page.text.feedbackAlert':"कृपया सभी प्रश्नों के लिए अपनी प्रतिक्रिया दें",
+   'common.page.label.filename' : 'फ़ाइल नाम दर्ज करें',
+   'webroutes.page.title.pdfList': 'पीडीएफ फाइल सूची',
+   'webroutes.page.title.pdfSentences': 'पीडीएफ वाक्य'
                           
 
    
