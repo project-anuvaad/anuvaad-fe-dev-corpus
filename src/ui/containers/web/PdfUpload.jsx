@@ -126,14 +126,14 @@ class PdfUpload extends Component {
             <br />
             <br />
           </Grid>
-          <Grid container spacing={24} style={{ marginLeft: "12%" }}>
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
+          <Grid container spacing={24} style={{ marginLeft: "15%" }}>
+            <Grid item xs={6} sm={6} lg={6} xl={6} style={{paddingLeft:'6%'}}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "85%", paddingTop: "30px", paddingBottom: "30px" }}>
               {translate('common.page.label.filename')} 
               </Typography>
               <br />
             </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6}>
+            <Grid item xs={6} sm={6} lg={6} xl={6} >
               <TextField
                 value={this.state.workspaceName}
                 required
