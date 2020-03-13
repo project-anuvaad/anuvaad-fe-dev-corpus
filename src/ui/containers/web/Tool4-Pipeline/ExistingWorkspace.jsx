@@ -70,9 +70,8 @@ class ExistingWorkspace extends React.Component {
 
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    console.log(rowData[0])
-      history.push(`${`${process.env.PUBLIC_URL}/stage4/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
-    
+    console.log(rowData[0]);
+    history.push(`${`${process.env.PUBLIC_URL}/stage4/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
   };
 
   handleChange = value => {
@@ -162,7 +161,7 @@ class ExistingWorkspace extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-          {translate('common.page.button.applyFilter')}
+            {translate("common.page.button.applyFilter")}
           </Button>
         </div>
       ),
@@ -175,8 +174,8 @@ class ExistingWorkspace extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
-            default:
-              return null;
+          default:
+            return null;
         }
       }
     };
@@ -185,7 +184,7 @@ class ExistingWorkspace extends React.Component {
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={translate('common.tools.title.processingWorkspaces')} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate("common.tools.title.processingWorkspaces")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );

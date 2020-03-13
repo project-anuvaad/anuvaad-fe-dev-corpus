@@ -350,7 +350,12 @@ class CreateWorkspace extends React.Component {
               <Grid item xs={6} sm={6} lg={6} xl={6} style={{ marginTop: "-7px", height: "56px" }}>
                 <Grid container spacing={8}>
                   <Grid item xs={4} sm={4} lg={4} xl={4}>
-                    <FileUpload accept=".yaml" buttonName={translate("common.page.button.upload")} handleChange={this.handleChange.bind(this)} name="configFile" />
+                    <FileUpload
+                      accept=".yaml"
+                      buttonName={translate("common.page.button.upload")}
+                      handleChange={this.handleChange.bind(this)}
+                      name="configFile"
+                    />
                   </Grid>
 
                   <Grid item xs={4} sm={4} lg={4} xl={4}>
