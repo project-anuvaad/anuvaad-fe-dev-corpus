@@ -7,24 +7,20 @@ import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import ReactQuill from "react-quill";
 import FetchModels from "../../../flux/actions/apis/fetchenchmarkmodel";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
-
 
 const styles = {
-    editor: {
-      width: '80%',
+  editor: {
+    width: "80%"
     //   height: '60vh',
     //   minHeigth: '50vh',
     //   maxHeight:'60vh',
     //   marginBottom:'100px'
-     
-    },
-  
-   
-  };
+  }
+};
 class Editor1 extends React.Component {
   constructor(props) {
     super(props);
@@ -68,9 +64,9 @@ class Editor1 extends React.Component {
       this.setState({ token: true });
     }
   }
-  
+
   render() {
-      const {classes} = this.props;
+    const { classes } = this.props;
     return (
       <div
         onClick={() => {
@@ -84,7 +80,8 @@ class Editor1 extends React.Component {
             width: "70%"
           }}
         >
-          <ReactQuill className={classes.editor}
+          <ReactQuill
+            className={classes.editor}
             ref={el => {
               this.reactQuillRef = el;
             }}

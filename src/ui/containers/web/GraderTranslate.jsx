@@ -4,17 +4,17 @@ import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
+import { withStyles } from "@material-ui/core/styles";
+import UploadFile from "@material-ui/icons/CloudUpload";
+import Typography from "@material-ui/core/Typography";
+import ScrollArea from "react-scrollbar";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import FetchBenchmark from "../../../flux/actions/apis/benchmark";
-import { withStyles } from "@material-ui/core/styles";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import GraderViewBenchmark from "./GraderViewBenchmark";
 import CreateBenchmark from "./UploadBenchmark";
-import UploadFile from "@material-ui/icons/CloudUpload";
-import Typography from "@material-ui/core/Typography";
 import Snackbars from "../../components/web/common/Snackbar";
-import { translate } from '../../../assets/localisation';
-import ScrollArea from "react-scrollbar";
+import { translate } from "../../../assets/localisation";
 
 class GarderTranslate extends React.Component {
   constructor(props) {
@@ -23,9 +23,9 @@ class GarderTranslate extends React.Component {
       name: [],
       apiCalled: false,
       file: {},
-      message: translate('gradeTranslate.page.text.benchmarkAdded'),
-      filesMessage:translate('gradeTranslate.page.text.noRecordsFound'),
-      renderPageMessage:translate('gradeTranslate.page.text.pleaseselectFile'),
+      message: translate("gradeTranslate.page.text.benchmarkAdded"),
+      filesMessage: translate("gradeTranslate.page.text.noRecordsFound"),
+      renderPageMessage: translate("gradeTranslate.page.text.pleaseselectFile"),
       role: JSON.parse(localStorage.getItem("roles")),
       sentences: [],
       createBenchmark: false
@@ -41,7 +41,7 @@ class GarderTranslate extends React.Component {
 
   handleFetchSentence(e, index, basename, name) {
     if (e.target.textContent) {
-      this.setState({ value: e.target.textContent,sentences:[], index, base: basename, file_name: name});
+      this.setState({ value: e.target.textContent, sentences: [], index, base: basename, file_name: name });
     }
   }
 
@@ -49,15 +49,14 @@ class GarderTranslate extends React.Component {
     if (prevProps.fetchBenchmark !== this.props.fetchBenchmark) {
       this.setState({ name: this.props.fetchBenchmark });
     }
-    if(prevProps.uploadbenchmark !== this.props.uploadbenchmark){
+    if (prevProps.uploadbenchmark !== this.props.uploadbenchmark) {
       const { APITransport } = this.props;
       const apiObj = new FetchBenchmark();
       APITransport(apiObj);
       this.setState({ value: 1 });
-      setTimeout(()=>{this.setState({ value: 0 })}, 4000)
-     
-      
-      
+      setTimeout(() => {
+        this.setState({ value: 0 });
+      }, 4000);
     }
 
     if (prevProps.sentences !== this.props.sentences) {
@@ -67,38 +66,41 @@ class GarderTranslate extends React.Component {
     }
   }
 
-  
-
-  handleSubmit=()=>{
-      this.setState({
-          createBenchmark: true, base:'', value:'',open1:true
-      })
-  }
+  handleSubmit = () => {
+    this.setState({
+      createBenchmark: true,
+      base: "",
+      value: "",
+      open1: true
+    });
+  };
 
   render() {
-   // const { base } = this.props;
+    // const { base } = this.props;
     return (
       <div>
         <Grid container spacing={4}>
-          <Grid item xs={3} sm={3} lg={3} xl={3} style={{marginLeft:'-130px'}}>
-            
-              <div>
-                <div
-                  style={{
-                    marginBottom: "68px",
-                    width:'90%',
-                    marginTop: "-20px",
-                    minWidth: "100px",
-                    minHeight: '84vh',
-                    paddingBottom:'40px',
-                    backgroundColor: "#F3F3F8"
-                  }}
-                >
-                 <Typography variant="h6" color="inherit"style={{ paddingTop: "40px",marginLeft:'15%' }} ><b>{translate('GrdaerTranslate.page.label..filesList')}</b><br/></Typography>
+          <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginLeft: "-130px" }}>
+            <div>
+              <div
+                style={{
+                  marginBottom: "68px",
+                  width: "90%",
+                  marginTop: "-20px",
+                  minWidth: "100px",
+                  minHeight: "84vh",
+                  paddingBottom: "40px",
+                  backgroundColor: "#F3F3F8"
+                }}
+              >
+                <Typography variant="h6" color="inherit" style={{ paddingTop: "40px", marginLeft: "15%" }}>
+                  <b>{translate("GrdaerTranslate.page.label..filesList")}</b>
+                  <br />
+                </Typography>
 
-                  <ScrollArea>
-                    {this.state.name.length>0 ? this.state.name.map((i, index) => {
-                      return (
+                <ScrollArea>
+                  {this.state.name.length > 0 ? (
+                    this.state.name.map((i, index) => (
                         <div
                           style={{
                             backgroundColor: "#F3F3F8",
@@ -121,54 +123,64 @@ class GarderTranslate extends React.Component {
                             <br />
                           </div>
                         </div>
-                      );
-                    }): <Typography variant="subtitle1" color="inherit"style={{ paddingTop: "40px",marginLeft:'15%' }} >{this.state.filesMessage}<br/></Typography> }
-                  </ScrollArea>
-                </div>
-                <div>
-                  <Button
-                    onClick = {this.handleSubmit}
-                    variant="contained"
-                    style={{
-                      width: "21.2%",
-                      marginLeft: "-53px",
-                      height: 96,
-                      backgroundColor: "#CB1E60",
-
-                      margin: 0,
-                      top: "auto",
-                      left: 0,
-                      bottom: 2,
-
-                      position: "fixed",
-                      paddingLeft: "30px",
-                      color: "white"
-                    }}
-                  >
-                    <UploadFile fontSize="large" />
-                    &nbsp;&nbsp;&nbsp;{translate('common.page.label.uploadFile')}
-                    
-                  </Button>
-                </div>
+                      ))
+                  ) : (
+                    <Typography variant="subtitle1" color="inherit" style={{ paddingTop: "40px", marginLeft: "15%" }}>
+                      {this.state.filesMessage}
+                      <br />
+                    </Typography>
+                  )}
+                </ScrollArea>
               </div>
-            
+              <div>
+                <Button
+                  onClick={this.handleSubmit}
+                  variant="contained"
+                  style={{
+                    width: "21.2%",
+                    marginLeft: "-53px",
+                    height: 96,
+                    backgroundColor: "#CB1E60",
+
+                    margin: 0,
+                    top: "auto",
+                    left: 0,
+                    bottom: 2,
+
+                    position: "fixed",
+                    paddingLeft: "30px",
+                    color: "white"
+                  }}
+                >
+                  <UploadFile fontSize="large" />
+                  &nbsp;&nbsp;&nbsp;{translate("common.page.label.uploadFile")}
+                </Button>
+              </div>
+            </div>
           </Grid>
 
-          <Grid item xs={8} sm={8} lg={8} xl={8} style={{position:"fixed", marginLeft:'20%'}}>
-            
+          <Grid item xs={8} sm={8} lg={8} xl={8} style={{ position: "fixed", marginLeft: "20%" }}>
             {!this.state.base && this.state.createBenchmark ? (
-              <CreateBenchmark open1={this.state.open1}/>
+              <CreateBenchmark open1={this.state.open1} />
             ) : this.state.base ? (
               <div>
-                <GraderViewBenchmark base={this.state.base} label={this.state.file_name}/>
+                <GraderViewBenchmark base={this.state.base} label={this.state.file_name} />
               </div>
-            ):<Typography variant="h6" color="inherit"style={{ paddingTop: "50%",marginLeft:'56%',textAlign:'center',color:"#ACACAC",marginRight:'-26%' }} >{this.state.renderPageMessage}<br/></Typography>}
+            ) : (
+              <Typography
+                variant="h6"
+                color="inherit"
+                style={{ paddingTop: "50%", marginLeft: "56%", textAlign: "center", color: "#ACACAC", marginRight: "-26%" }}
+              >
+                {this.state.renderPageMessage}
+                <br />
+              </Typography>
+            )}
           </Grid>
         </Grid>
-        { this.state.value>0 &&
-      (<Snackbars message={this.state.message} variant={this.props.apistatus.error ? "error":"success"} openValue={true}/>
-     
-      )}
+        {this.state.value > 0 && (
+          <Snackbars message={this.state.message} variant={this.props.apistatus.error ? "error" : "success"} openValue />
+        )}
       </div>
     );
   }
@@ -191,11 +203,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  withStyles(NewCorpusStyle)(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(GarderTranslate)
-  )
-);
+export default withRouter(withStyles(NewCorpusStyle)(connect(mapStateToProps, mapDispatchToProps)(GarderTranslate)));

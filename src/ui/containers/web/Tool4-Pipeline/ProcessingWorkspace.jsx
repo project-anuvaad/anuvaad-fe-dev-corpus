@@ -24,23 +24,20 @@ class ProcessingWorkspace extends React.Component {
 
   componentDidMount() {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.props.source, this.props.target,"PROCESSED");
+    const apiObj = new FetchWorkspace(this.props.source, this.props.target, "PROCESSED");
     APITransport(apiObj);
     this.setState({ showLoader: true });
-    
   }
 
   componentWillUnmount() {
     clearTimeout(this.intervalID);
   }
 
-
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspace !== this.props.fetchWorkspace) {
       this.setState({ workspaces: this.props.fetchWorkspace.data, count: this.props.fetchWorkspace.count });
     }
   }
-
 
   handleChange = value => {
     this.setState({ value });
@@ -75,7 +72,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "status",
-        label:translate("common.page.table.status"),
+        label: translate("common.page.table.status"),
         options: {
           filter: false,
           sort: false
@@ -140,9 +137,7 @@ class ProcessingWorkspace extends React.Component {
         if (this.props.handleWorkspaceSelected) {
           this.props.handleWorkspaceSelected(selectedItems);
         }
-      },
-
-      
+      }
     };
 
     return (
