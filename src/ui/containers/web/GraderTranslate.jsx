@@ -101,29 +101,29 @@ class GarderTranslate extends React.Component {
                 <ScrollArea>
                   {this.state.name.length > 0 ? (
                     this.state.name.map((i, index) => (
+                      <div
+                        style={{
+                          backgroundColor: "#F3F3F8",
+                          color: this.state.value === i.name && index === this.state.index ? "#CB1E60" : "black",
+                          marginLeft: "20px",
+                          paddingLeft: "50px",
+                          paddingTop: "30px",
+                          paddingBottom: "10px",
+                          cursor: "pointer",
+                          fontWeight: this.state.value === i.name && index === this.state.index ? "bold" : "normal"
+                        }}
+                        key={index}
+                      >
                         <div
-                          style={{
-                            backgroundColor: "#F3F3F8",
-                            color: this.state.value === i.name && index === this.state.index ? "#CB1E60" : "black",
-                            marginLeft: "20px",
-                            paddingLeft: "50px",
-                            paddingTop: "30px",
-                            paddingBottom: "10px",
-                            cursor: "pointer",
-                            fontWeight: this.state.value === i.name && index === this.state.index ? "bold" : "normal"
+                          onClick={e => {
+                            this.handleFetchSentence(e, index, i.basename, i.name);
                           }}
-                          key={index}
                         >
-                          <div
-                            onClick={e => {
-                              this.handleFetchSentence(e, index, i.basename, i.name);
-                            }}
-                          >
-                            {i.name}
-                            <br />
-                          </div>
+                          {i.name}
+                          <br />
                         </div>
-                      ))
+                      </div>
+                    ))
                   ) : (
                     <Typography variant="subtitle1" color="inherit" style={{ paddingTop: "40px", marginLeft: "15%" }}>
                       {this.state.filesMessage}
@@ -178,9 +178,7 @@ class GarderTranslate extends React.Component {
             )}
           </Grid>
         </Grid>
-        {this.state.value > 0 && (
-          <Snackbars message={this.state.message} variant={this.props.apistatus.error ? "error" : "success"} openValue />
-        )}
+        {this.state.value > 0 && <Snackbars message={this.state.message} variant={this.props.apistatus.error ? "error" : "success"} openValue />}
       </div>
     );
   }

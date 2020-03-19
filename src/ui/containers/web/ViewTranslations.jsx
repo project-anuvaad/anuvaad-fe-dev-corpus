@@ -13,7 +13,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import FetchTranslationSentences from "../../../flux/actions/apis/translation_sentences";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
-import { translate } from '../../../assets/localisation';
+import { translate } from "../../../assets/localisation";
 
 class Corpus extends React.Component {
   constructor(props) {
@@ -99,7 +99,7 @@ class Corpus extends React.Component {
         if (score.conf) {
           item_count++;
         }
-        count += score.conf ? parseInt(score.conf,10) : 0;
+        count += score.conf ? parseInt(score.conf, 10) : 0;
         return true;
       });
     }
@@ -148,7 +148,7 @@ class Corpus extends React.Component {
         <Grid container spacing={24} style={{ padding: 24 }}>
           <Grid item xs={12} sm={12} lg={12} xl={12}>
             <Typography component="h2" variant="title" gutterBottom>
-              {translate('common.page.label.translation')}
+              {translate("common.page.label.translation")}
             </Typography>
           </Grid>
           {/* <CSVDownload data={csvData} target="_blank" /> */}
@@ -156,29 +156,29 @@ class Corpus extends React.Component {
             {this.props.apistatus.progress ? (
               <CircularProgress />
             ) : (
-                <Paper>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>{translate('common.page.label.source')}</TableCell>
-                        <TableCell align="right">{translate('common.page.label.target')}</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {this.state.sentences &&
-                        Array.isArray(this.state.sentences) &&
-                        this.state.sentences.map((row, index) => (
-                          <TableRow key={index}>
-                            <TableCell component="th" scope="row">
-                              {row.source}
-                            </TableCell>
-                            <TableCell align="right">{row.target}</TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </Paper>
-              )}
+              <Paper>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>{translate("common.page.label.source")}</TableCell>
+                      <TableCell align="right">{translate("common.page.label.target")}</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {this.state.sentences &&
+                      Array.isArray(this.state.sentences) &&
+                      this.state.sentences.map((row, index) => (
+                        <TableRow key={index}>
+                          <TableCell component="th" scope="row">
+                            {row.source}
+                          </TableCell>
+                          <TableCell align="right">{row.target}</TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </Paper>
+            )}
           </Grid>
         </Grid>
       </div>

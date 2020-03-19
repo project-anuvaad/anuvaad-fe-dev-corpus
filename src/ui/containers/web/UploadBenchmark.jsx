@@ -3,9 +3,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
-import APITransport from "../../../flux/actions/apitransport/apitransport";
-import UploadBenchmark from "../../../flux/actions/apis/uploadbenchmark";
-import { translate } from '../../../assets/localisation';
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Select from "@material-ui/core/Select";
@@ -13,10 +10,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import { withStyles } from "@material-ui/core";
-import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Input from "@material-ui/core/Input";
 import { DropzoneArea } from "material-ui-dropzone";
-
+import NewCorpusStyle from "../../styles/web/Newcorpus";
+import { translate } from "../../../assets/localisation";
+import UploadBenchmark from "../../../flux/actions/apis/uploadbenchmark";
+import APITransport from "../../../flux/actions/apitransport/apitransport";
 
 class UploadBenchmarkfile extends React.Component {
   constructor(props) {
@@ -36,20 +35,16 @@ class UploadBenchmarkfile extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.apistatus.progress !== this.props.apistatus.progress) {
       this.setState({
-        add_name: '',
+        add_name: "",
         file: [],
-        source: '',
+        source: "",
         open: true,
         open1: true
-
-
-      })
+      });
 
       if (prevProps.apistatus !== this.props.apistatus.progress) {
-        this.setState({})
+        this.setState({});
       }
-
-
     }
   }
 
@@ -86,21 +81,16 @@ class UploadBenchmarkfile extends React.Component {
   handleSource = files => {
     this.setState({
       file: files,
-      add_name: this.state.add_name ? this.state.add_name : files.name.split('.')[0]
-
+      add_name: this.state.add_name ? this.state.add_name : files.name.split(".")[0]
     });
   };
 
-
   componentWillUnmount() {
-    this.setState({ file: [] })
+    this.setState({ file: [] });
   }
 
-
-
-
   handleBack = () => {
-    this.setState({ open1: false })
+    this.setState({ open1: false });
   };
 
   handleClose = () => {
@@ -108,31 +98,22 @@ class UploadBenchmarkfile extends React.Component {
   };
 
   handleSubmit() {
-
-    const apiObj = new UploadBenchmark(
-      this.state.file,
-      this.state.add_name,
-      this.state.source
-    );
+    const apiObj = new UploadBenchmark(this.state.file, this.state.add_name, this.state.source);
     this.props.APITransport(apiObj);
     this.setState({ showLoader: true, tocken: false, key: this.state.key + 1 });
-
-
   }
 
   render() {
     const { classes } = this.props;
     return (
       <div>
-
-        <div style={{ marginLeft: '100px', marginTop: '60px' }}>
-
+        <div style={{ marginLeft: "100px", marginTop: "60px" }}>
           <div style={{ Top: "15px", PaddingBottom: "5px" }}>
             <FormControl fullWidth>
-              <InputLabel htmlFor="Add Name">{translate('uploadBenchmark.page.label.fileNameTitle')}</InputLabel>
+              <InputLabel htmlFor="Add Name">{translate("uploadBenchmark.page.label.fileNameTitle")}</InputLabel>
               <Input
                 value={this.state.add_name}
-                style={{ width: '200%' }}
+                style={{ width: "200%" }}
                 id="name"
                 required
                 onChange={event => {
@@ -146,7 +127,7 @@ class UploadBenchmarkfile extends React.Component {
           <br />
           <br />
 
-          <AppBar position="static" style={{ width: '200%' }}>
+          <AppBar position="static" style={{ width: "200%" }}>
             <Toolbar>
               <Select
                 width="100%"
@@ -157,35 +138,29 @@ class UploadBenchmarkfile extends React.Component {
                 }}
                 displayEmpty
               >
-                <MenuItem value={"English"}>{translate('common.page.label.english')}</MenuItem>
-                <MenuItem value={"Hindi"}>{translate('common.page.label.hindi')}</MenuItem>
+                <MenuItem value="English">{translate("common.page.label.english")}</MenuItem>
+                <MenuItem value="Hindi">{translate("common.page.label.hindi")}</MenuItem>
               </Select>
-
             </Toolbar>
           </AppBar>
-          <div style={{ width: '200%' }}>
+          <div style={{ width: "200%" }}>
             <DropzoneArea
               key={this.state.key}
-              style={{ width: '200%' }}
+              style={{ width: "200%" }}
               Dropzoneiles=""
               onDrop={this.handleSource}
               id="source"
-              showPreviewsInDropzone={true}
+              showPreviewsInDropzone
               acceptedFiles={[".txt"]}
-              dropzoneText={translate('uploadBenchmark.page.label.pleaseDrag&Drop')}
+              dropzoneText={translate("uploadBenchmark.page.label.pleaseDrag&Drop")}
               filesLimit={1}
-            ></DropzoneArea>
+            />
           </div>
 
           <Button variant="contained" color="primary" className={classes.buttons} onClick={this.handleSubmit.bind(this)}>
-            {translate('common.page.button.submit')}
+            {translate("common.page.button.submit")}
           </Button>
-
-
-
-
         </div>
-
       </div>
     );
   }
@@ -206,11 +181,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  withStyles(NewCorpusStyle)(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(UploadBenchmarkfile)
-  )
-);
+export default withRouter(withStyles(NewCorpusStyle)(connect(mapStateToProps, mapDispatchToProps)(UploadBenchmarkfile)));
