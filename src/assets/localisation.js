@@ -307,6 +307,7 @@ var localization_EN_Data = {
     'feedback.page.text.feedbackAlert':"Please give your feedback for all the questions",
     'webroutes.page.title.pdfList':'PDF File list',
    'webroutes.page.title.pdfSentences': 'PDF Sentences',
+   'common.page.label.page_no':'Page No'
    //'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 }
 
