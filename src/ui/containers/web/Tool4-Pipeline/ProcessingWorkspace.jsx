@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import MUIDataTable from "mui-datatables";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchWorkspace from "../../../../flux/actions/apis/tool4fetchworkspace";
+import { translate } from "../../../../assets/localisation";
 
 class ProcessingWorkspace extends React.Component {
   intervalID;
@@ -23,23 +24,20 @@ class ProcessingWorkspace extends React.Component {
 
   componentDidMount() {
     const { APITransport } = this.props;
-    const apiObj = new FetchWorkspace(this.props.source, this.props.target,"PROCESSED");
+    const apiObj = new FetchWorkspace(this.props.source, this.props.target, "PROCESSED");
     APITransport(apiObj);
     this.setState({ showLoader: true });
-    
   }
 
   componentWillUnmount() {
     clearTimeout(this.intervalID);
   }
 
-
   componentDidUpdate(prevProps) {
     if (prevProps.fetchWorkspace !== this.props.fetchWorkspace) {
       this.setState({ workspaces: this.props.fetchWorkspace.data, count: this.props.fetchWorkspace.count });
     }
   }
-
 
   handleChange = value => {
     this.setState({ value });
@@ -49,7 +47,7 @@ class ProcessingWorkspace extends React.Component {
     const columns = [
       {
         name: "title",
-        label: "Workspace",
+        label: translate("common.page.table.workspace"),
         options: {
           filter: true,
           sort: true,
@@ -74,7 +72,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "status",
-        label: "Status",
+        label: translate("common.page.table.status"),
         options: {
           filter: false,
           sort: false
@@ -82,7 +80,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "sentence_count",
-        label: "Sentence Count",
+        label: translate("common.page.table.sentenceCount"),
         options: {
           filter: false,
           sort: true
@@ -90,7 +88,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "username",
-        label: "Created By",
+        label: translate("common.page.table.username"),
         options: {
           filter: false,
           sort: false
@@ -98,7 +96,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "created_at",
-        label: "Created At",
+        label: translate("common.page.table.createdAt"),
         options: {
           filter: false,
           sort: false
@@ -139,9 +137,7 @@ class ProcessingWorkspace extends React.Component {
         if (this.props.handleWorkspaceSelected) {
           this.props.handleWorkspaceSelected(selectedItems);
         }
-      },
-
-      
+      }
     };
 
     return (

@@ -17,14 +17,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { bindActionCreators } from "redux";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Updatepassword from "../../../flux/actions/apis/updatepassword";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 import MySnackbarContentWrapper from "../../components/web/common/Snackbar";
-import { translate } from '../../../assets/localisation';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from "@material-ui/core/Select";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
+import { translate } from "../../../assets/localisation";
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class UserProfile extends React.Component {
       status: "",
       open: false,
       messageSnack: "",
-      lang: localStorage.getItem('lang'+JSON.parse(localStorage.getItem("userProfile")).id),
+      lang: localStorage.getItem(`lang${JSON.parse(localStorage.getItem("userProfile")).id}`),
 
       userDetails: JSON.parse(localStorage.getItem("userProfile"))
     };
@@ -64,12 +64,14 @@ class UserProfile extends React.Component {
   handleReset = () => {
     this.setState({ drawer: true });
   };
+
   handleCancel = () => {
     this.setState({
       message: ""
     });
     this.setState({ drawer: false });
   };
+
   handleClose = () => {
     history.push(`${process.env.PUBLIC_URL}/corpus`);
   };
@@ -82,13 +84,13 @@ class UserProfile extends React.Component {
     if (prevProps.updatePasswordstatus !== this.props.updatePasswordstatus) {
       if (this.props.updatePasswordstatus.http.status === 400) {
         this.setState({
-          message: translate('userProfile.page.message.TryAgain'),
+          message: translate("userProfile.page.message.TryAgain"),
           status: this.props.updatePasswordstatus.http.status
         });
       } else if (this.props.updatePasswordstatus.http.status === 200) {
         this.setState({
           open: true,
-          messageSnack: translate('userProfile.page.message.passwordChangeSuccessLogin'),
+          messageSnack: translate("userProfile.page.message.passwordChangeSuccessLogin"),
           status: this.props.updatePasswordstatus.http.status
         });
 
@@ -125,32 +127,33 @@ class UserProfile extends React.Component {
             // setTimeout(()=>{history.push("{this.handleClose();history.push(`${process.env.PUBLIC_URL}/logout`)}")},200
           } else {
             this.setState({
-              message: translate('userProfile.page.message.passwordMismatchAlert')
+              message: translate("userProfile.page.message.passwordMismatchAlert")
             });
           }
         } else {
           this.setState({
-            message: translate('userProfile.page.message.passwordSameAlert')
+            message: translate("userProfile.page.message.passwordSameAlert")
           });
         }
       } else {
         this.setState({
-          message: translate('userProfile.page.message.passwordTooShortAlert')
+          message: translate("userProfile.page.message.passwordTooShortAlert")
         });
       }
     } else {
       this.setState({
-        message: translate('userProfile.page.message.enterCorrectPasswordAlert')
+        message: translate("userProfile.page.message.enterCorrectPasswordAlert")
       });
     }
   };
+
   handleChangeLanguage(event) {
-    let userProfile = JSON.parse(localStorage.getItem("userProfile"))
-    localStorage.setItem('lang'+userProfile.id, event.target.value)
+    const userProfile = JSON.parse(localStorage.getItem("userProfile"));
+    localStorage.setItem(`lang${userProfile.id}`, event.target.value);
     this.setState({
       lang: event.target.value
-    })
-    window.location.reload()
+    });
+    window.location.reload();
   }
 
   render() {
@@ -158,13 +161,13 @@ class UserProfile extends React.Component {
       <div>
         <Paper style={{ marginLeft: "23%", width: "46%", marginTop: "5%" }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
-            {translate('common.page.label.myProfile')}{" "}
+            {translate("common.page.label.myProfile")}{" "}
           </Typography>
 
           <Grid container spacing={4}>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "10.5%" }}>
-                {translate('common.page.label.firstName')}{" "}
+                {translate("common.page.label.firstName")}{" "}
               </Typography>
             </Grid>
             <Grid item xs={6} sm={6} lg={6} xl={6}>
@@ -178,7 +181,7 @@ class UserProfile extends React.Component {
             <Grid container spacing={4}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
-                  {translate('common.page.label.lastName')}{" "}
+                  {translate("common.page.label.lastName")}{" "}
                 </Typography>
               </Grid>
               <Grid item xs={6} sm={6} lg={6} xl={6}>
@@ -193,7 +196,7 @@ class UserProfile extends React.Component {
             <Grid container spacing={4}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
-                  {translate('common.page.label.email')}{" "}
+                  {translate("common.page.label.email")}{" "}
                 </Typography>
               </Grid>
               <Grid item xs={6} sm={6} lg={6} xl={6}>
@@ -209,34 +212,30 @@ class UserProfile extends React.Component {
             <Grid container spacing={4}>
               <Grid item xs={5} sm={5} lg={5} xl={5}>
                 <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
-                  {translate('common.page.label.selectLanguage')}{" "}
+                  {translate("common.page.label.selectLanguage")}{" "}
                 </Typography>
               </Grid>
               <Grid item xs={6} sm={6} lg={6} xl={6}>
                 <br />
                 <br />
 
-                <Select gutterBottom="true"
+                <Select
+                  gutterBottom="true"
                   name="selectlanguage"
                   style={{ marginLeft: "12%", marginTop: "-1%", minWidth: 120 }}
-                  id={"outlined-age-simple"}
+                  id="outlined-age-simple"
                   value={this.state.lang}
                   onChange={this.handleChangeLanguage.bind(this)}
-                  input={
-                    <OutlinedInput name='english' id="outlined-age-simple" />
-                  }
+                  input={<OutlinedInput name="english" id="outlined-age-simple" />}
                 >
                   <MenuItem value="en">English</MenuItem>
                   <MenuItem value="hi">हिंदी</MenuItem>
-
-
                 </Select>
               </Grid>
             </Grid>
-
           </Grid>
           <div style={{ marginLeft: "90%", paddingBottom: "20px" }}>
-            <Tooltip title={translate('userProfile.page.placeholder.resetPassword')}>
+            <Tooltip title={translate("userProfile.page.placeholder.resetPassword")}>
               <Fab aria-haspopup="true" onClick={this.handleReset} color="primary" size="medium">
                 <AccountCircle />
               </Fab>
@@ -257,7 +256,7 @@ class UserProfile extends React.Component {
               variant="h5"
               style={{ color: darkBlack, background: blueGrey50, paddingLeft: "28%", paddingBottom: "12px", paddingTop: "8px" }}
             >
-              {translate('userProfile.page.label.changePassword')}
+              {translate("userProfile.page.label.changePassword")}
             </Typography>
 
             <DialogContent>
@@ -267,7 +266,7 @@ class UserProfile extends React.Component {
               <form method="post">
                 <FormControl fullWidth>
                   <TextField
-                    placeholder={translate('userProfile.page.placeholder.oldPassword')}
+                    placeholder={translate("userProfile.page.placeholder.oldPassword")}
                     error
                     value={this.state.oldpassword}
                     required
@@ -283,7 +282,7 @@ class UserProfile extends React.Component {
                 <FormControl fullWidth>
                   <TextField
                     id={this.state.newpassword}
-                    placeholder={translate('userProfile.page.placeholder.newPassword')}
+                    placeholder={translate("userProfile.page.placeholder.newPassword")}
                     required
                     value={this.state.newpassword}
                     type="password"
@@ -297,7 +296,7 @@ class UserProfile extends React.Component {
                 </FormControl>
                 <FormControl fullWidth>
                   <TextField
-                    placeholder={translate('userProfile.page.placeholder.confirmPassword')}
+                    placeholder={translate("userProfile.page.placeholder.confirmPassword")}
                     value={this.state.repassword}
                     required
                     id="outlined-required"
@@ -323,17 +322,17 @@ class UserProfile extends React.Component {
                       aria-label="edit"
                       style={{ width: "50%", marginBottom: "4%", marginTop: "4%" }}
                     >
-                      {translate('common.page.button.cancel')}
+                      {translate("common.page.button.cancel")}
                     </Button>
                     <Button
                       variant="contained"
-                      disabled={this.state.oldpassword && this.state.newpassword && this.state.repassword ? false : true}
+                      disabled={!(this.state.oldpassword && this.state.newpassword && this.state.repassword)}
                       onClick={this.handleSubmit}
                       color="primary"
                       aria-label="edit"
                       style={{ width: "50%", marginBottom: "4%", marginTop: "4%" }}
                     >
-                      {translate('common.page.button.submit')}
+                      {translate("common.page.button.submit")}
                     </Button>
                   </DialogActions>
                 </div>
@@ -341,8 +340,8 @@ class UserProfile extends React.Component {
             </DialogContent>
           </Dialog>
         ) : (
-            ""
-          )}
+          ""
+        )}
       </div>
     );
   }
@@ -367,9 +366,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(UserProfile)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserProfile));

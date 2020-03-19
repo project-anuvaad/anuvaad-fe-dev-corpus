@@ -17,7 +17,7 @@ import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import C from "../../../flux/actions/constants";
 import SCImage from "../../../assets/icon.jpg";
-import { translate } from '../../../assets/localisation';
+import { translate } from "../../../assets/localisation";
 
 const langs = [
   { label: "Hindi", labelSecondary: "हिन्दी", code: "hi", type: C.HINDI, color: "#ff8000" },
@@ -58,7 +58,6 @@ class Translate extends React.Component {
           const model = this.getModelForLang(lang.code);
           const api = new NMT(this.state.sentence, model, false, null, true, lang.type);
           this.props.TranslateAPI(api);
-         
         }
         return console.log(prevProps);
       });
@@ -148,7 +147,7 @@ class Translate extends React.Component {
               className="idbox"
               rows="5"
               cols="50"
-              placeholder={translate('translateJundgement.page.placeholder.enterEnglishText')}
+              placeholder={translate("translateJundgement.page.placeholder.enterEnglishText")}
               onChange={event => {
                 this.handleTextChange("sentence", event);
               }}
@@ -163,10 +162,10 @@ class Translate extends React.Component {
                 }}
                 onClick={this.state.sentence && this.handleOnClick.bind(this)}
               >
-                {translate('dashboard.page.heading.title')}
+                {translate("dashboard.page.heading.title")}
               </Button>
               <img
-                src={SCImage} 
+                src={SCImage}
                 alt=""
                 style={{
                   width: "15%",
@@ -179,20 +178,20 @@ class Translate extends React.Component {
             </div>
           </div>
         ) : (
-            !this.state.showLangLayout && (
-              <div className="fadeUp">
-                <textarea
-                  className="idbox"
-                  rows="5"
-                  cols="50"
-                  placeholder={translate('common.page.placeholder.enterTextHere')}
-                  onChange={event => {
-                    this.handleTextChange("sentence", event);
-                  }}
-                />
-              </div>
-            )
-          )}
+          !this.state.showLangLayout && (
+            <div className="fadeUp">
+              <textarea
+                className="idbox"
+                rows="5"
+                cols="50"
+                placeholder={translate("common.page.placeholder.enterTextHere")}
+                onChange={event => {
+                  this.handleTextChange("sentence", event);
+                }}
+              />
+            </div>
+          )
+        )}
         <div>
           {this.state.showLangLayout ? (
             <Grid container spacing={16} style={{ paddingLeft: "1%" }}>
@@ -262,15 +261,16 @@ class Translate extends React.Component {
                         color={lang.color}
                         body={
                           this.state[lang.label.toLowerCase()] &&
-                            this.state[lang.label.toLowerCase()] &&
-                            Array.isArray(this.state[lang.label.toLowerCase()])
-                            ? this.state[lang.label.toLowerCase()].map((elem) => elem.tgt + (index === 0 && elem.tgt.indexOf("।") < 0 && elem.tgt.indexOf("?") < 0 ? "। " : " "))
+                          this.state[lang.label.toLowerCase()] &&
+                          Array.isArray(this.state[lang.label.toLowerCase()])
+                            ? this.state[lang.label.toLowerCase()].map(
+                                elem => elem.tgt + (index === 0 && elem.tgt.indexOf("।") < 0 && elem.tgt.indexOf("?") < 0 ? "। " : " ")
+                              )
                             : ""
                         }
                         style={{ background: lang.color }}
                       />
                     </Grid>
-          
                   ))}
                 </React.Fragment>
               </Grid>

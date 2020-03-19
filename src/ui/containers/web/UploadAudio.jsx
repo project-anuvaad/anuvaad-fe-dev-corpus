@@ -12,7 +12,7 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import Button from "../../components/web/common/Button";
 import Paper from "../../components/web/common/Paper";
 import Typography from "../../components/web/common/Typography";
-import { translate } from '../../../assets/localisation';
+import { translate } from "../../../assets/localisation";
 
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -117,10 +117,9 @@ class UploadAudio extends React.Component {
     const result = [];
     if (modelLanguage && supportLanguage) {
       modelLanguage.map(item => {
-        item.source_language_code === sourceLanguage
-          && supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null))
-          ;
-          return true;
+        item.source_language_code === sourceLanguage &&
+          supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null));
+        return true;
       });
     }
     const value = new Set(result);
@@ -148,7 +147,7 @@ class UploadAudio extends React.Component {
                   maxFileSize={20000000}
                   style={{ marginTop: "20%" }}
                   acceptedFiles={[".mp3", ".wav", ".flac"]}
-                  dropzoneText={translate('uploadBenchmark.page.label.dropAudio')}
+                  dropzoneText={translate("uploadBenchmark.page.label.dropAudio")}
                   filesLimit={1}
                 />
               </Grid>

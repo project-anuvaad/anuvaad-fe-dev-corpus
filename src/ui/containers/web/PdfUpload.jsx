@@ -17,7 +17,6 @@ import { translate } from "../../../assets/localisation";
 
 const styles = theme => ({
   paper: {
-    margin: "30%",
     width: "40%",
     minWidth: "20%",
     marginTop: "5%",
@@ -122,19 +121,19 @@ class PdfUpload extends Component {
         <Grid container spacing={24} style={{ padding: 24 }}>
           <Grid item xs={12} sm={12} lg={12} xl={12}>
             <Typography value="" variant="h4" className={this.props.classes.typography}>
-              Upload File
+            {translate('common.page.label.uploadFile')}
             </Typography>
             <br />
             <br />
           </Grid>
-          <Grid container spacing={24} style={{ marginLeft: "12%" }}>
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
+          <Grid container spacing={24} style={{ marginLeft: "15%" }}>
+            <Grid item xs={6} sm={6} lg={6} xl={6} style={{paddingLeft:'6%'}}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "85%", paddingTop: "30px", paddingBottom: "30px" }}>
-                Enter file name
+              {translate('common.page.label.filename')} 
               </Typography>
               <br />
             </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6}>
+            <Grid item xs={6} sm={6} lg={6} xl={6} >
               <TextField
                 value={this.state.workspaceName}
                 required
@@ -153,11 +152,11 @@ class PdfUpload extends Component {
             acceptedFiles={[".pdf"]}
             onChange={this.handleChange.bind(this)}
             filesLimit={1}
-            dropzoneText="Drag and drop a pdf file here or click"
+            dropzoneText={translate('common.page.label.addDropFile')} 
             onDelete={this.handleDelete.bind(this)}
           />
           <Button variant="contained" color="primary" className={this.props.classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
-            SUBMIT
+          {translate('common.page.button.submit')}
           </Button>
         </Grid>
 
