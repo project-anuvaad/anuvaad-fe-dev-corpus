@@ -1,11 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import ReadMoreAndLess from "react-read-more-less";
-
 import Divider from "@material-ui/core/Divider";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";

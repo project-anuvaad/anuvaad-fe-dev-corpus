@@ -14,17 +14,17 @@ import "react-quill/dist/quill.snow.css";
 
 const styles = {
   editor: {
-    width: "80%"
-    //   height: '60vh',
-    //   minHeigth: '50vh',
-    //   maxHeight:'60vh',
-    //   marginBottom:'100px'
+    width: "80%",
+      height: '60vh',
+      minHeigth: '50vh',
+      maxHeight:'60vh',
+      marginBottom:'100px'
   }
 };
 class Editor1 extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { token: false, value: "", isFocus: false, text: "" };
+    this.state = { token: false, value: "", isFocus: false, text: "",theme: 'snow' };
   }
 
   componentDidMount() {
@@ -77,7 +77,8 @@ class Editor1 extends React.Component {
           style={{
             marginLeft: "14%",
             marginTop: "5%",
-            width: "70%"
+            width: "70%",
+            marginBottom: "50%"
           }}
         >
           <ReactQuill
@@ -88,6 +89,9 @@ class Editor1 extends React.Component {
             value={this.state.text}
             onKeyDown={this.keyPress.bind(this)}
             onChange={this.handleChange.bind(this)}
+            modules={Editor1.modules}
+          formats={Editor1.formats}
+          theme={this.state.theme}
           />
 
           {this.state.token && (
@@ -106,6 +110,33 @@ class Editor1 extends React.Component {
     );
   }
 }
+
+Editor1.modules = {
+  toolbar: [
+    [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+    [{size: []}],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{'list': 'ordered'}, {'list': 'bullet'}, 
+     {'indent': '-1'}, {'indent': '+1'}],
+    ['link', 'image', 'video'],
+    ['clean']
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  }
+}
+/* 
+ * Quill editor formats
+ * See https://quilljs.com/docs/formats/
+ */
+Editor1.formats = [
+  'header', 'font', 'size',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image', 'video'
+]
+
 
 const mapStateToProps = state => ({
   user: state.login,

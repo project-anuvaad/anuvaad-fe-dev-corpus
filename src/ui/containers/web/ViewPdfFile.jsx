@@ -3,16 +3,16 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
-import APITransport from "../../../flux/actions/apitransport/apitransport";
-import FetchPdf from "../../../flux/actions/apis/fetchpdf";
-import history from "../../../web.history";
 import AddIcon from "@material-ui/icons/Add";
 import { withStyles } from "@material-ui/core/styles";
-import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Typography from "@material-ui/core/Typography";
 import MUIDataTable from "mui-datatables";
 import Toolbar from "@material-ui/core/Toolbar";
-import { translate } from '../../../assets/localisation';
+import NewCorpusStyle from "../../styles/web/Newcorpus";
+import history from "../../../web.history";
+import FetchPdf from "../../../flux/actions/apis/fetchpdf";
+import APITransport from "../../../flux/actions/apitransport/apitransport";
+import { translate } from "../../../assets/localisation";
 
 class PdfUpload extends React.Component {
   constructor(props) {
@@ -40,9 +40,8 @@ class PdfUpload extends React.Component {
   }
 
   handleClick = rowData => {
-    console.log(rowData)
-    history.push(`${process.env.PUBLIC_URL}/pdf-sentence/`+rowData[0]);
-    
+    console.log(rowData);
+    history.push(`${process.env.PUBLIC_URL}/pdf-sentence/${rowData[0]}`);
   };
 
   componentDidUpdate(prevProps) {
@@ -55,14 +54,14 @@ class PdfUpload extends React.Component {
     const columns = [
       {
         name: "session_id",
-        label: translate('common.page.label.basename'),
+        label: translate("common.page.label.basename"),
         options: {
           display: "excluded"
         }
       },
       {
         name: "process_name",
-        label: translate('viewCorpus.page.label.fileName'),
+        label: translate("viewCorpus.page.label.fileName"),
         options: {
           filter: true,
           sort: true
@@ -80,26 +79,26 @@ class PdfUpload extends React.Component {
 
       {
         name: "created_on",
-        label: translate('common.page.label.timeStamp') ,
+        label: translate("common.page.label.timeStamp"),
         options: {
           filter: true,
           sort: true,
           sortDirection: "desc"
         }
-      }, 
+      }
     ];
 
     const options = {
       textLabels: {
         body: {
-          noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
+          noMatch: translate("gradeReport.page.muiNoTitle.sorryRecordNotFound")
         },
         toolbar: {
-          search: translate('graderReport.page.muiTable.search'),
-          viewColumns: translate('graderReport.page.muiTable.viewColumns')
+          search: translate("graderReport.page.muiTable.search"),
+          viewColumns: translate("graderReport.page.muiTable.viewColumns")
         },
         pagination: {
-          rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
+          rowsPerPage: translate("graderReport.page.muiTable.rowsPerPages")
         }
       },
       filterType: "checkbox",
@@ -115,7 +114,7 @@ class PdfUpload extends React.Component {
     return (
       <div>
         <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
-          <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+          <Typography variant="title" color="inherit" style={{ flex: 1 }} />
           {this.state.role.includes("dev") ? (
             <Button
               variant="extendedFab"
@@ -126,14 +125,15 @@ class PdfUpload extends React.Component {
                 history.push(`${process.env.PUBLIC_URL}/pdf-upload`);
               }}
             >
-              <AddIcon />{translate('common.page.button.upload')}
+              <AddIcon />
+              {translate("common.page.button.upload")}
             </Button>
           ) : (
             ""
           )}
         </Toolbar>
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={translate('common.page.title.document')} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );
@@ -155,11 +155,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  withStyles(NewCorpusStyle)(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(PdfUpload)
-  )
-);
+export default withRouter(withStyles(NewCorpusStyle)(connect(mapStateToProps, mapDispatchToProps)(PdfUpload)));
