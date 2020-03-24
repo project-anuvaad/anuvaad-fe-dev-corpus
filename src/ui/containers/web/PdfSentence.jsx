@@ -99,6 +99,14 @@ handleRowClick = rowData => {
           sort: true
         }
       },
+      {
+        name: "page_no",
+        label: translate('common.page.label.page_no'),
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
 
       {
         name: "status",
