@@ -73,6 +73,7 @@ import FeedbackForm from "./ui/containers/web/FeedbackForm";
 import PdfUpload from "./ui/containers/web/PdfUpload";
 import ViewPdf from "./ui/containers/web/ViewPdfFile";
 
+import IntractiveTranslate from "./ui/containers/web/IntractiveTranslation";
 import PdfSentence from "./ui/containers/web/PdfSentence";
 import { translate } from '../src/assets/localisation';
 
@@ -616,6 +617,13 @@ class AppRoutes extends React.Component {
               title="Anuvaad Editor"
               userRoles={["dev"]}
               component={AnuvaadModels}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/intractive-translate`}
+              title="Anuvaad Editor"
+              userRoles={["editor","dev"]}
+              component={IntractiveTranslate}
               authenticate={this.authenticateUser}
             />
 
