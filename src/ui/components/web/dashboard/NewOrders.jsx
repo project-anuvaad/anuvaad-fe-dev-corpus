@@ -23,7 +23,7 @@ const NewOrders = props => {
       fontWeight: typography.fontWeightLight,
       color: darkBlack,
       backgroundColor: blueGrey50,
-      padding: 10,
+      padding: 12,
       marginLeft:"55px"
     }
   };
