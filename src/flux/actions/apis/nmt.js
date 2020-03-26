@@ -34,6 +34,7 @@ export default class NMT extends API {
 
   getBody() {
     var modelArray = [];
+    console.log("test",this.model)
     this.model.map(item => {
       modelArray.push({
         src: this.par,

@@ -53,7 +53,8 @@ import fetchSearch from './fetchsearchreplace';
 import sentenceReplace from './sentencereplace';
 import uploadpdf from './pdfupload';
 import pdfConfigUpload from './pdfuploadfile';
-import fetchPdfSentence from './fetchpdfsentence'
+import fetchPdfSentence from './fetchpdfsentence';
+import intractiveTrans from './intractive_translate'
 
 export default {
     login,
@@ -109,5 +110,6 @@ export default {
     feedbackQuestions,
     uploadpdf,
     pdfConfigUpload,
-    fetchPdfSentence
+    fetchPdfSentence,
+    intractiveTrans
 };
