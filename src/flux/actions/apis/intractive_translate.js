@@ -20,7 +20,7 @@ export default class NMTSP extends API {
 
     processResponse(res) {
         super.processResponse(res);
-        this.answers = res
+        this.answers = res.response_body
     }
 
     apiEndPoint() {
