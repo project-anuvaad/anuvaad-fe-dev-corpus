@@ -14,7 +14,7 @@ class SimpleSelect extends React.Component {
       <form>
         <FormControl>
           <Select
-            style={{ minWidth: 120 }}
+            style={{ minWidth: 145 }}
             value={value}
 
             onChange={handleChange}
@@ -24,7 +24,7 @@ class SimpleSelect extends React.Component {
           >
             {MenuItemValues &&
             MenuItemValues.map((item) => (
-              <MenuItem value={item} key ={item}>{item.language_name}</MenuItem>
+              <MenuItem value={item} key ={item}>{item}</MenuItem>
             ))}
           </Select>
         </FormControl>
