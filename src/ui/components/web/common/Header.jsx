@@ -399,6 +399,29 @@ class Header extends React.Component {
                     </ListItem>
                   )}
 
+{role && Array.isArray(role) && (role.includes("dev") || role.includes("grader")) && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={() => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/intractive-translate`);
+                      }}
+                    >
+                      <ListItemIcon>
+                      <SearchIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                           Intractive Translate
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+
                   {role && Array.isArray(role) && role.includes('admin') &&
                     <ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
                       <ListItemIcon>

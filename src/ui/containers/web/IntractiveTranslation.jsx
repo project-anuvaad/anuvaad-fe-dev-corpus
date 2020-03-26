@@ -104,6 +104,29 @@ class Dashboard extends React.Component {
     this.setState({ [name]: event.target.checked });
   };
 
+  keyPress(event) {
+    if (event.keyCode === 9) {
+      var c ;
+      var a = this.state.nmtText[0] && this.state.nmtText[0].tgt.split(' ')
+      var b = this.state.translateText&& this.state.translateText.split(' ')
+      
+      if(a&& b && a.length>b.length){
+        b.push(a[b.length])
+        c = b.join(' ')
+        event.preventDefault();
+      }
+      else if(a&& !b){
+        c=a[0]
+        event.preventDefault();
+      }
+      this.setState({
+        translateText : c
+      })
+    }
+
+    
+  }
+
   handleTextChange(key, event) {
     const n = event.target.value.endsWith(" ");
     if (this.state.nmtText[0] && n) {
@@ -175,7 +198,8 @@ class Dashboard extends React.Component {
     const apiObj = new IntractiveApi(this.state.text, this.state.translateText, model);
 
     if (!this.state.update && !this.state.edit) {
-      console.log("1");
+      var time;
+
       APITransport(apiObj);
       this.setState({
         autoMlText: "",
@@ -194,7 +218,14 @@ class Dashboard extends React.Component {
         submit: true,
        
       });
-      APITransport(apiObj);
+      clearTimeout(time);
+      time = setTimeout(() => {
+        APITransport(apiObj);
+      }, 1000);
+
+      
+        
+      
     }
   }
 
@@ -265,6 +296,7 @@ class Dashboard extends React.Component {
                     className="noter-text-area"
                     rows="3"
                     value={this.state.text}
+                    disabled = {this.state.edit? true : false}
                     placeholder="Enter sentence here"
                     cols="50"
                     onChange={event => {
@@ -287,6 +319,7 @@ class Dashboard extends React.Component {
                       value={this.state.translateText}
                       placeholder="Enter target prefix"
                       cols="50"
+                      onKeyDown={this.keyPress.bind(this)}
                       onChange={event => {
                         this.handleTextChange("translateText", event);
                       }}
