@@ -11,8 +11,6 @@ import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 // import Select from "../../components/web/common/Select";
 import SimpleSelect from "../../components/web/common/SimpleSelect";
-
-import NMT from "../../../flux/actions/apis/nmt";
 import IntractiveApi from "../../../flux/actions/apis/intractive_translate";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import NewOrders from "../../components/web/dashboard/NewOrders";
@@ -38,7 +36,8 @@ class Dashboard extends React.Component {
       model: [],
       showSplitted: false,
       open: false,
-      message: "Successfully updated sentence"
+      submit: false,
+      message: "Sentence updated successfully! "
     };
   }
 
@@ -50,7 +49,7 @@ class Dashboard extends React.Component {
     });
 
     const { APITransport } = this.props;
-    const apiObj = new FetchLanguage();
+    const apiObj = new FetchLanguage();  
     APITransport(apiObj);
     this.setState({ showLoader: true });
     const apiModel = new FetchModel();
@@ -59,23 +58,26 @@ class Dashboard extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
- 
-
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
+      console.log("----resp--", this.props.intractiveTrans);
+      this.setState({
+        nmtText: this.props.intractiveTrans,
+      });
+      if(this.state.submit) {
         this.setState({
-            open: true
+          open: true
         });
-
         setTimeout(() => {
-            this.handleClear()
-          }, 3000);
+          this.handleClear();
+        }, 3000);
       }
-    
+     
+    }
 
     if (prevProps.nmt !== this.props.nmt) {
       this.setState({
         nmtText: this.props.nmt,
-        update: true
+        
       });
     }
 
@@ -90,7 +92,6 @@ class Dashboard extends React.Component {
         language: this.props.supportLanguage
       });
     }
-    
 
     if (prevProps.langModel !== this.props.langModel) {
       this.setState({
@@ -104,6 +105,16 @@ class Dashboard extends React.Component {
   };
 
   handleTextChange(key, event) {
+    const n = event.target.value.endsWith(" ");
+    if (this.state.nmtText[0] && n) {
+      if (this.state.nmtText[0].tgt.startsWith(event.target.value) && this.state.nmtText[0].tgt.includes(event.target.value, 0)) {
+        console.log("sajish")
+      } else {
+        console.log("api")
+        const apiObj = new IntractiveApi(this.state.text, this.state.translateText, this.state.model);
+        this.props.APITransport(apiObj);
+      }
+    }
     this.setState({
       [key]: event.target.value
     });
@@ -116,6 +127,7 @@ class Dashboard extends React.Component {
       autoMlText: "",
       source: "",
       target: "",
+      translateText: "",
       model: [],
       update: false,
       edit: false
@@ -126,59 +138,63 @@ class Dashboard extends React.Component {
     this.setState({ [event.target.name]: event.target.value, model: [] });
   };
 
-//   handleSource(modelLanguage, supportLanguage) {
-//     const result = [];
-//     modelLanguage.map(item => supportLanguage.map(value => (item.source_language_code === value.language_code ? result.push(value) : null)));
-//     const value = new Set(result);
-//     const source_language = [...value];
-//     console.log("source",source_language)
-//     return source_language;
-//   }
+  //   handleSource(modelLanguage, supportLanguage) {
+  //     const result = [];
+  //     modelLanguage.map(item => supportLanguage.map(value => (item.source_language_code === value.language_code ? result.push(value) : null)));
+  //     const value = new Set(result);
+  //     const source_language = [...value];
+  //     console.log("source",source_language)
+  //     return source_language;
+  //   }
 
-//   handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
-//     const result = [];
-//     modelLanguage.map(item => {
-//       item.source_language_code === sourceLanguage &&
-//         supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null));
-//       return true;
-//     });
-//     const value = new Set(result);
-//     const target_language = [...value];
-//     return target_language;
-//   }
+  //   handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
+  //     const result = [];
+  //     modelLanguage.map(item => {
+  //       item.source_language_code === sourceLanguage &&
+  //         supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null));
+  //       return true;
+  //     });
+  //     const value = new Set(result);
+  //     const target_language = [...value];
+  //     return target_language;
+  //   }
 
   handleSubmit(role) {
     const model = [];
-    const { APITransport, NMTApi } = this.props;
+    const { APITransport} = this.props;
 
-    this.state.modelLanguage.map(item =>
-    //   item.target_language_code === this.state.target && item.source_language_code === this.state.source && model.length < 1 && item.is_primary
-    //     ? model.push(item)
-    //     : []
-    item.model_id === 56 && model.push(item)
+    this.state.modelLanguage.map(
+      item =>
+        //   item.target_language_code === this.state.target && item.source_language_code === this.state.source && model.length < 1 && item.is_primary
+        //     ? model.push(item)
+        //     : []
+        item.model_id === 56 && model.push(item)
     );
-    console.log("test",model)
-    const nmt = new NMT(this.state.text, model, true, this.state.target, this.state.showSplitted);
+
+    console.log("test", model);
+    const apiObj = new IntractiveApi(this.state.text, this.state.translateText, model);
+
     if (!this.state.update && !this.state.edit) {
-        console.log("1")
-      NMTApi(nmt);
+      console.log("1");
+      APITransport(apiObj);
       this.setState({
         autoMlText: "",
         nmtText: "",
-        apiCalled: true
+        apiCalled: true,
+        model,
+        update: true
       });
     } else if (this.state.update && !this.state.edit) {
-        console.log("2")
       this.setState({
         edit: true,
         update: false
       });
     } else if (this.state.edit) {
-        console.log("3")
-        console.log("----",this.state.text,this.state.translateText)
-        const apiObj = new IntractiveApi(this.state.text,this.state.translateText,model);
-        APITransport(apiObj)
-
+      this.setState({
+        submit: true,
+       
+      });
+      APITransport(apiObj);
     }
   }
 
@@ -282,11 +298,11 @@ class Dashboard extends React.Component {
           )}
           {this.state.nmtText[0] && (
             <div>
-              <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText}/>
+              <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} />
             </div>
           )}
 
-          <Grid container spacing={24} style={{ padding: 24, paddingBottom: "18", paddingTop:'18' }}>
+          <Grid container spacing={24} style={{ padding: 24, paddingBottom: "18", paddingTop: "18" }}>
             <Grid item xs={6} sm={6} lg={6} xl={6}>
               <Button
                 variant="contained"
@@ -321,7 +337,6 @@ class Dashboard extends React.Component {
             message={this.state.message}
           />
         )}
-
       </div>
     );
   }
