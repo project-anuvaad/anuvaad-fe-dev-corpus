@@ -137,7 +137,7 @@ class Dashboard extends React.Component {
       if (this.state.nmtText[0].tgt.startsWith(event.target.value) && this.state.nmtText[0].tgt.includes(event.target.value, 0)) {
         
       } else {
-        const apiObj = new IntractiveApi(this.state.text, this.state.translateText, this.state.model);
+        const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
         this.props.APITransport(apiObj);
       }
     }
@@ -348,7 +348,7 @@ class Dashboard extends React.Component {
                 aria-label="edit"
                 style={{ width: "75%", marginBottom: "4%", marginTop: "4%" }}
               >
-                {this.state.update ? "Edit" : this.state.edit ? "Done" : translate("common.page.button.submit")}
+                {this.state.update ? "Edit" : translate("common.page.button.submit")}
               </Button>
             </Grid>
           </Grid>
