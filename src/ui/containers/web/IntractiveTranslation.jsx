@@ -106,21 +106,30 @@ class Dashboard extends React.Component {
 
   keyPress(event) {
     if (event.keyCode === 9) {
-      var c ;
-      var a = this.state.nmtText[0] && this.state.nmtText[0].tgt.split(' ')
-      var b = this.state.translateText&& this.state.translateText.split(' ')
-      
-      if(a&& b && a.length>b.length){
-        b.push(a[b.length])
-        c = b.join(' ')
+      var temp ;
+      var prefix = this.state.nmtText[0] && this.state.nmtText[0].tgt.split(' ')
+      var translate = this.state.translateText&& this.state.translateText.split(' ')
+
+      var result= translate && translate.filter(value=>value!=="")
+      if(prefix&& result && prefix.length>result.length){
+        
+        if(result[result.length-1]!==' '){
+          result.push(prefix[result.length])
+        }
+        else{
+          result[result.length-1]=(prefix[result.length])
+        }
+
+        
+        temp = result.join(' ')
         event.preventDefault();
       }
-      else if(a&& !b){
-        c=a[0]
+      else if(prefix&& !result){
+        temp=prefix[0]
         event.preventDefault();
       }
       this.setState({
-        translateText : c
+        translateText : temp
       })
     }
 
@@ -241,7 +250,7 @@ class Dashboard extends React.Component {
       <div>
         <Paper style={{ marginLeft: "25%", width: "50%", marginTop: "3%" }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "35%", paddingBottom: "12px", paddingTop: "8px" }}>
-            Intractive Translate
+          Interactive Translate
           </Typography>
           <Grid container spacing={24}>
             <Grid item xs={2} sm={4} lg={8} xl={8}>
