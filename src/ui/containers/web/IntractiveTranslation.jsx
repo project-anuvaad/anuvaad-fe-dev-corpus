@@ -67,10 +67,14 @@ class Dashboard extends React.Component {
         this.setState({
           open: true
         });
-        setTimeout(() => {
-          this.handleClear();
-        }, 3000);
-      }
+          setTimeout(() => {
+            
+            this.setState({
+              open: false
+            })
+          }, 3000);
+        }
+        
      
     }
 
@@ -162,7 +166,8 @@ class Dashboard extends React.Component {
       translateText: "",
       model: [],
       update: false,
-      edit: false
+      edit: false,
+      submit: false
     });
   }
 
@@ -207,7 +212,6 @@ class Dashboard extends React.Component {
     const apiObj = new IntractiveApi(this.state.text, this.state.translateText, model);
 
     if (!this.state.update && !this.state.edit) {
-      var time;
 
       APITransport(apiObj);
       this.setState({
@@ -227,22 +231,15 @@ class Dashboard extends React.Component {
         submit: true,
        
       });
-      clearTimeout(time);
-      time = setTimeout(() => {
-        APITransport(apiObj);
-      }, 1000);
+     
 
       
-        
+      APITransport(apiObj);
       
     }
   }
 
-  handleUpdate() {
-    this.setState({
-      edit: true
-    });
-  }
+
 
   render() {
     const role = JSON.parse(localStorage.getItem("roles"));
