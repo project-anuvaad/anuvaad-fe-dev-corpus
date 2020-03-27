@@ -620,7 +620,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/intractive-translate`}
+              path={`${process.env.PUBLIC_URL}/interactive-translate`}
               title="Anuvaad Editor"
               userRoles={["editor","dev"]}
               component={IntractiveTranslate}
