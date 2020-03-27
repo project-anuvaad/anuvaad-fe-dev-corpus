@@ -69,7 +69,8 @@ class Dashboard extends React.Component {
         });
         setTimeout(() => {
           this.setState({
-            open: false
+            open: false,
+            submit: false
           });
         }, 3000);
       }
