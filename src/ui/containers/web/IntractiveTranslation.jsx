@@ -310,7 +310,7 @@ class Dashboard extends React.Component {
                       className="noter-text-area"
                       rows="3"
                       value={this.state.translateText}
-                      placeholder="Enter target prefix"
+                      placeholder='Enter target prefix here... (press "Tab key" to copy next word from anuvaad model)'
                       cols="50"
                       onKeyDown={this.keyPress.bind(this)}
                       onChange={event => {
@@ -348,7 +348,7 @@ class Dashboard extends React.Component {
                 aria-label="edit"
                 style={{ width: "75%", marginBottom: "4%", marginTop: "4%" }}
               >
-                {this.state.update ? "Edit" : this.state.edit ? translate("common.page.button.save") : translate("common.page.button.submit")}
+                {this.state.update ? "Edit" : this.state.edit ? "Done" : translate("common.page.button.submit")}
               </Button>
             </Grid>
           </Grid>
