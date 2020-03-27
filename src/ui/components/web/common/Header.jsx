@@ -405,7 +405,7 @@ class Header extends React.Component {
                       button
                       onClick={() => {
                         this.handleDrawerClose();
-                        history.push(`${process.env.PUBLIC_URL}/intractive-translate`);
+                        history.push(`${process.env.PUBLIC_URL}/interactive-translate`);
                       }}
                     >
                       <ListItemIcon>
