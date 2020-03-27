@@ -415,7 +415,7 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                           Intractive Translate
+                           Interactive Translate
                         </Typography>
                         }
                       />
