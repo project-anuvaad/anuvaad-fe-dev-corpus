@@ -142,7 +142,7 @@ class Dashboard extends React.Component {
       }
     }
     if(!event.target.value && this.state.edit){
-      const apiObj = new IntractiveApi(this.state.text, this.state.translateText, this.state.model);
+      const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
         this.props.APITransport(apiObj);
     }
     this.setState({
