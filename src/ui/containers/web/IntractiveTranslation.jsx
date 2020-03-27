@@ -49,7 +49,7 @@ class Dashboard extends React.Component {
     });
 
     const { APITransport } = this.props;
-    const apiObj = new FetchLanguage();  
+    const apiObj = new FetchLanguage();
     APITransport(apiObj);
     this.setState({ showLoader: true });
     const apiModel = new FetchModel();
@@ -61,27 +61,23 @@ class Dashboard extends React.Component {
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       console.log("----resp--", this.props.intractiveTrans);
       this.setState({
-        nmtText: this.props.intractiveTrans,
+        nmtText: this.props.intractiveTrans
       });
-      if(this.state.submit) {
+      if (this.state.submit) {
         this.setState({
           open: true
         });
-          setTimeout(() => {
-            
-            this.setState({
-              open: false
-            })
-          }, 3000);
-        }
-        
-     
+        setTimeout(() => {
+          this.setState({
+            open: false
+          });
+        }, 3000);
+      }
     }
 
     if (prevProps.nmt !== this.props.nmt) {
       this.setState({
-        nmtText: this.props.nmt,
-        
+        nmtText: this.props.nmt
       });
     }
 
@@ -110,46 +106,44 @@ class Dashboard extends React.Component {
 
   keyPress(event) {
     if (event.keyCode === 9) {
-      var temp ;
-      var prefix = this.state.nmtText[0] && this.state.nmtText[0].tgt.split(' ')
-      var translate = this.state.translateText&& this.state.translateText.split(' ')
+      let temp;
+      const prefix = this.state.nmtText[0] && this.state.nmtText[0].tgt.split(" ");
+      const translate = this.state.translateText && this.state.translateText.split(" ");
 
-      var result= translate && translate.filter(value=>value!=="")
-      if(prefix&& result && prefix.length>result.length){
-        
-        if(result[result.length-1]!==' '){
-          result.push(prefix[result.length])
-        }
-        else{
-          result[result.length-1]=(prefix[result.length])
+      const result = translate && translate.filter(value => value !== "");
+      if (prefix && result && prefix.length > result.length) {
+        if (result[result.length - 1] !== " ") {
+          result.push(prefix[result.length]);
+        } else {
+          result[result.length - 1] = prefix[result.length];
         }
 
-        
-        temp = result.join(' ')
+        temp = result.join(" ");
         event.preventDefault();
-      }
-      else if(prefix&& !result){
-        temp=prefix[0]
+      } else if (prefix && !result) {
+        temp = prefix[0];
         event.preventDefault();
       }
       this.setState({
-        translateText : temp
-      })
+        translateText: temp
+      });
     }
-
-    
   }
 
   handleTextChange(key, event) {
+    console.log(this.state.translateText,this.state.edit)
     const n = event.target.value.endsWith(" ");
     if (this.state.nmtText[0] && n) {
       if (this.state.nmtText[0].tgt.startsWith(event.target.value) && this.state.nmtText[0].tgt.includes(event.target.value, 0)) {
-        console.log("sajish")
+        
       } else {
-        console.log("api")
         const apiObj = new IntractiveApi(this.state.text, this.state.translateText, this.state.model);
         this.props.APITransport(apiObj);
       }
+    }
+    if(!event.target.value && this.state.edit){
+      const apiObj = new IntractiveApi(this.state.text, this.state.translateText, this.state.model);
+        this.props.APITransport(apiObj);
     }
     this.setState({
       [key]: event.target.value
@@ -198,7 +192,7 @@ class Dashboard extends React.Component {
 
   handleSubmit(role) {
     const model = [];
-    const { APITransport} = this.props;
+    const { APITransport } = this.props;
 
     this.state.modelLanguage.map(
       item =>
@@ -212,7 +206,6 @@ class Dashboard extends React.Component {
     const apiObj = new IntractiveApi(this.state.text, this.state.translateText, model);
 
     if (!this.state.update && !this.state.edit) {
-
       APITransport(apiObj);
       this.setState({
         autoMlText: "",
@@ -228,18 +221,12 @@ class Dashboard extends React.Component {
       });
     } else if (this.state.edit) {
       this.setState({
-        submit: true,
-       
+        submit: true
       });
-     
 
-      
       APITransport(apiObj);
-      
     }
   }
-
-
 
   render() {
     const role = JSON.parse(localStorage.getItem("roles"));
@@ -247,7 +234,7 @@ class Dashboard extends React.Component {
       <div>
         <Paper style={{ marginLeft: "25%", width: "50%", marginTop: "3%" }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "35%", paddingBottom: "12px", paddingTop: "8px" }}>
-          Interactive Translate
+            Interactive Translate
           </Typography>
           <Grid container spacing={24}>
             <Grid item xs={2} sm={4} lg={8} xl={8}>
@@ -302,7 +289,7 @@ class Dashboard extends React.Component {
                     className="noter-text-area"
                     rows="3"
                     value={this.state.text}
-                    disabled = {this.state.edit? true : false}
+                    disabled={!!this.state.edit}
                     placeholder="Enter sentence here"
                     cols="50"
                     onChange={event => {
