@@ -9,15 +9,15 @@ import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
-// import Select from "../../components/web/common/Select";
-import SimpleSelect from "../../components/web/common/SimpleSelect";
+import Select from "../../components/web/common/Select";
+// import SimpleSelect from "../../components/web/common/SimpleSelect";
 import IntractiveApi from "../../../flux/actions/apis/intractive_translate";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import NewOrders from "../../components/web/dashboard/NewOrders";
 import { translate } from "../../../assets/localisation";
 import Snackbar from "../../components/web/common/Snackbar";
 
-class Dashboard extends React.Component {
+class IntractiveTrans extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -98,6 +98,7 @@ class Dashboard extends React.Component {
       this.setState({
         modelLanguage: this.props.langModel
       });
+      console.log("---model-----",this.props.langModel)
     }
   }
 
@@ -170,26 +171,26 @@ class Dashboard extends React.Component {
     this.setState({ [event.target.name]: event.target.value, model: [] });
   };
 
-  //   handleSource(modelLanguage, supportLanguage) {
-  //     const result = [];
-  //     modelLanguage.map(item => supportLanguage.map(value => (item.source_language_code === value.language_code ? result.push(value) : null)));
-  //     const value = new Set(result);
-  //     const source_language = [...value];
-  //     console.log("source",source_language)
-  //     return source_language;
-  //   }
+    handleSource(modelLanguage, supportLanguage) {
+      const result = [];
+      modelLanguage.map(item =>item.interactive_end_point && supportLanguage.map(value => (item.source_language_code === value.language_code ? result.push(value) : null)));
+      const value = new Set(result);
+      const source_language = [...value];
+      console.log("source",source_language)
+      return source_language;
+    }
 
-  //   handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
-  //     const result = [];
-  //     modelLanguage.map(item => {
-  //       item.source_language_code === sourceLanguage &&
-  //         supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null));
-  //       return true;
-  //     });
-  //     const value = new Set(result);
-  //     const target_language = [...value];
-  //     return target_language;
-  //   }
+    handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
+      const result = [];
+      modelLanguage.map(item => {
+        item.source_language_code === sourceLanguage &&item.interactive_end_point&&
+          supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null));
+        return true;
+      });
+      const value = new Set(result);
+      const target_language = [...value];
+      return target_language;
+    }
 
   handleSubmit(role) {
     const model = [];
@@ -197,10 +198,11 @@ class Dashboard extends React.Component {
 
     this.state.modelLanguage.map(
       item =>
-        //   item.target_language_code === this.state.target && item.source_language_code === this.state.source && model.length < 1 && item.is_primary
-        //     ? model.push(item)
-        //     : []
-        item.model_id === 56 && model.push(item)
+      item.target_language_code === this.state.target && item.source_language_code === this.state.source && model.length < 1 && item.interactive_end_point === "interactive-translation"
+            ? model.push(item)
+            : [],
+
+        // item.model_id === 56 && model.push(item)
     );
 
     console.log("test", model);
@@ -247,11 +249,11 @@ class Dashboard extends React.Component {
             <Grid item xs={1} sm={2} lg={4} xl={4}>
               <br />
               <br />
-              <SimpleSelect
+              <Select
                 id="outlined-age-simple"
                 selectValue="language_code"
-                // MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
-                MenuItemValues={["English"]}
+                MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
+                // MenuItemValues={["English"]}
                 handleChange={this.handleSelectChange}
                 value={this.state.source}
                 name="source"
@@ -268,11 +270,11 @@ class Dashboard extends React.Component {
             <Grid item xs={1} sm={2} lg={4} xl={4}>
               <br />
               <br />
-              <SimpleSelect
+              <Select
                 id="outlined-age-simple"
                 selectValue="language_code"
-                // MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
-                MenuItemValues={["Hindi"]}
+                MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
+                // MenuItemValues={["Hindi"]}
                 handleChange={this.handleSelectChange}
                 value={this.state.target}
                 name="target"
@@ -286,7 +288,7 @@ class Dashboard extends React.Component {
               <Grid item xs={12} sm={12} lg={12} xl={12}>
                 <div>
                   <textarea
-                    style={{ width: "85%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
+                    style={{ width: "86.5%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
                     className="noter-text-area"
                     rows="3"
                     value={this.state.text}
@@ -307,7 +309,7 @@ class Dashboard extends React.Component {
                 <Grid item xs={12} sm={12} lg={12} xl={12}>
                   <div>
                     <textarea
-                      style={{ width: "85%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
+                      style={{ width: "86.5%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
                       className="noter-text-area"
                       rows="3"
                       value={this.state.translateText}
@@ -336,7 +338,7 @@ class Dashboard extends React.Component {
                 onClick={this.handleClear.bind(this)}
                 color="primary"
                 aria-label="edit"
-                style={{ marginLeft: "10%", width: "75%", marginBottom: "4%", marginTop: "4%", marginRight: "5%" }}
+                style={{ marginLeft: "10%", width: "78%", marginBottom: "4%", marginTop: "4%", marginRight: "5%" }}
               >
                 {translate("common.page.button.clear")}
               </Button>
@@ -347,7 +349,7 @@ class Dashboard extends React.Component {
                 onClick={this.handleSubmit.bind(this, role)}
                 color="primary"
                 aria-label="edit"
-                style={{ width: "75%", marginBottom: "4%", marginTop: "4%" }}
+                style={{ width: "78%", marginBottom: "4%", marginTop: "4%" }}
               >
                 {this.state.update ? "Edit" : translate("common.page.button.submit")}
               </Button>
@@ -391,4 +393,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IntractiveTrans));
