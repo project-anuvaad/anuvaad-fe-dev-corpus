@@ -26,7 +26,6 @@ class IntractiveTrans extends React.Component {
       apiCalled: false,
       autoMlText: "",
       nmtText: [],
-      nmtTextSP: [],
       tocken: false,
       source: "",
       target: "",
@@ -34,18 +33,16 @@ class IntractiveTrans extends React.Component {
       modelLanguage: [],
       language: [],
       model: [],
-      showSplitted: false,
       open: false,
       submit: false,
-      message: "Sentence updated successfully! "
+      message: translate("intractive_translate.page.snackbar.message")
     };
   }
 
   componentDidMount() {
     this.setState({
       autoMlText: "",
-      nmtText: [],
-      nmtTextSP: []
+      nmtText: []
     });
 
     const { APITransport } = this.props;
@@ -59,7 +56,6 @@ class IntractiveTrans extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
-      console.log("----resp--", this.props.intractiveTrans);
       this.setState({
         nmtText: this.props.intractiveTrans
       });
@@ -76,18 +72,6 @@ class IntractiveTrans extends React.Component {
       }
     }
 
-    if (prevProps.nmt !== this.props.nmt) {
-      this.setState({
-        nmtText: this.props.nmt
-      });
-    }
-
-    if (prevProps.nmtsp !== this.props.nmtsp) {
-      this.setState({
-        nmtTextSP: this.props.nmtsp.text
-      });
-    }
-
     if (prevProps.supportLanguage !== this.props.supportLanguage) {
       this.setState({
         language: this.props.supportLanguage
@@ -98,7 +82,6 @@ class IntractiveTrans extends React.Component {
       this.setState({
         modelLanguage: this.props.langModel
       });
-      console.log("---model-----",this.props.langModel)
     }
   }
 
@@ -106,6 +89,7 @@ class IntractiveTrans extends React.Component {
     this.setState({ [name]: event.target.checked });
   };
 
+  // Tab press will append next word into textarea
   keyPress(event) {
     if (event.keyCode === 9) {
       let temp;
@@ -133,19 +117,17 @@ class IntractiveTrans extends React.Component {
   }
 
   handleTextChange(key, event) {
-    console.log(this.state.translateText,this.state.edit)
-    const n = event.target.value.endsWith(" ");
-    if (this.state.nmtText[0] && n) {
+    const space = event.target.value.endsWith(" ");
+    if (this.state.nmtText[0] && space) {
       if (this.state.nmtText[0].tgt.startsWith(event.target.value) && this.state.nmtText[0].tgt.includes(event.target.value, 0)) {
-        
       } else {
         const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
         this.props.APITransport(apiObj);
       }
     }
-    if(!event.target.value && this.state.edit){
+    if (!event.target.value && this.state.edit) {
       const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
-        this.props.APITransport(apiObj);
+      this.props.APITransport(apiObj);
     }
     this.setState({
       [key]: event.target.value
@@ -156,7 +138,6 @@ class IntractiveTrans extends React.Component {
     this.setState({
       text: "",
       nmtText: "",
-      autoMlText: "",
       source: "",
       target: "",
       translateText: "",
@@ -171,73 +152,76 @@ class IntractiveTrans extends React.Component {
     this.setState({ [event.target.name]: event.target.value, model: [] });
   };
 
-    handleSource(modelLanguage, supportLanguage) {
-      const result = [];
-      modelLanguage.map(item =>item.interactive_end_point && supportLanguage.map(value => (item.source_language_code === value.language_code ? result.push(value) : null)));
-      const value = new Set(result);
-      const source_language = [...value];
-      console.log("source",source_language)
-      return source_language;
-    }
+  // Source language
+  handleSource(modelLanguage, supportLanguage) {
+    const result = [];
+    modelLanguage.map(
+      item =>
+        item.interactive_end_point && supportLanguage.map(value => (item.source_language_code === value.language_code ? result.push(value) : null))
+    );
+    const value = new Set(result);
+    const source_language = [...value];
+    return source_language;
+  }
+  // Target language
+  handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
+    const result = [];
+    modelLanguage.map(item => {
+      item.source_language_code === sourceLanguage &&
+        item.interactive_end_point &&
+        supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null));
+      return true;
+    });
+    const value = new Set(result);
+    const target_language = [...value];
+    return target_language;
+  }
 
-    handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
-      const result = [];
-      modelLanguage.map(item => {
-        item.source_language_code === sourceLanguage &&item.interactive_end_point&&
-          supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null));
-        return true;
-      });
-      const value = new Set(result);
-      const target_language = [...value];
-      return target_language;
-    }
-
-  handleSubmit(role) {
+  handleSubmit() {
     const model = [];
     const { APITransport } = this.props;
-
-    this.state.modelLanguage.map(
-      item =>
-      item.target_language_code === this.state.target && item.source_language_code === this.state.source && model.length < 1 && item.interactive_end_point === "interactive-translation"
-            ? model.push(item)
-            : [],
-
-        // item.model_id === 56 && model.push(item)
+    this.state.modelLanguage.map(item =>
+      item.target_language_code === this.state.target &&
+      item.source_language_code === this.state.source &&
+      model.length < 1 &&
+      item.interactive_end_point === "interactive-translation"
+        ? model.push(item)
+        : []
     );
-
-    console.log("test", model);
     const apiObj = new IntractiveApi(this.state.text, this.state.translateText, model);
+    if (this.state.text && this.state.source && this.state.target) {
+      if (!this.state.update && !this.state.edit) {
+        APITransport(apiObj);
+        this.setState({
+          autoMlText: "",
+          nmtText: "",
+          apiCalled: true,
+          model,
+          update: true
+        });
+      } else if (this.state.update && !this.state.edit) {
+        this.setState({
+          edit: true,
+          update: false
+        });
+      } else if (this.state.edit) {
+        this.setState({
+          submit: true
+        });
 
-    if (!this.state.update && !this.state.edit) {
-      APITransport(apiObj);
-      this.setState({
-        autoMlText: "",
-        nmtText: "",
-        apiCalled: true,
-        model,
-        update: true
-      });
-    } else if (this.state.update && !this.state.edit) {
-      this.setState({
-        edit: true,
-        update: false
-      });
-    } else if (this.state.edit) {
-      this.setState({
-        submit: true
-      });
-
-      APITransport(apiObj);
+        APITransport(apiObj);
+      }
+    } else {
+      alert(translate("common.page.label.pageWarning"));
     }
   }
 
   render() {
-    const role = JSON.parse(localStorage.getItem("roles"));
     return (
       <div>
         <Paper style={{ marginLeft: "25%", width: "50%", marginTop: "3%" }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "35%", paddingBottom: "12px", paddingTop: "8px" }}>
-            Interactive Translate
+            {translate("intractive_translate.page.main.title")}
           </Typography>
           <Grid container spacing={24}>
             <Grid item xs={2} sm={4} lg={8} xl={8}>
@@ -293,7 +277,7 @@ class IntractiveTrans extends React.Component {
                     rows="3"
                     value={this.state.text}
                     disabled={!!this.state.edit}
-                    placeholder="Enter sentence here"
+                    placeholder={translate("intractive_translate.page.textarea.sourcePlaceholder")}
                     cols="50"
                     onChange={event => {
                       this.handleTextChange("text", event);
@@ -313,7 +297,7 @@ class IntractiveTrans extends React.Component {
                       className="noter-text-area"
                       rows="3"
                       value={this.state.translateText}
-                      placeholder='Enter target prefix here... (press "Tab key" to copy next word from anuvaad model)'
+                      placeholder={translate("intractive_translate.page.textarea.targetPlaceholder")}
                       cols="50"
                       onKeyDown={this.keyPress.bind(this)}
                       onChange={event => {
@@ -346,12 +330,12 @@ class IntractiveTrans extends React.Component {
             <Grid item xs={6} sm={6} lg={6} xl={6}>
               <Button
                 variant="contained"
-                onClick={this.handleSubmit.bind(this, role)}
+                onClick={this.handleSubmit.bind(this)}
                 color="primary"
                 aria-label="edit"
                 style={{ width: "78%", marginBottom: "4%", marginTop: "4%" }}
               >
-                {this.state.update ? "Edit" : translate("common.page.button.submit")}
+                {this.state.update ? translate("common.page.title.edit") : translate("common.page.button.submit")}
               </Button>
             </Grid>
           </Grid>

@@ -5,12 +5,10 @@ import API from "./api";
 import C from "../constants";
 
 export default class AcceptAllSentence extends API {
-  constructor( workspace, timeout = 2000) {
-    console.log();
+  constructor(workspace, timeout = 2000) {
     super("POST", timeout, false);
     this.type = C.SENTENCEREPLACE;
     this.workspace = workspace;
-    
   }
 
   toString() {
@@ -29,18 +27,16 @@ export default class AcceptAllSentence extends API {
   }
 
   getBody() {
-    
     return {
-        processId: this.workspace.processId,
-        source_search: this.workspace.changes && this.workspace.changes.length>0 && this.workspace.changes[0].source_search
-
+      processId: this.workspace.processId,
+      source_search: this.workspace.changes && this.workspace.changes.length > 0 && this.workspace.changes[0].source_search
     };
   }
 
   getHeaders() {
     this.headers = {
       headers: {
-        Authorization: `Bearer ${  decodeURI(localStorage.getItem("token"))}`,
+        Authorization: `Bearer ${decodeURI(localStorage.getItem("token"))}`,
         "Content-Type": "application/json"
       }
     };
