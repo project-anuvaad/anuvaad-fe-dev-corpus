@@ -5,46 +5,41 @@ import API from "./api";
 import C from "../constants";
 
 export default class ConfigUpload extends API {
-    constructor(configFile,name, timeout = 2000) {
-        super('POST', timeout, false, 'MULTIPART');
-        this.type = C.CONFIGUPLOAD;
-        this.file = configFile
-        this.name = name
-    }
+  constructor(configFile, name, timeout = 2000) {
+    super("POST", timeout, false, "MULTIPART");
+    this.type = C.CONFIGUPLOAD;
+    this.file = configFile;
+    this.name = name;
+  }
 
-    toString() {
-        return `${super.toString()} , type: ${this.type}`
-    }
+  toString() {
+    return `${super.toString()} , type: ${this.type}`;
+  }
 
-    processResponse(res) {
-        super.processResponse(res)
-        
-        
-        console.log("resp",res.data)
-        if (res.data) {
-            this.config = {'data':res.data, 'name':this.name};
-            
-        }
+  processResponse(res) {
+    super.processResponse(res);
+    if (res.data) {
+      this.config = { data: res.data, name: this.name };
     }
+  }
 
-    apiEndPoint() {
-        return `${super.apiEndPointAuto()}/upload`;
-    }
+  apiEndPoint() {
+    return `${super.apiEndPointAuto()}/upload`;
+  }
 
-    getFormData() {
-        return this.file;
-    }
+  getFormData() {
+    return this.file;
+  }
 
-    getHeaders() {
-        return {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        }
-    }
+  getHeaders() {
+    return {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    };
+  }
 
-    getPayload() {
-        return this.config
-    }
-
+  getPayload() {
+    return this.config;
+  }
 }
