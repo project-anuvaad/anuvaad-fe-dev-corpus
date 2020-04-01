@@ -216,7 +216,7 @@ class ViewTranslate extends React.Component {
                             return (
 
                                 <div style={{ width: '120px' }}>
-                                    {(tableMeta.rowData[5] !== 'COMPLETED' && tableMeta.rowData[6]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[6] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[5]) : tableMeta.rowData[5]}
+                                    {(tableMeta.rowData[5] !== 'COMPLETED' &&tableMeta.rowData[5] !== 'FAILED' &&  tableMeta.rowData[6]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[6] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[5]) : tableMeta.rowData[5]}
 
                                 </div>
                             );
