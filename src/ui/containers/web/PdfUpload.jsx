@@ -152,6 +152,7 @@ class PdfUpload extends Component {
             acceptedFiles={[".pdf"]}
             onChange={this.handleChange.bind(this)}
             filesLimit={1}
+            maxFileSize={20000000}
             dropzoneText={translate('common.page.label.addDropFile')} 
             onDelete={this.handleDelete.bind(this)}
           />
