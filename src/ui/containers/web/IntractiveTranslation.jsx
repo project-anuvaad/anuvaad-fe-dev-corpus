@@ -32,6 +32,7 @@ class IntractiveTrans extends React.Component {
       update: false,
       modelLanguage: [],
       language: [],
+      disable: false,
       model: [],
       open: false,
       submit: false,
@@ -57,7 +58,8 @@ class IntractiveTrans extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       this.setState({
-        nmtText: this.props.intractiveTrans
+        nmtText: this.props.intractiveTrans,
+        disable: false
       });
       if (this.state.submit) {
         this.setState({
@@ -117,12 +119,36 @@ class IntractiveTrans extends React.Component {
   }
 
   handleTextChange(key, event) {
+    console.log(event.target.value);
     const space = event.target.value.endsWith(" ");
     if (this.state.nmtText[0] && space) {
       if (this.state.nmtText[0].tgt.startsWith(event.target.value) && this.state.nmtText[0].tgt.includes(event.target.value, 0)) {
       } else {
-        const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
+        const temp = event.target.value.split(" ");
+        const tagged_tgt = this.state.nmtText[0].tagged_tgt.split(" ");
+        const tgt = this.state.nmtText[0].tgt.split(" ");
+        const resultArray = [];
+        console.log(temp);
+        temp.map(item => {
+          if (item !== " ") {
+            const ind = tgt.indexOf(item, resultArray.length);
+            if (ind !== -1) {
+              resultArray.push(tagged_tgt[ind]);
+            } else {
+              resultArray.push(item);
+            }
+          } else {
+            resultArray.push(item);
+          }
+          return true;
+        });
+
+        const apiObj = new IntractiveApi(this.state.text, resultArray.join(" "), this.state.model);
         this.props.APITransport(apiObj);
+
+        this.setState({
+          disable: true
+        });
       }
     }
     if (!event.target.value && this.state.edit) {
@@ -163,6 +189,7 @@ class IntractiveTrans extends React.Component {
     const source_language = [...value];
     return source_language;
   }
+
   // Target language
   handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
     const result = [];
@@ -179,6 +206,7 @@ class IntractiveTrans extends React.Component {
 
   handleSubmit() {
     const model = [];
+    let res = "";
     const { APITransport } = this.props;
     this.state.modelLanguage.map(item =>
       item.target_language_code === this.state.target &&
@@ -188,7 +216,28 @@ class IntractiveTrans extends React.Component {
         ? model.push(item)
         : []
     );
-    const apiObj = new IntractiveApi(this.state.text, this.state.translateText, model);
+    if (this.state.translateText) {
+      const temp = this.state.translateText && this.state.translateText.split(" ");
+      const tagged_tgt = this.state.nmtText[0].tagged_tgt.split(" ");
+      const tgt = this.state.nmtText[0].tgt.split(" ");
+      const resultArray = [];
+      temp.map(item => {
+        if (item !== " ") {
+          const ind = tgt.indexOf(item, resultArray.length);
+          if (ind !== -1) {
+            resultArray.push(tagged_tgt[ind]);
+          } else {
+            resultArray.push(item);
+          }
+        } else {
+          resultArray.push(item);
+        }
+        return true;
+      });
+      res = resultArray.join(" ");
+      
+    }
+    const apiObj = new IntractiveApi(this.state.text, res, model);
     if (this.state.text && this.state.source && this.state.target) {
       if (!this.state.update && !this.state.edit) {
         APITransport(apiObj);
@@ -276,7 +325,7 @@ class IntractiveTrans extends React.Component {
                     className="noter-text-area"
                     rows="3"
                     value={this.state.text}
-                    disabled={!!this.state.edit}
+                    disabled={this.state.update || this.state.edit}
                     placeholder={translate("intractive_translate.page.textarea.sourcePlaceholder")}
                     cols="50"
                     onChange={event => {
@@ -296,6 +345,7 @@ class IntractiveTrans extends React.Component {
                       style={{ width: "86.5%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
                       className="noter-text-area"
                       rows="3"
+                      disabled={this.state.disable}
                       value={this.state.translateText}
                       placeholder={translate("intractive_translate.page.textarea.targetPlaceholder")}
                       cols="50"
