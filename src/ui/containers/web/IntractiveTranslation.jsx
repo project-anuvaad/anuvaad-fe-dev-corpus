@@ -20,6 +20,7 @@ import Snackbar from "../../components/web/common/Snackbar";
 class IntractiveTrans extends React.Component {
   constructor(props) {
     super(props);
+    this.textInput = React.createRef();
     this.state = {
       text: "",
       edit: false,
@@ -33,6 +34,7 @@ class IntractiveTrans extends React.Component {
       modelLanguage: [],
       language: [],
       disable: false,
+
       model: [],
       open: false,
       submit: false,
@@ -58,9 +60,11 @@ class IntractiveTrans extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       this.setState({
-        nmtText: this.props.intractiveTrans,
-        disable: false
+        nmtText: this.props.intractiveTrans
       });
+      if (this.state.edit) {
+        this.focusDiv('focus');
+      }
       if (this.state.submit) {
         this.setState({
           open: true
@@ -84,6 +88,14 @@ class IntractiveTrans extends React.Component {
       this.setState({
         modelLanguage: this.props.langModel
       });
+    }
+  }
+
+  focusDiv(val) {
+    if (val==='focus') {
+      this.textInput.focus();
+    } else {
+      this.textInput.blur();
     }
   }
 
@@ -145,7 +157,7 @@ class IntractiveTrans extends React.Component {
 
         const apiObj = new IntractiveApi(this.state.text, resultArray.join(" "), this.state.model);
         this.props.APITransport(apiObj);
-
+        this.focusDiv('blur');
         this.setState({
           disable: true
         });
@@ -154,6 +166,7 @@ class IntractiveTrans extends React.Component {
     if (!event.target.value && this.state.edit) {
       const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
       this.props.APITransport(apiObj);
+      this.focusDiv('blur');
     }
     this.setState({
       [key]: event.target.value
@@ -235,7 +248,6 @@ class IntractiveTrans extends React.Component {
         return true;
       });
       res = resultArray.join(" ");
-      
     }
     const apiObj = new IntractiveApi(this.state.text, res, model);
     if (this.state.text && this.state.source && this.state.target) {
@@ -345,7 +357,10 @@ class IntractiveTrans extends React.Component {
                       style={{ width: "86.5%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
                       className="noter-text-area"
                       rows="3"
-                      disabled={this.state.disable}
+                      ref={textarea => {
+                        this.textInput = textarea;
+                      }}
+                      // disabled={this.state.disable}
                       value={this.state.translateText}
                       placeholder={translate("intractive_translate.page.textarea.targetPlaceholder")}
                       cols="50"
@@ -385,7 +400,7 @@ class IntractiveTrans extends React.Component {
                 aria-label="edit"
                 style={{ width: "78%", marginBottom: "4%", marginTop: "4%" }}
               >
-                {this.state.update ? translate("common.page.title.edit") : translate("common.page.button.submit")}
+                {this.state.update && this.state.nmtText[0] ? translate("common.page.title.edit") : translate("common.page.button.submit")}
               </Button>
             </Grid>
           </Grid>
