@@ -34,7 +34,7 @@ class IntractiveTrans extends React.Component {
       modelLanguage: [],
       language: [],
       disable: false,
-
+      key: false,
       model: [],
       open: false,
       submit: false,
@@ -105,10 +105,12 @@ class IntractiveTrans extends React.Component {
 
   // Tab press will append next word into textarea
   keyPress(event) {
+    
     if (event.keyCode === 9) {
-      if (this.state.translateText && !this.state.nmtText[0].tgt.startsWith(this.state.translateText)) {
-        const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
+      if (this.state.key) {
+        const apiObj = new IntractiveApi(this.state.text, this.handleCalc(event.target.value), this.state.model);
         this.props.APITransport(apiObj);
+        this.setState({key:false})
       } else {
         let temp;
         const prefix = this.state.nmtText[0] && this.state.nmtText[0].tgt.split(" ");
@@ -134,15 +136,19 @@ class IntractiveTrans extends React.Component {
         });
       }
     }
+    
+      else{
+        
+        this.setState({
+          key:true,
+          
+        });
+      }
+    
   }
 
-  handleTextChange(key, event) {
-    console.log(event.target.value);
-    const space = event.target.value.endsWith(" ");
-    if (this.state.nmtText[0] && space) {
-      if (this.state.nmtText[0].tgt.startsWith(event.target.value) && this.state.nmtText[0].tgt.includes(event.target.value, 0)) {
-      } else {
-        const temp = event.target.value.split(" ");
+  handleCalc(value){
+    const temp = value.split(" ");
         const tagged_tgt = this.state.nmtText[0].tagged_tgt.split(" ");
         const tagged_src = this.state.nmtText[0].tagged_src.split(" ");
         const tgt = this.state.nmtText[0].tgt.split(" ");
@@ -153,9 +159,14 @@ class IntractiveTrans extends React.Component {
           if (item !== " ") {
             const ind = tgt.indexOf(item, resultArray.length);
             console.log(item);
-            const src_ind = src.indexOf(item);
-
-            console.log(src_ind);
+            const arr = [item, `${item},`, `${item}.`];
+            let src_ind = -1;
+            arr.map(el => {
+              if (src_ind === -1) {
+                src_ind = src.indexOf(el);
+              }
+              return true;
+            });
             if (ind !== -1) {
               resultArray.push(tagged_tgt[ind]);
             } else if (src_ind !== -1) {
@@ -167,9 +178,19 @@ class IntractiveTrans extends React.Component {
             resultArray.push(item);
           }
           return true;
-        });
+  });
+  return resultArray.join(" ");
+}
 
-        const apiObj = new IntractiveApi(this.state.text, resultArray.join(" "), this.state.model);
+
+  handleTextChange(key, event) {
+    console.log(event.target.value);
+    const space = event.target.value.endsWith(" ");
+    if (this.state.nmtText[0] && space) {
+      if (this.state.nmtText[0].tgt.startsWith(event.target.value) && this.state.nmtText[0].tgt.includes(event.target.value, 0)) {
+      } else {
+        var res= this.handleCalc(event.target.value)
+        const apiObj = new IntractiveApi(this.state.text, res, this.state.model);
         this.props.APITransport(apiObj);
         this.focusDiv("blur");
         this.setState({
@@ -244,24 +265,7 @@ class IntractiveTrans extends React.Component {
         : []
     );
     if (this.state.translateText) {
-      const temp = this.state.translateText && this.state.translateText.split(" ");
-      const tagged_tgt = this.state.nmtText[0].tagged_tgt.split(" ");
-      const tgt = this.state.nmtText[0].tgt.split(" ");
-      const resultArray = [];
-      temp.map(item => {
-        if (item !== " ") {
-          const ind = tgt.indexOf(item, resultArray.length);
-          if (ind !== -1) {
-            resultArray.push(tagged_tgt[ind]);
-          } else {
-            resultArray.push(item);
-          }
-        } else {
-          resultArray.push(item);
-        }
-        return true;
-      });
-      res = resultArray.join(" ");
+      res= this.handleCalc(this.state.translateText)
     }
     const apiObj = new IntractiveApi(this.state.text, res, model);
     if (this.state.text && this.state.source && this.state.target) {
