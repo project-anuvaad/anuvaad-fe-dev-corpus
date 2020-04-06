@@ -63,7 +63,7 @@ class IntractiveTrans extends React.Component {
         nmtText: this.props.intractiveTrans
       });
       if (this.state.edit) {
-        this.focusDiv('focus');
+        this.focusDiv("focus");
       }
       if (this.state.submit) {
         this.setState({
@@ -92,7 +92,7 @@ class IntractiveTrans extends React.Component {
   }
 
   focusDiv(val) {
-    if (val==='focus') {
+    if (val === "focus") {
       this.textInput.focus();
     } else {
       this.textInput.blur();
@@ -106,27 +106,33 @@ class IntractiveTrans extends React.Component {
   // Tab press will append next word into textarea
   keyPress(event) {
     if (event.keyCode === 9) {
-      let temp;
-      const prefix = this.state.nmtText[0] && this.state.nmtText[0].tgt.split(" ");
-      const translate = this.state.translateText && this.state.translateText.split(" ");
+      if (this.state.translateText && !this.state.nmtText[0].tgt.startsWith(this.state.translateText)) {
+        const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
+        this.props.APITransport(apiObj);
+      } else {
+        let temp;
+        const prefix = this.state.nmtText[0] && this.state.nmtText[0].tgt.split(" ");
+        const translate = this.state.translateText && this.state.translateText.split(" ");
 
-      const result = translate && translate.filter(value => value !== "");
-      if (prefix && result && prefix.length > result.length) {
-        if (result[result.length - 1] !== " ") {
-          result.push(prefix[result.length]);
-        } else {
-          result[result.length - 1] = prefix[result.length];
+        const result = translate && translate.filter(value => value !== "");
+        if (prefix && result && prefix.length > result.length) {
+          if (result[result.length - 1] !== " ") {
+            result.push(prefix[result.length]);
+          } else {
+            result[result.length - 1] = prefix[result.length];
+          }
+
+          temp = result.join(" ");
+          event.preventDefault();
+        } else if (prefix && !result) {
+          temp = prefix[0];
+          event.preventDefault();
         }
 
-        temp = result.join(" ");
-        event.preventDefault();
-      } else if (prefix && !result) {
-        temp = prefix[0];
-        event.preventDefault();
+        this.setState({
+          translateText: temp
+        });
       }
-      this.setState({
-        translateText: temp
-      });
     }
   }
 
@@ -138,14 +144,22 @@ class IntractiveTrans extends React.Component {
       } else {
         const temp = event.target.value.split(" ");
         const tagged_tgt = this.state.nmtText[0].tagged_tgt.split(" ");
+        const tagged_src = this.state.nmtText[0].tagged_src.split(" ");
         const tgt = this.state.nmtText[0].tgt.split(" ");
+        const src = this.state.text && this.state.text.split(" ");
         const resultArray = [];
         console.log(temp);
         temp.map(item => {
           if (item !== " ") {
             const ind = tgt.indexOf(item, resultArray.length);
+            console.log(item);
+            const src_ind = src.indexOf(item);
+
+            console.log(src_ind);
             if (ind !== -1) {
               resultArray.push(tagged_tgt[ind]);
+            } else if (src_ind !== -1) {
+              resultArray.push(tagged_src[src_ind]);
             } else {
               resultArray.push(item);
             }
@@ -157,7 +171,7 @@ class IntractiveTrans extends React.Component {
 
         const apiObj = new IntractiveApi(this.state.text, resultArray.join(" "), this.state.model);
         this.props.APITransport(apiObj);
-        this.focusDiv('blur');
+        this.focusDiv("blur");
         this.setState({
           disable: true
         });
@@ -166,7 +180,7 @@ class IntractiveTrans extends React.Component {
     if (!event.target.value && this.state.edit) {
       const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
       this.props.APITransport(apiObj);
-      this.focusDiv('blur');
+      this.focusDiv("blur");
     }
     this.setState({
       [key]: event.target.value
