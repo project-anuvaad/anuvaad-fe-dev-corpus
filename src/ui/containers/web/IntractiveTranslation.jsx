@@ -107,7 +107,7 @@ class IntractiveTrans extends React.Component {
   keyPress(event) {
     
     if (event.keyCode === 9) {
-      if (this.state.key) {
+      if (this.state.key && this.state.translateText) {
         const apiObj = new IntractiveApi(this.state.text, this.handleCalc(event.target.value), this.state.model);
         this.props.APITransport(apiObj);
         this.setState({key:false})
@@ -132,7 +132,8 @@ class IntractiveTrans extends React.Component {
         }
 
         this.setState({
-          translateText: temp
+          translateText: temp,
+          key: false
         });
       }
     }
@@ -154,6 +155,7 @@ class IntractiveTrans extends React.Component {
         const tgt = this.state.nmtText[0].tgt.split(" ");
         const src = this.state.text && this.state.text.split(" ");
         const resultArray = [];
+        var index;
         console.log(temp);
         temp.map(item => {
           if (item !== " ") {
@@ -161,16 +163,25 @@ class IntractiveTrans extends React.Component {
             console.log(item);
             const arr = [item, `${item},`, `${item}.`];
             let src_ind = -1;
-            arr.map(el => {
+            arr.map((el,i) => {
               if (src_ind === -1) {
                 src_ind = src.indexOf(el);
+                index = i
               }
               return true;
             });
             if (ind !== -1) {
               resultArray.push(tagged_tgt[ind]);
             } else if (src_ind !== -1) {
-              resultArray.push(tagged_src[src_ind]);
+              console.log(src_ind,index)
+              if(index>0){
+                var tem= tagged_src[src_ind]
+                resultArray.push(tem.slice(0,tem.length-1));
+              }
+              else{
+                resultArray.push(tagged_src[src_ind]);
+              }
+              
             } else {
               resultArray.push(item);
             }
