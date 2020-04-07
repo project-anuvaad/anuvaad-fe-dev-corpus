@@ -60,7 +60,8 @@ class IntractiveTrans extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       this.setState({
-        nmtText: this.props.intractiveTrans
+        nmtText: this.props.intractiveTrans,
+        disable: false
       });
       if (this.state.edit) {
         this.focusDiv("focus");
@@ -107,10 +108,10 @@ class IntractiveTrans extends React.Component {
   keyPress(event) {
     
     if (event.keyCode === 9) {
-      if (this.state.key && this.state.translateText) {
+      if (this.state.disable && this.state.translateText) {
         const apiObj = new IntractiveApi(this.state.text, this.handleCalc(event.target.value), this.state.model);
         this.props.APITransport(apiObj);
-        this.setState({key:false})
+        this.setState({disable:false})
       } else {
         let temp;
         const prefix = this.state.nmtText[0] && this.state.nmtText[0].tgt.split(" ");
@@ -133,22 +134,16 @@ class IntractiveTrans extends React.Component {
 
         this.setState({
           translateText: temp,
-          key: false
+          disable: false
         });
       }
     }
     
-      else{
-        
-        this.setState({
-          key:true,
-          
-        });
-      }
     
   }
 
   handleCalc(value){
+    console.log("vallll---",value)
     const temp = value.split(" ");
         const tagged_tgt = this.state.nmtText[0].tagged_tgt.split(" ");
         const tagged_src = this.state.nmtText[0].tagged_src.split(" ");
@@ -156,7 +151,7 @@ class IntractiveTrans extends React.Component {
         const src = this.state.text && this.state.text.split(" ");
         const resultArray = [];
         var index;
-        console.log(temp);
+  
         temp.map(item => {
           if (item !== " ") {
             const ind = tgt.indexOf(item, resultArray.length);
@@ -189,13 +184,14 @@ class IntractiveTrans extends React.Component {
             resultArray.push(item);
           }
           return true;
+          
   });
   return resultArray.join(" ");
 }
 
 
   handleTextChange(key, event) {
-    console.log(event.target.value);
+
     const space = event.target.value.endsWith(" ");
     if (this.state.nmtText[0] && space) {
       if (this.state.nmtText[0].tgt.startsWith(event.target.value) && this.state.nmtText[0].tgt.includes(event.target.value, 0)) {
@@ -209,15 +205,20 @@ class IntractiveTrans extends React.Component {
         });
       }
     }
+    
     if (!event.target.value && this.state.edit) {
+
+      console.log("test")
       const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
       this.props.APITransport(apiObj);
       this.focusDiv("blur");
     }
     this.setState({
-      [key]: event.target.value
+      [key]: event.target.value,
+      disable: true
     });
   }
+
 
   handleClear() {
     this.setState({
