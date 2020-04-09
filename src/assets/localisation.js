@@ -268,6 +268,7 @@ const localization_EN_Data = {
   "webroutes.page.title.feedbackForm": "FeedbackForm",
   "webroutes.page.title.dataPipeLine": "DATA PIPELINE DASHBOARD",
   "webroutes.page.title.anuvaadEditor": "Anuvaad Editor",
+  "webroutes.page.title.pdfToDoc":"PDF to DOC",
   "dashbord.page.title.anuvaadModel": "Anuvaad Model",
   "viewTranslate.page.title.downloadSource": "Download Source",
   "viewTranslate.page.title.downloadTranslate": "Download Translated",
@@ -638,7 +639,8 @@ const localization_HI_Data = {
   "intractive_translate.page.textarea.targetPlaceholder":
     'यहाँ लक्ष्य उपसर्ग दर्ज करें ... (प्रेस "Tab key" अनुवाड मॉडल से अगला शब्द कॉपी करने के लिए))',
   "intractive_translate.page.textarea.sourcePlaceholder": "यहां वाक्य दर्ज करें..",
-  "intractive_translate.page.main.title": "इंटरएक्टिव अनुवाद"
+  "intractive_translate.page.main.title": "इंटरएक्टिव अनुवाद",
+  "webroutes.page.title.pdfToDoc":"पीडीएफ से डॉक बनाए"
 };
 
 export function translate(locale_text) {
