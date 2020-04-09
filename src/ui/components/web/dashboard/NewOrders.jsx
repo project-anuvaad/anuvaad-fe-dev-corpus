@@ -6,7 +6,7 @@ import { typography } from "material-ui/styles";
 import Typography from '@material-ui/core/Typography';
 import { translate } from "../../../../assets/localisation";
 const NewOrders = props => {
-  const { title, data, status } = props;
+  const { title, data, status,value } = props;
   const styles = {
     paper: {
       backgroundColor: blueGrey50,
@@ -37,8 +37,8 @@ const NewOrders = props => {
                 data.map(item=>
                   <div key ={item.s_id}>
                     {data.length>1 &&
-                     <Typography variant="h6" gutterBottom style={{ color: darkBlack,marginLeft:"65px"}} >{item.s_id}</Typography>}
-                     <Typography variant="h6" gutterBottom style={{ color: darkBlack,marginLeft:"75px"}} >{item.tgt}</Typography>
+                     <Typography variant="h6" gutterBottom  style={{ color: darkBlack,marginLeft:"65px"}} >{item.s_id}</Typography>}
+                     <Typography variant="h6" gutterBottom style={value ?{ color: darkBlack,marginLeft:"55px",marginRight:'12%'}:{ color: darkBlack,marginLeft:"65px"}} >{item.tgt}</Typography>
                      
                      {status && <div>
                      <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"75px"}} >{translate('neworders.page.label.inputSubwords')}&nbsp; &nbsp; : {item.input_subwords? item.input_subwords: 'NA'}</Typography>
