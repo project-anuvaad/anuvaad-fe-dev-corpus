@@ -97,7 +97,8 @@ class PdfUpload extends Component {
 
     handleDelete = () => {
         this.setState({
-            files: []
+            files: [],
+            filesPath: null
         });
     };
 
