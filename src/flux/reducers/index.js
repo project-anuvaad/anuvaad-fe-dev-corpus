@@ -53,6 +53,7 @@ import fetchSearch from './fetchsearchreplace';
 import sentenceReplace from './sentencereplace';
 import uploadpdf from './pdfupload';
 import pdfConfigUpload from './pdfuploadfile';
+import docpath from './pdf_to_doc';
 import fetchPdfSentence from './fetchpdfsentence';
 import intractiveTrans from './intractive_translate'
 
@@ -111,5 +112,6 @@ export default {
     uploadpdf,
     pdfConfigUpload,
     fetchPdfSentence,
-    intractiveTrans
+    intractiveTrans,
+    docpath
 };

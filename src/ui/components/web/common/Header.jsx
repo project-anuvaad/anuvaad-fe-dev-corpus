@@ -484,7 +484,28 @@ class Header extends React.Component {
                       />
                     </ListItem>
                   )}
-
+{role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push("/pdf-to-doc");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <InsertDriveFileIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                           {translate('webroutes.page.title.pdfToDoc')}
+                        </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
 {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
