@@ -106,12 +106,11 @@ class IntractiveTrans extends React.Component {
 
   // Tab press will append next word into textarea
   keyPress(event) {
-    
     if (event.keyCode === 9) {
       if (this.state.disable && this.state.translateText) {
         const apiObj = new IntractiveApi(this.state.text, this.handleCalc(event.target.value), this.state.model);
         this.props.APITransport(apiObj);
-        this.setState({disable:false})
+        this.setState({ disable: false });
       } else {
         let temp;
         const prefix = this.state.nmtText[0] && this.state.nmtText[0].tgt.split(" ");
@@ -138,65 +137,58 @@ class IntractiveTrans extends React.Component {
         });
       }
     }
-    
-    
   }
 
-  handleCalc(value){
-    console.log("vallll---",value)
+  handleCalc(value) {
+    console.log("vallll---", value);
     const temp = value.split(" ");
-        const tagged_tgt = this.state.nmtText[0].tagged_tgt.split(" ");
-        const tagged_src = this.state.nmtText[0].tagged_src.split(" ");
-        const tgt = this.state.nmtText[0].tgt.split(" ");
-        const src = this.state.text && this.state.text.split(" ");
-        const resultArray = [];
-        var index;
-  
-        temp.map(item => {
-          if (item !== " ") {
-            const ind = tgt.indexOf(item, resultArray.length);
-            console.log(item);
-            const arr = [item, `${item},`, `${item}.`];
-            let src_ind = -1;
-            arr.map((el,i) => {
-              if (src_ind === -1) {
-                src_ind = src.indexOf(el);
-                index = i
-              }
-              return true;
-            });
-            if (ind !== -1) {
-              resultArray.push(tagged_tgt[ind]);
-            } else if (src_ind !== -1) {
-              console.log(src_ind,index)
-              if(index>0){
-                var tem= tagged_src[src_ind]
-                resultArray.push(tem.slice(0,tem.length-1));
-              }
-              else{
-                resultArray.push(tagged_src[src_ind]);
-              }
-              
-            } else {
-              resultArray.push(item);
-            }
-          } else {
-            resultArray.push(item);
+    const tagged_tgt = this.state.nmtText[0].tagged_tgt.split(" ");
+    const tagged_src = this.state.nmtText[0].tagged_src.split(" ");
+    const tgt = this.state.nmtText[0].tgt.split(" ");
+    const src = this.state.text && this.state.text.split(" ");
+    const resultArray = [];
+    let index;
+
+    temp.map(item => {
+      if (item !== " ") {
+        const ind = tgt.indexOf(item, resultArray.length);
+        console.log(item);
+        const arr = [item, `${item},`, `${item}.`];
+        let src_ind = -1;
+        arr.map((el, i) => {
+          if (src_ind === -1) {
+            src_ind = src.indexOf(el);
+            index = i;
           }
           return true;
-          
-  });
-  return resultArray.join(" ");
-}
-
+        });
+        if (ind !== -1) {
+          resultArray.push(tagged_tgt[ind]);
+        } else if (src_ind !== -1) {
+          console.log(src_ind, index);
+          if (index > 0) {
+            const tem = tagged_src[src_ind];
+            resultArray.push(tem.slice(0, tem.length - 1));
+          } else {
+            resultArray.push(tagged_src[src_ind]);
+          }
+        } else {
+          resultArray.push(item);
+        }
+      } else {
+        resultArray.push(item);
+      }
+      return true;
+    });
+    return resultArray.join(" ");
+  }
 
   handleTextChange(key, event) {
-
     const space = event.target.value.endsWith(" ");
     if (this.state.nmtText[0] && space) {
       if (this.state.nmtText[0].tgt.startsWith(event.target.value) && this.state.nmtText[0].tgt.includes(event.target.value, 0)) {
       } else {
-        var res= this.handleCalc(event.target.value)
+        const res = this.handleCalc(event.target.value);
         const apiObj = new IntractiveApi(this.state.text, res, this.state.model);
         this.props.APITransport(apiObj);
         this.focusDiv("blur");
@@ -205,10 +197,9 @@ class IntractiveTrans extends React.Component {
         });
       }
     }
-    
-    if (!event.target.value && this.state.edit) {
 
-      console.log("test")
+    if (!event.target.value && this.state.edit) {
+      console.log("test");
       const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
       this.props.APITransport(apiObj);
       this.focusDiv("blur");
@@ -218,7 +209,6 @@ class IntractiveTrans extends React.Component {
       disable: true
     });
   }
-
 
   handleClear() {
     this.setState({
@@ -277,7 +267,7 @@ class IntractiveTrans extends React.Component {
         : []
     );
     if (this.state.translateText) {
-      res= this.handleCalc(this.state.translateText)
+      res = this.handleCalc(this.state.translateText);
     }
     const apiObj = new IntractiveApi(this.state.text, res, model);
     if (this.state.text && this.state.source && this.state.target) {
@@ -314,6 +304,8 @@ class IntractiveTrans extends React.Component {
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "35%", paddingBottom: "12px", paddingTop: "8px" }}>
             {translate("intractive_translate.page.main.title")}
           </Typography>
+          {!this.state.edit && 
+          <div>
           <Grid container spacing={24}>
             <Grid item xs={2} sm={4} lg={8} xl={8}>
               <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
@@ -357,6 +349,7 @@ class IntractiveTrans extends React.Component {
               />
             </Grid>
           </Grid>
+          </div>}
 
           <div style={{ marginLeft: "5%" }}>
             <Grid container spacing={24} style={{ padding: 24 }}>
@@ -406,7 +399,7 @@ class IntractiveTrans extends React.Component {
           )}
           {this.state.nmtText[0] && (
             <div>
-              <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} />
+              <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText}value={true} />
             </div>
           )}
 
