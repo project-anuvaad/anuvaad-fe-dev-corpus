@@ -71,6 +71,7 @@ import Tool4DataSource from "./ui/containers/web/Tool4-Pipeline/DataSource";
 import Stage2DataSource from "./ui/containers/web/Tool2-Pipeline/DataSource";
 import FeedbackForm from "./ui/containers/web/FeedbackForm";
 import PdfUpload from "./ui/containers/web/PdfUpload";
+import PdfToDoc from "./ui/containers/web/PdfToDoc";
 import ViewPdf from "./ui/containers/web/ViewPdfFile";
 
 import IntractiveTranslate from "./ui/containers/web/IntractiveTranslation";
@@ -175,6 +176,12 @@ class AppRoutes extends React.Component {
               drawer
               title="Anuvaad Game"
               component={AnuvaadGame}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/pdf-to-doc`}
+              title={translate('webroutes.page.title.pdfToDoc')}
+              component={PdfToDoc}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
