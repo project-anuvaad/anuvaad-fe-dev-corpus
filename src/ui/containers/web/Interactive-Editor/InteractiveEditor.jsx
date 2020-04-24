@@ -20,6 +20,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Editor from "./Editor";
 import KeyboardTabIcon from '@material-ui/icons/KeyboardTab';
 import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
+import EditorPaper from "./EditorPaper"
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -28,7 +29,8 @@ class IntractiveTrans extends React.Component {
     this.state = {
       collapseToken: false,
       gridValue: 4,
-      message: translate("intractive_translate.page.snackbar.message")
+      message: translate("intractive_translate.page.snackbar.message"),
+      selectedSentence: ''
     };
   }
 
@@ -50,32 +52,40 @@ class IntractiveTrans extends React.Component {
     }
   }
 
+  handleOnMouseEnter(sentenceId) {
+    this.setState({ selectedSentence: sentenceId })
+  }
+
+  handleOnMouseLeave() {
+    this.setState({ selectedSentence: '' })
+  }
+
   render() {
     const { gridValue } = this.state;
     return (
       <div style={{ marginLeft: "-100px" }}>
         <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
           <Grid item xs={4} sm={3} lg={2} xl={2}>
-            <Button variant="outlined" size="large" color="primary" style={{ width: "100%",minWidth:'200px' }}>
+            <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '200px' }}>
               <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;Documents
             </Button>
           </Grid>
           <Grid item xs={false} sm={false} lg={8} xl={8}>
-          
+
             <Button variant="outlined" size="large" style={{ width: "100%", pointerEvents: "none" }}>
-              <PlayArrowIcon fontSize="large" style={{color: 'grey'}}/> Source : English 
-              <PlayArrowIcon fontSize="large" style={{color: 'grey'}}/> Target : Hindi
-              <PlayArrowIcon fontSize="large" style={{color: 'grey'}}/> File name : 6251_2016_3_1501_19387_Judgement_06-Jan-2020 copy.docx
+              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> Source : English
+              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> Target : Hindi
+              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> File name : 6251_2016_3_1501_19387_Judgement_06-Jan-2020 copy.docx
             </Button>
           </Grid>
           <Grid item xs={4} sm={4} lg={1} xl={1}>
-            <Button variant="outlined" size="large" color="primary" style={{ width: "100%",minWidth:'130px' }}>
+            <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '130px' }}>
               <VisibilityIcon fontSize="large" />
               &nbsp;&nbsp;Preview
             </Button>
           </Grid>
           <Grid item xs={4} sm={4} lg={1} xl={1} >
-            <Button variant="outlined" size="large" color="primary" style={{ width: "100%",minWidth:'80px' }}>
+            <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '80px' }}>
               <DoneIcon fontSize="large" />&nbsp;&nbsp;Done
             </Button>
           </Grid>
@@ -84,43 +94,44 @@ class IntractiveTrans extends React.Component {
         <Grid container spacing={16} style={{ padding: "0 24px 24px 24px" }}>
           {!this.state.collapseToken ? (
             <Grid item xs={4} sm={4} lg={4} xl={4}>
-              <Paper elevation={2} style={{ height: "100%", paddingBottom: "10px" }}>
+              <Paper elevation={2} style={{paddingBottom: "10px", maxHeight: window.innerHeight - 180 ,overflowY: 'scroll'}}>
                 <Toolbar>
                   <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", flex: 1, marginLeft: "3%" }}>
                     Source
                   </Typography>
                   <Toolbar onClick={event => {
-                      this.handleClick(true, 7);
-                    }}>
-                  <KeyboardBackspaceIcon style= {{cursor: "pointer"}}
-                    color="primary"
-                    
-                  />
-                  <Typography value="" variant="subtitle2" color="primary" style= {{cursor: "pointer"}}>
-                    Collapse
+                    this.handleClick(true, 7);
+                  }}>
+                    <KeyboardBackspaceIcon style={{ cursor: "pointer" }}
+                      color="primary"
+
+                    />
+                    <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
+                      Collapse
                   </Typography>
                   </Toolbar>
                 </Toolbar>
+                <EditorPaper sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}></EditorPaper>
               </Paper>
             </Grid>
           ) : (
-            <Grid item xs={1} sm={1} lg={1} xl={1}>
-              <Paper elevation={2} style={{ height: "50px", paddingBottom: "15px" }}>
-              <Toolbar onClick={event => {
-                  this.handleClick(false, 4);
-                }} >
-              <KeyboardTabIcon
-                color="primary"
-                style= {{cursor: "pointer"}}
-              />  &nbsp;&nbsp;
-              <Typography value="" variant="subtitle2" color="primary" style= {{cursor: "pointer"}}>
-                Source
+              <Grid item xs={1} sm={1} lg={1} xl={1}>
+                <Paper elevation={2} style={{ height: "50px", paddingBottom: "15px" }}>
+                  <Toolbar onClick={event => {
+                    this.handleClick(false, 4);
+                  }} >
+                    <KeyboardTabIcon
+                      color="primary"
+                      style={{ cursor: "pointer" }}
+                    />  &nbsp;&nbsp;
+              <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
+                      Source
               </Typography>
-              </Toolbar>
-              </Paper>
-            </Grid>
-            
-          )}
+                  </Toolbar>
+                </Paper>
+              </Grid>
+
+            )}
           <Grid item xs={4} sm={4} lg={4} xl={4}>
             <Paper elevation={2} style={{ height: "100%", paddingBottom: "10px" }}>
               <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", marginLeft: "3%" }}>
@@ -129,7 +140,7 @@ class IntractiveTrans extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={gridValue} sm={gridValue} lg={gridValue} xl={gridValue}>
-          {this.state.sentences && this.state.sentences[0]&& <Editor sentences = {this.state.sentences}/>}
+            {this.state.sentences && this.state.sentences[0] && <Editor sentences={this.state.sentences} />}
           </Grid>
         </Grid>
       </div>
