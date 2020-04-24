@@ -65,6 +65,8 @@
 		"react-scripts": "1.1.4",
 		"react-scroll-to": "^3.0.0-beta.3",
 		"react-scrollbar": "^0.5.6",
+		"react-split-pane": "^0.1.91",
+		"react-splitter-layout": "^4.0.0",
 		"react-star-rating-component": "^1.4.1",
 		"react-star-ratings": "^2.3.0",
 		"react-sweet-progress": "^1.1.2",
@@ -89,6 +91,9 @@
 		"babel-polyfill": "^6.26.0",
 		"babel-preset-react-native": "5.0.2",
 		"commit-msg": "^0.2.3",
+		"enzyme": "^3.11.0",
+		"enzyme-adapter-react-16": "^1.15.2",
+		"enzyme-to-json": "^3.4.4",
 		"eslint": "^5.16.0",
 		"eslint-config-airbnb": "^17.1.0",
 		"eslint-config-prettier": "^3.1.0",
@@ -122,9 +127,6 @@
 			"eslint --ignore-path .eslintignore ",
 			"git add"
 		]
-	},
-	"jest": {
-		"preset": "jest-expo"
 	},
 	"description": "This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).",
 	"author": "",
