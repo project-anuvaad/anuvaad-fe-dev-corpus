@@ -140,12 +140,19 @@ class IntractiveTrans extends React.Component {
             
           )}
           <Grid item xs={12} sm={6} lg={4} xl={4} className= 'GridFileDetails'>
-            <Paper elevation={2} style={{ height: "100%", paddingBottom: "10px" }}>
-              <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", marginLeft: "3%" }}>
-                Target
-              </Typography>
+          <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
+              <Toolbar>
+                <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", flex: 1, marginLeft: "3%" }}>
+                  Target
+                  </Typography>
+              </Toolbar>
+              <EditorPaper sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}></EditorPaper>
+
             </Paper>
-          </Grid>
+              </Grid>
+
+           
+         
           <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
           {this.state.sentences && this.state.sentences[0]&& <Editor sentences = {this.state.sentences}/>}
           </Grid>
