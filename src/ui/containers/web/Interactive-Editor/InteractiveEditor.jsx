@@ -94,7 +94,7 @@ class IntractiveTrans extends React.Component {
         <Grid container spacing={16} style={{ padding: "0 24px 24px 24px" }}>
           {!this.state.collapseToken ? (
             <Grid item xs={4} sm={4} lg={4} xl={4}>
-              <Paper elevation={2} style={{paddingBottom: "10px", maxHeight: window.innerHeight - 180 ,overflowY: 'scroll'}}>
+              <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
                 <Toolbar>
                   <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", flex: 1, marginLeft: "3%" }}>
                     Source
@@ -133,10 +133,14 @@ class IntractiveTrans extends React.Component {
 
             )}
           <Grid item xs={4} sm={4} lg={4} xl={4}>
-            <Paper elevation={2} style={{ height: "100%", paddingBottom: "10px" }}>
-              <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", marginLeft: "3%" }}>
-                Target
-              </Typography>
+            <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
+              <Toolbar>
+                <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", flex: 1, marginLeft: "3%" }}>
+                  Target
+                  </Typography>
+              </Toolbar>
+              <EditorPaper sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}></EditorPaper>
+
             </Paper>
           </Grid>
           <Grid item xs={gridValue} sm={gridValue} lg={gridValue} xl={gridValue}>
