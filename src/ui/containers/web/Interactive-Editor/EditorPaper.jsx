@@ -16,15 +16,15 @@ class EditorPaper extends React.Component {
         let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'left')
 
         if ( sentence.is_ner && !sentence.is_new_line) {
-            return (<div key={sentence._id} onMouseEnter={() => this.hoverOn(sentence._id)} onMouseLeave={() => this.hoverOff()} 
+            return (<div key={sentence._id} onClick={() => this.hoverOn(sentence._id)} onMouseEnter={() => this.hoverOn(sentence._id)} onMouseLeave={() => this.hoverOff()} 
                         style={{ backgroundColor: (this.props.selectedSentence === sentence._id) ? "yellow" : '', float: align, textAlign: align,display: 'inline-block',
                         fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>{sentence.text}</div>)
         } else if (sentence.is_ner && sentence.is_new_line) {
-            return (<div><div key={sentence._id} onMouseEnter={() => this.hoverOn(sentence._id)} onMouseLeave={() => this.hoverOff()} 
+            return (<div><div key={sentence._id} onClick={() => this.hoverOn(sentence._id)} onMouseEnter={() => this.hoverOn(sentence._id)} onMouseLeave={() => this.hoverOff()} 
                         style={{ backgroundColor: (this.props.selectedSentence === sentence._id) ? "yellow" : '', float: align, textAlign: align,
                         fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>{sentence.text}</div> <div style={{width: '100%'}}><br/>&nbsp;<br/></div></div>)
         } else {
-            return (<div key={sentence._id} onMouseEnter={() => this.hoverOn(sentence._id)} onMouseLeave={() => this.hoverOff()} 
+            return (<div key={sentence._id} onClick={() => this.hoverOn(sentence._id)} onMouseEnter={() => this.hoverOn(sentence._id)} onMouseLeave={() => this.hoverOff()} 
                         style={{ backgroundColor: this.props.selectedSentence === sentence._id ? "yellow" : '', textAlign: align, right: 0,
                         fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>{sentence.text}<br/><br/></div>)
         }
