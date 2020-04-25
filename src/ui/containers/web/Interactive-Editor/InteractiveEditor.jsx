@@ -2,7 +2,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
-import Card from "@material-ui/core/Card";
+import "../../../styles/web/InteractiveEditor.css";
 import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
@@ -20,6 +20,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Editor from "./Editor";
 import KeyboardTabIcon from '@material-ui/icons/KeyboardTab';
 import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
+import history from "../../../../web.history";
 import EditorPaper from "./EditorPaper"
 
 class IntractiveTrans extends React.Component {
@@ -36,6 +37,10 @@ class IntractiveTrans extends React.Component {
 
   handleClick(value, gridValue) {
     this.setState({ collapseToken: value, gridValue });
+  }
+
+  handleBack() {
+    history.push(`${process.env.PUBLIC_URL}/viewtranslate`);
   }
 
   componentDidMount() {
@@ -65,27 +70,29 @@ class IntractiveTrans extends React.Component {
     return (
       <div style={{ marginLeft: "-100px" }}>
         <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
-          <Grid item xs={4} sm={3} lg={2} xl={2}>
-            <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '200px' }}>
+          <Grid item xs={12} sm={6} lg={2} xl={2} className= 'GridFileDetails'>
+            <Button variant="outlined" size="large" onClick={event => {
+                      this.handleBack();
+                    }} color="primary" style={{ width: "100%",minWidth:'150px',fontSize:'90%',fontWeight:'bold' }}>
               <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;Documents
             </Button>
           </Grid>
-          <Grid item xs={false} sm={false} lg={8} xl={8}>
-
-            <Button variant="outlined" size="large" style={{ width: "100%", pointerEvents: "none" }}>
-              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> Source : English
-              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> Target : Hindi
-              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> File name : 6251_2016_3_1501_19387_Judgement_06-Jan-2020 copy.docx
+          <Grid item xs={false} sm={6} lg={8} xl={8} className= 'GridFileDetails'>
+          
+            <Button variant="outlined" size="large" className= 'GridFileDetails' style={{ width: "100%", pointerEvents: "none",fontSize:'90%', fontWeight:'bold' }}>
+              <PlayArrowIcon fontSize="large" style={{color: 'grey'}}/> Source : English 
+              <PlayArrowIcon fontSize="large" style={{color: 'grey'}}/> Target : Hindi
+              <PlayArrowIcon fontSize="large" style={{color: 'grey'}}/> File name : 6251_2016_3_1501_19387_Judgement_06-Jan-2020 copy.docx
             </Button>
           </Grid>
-          <Grid item xs={4} sm={4} lg={1} xl={1}>
-            <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '130px' }}>
+          <Grid item xs={12} sm={6} lg={1} xl={1}>
+            <Button variant="outlined" size="large" color="primary" style={{ width: "100%",minWidth:'110px',fontSize:'90%' , fontWeight:'bold'}}>
               <VisibilityIcon fontSize="large" />
               &nbsp;&nbsp;Preview
             </Button>
           </Grid>
-          <Grid item xs={4} sm={4} lg={1} xl={1} >
-            <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '80px' }}>
+          <Grid item xs={12} sm={6} lg={1} xl={1} >
+            <Button variant="outlined" size="large" color="primary" style={{ width: "100%",minWidth:'55px',fontSize:'90%', fontWeight:'bold' }}>
               <DoneIcon fontSize="large" />&nbsp;&nbsp;Done
             </Button>
           </Grid>
@@ -93,8 +100,8 @@ class IntractiveTrans extends React.Component {
 
         <Grid container spacing={16} style={{ padding: "0 24px 24px 24px" }}>
           {!this.state.collapseToken ? (
-            <Grid item xs={4} sm={4} lg={4} xl={4}>
-              <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
+            <Grid item xs={12} sm={6} lg={4} xl={4} className= 'GridFileDetails'>
+              <Paper elevation={2} style={{paddingBottom: "10px", maxHeight: window.innerHeight - 180 ,overflowY: 'scroll'}}>
                 <Toolbar>
                   <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", flex: 1, marginLeft: "3%" }}>
                     Source
@@ -127,13 +134,13 @@ class IntractiveTrans extends React.Component {
               <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
                       Source
               </Typography>
-                  </Toolbar>
-                </Paper>
-              </Grid>
-
-            )}
-          <Grid item xs={4} sm={4} lg={4} xl={4}>
-            <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
+              </Toolbar>
+              </Paper>
+            </Grid>
+            
+          )}
+          <Grid item xs={12} sm={6} lg={4} xl={4} className= 'GridFileDetails'>
+          <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
               <Toolbar>
                 <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", flex: 1, marginLeft: "3%" }}>
                   Target
@@ -142,9 +149,12 @@ class IntractiveTrans extends React.Component {
               <EditorPaper sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}></EditorPaper>
 
             </Paper>
-          </Grid>
-          <Grid item xs={gridValue} sm={gridValue} lg={gridValue} xl={gridValue}>
-            {this.state.sentences && this.state.sentences[0] && <Editor sentences={this.state.sentences} />}
+              </Grid>
+
+           
+         
+          <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
+          {this.state.sentences && this.state.sentences[0]&& <Editor sentences = {this.state.sentences}/>}
           </Grid>
         </Grid>
       </div>
