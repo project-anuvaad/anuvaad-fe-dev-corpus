@@ -242,9 +242,9 @@ class Editor extends React.Component {
             onKeyDown={this.keyPress.bind(this)}
           />
         </div>
-        <Grid container spacing={8} style={{ marginLeft: "21%" }}>
-          <Grid item xs={5} sm={5} lg={5} xl={5}>
-            <Button color="primary" onClick={event => {
+        <Grid container spacing={2} style={{ marginLeft: "5%" }}>
+          <Grid item xs={4} sm={4} lg={4} xl={4}>
+            <Button style={{ fontWeight:'bold',width:'100%'}} color="primary" onClick={event => {
               this.handleSentence(this.state.index-1,false);
             }}>
               {" "}
@@ -252,10 +252,19 @@ class Editor extends React.Component {
               &nbsp;Previous Line
             </Button>
           </Grid>
-          <Grid item xs={6} sm={6} lg={6} xl={6}>
+          <Grid item xs={3} sm={3} lg={3} xl={3}>
+            <Button style={{ fontWeight:'bold',width:'100%'}} color="primary" onClick={event => {
+              this.handleSentence(this.state.index-1,false);
+            }}>
+              {" "}
+              
+              &nbsp;save
+            </Button>
+          </Grid>
+          <Grid item xs={3} sm={3} lg={4} xl={4}>
             <Button color="primary" onClick={event => {
               this.handleSentence(this.state.index+1,false);
-            }}>
+            }} style={{ fontWeight:'bold',width:'100%'}}>
               Next Line&nbsp;
               <ChevronRightIcon size="large" />{" "}
             </Button>
