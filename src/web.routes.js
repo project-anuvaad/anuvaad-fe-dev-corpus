@@ -635,7 +635,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/interactive-editor`}
+              path={`${process.env.PUBLIC_URL}/interactive-editor/:fileid`}
               title={translate('webroutes.page.title.anuvaadEditor')}
               userRoles={["editor","dev"]}
               component={InteractiveEditor}
