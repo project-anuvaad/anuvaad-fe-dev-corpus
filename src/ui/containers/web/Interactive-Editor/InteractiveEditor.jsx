@@ -45,7 +45,7 @@ class IntractiveTrans extends React.Component {
 
   componentDidMount() {
     const { APITransport } = this.props;
-    const apiObj = new FetchDoc("b565656b-6919-4c8b-92bb-d1bba070f6a4");
+    const apiObj = new FetchDoc(this.props.match.params.fileid);
     APITransport(apiObj);
 
   }
@@ -57,7 +57,8 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-  handleOnMouseEnter(sentenceId) {
+  handleOnMouseEnter(sentenceId) {  
+    console.log(sentenceId)
     this.setState({ selectedSentence: sentenceId })
   }
 
@@ -102,8 +103,8 @@ class IntractiveTrans extends React.Component {
           {!this.state.collapseToken ? (
             <Grid item xs={12} sm={6} lg={4} xl={4} className= 'GridFileDetails'>
               <Paper elevation={2} style={{paddingBottom: "10px", maxHeight: window.innerHeight - 180 ,overflowY: 'scroll'}}>
-                <Toolbar>
-                  <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", flex: 1, marginLeft: "3%" }}>
+                <Toolbar style={{color: darkBlack, background: blueGrey50}}>
+                  <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
                     Source
                   </Typography>
                   <Toolbar onClick={event => {
@@ -123,10 +124,10 @@ class IntractiveTrans extends React.Component {
             </Grid>
           ) : (
               <Grid item xs={1} sm={1} lg={1} xl={1}>
-                <Paper elevation={2} style={{ height: "50px", paddingBottom: "15px" }}>
+                <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
                   <Toolbar onClick={event => {
                     this.handleClick(false, 4);
-                  }} >
+                  }} style={{color: darkBlack, background: blueGrey50}}>
                     <KeyboardTabIcon
                       color="primary"
                       style={{ cursor: "pointer" }}
@@ -141,8 +142,8 @@ class IntractiveTrans extends React.Component {
           )}
           <Grid item xs={12} sm={6} lg={4} xl={4} className= 'GridFileDetails'>
           <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
-              <Toolbar>
-                <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", flex: 1, marginLeft: "3%" }}>
+              <Toolbar style={{color: darkBlack, background: blueGrey50}}>
+                <Typography value="" variant="h6" gutterBottom style={{marginLeft: "3%" }}>
                   Target
                   </Typography>
               </Toolbar>
