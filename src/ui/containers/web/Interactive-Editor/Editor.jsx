@@ -13,51 +13,52 @@ import { translate } from "../../../../assets/localisation";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 
-
 class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.textInput = React.createRef();
     this.state = {
-     
-     
-      tgt:'',
-      model:  [
+      tgt: "",
+      model: [
         {
           model_id: "56"
         }
       ],
       message: translate("intractive_translate.page.snackbar.message"),
-      index:0
+      index: 0
     };
   }
 
+  handleSentence(index, val) {
+    console.log(index);
+    if (index < 0) {
+      alert("this is first sentence");
+    } else if (index > this.props.sentences.length) {
+      alert("finished");
+    } else {
+      const apiObj1 = new IntractiveApi(this.props.sentences[index].text, "", this.state.model);
+      this.props.APITransport(apiObj1);
+      this.setState({
+        text: this.props.sentences[index].text,
 
-  handleSentence(index,val){
-      console.log(index)
-      if(index<0){
-          alert("this is first sentence")
+        index: val ? index + 1 : index
+      });
+    }
+  }
 
-      }
-      else if(index>this.props.sentences.length){
-        alert("finished")
-      }else{
-        const apiObj1 = new IntractiveApi(
-            this.props.sentences[index].text,
-          "",
-         this.state.model
-        );
-       this.props.APITransport(apiObj1);
-        this.setState({
-            text: this.props.sentences[index].text,
-          
-          index:val ?index+1: index,
-          
-        });
-    
+  handleSubmit() {
 
-      }
-    
+    let res = "";
+    const { APITransport } = this.props;
+
+    if (this.state.translateText) {
+      res = this.handleCalc(this.state.translateText);
+    }
+    const apiObj = new IntractiveApi(this.state.text, res, this.state.model);
+    if (this.state.text && res) {
+      APITransport(apiObj);
+
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -66,11 +67,12 @@ class Editor extends React.Component {
       this.setState({
         nmtText: this.props.intractiveTrans,
         disable: false,
-        tgt : this.state.intractiveTrans && this.state.intractiveTrans.length>0 && this.state.intractiveTrans[0]
+        tgt: this.state.intractiveTrans && this.state.intractiveTrans.length > 0 && this.state.intractiveTrans[0]
       });
-        this.focusDiv("focus");
+      this.focusDiv("focus");
     }
   }
+
   focusDiv(val) {
     if (val === "focus") {
       this.textInput.focus();
@@ -186,10 +188,10 @@ class Editor extends React.Component {
   }
 
   render() {
-      console.log(this.props.sentences&&this.props.sentences[0]&&this.state.index===0&&this.props.sentences[0])
-    this.props.sentences &&this.state.index===0&& this.handleSentence(0, true)
+    console.log(this.props.sentences && this.props.sentences[0] && this.state.index === 0 && this.props.sentences[0]);
+    // this.props.sentences && this.state.index === 0 && this.handleSentence(0, true);
     return (
-      <Paper elevation={2} style={{ height: "100%", paddingBottom: "10px" }}>
+      <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", marginLeft: "4%" }}>
           Anuvaad Model
         </Typography>
@@ -205,9 +207,8 @@ class Editor extends React.Component {
             }}
             className="noter-text-area"
             rows="10"
-            
             disabled
-            value={this.state.nmtText &&this.state.nmtText[0] && this.state.nmtText[0].tgt}
+            value={this.state.nmtText && this.state.nmtText[0] && this.state.nmtText[0].tgt}
             placeholder="select sentence from target or press next.."
             cols="50"
             onChange={event => {
@@ -232,8 +233,8 @@ class Editor extends React.Component {
             rows="10"
             value={this.state.translateText}
             ref={textarea => {
-                this.textInput = textarea;
-              }}
+              this.textInput = textarea;
+            }}
             placeholder="type here.."
             cols="50"
             onChange={event => {
@@ -244,27 +245,38 @@ class Editor extends React.Component {
         </div>
         <Grid container spacing={2} style={{ marginLeft: "5%" }}>
           <Grid item xs={4} sm={4} lg={4} xl={4}>
-            <Button style={{ fontWeight:'bold',width:'100%'}} color="primary" onClick={event => {
-              this.handleSentence(this.state.index-1,false);
-            }}>
+            <Button
+              style={{ fontWeight: "bold", width: "100%" }}
+              color="primary"
+              onClick={event => {
+                this.handleSentence(this.state.index - 1, false);
+              }}
+            >
               {" "}
               <ChevronLeftIcon size="large" />
               &nbsp;Previous Line
             </Button>
           </Grid>
           <Grid item xs={3} sm={3} lg={3} xl={3}>
-            <Button style={{ fontWeight:'bold',width:'100%'}} color="primary" onClick={event => {
-              this.handleSentence(this.state.index-1,false);
-            }}>
+            <Button
+              style={{ fontWeight: "bold", width: "100%" }}
+              color="primary"
+              onClick={event => {
+                this.handleSentence(this.state.index - 1, false);
+              }}
+            >
               {" "}
-              
               &nbsp;save
             </Button>
           </Grid>
           <Grid item xs={3} sm={3} lg={4} xl={4}>
-            <Button color="primary" onClick={event => {
-              this.handleSentence(this.state.index+1,false);
-            }} style={{ fontWeight:'bold',width:'100%'}}>
+            <Button
+              color="primary"
+              onClick={event => {
+                this.handleSentence(this.state.index + 1, false);
+              }}
+              style={{ fontWeight: "bold", width: "100%" }}
+            >
               Next Line&nbsp;
               <ChevronRightIcon size="large" />{" "}
             </Button>
@@ -278,9 +290,7 @@ class Editor extends React.Component {
 const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
-  intractiveTrans: state.intractiveTrans,
-  
-
+  intractiveTrans: state.intractiveTrans
 });
 
 const mapDispatchToProps = dispatch =>

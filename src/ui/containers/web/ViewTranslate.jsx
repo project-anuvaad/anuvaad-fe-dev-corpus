@@ -5,7 +5,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Tooltip from '@material-ui/core/Tooltip';
-import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Translate';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import DeleteOutlinedIcon from '@material-ui/icons/VerticalAlignBottom';
@@ -239,7 +240,10 @@ class ViewTranslate extends React.Component {
                                 <div style={{ width: '240px', marginLeft: '-20px' }}>
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadSource')}><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadTranslate')}><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
-                                    {/* {tableMeta.rowData[5] == 'COMPLETED' ? <Tooltip title="View"><ViewIcon style={{ width: "24", height: "24",cursor:'pointer', marginLeft:'10%',marginRight:'8%' }} onClick={()=>{history.push('/view-doc/'+tableMeta.rowData[0])} } > </ViewIcon></Tooltip>: ''}  */}
+                                   
+
+
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.label.Edit')}><IconButton color="primary" component="span" onClick={(event) => {history.push('/interactive-editor/'+tableMeta.rowData[0])}} ><AddIcon/></IconButton></Tooltip> : ''}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.label.delete')}><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.button.upload')}><FileUpload id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" value={this.state.value} handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
 
@@ -284,7 +288,7 @@ class ViewTranslate extends React.Component {
                 <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
                     <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
                     <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { history.push("/doctranslate") }}>
-                        <AddIcon /> {translate('dashboard.page.heading.title')}
+                        <AddIcon />&nbsp;{translate('dashboard.page.heading.title')}
                     </Fab>
                 </Toolbar>
 
