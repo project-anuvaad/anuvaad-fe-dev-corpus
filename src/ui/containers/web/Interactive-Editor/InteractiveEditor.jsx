@@ -33,7 +33,8 @@ class IntractiveTrans extends React.Component {
       gridValue: 4,
       
       message: translate("intractive_translate.page.snackbar.message"),
-      selectedSentence: ''
+      selectedSentence: '',
+      selectedTableId: ''
     };
   }
 
@@ -63,18 +64,24 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-
-  handleOnMouseEnter(sentenceId) {  
-    console.log("id",sentenceId)
+  handleOnMouseEnter(sentenceId) {
     this.setState({ selectedSentence: sentenceId })
   }
 
-  handleSentenceClick(index) {  
-    this.setState({ submittedSentence: index })
-  }
+  handleSentenceClick(id) {  
+
+    console.log("index----",id)}
 
   handleOnMouseLeave() {
     this.setState({ selectedSentence: '' })
+  }
+
+  handleTableHover(blockId) {
+    this.setState({ selectedSentence: '', selectedTableId: blockId })
+  }
+
+  handleTableHoverLeft() {
+    this.setState({ selectedSentence: '', selectedTableId: '' })
   }
 
   render() {
@@ -82,29 +89,29 @@ class IntractiveTrans extends React.Component {
     return (
       <div style={{ marginLeft: "-100px" }}>
         <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
-          <Grid item xs={12} sm={6} lg={2} xl={2} className= 'GridFileDetails'>
+          <Grid item xs={12} sm={6} lg={2} xl={2} className='GridFileDetails'>
             <Button variant="outlined" size="large" onClick={event => {
-                      this.handleBack();
-                    }} color="primary" style={{ width: "100%",minWidth:'150px',fontSize:'90%',fontWeight:'bold' }}>
+              this.handleBack();
+            }} color="primary" style={{ width: "100%", minWidth: '150px', fontSize: '90%', fontWeight: 'bold' }}>
               <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;Documents
             </Button>
           </Grid>
-          <Grid item xs={false} sm={6} lg={8} xl={8} className= 'GridFileDetails'>
-          
-            <Button variant="outlined" size="large" className= 'GridFileDetails' style={{ width: "100%", pointerEvents: "none",fontSize:'90%', fontWeight:'bold' }}>
-              <PlayArrowIcon fontSize="large" style={{color: 'grey'}}/> Source : English 
-              <PlayArrowIcon fontSize="large" style={{color: 'grey'}}/> Target : Hindi
-              <PlayArrowIcon fontSize="large" style={{color: 'grey'}}/> File name : 6251_2016_3_1501_19387_Judgement_06-Jan-2020 copy.docx
+          <Grid item xs={false} sm={6} lg={8} xl={8} className='GridFileDetails'>
+
+            <Button variant="outlined" size="large" className='GridFileDetails' style={{ width: "100%", pointerEvents: "none", fontSize: '90%', fontWeight: 'bold' }}>
+              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> Source : English
+              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> Target : Hindi
+              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> File name : 6251_2016_3_1501_19387_Judgement_06-Jan-2020 copy.docx
             </Button>
           </Grid>
           <Grid item xs={12} sm={6} lg={1} xl={1}>
-            <Button variant="outlined" size="large" onClick={() => this.handlePreviewClick()}  color="primary" style={{ width: "100%",minWidth:'110px',fontSize:'90%' , fontWeight:'bold'}}>
+            <Button variant="outlined" size="large"  onClick={() => this.handlePreviewClick()}  color="primary" style={{ width: "100%",minWidth:'110px',fontSize:'90%' , fontWeight:'bold'}}>
               <VisibilityIcon fontSize="large" />
               &nbsp;&nbsp;Preview
             </Button>
           </Grid>
           <Grid item xs={12} sm={6} lg={1} xl={1} >
-            <Button variant="outlined" size="large" color="primary" style={{ width: "100%",minWidth:'55px',fontSize:'90%', fontWeight:'bold' }}>
+            <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '55px', fontSize: '90%', fontWeight: 'bold' }}>
               <DoneIcon fontSize="large" />&nbsp;&nbsp;Done
             </Button>
           </Grid>
@@ -112,11 +119,9 @@ class IntractiveTrans extends React.Component {
 
         <Grid container spacing={16} style={{ padding: "0 24px 24px 24px" }}>
           {!this.state.collapseToken ? (
-            <Grid item xs={12} sm={6} lg={4} xl={4} className= 'GridFileDetails'>
-              <Paper  ref={textarea => {
-                        this.textInput = textarea;
-                      }} elevation={2} style={{paddingBottom: "10px", maxHeight: window.innerHeight - 180 ,overflowY: 'scroll'}}>
-                <Toolbar style={{color: darkBlack, background: blueGrey50}}>
+            <Grid item xs={12} sm={6} lg={4} xl={4} className='GridFileDetails'>
+              <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
+                <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                   <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
                     Source
                   </Typography>
@@ -132,7 +137,11 @@ class IntractiveTrans extends React.Component {
                   </Typography>
                   </Toolbar>
                 </Toolbar>
-                <EditorPaper text ={"src"} sentences={this.props.fetchPdfSentence} submittedSentence={this.state.submittedSentence} selectedSentence={this.state.selectedSentence} handleSentenceClick={this.handleSentenceClick.bind(this)} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this) }></EditorPaper>
+                <EditorPaper paperType="source" sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} selectedTableId={this.state.selectedTableId}
+                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
+                  handleTableHover={this.handleTableHover.bind(this)} handleTableHoverLeft={this.handleTableHoverLeft.bind(this)}
+                  submittedSentence = {this.state.submittedSentence} handleSentenceClick = {this.handleSentenceClick.bind(this)}
+                ></EditorPaper>
               </Paper>
             </Grid>
           ) : (
@@ -140,7 +149,7 @@ class IntractiveTrans extends React.Component {
                 <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
                   <Toolbar onClick={event => {
                     this.handleClick(false, 4);
-                  }} style={{color: darkBlack, background: blueGrey50}}>
+                  }} style={{ color: darkBlack, background: blueGrey50 }}>
                     <KeyboardTabIcon
                       color="primary"
                       style={{ cursor: "pointer" }}
@@ -148,27 +157,27 @@ class IntractiveTrans extends React.Component {
               <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
                       Source
               </Typography>
-              </Toolbar>
-              </Paper>
-            </Grid>
-            
-          )}
-          <Grid item xs={12} sm={6} lg={4} xl={4} className= 'GridFileDetails'>
-          <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
-              <Toolbar style={{color: darkBlack, background: blueGrey50}}>
-                <Typography value="" variant="h6" gutterBottom style={{marginLeft: "3%" }}>
+                  </Toolbar>
+                </Paper>
+              </Grid>
+
+            )}
+          <Grid item xs={12} sm={6} lg={4} xl={4} className='GridFileDetails'>
+            <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
+              <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+                <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "3%" }}>
                   Target
                   </Typography>
               </Toolbar>
-              <EditorPaper text ={"target"}  sentences={this.props.fetchPdfSentence} submittedSentence={this.state.submittedSentence} selectedSentence={this.state.selectedSentence} handleSentenceClick={this.handleSentenceClick.bind(this)} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}></EditorPaper>
+              <EditorPaper  paperType="target" sentences={this.props.fetchPdfSentence} submittedSentence = {this.state.submittedSentence} handleSentenceClick = {this.handleSentenceClick.bind(this)} selectedSentence={this.state.selectedSentence} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}></EditorPaper>
 
             </Paper>
-              </Grid>
+          </Grid>
 
-           
-         
+
+
           <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
-          {this.state.sentences && this.state.sentences[0]&& <Editor submittedSentence= {this.state.submittedSentence} handleSentenceClick={this.handleSentenceClick.bind(this)} sentences = {this.state.sentences}/>}
+          {this.state.sentences && this.state.sentences[0]&& <Editor submittedIndex = {this.state.submittedIndex} submittedSentence= {this.state.submittedSentence} handleSentenceClick={this.handleSentenceClick.bind(this)} sentences = {this.state.sentences}/>}
           </Grid>
         </Grid>
       </div>

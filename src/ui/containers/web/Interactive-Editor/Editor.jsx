@@ -157,6 +157,23 @@ class Editor extends React.Component {
     }
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log("val",nextProps.submittedSentence, nextProps.submittedIndex)
+    if (prevState.submittedSentence !== nextProps.submittedSentence && prevState.submittedIndex !== nextProps.submittedIndex) {
+      return {
+        submittedIndex: nextProps.submittedIndex,
+        submittedSentence : nextProps.submittedSentence,
+        token : true
+
+       
+      };
+    } return null;
+  }
+
+  handleApiCall(){
+    
+  }
+
   handleTextChange(key, event) {
     const space = event.target.value.endsWith(" ");
     if (this.state.nmtText[0] && space) {
@@ -186,7 +203,7 @@ class Editor extends React.Component {
 
   render() {
     console.log(this.props.submittedSentence, this.props.sentences.length);
-    //  this.props.sentences && this.props.submittedSentence && this.handleSentence(this.props.submittedSentence, this.state.token);
+    this.state.token && this.handleApiCall()
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", marginLeft: "4%" }}>
@@ -206,7 +223,7 @@ class Editor extends React.Component {
             rows="10"
             disabled
             value={
-              this.props.sentences && this.props.sentences[this.props.submittedSentence] && this.props.sentences[this.props.submittedSentence].text
+              this.state.submittedSentence
             }
             placeholder="select sentence from target or press next.."
             cols="50"
