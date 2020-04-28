@@ -25,29 +25,26 @@ class Editor extends React.Component {
         }
       ],
       message: translate("intractive_translate.page.snackbar.message"),
-      index: 0
+      index: 0,
+      token: true
     };
   }
 
   handleSentence(index, val) {
+    console.log("index", index, val);
+    this.props.handleSentenceClick(index);
     console.log(index);
-    if (index < 0) {
-      alert("this is first sentence");
-    } else if (index > this.props.sentences.length) {
-      alert("finished");
-    } else {
-      const apiObj1 = new IntractiveApi(this.props.sentences[index].text, "", this.state.model);
-      this.props.APITransport(apiObj1);
-      this.setState({
-        text: this.props.sentences[index].text,
 
-        index: val ? index + 1 : index
-      });
-    }
+    const apiObj1 = new IntractiveApi(this.props.sentences[index].text, "", this.state.model);
+    // val && this.props.APITransport(apiObj1);
+    this.setState({
+      text: this.props.sentences[index].text,
+
+      index
+    });
   }
 
   handleSubmit() {
-
     let res = "";
     const { APITransport } = this.props;
 
@@ -57,7 +54,6 @@ class Editor extends React.Component {
     const apiObj = new IntractiveApi(this.state.text, res, this.state.model);
     if (this.state.text && res) {
       APITransport(apiObj);
-
     }
   }
 
@@ -67,6 +63,7 @@ class Editor extends React.Component {
       this.setState({
         nmtText: this.props.intractiveTrans,
         disable: false,
+        token: false,
         tgt: this.state.intractiveTrans && this.state.intractiveTrans.length > 0 && this.state.intractiveTrans[0]
       });
       this.focusDiv("focus");
@@ -134,7 +131,7 @@ class Editor extends React.Component {
         this.setState({ disable: false });
       } else {
         let temp;
-        const prefix = this.state.nmtText[0] && this.state.nmtText[0].tgt.split(" ");
+        const prefix = this.state.nmtText && this.state.nmtText[0] && this.state.nmtText[0].tgt.split(" ");
         const translate = this.state.translateText && this.state.translateText.split(" ");
 
         const result = translate && translate.filter(value => value !== "");
@@ -188,8 +185,8 @@ class Editor extends React.Component {
   }
 
   render() {
-    console.log(this.props.sentences && this.props.sentences[0] && this.state.index === 0 && this.props.sentences[0]);
-    // this.props.sentences && this.state.index === 0 && this.handleSentence(0, true);
+    console.log(this.props.submittedSentence, this.props.sentences.length);
+    //  this.props.sentences && this.props.submittedSentence && this.handleSentence(this.props.submittedSentence, this.state.token);
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", marginLeft: "4%" }}>
@@ -208,7 +205,9 @@ class Editor extends React.Component {
             className="noter-text-area"
             rows="10"
             disabled
-            value={this.state.nmtText && this.state.nmtText[0] && this.state.nmtText[0].tgt}
+            value={
+              this.props.sentences && this.props.sentences[this.props.submittedSentence] && this.props.sentences[this.props.submittedSentence].text
+            }
             placeholder="select sentence from target or press next.."
             cols="50"
             onChange={event => {
@@ -243,11 +242,12 @@ class Editor extends React.Component {
             onKeyDown={this.keyPress.bind(this)}
           />
         </div>
-        <Grid container spacing={2} style={{ marginLeft: "5%" }}>
+        <Grid container spacing={8} style={{ marginLeft: "5%" }}>
           <Grid item xs={4} sm={4} lg={4} xl={4}>
             <Button
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
+              disabled={this.props.submittedSentence === 0}
               onClick={event => {
                 this.handleSentence(this.state.index - 1, false);
               }}
@@ -262,7 +262,7 @@ class Editor extends React.Component {
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
               onClick={event => {
-                this.handleSentence(this.state.index - 1, false);
+                this.handleSentence(this.props.submittedSentence, true);
               }}
             >
               {" "}
@@ -272,8 +272,9 @@ class Editor extends React.Component {
           <Grid item xs={3} sm={3} lg={4} xl={4}>
             <Button
               color="primary"
+              disabled={this.props.submittedSentence === this.props.sentences.length - 1}
               onClick={event => {
-                this.handleSentence(this.state.index + 1, false);
+                this.handleSentence(this.props.submittedSentence + 1, true);
               }}
               style={{ fontWeight: "bold", width: "100%" }}
             >
