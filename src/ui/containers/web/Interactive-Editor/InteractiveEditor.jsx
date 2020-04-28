@@ -21,15 +21,17 @@ import Editor from "./Editor";
 import KeyboardTabIcon from '@material-ui/icons/KeyboardTab';
 import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
 import history from "../../../../web.history";
-import EditorPaper from "./EditorPaper"
+import EditorPaper from "./EditorPaper";
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
+
     super(props);
     this.textInput = React.createRef();
     this.state = {
       collapseToken: false,
       gridValue: 4,
+      
       message: translate("intractive_translate.page.snackbar.message"),
       selectedSentence: ''
     };
@@ -41,6 +43,10 @@ class IntractiveTrans extends React.Component {
 
   handleBack() {
     history.push(`${process.env.PUBLIC_URL}/viewtranslate`);
+  }
+
+  handlePreviewClick(){
+    console.log(this.textInput)
   }
 
   componentDidMount() {
@@ -57,9 +63,14 @@ class IntractiveTrans extends React.Component {
     }
   }
 
+
   handleOnMouseEnter(sentenceId) {  
-    console.log(sentenceId)
+    console.log("id",sentenceId)
     this.setState({ selectedSentence: sentenceId })
+  }
+
+  handleSentenceClick(index) {  
+    this.setState({ submittedSentence: index })
   }
 
   handleOnMouseLeave() {
@@ -87,7 +98,7 @@ class IntractiveTrans extends React.Component {
             </Button>
           </Grid>
           <Grid item xs={12} sm={6} lg={1} xl={1}>
-            <Button variant="outlined" size="large" color="primary" style={{ width: "100%",minWidth:'110px',fontSize:'90%' , fontWeight:'bold'}}>
+            <Button variant="outlined" size="large" onClick={() => this.handlePreviewClick()}  color="primary" style={{ width: "100%",minWidth:'110px',fontSize:'90%' , fontWeight:'bold'}}>
               <VisibilityIcon fontSize="large" />
               &nbsp;&nbsp;Preview
             </Button>
@@ -102,7 +113,9 @@ class IntractiveTrans extends React.Component {
         <Grid container spacing={16} style={{ padding: "0 24px 24px 24px" }}>
           {!this.state.collapseToken ? (
             <Grid item xs={12} sm={6} lg={4} xl={4} className= 'GridFileDetails'>
-              <Paper elevation={2} style={{paddingBottom: "10px", maxHeight: window.innerHeight - 180 ,overflowY: 'scroll'}}>
+              <Paper  ref={textarea => {
+                        this.textInput = textarea;
+                      }} elevation={2} style={{paddingBottom: "10px", maxHeight: window.innerHeight - 180 ,overflowY: 'scroll'}}>
                 <Toolbar style={{color: darkBlack, background: blueGrey50}}>
                   <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
                     Source
@@ -119,7 +132,7 @@ class IntractiveTrans extends React.Component {
                   </Typography>
                   </Toolbar>
                 </Toolbar>
-                <EditorPaper sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}></EditorPaper>
+                <EditorPaper text ={"src"} sentences={this.props.fetchPdfSentence} submittedSentence={this.state.submittedSentence} selectedSentence={this.state.selectedSentence} handleSentenceClick={this.handleSentenceClick.bind(this)} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this) }></EditorPaper>
               </Paper>
             </Grid>
           ) : (
@@ -147,7 +160,7 @@ class IntractiveTrans extends React.Component {
                   Target
                   </Typography>
               </Toolbar>
-              <EditorPaper sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}></EditorPaper>
+              <EditorPaper text ={"target"}  sentences={this.props.fetchPdfSentence} submittedSentence={this.state.submittedSentence} selectedSentence={this.state.selectedSentence} handleSentenceClick={this.handleSentenceClick.bind(this)} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}></EditorPaper>
 
             </Paper>
               </Grid>
@@ -155,7 +168,7 @@ class IntractiveTrans extends React.Component {
            
          
           <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
-          {this.state.sentences && this.state.sentences[0]&& <Editor sentences = {this.state.sentences}/>}
+          {this.state.sentences && this.state.sentences[0]&& <Editor submittedSentence= {this.state.submittedSentence} handleSentenceClick={this.handleSentenceClick.bind(this)} sentences = {this.state.sentences}/>}
           </Grid>
         </Grid>
       </div>
