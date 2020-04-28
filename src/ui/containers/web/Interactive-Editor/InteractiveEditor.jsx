@@ -31,10 +31,10 @@ class IntractiveTrans extends React.Component {
       collapseToken: false,
       gridValue: 4,
       message: translate("intractive_translate.page.snackbar.message"),
-      selectedSentence: '',
-      selectedTableId: '',
       hoveredSentence: '',
-      hoveredTableId: ''
+      hoveredTableId: '',
+      selectedSentenceId: '',
+      selectedTableId: ''
     };
   }
 
@@ -61,19 +61,28 @@ class IntractiveTrans extends React.Component {
   }
 
   handleOnMouseEnter(sentenceId) {
-    this.setState({ selectedSentence: sentenceId })
+
+    this.setState({ hoveredSentence: sentenceId })
   }
 
   handleOnMouseLeave() {
-    this.setState({ selectedSentence: '' })
+    this.setState({ hoveredSentence: '' })
   }
 
   handleTableHover(sentenceId, tableId) {
-    this.setState({ selectedSentence: sentenceId, selectedTableId: tableId })
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId })
   }
 
   handleTableHoverLeft() {
-    this.setState({ selectedSentence: '', selectedTableId: '' })
+    this.setState({ hoveredSentence: '', hoveredTableId: '' })
+  }
+
+  handleSenetenceOnClick(sentenceId) {
+    this.setState({ selectedSentenceId: sentenceId })
+  }
+
+  handleCellOnClick(sentenceId, tableId) {
+    this.setState({ selectedSentenceId: sentenceId, selectedTableId: tableId })
   }
 
   render() {
@@ -129,9 +138,10 @@ class IntractiveTrans extends React.Component {
                   </Typography>
                   </Toolbar>
                 </Toolbar>
-                <EditorPaper paperType="source" sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} selectedTableId={this.state.selectedTableId}
-                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
-                  handleTableHover={this.handleTableHover.bind(this)} handleTableHoverLeft={this.handleTableHoverLeft.bind(this)}
+                <EditorPaper paperType="source" sentences={this.props.fetchPdfSentence} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} 
+                  handleTableHover={this.handleTableHover.bind(this)} 
+                  handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
                 ></EditorPaper>
               </Paper>
             </Grid>
@@ -160,10 +170,10 @@ class IntractiveTrans extends React.Component {
                   Target
                   </Typography>
               </Toolbar>
-              <EditorPaper paperType="target" sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} selectedTableId={this.state.selectedTableId} 
-                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
-                handleTableHover={this.handleTableHover.bind(this)} handleTableHoverLeft={this.handleTableHoverLeft.bind(this)}></EditorPaper>
-
+              <EditorPaper paperType="target" sentences={this.props.fetchPdfSentence} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} 
+                  handleTableHover={this.handleTableHover.bind(this)} 
+                  handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
             </Paper>
           </Grid>
 
