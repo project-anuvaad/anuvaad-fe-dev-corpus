@@ -32,7 +32,9 @@ class IntractiveTrans extends React.Component {
       gridValue: 4,
       message: translate("intractive_translate.page.snackbar.message"),
       selectedSentence: '',
-      selectedTableId: ''
+      selectedTableId: '',
+      hoveredSentence: '',
+      hoveredTableId: ''
     };
   }
 
@@ -66,8 +68,8 @@ class IntractiveTrans extends React.Component {
     this.setState({ selectedSentence: '' })
   }
 
-  handleTableHover(blockId) {
-    this.setState({ selectedSentence: '', selectedTableId: blockId })
+  handleTableHover(sentenceId, tableId) {
+    this.setState({ selectedSentence: sentenceId, selectedTableId: tableId })
   }
 
   handleTableHoverLeft() {
@@ -158,7 +160,9 @@ class IntractiveTrans extends React.Component {
                   Target
                   </Typography>
               </Toolbar>
-              <EditorPaper  paperType="target" sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}></EditorPaper>
+              <EditorPaper paperType="target" sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} selectedTableId={this.state.selectedTableId} 
+                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
+                handleTableHover={this.handleTableHover.bind(this)} handleTableHoverLeft={this.handleTableHoverLeft.bind(this)}></EditorPaper>
 
             </Paper>
           </Grid>
