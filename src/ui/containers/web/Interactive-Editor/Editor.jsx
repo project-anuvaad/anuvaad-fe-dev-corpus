@@ -30,17 +30,16 @@ class Editor extends React.Component {
     };
   }
 
-  handleSentence(index, val) {
-    console.log("index", index, val);
-    this.props.handleSentenceClick(index);
-    console.log(index);
+  handleSentence(value, token) {
+    console.log(value, token);
+    
 
-    const apiObj1 = new IntractiveApi(this.props.sentences[index].text, "", this.state.model);
+    const apiObj1 = new IntractiveApi(this.props.sentences[value].text, "", this.state.model);
     // val && this.props.APITransport(apiObj1);
     this.setState({
-      text: this.props.sentences[index].text,
+      text: this.props.sentences[value].text,
 
-      index
+      index: value
     });
   }
 
@@ -158,15 +157,17 @@ class Editor extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log("val",nextProps.submittedSentence, nextProps.submittedIndex)
-    if (prevState.submittedSentence !== nextProps.submittedSentence && prevState.submittedIndex !== nextProps.submittedIndex) {
+    console.log("val----",nextProps.submittedSentence, nextProps.submittedSentence)
+    if (prevState.submittedSentence !== nextProps.submittedSentence ) {
+
+      console.log("-----vallll",nextProps.submittedSentence)
       return {
-        submittedIndex: nextProps.submittedIndex,
-        submittedSentence : nextProps.submittedSentence,
-        token : true
+        sentenceId: nextProps.sentenceId,
+        selectedSentence: nextProps.submittedSentence   
+      }
 
        
-      };
+      
     } return null;
   }
 
@@ -202,7 +203,7 @@ class Editor extends React.Component {
   }
 
   render() {
-    console.log(this.props.submittedSentence, this.props.sentences.length);
+    console.log("selected-----", this.state.selectedSentence);
     this.state.token && this.handleApiCall()
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
@@ -223,7 +224,7 @@ class Editor extends React.Component {
             rows="10"
             disabled
             value={
-              this.state.submittedSentence
+              this.state.selectedSentence
             }
             placeholder="select sentence from target or press next.."
             cols="50"
@@ -291,7 +292,7 @@ class Editor extends React.Component {
               color="primary"
               disabled={this.props.submittedSentence === this.props.sentences.length - 1}
               onClick={event => {
-                this.handleSentence(this.props.submittedSentence + 1, true);
+                this.handleSentence( 1, true);
               }}
               style={{ fontWeight: "bold", width: "100%" }}
             >

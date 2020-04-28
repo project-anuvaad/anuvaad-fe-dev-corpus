@@ -64,20 +64,20 @@ class EditorPaper extends React.Component {
             if (sentence.is_ner && !sentence.is_new_line) {
                 return (<div key={sentence._id} onClick={() => this.handleClick(sentence._id)} onMouseEnter={() => this.hoverOn(sentence._id)} onMouseLeave={() => this.hoverOff()}
                     style={{
-                        backgroundColor: (this.props.selectedSentence === sentence._id) ? "yellow" : '', float: align, textAlign: align, display: 'inline-block',
+                        backgroundColor: (this.props.selectedSentence === sentence._id) ? "yellow" : this.props.selectedId === sentence._id && !this.props.selectedSentence  ?'yellow': '', float: align, textAlign: align, display: 'inline-block',
                         fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : ''
                     }}>{this.fetchTokenizedSentence(sentence)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
 
             } else if (sentence.is_ner) {
                 return (<div><div key={sentence._id} onClick={() => this.handleClick(sentence._id)} onMouseEnter={() => this.hoverOn(sentence._id)} onMouseLeave={() => this.hoverOff()}
                     style={{
-                        backgroundColor: (this.props.selectedSentence === sentence._id) ? "yellow" : '', float: align, textAlign: align,
+                        backgroundColor: (this.props.selectedSentence === sentence._id) ? "yellow" : this.props.selectedId === sentence._id && !this.props.selectedSentence  ?'yellow': '', float: align, textAlign: align,
                         fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : ''
                     }}>{this.fetchTokenizedSentence(sentence)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
             } else {
                 return (<div key={sentence._id} onClick={() => this.handleClick(sentence._id)} onMouseEnter={() => this.hoverOn(sentence._id)} onMouseLeave={() => this.hoverOff()}
                     style={{
-                        backgroundColor: this.props.selectedSentence === sentence._id ? "yellow" : '', textAlign: align, right: 0,
+                        backgroundColor: this.props.selectedSentence === sentence._id ? "yellow" : this.props.selectedId === sentence._id && !this.props.selectedSentence  ?'yellow': '', textAlign: align, right: 0,
                         fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : ''
                     }}>{this.fetchTokenizedSentence(sentence)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup><br /><br /></div>)
             }
