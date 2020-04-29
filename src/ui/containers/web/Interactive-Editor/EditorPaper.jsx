@@ -27,12 +27,12 @@ class EditorPaper extends React.Component {
 
             for (let block in sentences[row]) {
                 let blockData = this.props.paperType === 'source' ? sentences[row][block].text : sentences[row][block].target
-
-                col.push(<td id={sentences[row][block].node_index}
-                    onClick={() => this.props.handleTableCellClick(id, sentences[row][block].node_index)}
-                    onMouseEnter={() => this.tableHoverOn(id, sentences[row][block].node_index)}
+                let blockId = id + '_' + sentences[row][block].sentence_index
+                col.push(<td id={blockId}
+                    onClick={() => this.props.handleTableCellClick(id, blockId)}
+                    onMouseEnter={() => this.tableHoverOn(id, blockId)}
                     onMouseLeave={() => this.tableHoverOff()}
-                    style={{ backgroundColor: (this.props.hoveredTableId === sentences[row][block].node_index) ? "yellow" : this.props.selectedTableId === sentences[row][block].node_index && !this.props.hoveredTableId && !this.props.hoveredSentence ? "yellow" : "", padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
+                    style={{ backgroundColor: (this.props.hoveredTableId === blockId) ? "yellow" : "", padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
                     {blockData}</td>)
             }
             tableRow.push(<tr>{col}</tr>)
@@ -41,8 +41,6 @@ class EditorPaper extends React.Component {
     }
 
     fetchTokenizedSentence(sentence) {
-        let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'left')
-
         if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0) {
             let sentenceArray = []
             if (this.props.paperType === 'source') {
