@@ -26,6 +26,7 @@ class Editor extends React.Component {
       ],
       message: translate("intractive_translate.page.snackbar.message"),
       index: 0,
+      i:0,
       token: true
     };
   }
@@ -33,22 +34,32 @@ class Editor extends React.Component {
   handleSentence(value, token) {
     
       let sentence = this.props.sentences[this.props.indexValue+value]
-      if (this.props.indexValue.hasOwnProperty("is_table")&& this.props.blockData.length>this.state.i) {
-        
-        this.props.handleCellOnClick(sentence && sentence._id, this.props.blockIndex[this.state.i+value])
+      console.log("hhhhh-----------",this.state.blockData,this.state.i+value)
+      if (this.props.indexValue.hasOwnProperty("is_table")&& this.state.blockData.length>this.state.i) {
+
+        this.props.handleCellOnClick(this.props.sentences[this.props.indexValue] && this.props.sentences[this.props.indexValue]._id, this.props.blockIndex[this.state.i+value])
 
         this.setState({
-          text: this.props.blockData[this.state.i+value],
+          text: this.state.blockData[this.state.i+value],
           i:this.state.i+value,
           index: value
         });
       }
-      
 
+      else if(sentence.hasOwnProperty("is_table")) {
+        console.log("---aaaaaaa")
+        this.props.handleCellOnClick(sentence && sentence._id)
+
+        this.setState({
+          selectedSentence: this.state.blockData && this.state.blockData[0],
+          i:this.state.i+value,
+          index: value
+        });
+      }
       else{
         this.props.handleSenetenceOnClick(sentence && sentence._id)
         this.setState({
-          text: this.props.sentences[this.props.indexValue+value].text,
+          selectedSentence: this.props.sentences[this.props.indexValue+value].text,
           i:0,
           index: value
         });
@@ -189,7 +200,9 @@ class Editor extends React.Component {
       return {
         sentenceId: nextProps.sentenceId,
         selectedSentence: nextProps.submittedSentence  ,
-        indexValue: nextProps.indexValue
+        indexValue: nextProps.indexValue,
+        blockData: nextProps.blockData,
+        blockIndex: nextProps.blockIndex
       }
 
        
@@ -197,7 +210,8 @@ class Editor extends React.Component {
     } return null;
   }
 
-  handleApiCall(){
+  handleTextClick(test){
+    console.log("sajish")
     
   }
 
@@ -230,7 +244,6 @@ class Editor extends React.Component {
 
   render() {
     console.log("selected-----", this.state.selectedSentence);
-    this.state.token && this.handleApiCall()
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", marginLeft: "4%" }}>
@@ -280,6 +293,9 @@ class Editor extends React.Component {
             }}
             placeholder="type here.."
             cols="50"
+            onClick={event => {
+              this.handleTextClick("clicked");
+            }}
             onChange={event => {
               this.handleTextChange("translateText", event);
             }}
