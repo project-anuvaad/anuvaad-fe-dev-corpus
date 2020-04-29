@@ -93,7 +93,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleCellOnClick(sentenceId, tableId) {
-    console.log(this.state.sentences)
+
     let tableSentence;
     this.state.sentences && this.state.sentences.length > 0 && this.state.sentences.map((sentence,index) => {
       if(sentence._id === sentenceId )
@@ -109,6 +109,8 @@ class IntractiveTrans extends React.Component {
        blockIndex.push(tableSentence[row][block].node_index)
         }
       }
+
+      console.log("bd",blockData,blockIndex)
       this.setState({ blockData,blockIndex })
     }
 
