@@ -31,14 +31,38 @@ class Editor extends React.Component {
   }
 
   handleSentence(value, token) {
-    console.log(value, token);
+    
+      let sentence = this.props.sentences[this.props.indexValue+value]
+      if (this.props.indexValue.hasOwnProperty("is_table")&& this.props.blockData.length>this.state.i) {
+        
+        this.props.handleCellOnClick(sentence && sentence._id, this.props.blockIndex[this.state.i+value])
+
+        this.setState({
+          text: this.props.blockData[this.state.i+value],
+          i:this.state.i+value,
+          index: value
+        });
+      }
+      
+
+      else{
+        this.props.handleSenetenceOnClick(sentence && sentence._id)
+        this.setState({
+          text: this.props.sentences[this.props.indexValue+value].text,
+          i:0,
+          index: value
+        });
+      }
+      
+      
+    
     
 
-    const apiObj1 = new IntractiveApi(this.props.sentences[value].text, "", this.state.model);
+    // const apiObj1 = new IntractiveApi(this.props.sentences[value].text, "", this.state.model);
     // val && this.props.APITransport(apiObj1);
     this.setState({
-      text: this.props.sentences[value].text,
-
+      text: this.props.sentences[this.props.indexValue+value].text,
+      
       index: value
     });
   }
@@ -55,6 +79,7 @@ class Editor extends React.Component {
       APITransport(apiObj);
     }
   }
+
 
   componentDidUpdate(prevProps) {
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
@@ -163,7 +188,8 @@ class Editor extends React.Component {
       console.log("-----vallll",nextProps.submittedSentence)
       return {
         sentenceId: nextProps.sentenceId,
-        selectedSentence: nextProps.submittedSentence   
+        selectedSentence: nextProps.submittedSentence  ,
+        indexValue: nextProps.indexValue
       }
 
        
@@ -265,9 +291,9 @@ class Editor extends React.Component {
             <Button
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
-              disabled={this.props.submittedSentence === 0}
+              disabled={this.props.indexValue === 0}
               onClick={event => {
-                this.handleSentence(this.state.index - 1, false);
+                this.handleSentence(-1, false);
               }}
             >
               {" "}
@@ -290,7 +316,7 @@ class Editor extends React.Component {
           <Grid item xs={3} sm={3} lg={4} xl={4}>
             <Button
               color="primary"
-              disabled={this.props.submittedSentence === this.props.sentences.length - 1}
+              disabled={this.props.indexValue === this.props.sentences.length - 1}
               onClick={event => {
                 this.handleSentence( 1, true);
               }}

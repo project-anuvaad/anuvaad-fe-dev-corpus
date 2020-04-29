@@ -21,22 +21,20 @@ import Editor from "./Editor";
 import KeyboardTabIcon from '@material-ui/icons/KeyboardTab';
 import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
 import history from "../../../../web.history";
-import EditorPaper from "./EditorPaper";
+import EditorPaper from "./EditorPaper"
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
-
     super(props);
     this.textInput = React.createRef();
     this.state = {
       collapseToken: false,
       gridValue: 4,
-      
       message: translate("intractive_translate.page.snackbar.message"),
-      selectedSentence: '',
-      selectedTableId: '',
       hoveredSentence: '',
-      hoveredTableId: ''
+      hoveredTableId: '',
+      selectedSentenceId: '',
+      selectedTableId: ''
     };
   }
 
@@ -46,10 +44,6 @@ class IntractiveTrans extends React.Component {
 
   handleBack() {
     history.push(`${process.env.PUBLIC_URL}/viewtranslate`);
-  }
-
-  handlePreviewClick(){
-    console.log(this.textInput)
   }
 
   componentDidMount() {
@@ -67,32 +61,59 @@ class IntractiveTrans extends React.Component {
   }
 
   handleOnMouseEnter(sentenceId) {
-    this.setState({ selectedSentence: sentenceId })
-  }
 
-  handleSentenceClick(id) { 
-    let a ; 
-    this.state.sentences && this.state.sentences.length > 0 && this.state.sentences.map((sentence) => {
-      if(sentence._id === id )
-      {
-       a =  sentence.tokenized_sentences[0].target
-      }})
-
-      console.log("aaa",a)
-      
-    this.setState({selectedId: id, submittedSentence: a})
+    this.setState({ hoveredSentence: sentenceId })
   }
 
   handleOnMouseLeave() {
-    this.setState({ selectedSentence: '' })
+    this.setState({ hoveredSentence: '' })
   }
 
   handleTableHover(sentenceId, tableId) {
-    this.setState({ selectedSentence: sentenceId, selectedTableId: tableId })
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId })
   }
 
   handleTableHoverLeft() {
-    this.setState({ selectedSentence: '', selectedTableId: '' })
+    this.setState({ hoveredSentence: '', hoveredTableId: '' })
+  }
+
+
+  handleSenetenceOnClick(sentenceId) {
+
+    var temp ;
+    var indexValue;
+    this.state.sentences && this.state.sentences.length > 0 && this.state.sentences.map((sentence,index) => {
+      if(sentence._id === sentenceId )
+      {
+        temp =  sentence.tokenized_sentences[0].target;
+        indexValue= index;
+        console.log("index----",index);
+      }})
+    this.setState({ selectedSentenceId: sentenceId,submittedSentence: temp, indexValue:indexValue })
+  }
+
+  handleCellOnClick(sentenceId, tableId) {
+    console.log(this.state.sentences)
+    let tableSentence;
+    this.state.sentences && this.state.sentences.length > 0 && this.state.sentences.map((sentence,index) => {
+      if(sentence._id === sentenceId )
+      {
+      
+        tableSentence = this.state.sentences[index].table_items
+    if(this.state.selectedSentenceId!= sentenceId){
+      var blockData = []
+      var blockIndex = []
+      for (let row in tableSentence) {
+        for (let block in tableSentence[row]) {
+       blockData.push(tableSentence[row][block].target)
+       blockIndex.push(tableSentence[row][block].node_index)
+        }
+      }
+      this.setState({ blockData,blockIndex })
+    }
+
+  }})
+  this.setState({ selectedSentenceId: sentenceId, selectedTableId: tableId })
   }
 
   render() {
@@ -116,7 +137,7 @@ class IntractiveTrans extends React.Component {
             </Button>
           </Grid>
           <Grid item xs={12} sm={6} lg={1} xl={1}>
-            <Button variant="outlined" size="large"  onClick={() => this.handlePreviewClick()}  color="primary" style={{ width: "100%",minWidth:'110px',fontSize:'90%' , fontWeight:'bold'}}>
+            <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '110px', fontSize: '90%', fontWeight: 'bold' }}>
               <VisibilityIcon fontSize="large" />
               &nbsp;&nbsp;Preview
             </Button>
@@ -148,10 +169,12 @@ class IntractiveTrans extends React.Component {
                   </Typography>
                   </Toolbar>
                 </Toolbar>
-                <EditorPaper paperType="source" sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} selectedTableId={this.state.selectedTableId}
-                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
-                  handleTableHover={this.handleTableHover.bind(this)} handleTableHoverLeft={this.handleTableHoverLeft.bind(this)}
-                  selectedId = {this.state.selectedId} handleSentenceClick = {this.handleSentenceClick.bind(this)}
+                <EditorPaper paperType="source" sentences={this.props.fetchPdfSentence} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} 
+                  handleTableHover={this.handleTableHover.bind(this)} 
+                  selectedSentenceId={this.state.selectedSentenceId}
+                  selectedTableId = {this.state.selectedTableId}
+                  handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
                 ></EditorPaper>
               </Paper>
             </Grid>
@@ -180,17 +203,19 @@ class IntractiveTrans extends React.Component {
                   Target
                   </Typography>
               </Toolbar>
-              <EditorPaper paperType="target" sentences={this.props.fetchPdfSentence} selectedSentence={this.state.selectedSentence} selectedTableId={this.state.selectedTableId} selectedId = {this.state.selectedId}
-                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
-                selectedId = {this.state.selectedId} handleSentenceClick = {this.handleSentenceClick.bind(this)} handleTableHover={this.handleTableHover.bind(this)} handleTableHoverLeft={this.handleTableHoverLeft.bind(this)}></EditorPaper>
-
+              <EditorPaper paperType="target" sentences={this.props.fetchPdfSentence} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} 
+                  handleTableHover={this.handleTableHover.bind(this)} 
+                  selectedSentenceId={this.state.selectedSentenceId}
+                  selectedTableId = {this.state.selectedTableId}
+                  handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
             </Paper>
           </Grid>
 
 
 
           <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
-          {this.state.sentences && this.state.sentences[0]&& <Editor submittedSentence = {this.state.submittedSentence} selectedId={this.state.sentenceId} handleSentenceClick={this.handleSentenceClick.bind(this)} sentences = {this.state.sentences}/>}
+            {this.state.sentences && this.state.sentences[0] && <Editor handleCellOnClick = {this.handleCellOnClick.bind(this)} blockData ={this.state.blockData} blockIndex = {this.state.blockIndex} selectedTableId={this.state.selectedTableId} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} indexValue = {this.state.indexValue} submittedId={this.state.selectedSentenceId} submittedSentence = {this.state.submittedSentence} sentences={this.state.sentences} />}
           </Grid>
         </Grid>
       </div>
