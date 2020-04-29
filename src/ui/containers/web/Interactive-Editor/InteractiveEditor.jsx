@@ -55,13 +55,11 @@ class IntractiveTrans extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
-      console.log(this.props.fetchPdfSentence)
       this.setState({ sentences: this.props.fetchPdfSentence });
     }
   }
 
   handleOnMouseEnter(sentenceId) {
-
     this.setState({ hoveredSentence: sentenceId })
   }
 
@@ -79,7 +77,6 @@ class IntractiveTrans extends React.Component {
 
 
   handleSenetenceOnClick(sentenceId) {
-
     var temp ;
     var indexValue;
     this.state.sentences && this.state.sentences.length > 0 && this.state.sentences.map((sentence,index) => {
