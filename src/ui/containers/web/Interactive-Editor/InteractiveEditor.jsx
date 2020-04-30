@@ -57,16 +57,16 @@ class IntractiveTrans extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
       let temp = this.props.fetchPdfSentence.data;
-      let sentenceArray=[]
-      temp.map(sentence=>{
-        if(!sentence.is_footer){
-            sentenceArray.push(sentence)
+      let sentenceArray = []
+      temp.map(sentence => {
+        if (!sentence.is_footer) {
+          sentenceArray.push(sentence)
         }
       })
 
-      console.log("len",sentenceArray.length, temp.length)
-      this.setState({ sentences: sentenceArray , fileDetails:this.props.fetchPdfSentence.pdf_process });
-      console.log("--process",this.props.fetchPdfSentence.pdf_process)
+      console.log("len", sentenceArray.length, temp.length)
+      this.setState({ sentences: sentenceArray, fileDetails: this.props.fetchPdfSentence.pdf_process });
+      console.log("--process", this.props.fetchPdfSentence.pdf_process)
     }
   }
 
@@ -88,12 +88,12 @@ class IntractiveTrans extends React.Component {
     this.setState({ hoveredSentence: '', hoveredTableId: '' })
   }
 
-  handleSenetenceOnClick(sentenceId, value) {
-    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId })
+  handleSenetenceOnClick(sentenceId, value, parent) {
+    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent })
   }
 
-  handleCellOnClick(sentenceId, tableId, clickedCell, value) {
-    this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell })
+  handleCellOnClick(sentenceId, tableId, clickedCell, value, parent) {
+    this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent })
   }
 
   render() {
@@ -156,6 +156,7 @@ class IntractiveTrans extends React.Component {
                       handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                       scrollToId={this.state.scrollToId}
                       handleTableHover={this.handleTableHover.bind(this)}
+                      parent={this.state.parent}
                       selectedSentenceId={this.state.selectedSentenceId}
                       selectedTableId={this.state.selectedTableId}
                       handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
@@ -189,6 +190,7 @@ class IntractiveTrans extends React.Component {
                   </Toolbar>
                   <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
                     scrollToId={this.state.scrollToId}
+                    parent={this.state.parent}
                     handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                     handleTableHover={this.handleTableHover.bind(this)}
                     selectedSentenceId={this.state.selectedSentenceId}
