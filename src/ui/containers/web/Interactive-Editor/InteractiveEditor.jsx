@@ -82,14 +82,18 @@ class IntractiveTrans extends React.Component {
 
   handleSenetenceOnClick(sentenceId, value) {
 
+<<<<<<< HEAD
     console.log("sid------------",sentenceId)
     this.setState({ selectedSentenceId: sentenceId, clickedSentence: value,selectedTableId:''})
+=======
+    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, scrollToId: sentenceId })
+>>>>>>> 8d7577489b2d4e1e4ac5a7f95bf26b898a326948
   }
 
   handleCellOnClick(sentenceId, tableId, value) {
 
-    console.log("------",value,tableId)
-  this.setState({ selectedSentenceId: sentenceId, selectedTableId: tableId,clickedSentence: value })
+    console.log("------", value, tableId)
+    this.setState({ selectedSentenceId: sentenceId, selectedTableId: tableId, clickedSentence: value })
   }
 
   render() {
@@ -149,10 +153,11 @@ class IntractiveTrans extends React.Component {
                   </Toolbar>
                 </Toolbar>
                 <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
-                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} 
-                  handleTableHover={this.handleTableHover.bind(this)} 
+                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                  scrollToId={this.state.scrollToId}
+                  handleTableHover={this.handleTableHover.bind(this)}
                   selectedSentenceId={this.state.selectedSentenceId}
-                  selectedTableId = {this.state.selectedTableId}
+                  selectedTableId={this.state.selectedTableId}
                   handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
                 ></EditorPaper>
               </Paper>
@@ -183,18 +188,19 @@ class IntractiveTrans extends React.Component {
                   </Typography>
               </Toolbar>
               <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
-                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} 
-                  handleTableHover={this.handleTableHover.bind(this)} 
-                  selectedSentenceId={this.state.selectedSentenceId}
-                  selectedTableId = {this.state.selectedTableId}
-                  handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
+                scrollToId={this.state.scrollToId}
+                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                handleTableHover={this.handleTableHover.bind(this)}
+                selectedSentenceId={this.state.selectedSentenceId}
+                selectedTableId={this.state.selectedTableId}
+                handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
             </Paper>
           </Grid>
 
 
 
           <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
-            {this.state.sentences && this.state.sentences[0] && <Editor selectedTableId = {this.state.selectedTableId} clickedSentence ={this.state.clickedSentence} handleCellOnClick = {this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
+            {this.state.sentences && this.state.sentences[0] && <Editor selectedTableId={this.state.selectedTableId} clickedSentence={this.state.clickedSentence} handleCellOnClick={this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
           </Grid>
         </Grid>
       </div>
