@@ -56,15 +56,24 @@ class IntractiveTrans extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
-      this.setState({ sentences: this.props.fetchPdfSentence.data, fileDetails: this.props.fetchPdfSentence.pdf_process });
-      console.log("--process", this.props.fetchPdfSentence.pdf_process)
+      let temp = this.props.fetchPdfSentence.data;
+      let sentenceArray=[]
+      temp.map(sentence=>{
+        if(!sentence.is_footer){
+            sentenceArray.push(sentence)
+        }
+      })
+
+      console.log("len",sentenceArray.length, temp.length)
+      this.setState({ sentences: sentenceArray , fileDetails:this.props.fetchPdfSentence.pdf_process });
+      console.log("--process",this.props.fetchPdfSentence.pdf_process)
     }
   }
 
   handleOnMouseEnter(sentenceId) {
 
     console.log(sentenceId)
-    this.setState({ hoveredSentence: sentenceId })
+    this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId })
   }
 
   handleOnMouseLeave() {
@@ -72,7 +81,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleTableHover(sentenceId, tableId) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId })
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId,scrollToId: sentenceId })
   }
 
   handleTableHoverLeft() {
