@@ -130,7 +130,7 @@ class IntractiveTrans extends React.Component {
               </Grid>
             </Grid>
 
-            <Grid container spacing={16} style={{ padding: "0 24px 24px 24px" }}>
+            <Grid container spacing={16} style={{ padding: "0 24px 0px 24px" }}>
               {!this.state.collapseToken ? (
                 <Grid item xs={12} sm={6} lg={4} xl={4} className='GridFileDetails'>
                   <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
