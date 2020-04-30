@@ -70,18 +70,16 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-  handleOnMouseEnter(sentenceId) {
-
-    console.log(sentenceId)
-    this.setState({ hoveredSentence: sentenceId })
+  handleOnMouseEnter(sentenceId, parent) {
+    this.setState({ hoveredSentence: sentenceId,scrollToId: sentenceId, parent: parent })
   }
 
   handleOnMouseLeave() {
     this.setState({ hoveredSentence: '' })
   }
 
-  handleTableHover(sentenceId, tableId) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId })
+  handleTableHover(sentenceId, tableId, parent) {
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, parent: parent  })
   }
 
   handleTableHoverLeft() {

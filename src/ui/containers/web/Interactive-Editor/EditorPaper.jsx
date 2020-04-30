@@ -118,7 +118,7 @@ class EditorPaper extends React.Component {
     }
 
     hoverOn(e) {
-        this.props.handleOnMouseEnter(e)
+        this.props.handleOnMouseEnter(e, this.props.paperType)
     }
 
     hoverOff() {
@@ -126,7 +126,7 @@ class EditorPaper extends React.Component {
     }
 
     tableHoverOn(sentenceId, tableId, val) {
-        this.props.handleTableHover(sentenceId, tableId, val)
+        this.props.handleTableHover(sentenceId, tableId, val, this.props.paperType)
     }
 
     tableHoverOff() {
