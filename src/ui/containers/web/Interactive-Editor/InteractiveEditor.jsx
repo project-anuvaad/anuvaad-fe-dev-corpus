@@ -34,7 +34,8 @@ class IntractiveTrans extends React.Component {
       hoveredSentence: '',
       hoveredTableId: '',
       selectedSentenceId: '',
-      selectedTableId: ''
+      selectedTableId: '',
+      clickedSentence: false
     };
   }
 
@@ -43,7 +44,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleBack() {
-    history.push(`${process.env.PUBLIC_URL}/viewtranslate`);
+    history.push(`${process.env.PUBLIC_URL}/view-pdf`);
   }
 
   componentDidMount() {
@@ -55,7 +56,8 @@ class IntractiveTrans extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
-      this.setState({ sentences: this.props.fetchPdfSentence.data });
+      this.setState({ sentences: this.props.fetchPdfSentence.data, fileDetails:this.props.fetchPdfSentence.pdf_process });
+      console.log("--process",this.props.fetchPdfSentence.pdf_process)
     }
   }
 
@@ -80,8 +82,8 @@ class IntractiveTrans extends React.Component {
 
   handleSenetenceOnClick(sentenceId, value) {
 
-    console.log("sid",sentenceId)
-    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value})
+    console.log("sid------------",sentenceId)
+    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value,selectedTableId:''})
   }
 
   handleCellOnClick(sentenceId, tableId, value) {
@@ -93,7 +95,10 @@ class IntractiveTrans extends React.Component {
   render() {
     const { gridValue } = this.state;
     return (
+      
       <div style={{ marginLeft: "-100px" }}>
+        {this.state.sentences &&
+        <div>
         <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
           <Grid item xs={12} sm={6} lg={2} xl={2} className='GridFileDetails'>
             <Button variant="outlined" size="large" onClick={event => {
@@ -105,9 +110,9 @@ class IntractiveTrans extends React.Component {
           <Grid item xs={false} sm={6} lg={8} xl={8} className='GridFileDetails'>
 
             <Button variant="outlined" size="large" className='GridFileDetails' style={{ width: "100%", pointerEvents: "none", fontSize: '90%', fontWeight: 'bold' }}>
-              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> Source : English
-              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> Target : Hindi
-              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> File name : 6251_2016_3_1501_19387_Judgement_06-Jan-2020 copy.docx
+              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} />{this.state.fileDetails &&"Source : "+ this.state.fileDetails.source_lang}
+              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> {this.state.fileDetails && "Target : "+this.state.fileDetails.target_lang}
+              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> {this.state.fileDetails && "Filename : "+this.state.fileDetails.process_name}
             </Button>
           </Grid>
           <Grid item xs={12} sm={6} lg={1} xl={1}>
@@ -192,6 +197,8 @@ class IntractiveTrans extends React.Component {
             {this.state.sentences && this.state.sentences[0] && <Editor selectedTableId = {this.state.selectedTableId} clickedSentence ={this.state.clickedSentence} handleCellOnClick = {this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
           </Grid>
         </Grid>
+      </div>
+        }
       </div>
     );
   }

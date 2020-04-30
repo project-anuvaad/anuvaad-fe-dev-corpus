@@ -45,7 +45,6 @@ class EditorPaper extends React.Component {
             let sentenceArray = []
             if (this.props.paperType === 'source') {
                 sentence.tokenized_sentences.map((tokenText) => {
-                    console.log(sentence._id + '_' + tokenText.sentence_index)
                     sentenceArray.push(<span
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
@@ -104,16 +103,16 @@ class EditorPaper extends React.Component {
         this.props.handleOnMouseEnter('')
     }
 
-    tableHoverOn(sentenceId, tableId) {
-        this.props.handleTableHover(sentenceId, tableId)
+    tableHoverOn(sentenceId, tableId, val) {
+        this.props.handleTableHover(sentenceId, tableId, val)
     }
 
     tableHoverOff() {
         this.props.handleTableHover('', '')
     }
 
-    handleOnClick(id) {
-        this.props.handleSentenceClick(id)
+    handleOnClick(id, val) {
+        this.props.handleSentenceClick(id,val)
     }
 
     render() {
