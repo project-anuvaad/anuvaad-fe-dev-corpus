@@ -29,10 +29,10 @@ class EditorPaper extends React.Component {
                 let blockData = this.props.paperType === 'source' ? sentences[row][block].text : sentences[row][block].target
                 let blockId = id + '_' + sentences[row][block].sentence_index
                 col.push(<td id={blockId}
-                    onClick={() => this.props.handleTableCellClick(id, blockId)}
+                    onClick={() => this.props.handleTableCellClick(id, blockId,"true")}
                     onMouseEnter={() => this.tableHoverOn(id, blockId)}
                     onMouseLeave={() => this.tableHoverOff()}
-                    style={{ backgroundColor: (this.props.hoveredTableId === blockId) ? "yellow" : "", padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
+                    style={{ backgroundColor: (this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId && !this.props.hoveredSentence && !this.props.hoveredTableId  ? 'yellow' : "", padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
                     {blockData}</td>)
             }
             tableRow.push(<tr>{col}</tr>)
@@ -45,12 +45,14 @@ class EditorPaper extends React.Component {
             let sentenceArray = []
             if (this.props.paperType === 'source') {
                 sentence.tokenized_sentences.map((tokenText) => {
+                    console.log(sentence._id + '_' + tokenText.sentence_index)
                     sentenceArray.push(<span
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : ''
+                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId=== sentence._id + '_' + tokenText.sentence_index && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : ""
                         }}
-                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.props.handleSentenceClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
+                        
+                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.props.handleSentenceClick(sentence._id + '_' + tokenText.sentence_index,true)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
                         {tokenText.text}</span>)
                 })
                 return sentenceArray
@@ -60,9 +62,9 @@ class EditorPaper extends React.Component {
                     sentenceArray.push(<span
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : ''
+                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId=== sentence._id + '_' + tokenText.sentence_index && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : "",
                         }}
-                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.props.handleSentenceClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>{tokenText.target}</span>)
+                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.props.handleSentenceClick(sentence._id + '_' + tokenText.sentence_index, true)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>{tokenText.target}</span>)
                 })
                 return sentenceArray
             }

@@ -26,56 +26,43 @@ class Editor extends React.Component {
       ],
       message: translate("intractive_translate.page.snackbar.message"),
       index: 0,
-      i:0,
+      i: 0,
       token: true
     };
   }
 
   handleSentence(value, token) {
-    
-      let sentence = this.props.sentences[this.props.indexValue+value]
-      console.log("hhhhh-----------",this.state.blockData,this.state.i+value)
-      if (this.props.indexValue.hasOwnProperty("is_table")&& this.state.blockData.length>this.state.i) {
 
-        this.props.handleCellOnClick(this.props.sentences[this.props.indexValue] && this.props.sentences[this.props.indexValue]._id, this.props.blockIndex[this.state.i+value])
+    console.log("tid",this.props.selectedTableId)
+    const splitValue = this.state.submittedId && this.state.submittedId.split("_");
+    this.props.sentences &&
+      this.props.sentences.length > 0 &&
+      this.props.sentences.map((sentence, index) => {
+        if (splitValue[0] === sentence._id) {
+          console.log("val---", this.props.sentences[index]);
+          if (
+            (sentence.tokenized_sentences.length === 1 && Number(splitValue[1]) === 0) ||
+            (Number(splitValue[1]) === 0 && value === -1) ||
+            Number(splitValue[1]) === sentence.tokenized_sentences.length - 1
+          ) {
+            const val = `${this.props.sentences[index + value]._id  }_${  this.props.sentences[index + value].tokenized_sentences[0].sentence_index}`;
+            this.props.handleSenetenceOnClick(val);
+            this.setState({
+              selectedSentence: this.props.sentences[index + value].tokenized_sentences[0].target
+            });
+          } else if (sentence.tokenized_sentences.length >= splitValue[1] && splitValue[1] >= 0) {
+            const ind = Number(splitValue[1]) + value;
 
-        this.setState({
-          text: this.state.blockData[this.state.i+value],
-          i:this.state.i+value,
-          index: value
-        });
-      }
-
-      else if(sentence.hasOwnProperty("is_table")) {
-        console.log("---aaaaaaa")
-        this.props.handleCellOnClick(sentence && sentence._id)
-
-        this.setState({
-          selectedSentence: this.state.blockData && this.state.blockData[0],
-          i:this.state.i+value,
-          index: value
-        });
-      }
-      else{
-        this.props.handleSenetenceOnClick(sentence && sentence._id)
-        this.setState({
-          selectedSentence: this.props.sentences[this.props.indexValue+value].text,
-          i:0,
-          index: value
-        });
-      }
-      
-      
-    
-    
-
-    // const apiObj1 = new IntractiveApi(this.props.sentences[value].text, "", this.state.model);
-    // val && this.props.APITransport(apiObj1);
-    this.setState({
-      text: this.props.sentences[this.props.indexValue+value].text,
-      
-      index: value
-    });
+            const val = `${this.props.sentences[index]._id  }_${  this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
+            this.props.handleSenetenceOnClick(val);
+            console.log("val", val, this.props.sentences[index].tokenized_sentences[ind].target);
+            this.setState({
+              selectedSentence: this.props.sentences[index].tokenized_sentences[ind].target,
+              token: false
+            });
+          }
+        }
+      });
   }
 
   handleSubmit() {
@@ -91,10 +78,8 @@ class Editor extends React.Component {
     }
   }
 
-
   componentDidUpdate(prevProps) {
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
-      console.log(this.props.intractiveTrans);
       this.setState({
         nmtText: this.props.intractiveTrans,
         disable: false,
@@ -114,7 +99,6 @@ class Editor extends React.Component {
   }
 
   handleCalc(value) {
-    console.log("vallll---", value);
     const temp = value.split(" ");
     const tagged_tgt = this.state.nmtText[0].tagged_tgt.split(" ");
     const tagged_src = this.state.nmtText[0].tagged_src.split(" ");
@@ -126,7 +110,6 @@ class Editor extends React.Component {
     temp.map(item => {
       if (item !== " ") {
         const ind = tgt.indexOf(item, resultArray.length);
-        console.log(item);
         const arr = [item, `${item},`, `${item}.`];
         let src_ind = -1;
         arr.map((el, i) => {
@@ -139,7 +122,6 @@ class Editor extends React.Component {
         if (ind !== -1) {
           resultArray.push(tagged_tgt[ind]);
         } else if (src_ind !== -1) {
-          console.log(src_ind, index);
           if (index > 0) {
             const tem = tagged_src[src_ind];
             resultArray.push(tem.slice(0, tem.length - 1));
@@ -158,7 +140,6 @@ class Editor extends React.Component {
   }
 
   keyPress(event) {
-    console.log(event);
     if (event.keyCode === 9) {
       if (this.state.disable && this.state.translateText) {
         const apiObj = new IntractiveApi(this.state.text, this.handleCalc(event.target.value), this.state.model);
@@ -193,26 +174,22 @@ class Editor extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log("val----",nextProps.submittedSentence, nextProps.submittedSentence)
-    if (prevState.submittedSentence !== nextProps.submittedSentence ) {
-
-      console.log("-----vallll",nextProps.submittedSentence)
+    if (prevState.submittedId !== nextProps.submittedId) {
       return {
         sentenceId: nextProps.sentenceId,
-        selectedSentence: nextProps.submittedSentence  ,
         indexValue: nextProps.indexValue,
         blockData: nextProps.blockData,
-        blockIndex: nextProps.blockIndex
-      }
+        blockIndex: nextProps.blockIndex,
+        submittedId: nextProps.submittedId,
 
-       
+      };
       
-    } return null;
+    }
+    return null;
   }
 
-  handleTextClick(test){
-    console.log("sajish")
-    
+  handleTextClick(test) {
+    console.log("sajish");
   }
 
   handleTextChange(key, event) {
@@ -243,7 +220,7 @@ class Editor extends React.Component {
   }
 
   render() {
-    console.log("selected-----", this.state.selectedSentence);
+    this.props.clickedSentence && this.handleSentence(0);
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", marginLeft: "4%" }}>
@@ -262,9 +239,7 @@ class Editor extends React.Component {
             className="noter-text-area"
             rows="10"
             disabled
-            value={
-              this.state.selectedSentence
-            }
+            value={this.state.selectedSentence}
             placeholder="select sentence from target or press next.."
             cols="50"
             onChange={event => {
@@ -307,7 +282,7 @@ class Editor extends React.Component {
             <Button
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
-              disabled={this.props.indexValue === 0}
+              disabled={this.props.sentences[0]._id === this.state.submittedId.split("_")[0] && this.state.submittedId.split("_")[1] == 0 }
               onClick={event => {
                 this.handleSentence(-1, false);
               }}
@@ -332,9 +307,9 @@ class Editor extends React.Component {
           <Grid item xs={3} sm={3} lg={4} xl={4}>
             <Button
               color="primary"
-              disabled={this.props.indexValue === this.props.sentences.length - 1}
+              disabled={this.props.sentences[this.props.sentences.length-1]._id === this.state.submittedId.split("_")[0] && this.state.submittedId.split("_")[1] == this.props.sentences[this.props.sentences.length-1].tokenized_sentences.length-1}
               onClick={event => {
-                this.handleSentence( 1, true);
+                this.handleSentence(1, true);
               }}
               style={{ fontWeight: "bold", width: "100%" }}
             >
