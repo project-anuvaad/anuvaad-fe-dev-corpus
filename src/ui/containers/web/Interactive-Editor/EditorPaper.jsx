@@ -50,7 +50,7 @@ class EditorPaper extends React.Component {
             }
             tableRow.push(<tr>{col}</tr>)
         }
-        return <table style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>{tableRow}</table>
+        return <table ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>{tableRow}</table>
     }
 
     fetchTokenizedSentence(sentence, isSpaceRequired) {
