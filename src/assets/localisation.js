@@ -311,7 +311,7 @@ const localization_EN_Data = {
   "GrdaerTranslate.page.label..filesList": "Files List",
   "AnuvaadModels.page.button.startWritting": "Start Writing",
   "feedback.page.text.feedbackAlert": "Please give your feedback for all the questions",
-  "webroutes.page.title.pdfList": "PDF File list",
+  "webroutes.page.title.pdfList": "PDF Interactive Translate",
   "webroutes.page.title.pdfSentences": "PDF Sentences",
   "common.page.label.page_no": "Page No",
   "intractive_translate.page.snackbar.message": "Sentence updated successfully!",
@@ -633,7 +633,7 @@ const localization_HI_Data = {
   "AnuvaadModels.page.button.startWritting": "लिखना शुरू करें",
   "feedback.page.text.feedbackAlert": "कृपया सभी प्रश्नों के लिए अपनी प्रतिक्रिया दें",
   "common.page.label.filename": "फ़ाइल नाम दर्ज करें",
-  "webroutes.page.title.pdfList": "पीडीएफ फाइल सूची",
+  "webroutes.page.title.pdfList": "पीडीएफ इंटरएक्टिव अनुवाद",
   "webroutes.page.title.pdfSentences": "पीडीएफ वाक्य",
   "intractive_translate.page.snackbar.message": "वाक्य सफलतापूर्वक अपडेट किया गया!",
   "intractive_translate.page.textarea.targetPlaceholder":

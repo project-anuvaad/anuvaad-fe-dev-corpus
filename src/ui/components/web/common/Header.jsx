@@ -108,20 +108,22 @@ class Header extends React.Component {
     const openEl = Boolean(anchorEl);
     var role = JSON.parse(localStorage.getItem("roles"));
     var useRole = [];
-    role.map((item, value) => {useRole.push(item); value !== role.length - 1 && useRole.push(", ")
-    return true; });
+    role.map((item, value) => {
+      useRole.push(item); value !== role.length - 1 && useRole.push(", ")
+      return true;
+    });
     return (
       <div  >
         <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
           <Toolbar disableGutters={!open}>
             {forDemo &&
-              <img src={logo} 
-              alt=""
-              style={{
-                width: '2%',
-                display: 'block',
-                marginLeft: '1%'
-              }} />
+              <img src={logo}
+                alt=""
+                style={{
+                  width: '2%',
+                  display: 'block',
+                  marginLeft: '1%'
+                }} />
             }
             <Typography variant="title" color="inherit" className={forDemo ? classes.felxDemo : classes.flex}>
               {title}
@@ -171,7 +173,7 @@ class Header extends React.Component {
                       history.push(`${process.env.PUBLIC_URL}/profile`);
                     }}
                   >
-                   {translate('header.page.heading.MyProfile')}
+                    {translate('header.page.heading.MyProfile')}
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -179,7 +181,7 @@ class Header extends React.Component {
                       history.push(`${process.env.PUBLIC_URL}/logout`);
                     }}
                   >
-                   {translate('header.page.heading.logout')}
+                    {translate('header.page.heading.logout')}
                   </MenuItem>
                 </Menu>
               </div>
@@ -224,7 +226,7 @@ class Header extends React.Component {
                           className={classes.flex}
                         >
                           {translate('header.page.heading.anuvaad')}
-                      </Typography>
+                        </Typography>
                       }
                     />
                   </ListItem>
@@ -246,7 +248,7 @@ class Header extends React.Component {
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
                             {translate('header.page.heading.dataPipeline')}
-                        </Typography>
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -268,7 +270,7 @@ class Header extends React.Component {
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
                             {translate('dashboard.page.heading.title')}
-                        </Typography>
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -289,8 +291,8 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                           {translate('dashboard.page.heading.title')}
-                        </Typography>
+                            {translate('dashboard.page.heading.title')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -326,8 +328,8 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                           {translate('header.page.heading.uploadFile')}
-                        </Typography>
+                            {translate('header.page.heading.uploadFile')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -349,7 +351,7 @@ class Header extends React.Component {
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
                             {translate('commonCorpus.page.button.corpus')}
-                        </Typography>
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -371,7 +373,7 @@ class Header extends React.Component {
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
                             {translate('webroutes.page.title.corpusList')}
-                        </Typography>
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -392,14 +394,14 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                           {translate('header.page.heading.benchMark')}
-                        </Typography>
+                            {translate('header.page.heading.benchMark')}
+                          </Typography>
                         }
                       />
                     </ListItem>
                   )}
 
-{role && Array.isArray(role) && (role.includes("dev") || role.includes("grader")) && (
+                  {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader")) && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -409,19 +411,40 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                      <SearchIcon style={{ color: "white" }} />
+                        <SearchIcon style={{ color: "white" }} />
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                           {translate("intractive_translate.page.main.title")}
-                        </Typography>
+                            {translate("intractive_translate.page.main.title")}
+                          </Typography>
                         }
                       />
                     </ListItem>
                   )}
-
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push("/view-pdf");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <SearchIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            {translate('webroutes.page.title.pdfList')}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
                   {role && Array.isArray(role) && role.includes('admin') &&
                     <ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
                       <ListItemIcon>
@@ -432,7 +455,7 @@ class Header extends React.Component {
                         primary={(
                           <Typography type="body2" style={{ color: '#FFFFFF' }}>
                             {translate('webroutes.page.title.graderReport')}
-          							</Typography>
+                          </Typography>
                         )}
                       />
                     </ListItem>
@@ -456,7 +479,7 @@ class Header extends React.Component {
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
                             {translate('common.page.title.comparisonReport')}
-                        </Typography>
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -479,12 +502,12 @@ class Header extends React.Component {
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
                             {translate('webroutes.page.title.translateFile')}
-                        </Typography>
+                          </Typography>
                         }
                       />
                     </ListItem>
                   )}
-{role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -500,13 +523,13 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                           {translate('webroutes.page.title.pdfToDoc')}
-                        </Typography>
+                            {translate('webroutes.page.title.pdfToDoc')}
+                          </Typography>
                         }
                       />
                     </ListItem>
                   )}
-{role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -522,30 +545,8 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                           {translate('webroutes.page.title.pdfSentences')}
-                        </Typography>
-                        }
-                      />
-                    </ListItem>
-                  )}
-                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={event => {
-                        this.handleDrawerClose();
-                        history.push("/view-pdf");
-                      }}
-                    >
-                      <ListItemIcon>
-                        <InsertDriveFileIcon style={{ color: "white" }} />
-                      </ListItemIcon>
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                           {translate('webroutes.page.title.pdfList')}
-                        </Typography>
+                            {translate('webroutes.page.title.pdfSentences')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -567,7 +568,7 @@ class Header extends React.Component {
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
                             {translate('common.page.title.document')}
-                        </Typography>
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -590,7 +591,7 @@ class Header extends React.Component {
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
                             {translate('userDirectory.page.label.userManagement')}
-                        </Typography>
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -613,13 +614,13 @@ class Header extends React.Component {
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
                             {translate('header.page.heading.qnA')}
-                        </Typography>
+                          </Typography>
                         }
                       />
                     </ListItem>
                   )}
 
-{role && Array.isArray(role) && role.includes("admin") && (
+                  {role && Array.isArray(role) && role.includes("admin") && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -629,14 +630,14 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                      <ActionDelete style={{ color: "white" }} />
+                        <ActionDelete style={{ color: "white" }} />
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            {translate('header.page.heading.feedBack')} 
-                        </Typography>
+                            {translate('header.page.heading.feedBack')}
+                          </Typography>
                         }
                       />
                     </ListItem>
