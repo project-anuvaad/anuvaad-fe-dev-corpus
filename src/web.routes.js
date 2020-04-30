@@ -75,6 +75,7 @@ import PdfToDoc from "./ui/containers/web/PdfToDoc";
 import ViewPdf from "./ui/containers/web/ViewPdfFile";
 
 import IntractiveTranslate from "./ui/containers/web/IntractiveTranslation";
+import InteractiveEditor from "./ui/containers/web/Interactive-Editor/InteractiveEditor";
 import PdfSentence from "./ui/containers/web/PdfSentence";
 import { translate } from '../src/assets/localisation';
 
@@ -631,6 +632,13 @@ class AppRoutes extends React.Component {
               title={translate('webroutes.page.title.anuvaadEditor')}
               userRoles={["editor","dev"]}
               component={IntractiveTranslate}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/interactive-editor/:fileid`}
+              title={translate('webroutes.page.title.anuvaadEditor')}
+              userRoles={["editor","dev"]}
+              component={InteractiveEditor}
               authenticate={this.authenticateUser}
             />
 
