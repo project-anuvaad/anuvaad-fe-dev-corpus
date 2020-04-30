@@ -56,8 +56,8 @@ class IntractiveTrans extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
-      this.setState({ sentences: this.props.fetchPdfSentence.data, fileDetails:this.props.fetchPdfSentence.pdf_process });
-      console.log("--process",this.props.fetchPdfSentence.pdf_process)
+      this.setState({ sentences: this.props.fetchPdfSentence.data, fileDetails: this.props.fetchPdfSentence.pdf_process });
+      console.log("--process", this.props.fetchPdfSentence.pdf_process)
     }
   }
 
@@ -80,121 +80,121 @@ class IntractiveTrans extends React.Component {
   }
 
   handleSenetenceOnClick(sentenceId, value) {
-    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value,selectedTableId:'',scrollToId: sentenceId})
+    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId })
   }
 
-  handleCellOnClick(sentenceId, tableId, value) {
-    this.setState({ selectedSentenceId: sentenceId, selectedTableId: tableId, clickedSentence: value,scrollToId: sentenceId })
+  handleCellOnClick(sentenceId, tableId, clickedCell, value) {
+    this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell })
   }
 
   render() {
     const { gridValue } = this.state;
     return (
-      
+
       <div style={{ marginLeft: "-100px" }}>
         {this.state.sentences &&
-        <div>
-        <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
-          <Grid item xs={12} sm={6} lg={2} xl={2} className='GridFileDetails'>
-            <Button variant="outlined" size="large" onClick={event => {
-              this.handleBack();
-            }} color="primary" style={{ width: "100%", minWidth: '150px', fontSize: '90%', fontWeight: 'bold' }}>
-              <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;Documents
+          <div>
+            <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
+              <Grid item xs={12} sm={6} lg={2} xl={2} className='GridFileDetails'>
+                <Button variant="outlined" size="large" onClick={event => {
+                  this.handleBack();
+                }} color="primary" style={{ width: "100%", minWidth: '150px', fontSize: '90%', fontWeight: 'bold' }}>
+                  <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;Documents
             </Button>
-          </Grid>
-          <Grid item xs={false} sm={6} lg={8} xl={8} className='GridFileDetails'>
+              </Grid>
+              <Grid item xs={false} sm={6} lg={8} xl={8} className='GridFileDetails'>
 
-            <Button variant="outlined" size="large" className='GridFileDetails' style={{ width: "100%", pointerEvents: "none", fontSize: '90%', fontWeight: 'bold' }}>
-              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} />{this.state.fileDetails &&"Source : "+ this.state.fileDetails.source_lang}
-              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> {this.state.fileDetails && "Target : "+this.state.fileDetails.target_lang}
-              <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> {this.state.fileDetails && "Filename : "+this.state.fileDetails.process_name}
-            </Button>
-          </Grid>
-          <Grid item xs={12} sm={6} lg={1} xl={1}>
-            <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '110px', fontSize: '90%', fontWeight: 'bold' }}>
-              <VisibilityIcon fontSize="large" />
+                <Button variant="outlined" size="large" className='GridFileDetails' style={{ width: "100%", pointerEvents: "none", fontSize: '90%', fontWeight: 'bold' }}>
+                  <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} />{this.state.fileDetails && "Source : " + this.state.fileDetails.source_lang}
+                  <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> {this.state.fileDetails && "Target : " + this.state.fileDetails.target_lang}
+                  <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> {this.state.fileDetails && "Filename : " + this.state.fileDetails.process_name}
+                </Button>
+              </Grid>
+              <Grid item xs={12} sm={6} lg={1} xl={1}>
+                <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '110px', fontSize: '90%', fontWeight: 'bold' }}>
+                  <VisibilityIcon fontSize="large" />
               &nbsp;&nbsp;Preview
             </Button>
-          </Grid>
-          <Grid item xs={12} sm={6} lg={1} xl={1} >
-            <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '55px', fontSize: '90%', fontWeight: 'bold' }}>
-              <DoneIcon fontSize="large" />&nbsp;&nbsp;Done
+              </Grid>
+              <Grid item xs={12} sm={6} lg={1} xl={1} >
+                <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '55px', fontSize: '90%', fontWeight: 'bold' }}>
+                  <DoneIcon fontSize="large" />&nbsp;&nbsp;Done
             </Button>
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={16} style={{ padding: "0 24px 24px 24px" }}>
-          {!this.state.collapseToken ? (
-            <Grid item xs={12} sm={6} lg={4} xl={4} className='GridFileDetails'>
-              <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
-                <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                  <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
-                    Source
-                  </Typography>
-                  <Toolbar onClick={event => {
-                    this.handleClick(true, 7);
-                  }}>
-                    <KeyboardBackspaceIcon style={{ cursor: "pointer" }}
-                      color="primary"
-
-                    />
-                    <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                      Collapse
-                  </Typography>
-                  </Toolbar>
-                </Toolbar>
-                <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
-                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                  scrollToId={this.state.scrollToId}
-                  handleTableHover={this.handleTableHover.bind(this)}
-                  selectedSentenceId={this.state.selectedSentenceId}
-                  selectedTableId={this.state.selectedTableId}
-                  handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
-                ></EditorPaper>
-              </Paper>
+              </Grid>
             </Grid>
-          ) : (
-              <Grid item xs={1} sm={1} lg={1} xl={1}>
-                <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
-                  <Toolbar onClick={event => {
-                    this.handleClick(false, 4);
-                  }} style={{ color: darkBlack, background: blueGrey50 }}>
-                    <KeyboardTabIcon
-                      color="primary"
-                      style={{ cursor: "pointer" }}
-                    />  &nbsp;&nbsp;
+
+            <Grid container spacing={16} style={{ padding: "0 24px 24px 24px" }}>
+              {!this.state.collapseToken ? (
+                <Grid item xs={12} sm={6} lg={4} xl={4} className='GridFileDetails'>
+                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
+                    <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+                      <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
+                        Source
+                  </Typography>
+                      <Toolbar onClick={event => {
+                        this.handleClick(true, 7);
+                      }}>
+                        <KeyboardBackspaceIcon style={{ cursor: "pointer" }}
+                          color="primary"
+
+                        />
+                        <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
+                          Collapse
+                  </Typography>
+                      </Toolbar>
+                    </Toolbar>
+                    <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                      scrollToId={this.state.scrollToId}
+                      handleTableHover={this.handleTableHover.bind(this)}
+                      selectedSentenceId={this.state.selectedSentenceId}
+                      selectedTableId={this.state.selectedTableId}
+                      handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
+                    ></EditorPaper>
+                  </Paper>
+                </Grid>
+              ) : (
+                  <Grid item xs={1} sm={1} lg={1} xl={1}>
+                    <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
+                      <Toolbar onClick={event => {
+                        this.handleClick(false, 4);
+                      }} style={{ color: darkBlack, background: blueGrey50 }}>
+                        <KeyboardTabIcon
+                          color="primary"
+                          style={{ cursor: "pointer" }}
+                        />  &nbsp;&nbsp;
               <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                      Source
+                          Source
               </Typography>
+                      </Toolbar>
+                    </Paper>
+                  </Grid>
+
+                )}
+              <Grid item xs={12} sm={6} lg={4} xl={4} className='GridFileDetails'>
+                <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
+                  <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+                    <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "3%" }}>
+                      Target
+                  </Typography>
                   </Toolbar>
+                  <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                    scrollToId={this.state.scrollToId}
+                    handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                    handleTableHover={this.handleTableHover.bind(this)}
+                    selectedSentenceId={this.state.selectedSentenceId}
+                    selectedTableId={this.state.selectedTableId}
+                    handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
                 </Paper>
               </Grid>
 
-            )}
-          <Grid item xs={12} sm={6} lg={4} xl={4} className='GridFileDetails'>
-            <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: 'scroll' }}>
-              <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "3%" }}>
-                  Target
-                  </Typography>
-              </Toolbar>
-              <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
-                scrollToId={this.state.scrollToId}
-                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                handleTableHover={this.handleTableHover.bind(this)}
-                selectedSentenceId={this.state.selectedSentenceId}
-                selectedTableId={this.state.selectedTableId}
-                handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
-            </Paper>
-          </Grid>
 
 
-
-          <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
-            {this.state.sentences && this.state.sentences[0] && <Editor selectedTableId={this.state.selectedTableId} clickedSentence={this.state.clickedSentence} handleCellOnClick={this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
-          </Grid>
-        </Grid>
-      </div>
+              <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
+                {this.state.sentences && this.state.sentences[0] && <Editor clickedCell={this.state.clickedCell} selectedTableId={this.state.selectedTableId} clickedSentence={this.state.clickedSentence} handleCellOnClick={this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
+              </Grid>
+            </Grid>
+          </div>
         }
       </div>
     );

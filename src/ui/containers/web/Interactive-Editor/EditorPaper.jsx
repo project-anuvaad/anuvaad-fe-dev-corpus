@@ -43,7 +43,7 @@ class EditorPaper extends React.Component {
                 let blockData = this.props.paperType === 'source' ? sentences[row][block].text : sentences[row][block].target
                 let blockId = id + '_' + sentences[row][block].sentence_index
                 col.push(<td id={blockId}
-                    onClick={() => this.props.handleTableCellClick(id, blockId, "true")}
+                    onClick={() => this.props.handleTableCellClick(id, blockId,sentences[row][block], "true")}
                     onMouseEnter={() => this.tableHoverOn(id, blockId)}
                     onMouseLeave={() => this.tableHoverOff()}
                     style={{ backgroundColor: (this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : "", padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
