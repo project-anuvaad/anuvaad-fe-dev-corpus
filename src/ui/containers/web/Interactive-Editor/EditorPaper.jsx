@@ -13,6 +13,18 @@ const styles = {
 
 class EditorPaper extends React.Component {
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.scrollToId !== this.props.scrollToId) {
+            let sid = this.props.scrollToId.split('_')[0]
+            if (this.refs[sid + '_' + this.props.paperType]) {
+                this.refs[sid + '_' + this.props.paperType].scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'end',
+                })
+            }
+        }
+    }
+
     fetchSuperScript(supArr) {
         if (supArr && Array.isArray(supArr) && supArr.length > 0) {
             return supArr.join()
@@ -30,10 +42,10 @@ class EditorPaper extends React.Component {
                 let blockData = this.props.paperType === 'source' ? sentences[row][block].text : sentences[row][block].target
                 let blockId = id + '_' + sentences[row][block].sentence_index
                 col.push(<td id={blockId}
-                    onClick={() => this.props.handleTableCellClick(id, blockId,"true")}
+                    onClick={() => this.props.handleTableCellClick(id, blockId, "true")}
                     onMouseEnter={() => this.tableHoverOn(id, blockId)}
                     onMouseLeave={() => this.tableHoverOff()}
-                    style={{ backgroundColor: (this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId && !this.props.hoveredSentence && !this.props.hoveredTableId  ? 'yellow' : "", padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
+                    style={{ backgroundColor: (this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : "", padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
                     {blockData}</td>)
             }
             tableRow.push(<tr>{col}</tr>)
@@ -50,9 +62,9 @@ class EditorPaper extends React.Component {
                     sentenceArray.push(<span
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId=== sentence._id + '_' + tokenText.sentence_index && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : ""
+                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : ""
                         }}
-                        
+
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
                         {tokenText.text}</span>)
                 })
@@ -63,7 +75,7 @@ class EditorPaper extends React.Component {
                     sentenceArray.push(<span
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId=== sentence._id + '_' + tokenText.sentence_index && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : "",
+                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : "",
                         }}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>{tokenText.target}</span>)
                 })
@@ -82,10 +94,10 @@ class EditorPaper extends React.Component {
                     {this.fetchTokenizedSentence(sentence)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
 
             } else if (sentence.is_ner) {
-                return (<div><div ref={sentence._id+ '_' + this.props.paperType} key={sentence._id} style={{ float: align, textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
+                return (<div><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ float: align, textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
                     {this.fetchTokenizedSentence(sentence)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
             } else {
-                return (<div ref={sentence._id+ '_' + this.props.paperType} key={sentence._id} style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
+                return (<div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
                     {this.fetchTokenizedSentence(sentence)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup><br /><br /></div>)
             }
         } else if (sentence.is_table) {
@@ -98,7 +110,7 @@ class EditorPaper extends React.Component {
     }
 
     hoverOn(e) {
-        console.log('---------------------paper---------',e)
+        console.log('---------------------paper---------', e)
         this.props.handleOnMouseEnter(e)
     }
 
@@ -115,25 +127,11 @@ class EditorPaper extends React.Component {
     }
 
     handleOnClick(id) {
-
-    // let sid = id.split('_')[0]
-    // let sourceNode = ReactDOM.findDOMNode(this.refs[sid + '_source'])
-    // // let targetNode = ReactDOM.findDOMNode(this.refs[sid + '_target'])
-
-    // // window.scrollTo(0, sourceNode.offsetTop);
-    // this.refs[sid + '_source'].current.scrollIntoView({
-    //     behavior: 'smooth',
-    //     block: 'start',
-    //   })
-    // // window.scrollTo(0, targetNode.offsetTop);
-
-
-    this.props.handleSentenceClick(id, true)
-
+        this.props.handleSentenceClick(id, true)
     }
 
     render() {
-        const { section, sentences, paperType } = this.props;
+        const { section, sentences, paperType, scrollTo } = this.props;
         return (
 
             <div>
