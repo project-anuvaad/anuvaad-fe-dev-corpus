@@ -55,11 +55,13 @@ class IntractiveTrans extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
-      this.setState({ sentences: this.props.fetchPdfSentence });
+      this.setState({ sentences: this.props.fetchPdfSentence.data });
     }
   }
 
   handleOnMouseEnter(sentenceId) {
+
+    console.log(sentenceId)
     this.setState({ hoveredSentence: sentenceId })
   }
 
@@ -76,43 +78,16 @@ class IntractiveTrans extends React.Component {
   }
 
 
-  handleSenetenceOnClick(sentenceId) {
-    var temp ;
-    var indexValue;
-    this.state.sentences && this.state.sentences.length > 0 && this.state.sentences.map((sentence,index) => {
-      if(sentence._id === sentenceId )
-      {
-        temp =  sentence.tokenized_sentences[0].target;
-        indexValue= index;
-        console.log("index----",index);
-      }})
-    this.setState({ selectedSentenceId: sentenceId,submittedSentence: temp, indexValue:indexValue })
+  handleSenetenceOnClick(sentenceId, value) {
+
+    console.log("sid",sentenceId)
+    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value})
   }
 
-  handleCellOnClick(sentenceId, tableId) {
+  handleCellOnClick(sentenceId, tableId, value) {
 
-    let tableSentence;
-    this.state.sentences && this.state.sentences.length > 0 && this.state.sentences.map((sentence,index) => {
-      if(sentence._id === sentenceId )
-      {
-      
-        tableSentence = this.state.sentences[index].table_items
-    if(this.state.selectedSentenceId!= sentenceId){
-      var blockData = []
-      var blockIndex = []
-      for (let row in tableSentence) {
-        for (let block in tableSentence[row]) {
-       blockData.push(tableSentence[row][block].target)
-       blockIndex.push(tableSentence[row][block].node_index)
-        }
-      }
-
-      console.log("bd",blockData,blockIndex)
-      this.setState({ blockData,blockIndex })
-    }
-
-  }})
-  this.setState({ selectedSentenceId: sentenceId, selectedTableId: tableId })
+    console.log("------",value,tableId)
+  this.setState({ selectedSentenceId: sentenceId, selectedTableId: tableId,clickedSentence: value })
   }
 
   render() {
@@ -168,7 +143,7 @@ class IntractiveTrans extends React.Component {
                   </Typography>
                   </Toolbar>
                 </Toolbar>
-                <EditorPaper paperType="source" sentences={this.props.fetchPdfSentence} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
                   handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} 
                   handleTableHover={this.handleTableHover.bind(this)} 
                   selectedSentenceId={this.state.selectedSentenceId}
@@ -202,7 +177,7 @@ class IntractiveTrans extends React.Component {
                   Target
                   </Typography>
               </Toolbar>
-              <EditorPaper paperType="target" sentences={this.props.fetchPdfSentence} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+              <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
                   handleOnMouseEnter={this.handleOnMouseEnter.bind(this)} 
                   handleTableHover={this.handleTableHover.bind(this)} 
                   selectedSentenceId={this.state.selectedSentenceId}
@@ -214,7 +189,7 @@ class IntractiveTrans extends React.Component {
 
 
           <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
-            {this.state.sentences && this.state.sentences[0] && <Editor handleCellOnClick = {this.handleCellOnClick.bind(this)} blockData ={this.state.blockData} blockIndex = {this.state.blockIndex} selectedTableId={this.state.selectedTableId} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} indexValue = {this.state.indexValue} submittedId={this.state.selectedSentenceId} submittedSentence = {this.state.submittedSentence} sentences={this.state.sentences} />}
+            {this.state.sentences && this.state.sentences[0] && <Editor selectedTableId = {this.state.selectedTableId} clickedSentence ={this.state.clickedSentence} handleCellOnClick = {this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
           </Grid>
         </Grid>
       </div>

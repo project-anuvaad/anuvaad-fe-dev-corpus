@@ -16,7 +16,7 @@ export default class FetchDoc extends API {
     processResponse(res) {
         super.processResponse(res)
         if (res.data) {
-            this.fetch_corpus_data = res.data;
+            this.fetch_corpus_data = res;
         }
     }
 
