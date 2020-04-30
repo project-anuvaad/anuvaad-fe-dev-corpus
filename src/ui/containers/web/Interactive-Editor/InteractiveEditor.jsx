@@ -73,7 +73,7 @@ class IntractiveTrans extends React.Component {
   handleOnMouseEnter(sentenceId) {
 
     console.log(sentenceId)
-    this.setState({ hoveredSentence: sentenceId })
+    this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId })
   }
 
   handleOnMouseLeave() {
@@ -81,24 +81,19 @@ class IntractiveTrans extends React.Component {
   }
 
   handleTableHover(sentenceId, tableId) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId })
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId,scrollToId: sentenceId })
   }
 
   handleTableHoverLeft() {
     this.setState({ hoveredSentence: '', hoveredTableId: '' })
   }
 
-
   handleSenetenceOnClick(sentenceId, value) {
-
-    console.log("sid------------",sentenceId)
-    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value,selectedTableId:''})
+    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value,selectedTableId:'',scrollToId: sentenceId})
   }
 
   handleCellOnClick(sentenceId, tableId, value) {
-
-    console.log("------", value, tableId)
-    this.setState({ selectedSentenceId: sentenceId, selectedTableId: tableId, clickedSentence: value })
+    this.setState({ selectedSentenceId: sentenceId, selectedTableId: tableId, clickedSentence: value,scrollToId: sentenceId })
   }
 
   render() {
