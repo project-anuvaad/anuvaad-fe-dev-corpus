@@ -58,10 +58,6 @@ class EditorPaper extends React.Component {
             let sentenceArray = []
             if (this.props.paperType === 'source') {
                 sentence.tokenized_sentences.map((tokenText) => {
-<<<<<<< HEAD
-=======
-                    // console.log(sentence._id + '_' + tokenText.sentence_index)
->>>>>>> 8d7577489b2d4e1e4ac5a7f95bf26b898a326948
                     sentenceArray.push(<span
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
@@ -129,13 +125,8 @@ class EditorPaper extends React.Component {
         this.props.handleTableHover('', '')
     }
 
-<<<<<<< HEAD
-    handleOnClick(id, val) {
-        this.props.handleSentenceClick(id,val)
-=======
     handleOnClick(id) {
         this.props.handleSentenceClick(id, true)
->>>>>>> 8d7577489b2d4e1e4ac5a7f95bf26b898a326948
     }
 
     render() {
