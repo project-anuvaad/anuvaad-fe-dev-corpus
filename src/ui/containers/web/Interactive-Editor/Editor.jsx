@@ -83,6 +83,10 @@ class Editor extends React.Component {
       });
   }
 
+  handleUpdate(){
+    
+  }
+
   handleSubmit() {
     let res = "";
     const { APITransport } = this.props;
@@ -312,7 +316,7 @@ class Editor extends React.Component {
             <Button
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
-              disabled={(this.props.sentences[0]._id === this.state.submittedId.split("_")[0] && this.state.submittedId.split("_")[1] == 0) ||(!this.state.target && !this.state.translateText) }
+              disabled={(this.props.sentences[0]._id === this.state.submittedId.split("_")[0])}
               onClick={event => {
                 this.handleSentence(-1);
               }}
@@ -337,7 +341,7 @@ class Editor extends React.Component {
           <Grid item xs={3} sm={3} lg={4} xl={4}>
             <Button
               color="primary"
-              disabled={(this.props.sentences[this.props.sentences.length-1]._id === this.state.submittedId.split("_")[0] && this.state.submittedId.split("_")[1] == this.props.sentences[this.props.sentences.length-1].tokenized_sentences.length-1)||(!this.state.target && !this.state.translateText)}
+              disabled={(this.props.sentences[this.props.sentences.length-1]._id === this.state.submittedId.split("_")[0])}
               onClick={event => {
                 this.handleSentence(1);
               }}

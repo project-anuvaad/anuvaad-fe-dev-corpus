@@ -33,7 +33,7 @@ class IntractiveTrans extends React.Component {
       message: translate("intractive_translate.page.snackbar.message"),
       hoveredSentence: '',
       hoveredTableId: '',
-      selectedSentenceId: '',
+      selectedSentenceId: "",
       selectedTableId: '',
       clickedSentence: false
     };
@@ -82,12 +82,8 @@ class IntractiveTrans extends React.Component {
 
   handleSenetenceOnClick(sentenceId, value) {
 
-<<<<<<< HEAD
     console.log("sid------------",sentenceId)
     this.setState({ selectedSentenceId: sentenceId, clickedSentence: value,selectedTableId:''})
-=======
-    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, scrollToId: sentenceId })
->>>>>>> 8d7577489b2d4e1e4ac5a7f95bf26b898a326948
   }
 
   handleCellOnClick(sentenceId, tableId, value) {
