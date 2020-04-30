@@ -79,16 +79,11 @@ class IntractiveTrans extends React.Component {
     this.setState({ hoveredSentence: '', hoveredTableId: '' })
   }
 
-
   handleSenetenceOnClick(sentenceId, value) {
-
-    console.log("sid------------",sentenceId)
     this.setState({ selectedSentenceId: sentenceId, clickedSentence: value,selectedTableId:'',scrollToId: sentenceId})
   }
 
   handleCellOnClick(sentenceId, tableId, value) {
-
-    console.log("------", value, tableId)
     this.setState({ selectedSentenceId: sentenceId, selectedTableId: tableId, clickedSentence: value,scrollToId: sentenceId })
   }
 
