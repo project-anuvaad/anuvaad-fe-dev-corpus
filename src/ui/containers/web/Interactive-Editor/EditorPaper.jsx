@@ -15,8 +15,10 @@ class EditorPaper extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.scrollToId !== this.props.scrollToId) {
+            console.log(this.props.scrollToId)
+            console.log(this.props.paperType)
             let sid = this.props.scrollToId.split('_')[0]
-            if (this.refs[sid + '_' + this.props.paperType]) {
+            if (this.refs[sid + '_' + this.props.paperType] && this.props.paperType !== this.props.parent) {
                 this.refs[sid + '_' + this.props.paperType].scrollIntoView({
                     behavior: 'smooth'
                     
@@ -42,7 +44,7 @@ class EditorPaper extends React.Component {
                 let blockData = this.props.paperType === 'source' ? sentences[row][block].text : sentences[row][block].target
                 let blockId = id + '_' + sentences[row][block].sentence_index
                 col.push(<td id={blockId}
-                    onClick={() => this.props.handleTableCellClick(id, blockId,sentences[row][block], "true")}
+                    onClick={() => this.props.handleTableCellClick(id, blockId,sentences[row][block], "true", this.props.paperType)}
                     onMouseEnter={() => this.tableHoverOn(id, blockId)}
                     onMouseLeave={() => this.tableHoverOff()}
                     style={{ backgroundColor: (this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : "", padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
@@ -110,7 +112,7 @@ class EditorPaper extends React.Component {
     }
 
     hoverOn(e) {
-        this.props.handleOnMouseEnter(e)
+        this.props.handleOnMouseEnter(e, this.props.paperType)
     }
 
     hoverOff() {
@@ -118,7 +120,7 @@ class EditorPaper extends React.Component {
     }
 
     tableHoverOn(sentenceId, tableId, val) {
-        this.props.handleTableHover(sentenceId, tableId, val)
+        this.props.handleTableHover(sentenceId, tableId, val, this.props.paperType)
     }
 
     tableHoverOff() {
@@ -126,7 +128,7 @@ class EditorPaper extends React.Component {
     }
 
     handleOnClick(id) {
-        this.props.handleSentenceClick(id, true)
+        this.props.handleSentenceClick(id, true, this.props.paperType)
     }
 
     render() {
