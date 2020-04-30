@@ -20,8 +20,9 @@ class EditorPaper extends React.Component {
             let sid = this.props.scrollToId.split('_')[0]
             if (this.refs[sid + '_' + this.props.paperType] && this.props.paperType !== this.props.parent) {
                 this.refs[sid + '_' + this.props.paperType].scrollIntoView({
-                    behavior: 'smooth'
-                    
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'center'
                 })
             }
         }
