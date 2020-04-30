@@ -88,12 +88,9 @@ class Editor extends React.Component {
           } else if (sentence.tokenized_sentences.length >= splitValue[1] && splitValue[1] >= 0) {
 
             const ind = Number(splitValue[1]) + value;
-            
-            console.log("index-----", ind)
 
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
             !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false);
-            console.log("sajishsssss")
             if (sentence.is_table) {
                 for (var key in sentence.table_items) {
                   for (var cell in sentence.table_items[key]) {
