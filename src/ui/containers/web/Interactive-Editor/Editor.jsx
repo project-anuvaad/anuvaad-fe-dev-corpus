@@ -12,6 +12,8 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { translate } from "../../../../assets/localisation";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
+import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentence";
+import Snackbar from "../../../components/web/common/Snackbar";
 
 class Editor extends React.Component {
   constructor(props) {
@@ -33,15 +35,30 @@ class Editor extends React.Component {
     };
   }
 
-  handleSentence(value, token) {
+  handleApiCall(){
+    const { APITransport } = this.props;
+    const apiObj = new InteractiveApi(this.state.sentences);
+      APITransport(apiObj);
+  }
 
-    console.log("tid-----", this.state.submittedId)
+
+  handleSave(index, tokenIndex, target, taggedTarget) {
+
+    const sentencesObj = this.state.sentences;
+    sentencesObj[index].tokenized_sentences[tokenIndex].target = target? target : this.state.target;
+    sentencesObj[index].tokenized_sentences[tokenIndex].tagged_tgt = taggedTarget? taggedTarget : this.state.taggedTarget;
+    this.setState({ sentences: sentencesObj });
+  }
+
+  handleSentence(value) {
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
+
+    
     this.props.sentences &&
       this.props.sentences.length > 0 &&
       this.props.sentences.map((sentence, index) => {
         if (splitValue[0] === sentence._id) {
-          console.log("val---", this.props.sentences[index]);
+          this.state.target && this.state.translateText && this.handleSave(index, splitValue[1]);
           if (
             (sentence.tokenized_sentences.length === 1 && Number(splitValue[1]) === 0) ||
             (Number(splitValue[1]) === 0 && value === -1) ||
@@ -109,10 +126,10 @@ class Editor extends React.Component {
   handleSubmit() {
     let res = "";
     const { APITransport } = this.props;
-
     if (this.state.translateText) {
       res = this.handleCalc(this.state.translateText);
     }
+
     const apiObj = new IntractiveApi(this.state.source, res, this.state.model);
     if (this.state.source && res) {
       APITransport(apiObj);
@@ -121,7 +138,8 @@ class Editor extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
-      console.log("-------------", this.props.intractiveTrans)
+
+
       this.setState({
         disable: false,
         token: false,
@@ -142,6 +160,7 @@ class Editor extends React.Component {
   }
 
   focusDiv(val) {
+    
     if (val === "focus") {
       this.textInput.focus();
     } else {
@@ -153,15 +172,10 @@ class Editor extends React.Component {
     const temp = value.split(" ");
     const tagged_tgt = this.state.taggedTarget.split(" ");
     const tagged_src = this.state.taggedSource.split(" ");
-
-
     const tgt = this.state.target && this.state.target.split(" ");
     const src = this.state.source && this.state.source.split(" ");
     const resultArray = [];
     let index;
-
-    console.log("values", this.state.target)
-
     temp.map(item => {
       if (item !== " ") {
         const ind = tgt.indexOf(item, resultArray.length);
@@ -196,14 +210,14 @@ class Editor extends React.Component {
 
   keyPress(event) {
     if (event.keyCode === 9) {
-      console.log("-----", event.keyCode)
+      console.log("-----", event.keyCode);
       if (this.state.disable && this.state.translateText) {
-        console.log("10", event.keyCode)
+        console.log("10", event.keyCode);
         const apiObj = new IntractiveApi(this.state.source, this.handleCalc(event.target.value), this.state.model);
         this.props.APITransport(apiObj);
         this.setState({ disable: false });
       } else {
-        console.log("11", event.keyCode)
+        console.log("11", event.keyCode);
         let temp;
         const prefix = this.state.target && this.state.target.split(" ");
         const translate = this.state.translateText && this.state.translateText.split(" ");
@@ -239,21 +253,17 @@ class Editor extends React.Component {
         blockData: nextProps.blockData,
         blockIndex: nextProps.blockIndex,
         submittedId: nextProps.submittedId,
-        clickedSentence: nextProps.clickedSentence
-
+        clickedSentence: nextProps.clickedSentence,
+        sentences: nextProps.sentences
       };
-
     }
     return null;
   }
 
-  handleTextClick(test) {
-    console.log("sajish");
-  }
 
   handleTextChange(key, event) {
     const space = event.target.value.endsWith(" ");
-    console.log("space", space)
+    console.log("space", space);
     if (this.state.target && space) {
       if (this.state.target.startsWith(event.target.value) && this.state.target.includes(event.target.value, 0)) {
       } else {
@@ -268,7 +278,6 @@ class Editor extends React.Component {
     }
 
     if (!event.target.value) {
-      console.log("test");
       const apiObj = new IntractiveApi(this.state.source, event.target.value, this.state.model);
       this.props.APITransport(apiObj);
       this.focusDiv("blur");
@@ -328,9 +337,7 @@ class Editor extends React.Component {
             }}
             placeholder="type here.."
             cols="50"
-            onClick={event => {
-              this.handleTextClick("clicked");
-            }}
+            
             onChange={event => {
               this.handleTextChange("translateText", event);
             }}
@@ -342,7 +349,7 @@ class Editor extends React.Component {
             <Button
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
-              disabled={(this.props.sentences[0]._id === this.state.submittedId.split("_")[0])}
+              disabled={this.props.sentences[0]._id === this.state.submittedId.split("_")[0]}
               onClick={event => {
                 this.handleSentence(-1);
               }}
@@ -357,7 +364,7 @@ class Editor extends React.Component {
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
               onClick={event => {
-                this.handleSubmit();
+                this.handleApiCall();
               }}
             >
               {" "}
@@ -378,6 +385,16 @@ class Editor extends React.Component {
             </Button>
           </Grid>
         </Grid>
+        {this.state.open && (
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={this.state.open}
+            autoHideDuration={3000}
+            onClose={this.handleClose}
+            variant="success"
+            message="Saved target file"
+          />
+        )}
       </Paper>
     );
   }
@@ -386,7 +403,8 @@ class Editor extends React.Component {
 const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
-  intractiveTrans: state.intractiveTrans
+  intractiveTrans: state.intractiveTrans,
+  interactiveUpdate: state.interactiveUpdate
 });
 
 const mapDispatchToProps = dispatch =>

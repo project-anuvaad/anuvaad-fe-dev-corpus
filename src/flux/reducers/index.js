@@ -9,7 +9,7 @@ import translations from './translations';
 import translation_sentences from './translation_sentences';
 import sentences from './sentences';
 import userProfile from './userprofile';
-
+import interactiveUpdate from './interactivesavesentence';
 import uploadbenchmark from './uploadbenchmark';
 import source_translate from './source-translate';
 import supportLanguage from './fetchlanguages';
@@ -113,5 +113,6 @@ export default {
     pdfConfigUpload,
     fetchPdfSentence,
     intractiveTrans,
-    docpath
+    docpath,
+    interactiveUpdate
 };
