@@ -64,7 +64,7 @@ class IntractiveTrans extends React.Component {
   handleOnMouseEnter(sentenceId) {
 
     console.log(sentenceId)
-    this.setState({ hoveredSentence: sentenceId })
+    this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId })
   }
 
   handleOnMouseLeave() {
@@ -72,7 +72,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleTableHover(sentenceId, tableId) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId })
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId,scrollToId: sentenceId })
   }
 
   handleTableHoverLeft() {
