@@ -56,6 +56,8 @@ class IntractiveTrans extends React.Component {
 
   }
 
+
+
   componentDidUpdate(prevProps) {
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
       let temp = this.props.fetchPdfSentence.data;
@@ -76,7 +78,35 @@ class IntractiveTrans extends React.Component {
       })
       this.setState({ sentences: sentenceArray, fileDetails: this.props.fetchPdfSentence.pdf_process, sourceSupScripts: supScripts, targetSupScripts: targetSupScript });
     }
+    
   }
+
+
+  handleSave(value,index,submittedId,keyValue,cellValue){
+    console.log("sen-----",value,index,this.state.sentences,keyValue,cellValue)
+    let obj = this.state.sentences
+      let temp = this.state.sentences[index]
+      console.log("temp",temp)
+    if(!temp.is_table){   
+      
+        temp.tokenized_sentences[submittedId.split("_")[1]].target=value.tgt? value.tgt : value;
+        temp.tokenized_sentences[submittedId.split("_")[1]].taggedTarget= value.tagged_tgt&& value.tagged_tgt;
+      }
+
+      else{
+        temp.table_items[keyValue][cellValue].target = value.tgt? value.tgt : value;
+        temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt&& value.tagged_tgt;
+      }
+
+      obj[index]= temp;
+
+      this.setState({
+        sentences:obj
+      })
+
+  }
+
+  
 
   handleOnMouseEnter(sentenceId, parent) {
     this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, parent: parent })
@@ -99,6 +129,8 @@ class IntractiveTrans extends React.Component {
   }
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent) {
+
+    console.log("cell",sentenceId, tableId, clickedCell, value, parent)
     this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent })
   }
 
@@ -210,7 +242,7 @@ class IntractiveTrans extends React.Component {
 
 
               <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
-                {this.state.sentences && this.state.sentences[0] && <Editor clickedCell={this.state.clickedCell} selectedTableId={this.state.selectedTableId} clickedSentence={this.state.clickedSentence} handleCellOnClick={this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
+                {this.state.sentences && this.state.sentences[0] && <Editor modelDetails={this.state.fileDetails.model} handleSave={this.handleSave.bind(this)} clickedCell={this.state.clickedCell} selectedTableId={this.state.selectedTableId} clickedSentence={this.state.clickedSentence} handleCellOnClick={this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
               </Grid>
             </Grid>
           </div>

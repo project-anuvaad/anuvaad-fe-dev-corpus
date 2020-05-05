@@ -141,10 +141,7 @@ class PdfUpload extends Component {
     }
     if (prevProps.uploadpdf !== this.props.uploadpdf) {
       this.setState({ filesPath: this.props.uploadpdf, open: true });
-
-      setTimeout(() => {
-        history.push(`${process.env.PUBLIC_URL}/view-pdf`);
-      }, 2000);
+      history.push(`${process.env.PUBLIC_URL}/view-pdf`);
     }
   }
 
