@@ -68,45 +68,51 @@ class IntractiveTrans extends React.Component {
         if (!sentence.is_footer) {
           sentenceArray.push(sentence)
         } else {
-          let sourceValue = (sentence.tokenized_sentences[0].text).substr((sentence.text).indexOf(' ') + 1)
-          let targetValue = (sentence.tokenized_sentences[0].target).substr((sentence.text).indexOf(' ') + 1)
+          let sourceValue = ""
+          let targetValue = ""
+          if (sentence.text) {
+            sourceValue = (sentence.text).substr((sentence.text).indexOf(' ') + 1)
+          }
+          if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences[0] && sentence.tokenized_sentences[0].target) {
+            targetValue = (sentence.tokenized_sentences[0].target).substr((sentence.text).indexOf(' ') + 1)
+          }
 
-          supScripts[(sentence.text).substr(0, (sentence.text).indexOf(' ')) ] = sourceValue
-          targetSupScript[(sentence.text).substr(0, (sentence.text).indexOf(' ')) ] = targetValue
-          
+          supScripts[(sentence.text).substr(0, (sentence.text).indexOf(' '))] = sourceValue
+          targetSupScript[(sentence.text).substr(0, (sentence.text).indexOf(' '))] = targetValue
+
         }
       })
       this.setState({ sentences: sentenceArray, fileDetails: this.props.fetchPdfSentence.pdf_process, sourceSupScripts: supScripts, targetSupScripts: targetSupScript });
     }
-    
+
   }
 
 
-  handleSave(value,index,submittedId,keyValue,cellValue){
-    console.log("sen-----",value,index,this.state.sentences,keyValue,cellValue)
+  handleSave(value, index, submittedId, keyValue, cellValue) {
+    console.log("sen-----", value, index, this.state.sentences, keyValue, cellValue)
     let obj = this.state.sentences
-      let temp = this.state.sentences[index]
-      console.log("temp",temp)
-    if(!temp.is_table){   
-      
-        temp.tokenized_sentences[submittedId.split("_")[1]].target=value.tgt? value.tgt : value;
-        temp.tokenized_sentences[submittedId.split("_")[1]].taggedTarget= value.tagged_tgt&& value.tagged_tgt;
-      }
+    let temp = this.state.sentences[index]
+    console.log("temp", temp)
+    if (!temp.is_table) {
 
-      else{
-        temp.table_items[keyValue][cellValue].target = value.tgt? value.tgt : value;
-        temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt&& value.tagged_tgt;
-      }
+      temp.tokenized_sentences[submittedId.split("_")[1]].target = value.tgt ? value.tgt : value;
+      temp.tokenized_sentences[submittedId.split("_")[1]].taggedTarget = value.tagged_tgt && value.tagged_tgt;
+    }
 
-      obj[index]= temp;
+    else {
+      temp.table_items[keyValue][cellValue].target = value.tgt ? value.tgt : value;
+      temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt && value.tagged_tgt;
+    }
 
-      this.setState({
-        sentences:obj
-      })
+    obj[index] = temp;
+
+    this.setState({
+      sentences: obj
+    })
 
   }
 
-  
+
 
   handleOnMouseEnter(sentenceId, parent) {
     this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, parent: parent })
@@ -130,7 +136,7 @@ class IntractiveTrans extends React.Component {
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent) {
 
-    console.log("cell",sentenceId, tableId, clickedCell, value, parent)
+    console.log("cell", sentenceId, tableId, clickedCell, value, parent)
     this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent })
   }
 
@@ -197,7 +203,7 @@ class IntractiveTrans extends React.Component {
                       parent={this.state.parent}
                       selectedSentenceId={this.state.selectedSentenceId}
                       selectedTableId={this.state.selectedTableId}
-                      supScripts = {this.state.sourceSupScripts}
+                      supScripts={this.state.sourceSupScripts}
                       handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
                     ></EditorPaper>
                   </Paper>
@@ -234,7 +240,7 @@ class IntractiveTrans extends React.Component {
                     handleTableHover={this.handleTableHover.bind(this)}
                     selectedSentenceId={this.state.selectedSentenceId}
                     selectedTableId={this.state.selectedTableId}
-                    supScripts = {this.state.targetSupScripts}
+                    supScripts={this.state.targetSupScripts}
                     handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
                 </Paper>
               </Grid>
