@@ -9,7 +9,7 @@ export default class NMTSP extends API {
         super("POST", timeout, false);
         this.src = source;
         this.target = target;
-        this.model = model;
+        this.model = model.model_id;
         this.answers = null;
         this.type = C.INTRACTIVE_TRANSLATE;
     }
@@ -24,19 +24,19 @@ export default class NMTSP extends API {
     }
 
     apiEndPoint() {
-        return `http://52.40.71.62:5001/interactive-translation`;
+        return `${super.apiEndPointAuto()}/interactive-translation`;
     }
 
     getBody() {
 
         var modelArray = [];
-    this.model.map(item => {
+   
       modelArray.push({
         src: this.src,
         target_prefix: this.target,
-        id: parseInt(item.model_id,10),
+        id: parseInt(this.model,10),
        
-    });return true;})
+    });
 
         return modelArray;
         
