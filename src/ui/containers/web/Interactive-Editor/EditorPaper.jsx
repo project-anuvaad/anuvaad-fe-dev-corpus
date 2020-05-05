@@ -47,7 +47,7 @@ class EditorPaper extends React.Component {
                     onClick={() => this.props.handleTableCellClick(id, blockId,sentences[row][block], "true", this.props.paperType)}
                     onMouseEnter={() => this.tableHoverOn(id, blockId)}
                     onMouseLeave={() => this.tableHoverOff()}
-                    style={{ backgroundColor: (this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : "", padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
+                    style={{ backgroundColor: (this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId ? '#4dffcf' : "", padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
                     {blockData}</td>)
             }
             tableRow.push(<tr>{col}</tr>)
@@ -63,7 +63,7 @@ class EditorPaper extends React.Component {
                     sentenceArray.push(<span
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : ""
+                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : ""
                         }}
 
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
@@ -76,7 +76,7 @@ class EditorPaper extends React.Component {
                     sentenceArray.push(<span
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index && !this.props.hoveredSentence && !this.props.hoveredTableId ? 'yellow' : "",
+                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index  ? '#4dffcf' : "",
                         }}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
                             {tokenText.target}{isSpaceRequired ? <span> </span> : <span></span>}</span>)
