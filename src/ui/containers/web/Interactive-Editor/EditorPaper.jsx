@@ -30,7 +30,7 @@ class EditorPaper extends React.Component {
         if (supArr && Array.isArray(supArr) && supArr.length > 0) {
             supArr.map((text, index) => {
                     let superScripts = this.props.supScripts
-                    supArray.push(<span><span title={superScripts[text]}>{text}</span><span>{supArr.length === index + 1 ? '' : ','}</span></span>)
+                    supArray.push(<span><a href="#"><span title={superScripts[text]}>{text}</span></a><span>{supArr.length === index + 1 ? '' : ','}</span></span>)
             })
             return supArray
         } else {
