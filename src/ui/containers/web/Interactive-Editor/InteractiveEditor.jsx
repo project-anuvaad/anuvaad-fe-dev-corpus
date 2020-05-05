@@ -35,7 +35,9 @@ class IntractiveTrans extends React.Component {
       hoveredTableId: '',
       selectedSentenceId: "",
       selectedTableId: '',
-      clickedSentence: false
+      clickedSentence: false,
+      sourceSupScripts: '',
+      targetSupScripts: ''
     };
   }
 
@@ -60,16 +62,21 @@ class IntractiveTrans extends React.Component {
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
       let temp = this.props.fetchPdfSentence.data;
       let sentenceArray = []
+      let supScripts = {}
+      let targetSupScript = {}
       temp.map(sentence => {
         if (!sentence.is_footer) {
           sentenceArray.push(sentence)
+        } else {
+          let sourceValue = (sentence.tokenized_sentences[0].text).substr((sentence.text).indexOf(' ') + 1)
+          let targetValue = (sentence.tokenized_sentences[0].target).substr((sentence.text).indexOf(' ') + 1)
+
+          supScripts[(sentence.text).substr(0, (sentence.text).indexOf(' ')) ] = sourceValue
+          targetSupScript[(sentence.text).substr(0, (sentence.text).indexOf(' ')) ] = targetValue
+          
         }
       })
-      
-
-      console.log("len", sentenceArray.length, temp.length)
-      this.setState({ sentences: sentenceArray, fileDetails: this.props.fetchPdfSentence.pdf_process });
-      console.log("--process", this.props.fetchPdfSentence.pdf_process)
+      this.setState({ sentences: sentenceArray, fileDetails: this.props.fetchPdfSentence.pdf_process, sourceSupScripts: supScripts, targetSupScripts: targetSupScript });
     }
     
   }
@@ -102,7 +109,7 @@ class IntractiveTrans extends React.Component {
   
 
   handleOnMouseEnter(sentenceId, parent) {
-    this.setState({ hoveredSentence: sentenceId,scrollToId: sentenceId, parent: parent })
+    this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, parent: parent })
   }
 
   handleOnMouseLeave() {
@@ -110,7 +117,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleTableHover(sentenceId, tableId, parent) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, parent: parent  })
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, parent: parent })
   }
 
   handleTableHoverLeft() {
@@ -190,6 +197,7 @@ class IntractiveTrans extends React.Component {
                       parent={this.state.parent}
                       selectedSentenceId={this.state.selectedSentenceId}
                       selectedTableId={this.state.selectedTableId}
+                      supScripts = {this.state.sourceSupScripts}
                       handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
                     ></EditorPaper>
                   </Paper>
@@ -226,6 +234,7 @@ class IntractiveTrans extends React.Component {
                     handleTableHover={this.handleTableHover.bind(this)}
                     selectedSentenceId={this.state.selectedSentenceId}
                     selectedTableId={this.state.selectedTableId}
+                    supScripts = {this.state.targetSupScripts}
                     handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
                 </Paper>
               </Grid>
