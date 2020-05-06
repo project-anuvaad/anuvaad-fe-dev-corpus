@@ -70,15 +70,42 @@ class IntractiveTrans extends React.Component {
         } else {
           let sourceValue = ""
           let targetValue = ""
-          if (sentence.text) {
-            sourceValue = (sentence.text).substr((sentence.text).indexOf(' ') + 1)
-          }
-          if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences[0] && sentence.tokenized_sentences[0].target) {
-            targetValue = (sentence.tokenized_sentences[0].target).substr((sentence.text).indexOf(' ') + 1)
+
+          let key = (sentence.text).substr(0, (sentence.text).indexOf(' '))
+
+          if (!isNaN(key)) {
+
+            if (sentence.text) {
+              sourceValue = (sentence.text).substr((sentence.text).indexOf(' ') + 1)
+            }
+            if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences[0] && sentence.tokenized_sentences[0].target) {
+              targetValue = (sentence.tokenized_sentences[0].target).substr((sentence.tokenized_sentences[0].target).indexOf(' ') + 1)
+            }
+
+            supScripts[key] = sourceValue
+            targetSupScript[key] = targetValue
+
+          } else {
+            let prevKey = Object.keys(supScripts).length
+
+            if (sentence.text) {
+              sourceValue = supScripts[prevKey]
+              sourceValue = sourceValue.concat(' ', sentence.text)
+            }
+            if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences[0] && sentence.tokenized_sentences[0].target) {
+              targetValue = targetSupScript[prevKey]
+
+              sentence.tokenized_sentences.map(tokenSentence => {
+                targetValue = targetValue.concat(' ', tokenSentence.target)
+              })
+            }
+
+            supScripts[prevKey] = sourceValue
+            targetSupScript[prevKey] = targetValue
+
           }
 
-          supScripts[(sentence.text).substr(0, (sentence.text).indexOf(' '))] = sourceValue
-          targetSupScript[(sentence.text).substr(0, (sentence.text).indexOf(' '))] = targetValue
+
 
         }
       })
