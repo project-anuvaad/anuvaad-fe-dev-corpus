@@ -1,7 +1,6 @@
 import React from "react";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import { withStyles } from "@material-ui/core";
-import ReactDOM from 'react-dom';
 
 const styles = {
     paperHeader: {
