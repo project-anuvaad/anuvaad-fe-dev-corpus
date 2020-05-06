@@ -12,8 +12,6 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import { translate } from "../../../../assets/localisation";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
-import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentence";
-import Snackbar from "../../../components/web/common/Snackbar";
 import Switch from "@material-ui/core/Switch";
 import Toolbar from "@material-ui/core/Toolbar";
 
@@ -34,9 +32,11 @@ class Editor extends React.Component {
   }
 
   handleApiCall(){
-    const { APITransport } = this.props;
-    const apiObj = new InteractiveApi(this.state.sentences);
-      APITransport(apiObj);
+    this.props.hadleSentenceSave(false);
+    this.state.checkedB && 
+    this.handleSubmit()
+
+
   }
 
   handleSwitchChange = () => {
@@ -95,7 +95,7 @@ class Editor extends React.Component {
             if (sentence.is_table) {
                 for (var key in sentence.table_items) {
                   for (var cell in sentence.table_items[key]) {
-                    if (sentence.table_items[key][cell].sentence_index == ind) {
+                    if (sentence.table_items[key][cell].sentence_index === ind) {
                       let blockId = sentence._id + '_' + sentence.table_items[key][cell].sentence_index
                       this.props.handleCellOnClick(sentence._id, blockId, sentence.table_items[key][cell], "true")
                       this.setState({keyValue:key,cellValue:cell})
@@ -114,9 +114,12 @@ class Editor extends React.Component {
               clickedSentence: false,
               
             });
+            
           }
         }
+        return true;
       });
+      
   }
 
   handleTextSelectChange(event) {
@@ -291,15 +294,6 @@ class Editor extends React.Component {
 
   render() {
     this.state.clickedSentence && this.handleSentence(0);
-
-    <Switch
-    checked={this.state.checkedB}
-    onChange={() => {
-      this.handleSwitchChange();
-    }}
-    value="checkedB"
-    color="secondary"
-  />
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
 
@@ -410,16 +404,7 @@ class Editor extends React.Component {
             </Button>
           </Grid>
         </Grid>
-        {this.state.open && (
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={this.state.open}
-            autoHideDuration={3000}
-            onClose={this.handleClose}
-            variant="success"
-            message="Saved target file"
-          />
-        )}
+        
       </Paper>
     );
   }
@@ -428,8 +413,7 @@ class Editor extends React.Component {
 const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
-  intractiveTrans: state.intractiveTrans,
-  interactiveUpdate: state.interactiveUpdate
+  intractiveTrans: state.intractiveTrans
 });
 
 const mapDispatchToProps = dispatch =>

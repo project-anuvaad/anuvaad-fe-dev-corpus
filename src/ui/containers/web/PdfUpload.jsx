@@ -17,7 +17,7 @@ import { translate } from "../../../assets/localisation";
 import Select from "../../components/web/common/SimpleSelect";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
-import PdfTranslation from "../../../flux/actions/apis/translation";
+
 
 const styles = theme => ({
   paper: {
