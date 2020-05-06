@@ -243,7 +243,7 @@ class ViewTranslate extends React.Component {
                                    
 
 
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.label.Edit')}><IconButton color="primary" component="span" onClick={(event) => {history.push('/interactive-editor/'+tableMeta.rowData[0])}} ><AddIcon/></IconButton></Tooltip> : ''}
+                                    {/* {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.label.Edit')}><IconButton color="primary" component="span" onClick={(event) => {history.push('/interactive-editor/'+tableMeta.rowData[0])}} ><AddIcon/></IconButton></Tooltip> : ''} */}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.label.delete')}><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
                                     {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.button.upload')}><FileUpload id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" value={this.state.value} handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
 

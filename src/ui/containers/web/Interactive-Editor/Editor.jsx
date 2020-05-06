@@ -14,6 +14,8 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentence";
 import Snackbar from "../../../components/web/common/Snackbar";
+import Switch from "@material-ui/core/Switch";
+import Toolbar from "@material-ui/core/Toolbar";
 
 class Editor extends React.Component {
   constructor(props) {
@@ -21,15 +23,11 @@ class Editor extends React.Component {
     this.textInput = React.createRef();
     this.state = {
       tgt: "",
-      model: [
-        {
-          model_id: "56"
-        }
-      ],
+      checkedB: true,
       target: '',
       translateText: '',
       message: translate("intractive_translate.page.snackbar.message"),
-      index: 0,
+      indexValue: 0,
       i: 0,
       token: true
     };
@@ -41,24 +39,22 @@ class Editor extends React.Component {
       APITransport(apiObj);
   }
 
+  handleSwitchChange = () => {
+    
+    this.setState({ checkedB: !this.state.checkedB, sentences: [] });
+  };
 
-  handleSave(index, tokenIndex, target, taggedTarget) {
 
-    const sentencesObj = this.state.sentences;
-    sentencesObj[index].tokenized_sentences[tokenIndex].target = target? target : this.state.target;
-    sentencesObj[index].tokenized_sentences[tokenIndex].tagged_tgt = taggedTarget? taggedTarget : this.state.taggedTarget;
-    this.setState({ sentences: sentencesObj });
-  }
 
   handleSentence(value) {
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
-
+    console.log("splitvalue",splitValue)
     
     this.props.sentences &&
       this.props.sentences.length > 0 &&
       this.props.sentences.map((sentence, index) => {
         if (splitValue[0] === sentence._id) {
-          this.state.target && this.state.translateText && this.handleSave(index, splitValue[1]);
+          // this.state.target && this.state.translateText && this.handleSave(index, splitValue[1]);
           if (
             (sentence.tokenized_sentences.length === 1 && Number(splitValue[1]) === 0) ||
             (Number(splitValue[1]) === 0 && value === -1) ||
@@ -76,13 +72,18 @@ class Editor extends React.Component {
               let blockId = this.props.sentences[index + value]._id + '_' + this.props.sentences[index + value].table_items[0][0].sentence_index
               this.props.handleCellOnClick(this.props.sentences[index + value]._id, blockId, this.props.sentences[index + value].table_items[0][0], "true")
             }
+
+            console.log("ind",index+value, this.props.sentences[index + value].tokenized_sentences[0].target)
             this.setState({
               target: this.props.sentences[index + value].tokenized_sentences[0].target,
               source: this.props.sentences[index + value].tokenized_sentences[0].src,
               taggedSource: this.props.sentences[index + value].tokenized_sentences[0].tagged_src,
               taggedTarget: this.props.sentences[index + value].tokenized_sentences[0].tagged_tgt,
               translateText: '',
-              clickedSentence: false
+              indexValue: index+value,
+              clickedSentence: false,
+              keyValue:'',
+              cellValue: ''
             });
 
           } else if (sentence.tokenized_sentences.length >= splitValue[1] && splitValue[1] >= 0) {
@@ -96,8 +97,8 @@ class Editor extends React.Component {
                   for (var cell in sentence.table_items[key]) {
                     if (sentence.table_items[key][cell].sentence_index == ind) {
                       let blockId = sentence._id + '_' + sentence.table_items[key][cell].sentence_index
-                      console.log(blockId)
                       this.props.handleCellOnClick(sentence._id, blockId, sentence.table_items[key][cell], "true")
+                      this.setState({keyValue:key,cellValue:cell})
                     }
                   }
                 }
@@ -109,16 +110,20 @@ class Editor extends React.Component {
               taggedTarget: this.props.sentences[index].tokenized_sentences[ind].tagged_tgt,
               token: false,
               translateText: '',
-              clickedSentence: false
+              indexValue: index,
+              clickedSentence: false,
+              
             });
           }
         }
       });
   }
 
-  handleUpdate() {
-
+  handleTextSelectChange(event) {
+    this.props.handleSave(event.target.value,this.state.indexValue, this.state.submittedId,this.state.keyValue, this.state.cellValue)
+      this.setState({target: event.target.value})
   }
+  
 
   handleSubmit() {
     let res = "";
@@ -126,17 +131,16 @@ class Editor extends React.Component {
     if (this.state.translateText) {
       res = this.handleCalc(this.state.translateText);
     }
-
-    const apiObj = new IntractiveApi(this.state.source, res, this.state.model);
+    console.log("model----",this.props.modelDetails)
+    const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails);
     if (this.state.source && res) {
       APITransport(apiObj);
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
-
-
+    if (prevProps.intractiveTrans !== this.props.intractiveTrans) {     
+      this.props.handleSave(this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0],this.state.indexValue, this.state.submittedId,this.state.keyValue, this.state.cellValue)
       this.setState({
         disable: false,
         token: false,
@@ -148,10 +152,11 @@ class Editor extends React.Component {
       this.focusDiv("focus");
     }
     if (prevProps.clickedCell !== this.props.clickedCell) {
+      console.log("clicked")
       this.setState({
         target: this.props.clickedCell.target,
-        taggedSource: this.props.clickedCell.taggedSource,
-        taggedTarget: this.props.clickedCell.taggedTarget,
+        taggedSource: this.props.clickedCell.tagged_src,
+        taggedTarget: this.props.clickedCell.tagged_tgt,
       })
     }
   }
@@ -210,7 +215,7 @@ class Editor extends React.Component {
       console.log("-----", event.keyCode);
       if (this.state.disable && this.state.translateText) {
         console.log("10", event.keyCode);
-        const apiObj = new IntractiveApi(this.state.source, this.handleCalc(event.target.value), this.state.model);
+        const apiObj = new IntractiveApi(this.state.source, this.handleCalc(event.target.value), this.props.modelDetails);
         this.props.APITransport(apiObj);
         this.setState({ disable: false });
       } else {
@@ -246,7 +251,6 @@ class Editor extends React.Component {
     if (prevState.submittedId !== nextProps.submittedId) {
       return {
         sentenceId: nextProps.sentenceId,
-        indexValue: nextProps.indexValue,
         blockData: nextProps.blockData,
         blockIndex: nextProps.blockIndex,
         submittedId: nextProps.submittedId,
@@ -265,7 +269,7 @@ class Editor extends React.Component {
       if (this.state.target.startsWith(event.target.value) && this.state.target.includes(event.target.value, 0)) {
       } else {
         const res = this.handleCalc(event.target.value);
-        const apiObj = new IntractiveApi(this.state.source, res, this.state.model);
+        const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails);
         this.props.APITransport(apiObj);
         this.focusDiv("blur");
         this.setState({
@@ -275,7 +279,7 @@ class Editor extends React.Component {
     }
 
     if (!event.target.value) {
-      const apiObj = new IntractiveApi(this.state.source, event.target.value, this.state.model);
+      const apiObj = new IntractiveApi(this.state.source, event.target.value, this.props.modelDetails);
       this.props.APITransport(apiObj);
       this.focusDiv("blur");
     }
@@ -287,10 +291,33 @@ class Editor extends React.Component {
 
   render() {
     this.state.clickedSentence && this.handleSentence(0);
+
+    <Switch
+    checked={this.state.checkedB}
+    onChange={() => {
+      this.handleSwitchChange();
+    }}
+    value="checkedB"
+    color="secondary"
+  />
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
+
+<Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+                      <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px", marginLeft: "4%" }}>
+                      {this.state.checkedB ? "Anuvaad Model" : "Ignored Anuvaad Model"}
+                  </Typography>
+                  <Switch
+    checked={this.state.checkedB}
+    onChange={() => {
+      this.handleSwitchChange();
+    }}
+    value="checkedB"
+    color="primary"
+  />
+                    </Toolbar>
         <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", marginLeft: "4%" }}>
-          Anuvaad Model
+          
         </Typography>
         <div>
           <textarea
@@ -304,12 +331,12 @@ class Editor extends React.Component {
             }}
             className="noter-text-area"
             rows="10"
-            disabled
+            disabled = {this.state.checkedB? true: false}
             value={this.state.target}
-            placeholder="select sentence from target or press next.."
+            placeholder={this.state.checkedB ? "select sentence from target or press next..":"Update sentence manually"}
             cols="50"
             onChange={event => {
-              this.handleTextChange("translateText", event);
+              this.handleTextSelectChange( event);
             }}
           />
         </div>
@@ -328,11 +355,12 @@ class Editor extends React.Component {
             }}
             className="noter-text-area"
             rows="10"
+            disabled = {!this.state.checkedB? true: false}
             value={this.state.translateText}
             ref={textarea => {
               this.textInput = textarea;
             }}
-            placeholder="type here.."
+            placeholder={this.state.checkedB ? "type here..": "Update sentence manually in above textarea."}
             cols="50"
             
             onChange={event => {
