@@ -9,7 +9,6 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Toolbar from "@material-ui/core/Toolbar";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
@@ -22,6 +21,8 @@ import KeyboardTabIcon from '@material-ui/icons/KeyboardTab';
 import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
 import history from "../../../../web.history";
 import EditorPaper from "./EditorPaper"
+import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentence";
+import Snackbar from "../../../components/web/common/Snackbar";
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -37,7 +38,8 @@ class IntractiveTrans extends React.Component {
       selectedTableId: '',
       clickedSentence: false,
       sourceSupScripts: '',
-      targetSupScripts: ''
+      targetSupScripts: '',
+      token: false
     };
   }
 
@@ -59,6 +61,15 @@ class IntractiveTrans extends React.Component {
 
 
   componentDidUpdate(prevProps) {
+
+    if(prevProps.interactiveUpdate!== this.props.interactiveUpdate){
+      this.setState({ open: this.state.token });
+     this.state.token && 
+        setTimeout(() => {
+          this.handleBack()
+        }, 3000);
+      
+    }
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
       let temp = this.props.fetchPdfSentence.data;
       let sentenceArray = []
@@ -97,6 +108,7 @@ class IntractiveTrans extends React.Component {
 
               sentence.tokenized_sentences.map(tokenSentence => {
                 targetValue = targetValue.concat(' ', tokenSentence.target)
+                return true;
               })
             }
 
@@ -108,6 +120,7 @@ class IntractiveTrans extends React.Component {
 
 
         }
+        return true;
       })
       this.setState({ sentences: sentenceArray, fileDetails: this.props.fetchPdfSentence.pdf_process, sourceSupScripts: supScripts, targetSupScripts: targetSupScript });
     }
@@ -136,6 +149,14 @@ class IntractiveTrans extends React.Component {
     this.setState({
       sentences: obj
     })
+
+  }
+
+  handleDone(token){
+    const { APITransport } = this.props;
+    const apiObj = new InteractiveApi(this.state.sentences);
+      APITransport(apiObj);
+      this.setState({token})
 
   }
 
@@ -197,7 +218,9 @@ class IntractiveTrans extends React.Component {
             </Button>
               </Grid>
               <Grid item xs={12} sm={6} lg={1} xl={1} >
-                <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '55px', fontSize: '90%', fontWeight: 'bold' }}>
+                <Button onClick={event => {
+                        this.handleDone(true);
+                      }} variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '55px', fontSize: '90%', fontWeight: 'bold' }}>
                   <DoneIcon fontSize="large" />&nbsp;&nbsp;Done
             </Button>
               </Grid>
@@ -275,9 +298,18 @@ class IntractiveTrans extends React.Component {
 
 
               <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
-                {this.state.sentences && this.state.sentences[0] && <Editor modelDetails={this.state.fileDetails.model} handleSave={this.handleSave.bind(this)} clickedCell={this.state.clickedCell} selectedTableId={this.state.selectedTableId} clickedSentence={this.state.clickedSentence} handleCellOnClick={this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
+                {this.state.sentences && this.state.sentences[0] && <Editor modelDetails={this.state.fileDetails.model} hadleSentenceSave = {this.handleDone.bind(this)} handleSave={this.handleSave.bind(this)} clickedCell={this.state.clickedCell} selectedTableId={this.state.selectedTableId} clickedSentence={this.state.clickedSentence} handleCellOnClick={this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
               </Grid>
             </Grid>
+            {this.state.open && (
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={this.state.open}
+            autoHideDuration={3000}
+            onClose={this.handleClose}
+            variant="success"
+            message= {this.state.fileDetails.process_name +" saved successfully !..."}
+          />)}
           </div>
         }
       </div>
@@ -288,7 +320,8 @@ class IntractiveTrans extends React.Component {
 const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
-  fetchPdfSentence: state.fetchPdfSentence
+  fetchPdfSentence: state.fetchPdfSentence,
+  interactiveUpdate: state.interactiveUpdate
 });
 
 const mapDispatchToProps = dispatch =>
