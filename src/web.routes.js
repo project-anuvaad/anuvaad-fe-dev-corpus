@@ -77,6 +77,7 @@ import ViewPdf from "./ui/containers/web/ViewPdfFile";
 import IntractiveTranslate from "./ui/containers/web/IntractiveTranslation";
 import InteractiveEditor from "./ui/containers/web/Interactive-Editor/InteractiveEditor";
 import PdfSentence from "./ui/containers/web/PdfSentence";
+import InteractivePreview from "./ui/containers/web/Interactive-Editor/Preview"
 import { translate } from '../src/assets/localisation';
 
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
@@ -94,8 +95,8 @@ const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo
           {...props}
         />
       ) : (
-        <Redirect to={`${process.env.PUBLIC_URL}/logout`} />
-      )
+          <Redirect to={`${process.env.PUBLIC_URL}/logout`} />
+        )
     }
   />
 );
@@ -165,7 +166,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
 
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title={translate('webroutes.page.title.profile')}component={UserProfile} authenticate={this.authenticateUser} />
+            <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title={translate('webroutes.page.title.profile')} component={UserProfile} authenticate={this.authenticateUser} />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/dashboard`}
               title={translate('dashboard.page.heading.title')}
@@ -187,21 +188,21 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdf-upload`}
-              
+
               title={translate('webroutes.page.title.pdfSentences')}
               component={PdfUpload}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/view-pdf`}
-              
+
               title={translate('webroutes.page.title.pdfList')}
               component={ViewPdf}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdf-sentence/:session_id`}
-              
+
               title={translate('webroutes.page.title.pdfSentences')}
               component={PdfSentence}
               authenticate={this.authenticateUser}
@@ -236,7 +237,7 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/comparison-report`}
-              title= {translate('common.page.title.comparisonReport')}
+              title={translate('common.page.title.comparisonReport')}
               component={ComparisonReport}
               userRoles={["admin"]}
               authenticate={this.authenticateUser}
@@ -456,7 +457,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
 
-<PrivateRoute
+            <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage4/sentence-extraction/:name/:session_id`}
               title={translate('webroutes.page.title.stage4Toolchain')}
               userRoles={["dev"]}
@@ -537,7 +538,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
 
-<PrivateRoute
+            <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage4/create-datasource`}
               title="STAGE 4, DATASOURCE"
               userRoles={["dev"]}
@@ -611,7 +612,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
 
-<PrivateRoute
+            <PrivateRoute
               path={`${process.env.PUBLIC_URL}/editor`}
               title="Editor"
               dontShowLoader
@@ -620,7 +621,7 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
             />
 
-<PrivateRoute
+            <PrivateRoute
               path={`${process.env.PUBLIC_URL}/anuvaad-models`}
               title="Anuvaad Editor"
               userRoles={["dev"]}
@@ -630,19 +631,25 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/interactive-translate`}
               title={translate('webroutes.page.title.anuvaadEditor')}
-              userRoles={["editor","dev"]}
+              userRoles={["editor", "dev"]}
               component={IntractiveTranslate}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/interactive-editor/:fileid`}
               title={translate('webroutes.page.title.anuvaadEditor')}
-              userRoles={["editor","dev"]}
+              userRoles={["editor", "dev"]}
               component={InteractiveEditor}
               authenticate={this.authenticateUser}
             />
-
-<PrivateRoute
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/interactive-preview/:fileid`}
+              title={translate('webroutes.page.title.anuvaadEditor')}
+              userRoles={["editor", "dev"]}
+              component={InteractivePreview}
+              authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage4/datasource`}
               dontShowLoader
               title={translate('webroutes.page.title.stage4dataSource')}

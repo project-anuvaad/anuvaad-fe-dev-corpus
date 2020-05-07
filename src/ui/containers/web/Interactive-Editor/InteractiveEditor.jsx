@@ -52,13 +52,12 @@ class IntractiveTrans extends React.Component {
   }
 
   componentDidMount() {
+
     const { APITransport } = this.props;
     const apiObj = new FetchDoc(this.props.match.params.fileid);
     APITransport(apiObj);
 
   }
-
-
 
   componentDidUpdate(prevProps) {
 
@@ -188,6 +187,13 @@ class IntractiveTrans extends React.Component {
     this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent })
   }
 
+  handlePreview() {
+    if (this.props.match.params.fileid) {
+      history.push(`${process.env.PUBLIC_URL}/interactive-preview/${this.props.match.params.fileid}`);
+    }
+
+  }
+
   render() {
     const { gridValue } = this.state;
     return (
@@ -212,7 +218,7 @@ class IntractiveTrans extends React.Component {
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6} lg={1} xl={1}>
-                <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '110px', fontSize: '90%', fontWeight: 'bold' }}>
+                <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '110px', fontSize: '90%', fontWeight: 'bold' }} onClick={() => this.handlePreview()}>
                   <VisibilityIcon fontSize="large" />
               &nbsp;&nbsp;Preview
             </Button>
@@ -247,6 +253,7 @@ class IntractiveTrans extends React.Component {
                       </Toolbar>
                     </Toolbar>
                     <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                      isPreview = {false}
                       handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                       scrollToId={this.state.scrollToId}
                       handleTableHover={this.handleTableHover.bind(this)}
@@ -284,6 +291,7 @@ class IntractiveTrans extends React.Component {
                   </Typography>
                   </Toolbar>
                   <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                    isPreview = {false}
                     scrollToId={this.state.scrollToId}
                     parent={this.state.parent}
                     handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
