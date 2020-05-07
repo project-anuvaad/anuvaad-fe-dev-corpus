@@ -123,8 +123,9 @@ class Editor extends React.Component {
   }
 
   handleTextSelectChange(event) {
-    this.props.handleSave(event.target.value,this.state.indexValue, this.state.submittedId,this.state.keyValue, this.state.cellValue)
-      this.setState({target: event.target.value})
+    console.log("-----",this.handleCalc(event.target.value))
+    this.props.handleSave(event.target.value,this.state.indexValue, this.state.submittedId,this.state.keyValue, this.state.cellValue, this.handleCalc(event.target.value))
+      this.setState({target: event.target.value, translateText:event.target.value })
   }
   
 
@@ -272,6 +273,7 @@ class Editor extends React.Component {
       if (this.state.target.startsWith(event.target.value) && this.state.target.includes(event.target.value, 0)) {
       } else {
         const res = this.handleCalc(event.target.value);
+        console.log("response----",res);
         const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails);
         this.props.APITransport(apiObj);
         this.focusDiv("blur");
@@ -325,9 +327,9 @@ class Editor extends React.Component {
             }}
             className="noter-text-area"
             rows="10"
-            disabled = {this.state.checkedB? true: false}
+            disabled
             value={this.state.target}
-            placeholder={this.state.checkedB ? "select sentence from target or press next..":"Update sentence manually"}
+            placeholder={"select sentence from target or press next.."}
             cols="50"
             onChange={event => {
               this.handleTextSelectChange( event);
@@ -335,7 +337,7 @@ class Editor extends React.Component {
           />
         </div>
         <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "4%" }}>
-          Edit to update the anuvaad model memory
+        Interactive Translate
         </Typography>
         <div>
           <textarea
@@ -349,16 +351,16 @@ class Editor extends React.Component {
             }}
             className="noter-text-area"
             rows="10"
-            disabled = {!this.state.checkedB? true: false}
+            
             value={this.state.translateText}
             ref={textarea => {
               this.textInput = textarea;
             }}
-            placeholder={this.state.checkedB ? "type here..": "Update sentence manually in above textarea."}
+            placeholder={this.state.checkedB ? 'Enter target prefix here... (press "Tab key" to copy next word from anuvaad model)': "Update sentence manually here..."}
             cols="50"
             
             onChange={event => {
-              this.handleTextChange("translateText", event);
+              {this.state.checkedB? this.handleTextChange("translateText", event): this.handleTextSelectChange( event);}
             }}
             onKeyDown={this.keyPress.bind(this)}
           />

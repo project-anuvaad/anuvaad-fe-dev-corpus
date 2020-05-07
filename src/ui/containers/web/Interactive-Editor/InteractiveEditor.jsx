@@ -128,24 +128,24 @@ class IntractiveTrans extends React.Component {
   }
 
 
-  handleSave(value, index, submittedId, keyValue, cellValue) {
-    console.log("sen-----", value, index, this.state.sentences, keyValue, cellValue)
+  handleSave(value, index, submittedId, keyValue, cellValue, taggedValue) {
+    console.log("sen-----", value, taggedValue)
     let obj = this.state.sentences
     let temp = this.state.sentences[index]
-    console.log("temp", temp)
+    console.log("temp", value)
     if (!temp.is_table) {
 
       temp.tokenized_sentences[submittedId.split("_")[1]].target = value.tgt ? value.tgt : value;
-      temp.tokenized_sentences[submittedId.split("_")[1]].taggedTarget = value.tagged_tgt && value.tagged_tgt;
+      temp.tokenized_sentences[submittedId.split("_")[1]].tagged_tgt = value.tagged_tgt ? value.tagged_tgt: taggedValue;
     }
 
     else {
       temp.table_items[keyValue][cellValue].target = value.tgt ? value.tgt : value;
-      temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt && value.tagged_tgt;
+      temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt ? value.tagged_tgt: taggedValue;
     }
 
     obj[index] = temp;
-
+    console.log("obj---",temp,obj)
     this.setState({
       sentences: obj
     })
