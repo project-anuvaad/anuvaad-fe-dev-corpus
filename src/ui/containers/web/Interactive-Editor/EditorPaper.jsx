@@ -1,7 +1,6 @@
 import React from "react";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import { withStyles } from "@material-ui/core";
-import ReactDOM from 'react-dom';
 
 const styles = {
     paperHeader: {
@@ -29,8 +28,8 @@ class EditorPaper extends React.Component {
         let supArray = []
         if (supArr && Array.isArray(supArr) && supArr.length > 0) {
             supArr.map((text, index) => {
-                    let superScripts = this.props.supScripts
-                    supArray.push(<span><a href="#"><span title={superScripts[text]}>{text}</span></a><span>{supArr.length === index + 1 ? '' : ','}</span></span>)
+                let superScripts = this.props.supScripts
+                supArray.push(<span><a href="#"><span title={superScripts && superScripts[text] ? superScripts[text] : ''}>{text}</span></a><span>{supArr.length === index + 1 ? '' : ','}</span></span>)
             })
             return supArray
         } else {
@@ -46,11 +45,13 @@ class EditorPaper extends React.Component {
             for (let block in sentences[row]) {
                 let blockData = this.props.paperType === 'source' ? sentences[row][block].text : sentences[row][block].target
                 let blockId = id + '_' + sentences[row][block].sentence_index
+                let bgColor = !this.props.isPreview ? ((this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId ? '#4dffcf' : "") : ""
+
                 col.push(<td id={blockId}
                     onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType)}
                     onMouseEnter={() => this.tableHoverOn(id, blockId)}
                     onMouseLeave={() => this.tableHoverOff()}
-                    style={{ backgroundColor: (this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId ? '#4dffcf' : "", padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
+                    style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
                     {blockData}</td>)
             }
             tableRow.push(<tr>{col}</tr>)
@@ -63,10 +64,13 @@ class EditorPaper extends React.Component {
             let sentenceArray = []
             if (this.props.paperType === 'source') {
                 sentence.tokenized_sentences.map((tokenText) => {
+
+                    let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "") : ""
+
                     sentenceArray.push(<span
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : ""
+                            backgroundColor: bgColor
                         }}
 
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
@@ -79,7 +83,7 @@ class EditorPaper extends React.Component {
                     sentenceArray.push(<span
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index  ? '#4dffcf' : "",
+                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "",
                         }}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
                         {tokenText.target}{isSpaceRequired ? <span> </span> : <span></span>}</span>)
@@ -115,23 +119,35 @@ class EditorPaper extends React.Component {
     }
 
     hoverOn(e) {
-        this.props.handleOnMouseEnter(e, this.props.paperType)
+        if (!this.props.isPreview) {
+            this.props.handleOnMouseEnter(e, this.props.paperType)
+        }
     }
 
     hoverOff() {
-        this.props.handleOnMouseEnter('')
+        if (!this.props.isPreview) {
+            this.props.handleOnMouseEnter('')
+        }
     }
 
     tableHoverOn(sentenceId, tableId, val) {
-        this.props.handleTableHover(sentenceId, tableId, val, this.props.paperType)
+        if (!this.props.isPreview) {
+            this.props.handleTableHover(sentenceId, tableId, val, this.props.paperType)
+        }
     }
 
     tableHoverOff() {
-        this.props.handleTableHover('', '')
+
+        if (!this.props.isPreview) {
+            this.props.handleTableHover('', '')
+        }
+
     }
 
     handleOnClick(id) {
-        this.props.handleSentenceClick(id, true, this.props.paperType)
+        if (!this.props.isPreview) {
+            this.props.handleSentenceClick(id, true, this.props.paperType)
+        }
     }
 
     render() {
