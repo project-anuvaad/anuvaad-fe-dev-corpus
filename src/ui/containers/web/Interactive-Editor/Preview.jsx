@@ -94,19 +94,19 @@ class Preview extends React.Component {
 
     render() {
         return (
-            <div style={{ marginLeft: "-70px" }}>
-                <Grid container spacing={16} style={{ padding: "0 24px 12px 24px", backgroundColor: blueGrey50 }}>
+            <div style={{ marginLeft: "-100px" }}>
+                <Grid container spacing={16} style={{ padding: "0 24px 12px 24px"}}>
                     <Grid item sm={2} lg={3} xl={3} className='GridFileDetails'>
                     </Grid>
                     <Grid item xs={12} sm={8} lg={6} xl={6} className='GridFileDetails'>
-                        <Paper elevation={2} style={{ overflowX: 'scroll' }}>
+                        <Paper elevation={2} style={{ padding: '20px', overflowX: 'hidden' }}>
                             <EditorPaper paperType="target" isPreview = {true} sentences={this.state.sentences}
                                 supScripts={this.state.targetSupScripts}
                             ></EditorPaper>
                         </Paper>
                     </Grid>
                     <Grid item xs={12} sm={2} lg={3} xl={3} className='GridFileDetails' style={{ textAlign: 'right' }}>
-                        <Button variant="extended" size="large" color="primary" style={{ backgroundColor: 'grey', color: 'white', minWidth: '110px', fontSize: '90%', fontWeight: 'bold' }} onClick={() => this.handleOnCancel()}>
+                        <Button variant="extended" size="large" color="primary" style={{ minWidth: '110px', fontSize: '90%', fontWeight: 'bold' }} onClick={() => this.handleOnCancel()}>
                             <CloseIcon size="large" />{" "}
                             &nbsp;&nbsp;CLOSE
             </Button>
