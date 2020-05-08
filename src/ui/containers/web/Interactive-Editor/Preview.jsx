@@ -95,6 +95,7 @@ class Preview extends React.Component {
     render() {
         return (
             <div style={{ marginLeft: "-100px" }}>
+               { this.state.sentences &&
                 <Grid container spacing={16} style={{ padding: "0 24px 12px 24px"}}>
                     <Grid item sm={2} lg={3} xl={3} className='GridFileDetails'>
                     </Grid>
@@ -112,6 +113,7 @@ class Preview extends React.Component {
             </Button>
                     </Grid>
                 </Grid>
+    }
             </div>
         )
     }

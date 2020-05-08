@@ -39,6 +39,7 @@ class IntractiveTrans extends React.Component {
       clickedSentence: false,
       sourceSupScripts: {},
       targetSupScripts: {},
+      superScript: false,
       token: false
     };
   }
@@ -72,13 +73,14 @@ class IntractiveTrans extends React.Component {
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
       let temp = this.props.fetchPdfSentence.data;
       let sentenceArray = []
+      let superArray = []
       let supScripts = {}
       let targetSupScript = {}
       temp.map(sentence => {
         if (!sentence.is_footer) {
           sentenceArray.push(sentence)
         } else {
-
+          superArray.push(sentence)
           let sourceValue = ""
           let targetValue = ""
 
@@ -128,7 +130,7 @@ class IntractiveTrans extends React.Component {
         }
         return true;
       })
-      this.setState({ sentences: sentenceArray, fileDetails: this.props.fetchPdfSentence.pdf_process, sourceSupScripts: supScripts, targetSupScripts: targetSupScript });
+      this.setState({ sentences: sentenceArray,scriptSentence : superArray, fileDetails: this.props.fetchPdfSentence.pdf_process, sourceSupScripts: supScripts, targetSupScripts: targetSupScript });
     }
 
   }
@@ -155,12 +157,24 @@ class IntractiveTrans extends React.Component {
 
   }
 
-  handleDone(token) {
+  handleDone(token, value) {
+
+    console.log("ppppp",value)
     const { APITransport } = this.props;
-    const apiObj = new InteractiveApi(this.state.sentences);
+    let senArray= [...this.state.sentences, ...value]
+    console.log(senArray)
+    const apiObj = new InteractiveApi(senArray);
     APITransport(apiObj);
     this.setState({ token })
 
+  }
+  handleScriptSave(target,indexValue){
+    const temp = this.state.targetSupScripts;
+
+  temp[indexValue].text = target.tgt
+    this.setState({
+      targetSupScripts: temp
+    })
   }
 
 
@@ -182,13 +196,17 @@ class IntractiveTrans extends React.Component {
   }
 
   handleSenetenceOnClick(sentenceId, value, parent) {
-    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent })
+
+    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent , superScript: false})
+  }
+
+  handleSuperScript(sentenceId, value, parent, token) {
+
+    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent, superScript: token })
   }
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent) {
-
-    console.log("cell", sentenceId, tableId, clickedCell, value, parent)
-    this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent })
+    this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent, superScript: false })
   }
 
   handlePreview() {
@@ -265,6 +283,7 @@ class IntractiveTrans extends React.Component {
                       selectedSentenceId={this.state.selectedSentenceId}
                       selectedTableId={this.state.selectedTableId}
                       supScripts={this.state.sourceSupScripts}
+                      handleSuperScript =  {this.handleSuperScript.bind(this)}
                       handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
                     ></EditorPaper>
                   </Paper>
@@ -294,7 +313,7 @@ class IntractiveTrans extends React.Component {
                       Target
                   </Typography>
                   </Toolbar>
-                  <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                  <EditorPaper paperType="target" sentences={this.state.sentences}  hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
                     isPreview={false}
                     scrollToId={this.state.scrollToId}
                     parent={this.state.parent}
@@ -303,6 +322,7 @@ class IntractiveTrans extends React.Component {
                     selectedSentenceId={this.state.selectedSentenceId}
                     selectedTableId={this.state.selectedTableId}
                     supScripts={this.state.targetSupScripts}
+                    handleSuperScript =  {this.handleSuperScript.bind(this)}
                     handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
                 </Paper>
               </Grid>
@@ -310,7 +330,7 @@ class IntractiveTrans extends React.Component {
 
 
               <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
-                {this.state.sentences && this.state.sentences[0] && <Editor modelDetails={this.state.fileDetails.model} hadleSentenceSave={this.handleDone.bind(this)} handleSave={this.handleSave.bind(this)} clickedCell={this.state.clickedCell} selectedTableId={this.state.selectedTableId} clickedSentence={this.state.clickedSentence} handleCellOnClick={this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
+                {this.state.sentences && this.state.sentences[0] && <Editor handleScriptSave ={this.handleScriptSave.bind(this)} superScriptToken={this.state.superScript} scriptSentence={this.state.scriptSentence} modelDetails={this.state.fileDetails.model} hadleSentenceSave={this.handleDone.bind(this)} handleSave={this.handleSave.bind(this)} clickedCell={this.state.clickedCell} selectedTableId={this.state.selectedTableId} clickedSentence={this.state.clickedSentence} handleCellOnClick={this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
               </Grid>
             </Grid>
             {this.state.open && (

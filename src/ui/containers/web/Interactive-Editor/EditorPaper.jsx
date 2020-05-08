@@ -31,7 +31,7 @@ class EditorPaper extends React.Component {
                 let superScripts = this.props.supScripts
                 let sentenceId = superScripts[supScript] ? superScripts[supScript].sentence_id : ''
                 
-                supArray.push(<span><a href="#"><span onClick={() => this.handleOnClick(sentenceId + '_' + 0)} title={superScripts && superScripts[supScript] ? superScripts[supScript].text : ''}>{supScript}</span></a><span>{supArr.length === index + 1 ? '' : ','}</span></span>)
+                supArray.push(<span><a href="#"><span onClick={() => this.props.handleSuperScript((sentenceId + '_' + 0), 'true',this.props.paperType,true)} title={superScripts && superScripts[supScript] ? superScripts[supScript].text : ''}>{supScript}</span></a><span>{supArr.length === index + 1 ? '' : ','}</span></span>)
             })
             return supArray
         } else {
