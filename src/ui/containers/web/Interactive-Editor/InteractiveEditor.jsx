@@ -263,7 +263,7 @@ class IntractiveTrans extends React.Component {
                   <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;Documents
             </Button>
               </Grid>
-              <Grid item xs={false} sm={6} lg={8} xl={8} className='GridFileDetails'>
+              <Grid item xs={false} sm={6} lg={7} xl={7} className='GridFileDetails'>
 
                 <Button variant="outlined" size="large" className='GridFileDetails' style={{ width: "100%", pointerEvents: "none", fontSize: '90%', fontWeight: 'bold' }}>
                   <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} />{this.state.fileDetails && "Source : " + this.state.fileDetails.source_lang}
@@ -271,10 +271,10 @@ class IntractiveTrans extends React.Component {
                   <PlayArrowIcon fontSize="large" style={{ color: 'grey' }} /> {this.state.fileDetails && "Filename : " + this.state.fileDetails.process_name}
                 </Button>
               </Grid>
-              <Grid item xs={12} sm={6} lg={1} xl={1}>
+              <Grid item xs={12} sm={6} lg={2} xl={2}>
                 <Button variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '110px', fontSize: '90%', fontWeight: 'bold' }} onClick={() => this.handlePreview()}>
                   <VisibilityIcon fontSize="large" />
-              &nbsp;&nbsp;Preview
+              &nbsp;&nbsp;Review / Download
             </Button>
               </Grid>
               <Grid item xs={12} sm={6} lg={1} xl={1} >
