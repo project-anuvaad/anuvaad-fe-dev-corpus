@@ -181,7 +181,7 @@ class EditorPaper extends React.Component {
                         <div style={{ color: 'grey' }}>
                             <Grid container>
                                 <Grid item xs={12} sm={8} lg={6} xl={6}>
-                                    {header}
+                                    {footer}
                                 </Grid>
                             </Grid>
                         </div>
