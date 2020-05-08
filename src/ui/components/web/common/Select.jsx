@@ -24,7 +24,7 @@ class SimpleSelect extends React.Component {
                   <OutlinedInput name={name} id={id}/>
                 }
               >
-                  {MenuItemValues.map((item) => (
+                  {MenuItemValues.length>0 && MenuItemValues.map((item) => (
                     <MenuItem key={item.language_code} value={item.language_code}>{item.language_name}</MenuItem>
                   ))}
               </Select>

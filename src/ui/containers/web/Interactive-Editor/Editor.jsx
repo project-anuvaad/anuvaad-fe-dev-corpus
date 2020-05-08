@@ -32,7 +32,23 @@ class Editor extends React.Component {
   }
 
   handleApiCall(){
-    this.props.hadleSentenceSave(false);
+    const splitValue = this.state.submittedId && this.state.submittedId.split("_");
+    let temp = this.state.scriptSentence
+
+    console.log("value",this.state.scriptSentence,this.state.superScriptToken)
+    if(this.props.superScriptToken){
+      this.state.scriptSentence.map((sentence, index) => {
+        console.log(splitValue[0],sentence._id)
+        if (splitValue[0] === sentence._id) {
+          console.log("t------",temp[index],temp[index].tokenized_sentences[splitValue[1]],temp[index].tokenized_sentences[splitValue[1]].target )
+          temp[index].tokenized_sentences[splitValue[1]].target =  this.state.superIndex +' '+ this.state.target,
+          temp[index].tokenized_sentences[splitValue[1]].tagged_tgt= this.state.taggedTarget        
+          }
+          
+        })
+    }
+    this.setState({scriptSentence:temp})
+    this.props.hadleSentenceSave(false,temp);
     this.state.checkedB && 
     this.handleSubmit()
 
@@ -44,12 +60,30 @@ class Editor extends React.Component {
     this.setState({ checkedB: !this.state.checkedB, sentences: [] });
   };
 
+ handleSuperScript(){
+  const splitValue = this.state.submittedId && this.state.submittedId.split("_");
+  
+  this.state.scriptSentence.map((sentence, index) => {
+    if (splitValue[0] === sentence._id) {
+      let temp = sentence.tokenized_sentences[splitValue[1]];
+      this.setState({clickedSentence: false,
+        target: (temp.target).substr(temp.target.indexOf(' ') + 1),
+              source: temp.src,
+              superIndex:(temp.target).substr(0, (temp.target).indexOf(' ')) ,
+              taggedSource: temp.tagged_src,
+              taggedTarget: temp.tagged_tgt,
+              translateText: '',
+      })
+      
+    }})
+  
+ }
+   
+  
 
 
   handleSentence(value) {
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
-    console.log("splitvalue",splitValue)
-    
     this.props.sentences &&
       this.props.sentences.length > 0 &&
       this.props.sentences.map((sentence, index) => {
@@ -72,8 +106,6 @@ class Editor extends React.Component {
               let blockId = this.props.sentences[index + value]._id + '_' + this.props.sentences[index + value].table_items[0][0].sentence_index
               this.props.handleCellOnClick(this.props.sentences[index + value]._id, blockId, this.props.sentences[index + value].table_items[0][0], "true")
             }
-
-            console.log("ind",index+value, this.props.sentences[index + value].tokenized_sentences[0].target)
             this.setState({
               target: this.props.sentences[index + value].tokenized_sentences[0].target,
               source: this.props.sentences[index + value].tokenized_sentences[0].src,
@@ -117,24 +149,33 @@ class Editor extends React.Component {
             
           }
         }
+       
         return true;
       });
+      this.props.superScriptToken && 
+      this.handleSuperScript()
       
   }
 
   handleTextSelectChange(event) {
-    this.props.handleSave(event.target.value,this.state.indexValue, this.state.submittedId,this.state.keyValue, this.state.cellValue)
-      this.setState({target: event.target.value})
+    if(this.props.superScriptToken && this.state.superIndex){
+      
+      this.props.handleScriptSave(event.target.value, this.state.superIndex)
+    }
+    else{
+      
+      this.props.handleSave(event.target.value,this.state.indexValue, this.state.submittedId,this.state.keyValue, this.state.cellValue, this.handleCalc(event.target.value))
+    }
+    this.setState({target: event.target.value, translateText:event.target.value })
   }
   
 
-  handleSubmit() {
+   handleSubmit() {
     let res = "";
     const { APITransport } = this.props;
     if (this.state.translateText) {
       res = this.handleCalc(this.state.translateText);
     }
-    console.log("model----",this.props.modelDetails)
     const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails);
     if (this.state.source && res) {
       APITransport(apiObj);
@@ -142,8 +183,14 @@ class Editor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.intractiveTrans !== this.props.intractiveTrans) {     
+    if (prevProps.intractiveTrans !== this.props.intractiveTrans) {  
+      if(this.props.superScriptToken && this.state.superIndex){
+
+        this.props.handleScriptSave(this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0],this.state.superIndex)
+      }
+      else{   
       this.props.handleSave(this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0],this.state.indexValue, this.state.submittedId,this.state.keyValue, this.state.cellValue)
+      }
       this.setState({
         disable: false,
         token: false,
@@ -155,7 +202,6 @@ class Editor extends React.Component {
       this.focusDiv("focus");
     }
     if (prevProps.clickedCell !== this.props.clickedCell) {
-      console.log("clicked")
       this.setState({
         target: this.props.clickedCell.target,
         taggedSource: this.props.clickedCell.tagged_src,
@@ -215,14 +261,11 @@ class Editor extends React.Component {
 
   keyPress(event) {
     if (event.keyCode === 9) {
-      console.log("-----", event.keyCode);
       if (this.state.disable && this.state.translateText) {
-        console.log("10", event.keyCode);
         const apiObj = new IntractiveApi(this.state.source, this.handleCalc(event.target.value), this.props.modelDetails);
         this.props.APITransport(apiObj);
         this.setState({ disable: false });
       } else {
-        console.log("11", event.keyCode);
         let temp;
         const prefix = this.state.target && this.state.target.split(" ");
         const translate = this.state.translateText && this.state.translateText.split(" ");
@@ -261,13 +304,17 @@ class Editor extends React.Component {
         sentences: nextProps.sentences
       };
     }
+    if (prevState.scriptSentence !== nextProps.scriptSentence) {
+      return {
+        scriptSentence: nextProps.scriptSentence
+      };
+    }
     return null;
   }
 
 
   handleTextChange(key, event) {
     const space = event.target.value.endsWith(" ");
-    console.log("space", space);
     if (this.state.target && space) {
       if (this.state.target.startsWith(event.target.value) && this.state.target.includes(event.target.value, 0)) {
       } else {
@@ -325,9 +372,9 @@ class Editor extends React.Component {
             }}
             className="noter-text-area"
             rows="10"
-            disabled = {this.state.checkedB? true: false}
+            disabled
             value={this.state.target}
-            placeholder={this.state.checkedB ? "select sentence from target or press next..":"Update sentence manually"}
+            placeholder={"select sentence from target or press next.."}
             cols="50"
             onChange={event => {
               this.handleTextSelectChange( event);
@@ -335,7 +382,7 @@ class Editor extends React.Component {
           />
         </div>
         <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "4%" }}>
-          Edit to update the anuvaad model memory
+        Interactive Translate
         </Typography>
         <div>
           <textarea
@@ -349,16 +396,16 @@ class Editor extends React.Component {
             }}
             className="noter-text-area"
             rows="10"
-            disabled = {!this.state.checkedB? true: false}
+            
             value={this.state.translateText}
             ref={textarea => {
               this.textInput = textarea;
             }}
-            placeholder={this.state.checkedB ? "type here..": "Update sentence manually in above textarea."}
+            placeholder={this.state.checkedB ? 'Enter target prefix here... (press "Tab key" to copy next word from anuvaad model)': "Update sentence manually here..."}
             cols="50"
             
             onChange={event => {
-              this.handleTextChange("translateText", event);
+              {this.state.checkedB? this.handleTextChange("translateText", event): this.handleTextSelectChange( event);}
             }}
             onKeyDown={this.keyPress.bind(this)}
           />
@@ -368,7 +415,7 @@ class Editor extends React.Component {
             <Button
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
-              disabled={this.props.sentences[0]._id === this.state.submittedId.split("_")[0]}
+              disabled={this.props.sentences[0]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken}
               onClick={event => {
                 this.handleSentence(-1);
               }}
@@ -393,7 +440,7 @@ class Editor extends React.Component {
           <Grid item xs={3} sm={3} lg={4} xl={4}>
             <Button
               color="primary"
-              disabled={(this.props.sentences[this.props.sentences.length - 1]._id === this.state.submittedId.split("_")[0])}
+              disabled={(this.props.sentences[this.props.sentences.length - 1]._id === this.state.submittedId.split("_")[0]) || this.props.superScriptToken}
               onClick={event => {
                 this.handleSentence(1);
               }}
