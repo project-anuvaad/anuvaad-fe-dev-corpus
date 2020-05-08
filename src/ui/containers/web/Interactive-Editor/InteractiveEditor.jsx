@@ -37,9 +37,12 @@ class IntractiveTrans extends React.Component {
       selectedSentenceId: "",
       selectedTableId: '',
       clickedSentence: false,
-      sourceSupScripts: '',
-      targetSupScripts: '',
-      token: false
+      sourceSupScripts: {},
+      targetSupScripts: {},
+      superScript: false,
+      token: false,
+      header: "",
+      footer: ""
     };
   }
 
@@ -61,105 +64,137 @@ class IntractiveTrans extends React.Component {
 
   componentDidUpdate(prevProps) {
 
-    if(prevProps.interactiveUpdate!== this.props.interactiveUpdate){
+    if (prevProps.interactiveUpdate !== this.props.interactiveUpdate) {
       this.setState({ open: this.state.token });
-     this.state.token && 
+      this.state.token &&
         setTimeout(() => {
           this.handleBack()
         }, 3000);
-      
+
     }
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
       let temp = this.props.fetchPdfSentence.data;
       let sentenceArray = []
+      let superArray = []
       let supScripts = {}
       let targetSupScript = {}
       temp.map(sentence => {
-        if (!sentence.is_footer) {
+        if (!sentence.is_footer && !sentence.is_header && !sentence.is_footer_text) {
+
           sentenceArray.push(sentence)
+
+        } else if (sentence.is_header) {
+
+          this.setState({ header: sentence.text })
+
+        } else if (sentence.is_footer_text) {
+
+          this.setState({ footer: sentence.text })
+
         } else {
+          superArray.push(sentence)
           let sourceValue = ""
           let targetValue = ""
 
           let key = (sentence.text).substr(0, (sentence.text).indexOf(' '))
 
           if (!isNaN(key)) {
+            let sScript = {}
+            let tScript = {}
+
+            sScript.sentence_id = sentence._id
+            tScript.sentence_id = sentence._id
 
             if (sentence.text) {
-              sourceValue = (sentence.text).substr((sentence.text).indexOf(' ') + 1)
+              sScript.text = (sentence.text).substr((sentence.text).indexOf(' ') + 1)
             }
             if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences[0] && sentence.tokenized_sentences[0].target) {
-              targetValue = (sentence.tokenized_sentences[0].target).substr((sentence.tokenized_sentences[0].target).indexOf(' ') + 1)
+              tScript.text = (sentence.tokenized_sentences[0].target).substr((sentence.tokenized_sentences[0].target).indexOf(' ') + 1)
             }
 
-            supScripts[key] = sourceValue
-            targetSupScript[key] = targetValue
+            supScripts[key] = sScript
+            targetSupScript[key] = tScript
 
           } else {
+            let sScript = {}
+            let tScript = {}
+
             let prevKey = Object.keys(supScripts).length
 
             if (sentence.text) {
-              sourceValue = supScripts[prevKey]
-              sourceValue = sourceValue.concat(' ', sentence.text)
+              sScript.sentence_id = supScripts[prevKey].sentence_id
+              sourceValue = supScripts[prevKey].text
+              if (sourceValue) {
+                sScript.text = sourceValue.concat(' ', sentence.text)
+              } else {
+                sScript.text = sentence.text
+              }
             }
-            if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences[0] && sentence.tokenized_sentences[0].target) {
-              targetValue = targetSupScript[prevKey]
+            if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences)) {
+              tScript.sentence_id = targetSupScript[prevKey].sentence_id
+              tScript.text = targetSupScript[prevKey].text
 
               sentence.tokenized_sentences.map(tokenSentence => {
-                targetValue = targetValue.concat(' ', tokenSentence.target)
+                tScript.text = (tScript.text).concat(' ', tokenSentence.target)
                 return true;
               })
             }
-
-            supScripts[prevKey] = sourceValue
-            targetSupScript[prevKey] = targetValue
-
+            supScripts[prevKey] = sScript
+            targetSupScript[prevKey] = tScript
           }
-
-
 
         }
         return true;
       })
-      this.setState({ sentences: sentenceArray, fileDetails: this.props.fetchPdfSentence.pdf_process, sourceSupScripts: supScripts, targetSupScripts: targetSupScript });
+      this.setState({ sentences: sentenceArray,scriptSentence : superArray, fileDetails: this.props.fetchPdfSentence.pdf_process, sourceSupScripts: supScripts, targetSupScripts: targetSupScript });
     }
 
   }
 
 
   handleSave(value, index, submittedId, keyValue, cellValue, taggedValue) {
-    console.log("sen-----", value, taggedValue)
     let obj = this.state.sentences
     let temp = this.state.sentences[index]
-    console.log("temp", value)
     if (!temp.is_table) {
 
       temp.tokenized_sentences[submittedId.split("_")[1]].target = value.tgt ? value.tgt : value;
-      temp.tokenized_sentences[submittedId.split("_")[1]].tagged_tgt = value.tagged_tgt ? value.tagged_tgt: taggedValue;
+      temp.tokenized_sentences[submittedId.split("_")[1]].tagged_tgt = value.tagged_tgt ? value.tagged_tgt : taggedValue;
     }
 
     else {
       temp.table_items[keyValue][cellValue].target = value.tgt ? value.tgt : value;
-      temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt ? value.tagged_tgt: taggedValue;
+      temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt ? value.tagged_tgt : taggedValue;
     }
 
     obj[index] = temp;
-    console.log("obj---",temp,obj)
     this.setState({
       sentences: obj
     })
 
   }
 
-  handleDone(token){
+  handleDone(token, value) {
+
+    console.log("ppppp",value)
     const { APITransport } = this.props;
-    const apiObj = new InteractiveApi(this.state.sentences);
-      APITransport(apiObj);
-      this.setState({token})
+    let senArray= [...this.state.sentences, ...value]
+    console.log(senArray, value)
+    const apiObj = new InteractiveApi(senArray);
+    APITransport(apiObj);
+    this.setState({ token })
 
   }
+  handleScriptSave(target,indexValue){
 
-
+    
+    const temp = this.state.targetSupScripts;
+    console.log("valll----",target)
+  temp[indexValue].text = target.tgt ? target.tgt:target
+  console.log("valll",temp)
+    this.setState({
+      targetSupScripts: temp
+    })
+  }
 
   handleOnMouseEnter(sentenceId, parent) {
     this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, parent: parent })
@@ -178,13 +213,32 @@ class IntractiveTrans extends React.Component {
   }
 
   handleSenetenceOnClick(sentenceId, value, parent) {
-    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent })
+    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent , superScript: false })
+    if (!parent) {
+      this.setState({ parent: 'target' })
+      var self = this
+      setTimeout(() => {
+        self.setState({ scrollToId: '' })
+        self.setState({ scrollToId: sentenceId, parent: 'source' })
+      }, 350)
+    }
+  }
+
+  handleSuperScript(sentenceId, value, parent, token) {
+
+    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent, superScript: token })
   }
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent) {
-
-    console.log("cell", sentenceId, tableId, clickedCell, value, parent)
-    this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent })
+    this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent, superScript: false })
+    if (!parent) {
+      this.setState({ parent: 'target' })
+      var self = this
+      setTimeout(() => {
+        self.setState({ scrollToId: '' })
+        self.setState({ scrollToId: sentenceId, parent: 'source' })
+      }, 350)
+    }
   }
 
   handlePreview() {
@@ -225,8 +279,8 @@ class IntractiveTrans extends React.Component {
               </Grid>
               <Grid item xs={12} sm={6} lg={1} xl={1} >
                 <Button onClick={event => {
-                        this.handleDone(true);
-                      }} variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '55px', fontSize: '90%', fontWeight: 'bold' }}>
+                  this.handleDone(true);
+                }} variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '55px', fontSize: '90%', fontWeight: 'bold' }}>
                   <DoneIcon fontSize="large" />&nbsp;&nbsp;Done
             </Button>
               </Grid>
@@ -252,17 +306,22 @@ class IntractiveTrans extends React.Component {
                   </Typography>
                       </Toolbar>
                     </Toolbar>
-                    <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
-                      isPreview = {false}
-                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                      scrollToId={this.state.scrollToId}
-                      handleTableHover={this.handleTableHover.bind(this)}
-                      parent={this.state.parent}
-                      selectedSentenceId={this.state.selectedSentenceId}
-                      selectedTableId={this.state.selectedTableId}
-                      supScripts={this.state.sourceSupScripts}
-                      handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
-                    ></EditorPaper>
+                    <div style={{ padding: '24px' }}>
+                      <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                        isPreview={false}
+                        header={this.state.header}
+                        footer={this.state.footer}
+                        handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                        scrollToId={this.state.scrollToId}
+                        handleTableHover={this.handleTableHover.bind(this)}
+                        parent={this.state.parent}
+                        selectedSentenceId={this.state.selectedSentenceId}
+                        selectedTableId={this.state.selectedTableId}
+                        supScripts={this.state.sourceSupScripts}
+                        handleSuperScript =  {this.handleSuperScript.bind(this)}
+                        handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
+                      ></EditorPaper>
+                    </div>
                   </Paper>
                 </Grid>
               ) : (
@@ -290,34 +349,39 @@ class IntractiveTrans extends React.Component {
                       Target
                   </Typography>
                   </Toolbar>
-                  <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
-                    isPreview = {false}
-                    scrollToId={this.state.scrollToId}
-                    parent={this.state.parent}
-                    handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                    handleTableHover={this.handleTableHover.bind(this)}
-                    selectedSentenceId={this.state.selectedSentenceId}
-                    selectedTableId={this.state.selectedTableId}
-                    supScripts={this.state.targetSupScripts}
-                    handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
+                  <div style={{ padding: '24px' }}>
+                    <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                      isPreview={false}
+                      header={this.state.header}
+                      footer={this.state.footer}
+                      scrollToId={this.state.scrollToId}
+                      parent={this.state.parent}
+                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                      handleTableHover={this.handleTableHover.bind(this)}
+                      selectedSentenceId={this.state.selectedSentenceId}
+                      selectedTableId={this.state.selectedTableId}
+                      supScripts={this.state.targetSupScripts}
+                      handleSuperScript =  {this.handleSuperScript.bind(this)}
+                      handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
+                  </div>
                 </Paper>
               </Grid>
 
 
 
               <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
-                {this.state.sentences && this.state.sentences[0] && <Editor modelDetails={this.state.fileDetails.model} hadleSentenceSave = {this.handleDone.bind(this)} handleSave={this.handleSave.bind(this)} clickedCell={this.state.clickedCell} selectedTableId={this.state.selectedTableId} clickedSentence={this.state.clickedSentence} handleCellOnClick={this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
+                {this.state.sentences && this.state.sentences[0] && <Editor handleScriptSave ={this.handleScriptSave.bind(this)} superScriptToken={this.state.superScript} scriptSentence={this.state.scriptSentence} modelDetails={this.state.fileDetails.model} hadleSentenceSave={this.handleDone.bind(this)} handleSave={this.handleSave.bind(this)} clickedCell={this.state.clickedCell} selectedTableId={this.state.selectedTableId} clickedSentence={this.state.clickedSentence} handleCellOnClick={this.handleCellOnClick.bind(this)} handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)} submittedId={this.state.selectedSentenceId} sentences={this.state.sentences} />}
               </Grid>
             </Grid>
             {this.state.open && (
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={this.state.open}
-            autoHideDuration={3000}
-            onClose={this.handleClose}
-            variant="success"
-            message= {this.state.fileDetails.process_name +" saved successfully !..."}
-          />)}
+              <Snackbar
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                open={this.state.open}
+                autoHideDuration={3000}
+                onClose={this.handleClose}
+                variant="success"
+                message={this.state.fileDetails.process_name + " saved successfully !..."}
+              />)}
           </div>
         }
       </div>

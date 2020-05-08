@@ -102,7 +102,7 @@ class PdfUpload extends React.Component {
         }
       },
       filterType: "checkbox",
-      onRowClick: rowData => this.handleClick(rowData),
+      onRowClick: rowData =>rowData[2]==="COMPLETED" && this.handleClick(rowData),
       download: false,
       expandableRowsOnClick: true,
       print: false,
