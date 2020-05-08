@@ -1,6 +1,7 @@
 import React from "react";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import { withStyles } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 
 const styles = {
     paperHeader: {
@@ -30,7 +31,7 @@ class EditorPaper extends React.Component {
             supArr.map((supScript, index) => {
                 let superScripts = this.props.supScripts
                 let sentenceId = superScripts[supScript] ? superScripts[supScript].sentence_id : ''
-                
+
                 supArray.push(<span><a href="#"><span onClick={() => this.handleOnClick(sentenceId + '_' + 0)} title={superScripts && superScripts[supScript] ? superScripts[supScript].text : ''}>{supScript}</span></a><span>{supArr.length === index + 1 ? '' : ','}</span></span>)
             })
             return supArray
@@ -153,15 +154,23 @@ class EditorPaper extends React.Component {
     }
 
     render() {
-        const { section, sentences } = this.props;
+        const { section, sentences, header } = this.props;
 
         return (
 
             <div>
-                <div style={{ padding: "10px 24px 24px 24px" }}>
-                    <div variant="h6" style={{ paddingBottom: "12px" }}>
-                        {section}
-                    </div>
+
+                {header && <div style={{ color: 'grey' }}>
+                    <Grid container>
+                        <Grid item xs={12} sm={8} lg={6} xl={6}>
+                            {header}
+                        </Grid>
+                        {/* <Grid item sm={4} lg={6} xl={6}>{"test"}
+                            </Grid> */}
+                    </Grid>
+                    <br />
+                </div>}
+                <div style={{paddingLeft: '20px'}}>
 
                     {sentences && Array.isArray(sentences) && sentences.length > 0 && sentences.map((sentence, index) => {
                         return this.fetchSentence(sentence)
