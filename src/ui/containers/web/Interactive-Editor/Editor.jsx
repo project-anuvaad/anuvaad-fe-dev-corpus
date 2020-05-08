@@ -32,7 +32,19 @@ class Editor extends React.Component {
   }
 
   handleApiCall(){
-    this.props.hadleSentenceSave(false);
+    const splitValue = this.state.submittedId && this.state.submittedId.split("_");
+    let temp = this.props.scriptSentence
+    if(this.props.superScriptToken){
+      let temp = this.props.scriptSentence
+      this.props.scriptSentence.map((sentence, index) => {
+        if (splitValue[0] === sentence._id) {
+          temp[index].target =  this.state.superIndex +' '+ this.state.target,
+          temp[index].taggedTarget= this.state.taggedTarget        
+          }
+          
+        })
+    }
+    this.props.hadleSentenceSave(false,temp);
     this.state.checkedB && 
     this.handleSubmit()
 
@@ -44,11 +56,34 @@ class Editor extends React.Component {
     this.setState({ checkedB: !this.state.checkedB, sentences: [] });
   };
 
+ handleSuperScript(){
+  const splitValue = this.state.submittedId && this.state.submittedId.split("_");
+  
+  this.props.scriptSentence.map((sentence, index) => {
+    if (splitValue[0] === sentence._id) {
+      
+      let temp = sentence.tokenized_sentences[splitValue[1]];
+      console.log("val-----",(temp.target).substr(0, (temp.target).indexOf(' ')))
+      this.setState({clickedSentence: false,
+        target: (temp.target).substr(temp.target.indexOf(' ') + 1),
+              source: temp.src,
+              superIndex:(temp.target).substr(0, (temp.target).indexOf(' ')) ,
+              taggedSource: temp.tagged_src,
+              taggedTarget: temp.tagged_tgt,
+              translateText: '',
+      })
+      
+    }})
+  
+ }
+   
+  
 
 
   handleSentence(value) {
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
-    console.log("splitvalue",splitValue)
+    console.log("splitvalue",splitValue, this.state.clickedSentence)
+
     
     this.props.sentences &&
       this.props.sentences.length > 0 &&
@@ -117,15 +152,22 @@ class Editor extends React.Component {
             
           }
         }
+       
         return true;
       });
+      this.props.superScriptToken && 
+      this.handleSuperScript()
       
   }
 
   handleTextSelectChange(event) {
-    console.log("-----",this.handleCalc(event.target.value))
-    this.props.handleSave(event.target.value,this.state.indexValue, this.state.submittedId,this.state.keyValue, this.state.cellValue, this.handleCalc(event.target.value))
-      this.setState({target: event.target.value, translateText:event.target.value })
+    if(this.props.superScriptToken && this.state.superIndex){
+      this.props.handleScriptSave(this.state.target, this.state.superIndex)
+    }
+    else{
+      this.props.handleSave(event.target.value,this.state.indexValue, this.state.submittedId,this.state.keyValue, this.state.cellValue, this.handleCalc(event.target.value))
+    }
+    this.setState({target: event.target.value, translateText:event.target.value })
   }
   
 
@@ -143,8 +185,15 @@ class Editor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.intractiveTrans !== this.props.intractiveTrans) {     
+    if (prevProps.intractiveTrans !== this.props.intractiveTrans) {  
+      console.log("--------------val",this.props.superScriptToken, this.state.superIndex)
+      if(this.props.superScriptToken && this.state.superIndex){
+
+        this.props.handleScriptSave(this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0],this.state.superIndex)
+      }
+      else{   
       this.props.handleSave(this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0],this.state.indexValue, this.state.submittedId,this.state.keyValue, this.state.cellValue)
+      }
       this.setState({
         disable: false,
         token: false,
@@ -296,6 +345,7 @@ class Editor extends React.Component {
 
   render() {
     this.state.clickedSentence && this.handleSentence(0);
+    console.log("sssssss",this.props.superScriptToken)
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
 
@@ -370,7 +420,7 @@ class Editor extends React.Component {
             <Button
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
-              disabled={this.props.sentences[0]._id === this.state.submittedId.split("_")[0]}
+              disabled={this.props.sentences[0]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken}
               onClick={event => {
                 this.handleSentence(-1);
               }}
@@ -395,7 +445,7 @@ class Editor extends React.Component {
           <Grid item xs={3} sm={3} lg={4} xl={4}>
             <Button
               color="primary"
-              disabled={(this.props.sentences[this.props.sentences.length - 1]._id === this.state.submittedId.split("_")[0])}
+              disabled={(this.props.sentences[this.props.sentences.length - 1]._id === this.state.submittedId.split("_")[0]) || this.props.superScriptToken}
               onClick={event => {
                 this.handleSentence(1);
               }}
