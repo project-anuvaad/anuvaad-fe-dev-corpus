@@ -33,17 +33,21 @@ class Editor extends React.Component {
 
   handleApiCall(){
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
-    let temp = this.props.scriptSentence
+    let temp = this.state.scriptSentence
+
+    console.log("value",this.state.scriptSentence,this.state.superScriptToken)
     if(this.props.superScriptToken){
-      let temp = this.props.scriptSentence
-      this.props.scriptSentence.map((sentence, index) => {
+      this.state.scriptSentence.map((sentence, index) => {
+        console.log(splitValue[0],sentence._id)
         if (splitValue[0] === sentence._id) {
-          temp[index].target =  this.state.superIndex +' '+ this.state.target,
-          temp[index].taggedTarget= this.state.taggedTarget        
+          console.log("t------",temp[index],temp[index].tokenized_sentences[splitValue[1]],temp[index].tokenized_sentences[splitValue[1]].target )
+          temp[index].tokenized_sentences[splitValue[1]].target =  this.state.superIndex +' '+ this.state.target,
+          temp[index].tokenized_sentences[splitValue[1]].tagged_tgt= this.state.taggedTarget        
           }
           
         })
     }
+    this.setState({scriptSentence:temp})
     this.props.hadleSentenceSave(false,temp);
     this.state.checkedB && 
     this.handleSubmit()
@@ -59,11 +63,9 @@ class Editor extends React.Component {
  handleSuperScript(){
   const splitValue = this.state.submittedId && this.state.submittedId.split("_");
   
-  this.props.scriptSentence.map((sentence, index) => {
+  this.state.scriptSentence.map((sentence, index) => {
     if (splitValue[0] === sentence._id) {
-      
       let temp = sentence.tokenized_sentences[splitValue[1]];
-      console.log("val-----",(temp.target).substr(0, (temp.target).indexOf(' ')))
       this.setState({clickedSentence: false,
         target: (temp.target).substr(temp.target.indexOf(' ') + 1),
               source: temp.src,
@@ -82,9 +84,6 @@ class Editor extends React.Component {
 
   handleSentence(value) {
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
-    console.log("splitvalue",splitValue, this.state.clickedSentence)
-
-    
     this.props.sentences &&
       this.props.sentences.length > 0 &&
       this.props.sentences.map((sentence, index) => {
@@ -107,8 +106,6 @@ class Editor extends React.Component {
               let blockId = this.props.sentences[index + value]._id + '_' + this.props.sentences[index + value].table_items[0][0].sentence_index
               this.props.handleCellOnClick(this.props.sentences[index + value]._id, blockId, this.props.sentences[index + value].table_items[0][0], "true")
             }
-
-            console.log("ind",index+value, this.props.sentences[index + value].tokenized_sentences[0].target)
             this.setState({
               target: this.props.sentences[index + value].tokenized_sentences[0].target,
               source: this.props.sentences[index + value].tokenized_sentences[0].src,
@@ -162,22 +159,23 @@ class Editor extends React.Component {
 
   handleTextSelectChange(event) {
     if(this.props.superScriptToken && this.state.superIndex){
-      this.props.handleScriptSave(this.state.target, this.state.superIndex)
+      
+      this.props.handleScriptSave(event.target.value, this.state.superIndex)
     }
     else{
+      
       this.props.handleSave(event.target.value,this.state.indexValue, this.state.submittedId,this.state.keyValue, this.state.cellValue, this.handleCalc(event.target.value))
     }
     this.setState({target: event.target.value, translateText:event.target.value })
   }
   
 
-  handleSubmit() {
+   handleSubmit() {
     let res = "";
     const { APITransport } = this.props;
     if (this.state.translateText) {
       res = this.handleCalc(this.state.translateText);
     }
-    console.log("model----",this.props.modelDetails)
     const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails);
     if (this.state.source && res) {
       APITransport(apiObj);
@@ -186,7 +184,6 @@ class Editor extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {  
-      console.log("--------------val",this.props.superScriptToken, this.state.superIndex)
       if(this.props.superScriptToken && this.state.superIndex){
 
         this.props.handleScriptSave(this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0],this.state.superIndex)
@@ -205,7 +202,6 @@ class Editor extends React.Component {
       this.focusDiv("focus");
     }
     if (prevProps.clickedCell !== this.props.clickedCell) {
-      console.log("clicked")
       this.setState({
         target: this.props.clickedCell.target,
         taggedSource: this.props.clickedCell.tagged_src,
@@ -265,14 +261,11 @@ class Editor extends React.Component {
 
   keyPress(event) {
     if (event.keyCode === 9) {
-      console.log("-----", event.keyCode);
       if (this.state.disable && this.state.translateText) {
-        console.log("10", event.keyCode);
         const apiObj = new IntractiveApi(this.state.source, this.handleCalc(event.target.value), this.props.modelDetails);
         this.props.APITransport(apiObj);
         this.setState({ disable: false });
       } else {
-        console.log("11", event.keyCode);
         let temp;
         const prefix = this.state.target && this.state.target.split(" ");
         const translate = this.state.translateText && this.state.translateText.split(" ");
@@ -311,18 +304,21 @@ class Editor extends React.Component {
         sentences: nextProps.sentences
       };
     }
+    if (prevState.scriptSentence !== nextProps.scriptSentence) {
+      return {
+        scriptSentence: nextProps.scriptSentence
+      };
+    }
     return null;
   }
 
 
   handleTextChange(key, event) {
     const space = event.target.value.endsWith(" ");
-    console.log("space", space);
     if (this.state.target && space) {
       if (this.state.target.startsWith(event.target.value) && this.state.target.includes(event.target.value, 0)) {
       } else {
         const res = this.handleCalc(event.target.value);
-        console.log("response----",res);
         const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails);
         this.props.APITransport(apiObj);
         this.focusDiv("blur");
@@ -345,7 +341,6 @@ class Editor extends React.Component {
 
   render() {
     this.state.clickedSentence && this.handleSentence(0);
-    console.log("sssssss",this.props.superScriptToken)
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
 
