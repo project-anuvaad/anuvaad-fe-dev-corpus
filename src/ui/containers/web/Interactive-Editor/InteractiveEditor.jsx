@@ -178,16 +178,19 @@ class IntractiveTrans extends React.Component {
     console.log("ppppp",value)
     const { APITransport } = this.props;
     let senArray= [...this.state.sentences, ...value]
-    console.log(senArray)
+    console.log(senArray, value)
     const apiObj = new InteractiveApi(senArray);
     APITransport(apiObj);
     this.setState({ token })
 
   }
   handleScriptSave(target,indexValue){
-    const temp = this.state.targetSupScripts;
 
-  temp[indexValue].text = target.tgt
+    
+    const temp = this.state.targetSupScripts;
+    console.log("valll----",target)
+  temp[indexValue].text = target.tgt ? target.tgt:target
+  console.log("valll",temp)
     this.setState({
       targetSupScripts: temp
     })
