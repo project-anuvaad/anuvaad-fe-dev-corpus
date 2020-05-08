@@ -319,7 +319,7 @@ class IntractiveTrans extends React.Component {
               <Select
                 id="outlined-age-simple"
                 selectValue="language_code"
-                MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
+                MenuItemValues={this.state.modelLanguage.length>0 && this.handleSource(this.state.modelLanguage, this.state.language)}
                 // MenuItemValues={["English"]}
                 handleChange={this.handleSelectChange}
                 value={this.state.source}
@@ -340,7 +340,7 @@ class IntractiveTrans extends React.Component {
               <Select
                 id="outlined-age-simple"
                 selectValue="language_code"
-                MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
+                MenuItemValues={this.state.source && this.state.modelLanguage ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
                 // MenuItemValues={["Hindi"]}
                 handleChange={this.handleSelectChange}
                 value={this.state.target}
