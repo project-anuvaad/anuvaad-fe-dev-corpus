@@ -39,7 +39,8 @@ class IntractiveTrans extends React.Component {
       clickedSentence: false,
       sourceSupScripts: {},
       targetSupScripts: {},
-      token: false
+      token: false,
+      header: ""
     };
   }
 
@@ -75,8 +76,10 @@ class IntractiveTrans extends React.Component {
       let supScripts = {}
       let targetSupScript = {}
       temp.map(sentence => {
-        if (!sentence.is_footer) {
+        if (!sentence.is_footer && !sentence.is_header) {
           sentenceArray.push(sentence)
+        } else if (sentence.is_header) {
+          this.setState({ header: sentence.text })
         } else {
 
           let sourceValue = ""
@@ -104,13 +107,17 @@ class IntractiveTrans extends React.Component {
           } else {
             let sScript = {}
             let tScript = {}
-          
+
             let prevKey = Object.keys(supScripts).length
 
             if (sentence.text) {
               sScript.sentence_id = supScripts[prevKey].sentence_id
               sourceValue = supScripts[prevKey].text
-              sScript.text = sourceValue.concat(' ', sentence.text)
+              if (sourceValue) {
+                sScript.text = sourceValue.concat(' ', sentence.text)
+              } else {
+                sScript.text = sentence.text
+              }
             }
             if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences)) {
               tScript.sentence_id = targetSupScript[prevKey].sentence_id
@@ -254,17 +261,20 @@ class IntractiveTrans extends React.Component {
                   </Typography>
                       </Toolbar>
                     </Toolbar>
-                    <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
-                      isPreview={false}
-                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                      scrollToId={this.state.scrollToId}
-                      handleTableHover={this.handleTableHover.bind(this)}
-                      parent={this.state.parent}
-                      selectedSentenceId={this.state.selectedSentenceId}
-                      selectedTableId={this.state.selectedTableId}
-                      supScripts={this.state.sourceSupScripts}
-                      handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
-                    ></EditorPaper>
+                    <div style={{ padding: '24px' }}>
+                      <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                        isPreview={false}
+                        header={this.state.header}
+                        handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                        scrollToId={this.state.scrollToId}
+                        handleTableHover={this.handleTableHover.bind(this)}
+                        parent={this.state.parent}
+                        selectedSentenceId={this.state.selectedSentenceId}
+                        selectedTableId={this.state.selectedTableId}
+                        supScripts={this.state.sourceSupScripts}
+                        handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
+                      ></EditorPaper>
+                    </div>
                   </Paper>
                 </Grid>
               ) : (
@@ -292,16 +302,19 @@ class IntractiveTrans extends React.Component {
                       Target
                   </Typography>
                   </Toolbar>
-                  <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
-                    isPreview={false}
-                    scrollToId={this.state.scrollToId}
-                    parent={this.state.parent}
-                    handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                    handleTableHover={this.handleTableHover.bind(this)}
-                    selectedSentenceId={this.state.selectedSentenceId}
-                    selectedTableId={this.state.selectedTableId}
-                    supScripts={this.state.targetSupScripts}
-                    handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
+                  <div style={{ padding: '24px' }}>
+                    <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                      isPreview={false}
+                      header={this.state.header}
+                      scrollToId={this.state.scrollToId}
+                      parent={this.state.parent}
+                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                      handleTableHover={this.handleTableHover.bind(this)}
+                      selectedSentenceId={this.state.selectedSentenceId}
+                      selectedTableId={this.state.selectedTableId}
+                      supScripts={this.state.targetSupScripts}
+                      handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
+                  </div>
                 </Paper>
               </Grid>
 
