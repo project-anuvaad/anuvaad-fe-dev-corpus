@@ -104,15 +104,16 @@ class IntractiveTrans extends React.Component {
           } else {
             let sScript = {}
             let tScript = {}
-            sScript.sentence_id = sentence._id
-            tScript.sentence_id = sentence._id
+          
             let prevKey = Object.keys(supScripts).length
 
             if (sentence.text) {
+              sScript.sentence_id = supScripts[prevKey].sentence_id
               sourceValue = supScripts[prevKey].text
               sScript.text = sourceValue.concat(' ', sentence.text)
             }
             if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences)) {
+              tScript.sentence_id = targetSupScript[prevKey].sentence_id
               targetValue = targetSupScript[prevKey].text
 
               sentence.tokenized_sentences.map(tokenSentence => {
