@@ -24,11 +24,13 @@ class EditorPaper extends React.Component {
         }
     }
 
-    fetchSuperScript(supArr, sentenceId) {
+    fetchSuperScript(supArr) {
         let supArray = []
         if (supArr && Array.isArray(supArr) && supArr.length > 0) {
             supArr.map((supScript, index) => {
                 let superScripts = this.props.supScripts
+                let sentenceId = superScripts[supScript] ? superScripts[supScript].sentence_id : ''
+                
                 supArray.push(<span><a href="#"><span onClick={() => this.handleOnClick(sentenceId + '_' + 0)} title={superScripts && superScripts[supScript] ? superScripts[supScript].text : ''}>{supScript}</span></a><span>{supArr.length === index + 1 ? '' : ','}</span></span>)
             })
             return supArray
@@ -100,14 +102,14 @@ class EditorPaper extends React.Component {
         if (!sentence.is_footer && sentence.text) {
             if (sentence.is_ner && !sentence.is_new_line) {
                 return (<div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
-                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array, sentence._id)}</sup></div>)
+                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
 
             } else if (sentence.is_ner) {
                 return (<div><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ float: align, textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
-                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array, sentence._id)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
+                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
             } else {
                 return (<div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
-                    {this.fetchTokenizedSentence(sentence, true)}<sup><span>{this.fetchSuperScript(sentence.sup_array, sentence._id)}</span></sup><br /><br /></div>)
+                    {this.fetchTokenizedSentence(sentence, true)}<sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup><br /><br /></div>)
             }
         } else if (sentence.is_table) {
             return this.fetchTable(sentence._id, sentence.table_items)
