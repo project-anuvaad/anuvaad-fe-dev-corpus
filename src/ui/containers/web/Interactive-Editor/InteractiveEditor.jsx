@@ -188,12 +188,28 @@ class IntractiveTrans extends React.Component {
 
   handleSenetenceOnClick(sentenceId, value, parent) {
     this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent })
+    if (!parent) {
+      this.setState({ parent: 'target' })
+      var self = this
+      setTimeout(() => {
+        self.setState({ scrollToId: '' })
+        self.setState({ scrollToId: sentenceId, parent: 'source' })
+        console.log('source scroll')
+      }, 200)
+    }
   }
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent) {
-
-    console.log("cell", sentenceId, tableId, clickedCell, value, parent)
     this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent })
+    if (!parent) {
+      this.setState({ parent: 'target' })
+      var self = this
+      setTimeout(() => {
+        self.setState({ scrollToId: '' })
+        self.setState({ scrollToId: sentenceId, parent: 'source' })
+        console.log('source scroll')
+      }, 200)
+    }
   }
 
   handlePreview() {
