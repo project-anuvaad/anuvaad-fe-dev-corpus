@@ -203,7 +203,7 @@ class IntractiveTrans extends React.Component {
       setTimeout(() => {
         self.setState({ scrollToId: '' })
         self.setState({ scrollToId: sentenceId, parent: 'source' })
-      }, 200)
+      }, 350)
     }
   }
 
@@ -215,7 +215,7 @@ class IntractiveTrans extends React.Component {
       setTimeout(() => {
         self.setState({ scrollToId: '' })
         self.setState({ scrollToId: sentenceId, parent: 'source' })
-      }, 200)
+      }, 350)
     }
   }
 
