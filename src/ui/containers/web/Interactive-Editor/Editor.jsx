@@ -63,19 +63,23 @@ class Editor extends React.Component {
  handleSuperScript(){
   const splitValue = this.state.submittedId && this.state.submittedId.split("_");
   
-  this.state.scriptSentence.map((sentence, index) => {
-    if (splitValue[0] === sentence._id) {
-      let temp = sentence.tokenized_sentences[splitValue[1]];
-      this.setState({clickedSentence: false,
-        target: (temp.target).substr(temp.target.indexOf(' ') + 1),
-              source: temp.src,
-              superIndex:(temp.target).substr(0, (temp.target).indexOf(' ')) ,
-              taggedSource: temp.tagged_src,
-              taggedTarget: temp.tagged_tgt,
-              translateText: '',
-      })
-      
-    }})
+  if(this.state.scriptSentence && Array.isArray(this.state.scriptSentence) && this.state.scriptSentence.length>0) {
+
+    this.state.scriptSentence.map((sentence, index) => {
+      if (splitValue[0] === sentence._id) {
+        let temp = sentence.tokenized_sentences[splitValue[1]];
+        this.setState({clickedSentence: false,
+          target: (temp.target).substr(temp.target.indexOf(' ') + 1),
+                source: temp.src,
+                superIndex:(temp.target).substr(0, (temp.target).indexOf(' ')) ,
+                taggedSource: temp.tagged_src,
+                taggedTarget: temp.tagged_tgt,
+                translateText: '',
+        })
+        
+      }})
+  }
+
   
  }
    
