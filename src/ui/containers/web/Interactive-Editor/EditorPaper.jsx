@@ -154,13 +154,12 @@ class EditorPaper extends React.Component {
     }
 
     render() {
-        const { section, sentences, header } = this.props;
+        const { section, sentences, header, footer } = this.props;
 
         return (
-
             <div>
 
-                {header && <div style={{ color: 'grey' }}>
+                {header ? <div style={{ color: 'grey' }}>
                     <Grid container>
                         <Grid item xs={12} sm={8} lg={6} xl={6}>
                             {header}
@@ -169,13 +168,25 @@ class EditorPaper extends React.Component {
                             </Grid> */}
                     </Grid>
                     <br />
-                </div>}
-                <div style={{paddingLeft: '20px'}}>
+                </div> : <div></div>}
+                <div style={{ paddingLeft: '20px' }}>
 
                     {sentences && Array.isArray(sentences) && sentences.length > 0 && sentences.map((sentence, index) => {
                         return this.fetchSentence(sentence)
                     })}
                 </div>
+                {footer ?
+                    <div>
+                        <hr></hr>
+                        <div style={{ color: 'grey' }}>
+                            <Grid container>
+                                <Grid item xs={12} sm={8} lg={6} xl={6}>
+                                    {header}
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </div> : <div></div>
+                }
             </div >
 
         )
