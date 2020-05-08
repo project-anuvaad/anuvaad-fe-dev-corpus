@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
+import DownloadDoc from "../../../../flux/actions/apis/downloaddoc"
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import CloseIcon from "@material-ui/icons/Close";
 import DownloadIcon from "@material-ui/icons/ArrowDownward";
@@ -33,6 +34,14 @@ class Preview extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
+
+        if (prevProps.downloaddoc !== this.props.downloaddoc) {
+            let url = `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+                this.props.downloaddoc.data ? this.props.downloaddoc.data : ""
+                }`
+            window.open(url, "_blank")
+        }
+
         if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
             let temp = this.props.fetchPdfSentence.data;
             let sentenceArray = []
@@ -102,15 +111,20 @@ class Preview extends React.Component {
         }
     }
 
-    handleOnCancel() {
+    handleOnClose() {
         history.push(`${process.env.PUBLIC_URL}/interactive-editor/${this.props.match.params.fileid}`);
+    }
+
+    handleOnDownload() {
+        const { APITransport } = this.props;
+        const apiObj = new DownloadDoc(this.props.match.params.fileid);
+        APITransport(apiObj);
     }
 
     render() {
         return (
             <div style={{ marginLeft: "-100px" }}>
-               { this.state.sentences &&
-                <Grid container spacing={16} style={{ padding: "0 24px 12px 24px"}}>
+                <Grid container spacing={16} style={{ padding: "0 24px 12px 24px" }}>
                     <Grid item sm={2} lg={3} xl={3} className='GridFileDetails'>
                     </Grid>
                     <Grid item xs={12} sm={8} lg={6} xl={6} className='GridFileDetails'>
@@ -121,21 +135,25 @@ class Preview extends React.Component {
                         </Paper>
                     </Grid>
                     <Grid item xs={12} sm={2} lg={3} xl={3} className='GridFileDetails' style={{ textAlign: 'right' }}>
-                        <Button variant="extended" size="large" color="primary" style={{ minWidth: '110px', fontSize: '90%', fontWeight: 'bold' }} onClick={() => this.handleOnCancel()}>
+                        <Button variant="extended" size="large" color="primary" style={{ minWidth: '110px', fontSize: '90%', fontWeight: 'bold', marginBottom: "10px" }} onClick={() => this.handleOnDownload()}>
+                            <DownloadIcon size="large" />{" "}&nbsp;&nbsp;DOWNLOAD
+                        </Button>
+                        <Button variant="extended" size="large" color="primary" style={{ minWidth: '110px', fontSize: '90%', fontWeight: 'bold', marginLeft: "5px", marginBottom: "10px" }} onClick={() => this.handleOnClose()}>
                             <CloseIcon size="large" />{" "}&nbsp;&nbsp;CLOSE
-                            </Button>
+                        </Button>
                     </Grid>
                 </Grid>
-    }
             </div>
         )
     }
 
 }
+
 const mapStateToProps = state => ({
     user: state.login,
     apistatus: state.apistatus,
     fetchPdfSentence: state.fetchPdfSentence,
+    downloaddoc: state.downloaddoc
 });
 
 const mapDispatchToProps = dispatch =>
