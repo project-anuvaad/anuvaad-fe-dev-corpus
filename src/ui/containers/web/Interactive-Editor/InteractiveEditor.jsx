@@ -40,7 +40,9 @@ class IntractiveTrans extends React.Component {
       sourceSupScripts: {},
       targetSupScripts: {},
       superScript: false,
-      token: false
+      token: false,
+      header: "",
+      footer: ""
     };
   }
 
@@ -77,8 +79,18 @@ class IntractiveTrans extends React.Component {
       let supScripts = {}
       let targetSupScript = {}
       temp.map(sentence => {
-        if (!sentence.is_footer) {
+        if (!sentence.is_footer && !sentence.is_header && !sentence.is_footer_text) {
+
           sentenceArray.push(sentence)
+
+        } else if (sentence.is_header) {
+
+          this.setState({ header: sentence.text })
+
+        } else if (sentence.is_footer_text) {
+
+          this.setState({ footer: sentence.text })
+
         } else {
           superArray.push(sentence)
           let sourceValue = ""
@@ -106,21 +118,25 @@ class IntractiveTrans extends React.Component {
           } else {
             let sScript = {}
             let tScript = {}
-          
+
             let prevKey = Object.keys(supScripts).length
 
             if (sentence.text) {
               sScript.sentence_id = supScripts[prevKey].sentence_id
               sourceValue = supScripts[prevKey].text
-              sScript.text = sourceValue.concat(' ', sentence.text)
+              if (sourceValue) {
+                sScript.text = sourceValue.concat(' ', sentence.text)
+              } else {
+                sScript.text = sentence.text
+              }
             }
             if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences)) {
               tScript.sentence_id = targetSupScript[prevKey].sentence_id
-              targetValue = targetSupScript[prevKey].text
+              tScript.text = targetSupScript[prevKey].text
 
               sentence.tokenized_sentences.map(tokenSentence => {
-                tScript.text = targetValue.concat(' ', tokenSentence.target)
-
+                tScript.text = (tScript.text).concat(' ', tokenSentence.target)
+                return true;
               })
             }
             supScripts[prevKey] = sScript
@@ -177,8 +193,6 @@ class IntractiveTrans extends React.Component {
     })
   }
 
-
-
   handleOnMouseEnter(sentenceId, parent) {
     this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, parent: parent })
   }
@@ -196,8 +210,15 @@ class IntractiveTrans extends React.Component {
   }
 
   handleSenetenceOnClick(sentenceId, value, parent) {
-
-    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent , superScript: false})
+    this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent , superScript: false })
+    if (!parent) {
+      this.setState({ parent: 'target' })
+      var self = this
+      setTimeout(() => {
+        self.setState({ scrollToId: '' })
+        self.setState({ scrollToId: sentenceId, parent: 'source' })
+      }, 350)
+    }
   }
 
   handleSuperScript(sentenceId, value, parent, token) {
@@ -207,6 +228,14 @@ class IntractiveTrans extends React.Component {
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent) {
     this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent, superScript: false })
+    if (!parent) {
+      this.setState({ parent: 'target' })
+      var self = this
+      setTimeout(() => {
+        self.setState({ scrollToId: '' })
+        self.setState({ scrollToId: sentenceId, parent: 'source' })
+      }, 350)
+    }
   }
 
   handlePreview() {
@@ -274,18 +303,22 @@ class IntractiveTrans extends React.Component {
                   </Typography>
                       </Toolbar>
                     </Toolbar>
-                    <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
-                      isPreview={false}
-                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                      scrollToId={this.state.scrollToId}
-                      handleTableHover={this.handleTableHover.bind(this)}
-                      parent={this.state.parent}
-                      selectedSentenceId={this.state.selectedSentenceId}
-                      selectedTableId={this.state.selectedTableId}
-                      supScripts={this.state.sourceSupScripts}
-                      handleSuperScript =  {this.handleSuperScript.bind(this)}
-                      handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
-                    ></EditorPaper>
+                    <div style={{ padding: '24px' }}>
+                      <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                        isPreview={false}
+                        header={this.state.header}
+                        footer={this.state.footer}
+                        handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                        scrollToId={this.state.scrollToId}
+                        handleTableHover={this.handleTableHover.bind(this)}
+                        parent={this.state.parent}
+                        selectedSentenceId={this.state.selectedSentenceId}
+                        selectedTableId={this.state.selectedTableId}
+                        supScripts={this.state.sourceSupScripts}
+                        handleSuperScript =  {this.handleSuperScript.bind(this)}
+                        handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}
+                      ></EditorPaper>
+                    </div>
                   </Paper>
                 </Grid>
               ) : (
@@ -313,17 +346,21 @@ class IntractiveTrans extends React.Component {
                       Target
                   </Typography>
                   </Toolbar>
-                  <EditorPaper paperType="target" sentences={this.state.sentences}  hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
-                    isPreview={false}
-                    scrollToId={this.state.scrollToId}
-                    parent={this.state.parent}
-                    handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                    handleTableHover={this.handleTableHover.bind(this)}
-                    selectedSentenceId={this.state.selectedSentenceId}
-                    selectedTableId={this.state.selectedTableId}
-                    supScripts={this.state.targetSupScripts}
-                    handleSuperScript =  {this.handleSuperScript.bind(this)}
-                    handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
+                  <div style={{ padding: '24px' }}>
+                    <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
+                      isPreview={false}
+                      header={this.state.header}
+                      footer={this.state.footer}
+                      scrollToId={this.state.scrollToId}
+                      parent={this.state.parent}
+                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                      handleTableHover={this.handleTableHover.bind(this)}
+                      selectedSentenceId={this.state.selectedSentenceId}
+                      selectedTableId={this.state.selectedTableId}
+                      supScripts={this.state.targetSupScripts}
+                      handleSuperScript =  {this.handleSuperScript.bind(this)}
+                      handleSentenceClick={this.handleSenetenceOnClick.bind(this)} handleTableCellClick={this.handleCellOnClick.bind(this)}></EditorPaper>
+                  </div>
                 </Paper>
               </Grid>
 
