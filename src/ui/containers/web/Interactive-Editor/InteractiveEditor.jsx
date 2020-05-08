@@ -40,7 +40,8 @@ class IntractiveTrans extends React.Component {
       sourceSupScripts: {},
       targetSupScripts: {},
       token: false,
-      header: ""
+      header: "",
+      footer: ""
     };
   }
 
@@ -76,10 +77,18 @@ class IntractiveTrans extends React.Component {
       let supScripts = {}
       let targetSupScript = {}
       temp.map(sentence => {
-        if (!sentence.is_footer && !sentence.is_header) {
+        if (!sentence.is_footer && !sentence.is_header && !sentence.is_footer_text) {
+
           sentenceArray.push(sentence)
+
         } else if (sentence.is_header) {
+
           this.setState({ header: sentence.text })
+
+        } else if (sentence.is_footer_text) {
+
+          this.setState({ footer: sentence.text })
+
         } else {
 
           let sourceValue = ""
@@ -265,6 +274,7 @@ class IntractiveTrans extends React.Component {
                       <EditorPaper paperType="source" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
                         isPreview={false}
                         header={this.state.header}
+                        footer={this.state.footer}
                         handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                         scrollToId={this.state.scrollToId}
                         handleTableHover={this.handleTableHover.bind(this)}
@@ -306,6 +316,7 @@ class IntractiveTrans extends React.Component {
                     <EditorPaper paperType="target" sentences={this.state.sentences} hoveredSentence={this.state.hoveredSentence} hoveredTableId={this.state.hoveredTableId}
                       isPreview={false}
                       header={this.state.header}
+                      footer={this.state.footer}
                       scrollToId={this.state.scrollToId}
                       parent={this.state.parent}
                       handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
