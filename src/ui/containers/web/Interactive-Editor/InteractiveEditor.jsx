@@ -114,11 +114,11 @@ class IntractiveTrans extends React.Component {
             }
             if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences)) {
               tScript.sentence_id = targetSupScript[prevKey].sentence_id
-              targetValue = targetSupScript[prevKey].text
+              tScript.text = targetSupScript[prevKey].text
 
               sentence.tokenized_sentences.map(tokenSentence => {
-                tScript.text = targetValue.concat(' ', tokenSentence.target)
-
+                tScript.text = (tScript.text).concat(' ', tokenSentence.target)
+                return true;
               })
             }
             supScripts[prevKey] = sScript
@@ -162,8 +162,6 @@ class IntractiveTrans extends React.Component {
     this.setState({ token })
 
   }
-
-
 
   handleOnMouseEnter(sentenceId, parent) {
     this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, parent: parent })
