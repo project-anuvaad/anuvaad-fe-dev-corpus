@@ -55,7 +55,8 @@ import uploadpdf from './pdfupload';
 import pdfConfigUpload from './pdfuploadfile';
 import docpath from './pdf_to_doc';
 import fetchPdfSentence from './fetchpdfsentence';
-import intractiveTrans from './intractive_translate'
+import intractiveTrans from './intractive_translate';
+import downloaddoc from './downloaddoc';
 
 export default {
     login,
@@ -114,5 +115,6 @@ export default {
     fetchPdfSentence,
     intractiveTrans,
     docpath,
-    interactiveUpdate
+    interactiveUpdate,
+    downloaddoc
 };
