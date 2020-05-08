@@ -14,15 +14,14 @@ import PdfFileUpload from "../../../flux/actions/apis/pdffileupload";
 import history from "../../../web.history";
 import Snackbar from "../../components/web/common/Snackbar";
 import { translate } from "../../../assets/localisation";
-import Select from "../../components/web/common/SimpleSelect";
-import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
+import Select from "../../components/web/common/Select";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
-
+import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 
 const styles = theme => ({
   paper: {
     width: "40%",
-    minWidth: "20%",
+    minWidth: "200px",
     marginTop: "2%",
     padding: "2%",
     marginLeft: "22%"
@@ -46,6 +45,7 @@ class PdfUpload extends Component {
       target: "",
       files: [],
       open: false,
+      modelLanguage:[],
       name: "",
       message: "File uplaoded successfully",
       showComponent: false
@@ -80,32 +80,32 @@ class PdfUpload extends Component {
     }
   }
 
+  
+  // Source language
   handleSource(modelLanguage, supportLanguage) {
     const result = [];
-    if (modelLanguage && supportLanguage) {
-      modelLanguage.map(item => supportLanguage.map(value => (item.source_language_code === value.language_code ? result.push(value) : null)));
-    }
+    modelLanguage.map(
+      item =>
+        item.interactive_end_point && supportLanguage.map(value => (item.source_language_code === value.language_code ? result.push(value) : null))
+    );
     const value = new Set(result);
     const source_language = [...value];
-    // var src =[{_id: "5d7a0fcdb053d84641cebd1c", language_code: "en", language_name: "English", "status": "ACTIVE", "created_on": "2019-09-12T09:28:45.367Z"}]
     return source_language;
   }
 
+  // Target language
   handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
     const result = [];
-    if (modelLanguage && supportLanguage) {
-      modelLanguage.map(item => {
-        item.source_language_code === sourceLanguage &&
-          supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null));
-        return true;
-      });
-    }
+    modelLanguage.map(item => {
+      item.source_language_code === sourceLanguage &&
+        item.interactive_end_point &&
+        supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null));
+      return true;
+    });
     const value = new Set(result);
     const target_language = [...value];
-
     return target_language;
   }
-
   handleSelectChange = event => {
     console.log("", event.target.value);
     this.setState({ [event.target.name]: event.target.value });
@@ -210,7 +210,7 @@ class PdfUpload extends Component {
                   this.handleTextChange("name", event);
                 }}
                 variant="outlined"
-                style={{ width: 145 }}
+                style={{ width: 158 }}
               />
             </Grid>
           </Grid>
@@ -221,15 +221,20 @@ class PdfUpload extends Component {
               </Typography>
             </Grid>
             <Grid item xs={3} sm={3} lg={3} xl={3}>
+            
               <Select
                 id="outlined-age-simple"
-                MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
+                selectValue="language_code"
+                MenuItemValues={this.state.modelLanguage.length>0 && this.handleSource(this.state.modelLanguage, this.state.language)}
+                // MenuItemValues={["English"]}
                 handleChange={this.handleSelectChange}
                 value={this.state.source}
                 name="source"
-                style={{ marginRight: "30%", width: "80%", marginBottom: "5%", marginTop: "4%" }}
+                style={{ marginRight: "30%", marginBottom: "4%", marginTop: "4%" }}
               />
+            
             </Grid>
+
           </Grid>
           <br />
           <br />
@@ -246,17 +251,15 @@ class PdfUpload extends Component {
               <br />
             </Grid>
             <Grid item xs={3} sm={3} lg={3} xl={3}>
-              <Select
+            <Select
                 id="outlined-age-simple"
-                MenuItemValues={
-                  this.state.source.language_code
-                    ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source.language_code)
-                    : []
-                }
+                selectValue="language_code"
+                MenuItemValues={this.state.source && this.state.modelLanguage.length>0 ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
+                // MenuItemValues={["Hindi"]}
                 handleChange={this.handleSelectChange}
                 value={this.state.target}
                 name="target"
-                style={{ minWidth: 120, width: "80%", marginLeft: "10%", marginTop: "30" }}
+                style={{ marginRight: "30%", marginBottom: "4%", marginTop: "4%", marginLeft: "10%" }}
               />
             </Grid>
           </Grid>
