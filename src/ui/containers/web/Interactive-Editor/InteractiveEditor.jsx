@@ -175,10 +175,8 @@ class IntractiveTrans extends React.Component {
 
   handleDone(token, value) {
 
-    console.log("ppppp",value)
     const { APITransport } = this.props;
     let senArray= [...this.state.sentences, ...value]
-    console.log(senArray, value)
     const apiObj = new InteractiveApi(senArray);
     APITransport(apiObj);
     this.setState({ token })
@@ -188,9 +186,7 @@ class IntractiveTrans extends React.Component {
 
     
     const temp = this.state.targetSupScripts;
-    console.log("valll----",target)
   temp[indexValue].text = target.tgt ? target.tgt:target
-  console.log("valll",temp)
     this.setState({
       targetSupScripts: temp
     })
@@ -212,9 +208,9 @@ class IntractiveTrans extends React.Component {
     this.setState({ hoveredSentence: '', hoveredTableId: '' })
   }
 
-  handleSenetenceOnClick(sentenceId, value, parent) {
+  handleSenetenceOnClick(sentenceId, value, parent, next_previous) {
     this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent , superScript: false })
-    if (!parent) {
+    if (next_previous) {
       this.setState({ parent: 'target' })
       var self = this
       setTimeout(() => {
@@ -229,9 +225,9 @@ class IntractiveTrans extends React.Component {
     this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent, superScript: token })
   }
 
-  handleCellOnClick(sentenceId, tableId, clickedCell, value, parent) {
+  handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, next_previous) {
     this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent, superScript: false })
-    if (!parent) {
+    if (next_previous) {
       this.setState({ parent: 'target' })
       var self = this
       setTimeout(() => {
@@ -279,7 +275,7 @@ class IntractiveTrans extends React.Component {
               </Grid>
               <Grid item xs={12} sm={6} lg={1} xl={1} >
                 <Button onClick={event => {
-                  this.handleDone(true);
+                  this.handleDone(true, this.state.scriptSentence);
                 }} variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '55px', fontSize: '90%', fontWeight: 'bold' }}>
                   <DoneIcon fontSize="large" />&nbsp;&nbsp;Done
             </Button>
