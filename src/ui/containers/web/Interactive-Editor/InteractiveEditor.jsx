@@ -91,7 +91,7 @@ class IntractiveTrans extends React.Component {
 
           this.setState({ footer: sentence.text })
 
-        } else {
+        } else if (sentence.is_footer){
           superArray.push(sentence)
           let sourceValue = ""
           let targetValue = ""
@@ -121,7 +121,7 @@ class IntractiveTrans extends React.Component {
 
             let prevKey = Object.keys(supScripts).length
 
-            if (sentence.text) {
+            if (sentence.text && supScripts[prevKey] &&supScripts[prevKey].sentence_id) {
               sScript.sentence_id = supScripts[prevKey].sentence_id
               sourceValue = supScripts[prevKey].text
               if (sourceValue) {
@@ -130,7 +130,7 @@ class IntractiveTrans extends React.Component {
                 sScript.text = sentence.text
               }
             }
-            if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences)) {
+            if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences)&& targetSupScript[prevKey] && targetSupScript[prevKey]._id) {
               tScript.sentence_id = targetSupScript[prevKey].sentence_id
               tScript.text = targetSupScript[prevKey].text
 
