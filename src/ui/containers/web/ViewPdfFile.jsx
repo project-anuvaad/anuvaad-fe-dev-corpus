@@ -40,7 +40,6 @@ class PdfUpload extends React.Component {
   }
 
   handleClick = rowData => {
-    console.log(rowData);
     history.push(`${process.env.PUBLIC_URL}/interactive-editor/${rowData[0]}`);
   };
 
@@ -102,7 +101,7 @@ class PdfUpload extends React.Component {
         }
       },
       filterType: "checkbox",
-      onRowClick: rowData =>rowData[2]==="COMPLETED" && this.handleClick(rowData),
+      onRowClick: rowData =>(rowData[2]==="COMPLETED"||rowData[2]==="TRANSLATING") && this.handleClick(rowData),
       download: false,
       expandableRowsOnClick: true,
       print: false,

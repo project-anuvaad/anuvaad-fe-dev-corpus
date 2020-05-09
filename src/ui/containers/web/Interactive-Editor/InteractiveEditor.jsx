@@ -175,10 +175,8 @@ class IntractiveTrans extends React.Component {
 
   handleDone(token, value) {
 
-    console.log("ppppp",value)
     const { APITransport } = this.props;
     let senArray= [...this.state.sentences, ...value]
-    console.log(senArray, value)
     const apiObj = new InteractiveApi(senArray);
     APITransport(apiObj);
     this.setState({ token })
@@ -188,9 +186,7 @@ class IntractiveTrans extends React.Component {
 
     
     const temp = this.state.targetSupScripts;
-    console.log("valll----",target)
   temp[indexValue].text = target.tgt ? target.tgt:target
-  console.log("valll",temp)
     this.setState({
       targetSupScripts: temp
     })
