@@ -208,9 +208,9 @@ class IntractiveTrans extends React.Component {
     this.setState({ hoveredSentence: '', hoveredTableId: '' })
   }
 
-  handleSenetenceOnClick(sentenceId, value, parent) {
+  handleSenetenceOnClick(sentenceId, value, parent, next_previous) {
     this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent , superScript: false })
-    if (!parent) {
+    if (next_previous) {
       this.setState({ parent: 'target' })
       var self = this
       setTimeout(() => {
@@ -225,9 +225,9 @@ class IntractiveTrans extends React.Component {
     this.setState({ selectedSentenceId: sentenceId, clickedSentence: value, selectedTableId: '', scrollToId: sentenceId, parent: parent, superScript: token })
   }
 
-  handleCellOnClick(sentenceId, tableId, clickedCell, value, parent) {
+  handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, next_previous) {
     this.setState({ selectedSentenceId: tableId, selectedTableId: tableId, clickedSentence: value, scrollToId: sentenceId, clickedCell: clickedCell, parent: parent, superScript: false })
-    if (!parent) {
+    if (next_previous) {
       this.setState({ parent: 'target' })
       var self = this
       setTimeout(() => {
