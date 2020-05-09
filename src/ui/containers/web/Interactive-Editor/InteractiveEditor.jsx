@@ -275,7 +275,7 @@ class IntractiveTrans extends React.Component {
               </Grid>
               <Grid item xs={12} sm={6} lg={1} xl={1} >
                 <Button onClick={event => {
-                  this.handleDone(true);
+                  this.handleDone(true, this.state.scriptSentence);
                 }} variant="outlined" size="large" color="primary" style={{ width: "100%", minWidth: '55px', fontSize: '90%', fontWeight: 'bold' }}>
                   <DoneIcon fontSize="large" />&nbsp;&nbsp;Done
             </Button>
