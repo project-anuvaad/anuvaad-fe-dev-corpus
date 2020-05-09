@@ -45,10 +45,11 @@ class PdfUpload extends Component {
       target: "",
       files: [],
       open: false,
-      modelLanguage:[],
+    
       name: "",
       message: "File uplaoded successfully",
-      showComponent: false
+      showComponent: false,
+      modelLanguage: []
     };
   }
 
@@ -56,21 +57,22 @@ class PdfUpload extends Component {
     let model = "";
     if (this.state.modelLanguage) {
       this.state.modelLanguage.map(item =>
-        item.target_language_code === this.state.target.language_code &&
-        item.source_language_code === this.state.source.language_code &&
-        item.is_primary
-          ? (model = item)
-          : ""
+        item.target_language_code === this.state.target &&
+        item.source_language_code === this.state.source &&
+        model.length < 1 &&
+        item.interactive_end_point === "interactive-translation"
+          ? model.push(item)
+          : []
       );
       e.preventDefault();
       const { APITransport } = this.props;
-      console.log(this.state.source, this.state.target, model);
+      console.log("model---", model);
       if (this.state.files.length > 0 && this.state.name) {
         const apiObj = new PdfFileUpload(
           this.state.name,
           this.state.files[0],
-          this.state.source.language_name,
-          this.state.target.language_name,
+          this.state.source,
+          this.state.target,
           model
         );
         APITransport(apiObj);
@@ -84,7 +86,8 @@ class PdfUpload extends Component {
   // Source language
   handleSource(modelLanguage, supportLanguage) {
     const result = [];
-    modelLanguage.map(
+    console.log(modelLanguage)
+    modelLanguage && modelLanguage.length>0 && modelLanguage.map(
       item =>
         item.interactive_end_point && supportLanguage.map(value => (item.source_language_code === value.language_code ? result.push(value) : null))
     );
@@ -225,7 +228,7 @@ class PdfUpload extends Component {
               <Select
                 id="outlined-age-simple"
                 selectValue="language_code"
-                MenuItemValues={this.state.modelLanguage.length>0 && this.handleSource(this.state.modelLanguage, this.state.language)}
+                MenuItemValues={this.state.modelLanguage && this.state.modelLanguage.length>0 && this.handleSource(this.state.modelLanguage, this.state.language)}
                 // MenuItemValues={["English"]}
                 handleChange={this.handleSelectChange}
                 value={this.state.source}
