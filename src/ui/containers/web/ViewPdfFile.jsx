@@ -40,7 +40,6 @@ class PdfUpload extends React.Component {
   }
 
   handleClick = rowData => {
-    console.log(rowData);
     history.push(`${process.env.PUBLIC_URL}/interactive-editor/${rowData[0]}`);
   };
 

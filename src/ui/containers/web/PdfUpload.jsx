@@ -48,7 +48,8 @@ class PdfUpload extends Component {
       modelLanguage: [],
       name: "",
       message: "File uplaoded successfully",
-      showComponent: false
+      showComponent: false,
+
     };
   }
 
@@ -73,7 +74,6 @@ class PdfUpload extends Component {
       })
       e.preventDefault();
       const { APITransport } = this.props;
-      console.log(this.state.source, this.state.target, model);
       if (this.state.files.length > 0 && this.state.name) {
         const apiObj = new PdfFileUpload(
           this.state.name,
@@ -99,7 +99,6 @@ class PdfUpload extends Component {
           item.interactive_end_point && supportLanguage.map(value => (item.source_language_code === value.language_code ? result.push(value) : null))
       );
     }
-    console.log(result)
     const value = new Set(result);
     const source_language = [...value];
     return source_language;
@@ -121,7 +120,6 @@ class PdfUpload extends Component {
     return target_language;
   }
   handleSelectChange = event => {
-    console.log("", event.target.value);
     this.setState({ [event.target.name]: event.target.value });
   };
 
@@ -160,7 +158,6 @@ class PdfUpload extends Component {
   }
 
   readFileDataAsBinary(file) {
-    console.log(file);
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 

@@ -34,14 +34,10 @@ class Editor extends React.Component {
   handleApiCall(){
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
     let temp = this.state.scriptSentence
-
-    console.log("value",this.state.scriptSentence,this.state.superScriptToken)
     if(this.props.superScriptToken){
       this.state.scriptSentence.map((sentence, index) => {
-        console.log(splitValue[0],sentence._id)
         if (splitValue[0] === sentence._id) {
-          console.log("t------",temp[index],temp[index].tokenized_sentences[splitValue[1]],temp[index].tokenized_sentences[splitValue[1]].target )
-          temp[index].tokenized_sentences[splitValue[1]].target =  this.state.superIndex +' '+ this.state.target,
+         temp[index].tokenized_sentences[splitValue[1]].target =  this.state.superIndex +' '+ this.state.target,
           temp[index].tokenized_sentences[splitValue[1]].tagged_tgt= this.state.taggedTarget        
           }
           
