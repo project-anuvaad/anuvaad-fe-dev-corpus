@@ -8,6 +8,9 @@
   }
 }
 
+.GridButton{
+  width: 100%; overflow:hidden; white-space:nowrap; pointer-events: none; font-size: 90%; font-weight: bold;
+}
 .Button{
   width: 100%; pointer-events: none; font-size:'10px'; font-weight:bold;
 }
