@@ -98,7 +98,7 @@ class EditorPaper extends React.Component {
     }
 
     fetchSentence(sentence) {
-        let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'justify')
+        let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'left')
 
         if (!sentence.is_footer && sentence.text) {
             if (sentence.is_ner && !sentence.is_new_line) {
