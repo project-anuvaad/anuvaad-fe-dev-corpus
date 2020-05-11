@@ -227,7 +227,7 @@ class Editor extends React.Component {
         taggedTarget: this.props.clickedCell.tagged_tgt
       });
     }
-    if (prevProps.submittedId !== this.props.submittedId && !this.props.selectedTableId) {
+    if (prevProps.submittedId !== this.props.submittedId) {
       console.log("----", this.props.submittedId);
       this.handleSentence(0);
     }
