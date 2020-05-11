@@ -290,7 +290,7 @@ class IntractiveTrans extends React.Component {
                   variant="outlined"
                   size="large"
                   className="GridFileDetails"
-                  style={{ width: "100%", pointerEvents: "none", fontSize: "90%", fontWeight: "bold" }}
+                  style={{width:'100%',overflow:"hidden",whiteSpace:"nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold"}}
                 >
                   <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />
                   {this.state.fileDetails && `Source : ${  this.state.fileDetails.source_lang}`}
@@ -305,7 +305,7 @@ class IntractiveTrans extends React.Component {
                   variant="outlined"
                   size="large"
                   color="primary"
-                  style={{ width: "100%", minWidth: "110px", fontSize: "90%", fontWeight: "bold" }}
+                  style={{ width: "100%", minWidth: "110px", fontSize: "90%", fontWeight: "bold",overflow:"hidden",whiteSpace:"nowrap" }}
                   onClick={() => this.handlePreview()}
                 >
                   <VisibilityIcon fontSize="large" />

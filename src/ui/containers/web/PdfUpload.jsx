@@ -74,9 +74,9 @@ class PdfUpload extends Component {
       })
       e.preventDefault();
       const { APITransport } = this.props;
-      if (this.state.files.length > 0 && this.state.name) {
+      if (this.state.files.length > 0 && this.state.workspaceName) {
         const apiObj = new PdfFileUpload(
-          this.state.name,
+          this.state.workspaceName,
           this.state.files[0],
           source_lang_name,
           target_lang_name,
@@ -123,11 +123,11 @@ class PdfUpload extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleChange = files => {
-    this.setState({
-      files
-    });
-  };
+  // handleChange = files => {
+  //   this.setState({
+  //     files
+  //   });
+  // };
 
   componentDidMount() {
     const { APITransport } = this.props;
@@ -188,7 +188,8 @@ class PdfUpload extends Component {
   handleChange = files => {
     if (files.length > 0) {
       this.setState({
-        files
+        files,
+        workspaceName:this.state.workspaceName ? this.state.workspaceName :files[0].name.slice(0, -4)
       });
     }
   };
@@ -214,11 +215,10 @@ class PdfUpload extends Component {
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <TextField
                 value={this.state.workspaceName}
-                required
                 id="outlined-name"
                 margin="normal"
                 onChange={event => {
-                  this.handleTextChange("name", event);
+                  this.handleTextChange("workspaceName", event);
                 }}
                 variant="outlined"
                 style={{ width: 158 }}
