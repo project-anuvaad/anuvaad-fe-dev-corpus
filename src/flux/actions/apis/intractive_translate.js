@@ -6,6 +6,7 @@ import C from "../constants";
 
 export default class NMTSP extends API {
     constructor(source,target, model, timeout = 200000) {
+        console.log("model----",model)
         super("POST", timeout, false);
         this.src = source;
         this.target = target;
