@@ -157,8 +157,6 @@ class IntractiveTrans extends React.Component {
   handleSave(value, index, submittedId, keyValue, cellValue, taggedValue) {
     const obj = this.state.sentences;
     const temp = this.state.sentences[index];
-
-    console.log("test", temp);
     if (temp.is_table) {
       temp.table_items[keyValue][cellValue].target = value.tgt ? value.tgt : value;
       temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt ? value.tagged_tgt : taggedValue;
@@ -172,14 +170,15 @@ class IntractiveTrans extends React.Component {
       sentences: obj
     });
 
-    this.handleDone(false, obj);
+    this.handleDone(false, temp);
   }
 
   handleDone(token, value) {
     console.log(value);
 
     const { APITransport } = this.props;
-    const senArray = [...value];
+    let senArray =[];
+    senArray.push(value)
     const apiObj = new InteractiveApi(senArray);
     APITransport(apiObj);
     this.setState({ token });
@@ -290,14 +289,14 @@ class IntractiveTrans extends React.Component {
                   variant="outlined"
                   size="large"
                   className="GridFileDetails"
-                  style={{width:'100%',overflow:"hidden",whiteSpace:"nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold"}}
+                  style={{ width: '100%', overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold" }}
                 >
                   <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />
-                  {this.state.fileDetails && `Source : ${  this.state.fileDetails.source_lang}`}
+                  {this.state.fileDetails && `Source : ${this.state.fileDetails.source_lang}`}
                   <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
-                  {this.state.fileDetails && `Target : ${  this.state.fileDetails.target_lang}`}
+                  {this.state.fileDetails && `Target : ${this.state.fileDetails.target_lang}`}
                   <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
-                  {this.state.fileDetails && `Filename : ${  this.state.fileDetails.process_name}`}
+                  <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', }}>{this.state.fileDetails && `Filename : ${  this.state.fileDetails.process_name}`}</div>
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6} lg={2} xl={2}>
@@ -305,7 +304,7 @@ class IntractiveTrans extends React.Component {
                   variant="outlined"
                   size="large"
                   color="primary"
-                  style={{ width: "100%", minWidth: "110px", fontSize: "90%", fontWeight: "bold",overflow:"hidden",whiteSpace:"nowrap" }}
+                  style={{ width: "100%", minWidth: "110px", fontSize: "90%", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap" }}
                   onClick={() => this.handlePreview()}
                 >
                   <VisibilityIcon fontSize="large" />
@@ -366,27 +365,27 @@ class IntractiveTrans extends React.Component {
                         handleSuperScript={this.handleSuperScript.bind(this)}
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
-                       />
+                      />
                     </div>
                   </Paper>
                 </Grid>
               ) : (
-                <Grid item xs={1} sm={1} lg={1} xl={1}>
-                  <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
-                    <Toolbar
-                      onClick={event => {
-                        this.handleClick(false, 4);
-                      }}
-                      style={{ color: darkBlack, background: blueGrey50 }}
-                    >
-                      <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
+                  <Grid item xs={1} sm={1} lg={1} xl={1}>
+                    <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
+                      <Toolbar
+                        onClick={event => {
+                          this.handleClick(false, 4);
+                        }}
+                        style={{ color: darkBlack, background: blueGrey50 }}
+                      >
+                        <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
                       <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                        Source
+                          Source
                       </Typography>
-                    </Toolbar>
-                  </Paper>
-                </Grid>
-              )}
+                      </Toolbar>
+                    </Paper>
+                  </Grid>
+                )}
               <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
                 <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: "scroll" }}>
                   <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
@@ -413,7 +412,7 @@ class IntractiveTrans extends React.Component {
                       handleSuperScript={this.handleSuperScript.bind(this)}
                       handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                       handleTableCellClick={this.handleCellOnClick.bind(this)}
-                     />
+                    />
                   </div>
                 </Paper>
               </Grid>
@@ -445,7 +444,7 @@ class IntractiveTrans extends React.Component {
                 autoHideDuration={3000}
                 onClose={this.handleClose}
                 variant="success"
-                message={`${this.state.fileDetails.process_name  } saved successfully !...`}
+                message={`${this.state.fileDetails.process_name} saved successfully !...`}
               />
             )}
           </div>
