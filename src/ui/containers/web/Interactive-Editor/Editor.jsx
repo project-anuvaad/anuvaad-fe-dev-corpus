@@ -365,7 +365,7 @@ class Editor extends React.Component {
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
           <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px", marginLeft: "4%" }}>
-            {this.state.checkedB ? "Anuvaad Model" : "Ignored Anuvaad Model"}
+            {this.state.checkedB ? translate('dashbord.page.title.anuvaadModel') : translate('intractive_translate.page.textarea.ignoredPlaceholder')}
           </Typography>
           <Switch
             checked={this.state.checkedB}
@@ -391,7 +391,7 @@ class Editor extends React.Component {
             rows="10"
             disabled
             value={this.state.target}
-            placeholder="select sentence from target or press next.."
+            placeholder= {translate('intractive_translate.page.textarea.anuvaadModelPlaceholder')}
             cols="50"
             onChange={event => {
               this.handleTextSelectChange(event);
@@ -399,7 +399,7 @@ class Editor extends React.Component {
           />
         </div>
         <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "4%" }}>
-          Interactive Translate
+         {translate('intractive_translate.page.main.title')}
         </Typography>
         <div>
           <textarea
@@ -419,8 +419,8 @@ class Editor extends React.Component {
             }}
             placeholder={
               this.state.checkedB
-                ? 'Enter target prefix here... (press "Tab key" to copy next word from anuvaad model)'
-                : "Update sentence manually here..."
+                ? translate('intractive_translate.page.textarea.targetPlaceholder')
+                : translate('intractive_translate.page.textarea.updateManuallyPlaceholder')
             }
             cols="50"
             onChange={event => {
@@ -443,7 +443,7 @@ class Editor extends React.Component {
             >
               {" "}
               <ChevronLeftIcon size="large" />
-              &nbsp;Previous Line
+              &nbsp;{translate('common.page.label.previousLine')}
             </Button>
           </Grid>
           <Grid item xs={3} sm={3} lg={3} xl={3}>
@@ -455,7 +455,7 @@ class Editor extends React.Component {
               }}
             >
               {" "}
-              &nbsp;save
+              &nbsp;{translate('common.page.button.save')}
             </Button>
           </Grid>
           <Grid item xs={3} sm={3} lg={4} xl={4}>
@@ -469,7 +469,7 @@ class Editor extends React.Component {
               }}
               style={{ fontWeight: "bold", width: "100%" }}
             >
-              Next Line&nbsp;
+              {translate('common.page.label.nextLine')}&nbsp;
               <ChevronRightIcon size="large" />{" "}
             </Button>
           </Grid>
