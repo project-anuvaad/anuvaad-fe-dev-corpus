@@ -108,7 +108,7 @@ class IntractiveTrans extends React.Component {
   keyPress(event) {
     if (event.keyCode === 9) {
       if (this.state.disable && this.state.translateText) {
-        const apiObj = new IntractiveApi(this.state.text, this.handleCalc(event.target.value), this.state.model);
+        const apiObj = new IntractiveApi(this.state.text, this.handleCalc(event.target.value), this.state.model[0]);
         this.props.APITransport(apiObj);
         this.setState({ disable: false });
       } else {
@@ -189,7 +189,7 @@ class IntractiveTrans extends React.Component {
       if (this.state.nmtText[0].tgt.startsWith(event.target.value) && this.state.nmtText[0].tgt.includes(event.target.value, 0)) {
       } else {
         const res = this.handleCalc(event.target.value);
-        const apiObj = new IntractiveApi(this.state.text, res, this.state.model);
+        const apiObj = new IntractiveApi(this.state.text, res, this.state.model[0]);
         this.props.APITransport(apiObj);
         this.focusDiv("blur");
         this.setState({
@@ -200,7 +200,7 @@ class IntractiveTrans extends React.Component {
 
     if (!event.target.value && this.state.edit) {
       console.log("test");
-      const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model);
+      const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model[0]);
       this.props.APITransport(apiObj);
       this.focusDiv("blur");
     }
@@ -269,7 +269,7 @@ class IntractiveTrans extends React.Component {
     if (this.state.translateText) {
       res = this.handleCalc(this.state.translateText);
     }
-    const apiObj = new IntractiveApi(this.state.text, res, model);
+    const apiObj = new IntractiveApi(this.state.text, res, model[0]);
     if (this.state.text && this.state.source && this.state.target) {
       if (!this.state.update && !this.state.edit) {
         APITransport(apiObj);
