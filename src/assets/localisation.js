@@ -317,7 +317,16 @@ const localization_EN_Data = {
   "intractive_translate.page.snackbar.message": "Sentence updated successfully!",
   "intractive_translate.page.textarea.targetPlaceholder": 'Enter target prefix here... (press "Tab key" to copy next word from anuvaad model)',
   "intractive_translate.page.textarea.sourcePlaceholder": "Enter sentence here..",
-  "intractive_translate.page.main.title": "Interactive Translate"
+  "intractive_translate.page.main.title": "Interactive Translate",
+  "common.page.label.collapse": "Collapse",
+  "common.page.label.review/download": "Review / Download",
+  "common.page.label.previousLine": "Previous Line",
+  "common.page.label.nextLine": "Next Line",
+  "common.page.label.done": "Done",
+  "common.page.label.fileName": "filename",
+  "intractive_translate.page.textarea.anuvaadModelPlaceholder": "Select sentence from target or press next..",
+  "intractive_translate.page.textarea.updateManuallyPlaceholder": "Update sentence manually here...",
+  "intractive_translate.page.textarea.ignoredPlaceholder": "Ignored Anuvaad Model",
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
@@ -640,7 +649,16 @@ const localization_HI_Data = {
     'यहाँ लक्ष्य उपसर्ग दर्ज करें ... (प्रेस "Tab key" अनुवाड मॉडल से अगला शब्द कॉपी करने के लिए))',
   "intractive_translate.page.textarea.sourcePlaceholder": "यहां वाक्य दर्ज करें..",
   "intractive_translate.page.main.title": "इंटरएक्टिव अनुवाद",
-  "webroutes.page.title.pdfToDoc":"पीडीएफ से डॉक बनाए"
+  "webroutes.page.title.pdfToDoc":"पीडीएफ से डॉक बनाए",
+  "common.page.label.collapse": "छिपाए",
+  "common.page.label.review/download": "समीक्षा / डाउनलोड",
+  "common.page.label.previousLine": "पिछली पंक्ति",
+  "common.page.label.nextLine": "अगली पंक्ति",
+  "common.page.label.done": "किया हुआ",
+  "common.page.label.fileName": "फ़ाइल नाम",
+  "intractive_translate.page.textarea.anuvaadModelPlaceholder": "लक्ष्य से वाक्य चुनें या अगला दबाएं",
+  "intractive_translate.page.textarea.updateManuallyPlaceholder": "यहां मैन्युअल रूप से वाक्य अपडेट करें...",
+  "intractive_translate.page.textarea.ignoredPlaceholder": "अनुवाद मॉडल को नज़रंदाज़ करे",
 };
 
 export function translate(locale_text) {
