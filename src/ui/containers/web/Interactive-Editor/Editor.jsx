@@ -35,16 +35,18 @@ class Editor extends React.Component {
     console.log("res---", target, taggedTarget);
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
     const temp = this.state.scriptSentence;
+    let value=[]
     if (this.props.superScriptToken) {
       this.state.scriptSentence.map((sentence, index) => {
         if (splitValue[0] === sentence._id) {
           (temp[index].tokenized_sentences[splitValue[1]].target = `${this.state.superIndex} ${target}`),
             (temp[index].tokenized_sentences[splitValue[1]].tagged_tgt = taggedTarget);
+            value=temp[index]
         }
       });
     }
     this.setState({ scriptSentence: temp, apiToken: true });
-    return temp;
+    return value;
   }
 
   handleApiCall() {
@@ -53,7 +55,7 @@ class Editor extends React.Component {
       this.handleSubmit();
     } else if (this.props.superScriptToken && this.state.superIndex) {
       this.props.handleScriptSave(this.state.target, this.state.superIndex);
-      this.props.hadleSentenceSave(false, [...this.state.sentences, ...temp]);
+      this.props.hadleSentenceSave(false, temp);
     } else {
       this.props.handleSave(
         this.state.target,
@@ -199,7 +201,7 @@ class Editor extends React.Component {
             this.props.intractiveTrans.length > 0 &&
             this.handleSuperSave(this.props.intractiveTrans[0].tgt, this.props.intractiveTrans[0].tagged_tgt);
 
-          this.props.hadleSentenceSave(false, [...this.state.sentences, ...temp]);
+          this.props.hadleSentenceSave(false, temp);
         } else {
           this.props.handleSave(
             this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0],
