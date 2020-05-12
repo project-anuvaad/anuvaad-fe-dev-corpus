@@ -149,7 +149,9 @@ class EditorPaper extends React.Component {
 
     handleOnClick(id) {
         if (!this.props.isPreview) {
-            this.props.handleSentenceClick(id, true, this.props.paperType)
+            if(id) {
+                this.props.handleSentenceClick(id, true, this.props.paperType)
+            }
         }
     }
 
