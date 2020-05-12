@@ -79,9 +79,9 @@ class Editor extends React.Component {
           const temp = sentence.tokenized_sentences[splitValue[1]];
           this.setState({
             clickedSentence: false,
-            target: temp.target.substr(temp.target.indexOf(" ") + 1),
+            target: temp.target ? temp.target.substr(temp.target.indexOf(" ") + 1) : "",
             source: temp.src,
-            superIndex: temp.target.substr(0, temp.target.indexOf(" ")),
+            superIndex: temp.target ? temp.target.substr(0, temp.target.indexOf(" ")): "",
             taggedSource: temp.tagged_src,
             taggedTarget: temp.tagged_tgt,
             translateText: ""
