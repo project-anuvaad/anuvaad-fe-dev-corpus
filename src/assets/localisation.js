@@ -79,7 +79,7 @@ const localization_EN_Data = {
   "corpus.page.text.alignmentAccuracy": "Alignment Accuracy",
   "common.page.text.download": "DOWNLOAD",
   "common.page.label.basename": "Basename",
-  "common.page.label.filename": "Enter Filename",
+  "common.page.label.filename": "Enter Filename :",
   "viewCorpus.page.label.fileName": "File Name",
   "viewCorpus.page.label.domain": "Domain",
   "common.page.label.sentence": "Sentences",
