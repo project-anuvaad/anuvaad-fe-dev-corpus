@@ -157,8 +157,6 @@ class IntractiveTrans extends React.Component {
   handleSave(value, index, submittedId, keyValue, cellValue, taggedValue) {
     const obj = this.state.sentences;
     const temp = this.state.sentences[index];
-
-    console.log("test", temp);
     if (temp.is_table) {
       temp.table_items[keyValue][cellValue].target = value.tgt ? value.tgt : value;
       temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt ? value.tagged_tgt : taggedValue;
@@ -172,14 +170,15 @@ class IntractiveTrans extends React.Component {
       sentences: obj
     });
 
-    this.handleDone(false, obj);
+    this.handleDone(false, temp);
   }
 
   handleDone(token, value) {
     console.log(value);
 
     const { APITransport } = this.props;
-    const senArray = [...value];
+    let senArray =[];
+    senArray.push(value)
     const apiObj = new InteractiveApi(senArray);
     APITransport(apiObj);
     this.setState({ token });
