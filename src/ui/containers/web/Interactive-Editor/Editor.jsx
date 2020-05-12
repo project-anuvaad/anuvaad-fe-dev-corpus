@@ -14,7 +14,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { translate } from "../../../../assets/localisation";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
-
+import Dialog from "../../../components/web/common/SimpleDialog"
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +27,7 @@ class Editor extends React.Component {
       message: translate("intractive_translate.page.snackbar.message"),
       indexValue: 0,
       i: 0,
-      token: true
+      token: true, value:''
     };
   }
 
@@ -66,6 +66,9 @@ class Editor extends React.Component {
         this.handleCalc(this.state.target)
       );
     }
+    this.setState({
+      targetDialog:this.state.target
+    })
   }
 
   handleSwitchChange = () => {
@@ -82,6 +85,7 @@ class Editor extends React.Component {
           this.setState({
             clickedSentence: false,
             target: temp.target ? temp.target.substr(temp.target.indexOf(" ") + 1) : "",
+            targetDialog:  temp.target ? temp.target.substr(temp.target.indexOf(" ") + 1) : "",
             source: temp.src,
             superIndex: temp.target ? temp.target.substr(0, temp.target.indexOf(" ")): "",
             taggedSource: temp.tagged_src,
@@ -93,6 +97,31 @@ class Editor extends React.Component {
     }
   }
 
+  handleClose(){
+    this.setState({
+      open:false
+    })
+    this.handleSentence(this.state.value)
+  }
+
+  handleSave(){
+    this.setState({
+      open:false
+    })
+    this.handleApiCall()
+  }
+
+
+  handleDialog(value){
+
+    if(this.state.targetDialog!==this.state.target && value!== 0){
+      this.setState({open: true, value})
+    }
+    else{
+      this.handleSentence(value)
+    }
+   
+  }
   handleSentence(value) {
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
     this.props.sentences &&
@@ -125,6 +154,7 @@ class Editor extends React.Component {
             }
             this.setState({
               target: this.props.sentences[index + value].tokenized_sentences[0].target,
+              targetDialog: this.props.sentences[index + value].tokenized_sentences[0].target,
               source: this.props.sentences[index + value].tokenized_sentences[0].src,
               taggedSource: this.props.sentences[index + value].tokenized_sentences[0].tagged_src,
               taggedTarget: this.props.sentences[index + value].tokenized_sentences[0].tagged_tgt,
@@ -155,6 +185,7 @@ class Editor extends React.Component {
             this.setState({
               target: this.props.sentences[index].tokenized_sentences[ind].target,
               source: this.props.sentences[index].tokenized_sentences[ind].src,
+              targetDialog: this.props.sentences[index].tokenized_sentences[ind].target,
               taggedSource: this.props.sentences[index].tokenized_sentences[ind].tagged_src,
               taggedTarget: this.props.sentences[index].tokenized_sentences[ind].tagged_tgt,
               token: false,
@@ -208,9 +239,14 @@ class Editor extends React.Component {
             this.state.indexValue,
             this.state.submittedId,
             this.state.keyValue,
-            this.state.cellValue
+            this.state.cellValue,
+            
           );
+          this.state.value && this.handleSentence(this.state.value)
         }
+        this.setState({
+          targetDialog:this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt, value:''
+        })
       }
       this.setState({
         disable: false,
@@ -440,7 +476,7 @@ class Editor extends React.Component {
               color="primary"
               disabled={this.props.sentences[0]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken}
               onClick={event => {
-                this.handleSentence(-1);
+                this.handleDialog(-1);
               }}
             >
               {" "}
@@ -467,7 +503,7 @@ class Editor extends React.Component {
                 this.props.sentences[this.props.sentences.length - 1]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken
               }
               onClick={event => {
-                this.handleSentence(1);
+                this.handleDialog(1);
               }}
               style={{ fontWeight: "bold", width: "100%" }}
             >
@@ -476,6 +512,7 @@ class Editor extends React.Component {
             </Button>
           </Grid>
         </Grid>
+        {this.state.open&& <Dialog  message="Do you want to save the changes ? "  handleSubmit = {this.handleSave.bind(this)}handleClose ={this.handleClose.bind(this)} open= {true}title="Save" status= {this.state.value}/>}
       </Paper>
     );
   }
