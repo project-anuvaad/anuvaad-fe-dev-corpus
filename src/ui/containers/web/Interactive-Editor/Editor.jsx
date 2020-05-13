@@ -413,7 +413,7 @@ class Editor extends React.Component {
           {!this.state.checkedB &&
 
 <Button  size="small" color="primary" onClick={event => {
-                copy(this.state.target),this.setState({ tag: true, translateText: this.state.target });
+                this.setState({ tag: true, translateText: this.state.target });
                 setTimeout(() => {
                   this.setState({ tag: false });
                 }, 3000);
