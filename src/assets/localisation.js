@@ -354,7 +354,7 @@ const localization_HI_Data = {
   "common.page.label.enterWorkspace": "कार्यक्षेत्र का नाम दर्ज करें :",
   "newSentenceExtraction.page.label.confiFile": "विन्यास फाइल :",
   "newSentenceExtraction.page.link.globalConfig": "वैश्विक कॉन्फ़िगरेशन डाउनलोड करें",
-  "common.page.button.upload": "डालना",
+  "common.page.button.upload": "अपलोड करे",
   "common.page.label.csvFile": "सीएसवी फ़ाइल :",
   "newSentenceExtraction.page.link.SampleCsv": "नमूना सीएसवी डाउनलोड करें",
   "common.page.button.start": "प्रसंस्करण शुरू करें",
