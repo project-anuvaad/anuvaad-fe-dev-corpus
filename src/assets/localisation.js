@@ -654,7 +654,7 @@ const localization_HI_Data = {
   "common.page.label.review/download": "समीक्षा / डाउनलोड",
   "common.page.label.previousLine": "पिछली पंक्ति",
   "common.page.label.nextLine": "अगली पंक्ति",
-  "common.page.label.done": "किया हुआ",
+  "common.page.label.done": "पूर्ण",
   "common.page.label.fileName": "फ़ाइल नाम",
   "intractive_translate.page.textarea.anuvaadModelPlaceholder": "लक्ष्य से वाक्य चुनें या अगला दबाएं",
   "intractive_translate.page.textarea.updateManuallyPlaceholder": "यहां मैन्युअल रूप से वाक्य अपडेट करें...",
