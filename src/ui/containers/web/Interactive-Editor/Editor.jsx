@@ -14,7 +14,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import { translate } from "../../../../assets/localisation";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
-import Dialog from "../../../components/web/common/SimpleDialog"
+import Dialog from "../../../components/web/common/SimpleDialog";
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -49,25 +50,31 @@ class Editor extends React.Component {
     return value;
   }
 
+ 
+
   handleApiCall() {
-    const temp = this.handleSuperSave(this.state.target, this.state.taggedTarget);
+    const temp = this.handleSuperSave(this.state.checkedB ? this.state.target: this.state.translateText, this.state.taggedTarget);
     if (this.state.checkedB) {
       this.handleSubmit();
     } else if (this.props.superScriptToken && this.state.superIndex) {
-      this.props.handleScriptSave(this.state.target, this.state.superIndex);
+      this.props.handleScriptSave(this.state.translateText, this.state.superIndex);
       this.props.hadleSentenceSave(false, temp);
+      this.setState({target:this.state.translateText})
     } else {
       this.props.handleSave(
-        this.state.target,
+        this.state.translateText,
         this.state.indexValue,
         this.state.submittedId,
         this.state.keyValue,
         this.state.cellValue,
-        this.handleCalc(this.state.target)
+        this.handleCalc(this.state.translateText)
       );
+      
+      this.setState({target:this.state.translateText})
+      this.state.value && this.handleSentence(this.state.value)
     }
     this.setState({
-      targetDialog:this.state.target
+      targetDialog:this.state.checkedB ? this.state.target: this.state.translateText
     })
   }
 
@@ -90,7 +97,8 @@ class Editor extends React.Component {
             superIndex: temp.target ? temp.target.substr(0, temp.target.indexOf(" ")): "",
             taggedSource: temp.tagged_src,
             taggedTarget: temp.tagged_tgt,
-            translateText: ""
+            translateText: "",
+            checkedB: true
           });
         }
       });
@@ -114,7 +122,7 @@ class Editor extends React.Component {
 
   handleDialog(value){
 
-    if(this.state.targetDialog!==this.state.target && value!== 0){
+    if((this.state.targetDialog!==this.state.target || (this.state.target !== this.state.translateText && !this.state.checkedB && this.state.translateText)) && value!== 0){
       this.setState({open: true, value})
     }
     else{
@@ -203,7 +211,7 @@ class Editor extends React.Component {
   }
 
   handleTextSelectChange(event) {
-    this.setState({ target: event.target.value, translateText: event.target.value });
+    this.setState({ translateText: event.target.value });
   }
 
   handleSubmit() {
@@ -220,7 +228,6 @@ class Editor extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
-      console.log("apiT---", this.state.apiToken);
       if (this.state.apiToken) {
         if (this.props.superScriptToken && this.state.superIndex) {
           this.props.handleScriptSave(
@@ -320,7 +327,7 @@ class Editor extends React.Component {
   }
 
   keyPress(event) {
-    if (event.keyCode === 9) {
+    if (event.keyCode === 9 && this.state.checkedB) {
       if (this.state.disable && this.state.translateText) {
         const apiObj = new IntractiveApi(this.state.source, this.handleCalc(event.target.value), this.props.modelDetails);
         this.props.APITransport(apiObj);
@@ -388,9 +395,7 @@ class Editor extends React.Component {
     }
 
     if (!event.target.value) {
-      const apiObj = new IntractiveApi(this.state.source, event.target.value, this.props.modelDetails);
-      this.props.APITransport(apiObj);
-      this.focusDiv("blur");
+      this.setState({target:this.state.targetDialog})
     }
     this.setState({
       [key]: event.target.value,
@@ -401,24 +406,29 @@ class Editor extends React.Component {
   render() {
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
-        <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-          <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px", marginLeft: "4%" }}>
-            {this.state.checkedB ? translate('dashbord.page.title.anuvaadModel') : translate('intractive_translate.page.textarea.ignoredPlaceholder')}
+        <Toolbar>
+          <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px"}}>
+            {this.state.checkedB ? translate('dashbord.page.title.anuvaadModel') : "Recommended Sentence"}
           </Typography>
-          <Switch
-            checked={this.state.checkedB}
-            onChange={() => {
-              this.handleSwitchChange();
-            }}
-            value="checkedB"
-            color="primary"
-          />
+          {!this.state.checkedB &&
+
+<Button  size="small" color="primary" onClick={event => {
+                this.setState({ tag: true, translateText: this.state.target });
+                setTimeout(() => {
+                  this.setState({ tag: false });
+                }, 3000);
+              }}>
+{this.state.tag ? "copied": "copy"}&nbsp;
+</Button>
+         
+  }
         </Toolbar>
-        <Typography value="" variant="h6" gutterBottom style={{ paddingTop: "10px", marginLeft: "4%" }} />
+        <Typography value="" variant="h6" gutterBottom/>
         <div>
           <textarea
             style={{
               width: "87%",
+              resize: "none",
               margin: "10px 10px 10px 4%",
               padding: "15px",
               height: "25vh",
@@ -436,13 +446,26 @@ class Editor extends React.Component {
             }}
           />
         </div>
-        <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "4%" }}>
-         {translate('intractive_translate.page.main.title')}
-        </Typography>
+
+        <Toolbar>
+          <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px"}}>
+            {this.state.checkedB ? translate('intractive_translate.page.main.title') : "Manual Translate"}
+          </Typography>
+          <Switch
+            checked={this.state.checkedB}
+            onChange={() => {
+              this.handleSwitchChange();
+            }}
+            value="checkedB"
+            color="primary"
+          />
+        </Toolbar>
+        
         <div>
           <textarea
             style={{
               width: "87%",
+              resize: "none",
               margin: "10px 10px 10px 4%",
               padding: "15px",
               height: "25vh",
