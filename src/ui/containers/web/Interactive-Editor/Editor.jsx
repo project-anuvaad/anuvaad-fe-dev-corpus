@@ -419,6 +419,7 @@ class Editor extends React.Component {
           <textarea
             style={{
               width: "87%",
+              resize: "none",
               margin: "10px 10px 10px 4%",
               padding: "15px",
               height: "25vh",
@@ -443,6 +444,7 @@ class Editor extends React.Component {
           <textarea
             style={{
               width: "87%",
+              resize: "none",
               margin: "10px 10px 10px 4%",
               padding: "15px",
               height: "25vh",
