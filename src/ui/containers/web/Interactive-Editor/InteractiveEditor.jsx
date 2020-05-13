@@ -177,7 +177,7 @@ class IntractiveTrans extends React.Component {
     console.log(value);
 
     const { APITransport } = this.props;
-    let senArray =[];
+    let senArray = [];
     senArray.push(value)
     const apiObj = new InteractiveApi(senArray);
     APITransport(apiObj);
@@ -193,7 +193,11 @@ class IntractiveTrans extends React.Component {
   }
 
   handleOnMouseEnter(sentenceId, parent) {
-    this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, parent });
+    if (this.state.selectedSentenceId) {
+      this.setState({ hoveredSentence: sentenceId, scrollToId: "", parent });
+    } else {
+      this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, parent })
+    }
   }
 
   handleOnMouseLeave() {
@@ -201,10 +205,15 @@ class IntractiveTrans extends React.Component {
   }
 
   handleTableHover(sentenceId, tableId, parent) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, parent });
+    if (this.state.clickedCell) {
+      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: "", parent });
+    } else {
+      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, parent });
+    }
   }
 
   handleTableHoverLeft() {
+
     this.setState({ hoveredSentence: "", hoveredTableId: "" });
   }
 
