@@ -189,7 +189,7 @@ class PdfUpload extends Component {
     if (files.length > 0) {
       this.setState({
         files,
-        workspaceName:this.state.workspaceName ? this.state.workspaceName :files[0].name.slice(0, -4)
+        workspaceName: this.state.workspaceName ? this.state.workspaceName : files[0].name.slice(0, -4)
       });
     }
   };
@@ -228,7 +228,7 @@ class PdfUpload extends Component {
           <Grid container spacing={24} style={{ marginLeft: "3%" }}>
             <Grid item xs={8} sm={8} lg={8} xl={8} style={{ paddingLeft: "2%" }}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "100%", paddingTop: "15px" }}>
-                Select Source Language *
+                {translate('common.page.label.sourceLang') + ' *'}
               </Typography>
             </Grid>
             <Grid item xs={3} sm={3} lg={3} xl={3}>
@@ -257,7 +257,7 @@ class PdfUpload extends Component {
                 gutterBottom="true"
                 style={{ width: "100%", paddingTop: "15px", paddingBottom: "30px" }}
               >
-                Select Target Language *
+                {translate('common.page.label.targetLang') + ' *'}
               </Typography>
               <br />
             </Grid>

@@ -14,6 +14,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import DownloadIcon from "@material-ui/icons/ArrowDownward";
 import history from "../../../../web.history";
 import EditorPaper from "./EditorPaper"
+import { translate } from "../../../../assets/localisation";
 
 class Preview extends React.Component {
     constructor(props) {
@@ -137,10 +138,10 @@ class Preview extends React.Component {
                     </Grid>
                     <Grid item xs={12} sm={2} lg={3} xl={3} className='GridFileDetails' style={{ textAlign: 'right' }}>
                         <Button variant="extended" size="large" color="primary" style={{ minWidth: '110px', fontSize: '90%', fontWeight: 'bold', marginBottom: "10px" }} onClick={() => this.handleOnDownload()}>
-                            <DownloadIcon size="large" />{" "}&nbsp;&nbsp;DOWNLOAD
+                            <DownloadIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.text.download')}
                         </Button>
                         <Button variant="extended" size="large" color="primary" style={{ minWidth: '110px', fontSize: '90%', fontWeight: 'bold', marginLeft: "5px", marginBottom: "10px" }} onClick={() => this.handleOnClose()}>
-                            <CloseIcon size="large" />{" "}&nbsp;&nbsp;CLOSE
+                            <CloseIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
                         </Button>
                     </Grid>
                 </Grid>
