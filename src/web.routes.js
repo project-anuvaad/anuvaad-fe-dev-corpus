@@ -73,7 +73,7 @@ import FeedbackForm from "./ui/containers/web/FeedbackForm";
 import PdfUpload from "./ui/containers/web/PdfUpload";
 import PdfToDoc from "./ui/containers/web/PdfToDoc";
 import ViewPdf from "./ui/containers/web/ViewPdfFile";
-
+import Signup from "./ui/containers/web/SignUp";
 import IntractiveTranslate from "./ui/containers/web/IntractiveTranslation";
 import InteractiveEditor from "./ui/containers/web/Interactive-Editor/InteractiveEditor";
 import PdfSentence from "./ui/containers/web/PdfSentence";
@@ -291,6 +291,13 @@ class AppRoutes extends React.Component {
               userRoles={["editor"]}
               component={QnA}
               authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/signup`}
+              title="Sign up"
+              authenticate={this.authenticateUser}
+              component={Signup}
+              
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/newcorpus`}

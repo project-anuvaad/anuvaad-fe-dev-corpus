@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Switch from "@material-ui/core/Switch";
@@ -28,26 +27,28 @@ class Editor extends React.Component {
       message: translate("intractive_translate.page.snackbar.message"),
       indexValue: 0,
       i: 0,
-      token: true, value:''
+      apiToken: false,
+      token: true, value:0
     };
   }
 
   handleSuperSave(target, taggedTarget) {
-    console.log("res---", target, taggedTarget);
+
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
     const temp = this.state.scriptSentence;
     let value=[]
     if (this.props.superScriptToken) {
       this.state.scriptSentence.map((sentence, index) => {
         if (splitValue[0] === sentence._id) {
-          (temp[index].tokenized_sentences[splitValue[1]].target = `${this.state.superIndex} ${target}`),
+          (temp[index].tokenized_sentences[splitValue[1]].target = `${this.state.superIndex} ${target}`);
             (temp[index].tokenized_sentences[splitValue[1]].tagged_tgt = taggedTarget);
             value=temp[index]
         }
+        return value;
       });
     }
     this.setState({ scriptSentence: temp, apiToken: true });
-    return value;
+    
   }
 
  
@@ -70,8 +71,9 @@ class Editor extends React.Component {
         this.handleCalc(this.state.translateText)
       );
       
-      this.setState({target:this.state.translateText})
-      this.state.value && this.handleSentence(this.state.value)
+       this.setState({target:this.state.value===0 ?this.state.translateText: this.state.target, value:0, apiToken: false})
+      this.state.value!==0 && this.handleSentence(this.state.value)
+      
     }
     this.setState({
       targetDialog:this.state.checkedB ? this.state.target: this.state.translateText
@@ -101,6 +103,7 @@ class Editor extends React.Component {
             checkedB: true
           });
         }
+        return true;
       });
     }
   }
@@ -112,7 +115,7 @@ class Editor extends React.Component {
     this.handleSentence(this.state.value)
   }
 
-  handleSave(){
+  handleDialogSave(){
     this.setState({
       open:false
     })
@@ -147,9 +150,9 @@ class Editor extends React.Component {
             }
             const val = `${this.props.sentences[index + value]._id}_${this.props.sentences[index + value].tokenized_sentences[0].sentence_index}`;
 
-            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value == 0 ? null : true);
+            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value === 0 ? null : true);
 
-            if (this.props.sentences[index + value].is_table && value != 0) {
+            if (this.props.sentences[index + value].is_table && value !== 0) {
               const blockId = `${this.props.sentences[index + value]._id}_${this.props.sentences[index + value].table_items[0][0].sentence_index}`;
               this.props.handleCellOnClick(
                 this.props.sentences[index + value]._id,
@@ -157,7 +160,7 @@ class Editor extends React.Component {
                 this.props.sentences[index + value].table_items[0][0],
                 "true",
                 null,
-                value == 0 ? null : true
+                value === 0 ? null : true
               );
             }
             this.setState({
@@ -177,14 +180,14 @@ class Editor extends React.Component {
             const ind = Number(splitValue[1]) + value;
 
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
-            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value == 0 ? null : true);
+            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value === 0 ? null : true);
             if (sentence.is_table) {
               debugger;
               for (const key in sentence.table_items) {
                 for (const cell in sentence.table_items[key]) {
                   if (sentence.table_items[key][cell].sentence_index === ind) {
                     const blockId = `${sentence._id}_${sentence.table_items[key][cell].sentence_index}`;
-                    this.props.handleCellOnClick(sentence._id, blockId, sentence.table_items[key][cell], "true", null, value == 0 ? null : true);
+                    this.props.handleCellOnClick(sentence._id, blockId, sentence.table_items[key][cell], "true", null, value === 0 ? null : true);
                     this.setState({ keyValue: key, cellValue: cell, checkedB: true });
                   }
                 }
@@ -249,10 +252,10 @@ class Editor extends React.Component {
             this.state.cellValue,
             
           );
-          this.state.value && this.handleSentence(this.state.value)
+          this.state.value!==0 && this.handleSentence(this.state.value)
         }
         this.setState({
-          targetDialog:this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt, value:''
+          targetDialog:this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt, value:0
         })
       }
       this.setState({
@@ -273,7 +276,6 @@ class Editor extends React.Component {
       });
     }
     if (prevProps.submittedId !== this.props.submittedId) {
-      console.log("----", this.props.submittedId);
       this.handleSentence(0);
     }
   }
@@ -485,9 +487,7 @@ class Editor extends React.Component {
             }
             cols="50"
             onChange={event => {
-              {
                 this.state.checkedB ? this.handleTextChange("translateText", event) : this.handleTextSelectChange(event);
-              }
             }}
             onKeyDown={this.keyPress.bind(this)}
           />
@@ -535,7 +535,7 @@ class Editor extends React.Component {
             </Button>
           </Grid>
         </Grid>
-        {this.state.open&& <Dialog  message="Do you want to save the changes ? "  handleSubmit = {this.handleSave.bind(this)}handleClose ={this.handleClose.bind(this)} open= {true}title="Save" status= {this.state.value}/>}
+        {this.state.open&& <Dialog  message="Do you want to save the changes ? "  handleSubmit = {this.handleDialogSave.bind(this)}handleClose ={this.handleClose.bind(this)} open= {true}title="Save" status= {this.state.value}/>}
       </Paper>
     );
   }
