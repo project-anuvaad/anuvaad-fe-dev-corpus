@@ -194,7 +194,7 @@ class Translate extends React.Component {
         )}
         <div>
           {this.state.showLangLayout ? (
-            <Grid container spacing={16} style={{ paddingLeft: "1%" }}>
+            <Grid container spacing={16} style={{ paddingLeft: "6%" }}>
               <Grid
                 container
                 item
