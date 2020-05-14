@@ -27,12 +27,13 @@ class Editor extends React.Component {
       message: translate("intractive_translate.page.snackbar.message"),
       indexValue: 0,
       i: 0,
-      token: true, value:null
+      apiToken: false,
+      token: true, value:0
     };
   }
 
   handleSuperSave(target, taggedTarget) {
-    console.log("res---", target, taggedTarget);
+
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
     const temp = this.state.scriptSentence;
     let value=[]
@@ -70,8 +71,9 @@ class Editor extends React.Component {
         this.handleCalc(this.state.translateText)
       );
       
-      this.setState({target:this.state.translateText})
-      this.state.value && this.handleSentence(this.state.value)
+       this.setState({target:this.state.value===0 ?this.state.translateText: this.state.target, value:0, apiToken: false})
+      this.state.value!==0 && this.handleSentence(this.state.value)
+      
     }
     this.setState({
       targetDialog:this.state.checkedB ? this.state.target: this.state.translateText
@@ -113,7 +115,7 @@ class Editor extends React.Component {
     this.handleSentence(this.state.value)
   }
 
-  handleSave(){
+  handleDialogSave(){
     this.setState({
       open:false
     })
@@ -250,10 +252,10 @@ class Editor extends React.Component {
             this.state.cellValue,
             
           );
-          this.state.value && this.handleSentence(this.state.value)
+          this.state.value!==0 && this.handleSentence(this.state.value)
         }
         this.setState({
-          targetDialog:this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt, value:''
+          targetDialog:this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt, value:0
         })
       }
       this.setState({
@@ -274,7 +276,6 @@ class Editor extends React.Component {
       });
     }
     if (prevProps.submittedId !== this.props.submittedId) {
-      console.log("----", this.props.submittedId);
       this.handleSentence(0);
     }
   }
@@ -534,7 +535,7 @@ class Editor extends React.Component {
             </Button>
           </Grid>
         </Grid>
-        {this.state.open&& <Dialog  message="Do you want to save the changes ? "  handleSubmit = {this.handleSave.bind(this)}handleClose ={this.handleClose.bind(this)} open= {true}title="Save" status= {this.state.value}/>}
+        {this.state.open&& <Dialog  message="Do you want to save the changes ? "  handleSubmit = {this.handleDialogSave.bind(this)}handleClose ={this.handleClose.bind(this)} open= {true}title="Save" status= {this.state.value}/>}
       </Paper>
     );
   }
