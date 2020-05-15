@@ -188,7 +188,7 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdf-upload`}
-
+              userRoles={["user","grader", "dev","editor"]}
               title={translate('webroutes.page.title.pdfSentences')}
               component={PdfUpload}
               authenticate={this.authenticateUser}
