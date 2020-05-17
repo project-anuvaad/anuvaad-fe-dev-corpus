@@ -15,6 +15,7 @@ import { translate } from "../../../../assets/localisation";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 import Dialog from "../../../components/web/common/SimpleDialog"
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -43,6 +44,7 @@ class Editor extends React.Component {
             (temp[index].tokenized_sentences[splitValue[1]].tagged_tgt = taggedTarget);
             value=temp[index]
         }
+        return true
       });
     }
     this.setState({ scriptSentence: temp, apiToken: true });

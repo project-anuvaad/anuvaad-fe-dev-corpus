@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
 import DownloadDoc from "../../../../flux/actions/apis/downloaddoc"
-import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import CloseIcon from "@material-ui/icons/Close";
 import DownloadIcon from "@material-ui/icons/ArrowDownward";
 import history from "../../../../web.history";
@@ -56,7 +55,6 @@ class Preview extends React.Component {
                 } else {
 
                     let sourceValue = ""
-                    let targetValue = ""
 
                     let key = (sentence.text).substr(0, (sentence.text).indexOf(' '))
 

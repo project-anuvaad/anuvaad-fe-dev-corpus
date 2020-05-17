@@ -32,7 +32,8 @@ class EditorPaper extends React.Component {
                 let superScripts = this.props.supScripts
                 let sentenceId = superScripts[supScript] ? superScripts[supScript].sentence_id : ''
 
-                supArray.push(<span><a href="#"><span onClick={() => this.props.handleSuperScript((sentenceId + '_' + 0), 'true', this.props.paperType, true)} title={superScripts && superScripts[supScript] ? superScripts[supScript].text : ''}>{supScript}</span></a><span>{supArr.length === index + 1 ? '' : ','}</span></span>)
+                supArray.push(<span key={index}><a href="#"><span onClick={() => this.props.handleSuperScript((sentenceId + '_' + 0), 'true', this.props.paperType, true)} title={superScripts && superScripts[supScript] ? superScripts[supScript].text : ''}>{supScript}</span></a><span>{supArr.length === index + 1 ? '' : ','}</span></span>)
+                return true
             })
             return supArray
         } else {
@@ -42,6 +43,7 @@ class EditorPaper extends React.Component {
 
     fetchTable(id, sentences) {
         let tableRow = []
+        let index = 0
         for (let row in sentences) {
             let col = []
 
@@ -50,16 +52,17 @@ class EditorPaper extends React.Component {
                 let blockId = id + '_' + sentences[row][block].sentence_index
                 let bgColor = !this.props.isPreview ? ((this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId ? '#4dffcf' : "") : ""
 
-                col.push(<td id={blockId}
+                col.push(<td id={blockId} key={blockId}
                     onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType)}
                     onMouseEnter={() => this.tableHoverOn(id, blockId)}
                     onMouseLeave={() => this.tableHoverOff()}
                     style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
                     {blockData}</td>)
             }
-            tableRow.push(<tr>{col}</tr>)
+            tableRow.push(<tr key={index}>{col}</tr>)
+            index++
         }
-        return <table ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>{tableRow}</table>
+        return <table key={id} ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}><tbody>{tableRow}</tbody></table>
     }
 
     fetchTokenizedSentence(sentence, isSpaceRequired) {
@@ -78,6 +81,7 @@ class EditorPaper extends React.Component {
 
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
                         {tokenText.text}{isSpaceRequired ? <span> </span> : <span></span>}</span>)
+                        return true
                 })
                 return sentenceArray
             }
@@ -90,6 +94,7 @@ class EditorPaper extends React.Component {
                         }}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
                         {tokenText.target}{isSpaceRequired ? <span> </span> : <span></span>}</span>)
+                        return true
                 })
                 return sentenceArray
             }
@@ -102,14 +107,14 @@ class EditorPaper extends React.Component {
 
         if (!sentence.is_footer && sentence.text) {
             if (sentence.is_ner && !sentence.is_new_line) {
-                return (<div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
+                return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
                     {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
 
             } else if (sentence.is_ner) {
-                return (<div><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ float: align, textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
+                return (<div key={sentence._id}><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ float: align, textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
                     {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
             } else {
-                return (<div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
+                return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
                     {this.fetchTokenizedSentence(sentence, true)}<sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup><br /><br /></div>)
             }
         } else if (sentence.is_table) {
@@ -156,7 +161,7 @@ class EditorPaper extends React.Component {
     }
 
     render() {
-        const { section, sentences, header, footer } = this.props;
+        const { sentences, header, footer } = this.props;
 
         return (
             <div>
