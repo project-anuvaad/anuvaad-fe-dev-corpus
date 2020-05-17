@@ -87,7 +87,7 @@ class EditorPaper extends React.Component {
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
                         {tokenText.text}{isSpaceRequired ? <span> </span> : <span></span>}</span>)
-                        return true
+                    return true
                 })
                 return sentenceArray
             }
@@ -101,7 +101,7 @@ class EditorPaper extends React.Component {
                         }}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
                         {tokenText.target}{isSpaceRequired ? <span> </span> : <span></span>}</span>)
-                        return true
+                    return true
                 })
                 return sentenceArray
             }
@@ -114,12 +114,17 @@ class EditorPaper extends React.Component {
 
         if (!sentence.is_footer && sentence.text) {
             if (sentence.is_ner && !sentence.is_new_line) {
-                return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
+                if (align === 'left') {
+                return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ width:'60%',float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
                     {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
+                } else {
+                    return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
+                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
+                }
 
             } else if (sentence.is_ner) {
-                return (<div key={sentence._id}><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ float: align, textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
-                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
+                    return (<div key={sentence._id}><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
+                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
             } else {
                 return (<div key={sentence._id} style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
                     {this.fetchTokenizedSentence(sentence, true)}<sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup><br /><br /></div>)
