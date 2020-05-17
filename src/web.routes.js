@@ -73,7 +73,7 @@ import FeedbackForm from "./ui/containers/web/FeedbackForm";
 import PdfUpload from "./ui/containers/web/PdfUpload";
 import PdfToDoc from "./ui/containers/web/PdfToDoc";
 import ViewPdf from "./ui/containers/web/ViewPdfFile";
-
+import Signup from "./ui/containers/web/SignUp";
 import IntractiveTranslate from "./ui/containers/web/IntractiveTranslation";
 import InteractiveEditor from "./ui/containers/web/Interactive-Editor/InteractiveEditor";
 import PdfSentence from "./ui/containers/web/PdfSentence";
@@ -188,7 +188,7 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdf-upload`}
-
+              userRoles={["user","grader", "dev","editor"]}
               title={translate('webroutes.page.title.pdfSentences')}
               component={PdfUpload}
               authenticate={this.authenticateUser}
@@ -291,6 +291,13 @@ class AppRoutes extends React.Component {
               userRoles={["editor"]}
               component={QnA}
               authenticate={this.authenticateUser}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/signup`}
+              title="Sign up"
+              authenticate={this.authenticateUser}
+              component={Signup}
+              
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/newcorpus`}
@@ -638,7 +645,8 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/interactive-editor/:fileid`}
               title={translate('webroutes.page.title.anuvaadEditor')}
-              userRoles={["editor", "dev"]}
+              userRoles={["editor", "dev", "grader"]}
+
               component={InteractiveEditor}
               authenticate={this.authenticateUser}
             />
