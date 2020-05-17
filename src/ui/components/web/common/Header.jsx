@@ -423,7 +423,7 @@ class Header extends React.Component {
                       />
                     </ListItem>
                   )}
-                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user") || role.includes("grader")) && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
