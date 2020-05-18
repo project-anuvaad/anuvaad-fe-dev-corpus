@@ -189,7 +189,7 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdf-upload`}
-              userRoles={["user", "grader", "dev", "editor"]}
+              userRoles={["user","grader", "dev","editor", "interactive-editor"]}
               title={translate('webroutes.page.title.pdfSentences')}
               component={PdfUpload}
               authenticate={this.authenticateUser}
@@ -640,14 +640,14 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/interactive-translate`}
               title={translate('webroutes.page.title.anuvaadEditor')}
-              userRoles={["editor", "dev"]}
+              userRoles={["editor", "dev", "interactive-editor", "grader"]}
               component={IntractiveTranslate}
               authenticate={this.authenticateUser}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/interactive-editor/:fileid`}
               title={translate('webroutes.page.title.anuvaadEditor')}
-              userRoles={["editor", "dev", "grader"]}
+              userRoles={["editor", "dev", "grader","interactive-editor"]}
 
               component={InteractiveEditor}
               authenticate={this.authenticateUser}
