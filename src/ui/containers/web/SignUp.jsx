@@ -48,25 +48,25 @@ class SignUp extends React.Component {
               <form method="post">
               <Typography style={{marginTop:'3%', marginBottom:'8%', fontSize:'24px'}}>Create New Account</Typography>
                 <FormControl fullWidth>
-                <TextField value={"First Name"} id="outlined-required"
+                <TextField value={''} id="outlined-required" placeholder={"Username"}
               margin="normal" varient="outlined" style={{width:'100%', marginBottom:'4%'}}
               />
                   
                 </FormControl>
                 <FormControl fullWidth>
-                <TextField value={"Last Name"} id="outlined-required"
+                <TextField value={''} id="outlined-required" type="email" placeholder={"Email"}
               margin="normal" varient="outlined" style={{width:'100%', marginBottom:'4%'}}
               />
                   
                 </FormControl>
                 <FormControl fullWidth>
-                <TextField value={"mail"} id="outlined-required"
+                <TextField value={''} id="outlined-required" placeholder={"Name"}
               margin="normal" varient="outlined" style={{width:'100%', marginBottom:'4%'}}
               />
                   
                 </FormControl>
                 <FormControl fullWidth>
-                <TextField value={"password"} id="outlined-required" type="password"
+                <TextField value={''} id="outlined-required" type="password" placeholder={"Password"}
               margin="normal" varient="outlined"  style={{width:'100%', marginBottom:'4%'}}
               />                </FormControl>
                 <div>
@@ -90,7 +90,7 @@ class SignUp extends React.Component {
                   <Typography >Have an account?</Typography>
                   </Grid>
                   <Grid item xs={2} sm={2} lg={2} xl={2}>
-                  <Link onClick={() => {{history.push("/signup")}}}>SignIn</Link>
+                  <Link onClick={() => {{history.push("/")}}}>SignIn</Link>
                   </Grid>
                   </Grid>
           
