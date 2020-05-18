@@ -401,7 +401,7 @@ class Header extends React.Component {
                     </ListItem>
                   )}
 
-                  {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader")) && (
+                  {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader") || role.includes("interactive-editor"))   && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -423,7 +423,7 @@ class Header extends React.Component {
                       />
                     </ListItem>
                   )}
-                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user") || role.includes("grader")) && (
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user") || role.includes("grader") || role.includes("interactive-editor"))  && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -597,7 +597,7 @@ class Header extends React.Component {
                     </ListItem>
                   )}
 
-                  {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") && !role.includes("user") && (
+                  {/* {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") && !role.includes("user") && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -618,7 +618,7 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
-                  )}
+                  )} */}
 
                   {role && Array.isArray(role) && role.includes("admin") && (
                     <ListItem
