@@ -84,7 +84,6 @@ class IntractiveTrans extends React.Component {
         } else if (sentence.is_footer) {
           superArray.push(sentence);
           let sourceValue = "";
-          const targetValue = "";
 
           const key = sentence.text.substr(0, sentence.text.indexOf(" "));
 
