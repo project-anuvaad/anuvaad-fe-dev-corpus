@@ -80,7 +80,7 @@ import PdfSentence from "./ui/containers/web/PdfSentence";
 import InteractivePreview from "./ui/containers/web/Interactive-Editor/Preview"
 import { translate } from '../src/assets/localisation';
 
-const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, authenticate, ...rest }) => (
+const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader,dontShowHeader, authenticate, ...rest }) => (
   <Route
     {...rest}
     render={props =>
@@ -92,6 +92,7 @@ const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo
           title={title}
           forDemo={forDemo}
           drawer={drawer}
+          dontShowHeader={dontShowHeader}
           {...props}
         />
       ) : (
@@ -188,7 +189,7 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdf-upload`}
-              userRoles={["user","grader", "dev","editor"]}
+              userRoles={["user", "grader", "dev", "editor"]}
               title={translate('webroutes.page.title.pdfSentences')}
               component={PdfUpload}
               authenticate={this.authenticateUser}
@@ -295,9 +296,10 @@ class AppRoutes extends React.Component {
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/signup`}
               title="Sign up"
-              authenticate={this.authenticateUser}
+              authenticate={() => true}
               component={Signup}
-              
+              drawer
+              dontShowHeader={true}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/newcorpus`}

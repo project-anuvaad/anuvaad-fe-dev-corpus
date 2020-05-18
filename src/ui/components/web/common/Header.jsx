@@ -102,7 +102,7 @@ class Header extends React.Component {
   };
 
   render() {
-    const { classes, title, drawer, forDemo } = this.props;
+    const { classes, title, drawer, forDemo, dontShowHeader } = this.props;
 
     const { auth, anchorEl, open } = this.state;
     const openEl = Boolean(anchorEl);
@@ -128,20 +128,21 @@ class Header extends React.Component {
             <Typography variant="title" color="inherit" className={forDemo ? classes.felxDemo : classes.flex}>
               {title}
             </Typography>
-            <Typography
-              variant="title"
-              color="inherit"
-              style={{
-                position: "absolute",
-                textTransform: "capitalize",
-                right: "130px"
-              }}
-            >
-              {translate('header.page.heading.welcome')} {this.state.name} [{useRole}]
+            {!dontShowHeader &&
+              <Typography
+                variant="title"
+                color="inherit"
+                style={{
+                  position: "absolute",
+                  textTransform: "capitalize",
+                  right: "130px"
+                }}
+              >
+                {translate('header.page.heading.welcome')} {this.state.name} [{useRole}]
             </Typography>
-
+            }
             {this.state.drawerClose}
-            {auth && (
+            {!dontShowHeader && auth && (
               <div
                 style={{
                   position: "absolute",
@@ -657,21 +658,22 @@ class Header extends React.Component {
                 </List>
               </Drawer>
 
-
-              <main
-                className={classNames(classes.content, {
-                  [classes.contentShift]: open
-                })}
-              >
-                {this.state.open ? (
-                  ""
-                ) : (!drawer &&
-                  <Button color="primary" variant="contained" className={classes.buttonRight} style={{ zIndex: 9999 }} onClick={this.handleDrawerOpen}>
-                    <ChevronRightIcon />
-                  </Button>
-                  )}
-                <div className={classes.drawerHeader} />
-              </main>
+              {!dontShowHeader &&
+                <main
+                  className={classNames(classes.content, {
+                    [classes.contentShift]: open
+                  })}
+                >
+                  {this.state.open ? (
+                    ""
+                  ) : (!drawer &&
+                    <Button color="primary" variant="contained" className={classes.buttonRight} style={{ zIndex: 9999 }} onClick={this.handleDrawerOpen}>
+                      <ChevronRightIcon />
+                    </Button>
+                    )}
+                  <div className={classes.drawerHeader} />
+                </main>
+              }
             </Grid>
           }
         </div>
