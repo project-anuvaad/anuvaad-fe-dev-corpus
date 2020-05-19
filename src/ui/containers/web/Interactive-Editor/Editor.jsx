@@ -28,7 +28,7 @@ class Editor extends React.Component {
       indexValue: 0,
       i: 0,
       apiToken: false,
-      token: true, value:0
+      token: true, value: 0
     };
   }
 
@@ -36,31 +36,31 @@ class Editor extends React.Component {
 
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
     const temp = this.state.scriptSentence;
-    let value=[]
+    let value = []
     if (this.props.superScriptToken) {
       this.state.scriptSentence.map((sentence, index) => {
         if (splitValue[0] === sentence._id) {
           (temp[index].tokenized_sentences[splitValue[1]].target = `${this.state.superIndex} ${target}`);
-            (temp[index].tokenized_sentences[splitValue[1]].tagged_tgt = taggedTarget);
-            value=temp[index]
+          (temp[index].tokenized_sentences[splitValue[1]].tagged_tgt = taggedTarget);
+          value = temp[index]
         }
         return value;
       });
     }
     this.setState({ scriptSentence: temp, apiToken: true });
-    
+
   }
 
- 
+
 
   handleApiCall() {
-    const temp = this.handleSuperSave(this.state.checkedB ? this.state.target: this.state.translateText, this.state.taggedTarget);
+    const temp = this.handleSuperSave(this.state.checkedB ? this.state.target : this.state.translateText, this.state.taggedTarget);
     if (this.state.checkedB) {
       this.handleSubmit();
     } else if (this.props.superScriptToken && this.state.superIndex) {
       this.props.handleScriptSave(this.state.translateText, this.state.superIndex);
       this.props.hadleSentenceSave(false, temp);
-      this.setState({target:this.state.translateText})
+      this.setState({ target: this.state.translateText })
     } else {
       this.props.handleSave(
         this.state.translateText,
@@ -70,13 +70,13 @@ class Editor extends React.Component {
         this.state.cellValue,
         this.handleCalc(this.state.translateText)
       );
-      
-       this.setState({target:this.state.value===0 ?this.state.translateText: this.state.target, value:0, apiToken: false})
-      this.state.value!==0 && this.handleSentence(this.state.value)
-      
+
+      this.setState({ target: this.state.value === 0 ? this.state.translateText : this.state.target, value: 0, apiToken: false })
+      this.state.value !== 0 && this.handleSentence(this.state.value)
+
     }
     this.setState({
-      targetDialog:this.state.checkedB ? this.state.target: this.state.translateText
+      targetDialog: this.state.checkedB ? this.state.target : this.state.translateText
     })
   }
 
@@ -94,9 +94,9 @@ class Editor extends React.Component {
           this.setState({
             clickedSentence: false,
             target: temp.target ? temp.target.substr(temp.target.indexOf(" ") + 1) : "",
-            targetDialog:  temp.target ? temp.target.substr(temp.target.indexOf(" ") + 1) : "",
+            targetDialog: temp.target ? temp.target.substr(temp.target.indexOf(" ") + 1) : "",
             source: temp.src,
-            superIndex: temp.target ? temp.target.substr(0, temp.target.indexOf(" ")): "",
+            superIndex: temp.target ? temp.target.substr(0, temp.target.indexOf(" ")) : "",
             taggedSource: temp.tagged_src,
             taggedTarget: temp.tagged_tgt,
             translateText: "",
@@ -108,30 +108,30 @@ class Editor extends React.Component {
     }
   }
 
-  handleClose(){
+  handleClose() {
     this.setState({
-      open:false
+      open: false
     })
     this.handleSentence(this.state.value)
   }
 
-  handleDialogSave(){
+  handleDialogSave() {
     this.setState({
-      open:false
+      open: false
     })
     this.handleApiCall()
   }
 
 
-  handleDialog(value){
+  handleDialog(value) {
 
-    if((this.state.targetDialog!==this.state.target || (this.state.target !== this.state.translateText && !this.state.checkedB && this.state.translateText)) && value!== 0){
-      this.setState({open: true, value})
+    if ((this.state.targetDialog !== this.state.target || (this.state.target !== this.state.translateText && !this.state.checkedB && this.state.translateText)) && value !== 0) {
+      this.setState({ open: true, value })
     }
-    else{
+    else {
       this.handleSentence(value)
     }
-   
+
   }
   handleSentence(value) {
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
@@ -250,12 +250,12 @@ class Editor extends React.Component {
             this.state.submittedId,
             this.state.keyValue,
             this.state.cellValue,
-            
+
           );
-          this.state.value!==0 && this.handleSentence(this.state.value)
+          this.state.value !== 0 && this.handleSentence(this.state.value)
         }
         this.setState({
-          targetDialog:this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt, value:0
+          targetDialog: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt, value: 0
         })
       }
       this.setState({
@@ -312,6 +312,9 @@ class Editor extends React.Component {
           resultArray.push(tagged_tgt[ind]);
         } else if (src_ind !== -1) {
           if (index > 0) {
+            if (src_ind > tagged_src.length - 1) {
+              src_ind = tagged_src.length - 1
+            }
             const tem = tagged_src[src_ind];
             resultArray.push(tem.slice(0, tem.length - 1));
           } else {
@@ -397,7 +400,7 @@ class Editor extends React.Component {
     }
 
     if (!event.target.value) {
-      this.setState({target:this.state.targetDialog})
+      this.setState({ target: this.state.targetDialog })
     }
     this.setState({
       [key]: event.target.value,
@@ -409,23 +412,23 @@ class Editor extends React.Component {
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Toolbar>
-          <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px"}}>
+          <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px" }}>
             {this.state.checkedB ? translate('dashbord.page.title.anuvaadModel') : "Recommended Sentence"}
           </Typography>
           {!this.state.checkedB &&
 
-<Button  size="small" color="primary" onClick={event => {
-                this.setState({ tag: true, translateText: this.state.target });
-                setTimeout(() => {
-                  this.setState({ tag: false });
-                }, 3000);
-              }}>
-{this.state.tag ? "copied": "copy"}&nbsp;
+            <Button size="small" color="primary" onClick={event => {
+              this.setState({ tag: true, translateText: this.state.target });
+              setTimeout(() => {
+                this.setState({ tag: false });
+              }, 3000);
+            }}>
+              {this.state.tag ? "copied" : "copy"}&nbsp;
 </Button>
-         
-  }
+
+          }
         </Toolbar>
-        <Typography value="" variant="h6" gutterBottom/>
+        <Typography value="" variant="h6" gutterBottom />
         <div>
           <textarea
             style={{
@@ -441,7 +444,7 @@ class Editor extends React.Component {
             rows="10"
             disabled
             value={this.state.target}
-            placeholder= {translate('intractive_translate.page.textarea.anuvaadModelPlaceholder')}
+            placeholder={translate('intractive_translate.page.textarea.anuvaadModelPlaceholder')}
             cols="50"
             onChange={event => {
               this.handleTextSelectChange(event);
@@ -450,7 +453,7 @@ class Editor extends React.Component {
         </div>
 
         <Toolbar>
-          <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px"}}>
+          <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px" }}>
             {this.state.checkedB ? translate('intractive_translate.page.main.title') : "Manual Translate"}
           </Typography>
           <Switch
@@ -462,7 +465,7 @@ class Editor extends React.Component {
             color="primary"
           />
         </Toolbar>
-        
+
         <div>
           <textarea
             style={{
@@ -487,7 +490,7 @@ class Editor extends React.Component {
             }
             cols="50"
             onChange={event => {
-                this.state.checkedB ? this.handleTextChange("translateText", event) : this.handleTextSelectChange(event);
+              this.state.checkedB ? this.handleTextChange("translateText", event) : this.handleTextSelectChange(event);
             }}
             onKeyDown={this.keyPress.bind(this)}
           />
@@ -535,7 +538,7 @@ class Editor extends React.Component {
             </Button>
           </Grid>
         </Grid>
-        {this.state.open&& <Dialog  message="Do you want to save the changes ? "  handleSubmit = {this.handleDialogSave.bind(this)}handleClose ={this.handleClose.bind(this)} open= {true}title="Save" status= {this.state.value}/>}
+        {this.state.open && <Dialog message="Do you want to save the changes ? " handleSubmit={this.handleDialogSave.bind(this)} handleClose={this.handleClose.bind(this)} open={true} title="Save" status={this.state.value} />}
       </Paper>
     );
   }
