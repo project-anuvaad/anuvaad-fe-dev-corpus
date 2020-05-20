@@ -25,17 +25,8 @@ import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentenc
 import Snackbar from "../../../components/web/common/Snackbar";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
 
-
-const styles = theme => ({
-  paper: {
-    width: "40%",
-    minWidth: "20%",
-    marginTop: "5%",
-    padding: "2%",
-    marginLeft: "22%"
-  }
-});
 class IntractiveTrans extends React.Component {
   constructor(props) {
     super(props);
@@ -249,14 +240,26 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-  handleSelectedTo(value,event){
+  handleApiMerge(){
+    const { APITransport } = this.props;
+    const apiObj = new SentenceMerge(this.state.mergeSentence);
+    APITransport(apiObj);
+  }
 
+  handleSelectedTo(value,event){
+    let initialIndex, endIndex;
+    this.state.sentences.map((sentence, index)=>{
+      if(sentence.id == value){
+        initialIndex = index
+      }
+      else if(sentence.id == value){
+        endIndex = index
+      }
+    })
     if(event.type == "mouseup"){
-      console.log("mouse----",window.getSelection().toString())
        var txt;
        if (window.getSelection) {
          txt = window.getSelection().toString();
-         console.log("text------",txt)
    }
    
    this.setState({
