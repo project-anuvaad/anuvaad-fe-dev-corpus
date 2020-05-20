@@ -24,6 +24,7 @@ import history from "../../../web.history";
 import TextField from '../../components/web/common/TextField';
 import Link from '@material-ui/core/Link';
 
+
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
@@ -69,6 +70,10 @@ class SignUp extends React.Component {
                 <TextField value={''} id="outlined-required" type="password" placeholder={"Password"}
               margin="normal" varient="outlined"  style={{width:'100%', marginBottom:'4%'}}
               />                </FormControl>
+              <FormControl fullWidth>
+                <TextField value={''} id="outlined-required" type="password" placeholder={"Confirm Password"}
+              margin="normal" varient="outlined"  style={{width:'100%', marginBottom:'4%'}}
+              />                </FormControl>
                 <div>
                   
 
@@ -80,17 +85,17 @@ class SignUp extends React.Component {
                         iconclassName={classes.checkRemember.iconclassName}
                       />
                     }
-                    label="I have read the Terms and Conditions"
+                    label={<div><span>I have read the </span>
+                    <a href="../../../../public/tnc.html" target='_blank'>Terms and Conditions</a>
+                    </div>}
                   />
                   <Button variant="contained"  color="secondary" aria-label="edit" style={{width:'100%', marginBottom:'4%', marginTop:'4%'}}>
                     Sign Up Now
                   </Button>
-                  <Grid container spacing={24} style={{ marginTop:'5%'}}>
+                  <Grid container spacing={24} >
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
-                  <Typography >Have an account?</Typography>
-                  </Grid>
-                  <Grid item xs={2} sm={2} lg={2} xl={2}>
-                  <Link onClick={() => {{history.push("/")}}}>SignIn</Link>
+                  <Typography >Have an account?
+                  <Link onClick={() => {{history.push("/")}}}> SignIn</Link></Typography>
                   </Grid>
                   </Grid>
           
