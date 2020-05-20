@@ -272,8 +272,8 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-  handleSelection(slctSentence) {
-    console.log(slctSentence)
+  handleSelection() {
+    console.log('--------------------------------------')
   }
 
   render() {

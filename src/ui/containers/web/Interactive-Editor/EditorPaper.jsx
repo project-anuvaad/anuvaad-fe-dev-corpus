@@ -14,9 +14,9 @@ const styles = {
 class EditorPaper extends React.Component {
 
     componentDidMount() {
-        document.addEventListener('selectionchange', this.getSelectionText);
-        document.addEventListener('mouseup', this.getSelectionText);
-        document.addEventListener('keyup', this.getSelectionText);
+        document.addEventListener('selectionchange', this.getSelectionText.bind(this));
+        document.addEventListener('mouseup', this.getSelectionText.bind(this));
+        document.addEventListener('keyup', this.getSelectionText.bind(this));
     }
     componentDidUpdate(prevProps) {
         if (prevProps.scrollToId !== this.props.scrollToId) {
@@ -85,7 +85,7 @@ class EditorPaper extends React.Component {
                     let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "") : ""
 
                     sentenceArray.push(<span
-                        id={sentence._id + '_' + tokenText.sentence_index }
+                        id={sentence._id + '_' + tokenText.sentence_index}
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
                             backgroundColor: bgColor
@@ -100,7 +100,7 @@ class EditorPaper extends React.Component {
             if (this.props.paperType === 'target') {
                 sentence.tokenized_sentences.map((tokenText) => {
                     sentenceArray.push(<span
-                        id={sentence._id + '_' + tokenText.sentence_index }
+                        id={sentence._id + '_' + tokenText.sentence_index}
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
@@ -122,37 +122,51 @@ class EditorPaper extends React.Component {
         var activeEl = document.activeElement;
         var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
         if (
-          (activeElTagName == "textarea") || (activeElTagName == "input" &&
-          /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
-          (typeof activeEl.selectionStart == "number")
+            (activeElTagName == "textarea") || (activeElTagName == "input" &&
+                /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
+            (typeof activeEl.selectionStart == "number")
         ) {
             text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
         } else if (window.getSelection) {
             text = window.getSelection().toString();
         }
-        selection.startNode = window.getSelection().anchorNode.parentElement.id
-        selection.endNode = window.getSelection().focusNode.parentElement.id
-        // if(selection) {
-        //     this.props.handleSelection()
-        // }
+
+        let sentences = ""
+        if (window.getSelection()) {
+            sentences = window.getSelection()
+        }
+        if (sentences && sentences.anchorNode && sentences.anchorNode.parentElement && sentences.anchorNode.parentElement.id && sentences.anchorNode.textContent) {
+            selection.startNode = window.getSelection().anchorNode.parentElement.id
+            selection.starText = window.getSelection().anchorNode.textContent
+        }
+
+        if (sentences && sentences.focusNode && sentences.focusNode.parentElement && sentences.focusNode.parentElement.id && sentences.focusNode.textContent) {
+            selection.endNode = window.getSelection().focusNode.parentElement.id
+            selection.endText = window.getSelection().focusNode.textContent
+        }
+
+        // console.log(this.props.handleSelection())
+        if(selection) {
+            this.props.handleSelection()
+        }
     }
-    
+
     fetchSentence(sentence) {
         let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'left')
 
         if (!sentence.is_footer && sentence.text) {
             if (sentence.is_ner && !sentence.is_new_line) {
                 if (align === 'left') {
-                return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ width:'60%',float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
-                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
+                    return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ width: '60%', float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
+                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
                 } else {
                     return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
-                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
+                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
                 }
 
             } else if (sentence.is_ner) {
-                    return (<div key={sentence._id}><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
-                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
+                return (<div key={sentence._id}><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
+                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
             } else {
                 return (<div key={sentence._id} style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
                     {this.fetchTokenizedSentence(sentence, true)}<sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup><br /><br /></div>)
