@@ -23,7 +23,19 @@ import history from "../../../../web.history";
 import EditorPaper from "./EditorPaper";
 import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentence";
 import Snackbar from "../../../components/web/common/Snackbar";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 
+
+const styles = theme => ({
+  paper: {
+    width: "40%",
+    minWidth: "20%",
+    marginTop: "5%",
+    padding: "2%",
+    marginLeft: "22%"
+  }
+});
 class IntractiveTrans extends React.Component {
   constructor(props) {
     super(props);
@@ -216,13 +228,15 @@ class IntractiveTrans extends React.Component {
     this.setState({ hoveredSentence: "", hoveredTableId: "" });
   }
 
-  handleSenetenceOnClick(sentenceId, value, parent, next_previous) {
+  handleSenetenceOnClick(sentenceId, value, parent, next_previous, event) {
+    console.log("handle",event.type)
     this.setState({
       selectedSentenceId: sentenceId,
       clickedSentence: value,
       selectedTableId: "",
       scrollToId: sentenceId,
       parent,
+     
       superScript: false
     });
     if (next_previous) {
@@ -235,6 +249,27 @@ class IntractiveTrans extends React.Component {
     }
   }
 
+  handleSelectedTo(value,event){
+
+    if(event.type == "mouseup"){
+      console.log("mouse----",window.getSelection().toString())
+       var txt;
+       if (window.getSelection) {
+         txt = window.getSelection().toString();
+         console.log("text------",txt)
+   }
+   
+   this.setState({
+     openEl: true,
+     anchorEl: event ? event.currentTarget :  null,
+   })
+    }
+   
+
+
+
+  }
+
   handleSuperScript(sentenceId, value, parent, token) {
     this.setState({
       selectedSentenceId: sentenceId,
@@ -242,9 +277,14 @@ class IntractiveTrans extends React.Component {
       selectedTableId: "",
       scrollToId: sentenceId,
       parent,
+      
       superScript: token
     });
   }
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, next_previous) {
     this.setState({
@@ -256,6 +296,7 @@ class IntractiveTrans extends React.Component {
       parent,
       superScript: false
     });
+    
     if (next_previous) {
       this.setState({ parent: "target" });
       const self = this;
@@ -273,6 +314,7 @@ class IntractiveTrans extends React.Component {
   }
 
   render() {
+    console.log("val---",this.state.val)
     const { gridValue } = this.state;
     return (
       <div style={{ marginLeft: "-100px" }}>
@@ -373,6 +415,8 @@ class IntractiveTrans extends React.Component {
                         handleSuperScript={this.handleSuperScript.bind(this)}
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
+
+                        handleSelectedTo = {this.handleSelectedTo.bind(this)}
                       />
                     </div>
                   </Paper>
@@ -450,11 +494,47 @@ class IntractiveTrans extends React.Component {
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 open={this.state.open}
                 autoHideDuration={3000}
-                onClose={this.handleClose}
+                
                 variant="success"
                 message={`${this.state.fileDetails.process_name} saved successfully !...`}
               />
             )}
+{this.state.anchorEl &&
+<Menu
+                  id="menu-appbar"
+                  anchorEl={this.state.anchorEl}
+                  disableAutoFocusItem= {false}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right"
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right"
+                  }}
+                  open={this.state.openEl}
+                  onClose={this.handleClose}
+                  
+                >
+                  <MenuItem
+                    onClick={() => {
+                      this.handleClose()
+                     
+                    }}
+                  >
+                    Merge Sentence
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      this.handleClose()
+                      
+                    }}
+                  >
+                    Split Sentence
+                  </MenuItem>
+                </Menu>
+
+                  }
           </div>
         )}
       </div>
@@ -480,4 +560,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IntractiveTrans));
+export default (withRouter(connect(mapStateToProps, mapDispatchToProps)(IntractiveTrans)));
