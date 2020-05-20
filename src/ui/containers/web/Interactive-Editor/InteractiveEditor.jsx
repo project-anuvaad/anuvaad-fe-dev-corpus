@@ -272,6 +272,10 @@ class IntractiveTrans extends React.Component {
     }
   }
 
+  handleSelection(slctSentence) {
+    console.log(slctSentence)
+  }
+
   render() {
     const { gridValue } = this.state;
     return (
@@ -373,6 +377,7 @@ class IntractiveTrans extends React.Component {
                         handleSuperScript={this.handleSuperScript.bind(this)}
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
+                        handleSelection={this.handleSelection.bind(this)}
                       />
                     </div>
                   </Paper>
@@ -420,6 +425,7 @@ class IntractiveTrans extends React.Component {
                       handleSuperScript={this.handleSuperScript.bind(this)}
                       handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                       handleTableCellClick={this.handleCellOnClick.bind(this)}
+                      handleSelection={this.handleSelection.bind(this)}
                     />
                   </div>
                 </Paper>

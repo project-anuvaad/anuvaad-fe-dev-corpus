@@ -13,6 +13,11 @@ const styles = {
 
 class EditorPaper extends React.Component {
 
+    componentDidMount() {
+        document.addEventListener('selectionchange', this.getSelectionText);
+        document.addEventListener('mouseup', this.getSelectionText);
+        document.addEventListener('keyup', this.getSelectionText);
+    }
     componentDidUpdate(prevProps) {
         if (prevProps.scrollToId !== this.props.scrollToId) {
             let sid = this.props.scrollToId.split('_')[0]
@@ -80,6 +85,7 @@ class EditorPaper extends React.Component {
                     let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "") : ""
 
                     sentenceArray.push(<span
+                        id={sentence._id + '_' + tokenText.sentence_index }
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
                             backgroundColor: bgColor
@@ -94,6 +100,7 @@ class EditorPaper extends React.Component {
             if (this.props.paperType === 'target') {
                 sentence.tokenized_sentences.map((tokenText) => {
                     sentenceArray.push(<span
+                        id={sentence._id + '_' + tokenText.sentence_index }
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
@@ -109,6 +116,27 @@ class EditorPaper extends React.Component {
         }
     }
 
+    getSelectionText() {
+        var text = "";
+        let selection = {}
+        var activeEl = document.activeElement;
+        var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+        if (
+          (activeElTagName == "textarea") || (activeElTagName == "input" &&
+          /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
+          (typeof activeEl.selectionStart == "number")
+        ) {
+            text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
+        } else if (window.getSelection) {
+            text = window.getSelection().toString();
+        }
+        selection.startNode = window.getSelection().anchorNode.parentElement.id
+        selection.endNode = window.getSelection().focusNode.parentElement.id
+        // if(selection) {
+        //     this.props.handleSelection()
+        // }
+    }
+    
     fetchSentence(sentence) {
         let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'left')
 
@@ -174,7 +202,6 @@ class EditorPaper extends React.Component {
 
     render() {
         const { sentences, header, footer } = this.props;
-
         return (
             <div>
 
