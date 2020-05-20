@@ -100,7 +100,6 @@ class EditorPaper extends React.Component {
             if (this.props.paperType === 'target') {
                 sentence.tokenized_sentences.map((tokenText) => {
                     sentenceArray.push(<span
-                        id={sentence._id + '_' + tokenText.sentence_index}
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
@@ -144,8 +143,7 @@ class EditorPaper extends React.Component {
             selection.endNode = window.getSelection().focusNode.parentElement.id
             
         }
-        console.log(window.getSelection())
-        if(selection) {
+        if(selection && selection.startNode && selection.endNode) {
             this.props.handleSelection(selection, event)
         }
     }
