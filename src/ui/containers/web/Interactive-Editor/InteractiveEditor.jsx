@@ -219,8 +219,7 @@ class IntractiveTrans extends React.Component {
     this.setState({ hoveredSentence: "", hoveredTableId: "" });
   }
 
-  handleSenetenceOnClick(sentenceId, value, parent, next_previous, event) {
-    console.log("handle",event.type)
+  handleSenetenceOnClick(sentenceId, value, parent, next_previous) {
     this.setState({
       selectedSentenceId: sentenceId,
       clickedSentence: value,
@@ -314,6 +313,10 @@ class IntractiveTrans extends React.Component {
     if (this.props.match.params.fileid) {
       history.push(`${process.env.PUBLIC_URL}/interactive-preview/${this.props.match.params.fileid}`);
     }
+  }
+
+  handleSelection(slctSentence) {
+    console.log("selected sentence",slctSentence)
   }
 
   render() {
@@ -418,8 +421,7 @@ class IntractiveTrans extends React.Component {
                         handleSuperScript={this.handleSuperScript.bind(this)}
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
-
-                        handleSelectedTo = {this.handleSelectedTo.bind(this)}
+                        handleSelection={this.handleSelection.bind(this)}
                       />
                     </div>
                   </Paper>
@@ -467,6 +469,7 @@ class IntractiveTrans extends React.Component {
                       handleSuperScript={this.handleSuperScript.bind(this)}
                       handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                       handleTableCellClick={this.handleCellOnClick.bind(this)}
+                      handleSelection={this.handleSelection.bind(this)}
                     />
                   </div>
                 </Paper>
