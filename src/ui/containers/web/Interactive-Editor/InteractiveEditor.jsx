@@ -23,9 +23,8 @@ import history from "../../../../web.history";
 import EditorPaper from "./EditorPaper";
 import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentence";
 import Snackbar from "../../../components/web/common/Snackbar";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
 import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
+import Menu from "../../../components/web/common/Menu";
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -176,11 +175,10 @@ class IntractiveTrans extends React.Component {
   }
 
   handleDone(token, value) {
-    console.log(value);
 
     const { APITransport } = this.props;
-    let senArray = [];
-    senArray.push(value)
+    const senArray = [];
+    senArray.push(value);
     const apiObj = new InteractiveApi(senArray);
     APITransport(apiObj);
     this.setState({ token });
@@ -198,7 +196,7 @@ class IntractiveTrans extends React.Component {
     if (this.state.selectedSentenceId) {
       this.setState({ hoveredSentence: sentenceId, scrollToId: "", parent });
     } else {
-      this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, parent })
+      this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, parent });
     }
   }
 
@@ -215,7 +213,6 @@ class IntractiveTrans extends React.Component {
   }
 
   handleTableHoverLeft() {
-
     this.setState({ hoveredSentence: "", hoveredTableId: "" });
   }
 
@@ -226,7 +223,7 @@ class IntractiveTrans extends React.Component {
       selectedTableId: "",
       scrollToId: sentenceId,
       parent,
-     
+
       superScript: false
     });
     if (next_previous) {
@@ -239,37 +236,15 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-  handleApiMerge(){
+  handleApiMerge() {
     const { APITransport } = this.props;
-    const apiObj = new SentenceMerge(this.state.mergeSentence);
-    APITransport(apiObj);
-  }
-
-  handleSelectedTo(value,event){
-    let initialIndex, endIndex;
-    this.state.sentences.map((sentence, index)=>{
-      if(sentence.id == value){
-        initialIndex = index
-      }
-      else if(sentence.id == value){
-        endIndex = index
-      }
-    })
-    if(event.type == "mouseup"){
-       var txt;
-       if (window.getSelection) {
-         txt = window.getSelection().toString();
-   }
-   
-   this.setState({
-     openEl: true,
-     anchorEl: event ? event.currentTarget :  null,
-   })
+    let sen = {}
+    if (this.state.operation_type === "merge") {
+      const apiObj = new SentenceMerge(this.state.mergeSentence, this.state.startSentence, this.state.endSentence, this.state.operation_type);
+      
     }
-   
-
-
-
+    
+    // APITransport(apiObj);
   }
 
   handleSuperScript(sentenceId, value, parent, token) {
@@ -279,14 +254,14 @@ class IntractiveTrans extends React.Component {
       selectedTableId: "",
       scrollToId: sentenceId,
       parent,
-      
+
       superScript: token
     });
   }
+
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, next_previous) {
     this.setState({
@@ -298,7 +273,7 @@ class IntractiveTrans extends React.Component {
       parent,
       superScript: false
     });
-    
+
     if (next_previous) {
       this.setState({ parent: "target" });
       const self = this;
@@ -315,12 +290,41 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-  handleSelection(slctSentence) {
-    console.log("selected sentence",slctSentence)
+  handleSelection(selectedSentence, event) {
+    
+    event.preventDefault()
+    if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode &&  window.getSelection().toString()) {
+      let initialIndex; let startSentence; let endIndex; let endSentence; let operation_type;
+      const startValue = selectedSentence.startNode.split("_");
+      const endValue = selectedSentence.endNode.split("_");
+      this.state.sentences.map((sentence, index) => {
+        if (sentence._id == startValue[0]) {
+          initialIndex = index;
+          startSentence = sentence.tokenized_sentences[Number(startValue[1])];
+        } else if (sentence._id == endValue[0]) {
+          endIndex = index;
+          endSentence = sentence.tokenized_sentences[Number(endValue[1])];
+        }
+      });
+      const mergeSentence = this.state.sentences.slice(initialIndex, endIndex + 1);
+      if (startValue[0] === endValue[0] && startValue[1] === endValue[1]) {
+        operation_type = "split";
+      } else {
+        operation_type = "merge";
+      }
+      this.setState({
+        mergeSentence,
+        startSentence,
+        endSentence,
+        operation_type,
+        openEl: true,
+        anchorEl: event && event.target ? event.target : null
+      });
+    }
   }
 
   render() {
-    console.log("val---",this.state.val)
+
     const { gridValue } = this.state;
     return (
       <div style={{ marginLeft: "-100px" }}>
@@ -337,7 +341,7 @@ class IntractiveTrans extends React.Component {
                   color="primary"
                   style={{ width: "100%", minWidth: "150px", fontSize: "90%", fontWeight: "bold" }}
                 >
-                  <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;{translate('common.page.title.document')}
+                  <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;{translate("common.page.title.document")}
                 </Button>
               </Grid>
               <Grid item xs={false} sm={6} lg={7} xl={7} className="GridFileDetails">
@@ -345,14 +349,16 @@ class IntractiveTrans extends React.Component {
                   variant="outlined"
                   size="large"
                   className="GridFileDetails"
-                  style={{ width: '100%', overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold" }}
+                  style={{ width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold" }}
                 >
                   <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />
-                  {this.state.fileDetails && translate('common.page.label.source') + ` : ${this.state.fileDetails.source_lang}`}
+                  {this.state.fileDetails && `${translate("common.page.label.source")  } : ${this.state.fileDetails.source_lang}`}
                   <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
-                  {this.state.fileDetails && translate('common.page.label.target') + ` : ${this.state.fileDetails.target_lang}`}
+                  {this.state.fileDetails && `${translate("common.page.label.target")  } : ${this.state.fileDetails.target_lang}`}
                   <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
-                  <div style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflow: 'hidden', }}>{this.state.fileDetails && translate('common.page.label.fileName') + ` : ${this.state.fileDetails.process_name}`}</div>
+                  <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
+                    {this.state.fileDetails && `${translate("common.page.label.fileName")  } : ${this.state.fileDetails.process_name}`}
+                  </div>
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6} lg={2} xl={2}>
@@ -364,7 +370,7 @@ class IntractiveTrans extends React.Component {
                   onClick={() => this.handlePreview()}
                 >
                   <VisibilityIcon fontSize="large" />
-                  &nbsp;&nbsp;{translate('common.page.label.review/download')}
+                  &nbsp;&nbsp;{translate("common.page.label.review/download")}
                 </Button>
               </Grid>
               <Grid item xs={12} sm={6} lg={1} xl={1}>
@@ -378,7 +384,7 @@ class IntractiveTrans extends React.Component {
                   style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold" }}
                 >
                   <DoneIcon fontSize="large" />
-                  &nbsp;&nbsp;{translate('common.page.label.done')}
+                  &nbsp;&nbsp;{translate("common.page.label.done")}
                 </Button>
               </Grid>
             </Grid>
@@ -389,7 +395,7 @@ class IntractiveTrans extends React.Component {
                   <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: "scroll" }}>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
-                        {translate('common.page.label.source')}
+                        {translate("common.page.label.source")}
                       </Typography>
                       <Toolbar
                         onClick={event => {
@@ -398,7 +404,7 @@ class IntractiveTrans extends React.Component {
                       >
                         <KeyboardBackspaceIcon style={{ cursor: "pointer" }} color="primary" />
                         <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                          {translate('common.page.label.collapse')}
+                          {translate("common.page.label.collapse")}
                         </Typography>
                       </Toolbar>
                     </Toolbar>
@@ -427,27 +433,27 @@ class IntractiveTrans extends React.Component {
                   </Paper>
                 </Grid>
               ) : (
-                  <Grid item xs={1} sm={1} lg={1} xl={1}>
-                    <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
-                      <Toolbar
-                        onClick={event => {
-                          this.handleClick(false, 4);
-                        }}
-                        style={{ color: darkBlack, background: blueGrey50 }}
-                      >
-                        <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
+                <Grid item xs={1} sm={1} lg={1} xl={1}>
+                  <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
+                    <Toolbar
+                      onClick={event => {
+                        this.handleClick(false, 4);
+                      }}
+                      style={{ color: darkBlack, background: blueGrey50 }}
+                    >
+                      <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
                       <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                          {translate('common.page.label.source')}
-                        </Typography>
-                      </Toolbar>
-                    </Paper>
-                  </Grid>
-                )}
+                        {translate("common.page.label.source")}
+                      </Typography>
+                    </Toolbar>
+                  </Paper>
+                </Grid>
+              )}
               <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
                 <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: "scroll" }}>
                   <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                     <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "3%" }}>
-                      {translate('common.page.label.target')}
+                      {translate("common.page.label.target")}
                     </Typography>
                   </Toolbar>
                   <div style={{ padding: "24px" }}>
@@ -500,47 +506,21 @@ class IntractiveTrans extends React.Component {
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 open={this.state.open}
                 autoHideDuration={3000}
-                
                 variant="success"
                 message={`${this.state.fileDetails.process_name} saved successfully !...`}
               />
             )}
-{this.state.anchorEl &&
-<Menu
-                  id="menu-appbar"
-                  anchorEl={this.state.anchorEl}
-                  disableAutoFocusItem= {false}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
-                  }}
-                  open={this.state.openEl}
-                  onClose={this.handleClose}
-                  
-                >
-                  <MenuItem
-                    onClick={() => {
-                      this.handleClose()
-                     
-                    }}
-                  >
-                    Merge Sentence
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      this.handleClose()
-                      
-                    }}
-                  >
-                    Split Sentence
-                  </MenuItem>
-                </Menu>
-
-                  }
+            {this.state.anchorEl && (
+               <Menu
+               anchorEl = {this.state.anchorEl} openEl={this.state.openEl}
+               submittedId={this.state.selectedSentenceId}
+               onClose={this.handleClose}
+               sentences={this.state.sentences}
+               handleClose={this.handleClose.bind(this)}
+               handleApiMerge={this.handleApiMerge.bind(this)}
+               operation_type = {this.state.operation_type}
+             />
+            )}
           </div>
         )}
       </div>
@@ -566,4 +546,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default (withRouter(connect(mapStateToProps, mapDispatchToProps)(IntractiveTrans)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IntractiveTrans));
