@@ -171,7 +171,10 @@ class IntractiveTrans extends React.Component {
         scriptSentence: superArray,
         fileDetails: this.props.fetchPdfSentence.pdf_process,
         sourceSupScripts: supScripts,
-        targetSupScripts: targetSupScript
+        targetSupScripts: targetSupScript,
+        clickedSentence: ''
+        
+      
       });
     }
   }
@@ -260,13 +263,11 @@ class IntractiveTrans extends React.Component {
   handleApiMerge() {
     const { APITransport } = this.props;
     let sen = {}
-    if (this.state.operation_type === "merge") {
-      const apiObj = new SentenceMerge(this.state.mergeSentence, this.state.startSentence, this.state.endSentence, this.state.operation_type);
+    if (this.state.operation_type === "merge" || this.state.operation_type === "split") {
+      const apiObj = new SentenceMerge(this.state.mergeSentence, this.state.startSentence,this.state.operation_type, this.state.endSentence,this.state.splitSentence );
       APITransport(apiObj);
     }
-    else if(this.state.operation_type === "split"){
-      alert("Still in progress....")
-    }
+    
 
   }
 
@@ -314,9 +315,9 @@ class IntractiveTrans extends React.Component {
   }
 
   handleSelection(selectedSentence, event) {
-
+   console.log("tested",selectedSentence,event && event.target)
     if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode &&  window.getSelection().toString()) {
-      let initialIndex; let startSentence; let endIndex; let endSentence; let operation_type;
+      let initialIndex; let startSentence; let endIndex; let endSentence; let operation_type, selectedSplitValue;
       const startValue = selectedSentence.startNode.split("_");
       const endValue = selectedSentence.endNode.split("_");
       this.state.sentences.map((sentence, index) => {
@@ -342,9 +343,13 @@ class IntractiveTrans extends React.Component {
 
       const mergeSentence = this.state.sentences.slice(initialIndex, endIndex + 1);
       if (startValue[0] === endValue[0] && startValue[1] === endValue[1]) {
+        let selectedSplitEndIndex = window.getSelection() && window.getSelection().getRangeAt(0).endOffset
         operation_type = "split";
+        selectedSplitValue = startSentence.src.substring(0,selectedSplitEndIndex)
+        console.log(selectedSplitValue)
       } else {
         operation_type = "merge";
+        selectedSplitValue = window.getSelection().toString()
       }
       this.setState({
         mergeSentence,
@@ -352,6 +357,7 @@ class IntractiveTrans extends React.Component {
         endSentence,
         operation_type,
         openEl: true,
+        splitSentence: selectedSplitValue,
         anchorEl: event && event.target ? event.target : null
       });
     }
@@ -535,14 +541,16 @@ class IntractiveTrans extends React.Component {
                 )}
               </Grid>
             </Grid>
-            
+            {this.state.open &&
               <Snackbar
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                open={"true"}
+                open={this.state.open}
                 autoHideDuration={3000}
                 variant="success"
                 message={this.state.token ?  `${this.state.fileDetails.process_name} saved successfully !...`:"Sentence merged successfully!..." }
               />
+
+            }
             
             {this.state.anchorEl && (
                <Menu

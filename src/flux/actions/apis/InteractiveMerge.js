@@ -3,13 +3,14 @@ import C from "../constants";
 
 
 export default class RunExperiment extends API {
-  constructor(sentences,startSentence, endSentence, operation_type, timeout = 2000) {
+  constructor(sentences,startSentence,operation_type, endSentence,selected_text, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
     this.type = C.MERGEINTERACTIVESENTENCE;
     this.sentences = sentences;
     this.start_sentence = startSentence;
     this.end_sentence = endSentence;
+    this.selected_text = selected_text;
     this.operation_type = operation_type;
     
     
@@ -34,11 +35,13 @@ export default class RunExperiment extends API {
   }
 
   getBody() {
+    
     return {
         "sentences": this.sentences,
         "start_sentence" : this.start_sentence,
-        "end_sentence" : this.end_sentence,
-        "operation_type" : this.operation_type
+        "end_sentence": this.end_sentence,
+        "operation_type" : this.operation_type,
+        "selected_text" : this.selected_text
     };
   }
 

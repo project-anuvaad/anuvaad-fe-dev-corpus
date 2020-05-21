@@ -125,7 +125,7 @@ class Editor extends React.Component {
 
   handleDialog(value) {
 
-    if ((this.state.targetDialog !== this.state.target || (this.state.target !== this.state.translateText && !this.state.checkedB && this.state.translateText)) && value !== 0) {
+    if ((this.state.targetDialog !== this.state.target || (this.state.target !== this.state.translateText && !this.state.checkedB && this.state.translateText)) && value !== 0 && this.state.target) {
       this.setState({ open: true, value })
     }
     else {
@@ -189,7 +189,7 @@ class Editor extends React.Component {
           } else if (sentence.tokenized_sentences.length >= splitValue[1] && splitValue[1] >= 0) {
             const ind =  sentenceIndex + value;
 
-            console.log(ind,this.props.sentences[index].tokenized_sentences[ind])
+            console.log("------",ind,this.props.sentences[index].tokenized_sentences[ind],this.props.sentences[index].tokenized_sentences[ind].sentence_index)
             
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
             !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value === 0 ? null : true);
@@ -526,7 +526,7 @@ class Editor extends React.Component {
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
               onClick={event => {
-                this.handleApiCall();
+                 this.handleApiCall();
               }}
             >
               {" "}
@@ -540,7 +540,7 @@ class Editor extends React.Component {
                 this.props.sentences[this.props.sentences.length - 1]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken
               }
               onClick={event => {
-                this.handleDialog(1);
+                 this.handleDialog(1);
               }}
               style={{ fontWeight: "bold", width: "100%" }}
             >
