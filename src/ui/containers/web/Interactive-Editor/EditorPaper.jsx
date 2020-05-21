@@ -13,11 +13,6 @@ const styles = {
 
 class EditorPaper extends React.Component {
 
-    componentDidMount() {
-        // document.addEventListener('selectionchange', this.getSelectionText.bind(this));
-        document.addEventListener('mouseup', this.getSelectionText.bind(this));
-        document.addEventListener('keyup', this.getSelectionText.bind(this));
-    }
     componentDidUpdate(prevProps) {
         if (prevProps.scrollToId !== this.props.scrollToId) {
             let sid = this.props.scrollToId.split('_')[0]
@@ -80,6 +75,7 @@ class EditorPaper extends React.Component {
         if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0) {
             let sentenceArray = []
             if (this.props.paperType === 'source') {
+
                 sentence.tokenized_sentences.map((tokenText) => {
 
                     let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "") : ""
@@ -90,6 +86,8 @@ class EditorPaper extends React.Component {
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
                             backgroundColor: bgColor
                         }}
+                        onMouseUp={this.getSelectionText.bind(this)}
+                        onKeyUp={this.getSelectionText.bind(this)}
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
                         {tokenText.text}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
@@ -106,7 +104,7 @@ class EditorPaper extends React.Component {
                             backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "",
                         }}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
-                        {tokenText.target}</span>{isSpaceRequired ?  <span>&nbsp;</span> : <span></span>}</span>)
+                        {tokenText.target}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                     return true
                 })
                 return sentenceArray
