@@ -174,19 +174,29 @@ class EditorPaper extends React.Component {
         }
 
         let sentences = ""
+        let startNode = ""
+        let endNode = ""
+
         if (window.getSelection()) {
             sentences = window.getSelection()
         }
         if (sentences && sentences.anchorNode && sentences.anchorNode.parentElement && sentences.anchorNode.parentElement.id && sentences.anchorNode.textContent) {
-            selection.startNode = window.getSelection().anchorNode.parentElement.id
-
+            startNode = window.getSelection().anchorNode.parentElement.id
+            this.props.sentences.map(paragraph => {
+                if (paragraph._id === startNode.split('_')[0] && !paragraph.is_table) {
+                    selection.startNode = startNode
+                }
+            })
         }
 
         if (sentences && sentences.focusNode && sentences.focusNode.parentElement && sentences.focusNode.parentElement.id && sentences.focusNode.textContent) {
-            selection.endNode = window.getSelection().focusNode.parentElement.id
-
+            endNode = window.getSelection().focusNode.parentElement.id
+            this.props.sentences.map(paragraph => {
+                if (paragraph._id === endNode.split('_')[0] && !paragraph.is_table) {
+                    selection.endNode = endNode
+                }
+            })
         }
-        console.log("selection----",selection)
         if (selection && selection.startNode && selection.endNode) {
             this.props.handleSelection(selection, event)
         }
