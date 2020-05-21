@@ -219,7 +219,7 @@ class EditorPaper extends React.Component {
                 }
 
             } else if (sentence.is_ner) {
-                return (<div key={sentence._id}><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} 
+                return (<div key={sentence._id} style={{textAlign:'justify'}} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} 
                 style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                     {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
@@ -227,7 +227,7 @@ class EditorPaper extends React.Component {
                 return (<div key={sentence._id} 
                     style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
-                    {this.fetchTokenizedSentence(sentence, true)}<sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup><br /><br /></div>)
+                    <div style={{textAlign:'justify'}}>{this.fetchTokenizedSentence(sentence, true)}{sentence.sup_array ? <sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup> : ''}<br /><br /></div></div>)
             }
         } else if (sentence.is_table) {
             return this.fetchTable(sentence._id, sentence.table_items)
