@@ -241,6 +241,10 @@ class Editor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+
+    if (prevProps.sentences !== this.props.sentences) {
+      this.setState({target:''})
+    }
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       if (this.state.apiToken) {
         if (this.props.superScriptToken && this.state.superIndex) {

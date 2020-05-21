@@ -172,7 +172,8 @@ class IntractiveTrans extends React.Component {
         fileDetails: this.props.fetchPdfSentence.pdf_process,
         sourceSupScripts: supScripts,
         targetSupScripts: targetSupScript,
-        clickedSentence: ''
+        clickedSentence: '',
+        selectedSentenceId: ''
         
       
       });
