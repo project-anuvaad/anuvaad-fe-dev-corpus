@@ -316,7 +316,6 @@ class IntractiveTrans extends React.Component {
   }
 
   handleSelection(selectedSentence, event) {
-   console.log("tested",selectedSentence,event && event.target)
     if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode &&  window.getSelection().toString()) {
       let initialIndex; let startSentence; let endIndex; let endSentence; let operation_type, selectedSplitValue;
       const startValue = selectedSentence.startNode.split("_");
