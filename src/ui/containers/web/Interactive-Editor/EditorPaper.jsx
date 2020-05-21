@@ -71,6 +71,52 @@ class EditorPaper extends React.Component {
         return <table key={id} ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}><tbody>{tableRow}</tbody></table>
     }
 
+
+    getSelectionText(event) {
+        var text = "";
+        let selection = {}
+        var activeEl = document.activeElement;
+        var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+        if (
+            (activeElTagName == "textarea") || (activeElTagName == "input" &&
+                /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
+            (typeof activeEl.selectionStart == "number")
+        ) {
+            text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
+        } else if (window.getSelection) {
+            text = window.getSelection().toString();
+        }
+
+        let sentences = ""
+        let startNode = ""
+        let endNode = ""
+
+        if (window.getSelection()) {
+            sentences = window.getSelection()
+        }
+        if (sentences && sentences.anchorNode && sentences.anchorNode.parentElement && sentences.anchorNode.parentElement.id && sentences.anchorNode.textContent) {
+            startNode = window.getSelection().anchorNode.parentElement.id
+            this.props.sentences.map(paragraph => {
+                if (paragraph._id === startNode.split('_')[0] && !paragraph.is_table) {
+                    selection.startNode = startNode
+                }
+            })
+        }
+
+        if (sentences && sentences.focusNode && sentences.focusNode.parentElement && sentences.focusNode.parentElement.id && sentences.focusNode.textContent) {
+            endNode = window.getSelection().focusNode.parentElement.id
+            this.props.sentences.map(paragraph => {
+                if (paragraph._id === endNode.split('_')[0] && !paragraph.is_table) {
+                    selection.endNode = endNode
+                }
+            })
+        }
+    
+        if (selection && selection.startNode && selection.endNode) {
+            this.props.handleSelection(selection, event)
+        }
+    }
+
     fetchTokenizedSentence(sentence, isSpaceRequired) {
         if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0) {
             let sentenceArray = []
