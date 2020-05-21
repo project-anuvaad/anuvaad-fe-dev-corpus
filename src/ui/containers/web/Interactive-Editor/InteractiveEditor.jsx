@@ -547,7 +547,7 @@ class IntractiveTrans extends React.Component {
                 open={this.state.open}
                 autoHideDuration={3000}
                 variant="success"
-                message={this.state.token ?  `${this.state.fileDetails.process_name} saved successfully !...`:"Sentence merged successfully!..." }
+                message={this.state.token ?  `${this.state.fileDetails.process_name} saved successfully !...`: this.state.operation_type ==="merge"?"Sentence merged successfully!...":"Sentence splitted successfully!..." }
               />
 
             }
