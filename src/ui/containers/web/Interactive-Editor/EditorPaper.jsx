@@ -84,7 +84,7 @@ class EditorPaper extends React.Component {
 
                     let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "") : ""
 
-                    sentenceArray.push(<span
+                    sentenceArray.push(<span><span
                         id={sentence._id + '_' + tokenText.sentence_index}
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
@@ -92,21 +92,21 @@ class EditorPaper extends React.Component {
                         }}
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
-                        {tokenText.text}{isSpaceRequired ? <span> </span> : <span></span>}</span>)
+                        {tokenText.text}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                     return true
                 })
                 return sentenceArray
             }
             if (this.props.paperType === 'target') {
                 sentence.tokenized_sentences.map((tokenText) => {
-                    sentenceArray.push(<span
+                    sentenceArray.push(<span><span
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
                             backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "",
                         }}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
-                        {tokenText.target}{isSpaceRequired ? <span> </span> : <span></span>}</span>)
+                        {tokenText.target}</span>{isSpaceRequired ?  <span>&nbsp;</span> : <span></span>}</span>)
                     return true
                 })
                 return sentenceArray
@@ -136,14 +136,14 @@ class EditorPaper extends React.Component {
         }
         if (sentences && sentences.anchorNode && sentences.anchorNode.parentElement && sentences.anchorNode.parentElement.id && sentences.anchorNode.textContent) {
             selection.startNode = window.getSelection().anchorNode.parentElement.id
-            
+
         }
 
         if (sentences && sentences.focusNode && sentences.focusNode.parentElement && sentences.focusNode.parentElement.id && sentences.focusNode.textContent) {
             selection.endNode = window.getSelection().focusNode.parentElement.id
-            
+
         }
-        if(selection && selection.startNode && selection.endNode) {
+        if (selection && selection.startNode && selection.endNode) {
             this.props.handleSelection(selection, event)
         }
     }
