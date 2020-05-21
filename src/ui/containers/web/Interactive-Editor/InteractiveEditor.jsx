@@ -57,6 +57,9 @@ class IntractiveTrans extends React.Component {
   }
 
   componentDidMount() {
+    this.handleSentenceApi()
+  }
+  handleSentenceApi(){
     const { APITransport } = this.props;
     const apiObj = new FetchDoc(this.props.match.params.fileid);
     APITransport(apiObj);
@@ -70,6 +73,10 @@ class IntractiveTrans extends React.Component {
           this.handleBack();
         }, 3000);
     }
+    if(prevProps.mergeSentenceApi !== this.props.mergeSentenceApi){
+      console.log("----",this.props.mergeSentenceApi)
+      this.handleSentenceApi()
+    }
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
       const temp = this.props.fetchPdfSentence.data;
       const sentenceArray = [];
@@ -77,6 +84,9 @@ class IntractiveTrans extends React.Component {
       const supScripts = {};
       const targetSupScript = {};
       temp.map(sentence => {
+        if(Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length){
+
+       
         if (!sentence.is_footer && !sentence.is_header && !sentence.is_footer_text) {
           sentenceArray.push(sentence);
         } else if (sentence.is_header) {
@@ -143,8 +153,10 @@ class IntractiveTrans extends React.Component {
             targetSupScript[prevKey] = tScript;
           }
         }
+      }
         return true;
       });
+      
       this.setState({
         sentences: sentenceArray,
         scriptSentence: superArray,
@@ -241,10 +253,12 @@ class IntractiveTrans extends React.Component {
     let sen = {}
     if (this.state.operation_type === "merge") {
       const apiObj = new SentenceMerge(this.state.mergeSentence, this.state.startSentence, this.state.endSentence, this.state.operation_type);
-      
+      APITransport(apiObj);
     }
-    
-    // APITransport(apiObj);
+    else if(this.state.operation_type === "split"){
+      alert("Still in progress....")
+    }
+
   }
 
   handleSuperScript(sentenceId, value, parent, token) {
@@ -291,21 +305,32 @@ class IntractiveTrans extends React.Component {
   }
 
   handleSelection(selectedSentence, event) {
-    
-    event.preventDefault()
+
     if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode &&  window.getSelection().toString()) {
       let initialIndex; let startSentence; let endIndex; let endSentence; let operation_type;
       const startValue = selectedSentence.startNode.split("_");
       const endValue = selectedSentence.endNode.split("_");
       this.state.sentences.map((sentence, index) => {
-        if (sentence._id == startValue[0]) {
+        if (sentence._id === startValue[0]) {
           initialIndex = index;
-          startSentence = sentence.tokenized_sentences[Number(startValue[1])];
-        } else if (sentence._id == endValue[0]) {
+          sentence.tokenized_sentences.map((value,index)=>{
+            if(value.sentence_index === Number(startValue[1])){
+              startSentence = value;
+            }
+          })
+          
+        } 
+        if (sentence._id === endValue[0]) {
           endIndex = index;
-          endSentence = sentence.tokenized_sentences[Number(endValue[1])];
+
+           sentence.tokenized_sentences.map((value,index)=>{
+            if(value.sentence_index === Number(endValue[1])){
+              endSentence = value;
+            }
+          })
         }
       });
+
       const mergeSentence = this.state.sentences.slice(initialIndex, endIndex + 1);
       if (startValue[0] === endValue[0] && startValue[1] === endValue[1]) {
         operation_type = "split";
@@ -532,7 +557,8 @@ const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
   fetchPdfSentence: state.fetchPdfSentence,
-  interactiveUpdate: state.interactiveUpdate
+  interactiveUpdate: state.interactiveUpdate,
+  mergeSentenceApi: state.mergeSentenceApi
 });
 
 const mapDispatchToProps = dispatch =>

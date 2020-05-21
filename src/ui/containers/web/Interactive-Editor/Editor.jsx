@@ -139,11 +139,21 @@ class Editor extends React.Component {
       this.props.sentences.length > 0 &&
       this.props.sentences.map((sentence, index) => {
         if (splitValue[0] === sentence._id) {
-          // this.state.target && this.state.translateText && this.handleSave(index, splitValue[1]);
+          let sentenceIndex;
+          console.log("sid-----",this.props.sentences[index].tokenized_sentences)
+
+         if( sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0){
+          sentence.tokenized_sentences.map((sentence,i) =>{
+           
+            if(sentence.sentence_index===Number(splitValue[1])){
+                sentenceIndex = i;
+            }
+          })
+         }
           if (
-            (sentence.tokenized_sentences.length === 1 && Number(splitValue[1]) === 0) ||
-            (Number(splitValue[1]) === 0 && value === -1) ||
-            (Number(splitValue[1]) === sentence.tokenized_sentences.length - 1 && value > 0)
+            (sentence.tokenized_sentences.length === 1 && sentenceIndex === 0) ||
+            (sentenceIndex === 0 && value === -1) ||
+            (sentenceIndex === sentence.tokenized_sentences.length - 1 && value > 0)
           ) {
             if (this.props.sentences[index + value].is_footer && this.props.sentences.length >= index + 1 + 2 * value) {
               value = 2 * value;
@@ -177,12 +187,13 @@ class Editor extends React.Component {
               checkedB: true
             });
           } else if (sentence.tokenized_sentences.length >= splitValue[1] && splitValue[1] >= 0) {
-            const ind = Number(splitValue[1]) + value;
+            const ind =  sentenceIndex + value;
 
+            console.log(ind,this.props.sentences[index].tokenized_sentences[ind])
+            
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
             !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value === 0 ? null : true);
             if (sentence.is_table) {
-              debugger;
               for (const key in sentence.table_items) {
                 for (const cell in sentence.table_items[key]) {
                   if (sentence.table_items[key][cell].sentence_index === ind) {
