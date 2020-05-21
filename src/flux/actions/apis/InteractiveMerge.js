@@ -6,7 +6,7 @@ export default class RunExperiment extends API {
   constructor(sentences,startSentence, endSentence, operation_type, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
-    this.type = C.UPDATEINTERACTIVESENTENCE;
+    this.type = C.MERGEINTERACTIVESENTENCE;
     this.sentences = sentences;
     this.start_sentence = startSentence;
     this.end_sentence = endSentence;
@@ -23,6 +23,8 @@ export default class RunExperiment extends API {
   processResponse(res) {
     super.processResponse(res);
     if (res) {
+
+      console.log("response", res)
       this.sentences = res;
     }
   }
