@@ -74,8 +74,10 @@ class IntractiveTrans extends React.Component {
         }, 3000);
     }
     if(prevProps.mergeSentenceApi !== this.props.mergeSentenceApi){
-      console.log("----",this.props.mergeSentenceApi)
       this.handleSentenceApi()
+      this.setState({
+        merge: true
+      })
     }
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
       const temp = this.props.fetchPdfSentence.data;
@@ -156,9 +158,16 @@ class IntractiveTrans extends React.Component {
       }
         return true;
       });
+
+      this.setState({ open: this.state.merge });
+      this.state.merge &&
+        setTimeout(() => {
+         this.setState({merge: false, open: false})
+        }, 2000);
       
       this.setState({
         sentences: sentenceArray,
+        merge: false,
         scriptSentence: superArray,
         fileDetails: this.props.fetchPdfSentence.pdf_process,
         sourceSupScripts: supScripts,
@@ -526,15 +535,15 @@ class IntractiveTrans extends React.Component {
                 )}
               </Grid>
             </Grid>
-            {this.state.open && (
+            
               <Snackbar
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                open={this.state.open}
+                open={"true"}
                 autoHideDuration={3000}
                 variant="success"
-                message={`${this.state.fileDetails.process_name} saved successfully !...`}
+                message={this.state.token ?  `${this.state.fileDetails.process_name} saved successfully !...`:"Sentence merged successfully!..." }
               />
-            )}
+            
             {this.state.anchorEl && (
                <Menu
                anchorEl = {this.state.anchorEl} openEl={this.state.openEl}
