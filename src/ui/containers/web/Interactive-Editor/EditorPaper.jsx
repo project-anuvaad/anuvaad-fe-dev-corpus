@@ -141,6 +141,7 @@ class EditorPaper extends React.Component {
             selection.endNode = window.getSelection().focusNode.parentElement.id
 
         }
+        console.log("selection----",selection)
         if (selection && selection.startNode && selection.endNode) {
             this.props.handleSelection(selection, event)
         }
