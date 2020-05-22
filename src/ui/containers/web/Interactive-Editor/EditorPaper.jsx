@@ -71,41 +71,134 @@ class EditorPaper extends React.Component {
         return <table key={id} ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}><tbody>{tableRow}</tbody></table>
     }
 
+
+    getSelectionText(event) {
+        var text = "";
+        let selection = {}
+        var activeEl = document.activeElement;
+        var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+        if (
+            (activeElTagName == "textarea") || (activeElTagName == "input" &&
+                /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
+            (typeof activeEl.selectionStart == "number")
+        ) {
+            text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
+        } else if (window.getSelection) {
+            text = window.getSelection().toString();
+        }
+
+        let sentences = ""
+        let startNode = ""
+        let endNode = ""
+
+        if (window.getSelection()) {
+            sentences = window.getSelection()
+        }
+        if (sentences && sentences.anchorNode && sentences.anchorNode.parentElement && sentences.anchorNode.parentElement.id && sentences.anchorNode.textContent) {
+            startNode = window.getSelection().anchorNode.parentElement.id
+            this.props.sentences.map(paragraph => {
+                if (paragraph._id === startNode.split('_')[0] && !paragraph.is_table) {
+                    selection.startNode = startNode
+                }
+            })
+        }
+
+        if (sentences && sentences.focusNode && sentences.focusNode.parentElement && sentences.focusNode.parentElement.id && sentences.focusNode.textContent) {
+            endNode = window.getSelection().focusNode.parentElement.id
+            this.props.sentences.map(paragraph => {
+                if (paragraph._id === endNode.split('_')[0] && !paragraph.is_table) {
+                    selection.endNode = endNode
+                }
+            })
+        }
+
+        if (selection && selection.startNode && selection.endNode) {
+            this.props.handleSelection(selection, event)
+        }
+    }
+
     fetchTokenizedSentence(sentence, isSpaceRequired) {
         if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0) {
             let sentenceArray = []
             if (this.props.paperType === 'source') {
+
                 sentence.tokenized_sentences.map((tokenText) => {
 
                     let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "") : ""
 
-                    sentenceArray.push(<span
+                    sentenceArray.push(<span><span
+                        id={sentence._id + '_' + tokenText.sentence_index}
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
                             backgroundColor: bgColor
                         }}
+
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
-                        {tokenText.text}{isSpaceRequired ? <span> </span> : <span></span>}</span>)
+                        {(tokenText.text).trim()}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                     return true
                 })
                 return sentenceArray
             }
             if (this.props.paperType === 'target') {
                 sentence.tokenized_sentences.map((tokenText) => {
-                    sentenceArray.push(<span
+                    sentenceArray.push(<span><span
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
                             backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "",
                         }}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
-                        {tokenText.target}{isSpaceRequired ? <span> </span> : <span></span>}</span>)
+                        {(tokenText.target).trim()}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                     return true
                 })
                 return sentenceArray
             }
 
+        }
+    }
+
+    getSelectionText(event) {
+        var text = "";
+        let selection = {}
+        var activeEl = document.activeElement;
+        var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+        if (
+            (activeElTagName == "textarea") || (activeElTagName == "input" &&
+                /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
+            (typeof activeEl.selectionStart == "number")
+        ) {
+            text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
+        } else if (window.getSelection) {
+            text = window.getSelection().toString();
+        }
+
+        let sentences = ""
+        let startNode = ""
+        let endNode = ""
+
+        if (window.getSelection()) {
+            sentences = window.getSelection()
+        }
+        if (sentences && sentences.anchorNode && sentences.anchorNode.parentElement && sentences.anchorNode.parentElement.id && sentences.anchorNode.textContent) {
+            startNode = window.getSelection().anchorNode.parentElement.id
+            this.props.sentences.map(paragraph => {
+                if (paragraph._id === startNode.split('_')[0] && !paragraph.is_table) {
+                    selection.startNode = startNode
+                }
+            })
+        }
+
+        if (sentences && sentences.focusNode && sentences.focusNode.parentElement && sentences.focusNode.parentElement.id && sentences.focusNode.textContent) {
+            endNode = window.getSelection().focusNode.parentElement.id
+            this.props.sentences.map(paragraph => {
+                if (paragraph._id === endNode.split('_')[0] && !paragraph.is_table) {
+                    selection.endNode = endNode
+                }
+            })
+        }
+        if (selection && selection.startNode && selection.endNode) {
+            this.props.handleSelection(selection, event)
         }
     }
 
@@ -115,19 +208,26 @@ class EditorPaper extends React.Component {
         if (!sentence.is_footer && sentence.text) {
             if (sentence.is_ner && !sentence.is_new_line) {
                 if (align === 'left') {
-                return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ width:'60%',float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
-                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
+                    return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
+                        style={{ width: '60%', float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                        onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
+                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
                 } else {
-                    return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
-                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
+                    return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                        onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
+                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
                 }
 
             } else if (sentence.is_ner) {
-                    return (<div key={sentence._id}><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
-                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
+                return (<div key={sentence._id} style={{textAlign:'justify'}} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} 
+                style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                    onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
+                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
             } else {
-                return (<div key={sentence._id} style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}>
-                    {this.fetchTokenizedSentence(sentence, true)}<sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup><br /><br /></div>)
+                return (<div key={sentence._id} 
+                    style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                    onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
+                    <div style={{textAlign:'justify'}}>{this.fetchTokenizedSentence(sentence, true)}{sentence.sup_array ? <sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup> : ''}<br /><br /></div></div>)
             }
         } else if (sentence.is_table) {
             return this.fetchTable(sentence._id, sentence.table_items)
@@ -174,7 +274,6 @@ class EditorPaper extends React.Component {
 
     render() {
         const { sentences, header, footer } = this.props;
-
         return (
             <div>
 
