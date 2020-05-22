@@ -25,7 +25,7 @@ import translation from './translation';
 import configUplaod from './configupload';
 import workspaceDetails from './runexperiment';
 import audio from './audio';
-
+import mergeSentenceApi from './interactivemerge';
 import fetchDefaultConfig from './fetchdefaultconfig';
 import hindi from './hindi';
 import marathi from './marathi';
@@ -116,5 +116,6 @@ export default {
     intractiveTrans,
     docpath,
     interactiveUpdate,
-    downloaddoc
+    downloaddoc,
+    mergeSentenceApi
 };
