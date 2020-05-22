@@ -9,6 +9,8 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 // import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+
+import FileCopy from "@material-ui/icons/FileCopy";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Grid from "@material-ui/core/Grid";
 import AccountCircle from "@material-ui/icons/AccountBox";
@@ -286,7 +288,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <SearchIcon style={{ color: "white" }} />
+                        <TranslateIcon style={{ color: "white" }} />
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -434,7 +436,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <SearchIcon style={{ color: "white" }} />
+                        <FileCopy style={{ color: "white" }} />
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
