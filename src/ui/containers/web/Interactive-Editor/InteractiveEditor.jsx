@@ -25,6 +25,7 @@ import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentenc
 import Snackbar from "../../../components/web/common/Snackbar";
 import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
 import Menu from "../../../components/web/common/Menu";
+import ContextMenu from 'react-context-menu';
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -173,7 +174,8 @@ class IntractiveTrans extends React.Component {
         sourceSupScripts: supScripts,
         targetSupScripts: targetSupScript,
         clickedSentence: '',
-        selectedSentenceId: ''
+        selectedSentenceId: '',
+        contextToken: false
         
       
       });
@@ -279,7 +281,7 @@ class IntractiveTrans extends React.Component {
       selectedTableId: "",
       scrollToId: sentenceId,
       parent,
-
+      contextToken: false,
       superScript: token
     });
   }
@@ -296,7 +298,8 @@ class IntractiveTrans extends React.Component {
       scrollToId: sentenceId,
       clickedCell,
       parent,
-      superScript: false
+      superScript: false,
+      contextToken: false
     });
 
     if (next_previous) {
@@ -358,7 +361,7 @@ class IntractiveTrans extends React.Component {
         operation_type,
         openEl: true,
         splitSentence: selectedSplitValue,
-        anchorEl: event && event.target ? event.target : null
+        contextToken: true
       });
     }
   }
@@ -448,7 +451,7 @@ class IntractiveTrans extends React.Component {
                         </Typography>
                       </Toolbar>
                     </Toolbar>
-                    <div style={{ padding: "24px" }}>
+                    <div style={{ padding: "24px" }} id = "popUp">
                       <EditorPaper
                         paperType="source"
                         sentences={this.state.sentences}
@@ -551,17 +554,21 @@ class IntractiveTrans extends React.Component {
               />
 
             }
-            
-            {this.state.anchorEl && (
-               <Menu
-               anchorEl = {this.state.anchorEl} openEl={this.state.openEl}
-               submittedId={this.state.selectedSentenceId}
-               onClose={this.handleClose}
-               sentences={this.state.sentences}
-               handleClose={this.handleClose.bind(this)}
-               handleApiMerge={this.handleApiMerge.bind(this)}
-               operation_type = {this.state.operation_type}
-             />
+            {console.log("token",this.state.contextToken)}
+            {console.log(window.getSelection().toString() , this.state.contextToken , this.state.startSentence, this.state.endSentence, this.state.operation_type)}
+            {window.getSelection().toString() && this.state.contextToken &&this.state.startSentence && this.state.endSentence&& this.state.operation_type&& (
+
+             <ContextMenu
+  contextId={'popUp'}
+  items={[
+    {
+      label: this.state.operation_type === "merge" ? "Merge Sentence" : "Split Sentence",
+      onClick: this.handleApiMerge.bind(this),
+      closeOnClick: true,
+      closeOnClickOut: true
+      
+    }
+  ]} />
             )}
           </div>
         )}
