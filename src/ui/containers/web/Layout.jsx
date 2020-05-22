@@ -64,8 +64,10 @@ class App extends React.Component {
           {!dontShowLoader &&
             this.renderSpinner()
           }
+          {!dontShowHeader && 
           <Header dontShowHeader={dontShowHeader} forDemo={forDemo || showLogo} classes={classes} theme={theme} title={title} drawer={drawer} tocken={this.state.tocken} handleTockenChange={this.handleTockenChange.bind(this)} />
-          <div className={forDemo ? classes.containerDemo : classes.container} onClick={this.handlDrawerTocken.bind(this)}>
+          }
+         <div className={forDemo ? classes.containerDemo : classes.container} onClick={this.handlDrawerTocken.bind(this)}>
             {/* {forDemo &&
               <div style={{
                 position: 'absolute',
