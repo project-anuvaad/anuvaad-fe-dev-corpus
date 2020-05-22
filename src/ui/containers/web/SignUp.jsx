@@ -23,7 +23,6 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 import TextField from '../../components/web/common/TextField';
 import Link from '@material-ui/core/Link';
-import Divider from '@material-ui/core/Divider';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 
@@ -88,7 +87,7 @@ class SignUp extends React.Component {
                     />
                   }
                   label={<div><span>I agree to the</span>
-                    <Link href="tnc.html" > Privacy Policy</Link>
+                    <Link href="Anuvaad-TnC.html" > Privacy Policy</Link>
                   </div>}
                 />
                 <br />
