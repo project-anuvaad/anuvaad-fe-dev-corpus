@@ -135,7 +135,7 @@ class EditorPaper extends React.Component {
 
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
-                        {tokenText.text}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
+                        {(tokenText.text).trim()}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                     return true
                 })
                 return sentenceArray
@@ -149,7 +149,7 @@ class EditorPaper extends React.Component {
                             backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "",
                         }}
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
-                        {tokenText.target}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
+                        {(tokenText.target).trim()}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                     return true
                 })
                 return sentenceArray
