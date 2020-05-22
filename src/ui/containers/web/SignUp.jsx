@@ -23,15 +23,16 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 import TextField from '../../components/web/common/TextField';
 import Link from '@material-ui/core/Link';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
-   
+
   }
 
-  
+
 
   /**
    * user input handlers
@@ -44,69 +45,70 @@ class SignUp extends React.Component {
     return (
       <MuiThemeProvider theme={ThemeDefault}>
         <div>
-          <div className={classes.signUpContainer}>
-            <Paper className={classes.paper}>
-              <form method="post">
-              <Typography style={{marginTop:'3%', marginBottom:'8%', fontSize:'24px'}}>Create New Account</Typography>
-                <FormControl fullWidth>
-                <TextField value={''} id="outlined-required" placeholder={"Username"}
-              margin="normal" varient="outlined" style={{width:'100%', marginBottom:'4%'}}
-              />
-                  
-                </FormControl>
-                <FormControl fullWidth>
-                <TextField value={''} id="outlined-required" type="email" placeholder={"Email"}
-              margin="normal" varient="outlined" style={{width:'100%', marginBottom:'4%'}}
-              />
-                  
-                </FormControl>
-                <FormControl fullWidth>
-                <TextField value={''} id="outlined-required" placeholder={"Name"}
-              margin="normal" varient="outlined" style={{width:'100%', marginBottom:'4%'}}
-              />
-                  
-                </FormControl>
-                <FormControl fullWidth>
-                <TextField value={''} id="outlined-required" type="password" placeholder={"Password"}
-              margin="normal" varient="outlined"  style={{width:'100%', marginBottom:'4%'}}
-              />                </FormControl>
-              <FormControl fullWidth>
-                <TextField value={''} id="outlined-required" type="password" placeholder={"Confirm Password"}
-              margin="normal" varient="outlined"  style={{width:'100%', marginBottom:'4%'}}
-              />                </FormControl>
-                <div>
-                  
+          <Grid container spacing={8}>
+            <Grid item xs={12} sm={4} lg={5} xl={5} >
+              <img src="Anuvaad.png" width="100%" />
+            </Grid>
+            <Grid item xs={12} sm={8} lg={7} xl={7}  style={{ backgroundColor: '#f1f5f7' }} >
+              <form  method="post">
+                <Typography align='center' style={{ marginTop: '5%', marginBottom: '5%', fontSize: '33px', fontfamily: 'Trebuchet MS, sans-serif	', color: '#003366' }}>Sign Up</Typography>
+                <FormControl align='center' fullWidth >
 
-                <FormControlLabel
-                    control={
-                      <Checkbox
-                        className={classes.checkRemember.className}
-                        labelclassName={classes.checkRemember.labelclassName}
-                        iconclassName={classes.checkRemember.iconclassName}
-                      />
-                    }
-                    label={<div><span>I have read the </span>
-                    <a href="../../../../public/tnc.html" target='_blank'>Terms and Conditions</a>
-                    </div>}
+                  <TextField  value={''} id="input-with-icon-textfield" placeholder={"First name"}
+                    margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white',fontSize:'20px' }}
                   />
-                  <Button variant="contained"  color="secondary" aria-label="edit" style={{width:'100%', marginBottom:'4%', marginTop:'4%'}}>
-                    Sign Up Now
+                  </FormControl>
+                  <FormControl align='center' fullWidth>
+                  <TextField value={''} id="input-with-icon-textfield" placeholder={"Last name"}
+                    margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }}
+                  />
+                </FormControl>
+                <FormControl  align='center'fullWidth>
+                  <TextField value={''} id="outlined-required" type="email" placeholder={"Email"}
+                    margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }}
+                  />
+                </FormControl>
+                <FormControl  align='center' fullWidth>
+                  <TextField value={''} id="outlined-required" type="password" placeholder={"Enter password"}
+                    margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }}
+                  />                </FormControl>
+                <FormControl align='center' fullWidth>
+                  <TextField value={''} id="outlined-required" type="password" placeholder={"Re-enter password"}
+                    margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }}
+                  />
+                </FormControl>
+                <FormControlLabel fullWidth style={{marginLeft:'25%'}}
+                  control={
+                    <Checkbox
+                      className={classes.checkRemember.className}
+                      labelclassName={classes.checkRemember.labelclassName}
+                      iconclassName={classes.checkRemember.iconclassName}
+                      color='#ffffff !important'
+                    />
+                  }
+                  label={<div><span>I agree to the</span>
+                    <Link href="Anuvaad-TnC.html" > Privacy Policy</Link>
+                  </div>}
+                />
+                <br />
+                <FormControl align='center' fullWidth>
+                <Button  variant="contained" aria-label="edit" style={{
+                  width: '50%', marginBottom: '2%', marginTop: '2%',
+                  backgroundColor: '#1ca9c9', color: 'white',
+                }}>
+                  Sign Up
                   </Button>
-                  <Grid container spacing={24} >
-                <Grid item xs={6} sm={6} lg={6} xl={6}>
-                  <Typography >Have an account?
-                  <Link onClick={() => {{history.push("/")}}}> SignIn</Link></Typography>
-                  </Grid>
-                  </Grid>
-          
-                  {/* </Link> */}
-                </div>
+                  </FormControl>
+                
+                <Typography style={{marginLeft:'26%',marginBottom:'4%'}}>Already Signed up?
+                  <Link onClick={() => { { history.push("/") } }}> Log In</Link></Typography>
+               
               </form>
-            </Paper>
-
-           
-            <div className={classes.buttonsDiv} />
-          </div>
+              <hr style={{ height: '2px', borderwidth: '0', width: '70%', backgroundColor: ' #D8D8D8', color: '#D8D8D8', border: '0',marginTop:'2%' }} />
+              <Typography align='center' style={{ marginTop: '3%', fontfamily: 'Gill Sans, sans-serif;' }}>Enter the required details,you will receive a confirmation mail to your resgistered email id.<br />Please click on that to activate your account.</Typography>
+            </Grid>
+          </Grid>
+          <div className={classes.buttonsDiv} />
         </div>
       </MuiThemeProvider>
     );
