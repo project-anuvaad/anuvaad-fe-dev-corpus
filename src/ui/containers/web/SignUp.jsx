@@ -153,7 +153,7 @@ class SignUp extends React.Component {
 
               {/* </ValidatorForm> */}
               <hr style={{ height: '2px', borderwidth: '0', width: '70%', backgroundColor: ' #D8D8D8', color: '#D8D8D8', border: '0', marginTop: '2%' }} />
-              <Typography align='center' style={{ marginTop: '3%', fontfamily: 'Gill Sans, sans-serif;' }}>Enter the required details,you will receive a confirmation mail to your resgistered email id.<br />Please click on that to activate your account.</Typography>
+              <Typography align='center' style={{ marginTop: '3%', fontfamily: 'Gill Sans, sans-serif;' }}>Enter the required details,you will receive a confirmation mail to your registered email id.<br />Please click on that to activate your account.</Typography>
             </Grid>
           </Grid>
           <div className={classes.buttonsDiv} />
