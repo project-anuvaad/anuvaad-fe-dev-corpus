@@ -111,7 +111,7 @@ class Activate extends React.Component {
                             onSubmit={this.handleSubmit}
                             onError={errors => console.log(errors)}
                         > */}
-                            <Typography align='center' style={{ marginTop: '5%', marginBottom: '5%', fontSize: '33px', fontfamily: 'Trebuchet MS, sans-serif	', color: '#003366' }}>Please wait while we are activating</Typography>
+                            <Typography align='center' style={{ marginTop: '40%', marginBottom: '5%', fontSize: '25px', fontfamily: 'Arial, Helvetica, sans-serif', color: '#003366' }}>Please wait while we are activating</Typography>
                         </Grid>
                     </Grid>
                     <div className={classes.buttonsDiv} />
