@@ -109,7 +109,7 @@ class SignUp extends React.Component {
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.email} id="outlined-required" type="email" placeholder={"Email"}
+                <TextField value={this.state.email} id="outlined-required" type="email" placeholder={"Email/Username"}
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('email')}
                 />
               </FormControl>
@@ -135,7 +135,10 @@ class SignUp extends React.Component {
                   />
                 }
                 label={<div><span>I agree to the</span>
-                  <Link href="Anuvaad-TnC.html" > Privacy Policy</Link>
+                  <Link href="#" onClick={() => {
+                    window.open('/Anuvaad-TnC.html', 'T&C', `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+width=500,height=500`);
+                  }}> Privacy Policy</Link>
                 </div>}
               />
               <br />
@@ -148,8 +151,8 @@ class SignUp extends React.Component {
                   </Button>
               </FormControl>
 
-              <Typography style={{ marginLeft: '26%', marginBottom: '4%' }}>Already Signed up?
-                  <Link onClick={() => { { history.push("/") } }}> Log In</Link></Typography>
+              <Typography style={{ marginLeft: '26%', marginBottom: '4%' }}>Already Having Account?
+                  <Link  style={{ cursor: 'pointer' }} href="#" onClick={() => { { history.push("/") } }}> Log In</Link></Typography>
 
               {/* </ValidatorForm> */}
               <hr style={{ height: '2px', borderwidth: '0', width: '70%', backgroundColor: ' #D8D8D8', color: '#D8D8D8', border: '0', marginTop: '2%' }} />
