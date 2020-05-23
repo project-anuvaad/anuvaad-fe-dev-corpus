@@ -58,6 +58,7 @@ import fetchPdfSentence from './fetchpdfsentence';
 import intractiveTrans from './intractive_translate';
 import downloaddoc from './downloaddoc';
 import signup from './signup';
+import activate from './activate';
 
 export default {
     login,
@@ -119,5 +120,6 @@ export default {
     interactiveUpdate,
     downloaddoc,
     mergeSentenceApi,
-    signup
+    signup,
+    activate
 };

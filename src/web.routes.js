@@ -74,6 +74,7 @@ import PdfUpload from "./ui/containers/web/PdfUpload";
 import PdfToDoc from "./ui/containers/web/PdfToDoc";
 import ViewPdf from "./ui/containers/web/ViewPdfFile";
 import Signup from "./ui/containers/web/SignUp";
+import Activate from "./ui/containers/web/Activate";
 import IntractiveTranslate from "./ui/containers/web/IntractiveTranslation";
 import InteractiveEditor from "./ui/containers/web/Interactive-Editor/InteractiveEditor";
 import PdfSentence from "./ui/containers/web/PdfSentence";
@@ -221,6 +222,14 @@ class AppRoutes extends React.Component {
               userRoles={["grader", "dev"]}
               component={GradeViewCorpus}
               authenticate={this.authenticateUser}
+            />
+             <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/activate/:uid/:rid`}
+              title="Activate"
+              authenticate={() => true}
+              component={Activate}
+              drawer
+              dontShowHeader={true}
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/:basename/:modelid`}
