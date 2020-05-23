@@ -9,6 +9,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
+import { ValidatorForm } from 'react-material-ui-form-validator';
 // import {Link} from 'react-router';
 
 import { connect } from "react-redux";
@@ -18,26 +19,66 @@ import ThemeDefault from "../../theme/web/theme-default";
 
 import LoginStyles from "../../styles/web/LoginStyles";
 import Grid from '@material-ui/core/Grid';
-import LoginAPI from "../../../flux/actions/apis/login";
+import SignupApi from "../../../flux/actions/apis/signup";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 import TextField from '../../components/web/common/TextField';
 import Link from '@material-ui/core/Link';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Snackbar from "../../components/web/common/Snackbar";
 
 
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+
+    }
 
   }
 
 
 
-  /**
-   * user input handlers
-   * captures text provided in email and password fields
-   */
+  handleInputReceived = prop => event => {
+    this.setState({ [prop]: event.target.value });
+  };
+
+  handleSubmit() {
+    if (this.handleValidation('firstName') && this.handleValidation('lastName') && this.handleValidation('email') && this.handleValidation('password') && this.handleValidation('confirmPassword')) {
+      if (this.state.password !== this.state.confirmPassword) {
+        alert('Password and confirm password did not match')
+      } else {
+        if (!this.state.termsAndCondition) {
+          alert('Please accept terms and condition')
+        } else {
+          var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+          if (this.state.email.match(mailformat)) {
+            let { APITransport } = this.props;
+            let apiObj = new SignupApi(this.state.email, this.state.firstName, this.state.lastName, this.state.password);
+            APITransport(apiObj);
+          } else {
+            alert('Please provide valid email')
+          }
+        }
+      }
+    } else {
+      alert('Please provide valid details')
+    }
+
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.signup !== this.props.signup) {
+      this.setState({ message: 'Successfully created the account. Please check your email for account verification', open: true })
+    }
+  }
+
+  handleValidation(key) {
+    if (!this.state[key] || this.state[key].length < 2) {
+      return false
+    }
+    return true
+  }
 
 
   render() {
@@ -49,66 +90,83 @@ class SignUp extends React.Component {
             <Grid item xs={12} sm={4} lg={5} xl={5} >
               <img src="Anuvaad.png" width="100%" />
             </Grid>
-            <Grid item xs={12} sm={8} lg={7} xl={7}  style={{ backgroundColor: '#f1f5f7' }} >
-              <form  method="post">
-                <Typography align='center' style={{ marginTop: '5%', marginBottom: '5%', fontSize: '33px', fontfamily: 'Trebuchet MS, sans-serif	', color: '#003366' }}>Sign Up</Typography>
-                <FormControl align='center' fullWidth >
+            <Grid item xs={12} sm={8} lg={7} xl={7} style={{ backgroundColor: '#f1f5f7' }} >
+              {/* <ValidatorForm
+                            ref="form"
+                            onSubmit={this.handleSubmit}
+                            onError={errors => console.log(errors)}
+                        > */}
+              <Typography align='center' style={{ marginTop: '5%', marginBottom: '5%', fontSize: '33px', fontfamily: 'Trebuchet MS, sans-serif	', color: '#003366' }}>Sign Up</Typography>
+              <FormControl align='center' fullWidth >
 
-                  <TextField  value={''} id="input-with-icon-textfield" placeholder={"First name"}
-                    margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white',fontSize:'20px' }}
-                  />
-                  </FormControl>
-                  <FormControl align='center' fullWidth>
-                  <TextField value={''} id="input-with-icon-textfield" placeholder={"Last name"}
-                    margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }}
-                  />
-                </FormControl>
-                <FormControl  align='center'fullWidth>
-                  <TextField value={''} id="outlined-required" type="email" placeholder={"Email"}
-                    margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }}
-                  />
-                </FormControl>
-                <FormControl  align='center' fullWidth>
-                  <TextField value={''} id="outlined-required" type="password" placeholder={"Enter password"}
-                    margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }}
-                  />                </FormControl>
-                <FormControl align='center' fullWidth>
-                  <TextField value={''} id="outlined-required" type="password" placeholder={"Re-enter password"}
-                    margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }}
-                  />
-                </FormControl>
-                <FormControlLabel fullWidth style={{marginLeft:'25%'}}
-                  control={
-                    <Checkbox
-                      className={classes.checkRemember.className}
-                      labelclassName={classes.checkRemember.labelclassName}
-                      iconclassName={classes.checkRemember.iconclassName}
-                      color='#ffffff !important'
-                    />
-                  }
-                  label={<div><span>I agree to the</span>
-                    <Link href="Anuvaad-TnC.html" > Privacy Policy</Link>
-                  </div>}
+                <TextField value={this.state.firstName} id="input-with-icon-textfield" placeholder={"First name"}
+                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white', fontSize: '20px' }} onChange={this.handleInputReceived('firstName')}
                 />
-                <br />
-                <FormControl align='center' fullWidth>
-                <Button  variant="contained" aria-label="edit" style={{
+              </FormControl>
+              <FormControl align='center' fullWidth>
+                <TextField value={this.state.lastName} id="input-with-icon-textfield" placeholder={"Last name"}
+                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('lastName')}
+                />
+              </FormControl>
+              <FormControl align='center' fullWidth>
+                <TextField value={this.state.email} id="outlined-required" type="email" placeholder={"Email"}
+                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('email')}
+                />
+              </FormControl>
+              <FormControl align='center' fullWidth>
+                <TextField value={this.state.password} id="outlined-required" type="password" placeholder={"Enter password"}
+                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('password')}
+                />                </FormControl>
+              <FormControl align='center' fullWidth>
+                <TextField value={this.state.confirmPassword} id="outlined-required" type="password" placeholder={"Re-enter password"}
+                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('confirmPassword')}
+                />
+              </FormControl>
+              <FormControlLabel fullWidth style={{ marginLeft: '25%' }}
+                control={
+                  <Checkbox
+                    className={classes.checkRemember.className}
+                    labelclassName={classes.checkRemember.labelclassName}
+                    iconclassName={classes.checkRemember.iconclassName}
+                    value={this.state.termsAndCondition ? false : true}
+                    checked={this.state.termsAndCondition}
+                    onChange={this.handleInputReceived('termsAndCondition')}
+                    color='#ffffff !important'
+                  />
+                }
+                label={<div><span>I agree to the</span>
+                  <Link href="Anuvaad-TnC.html" > Privacy Policy</Link>
+                </div>}
+              />
+              <br />
+              <FormControl align='center' fullWidth>
+                <Button variant="contained" aria-label="edit" style={{
                   width: '50%', marginBottom: '2%', marginTop: '2%',
                   backgroundColor: '#1ca9c9', color: 'white',
-                }}>
+                }} onClick={this.handleSubmit.bind(this)}>
                   Sign Up
                   </Button>
-                  </FormControl>
-                
-                <Typography style={{marginLeft:'26%',marginBottom:'4%'}}>Already Signed up?
+              </FormControl>
+
+              <Typography style={{ marginLeft: '26%', marginBottom: '4%' }}>Already Signed up?
                   <Link onClick={() => { { history.push("/") } }}> Log In</Link></Typography>
-               
-              </form>
-              <hr style={{ height: '2px', borderwidth: '0', width: '70%', backgroundColor: ' #D8D8D8', color: '#D8D8D8', border: '0',marginTop:'2%' }} />
+
+              {/* </ValidatorForm> */}
+              <hr style={{ height: '2px', borderwidth: '0', width: '70%', backgroundColor: ' #D8D8D8', color: '#D8D8D8', border: '0', marginTop: '2%' }} />
               <Typography align='center' style={{ marginTop: '3%', fontfamily: 'Gill Sans, sans-serif;' }}>Enter the required details,you will receive a confirmation mail to your resgistered email id.<br />Please click on that to activate your account.</Typography>
             </Grid>
           </Grid>
           <div className={classes.buttonsDiv} />
+          {this.state.open && (
+            <Snackbar
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              open={this.state.open}
+              autoHideDuration={6000}
+              onClose={this.handleClose}
+              variant="success"
+              message={this.state.message}
+            />
+          )}
         </div>
       </MuiThemeProvider>
     );
@@ -117,13 +175,13 @@ class SignUp extends React.Component {
 
 
 const mapStateToProps = state => ({
-  user: state.login
+  signup: state.signup
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      APITransporter: APITransport
+      APITransport: APITransport
     },
     dispatch
   );

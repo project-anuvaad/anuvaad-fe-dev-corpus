@@ -57,6 +57,7 @@ import docpath from './pdf_to_doc';
 import fetchPdfSentence from './fetchpdfsentence';
 import intractiveTrans from './intractive_translate';
 import downloaddoc from './downloaddoc';
+import signup from './signup';
 
 export default {
     login,
@@ -117,5 +118,6 @@ export default {
     docpath,
     interactiveUpdate,
     downloaddoc,
-    mergeSentenceApi
+    mergeSentenceApi,
+    signup
 };
