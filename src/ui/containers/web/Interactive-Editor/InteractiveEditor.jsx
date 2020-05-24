@@ -175,23 +175,23 @@ class IntractiveTrans extends React.Component {
         targetSupScripts: targetSupScript,
         clickedSentence: '',
         selectedSentenceId: '',
-        contextToken: false
+        contextToken: false,
+        addSentence: false
         
-      
       });
     }
   }
 
-  handleSave(value, index, submittedId, keyValue, cellValue, taggedValue) {
+  handleSave(value, index, submittedId, sentenceIndex, keyValue, cellValue, taggedValue) {
     const obj = this.state.sentences;
     const temp = this.state.sentences[index];
     if (temp.is_table) {
       temp.table_items[keyValue][cellValue].target = value.tgt ? value.tgt : value;
       temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt ? value.tagged_tgt : taggedValue;
     }
-
-    temp.tokenized_sentences[submittedId.split("_")[1]].target = value.tgt ? value.tgt : value;
-    temp.tokenized_sentences[submittedId.split("_")[1]].tagged_tgt = value.tagged_tgt ? value.tagged_tgt : taggedValue;
+    console.log(temp.tokenized_sentences[sentenceIndex],sentenceIndex)
+    temp.tokenized_sentences[sentenceIndex].target = value.tgt ? value.tgt : value;
+    temp.tokenized_sentences[sentenceIndex].tagged_tgt = value.tagged_tgt ? value.tagged_tgt : taggedValue;
 
     obj[index] = temp;
     this.setState({
@@ -202,7 +202,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleDone(token, value) {
-
+    console.log("value",value)
     const { APITransport } = this.props;
     const senArray = [];
     senArray.push(value);
@@ -262,7 +262,11 @@ class IntractiveTrans extends React.Component {
       }, 350);
     }
   }
+  handleAddSentence(){
+    this.setState({addSentence: true, operation_type:"merge"})
+  }
 
+ 
   handleApiMerge() {
     const { APITransport } = this.props;
     let sen = {}
@@ -354,17 +358,27 @@ class IntractiveTrans extends React.Component {
         operation_type = "merge";
         selectedSplitValue = window.getSelection().toString()
       }
-      this.setState({
-        mergeSentence,
-        startSentence,
-        endSentence,
-        operation_type,
-        openEl: true,
-        splitSentence: selectedSplitValue,
-        contextToken: true
-      });
+     
+      this.state.addSentence ?
+        this.setState({
+          mergeSentence: [...this.state.mergeSentence, ...mergeSentence ],
+          endSentence,
+          openEl: true,
+          contextToken: true,
+          addSentence: true
+        }):
+        this.setState({
+          mergeSentence,
+          startSentence,
+          endSentence,
+          operation_type,
+          openEl: true,
+          splitSentence: selectedSplitValue,
+          contextToken: true
+        });
+      }
     }
-  }
+  
 
   render() {
 
@@ -554,8 +568,6 @@ class IntractiveTrans extends React.Component {
               />
 
             }
-            {console.log("token",this.state.contextToken)}
-            {console.log(window.getSelection().toString() , this.state.contextToken , this.state.startSentence, this.state.endSentence, this.state.operation_type)}
             {window.getSelection().toString() && this.state.contextToken &&this.state.startSentence && this.state.endSentence&& this.state.operation_type&& (
 
              <ContextMenu
@@ -567,7 +579,14 @@ class IntractiveTrans extends React.Component {
       closeOnClick: true,
       closeOnClickOut: true
       
-    }
+    },
+    // {
+    //   label: "Add another sentence",
+    //   onClick: this.handleAddSentence.bind(this),
+    //   closeOnClick: true,
+    //   closeOnClickOut: true
+      
+    // }
   ]} />
             )}
           </div>
