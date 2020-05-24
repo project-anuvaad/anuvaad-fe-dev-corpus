@@ -35,19 +35,30 @@ class Editor extends React.Component {
   handleSuperSave(target, taggedTarget) {
 
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
+
+    console.log("splitvalue",splitValue)
     const temp = this.state.scriptSentence;
     let value = []
     if (this.props.superScriptToken) {
       this.state.scriptSentence.map((sentence, index) => {
         if (splitValue[0] === sentence._id) {
-          (temp[index].tokenized_sentences[splitValue[1]].target = `${this.state.superIndex} ${target}`);
-          (temp[index].tokenized_sentences[splitValue[1]].tagged_tgt = taggedTarget);
-          value = temp[index]
+          temp[index].tokenized_sentences.map((sentence,i) =>{
+           
+            if(sentence.sentence_index===Number(splitValue[1])){
+              (sentence.target = `${this.state.superIndex} ${target}`);
+              (sentence.tagged_tgt = taggedTarget);
+            }
+          })
+          value = temp[index];
         }
-        return value;
+        console.log(value)
+        return true;
       });
     }
+
+    console.log("target value",temp);
     this.setState({ scriptSentence: temp, apiToken: true });
+    return value;
 
   }
 
@@ -59,6 +70,7 @@ class Editor extends React.Component {
       this.handleSubmit();
     } else if (this.props.superScriptToken && this.state.superIndex) {
       this.props.handleScriptSave(this.state.translateText, this.state.superIndex);
+      console.log("---",temp)
       this.props.hadleSentenceSave(false, temp);
       this.setState({ target: this.state.translateText })
     } else {
@@ -66,6 +78,7 @@ class Editor extends React.Component {
         this.state.translateText,
         this.state.indexValue,
         this.state.submittedId,
+        this.state.sentenceIndex,
         this.state.keyValue,
         this.state.cellValue,
         this.handleCalc(this.state.translateText)
@@ -184,13 +197,11 @@ class Editor extends React.Component {
               clickedSentence: false,
               keyValue: "",
               cellValue: "",
+              sentenceIndex,
               checkedB: true
             });
-          } else if (sentence.tokenized_sentences.length >= splitValue[1] && splitValue[1] >= 0) {
+          } else if (sentence.tokenized_sentences.length >=  sentenceIndex&& sentenceIndex >= 0) {
             const ind =  sentenceIndex + value;
-
-            console.log("------",ind,this.props.sentences[index].tokenized_sentences[ind],this.props.sentences[index].tokenized_sentences[ind].sentence_index)
-            
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
             !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value === 0 ? null : true);
             if (sentence.is_table) {
@@ -214,7 +225,8 @@ class Editor extends React.Component {
               translateText: "",
               indexValue: index,
               clickedSentence: false,
-              checkedB: true
+              checkedB: true,
+              sentenceIndex
             });
           }
         }
@@ -263,6 +275,8 @@ class Editor extends React.Component {
             this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0],
             this.state.indexValue,
             this.state.submittedId,
+            this.state.sentenceIndex,
+
             this.state.keyValue,
             this.state.cellValue,
 
