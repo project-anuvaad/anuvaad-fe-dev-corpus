@@ -111,7 +111,7 @@ class Activate extends React.Component {
                             onSubmit={this.handleSubmit}
                             onError={errors => console.log(errors)}
                         > */}
-                            <Typography align='center' style={{ marginTop: '45%', marginBottom: '5%', fontSize: '25px', fontfamily: 'Arial, Helvetica, sans-serif', color: '#003366' }}>Please wait while we are activating your account</Typography>
+                            <Typography align='center' style={{ marginTop: '45%', marginBottom: '5%', fontSize: '25px', fontfamily: 'Arial, Helvetica, sans-serif', color: '#003366' }}>Please wait while we are activating your account, you will be redirected to login page automatically</Typography>
                         </Grid>
                     </Grid>
                     <div className={classes.buttonsDiv} />
