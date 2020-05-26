@@ -8,9 +8,6 @@ export default class RunExperiment extends API {
     super("POST", timeout, false);
     this.type = C.UPDATEINTERACTIVESENTENCE;
     this.sentences = sentences;
-    
-    
-    
   }
 
   toString() {
@@ -30,14 +27,14 @@ export default class RunExperiment extends API {
 
   getBody() {
     return {
-        sentences:this.sentences
+      sentences: this.sentences
     };
   }
 
   getHeaders() {
     this.headers = {
       headers: {
-        Authorization: `Bearer ${  decodeURI(localStorage.getItem("token"))}`,
+        Authorization: `Bearer ${decodeURI(localStorage.getItem("token"))}`,
         "Content-Type": "application/json"
       }
     };

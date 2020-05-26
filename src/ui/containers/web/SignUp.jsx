@@ -10,6 +10,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import { ValidatorForm } from 'react-material-ui-form-validator';
+import Scrollable from 'hide-scrollbar-react';
 // import {Link} from 'react-router';
 
 import { connect } from "react-redux";
@@ -32,9 +33,15 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      firstName:"",
+      lastName:"",
+      email:"",
+      password:"",
+      confirmPassword:"",
+      termsAndCondition:""
 
     }
-
+this.handleSubmit = this.handleSubmit.bind(this);
   }
 
 
@@ -43,8 +50,12 @@ class SignUp extends React.Component {
     this.setState({ [prop]: event.target.value });
   };
 
-  handleSubmit() {
-    if (this.handleValidation('firstName') && this.handleValidation('lastName') && this.handleValidation('email') && this.handleValidation('password') && this.handleValidation('confirmPassword')) {
+  handleSubmit(e) {
+
+    e.preventDefault();
+  
+
+    if (this.handleValidation('firstName') && this.handleValidation('lastName') && this.handleValidation('email') && this.handleValidation('password') && this.handleValidation('confirmPassword') && this.handleValidation('termsAndCondition')) {
       if (this.state.password !== this.state.confirmPassword) {
         alert('Password and confirm password did not match')
       } else {
@@ -69,8 +80,9 @@ class SignUp extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.signup !== this.props.signup) {
-      this.setState({ message: 'Successfully created the account. Please check your email for account verification', open: true })
+      this.setState({ message: 'Successfully created the account. Please check your email for account verification', open: true , firstName:'',lastName:'',email:'',password:'',confirmPassword:'', termsAndCondition:'' })
     }
+    
   }
 
   handleValidation(key) {
@@ -84,7 +96,9 @@ class SignUp extends React.Component {
   render() {
     const { user, classes, location } = this.props;
     return (
+  
       <MuiThemeProvider theme={ThemeDefault}>
+       
         <div>
           <Grid container spacing={8}>
             <Grid item xs={12} sm={4} lg={5} xl={5} >
@@ -99,26 +113,26 @@ class SignUp extends React.Component {
               <Typography align='center' style={{ marginTop: '5%', marginBottom: '5%', fontSize: '33px', fontfamily: 'Trebuchet MS, sans-serif	', color: '#003366' }}>Sign Up</Typography>
               <FormControl align='center' fullWidth >
 
-                <TextField value={this.state.firstName} id="input-with-icon-textfield" placeholder={"First name"}
+                <TextField value={this.state.firstName} id="outlined-required"  placeholder={"First name*"} 
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white', fontSize: '20px' }} onChange={this.handleInputReceived('firstName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.lastName} id="input-with-icon-textfield" placeholder={"Last name"}
+                <TextField value={this.state.lastName} id="outlined-required"   placeholder={"Last name*"} 
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('lastName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.email} id="outlined-required" type="email" placeholder={"Email/Username"}
+                <TextField value={this.state.email} id="outlined-required"  type="email" placeholder={"Email/Username*"} 
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('email')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.password} id="outlined-required" type="password" placeholder={"Enter password"}
+                <TextField value={this.state.password} id="outlined-required"  type="password" placeholder={"Enter password*"} 
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('password')}
                 />                </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.confirmPassword} id="outlined-required" type="password" placeholder={"Re-enter password"}
+                <TextField value={this.state.confirmPassword} id="outlined-required"  type="password" placeholder={"Re-enter password*"} 
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('confirmPassword')}
                 />
               </FormControl>
@@ -143,16 +157,18 @@ width=500,height=500`);
               />
               <br />
               <FormControl align='center' fullWidth>
-                <Button variant="contained" aria-label="edit" style={{
+                <Button 
+                disabled={!this.state.termsAndCondition}
+                variant="contained" aria-label="edit" style={{
                   width: '50%', marginBottom: '2%', marginTop: '2%',
-                  backgroundColor: '#1ca9c9', color: 'white',
+                  backgroundColor: this.state.termsAndCondition ? '#1ca9c9' :'gray', color: 'white',
                 }} onClick={this.handleSubmit.bind(this)}>
                   Sign Up
                   </Button>
               </FormControl>
 
               <Typography style={{ marginLeft: '26%', marginBottom: '4%' }}>Already Having Account?
-                  <Link  style={{ cursor: 'pointer' }} href="#" onClick={() => { { history.push("/") } }}> Log In</Link></Typography>
+                  <Link style={{ cursor: 'pointer' }} href="#" onClick={() => { { history.push("/") } }}> Log In</Link></Typography>
 
               {/* </ValidatorForm> */}
               <hr style={{ height: '2px', borderwidth: '0', width: '70%', backgroundColor: ' #D8D8D8', color: '#D8D8D8', border: '0', marginTop: '2%' }} />
@@ -162,7 +178,7 @@ width=500,height=500`);
           <div className={classes.buttonsDiv} />
           {this.state.open && (
             <Snackbar
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               open={this.state.open}
               autoHideDuration={6000}
               onClose={this.handleClose}
@@ -171,7 +187,9 @@ width=500,height=500`);
             />
           )}
         </div>
+       
       </MuiThemeProvider>
+      
     );
   }
 }

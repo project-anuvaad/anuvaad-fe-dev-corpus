@@ -10,6 +10,7 @@
 		"classnames": "^2.2.6",
 		"draft-js": "^0.11.4",
 		"draftjs-to-markdown": "^0.6.0",
+		"hide-scrollbar-react": "^1.1.6",
 		"history": "^4.7.2",
 		"install": "^0.13.0",
 		"jquery": "^3.4.1",
