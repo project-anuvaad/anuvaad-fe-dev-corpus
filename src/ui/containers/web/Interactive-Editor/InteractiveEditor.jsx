@@ -369,7 +369,7 @@ class IntractiveTrans extends React.Component {
         selectedSplitValue = window.getSelection().toString()
       }
 
-     console.log(selectedSentence,this.state.selectedMergeSentence,this.state.mergeSentence)
+     console.log(this.state.selectedMergeSentence)
       this.state.addSentence ?
         this.setState({
           mergeSentence: [...this.state.mergeSentence, ...mergeSentence ],
