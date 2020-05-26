@@ -161,7 +161,7 @@ width=500,height=500`);
                 disabled={!this.state.termsAndCondition}
                 variant="contained" aria-label="edit" style={{
                   width: '50%', marginBottom: '2%', marginTop: '2%',
-                  backgroundColor: '#1ca9c9', color: 'white',
+                  backgroundColor: this.state.termsAndCondition ? '#1ca9c9' :'gray', color: 'white',
                 }} onClick={this.handleSubmit.bind(this)}>
                   Sign Up
                   </Button>
