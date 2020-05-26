@@ -113,26 +113,26 @@ this.handleSubmit = this.handleSubmit.bind(this);
               <Typography align='center' style={{ marginTop: '5%', marginBottom: '5%', fontSize: '33px', fontfamily: 'Trebuchet MS, sans-serif	', color: '#003366' }}>Sign Up</Typography>
               <FormControl align='center' fullWidth >
 
-                <TextField value={this.state.firstName} id="outlined-required"  placeholder={"*First name"} 
+                <TextField value={this.state.firstName} id="outlined-required"  placeholder={"First name*"} 
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white', fontSize: '20px' }} onChange={this.handleInputReceived('firstName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.lastName} id="outlined-required"   placeholder={"*Last name"} 
+                <TextField value={this.state.lastName} id="outlined-required"   placeholder={"Last name*"} 
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('lastName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.email} id="outlined-required"  type="email" placeholder={"*Email/Username"} 
+                <TextField value={this.state.email} id="outlined-required"  type="email" placeholder={"Email/Username*"} 
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('email')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.password} id="outlined-required"  type="password" placeholder={"*Enter password"} 
+                <TextField value={this.state.password} id="outlined-required"  type="password" placeholder={"Enter password*"} 
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('password')}
                 />                </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.confirmPassword} id="outlined-required"  type="password" placeholder={"*Re-enter password"} 
+                <TextField value={this.state.confirmPassword} id="outlined-required"  type="password" placeholder={"Re-enter password*"} 
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('confirmPassword')}
                 />
               </FormControl>
