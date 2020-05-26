@@ -25,6 +25,7 @@ import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentenc
 import Snackbar from "../../../components/web/common/Snackbar";
 import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
 import ContextMenu from 'react-context-menu';
+import Dialog from "../../../components/web/common/SimpleDialog";
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class IntractiveTrans extends React.Component {
       superScript: false,
       token: false,
       header: "",
+      openDialog:'',
       footer: "",
       selectedMergeSentence:[]
     };
@@ -278,6 +280,11 @@ class IntractiveTrans extends React.Component {
 
   }
 
+  handleDialogSave(){
+    this.handleApiMerge()
+    this.setState({openDialog: false})
+  }
+
   handleSuperScript(sentenceId, value, parent, token) {
     this.setState({
       selectedSentenceId: sentenceId,
@@ -291,8 +298,11 @@ class IntractiveTrans extends React.Component {
   }
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.setState({openDialog: false,mergeSentence : [],selectedMergeSentence:[], })
   };
+  handleDialog(){
+    this.setState({ openDialog: true });
+  }
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, next_previous) {
     this.setState({
@@ -562,6 +572,8 @@ class IntractiveTrans extends React.Component {
                 )}
               </Grid>
             </Grid>
+
+            {this.state.openDialog && <Dialog message="Selected sentence from different position. Do you want to merge ? " handleSubmit={this.handleDialogSave.bind(this)} handleClose={this.handleClose.bind(this)} open={true} title="Merge"/>}
             {this.state.open &&
               <Snackbar
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -579,7 +591,7 @@ class IntractiveTrans extends React.Component {
   items={[
     {
       label: this.state.operation_type === "merge" ? "Merge Sentence" : "Split Sentence",
-      onClick: this.handleApiMerge.bind(this),
+      onClick: this.state.operation_type === "merge" && this.state.addSentence ? this.handleDialog.bind(this) : this.handleApiMerge.bind(this),
       closeOnClick: true,
       closeOnClickOut: true
       

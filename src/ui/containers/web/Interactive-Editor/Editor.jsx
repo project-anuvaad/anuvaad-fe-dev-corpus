@@ -55,8 +55,6 @@ class Editor extends React.Component {
         return true;
       });
     }
-
-    console.log("target value",temp);
     this.setState({ scriptSentence: temp, apiToken: true });
     return value;
 
