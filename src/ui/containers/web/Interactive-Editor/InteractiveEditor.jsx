@@ -596,13 +596,13 @@ class IntractiveTrans extends React.Component {
       closeOnClickOut: true
       
     },
-    {
-      label: "Add another sentence",
-      onClick: this.handleAddSentence.bind(this),
-      closeOnClick: true,
-      closeOnClickOut: true
+    // {
+    //   label: "Add another sentence",
+    //   onClick: this.handleAddSentence.bind(this),
+    //   closeOnClick: true,
+    //   closeOnClickOut: true
       
-    }
+    // }
   ]} />
             )}
           </div>

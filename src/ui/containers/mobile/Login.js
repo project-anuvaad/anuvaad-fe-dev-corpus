@@ -53,7 +53,7 @@ class Login extends Component {
 							<CardItem style={logincontainer}>
 								<Input
 									rounded
-									placeholder="Username"
+									placeholder="Email/UserName"
 									onChange={this.processInputReceived}
 									style={placeholder}
 								/>
