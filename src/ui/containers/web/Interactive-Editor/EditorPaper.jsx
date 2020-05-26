@@ -123,14 +123,26 @@ class EditorPaper extends React.Component {
             if (this.props.paperType === 'source') {
 
                 sentence.tokenized_sentences.map((tokenText) => {
+                    let color = ""
+                    let textColor = ""
+                    if (this.props.selectedMergeSentence && Array.isArray(this.props.selectedMergeSentence) && this.props.selectedMergeSentence.length > 0) {
+                        console.log(this.props.selectedMergeSentence)
+                        this.props.selectedMergeSentence.map(sentenceText => {
+                            if ((sentence._id + '_' + tokenText.sentence_index === sentenceText.startNode) || (sentence._id + '_' + tokenText.sentence_index === sentenceText.endNode)) {
+                                color = "red"
+                                textColor = 'white'
+                            }
+                        })
+                    }
 
-                    let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "") : ""
-
+                    let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : color ? color : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : '') : ""
+                   
                     sentenceArray.push(<span><span
                         id={sentence._id + '_' + tokenText.sentence_index}
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: bgColor
+                            backgroundColor: bgColor,
+                            color: textColor ? textColor : ''
                         }}
 
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
@@ -219,15 +231,15 @@ class EditorPaper extends React.Component {
                 }
 
             } else if (sentence.is_ner) {
-                return (<div key={sentence._id} style={{textAlign:'justify'}} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id} 
-                style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                return (<div key={sentence._id} style={{ textAlign: 'justify' }} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id}
+                    style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                     {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
             } else {
-                return (<div key={sentence._id} 
+                return (<div key={sentence._id}
                     style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
-                    <div style={{textAlign:'justify'}}>{this.fetchTokenizedSentence(sentence, true)}{sentence.sup_array ? <sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup> : ''}<br /><br /></div></div>)
+                    <div style={{ textAlign: 'justify' }}>{this.fetchTokenizedSentence(sentence, true)}{sentence.sup_array ? <sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup> : ''}<br /><br /></div></div>)
             }
         } else if (sentence.is_table) {
             return this.fetchTable(sentence._id, sentence.table_items)
