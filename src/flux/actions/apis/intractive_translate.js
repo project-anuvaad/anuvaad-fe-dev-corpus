@@ -5,12 +5,13 @@ import API from "./api";
 import C from "../constants";
 
 export default class NMTSP extends API {
-    constructor(source,target, model, timeout = 200000) {
+    constructor(source,target, model,dontshowloader, timeout = 200000) {
         console.log("model----",model)
         super("POST", timeout, false);
         this.src = source;
         this.target = target;
         this.model = model.model_id;
+        this.dontshowloader = dontshowloader;
         this.answers = null;
         this.type = C.INTRACTIVE_TRANSLATE;
     }
@@ -27,6 +28,10 @@ export default class NMTSP extends API {
     apiEndPoint() {
         return `${super.apiEndPointAuto()}/interactive-translation`;
     }
+
+    dontShowApiLoader(){
+        return this.dontshowloader
+      }
 
     getBody() {
 

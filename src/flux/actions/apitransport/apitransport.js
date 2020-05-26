@@ -58,7 +58,7 @@ export const updateMessage = apiStatusAsync;
 export default function dispatchAPI(api) {
   if (api.reqType === "MULTIPART") {
     return dispatch => {
-      dispatch(apiStatusAsync(true, false, ""));
+      dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, ""));
       axios
         .post(api.apiEndPoint(), api.getFormData(), api.getHeaders())
         .then(res => {
@@ -70,7 +70,7 @@ export default function dispatchAPI(api) {
     };
   } else if (api.method === "POST") {
     return dispatch => {
-      dispatch(apiStatusAsync(true, false, ""));
+      dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, ""));
       axios
         .post(api.apiEndPoint(), api.getBody(), api.getHeaders())
         .then(res => {
@@ -82,7 +82,7 @@ export default function dispatchAPI(api) {
     };
   } else if (api.method === "PUT") {
     return dispatch => {
-      dispatch(apiStatusAsync(true, false, ""));
+      dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, ""));
       axios
         .put(api.apiEndPoint(), api.getBody(), api.getHeaders())
         .then(res => {
@@ -94,7 +94,7 @@ export default function dispatchAPI(api) {
     };
   } else if (api.method === "DELETE") {
     return dispatch => {
-      dispatch(apiStatusAsync(true, false, ""));
+      dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, ""));
       axios
         .delete(api.apiEndPoint(), api.getHeaders())
         .then(res => {
@@ -106,7 +106,7 @@ export default function dispatchAPI(api) {
     };
   }
   return dispatch => {
-    dispatch(apiStatusAsync(true, false, ""));
+    dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, ""));
     axios
       .get(api.apiEndPoint(), api.getHeaders())
       .then(res => {
