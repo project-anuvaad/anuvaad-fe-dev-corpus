@@ -10,6 +10,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import { ValidatorForm } from 'react-material-ui-form-validator';
+import Scrollable from 'hide-scrollbar-react';
 // import {Link} from 'react-router';
 
 import { connect } from "react-redux";
@@ -95,7 +96,9 @@ this.handleSubmit = this.handleSubmit.bind(this);
   render() {
     const { user, classes, location } = this.props;
     return (
+  
       <MuiThemeProvider theme={ThemeDefault}>
+       
         <div>
           <Grid container spacing={8}>
             <Grid item xs={12} sm={4} lg={5} xl={5} >
@@ -154,7 +157,9 @@ width=500,height=500`);
               />
               <br />
               <FormControl align='center' fullWidth>
-                <Button variant="contained" aria-label="edit" style={{
+                <Button 
+                disabled={!this.state.termsAndCondition}
+                variant="contained" aria-label="edit" style={{
                   width: '50%', marginBottom: '2%', marginTop: '2%',
                   backgroundColor: '#1ca9c9', color: 'white',
                 }} onClick={this.handleSubmit.bind(this)}>
@@ -173,7 +178,7 @@ width=500,height=500`);
           <div className={classes.buttonsDiv} />
           {this.state.open && (
             <Snackbar
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               open={this.state.open}
               autoHideDuration={6000}
               onClose={this.handleClose}
@@ -182,7 +187,9 @@ width=500,height=500`);
             />
           )}
         </div>
+       
       </MuiThemeProvider>
+      
     );
   }
 }
