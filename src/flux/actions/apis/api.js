@@ -24,6 +24,10 @@ export default class API {
     return this.baseUrl;
   }
 
+  dontShowApiLoader(){
+    return false;
+  }
+
   apiEndPointAuto() {
     return this.baseUrlAuto;
   }
