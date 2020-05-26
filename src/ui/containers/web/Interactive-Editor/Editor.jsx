@@ -244,7 +244,7 @@ class Editor extends React.Component {
     if (this.state.translateText) {
       res = this.handleCalc(this.state.translateText);
     }
-    const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails);
+    const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails, true);
     if (this.state.source && res) {
       APITransport(apiObj);
     }
@@ -361,7 +361,7 @@ class Editor extends React.Component {
   keyPress(event) {
     if (event.keyCode === 9 && this.state.checkedB) {
       if (this.state.disable && this.state.translateText) {
-        const apiObj = new IntractiveApi(this.state.source, this.handleCalc(event.target.value), this.props.modelDetails);
+        const apiObj = new IntractiveApi(this.state.source, this.handleCalc(event.target.value), this.props.modelDetails, true);
         this.props.APITransport(apiObj);
         this.setState({ disable: false });
       } else {
@@ -417,7 +417,7 @@ class Editor extends React.Component {
       if (this.state.target.startsWith(event.target.value) && this.state.target.includes(event.target.value, 0)) {
       } else {
         const res = this.handleCalc(event.target.value);
-        const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails);
+        const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails, true);
         this.props.APITransport(apiObj);
         this.focusDiv("blur");
         this.setState({
