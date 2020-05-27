@@ -30,7 +30,8 @@ export default class NMTSP extends API {
     }
 
     dontShowApiLoader(){
-        return this.dontshowloader
+        // return this.dontshowloader
+        return false
       }
 
     getBody() {
