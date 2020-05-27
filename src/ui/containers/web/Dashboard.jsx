@@ -3,26 +3,27 @@ import { withRouter } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import NewOrders from "../../components/web/dashboard/NewOrders";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import APITransport from "../../../flux/actions/apitransport/apitransport";
-import AutoML from "../../../flux/actions/apis/auto_ml";
-import NMT from "../../../flux/actions/apis/nmt";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { white, blueGrey50, darkBlack } from "material-ui/styles/colors";
-import Select from "../../components/web/common/Select";
-import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
-import FetchModel from "../../../flux/actions/apis/fetchmodel";
+import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import SelectModel from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import TranslateSentence from "../../components/web/dashboard/TranslateSentence";
 import Chip from "@material-ui/core/Chip";
 import { Tooltip } from "@material-ui/core";
+import TranslateSentence from "../../components/web/dashboard/TranslateSentence";
+import FetchModel from "../../../flux/actions/apis/fetchmodel";
+import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
+import Select from "../../components/web/common/Select";
+import NMT from "../../../flux/actions/apis/nmt";
+import AutoML from "../../../flux/actions/apis/auto_ml";
+import APITransport from "../../../flux/actions/apitransport/apitransport";
+import NewOrders from "../../components/web/dashboard/NewOrders";
+import { translate } from "../../../assets/localisation";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -52,7 +53,7 @@ class Dashboard extends React.Component {
       nmtTextSP: []
     });
 
-    const { APITransport, MODELApi } = this.props;
+    const { APITransport } = this.props;
     const apiObj = new FetchLanguage();
     APITransport(apiObj);
     this.setState({ showLoader: true });
@@ -63,9 +64,15 @@ class Dashboard extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.automl !== this.props.automl) {
-      this.setState({
-        autoMlText: this.props.automl.text
-      });
+      if (this.props.automl.text && this.props.automl.text.message === "Daily Limit Exceeded") {
+        this.setState({
+          autoMlText: this.props.automl.text.message
+        });
+      } else {
+        this.setState({
+          autoMlText: this.props.automl.text
+        });
+      }
     }
 
     if (prevProps.nmt !== this.props.nmt) {
@@ -102,6 +109,7 @@ class Dashboard extends React.Component {
       [key]: event.target.value
     });
   }
+
   handleClear() {
     this.setState({
       text: "",
@@ -125,29 +133,30 @@ class Dashboard extends React.Component {
   };
 
   handleSource(modelLanguage, supportLanguage) {
-    var result = [];
+    const result = [];
     modelLanguage.map(item => supportLanguage.map(value => (item.source_language_code === value.language_code ? result.push(value) : null)));
-    var value = new Set(result);
-    var source_language = [...value];
+    const value = new Set(result);
+    const source_language = [...value];
     return source_language;
   }
 
   handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
-    var result = [];
+    const result = [];
     modelLanguage.map(item => {
-      item.source_language_code === sourceLanguage
-        ? supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null))
-        : "";
+      item.source_language_code === sourceLanguage &&
+        supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null));
+      return true;
     });
-    var value = new Set(result);
-    var target_language = [...value];
+    const value = new Set(result);
+    const target_language = [...value];
     return target_language;
   }
 
   handleModel(modelLanguage, source, target) {
-    var result = [];
+    const result = [];
     modelLanguage.map(item => {
-      item.source_language_code === source && item.target_language_code === target ? result.push(item) : null;
+      item.source_language_code === source && item.target_language_code === target && result.push(item);
+      return true;
     });
     return result;
   }
@@ -162,7 +171,7 @@ class Dashboard extends React.Component {
   };
 
   handleSubmit(role) {
-    var model = [];
+    const model = [];
     const { APITransport, NMTApi } = this.props;
     role.includes("dev")
       ? this.state.modelLanguage.map(item =>
@@ -180,7 +189,7 @@ class Dashboard extends React.Component {
     const apiObj = new AutoML(this.state.text, this.state.source, this.state.target);
     const nmt = new NMT(this.state.text, model, true, this.state.target, this.state.showSplitted);
     NMTApi(nmt);
-    this.state.checkedMachine ? APITransport(apiObj) : "";
+    this.state.checkedMachine && APITransport(apiObj);
     this.setState({
       showLoader: true,
       autoMlText: "",
@@ -190,17 +199,17 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    var role = JSON.parse(localStorage.getItem("roles"));
+    const role = JSON.parse(localStorage.getItem("roles"));
     return (
       <div>
         <Paper style={{ marginLeft: "25%", width: "50%", marginTop: "4%" }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
-            Translate
+            {translate("dashboard.page.heading.title")}
           </Typography>
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom={true} style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                Please select source language{" "}
+              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
+                {translate("common.page.label.sourceLang")}{" "}
               </Typography>
             </Grid>
 
@@ -208,7 +217,7 @@ class Dashboard extends React.Component {
               <br />
               <br />
               <Select
-                id={"outlined-age-simple"}
+                id="outlined-age-simple"
                 selectValue="language_code"
                 MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
                 handleChange={this.handleSelectChange}
@@ -220,15 +229,15 @@ class Dashboard extends React.Component {
           </Grid>
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom={true} style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                Please select target language &nbsp;
+              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
+                {translate("common.page.label.targetLang")}&nbsp;
               </Typography>
             </Grid>
             <Grid item xs={3} sm={3} lg={3} xl={3}>
               <br />
               <br />
               <Select
-                id={"outlined-age-simple"}
+                id="outlined-age-simple"
                 selectValue="language_code"
                 MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
                 handleChange={this.handleSelectChange}
@@ -241,8 +250,8 @@ class Dashboard extends React.Component {
           {role.includes("dev") && (
             <Grid container spacing={8}>
               <Grid item xs={8} sm={8} lg={8} xl={8}>
-                <Typography value="" variant="title" gutterBottom={true} style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                  Please select model{" "}
+                <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
+                  {translate("common.page.label.pleaseSelectModel")}{" "}
                 </Typography>
               </Grid>
               <Grid item xs={3} sm={3} lg={3} xl={3}>
@@ -251,7 +260,7 @@ class Dashboard extends React.Component {
 
                 <SelectModel
                   id="select-multiple-chip"
-                  multiple={true}
+                  multiple
                   style={{ minWidth: 160, align: "right", maxWidth: 160 }}
                   value={this.state.model}
                   onChange={this.handleSelectModelChange}
@@ -292,7 +301,7 @@ class Dashboard extends React.Component {
                 <TextField
                   value={this.state.text}
                   id="standard-multiline-static"
-                  placeholder="Enter Text Here ......"
+                  placeholder={translate("dashboard.page.alternatetext.enterTextHere")}
                   style={{ width: "96%" }}
                   multiline
                   onChange={event => {
@@ -311,7 +320,7 @@ class Dashboard extends React.Component {
                     onChange={this.handleChange("checkedMachine")}
                   />
                 }
-                label="Machine Translated"
+                label={translate("dashboard.page.checkbox.mt")}
               />
               {role.includes("dev") && (
                 <FormControlLabel
@@ -319,7 +328,7 @@ class Dashboard extends React.Component {
                   control={
                     <Checkbox color="default" checked={this.state.showSplitted} value="showSplitted" onChange={this.handleChange("showSplitted")} />
                   }
-                  label="Show , splitted"
+                  label={translate("dashboard.page.checkbox.splitted")}
                 />
               )}
               {role.includes("dev") && (
@@ -332,7 +341,7 @@ class Dashboard extends React.Component {
                       onChange={this.handleChange("checkedSubwords")}
                     />
                   }
-                  label="Input and Output Subwords"
+                  label={translate("dashboard.page.checkbox.ioSubwords")}
                 />
               )}
 
@@ -343,7 +352,7 @@ class Dashboard extends React.Component {
                 aria-label="edit"
                 style={{ marginLeft: "1.3%", width: "44%", marginBottom: "4%", marginTop: "4%", marginRight: "5%" }}
               >
-                Clear
+                {translate("common.page.button.clear")}
               </Button>
               <Button
                 variant="contained"
@@ -352,17 +361,17 @@ class Dashboard extends React.Component {
                 aria-label="edit"
                 style={{ width: "44%", marginBottom: "4%", marginTop: "4%" }}
               >
-                Submit
+                {translate("common.page.button.submit")}
               </Button>
             </Grid>
           </div>
           {this.state.nmtText[0] && (
             <div>
-              <NewOrders title="Anuvaad Model" data={this.state.nmtText} status={this.state.checkedSubwords} />
+              <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} status={this.state.checkedSubwords} />
             </div>
           )}
           {this.state.checkedMachine && this.state.autoMlText && this.state.nmtText && (
-            <TranslateSentence title="Machine Translated" data={this.state.autoMlText} />
+            <TranslateSentence title={translate("dashboard.page.checkbox.mt")} data={this.state.autoMlText} />
           )}
         </Paper>
       </div>
@@ -391,9 +400,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Dashboard)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));

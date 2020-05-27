@@ -2,17 +2,19 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import APITransport from "../../../flux/actions/apitransport/apitransport";
-import FetchBenchmarkCompareModel from "../../../flux/actions/apis/fetchenchmarkcomparemodel";
 import Pagination from "material-ui-flat-pagination";
 import Grid from "@material-ui/core/Grid";
-import Grader from "../../components/web/common/Grader";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import Switch from "@material-ui/core/Switch";
 import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
- import AppBar from "../../components/web/common/Appbar";
- import Switch from '@material-ui/core/Switch';
+import AppBar from "../../components/web/common/Appbar";
+import Grader from "../../components/web/common/Grader";
+import FetchBenchmarkCompareModel from "../../../flux/actions/apis/fetchenchmarkcomparemodel";
+import APITransport from "../../../flux/actions/apitransport/apitransport";
+import { translate } from "../../../assets/localisation";
+
 class BenchmarkGrade extends React.Component {
   constructor(props) {
     super(props);
@@ -39,22 +41,15 @@ class BenchmarkGrade extends React.Component {
   }
 
   componentDidMount() {
-
-
-    let api = new FetchBenchmarkCompareModel(
-      this.props.base,
-      this.state.pageCount,
-      1
-    );
+    const api = new FetchBenchmarkCompareModel(this.props.base, this.state.pageCount, 1);
     this.props.APITransport(api);
-
   }
 
   handleChangePage(event, offset) {
-    this.setState({ offset, sentences: [] })
+    this.setState({ offset, sentences: [] });
 
-    if (this.state.base ) {
-      let api = new FetchBenchmarkCompareModel(
+    if (this.state.base) {
+      const api = new FetchBenchmarkCompareModel(
         this.state.base,
 
         this.state.pageCount,
@@ -63,74 +58,61 @@ class BenchmarkGrade extends React.Component {
       );
       this.props.APITransport(api);
     }
-  };
+  }
 
   handleFetchBenchmark(base) {
-    let api = new FetchBenchmarkCompareModel(
-      this.state.base,
-      this.state.pageCount,
-      1
-    );
+    const api = new FetchBenchmarkCompareModel(this.state.base, this.state.pageCount, 1);
     this.props.APITransport(api);
   }
 
   handleSubmit = () => {
-    let api = new UpdateSentencesGrade(this.state.sentences, this.props.match.params.modelid);
+    const api = new UpdateSentencesGrade(this.state.sentences, this.props.match.params.modelid);
     this.setState({ dialogOpen: false, apiCall: true, showLoader: true, tocken: false, sentences: [] });
     this.props.APITransport(api);
-
   };
 
-
-
   static getDerivedStateFromProps(nextProps, prevState) {
-
     if (nextProps.base !== prevState.base) {
-
-
       return {
-
         base: nextProps.base,
         apiCall: true,
         sentences: [],
         offset: 0
-
       };
-
-    }
-    else return null;
+    } return null;
   }
 
   componentDidUpdate(prevProps) {
-
     if (prevProps.base !== this.state.base) {
-      this.setState({ base: this.state.base })
-      let api = new FetchBenchmarkCompareModel(
-        this.props.base,
-        this.state.pageCount,
-        this.state.offset + 1,
-        this.state.inputStatus
-      );
+      this.setState({ base: this.state.base });
+      const api = new FetchBenchmarkCompareModel(this.props.base, this.state.pageCount, this.state.offset + 1, this.state.inputStatus);
       this.props.APITransport(api);
     }
 
     if (prevProps.updateGrade !== this.props.updateGrade) {
-
-
-      let api1 = new FetchBenchmarkCompareModel(
+      const api1 = new FetchBenchmarkCompareModel(
         this.state.base,
 
         this.state.pageCount,
-        this.state.offset+1===this.state.count ?this.state.offset+1 : (this.state.inputStatus==="PENDING"&& this.state.offset+1===this.state.pending)? this.state.offset :this.state.offset + 2,
+        this.state.offset + 1 === this.state.count
+          ? this.state.offset + 1
+          : this.state.inputStatus === "PENDING" && this.state.offset + 1 === this.state.pending
+          ? this.state.offset
+          : this.state.offset + 2,
         this.state.inputStatus
       );
 
-      
-      this.setState({ showLoader: true, offset:  this.state.offset+1===this.state.count ?this.state.offset : (this.state.inputStatus==="PENDING"&& this.state.offset+1===this.state.pending)? this.state.offset-1 :this.state.offset +1 , sentences: [] });
+      this.setState({
+        showLoader: true,
+        offset:
+          this.state.offset + 1 === this.state.count
+            ? this.state.offset
+            : this.state.inputStatus === "PENDING" && this.state.offset + 1 === this.state.pending
+            ? this.state.offset - 1
+            : this.state.offset + 1,
+        sentences: []
+      });
       this.props.APITransport(api1);
-        
-      
-
     }
 
     if (prevProps.fetchBenchmarkCompareModel !== this.props.fetchBenchmarkCompareModel) {
@@ -142,100 +124,122 @@ class BenchmarkGrade extends React.Component {
         score: this.props.fetchBenchmarkCompareModel.sum,
         pending: this.props.fetchBenchmarkCompareModel.pending
       });
-
-
     }
   }
 
   onStarClick(nextValue, prevValue, name, index) {
-    let sentences = this.state.sentences
-    sentences[index][name] = nextValue
-    this.setState({ sentences: sentences });
-
+    const {sentences} = this.state;
+    sentences[index][name] = nextValue;
+    this.setState({ sentences });
   }
 
-  handleSwitchChange=()=>{
-    if(this.state.checkedB){
-        let api = new FetchBenchmarkCompareModel(
-            this.props.base,
-            this.state.pageCount,
-             1,
-            "ALL"
-          );
-          this.props.APITransport(api);
-          this.setState({inputStatus:"ALL",offset:0})
+  handleSwitchChange = () => {
+    if (this.state.checkedB) {
+      const api = new FetchBenchmarkCompareModel(this.props.base, this.state.pageCount, 1, translate("common.page.text.allCaps"));
+      this.props.APITransport(api);
+      this.setState({ inputStatus: "ALL", offset: 0 });
+    } else {
+      const api = new FetchBenchmarkCompareModel(this.props.base, this.state.pageCount, 1, translate("common.page.text.pendingCaps"));
+      this.props.APITransport(api);
+      this.setState({ inputStatus: "PENDING", offset: 0 });
     }
-    else{
-
-        let api = new FetchBenchmarkCompareModel(
-            this.props.base,
-            this.state.pageCount,
-            1,
-            "PENDING"
-          );
-          this.props.APITransport(api);
-          this.setState({inputStatus:"PENDING",offset:0})
-    }
-    this.setState({ checkedB: !this.state.checkedB,sentences:[]});
-  }
+    this.setState({ checkedB: !this.state.checkedB, sentences: [] });
+  };
 
   render() {
-    var value =  <Switch
-    checked={this.state.checkedB}
-    onChange={()=>{this.handleSwitchChange()}}
-    value="checkedB"
-    color="secondary"
-  />
+    const value = (
+      <Switch
+        checked={this.state.checkedB}
+        onChange={() => {
+          this.handleSwitchChange();
+        }}
+        value="checkedB"
+        color="secondary"
+      />
+    );
     return (
       <div>
-        <Typography variant="title" color="inherit" style={{ marginTop: "20px", marginLeft: '20px' }} ><b>{"Sentences From " + this.props.label}</b></Typography>
+        <Typography variant="title" color="inherit" style={{ marginTop: "20px", marginLeft: "20px" }}>
+          <b>{translate("graderViewBenchmark.page.label.sentencesFrom") + this.props.label}</b>
+        </Typography>
         <Grid container spacing={4} style={{ padding: "20px" }}>
-        {this.state.sentences && this.state.sentences.length > 0 &&<AppBar pending={this.state.pending} count={this.state.count} val={value}/>}
-        
-        {this.state.sentences.length > 0&& <Typography variant="title" color="inherit"style={{ marginTop: "20px" }} ><b>Source Sentence</b><br/></Typography>}
-        <Grid item xs={12} sm={12} lg={12} xl={12}>
-        <Typography variant="body1" color="inherit" style={{ marginTop: "20px" }} > {this.state.sentences.length > 0 && this.state.sentences[0].source}</Typography>
-        </Grid>
-        
+          {this.state.sentences && this.state.sentences.length > 0 && <AppBar pending={this.state.pending} count={this.state.count} val={value} />}
+
+          {this.state.sentences.length > 0 && (
+            <Typography variant="title" color="inherit" style={{ marginTop: "20px" }}>
+              <b>{translate("commonCorpus.page.text.sourceSentence")}</b>
+              <br />
+            </Typography>
+          )}
+          <Grid item xs={12} sm={12} lg={12} xl={12}>
+            <Typography variant="body1" color="inherit" style={{ marginTop: "20px" }}>
+              {" "}
+              {this.state.sentences.length > 0 && this.state.sentences[0].source}
+            </Typography>
+          </Grid>
+
           {this.state.sentences.map((value, i) => {
-            var val = i === 0 ? "A" : "B";
-            return <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <Grader title={"Model " + val} index={i} description={value.target} handleStarClick={this.onStarClick.bind(this)} data={value} handleStarClick={this.onStarClick.bind(this)} handleStarClick={this.onStarClick.bind(this)} meaning={"rating"} structure={"context_rating"} vocabulary={"spelling_rating"} />
-            </Grid>
+            const val = i === 0 ? "A" : "B";
+            return (
+              <Grid item xs={6} sm={6} lg={6} xl={6}>
+                <Grader
+                  title={`Model ${  val}`}
+                  index={i}
+                  description={value.target}
+                  handleStarClick={this.onStarClick.bind(this)}
+                  data={value}
+                  meaning="rating"
+                  structure="context_rating"
+                  vocabulary="spelling_rating"
+                />
+              </Grid>
+            );
           })}
         </Grid>
         {/*  */}
-        
-        {this.state.sentences && this.state.sentences.length > 0 &&  <Toolbar style={{ marginRight: "3%", marginTop: "20px" }}>
-              <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
-              <Button
-                variant="contained"
-                disabled ={this.state.sentences[0] && this.state.sentences[1] ? this.state.sentences[0].rating && this.state.sentences[1].rating && this.state.sentences[0].context_rating && this.state.sentences[1].context_rating && this.state.sentences[0].spelling_rating && this.state.sentences[1].spelling_rating? false:true: true}
-                onClick={event => {
-                  this.handleSubmit(this.state.sentences);
-                }}
-                color={"primary"}
-                aria-label="edit"
-                style={{ width: "170px", marginBottom: "4%", marginTop: "1px" }}
-              >
 
-{this.state.offset+1===this.state.count ? "Save":(this.state.inputStatus==="PENDING"&& this.state.offset+1===this.state.pending)? "Save" :"Save & Next"}
-               
-              </Button>
-            </Toolbar>}
-        {this.state.sentences && this.state.sentences.length > 0 && 
-        <Pagination
-          align="right"
-          limit={1}
-          offset={this.state.offset}
-          centerRipple={true}
-          total={this.state.inputStatus==="PENDING"? this.state.pending: this.state.count}
-          onClick={(event, offset) => {
-            this.handleChangePage(event, offset);
-          }}
-        />
-      }
-
+        {this.state.sentences && this.state.sentences.length > 0 && (
+          <Toolbar style={{ marginRight: "3%", marginTop: "20px" }}>
+            <Typography variant="title" color="inherit" style={{ flex: 1 }} />
+            <Button
+              variant="contained"
+              disabled={
+                this.state.sentences[0] && this.state.sentences[1]
+                  ? !(this.state.sentences[0].rating &&
+                    this.state.sentences[1].rating &&
+                    this.state.sentences[0].context_rating &&
+                    this.state.sentences[1].context_rating &&
+                    this.state.sentences[0].spelling_rating &&
+                    this.state.sentences[1].spelling_rating)
+                  : true
+              }
+              onClick={event => {
+                this.handleSubmit(this.state.sentences);
+              }}
+              color="primary"
+              aria-label="edit"
+              style={{ width: "170px", marginBottom: "4%", marginTop: "1px" }}
+            >
+              {this.state.offset + 1 === this.state.count
+                ? translate("common.page.button.save")
+                : this.state.inputStatus === "PENDING" && this.state.offset + 1 === this.state.pending
+                ? translate("common.page.button.save")
+                : translate("graderViewBenchmark.page.label.save&Next")}
+            </Button>
+          </Toolbar>
+        )}
+        {this.state.sentences && this.state.sentences.length > 0 && (
+          <Pagination
+            align="right"
+            limit={1}
+            offset={this.state.offset}
+            centerRipple
+            total={this.state.inputStatus === "PENDING" ? this.state.pending : this.state.count}
+            onClick={(event, offset) => {
+              this.handleChangePage(event, offset);
+            }}
+          />
+        )}
       </div>
     );
   }
@@ -259,9 +263,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(BenchmarkGrade)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BenchmarkGrade));

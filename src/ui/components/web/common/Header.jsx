@@ -8,7 +8,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+// import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+
+import FileCopy from "@material-ui/icons/FileCopy";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Grid from "@material-ui/core/Grid";
 import AccountCircle from "@material-ui/icons/AccountBox";
@@ -27,7 +29,9 @@ import { Button } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import ActionDelete from "@material-ui/icons/QuestionAnswer";
 import GroupIcon from "@material-ui/icons/Group";
-import logo from '../../../../assets/logo.png'
+import logo from '../../../../assets/logo.png';
+import { translate } from '../../../../../src/assets/localisation';
+import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 
 const styles = {
   root: {
@@ -48,7 +52,7 @@ class Header extends React.Component {
     open: false,
     auth: true,
     anchorEl: null,
-    heading: "Translation",
+    heading: translate('header.page.heading.translation'),
     name: localStorage.getItem("userDetails"),
     userName: ""
   };
@@ -70,14 +74,14 @@ class Header extends React.Component {
   handleDrawerTranslate = () => {
     this.setState({
       open: false,
-      heading: "Translation"
+      heading: translate('header.page.heading.translation')
     });
   };
 
   handleDrawerDoc = () => {
     this.setState({
       open: false,
-      heading: "Documents"
+      heading: translate('common.page.title.document')
     });
   };
   handleDrawerClose() {
@@ -100,41 +104,47 @@ class Header extends React.Component {
   };
 
   render() {
-    const { classes, title, drawer, forDemo } = this.props;
+    const { classes, title, drawer, forDemo, dontShowHeader } = this.props;
 
     const { auth, anchorEl, open } = this.state;
     const openEl = Boolean(anchorEl);
     var role = JSON.parse(localStorage.getItem("roles"));
-    var useRole = new Array();
-    role.map((item, value) => (useRole.push(item), value !== role.length - 1 ? useRole.push(", ") : null));
+    var useRole = [];
+    role.map((item, value) => {
+      useRole.push(item); value !== role.length - 1 && useRole.push(", ")
+      return true;
+    });
     return (
       <div  >
         <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
           <Toolbar disableGutters={!open}>
             {forDemo &&
-              <img src={logo} style={{
-                width: '2%',
-                display: 'block',
-                marginLeft: '1%'
-              }} />
+              <img src={logo}
+                alt=""
+                style={{
+                  width: '2%',
+                  display: 'block',
+                  marginLeft: '1%'
+                }} />
             }
             <Typography variant="title" color="inherit" className={forDemo ? classes.felxDemo : classes.flex}>
               {title}
             </Typography>
-            <Typography
-              variant="title"
-              color="inherit"
-              style={{
-                position: "absolute",
-                textTransform: "capitalize",
-                right: "130px"
-              }}
-            >
-              Welcome {this.state.name} [{useRole}]
+            {!dontShowHeader &&
+              <Typography
+                variant="title"
+                color="inherit"
+                style={{
+                  position: "absolute",
+                  textTransform: "capitalize",
+                  right: "130px"
+                }}
+              >
+                {translate('header.page.heading.welcome')} {this.state.name} [{useRole}]
             </Typography>
-
+            }
             {this.state.drawerClose}
-            {auth && (
+            {!dontShowHeader && auth && (
               <div
                 style={{
                   position: "absolute",
@@ -166,7 +176,7 @@ class Header extends React.Component {
                       history.push(`${process.env.PUBLIC_URL}/profile`);
                     }}
                   >
-                    My Profile
+                    {translate('header.page.heading.MyProfile')}
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -174,7 +184,7 @@ class Header extends React.Component {
                       history.push(`${process.env.PUBLIC_URL}/logout`);
                     }}
                   >
-                    Logout
+                    {translate('header.page.heading.logout')}
                   </MenuItem>
                 </Menu>
               </div>
@@ -218,8 +228,8 @@ class Header extends React.Component {
                           color="inherit"
                           className={classes.flex}
                         >
-                          ANUVAAD
-                      </Typography>
+                          {translate('header.page.heading.anuvaad')}
+                        </Typography>
                       }
                     />
                   </ListItem>
@@ -240,8 +250,8 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Data Pipeline
-                        </Typography>
+                            {translate('header.page.heading.dataPipeline')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -262,8 +272,8 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Translate
-                        </Typography>
+                            {translate('dashboard.page.heading.title')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -278,14 +288,14 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <SearchIcon style={{ color: "white" }} />
+                        <TranslateIcon style={{ color: "white" }} />
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Translate
-                        </Typography>
+                            {translate('dashboard.page.heading.title')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -321,8 +331,8 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Upload File
-                        </Typography>
+                            {translate('header.page.heading.uploadFile')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -343,8 +353,8 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Corpus
-                        </Typography>
+                            {translate('commonCorpus.page.button.corpus')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -365,8 +375,8 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Corpus List
-                        </Typography>
+                            {translate('webroutes.page.title.corpusList')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -387,13 +397,57 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Benchmark
-                        </Typography>
+                            {translate('header.page.heading.benchMark')}
+                          </Typography>
                         }
                       />
                     </ListItem>
                   )}
 
+                  {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader") || role.includes("interactive-editor"))   && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={() => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/interactive-translate`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <SearchIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            {translate("intractive_translate.page.main.title")}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user") || role.includes("grader") || role.includes("interactive-editor"))  && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push("/view-pdf");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <FileCopy style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            {translate('webroutes.page.title.pdfList')}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
                   {role && Array.isArray(role) && role.includes('admin') &&
                     <ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
                       <ListItemIcon>
@@ -403,8 +457,8 @@ class Header extends React.Component {
                         disableTypography
                         primary={(
                           <Typography type="body2" style={{ color: '#FFFFFF' }}>
-                            Grader Reports
-          							</Typography>
+                            {translate('webroutes.page.title.graderReport')}
+                          </Typography>
                         )}
                       />
                     </ListItem>
@@ -427,8 +481,8 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Comparison Reports
-                        </Typography>
+                            {translate('common.page.title.comparisonReport')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -450,8 +504,52 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Translate File
-                        </Typography>
+                            {translate('webroutes.page.title.translateFile')}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push("/pdf-to-doc");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <InsertDriveFileIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            {translate('webroutes.page.title.pdfToDoc')}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )}
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push("/pdf-upload");
+                      }}
+                    >
+                      <ListItemIcon>
+                        <InsertDriveFileIcon style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            {translate('webroutes.page.title.pdfSentences')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -472,8 +570,8 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Documents
-                        </Typography>
+                            {translate('common.page.title.document')}
+                          </Typography>
                         }
                       />
                     </ListItem>
@@ -495,14 +593,14 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            User Management
-                        </Typography>
+                            {translate('userDirectory.page.label.userManagement')}
+                          </Typography>
                         }
                       />
                     </ListItem>
                   )}
 
-                  {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") && !role.includes("user") && (
+                  {/* {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") && !role.includes("user") && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -518,14 +616,37 @@ class Header extends React.Component {
                         disableTypography
                         primary={
                           <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            QnA
-                        </Typography>
+                            {translate('header.page.heading.qnA')}
+                          </Typography>
+                        }
+                      />
+                    </ListItem>
+                  )} */}
+
+                  {role && Array.isArray(role) && role.includes("admin") && (
+                    <ListItem
+                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
+                      button
+                      onClick={event => {
+                        this.handleDrawerClose();
+                        history.push(`${process.env.PUBLIC_URL}/feedback`);
+                      }}
+                    >
+                      <ListItemIcon>
+                        <ActionDelete style={{ color: "white" }} />
+                      </ListItemIcon>
+                      <ListItemText
+                        disableTypography
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            {translate('header.page.heading.feedBack')}
+                          </Typography>
                         }
                       />
                     </ListItem>
                   )}
 
-                  <ListItem
+                  {/* <ListItem
                     style={{ paddingTop: "17%", paddingBottom: "17%", marginTop: "43%", marginLeft: "82%", width: "18%" }}
                     button
                     onClick={event => {
@@ -535,25 +656,26 @@ class Header extends React.Component {
                     <ListItemIcon>
                       <ChevronLeftIcon style={{ color: "white" }} />
                     </ListItemIcon>
-                  </ListItem>
+                  </ListItem> */}
                 </List>
               </Drawer>
 
-
-              <main
-                className={classNames(classes.content, {
-                  [classes.contentShift]: open
-                })}
-              >
-                {this.state.open ? (
-                  ""
-                ) : (!drawer &&
-                  <Button color="primary" variant="contained" className={classes.buttonRight} style={{ zIndex: 9999 }} onClick={this.handleDrawerOpen}>
-                    <ChevronRightIcon />
-                  </Button>
-                  )}
-                <div className={classes.drawerHeader} />
-              </main>
+              {!dontShowHeader &&
+                <main
+                  className={classNames(classes.content, {
+                    [classes.contentShift]: open
+                  })}
+                >
+                  {this.state.open ? (
+                    ""
+                  ) : (!drawer &&
+                    <Button color="primary" variant="contained" className={classes.buttonRight} style={{ zIndex: 9999 }} onClick={this.handleDrawerOpen}>
+                      <ChevronRightIcon />
+                    </Button>
+                    )}
+                  <div className={classes.drawerHeader} />
+                </main>
+              }
             </Grid>
           }
         </div>

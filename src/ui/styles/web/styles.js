@@ -1,6 +1,6 @@
 
 const drawerWidth = 240;
-let logo = require('../../../assets/logo.png')
+//let logo = require('../../../assets/logo.png')
 
 const GlobalStyles = theme => ({
   container: {
@@ -48,18 +48,15 @@ const GlobalStyles = theme => ({
     marginRight: 36
 
   },
-  hide: {
-    display: 'none'
-  },
-  drawerPaper: {
-    backgroundColor: theme.drawer.default,
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
+  // drawerPaper: {
+  //   backgroundColor: theme.drawer.default,
+  //   whiteSpace: 'nowrap',
+  //   width: drawerWidth,
+  //   transition: theme.transitions.create('width', {
+  //     easing: theme.transitions.easing.sharp,
+  //     duration: theme.transitions.duration.enteringScreen
+  //   })
+  // },
   buttonLeft: {
 
     marginLeft: '230px',
@@ -102,15 +99,15 @@ const GlobalStyles = theme => ({
     ...theme.mixins.toolbar,
     justifyContent: "flex-end"
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    marginLeft: -drawerWidth
-  },
+  // content: {
+  //   flexGrow: 1,
+  //   padding: theme.spacing.unit * 3,
+  //   transition: theme.transitions.create("margin", {
+  //     easing: theme.transitions.easing.sharp,
+  //     duration: theme.transitions.duration.leavingScreen
+  //   }),
+  //   marginLeft: -drawerWidth
+  // },
   contentShift: {
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.easeOut,

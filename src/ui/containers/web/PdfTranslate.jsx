@@ -1,4 +1,3 @@
-import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -6,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import PdfTranslation from "../../../flux/actions/apis/translation";
+import FetchFeedbackPending from "../../../flux/actions/apis/fetchfeedbackpending";
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import history from "../../../web.history";
 import Button from "../../components/web/common/Button";
@@ -13,7 +13,7 @@ import DropZone from '../../components/web/common/DropZone';
 import Paper from '../../components/web/common/Paper';
 import Select from '../../components/web/common/SimpleSelect';
 import Typography from '../../components/web/common/Typography';
-import { white, blueGrey50,darkBlack } from "material-ui/styles/colors"
+import { blueGrey50 } from "material-ui/styles/colors"
 
 
 class doctranslate extends React.Component {
@@ -29,7 +29,10 @@ class doctranslate extends React.Component {
   };
 
   componentDidMount() {
+
     const { APITransport } = this.props;
+    const api = new FetchFeedbackPending();
+    APITransport(api);
     const apiObj = new FetchLanguage();
     APITransport(apiObj);
     this.setState({ showLoader: true })
@@ -46,7 +49,14 @@ class doctranslate extends React.Component {
       })
     }
 
-    
+
+    if (prevProps.feedbackQuestions !== this.props.feedbackQuestions) {
+
+      if (Object.getOwnPropertyNames(this.props.feedbackQuestions).length !== 0) {
+        history.push("/feedback-form/translate")
+      }
+    }
+
 
     if (prevProps.langModel !== this.props.langModel) {
       this.setState({
@@ -82,10 +92,10 @@ class doctranslate extends React.Component {
         item.target_language_code === this.state.target.language_code && item.source_language_code === this.state.source.language_code && item.is_primary ?
           model = item : ''))
       const { APITransport } = this.props;
-      const apiObj = new PdfTranslation(this.state.source.language_name, this.state.target.language_name, this.state.files, model,this.state.source.language_code, this.state.target.language_code);
+      const apiObj = new PdfTranslation(this.state.source.language_name, this.state.target.language_name, this.state.files, model, this.state.source.language_code, this.state.target.language_code);
       APITransport(apiObj);
       this.setState({ showLoader: true })
-      
+
     }
   }
 
@@ -107,16 +117,17 @@ class doctranslate extends React.Component {
     var result = [];
     if (modelLanguage && supportLanguage) {
       modelLanguage.map((item) => {
-      item.source_language_code === sourceLanguage ?
-        supportLanguage.map((value) => (
-          item.target_language_code === value.language_code ?
-            result.push(value) : null
-        )) : ''
+        item.source_language_code === sourceLanguage &&
+          supportLanguage.map((value) => (
+            item.target_language_code === value.language_code ?
+              result.push(value) : null
+          )) 
+          return true;
       })
     }
     var value = new Set(result);
     var target_language = [...value]
-    
+
     return target_language;
 
   }
@@ -127,10 +138,10 @@ class doctranslate extends React.Component {
         <Paper value={
           <div>
 
-            <Typography value='Document Translator' variant="h5" gutterBottom="true" style={{ paddingLeft: '30%', paddingTop: '3%', paddingBottom: '4%', background:blueGrey50, marginBottom:'3%'}} />
-           
+            <Typography value='Document Translator' variant="h5" gutterBottom="true" style={{ paddingLeft: '30%', paddingTop: '3%', paddingBottom: '4%', background: blueGrey50, marginBottom: '3%' }} />
+
             <Grid container spacing={4} >
-              <DropZone handleChange={this.handleChange} supportFile={['.docx']}/>
+              <DropZone handleChange={this.handleChange} supportFile={['.docx']} />
               <Grid item xs={8} sm={8} lg={8} xl={8}>
                 <Typography value='Select source language' variant="title" gutterBottom="true" style={{ marginLeft: '22%', paddingTop: '48px' }} />
               </Grid>
@@ -141,14 +152,14 @@ class doctranslate extends React.Component {
             <Grid container spacing={2}>
               <Grid item xs={8} sm={8} lg={8} xl={8}>
                 <Typography value='Select target language' variant="title" gutterBottom="true" style={{ marginLeft: '22%', paddingTop: '13                                                                         px', marginBottom: '15%' }} /><br />
-              </Grid>                  
+              </Grid>
               <Grid item xs={3} sm={3} lg={3} xl={3}>
                 <Select id={"outlined-age-simple"} MenuItemValues={this.state.source.language_code ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source.language_code) : []} handleChange={this.handleSelectChange} value={this.state.target} name="target" style={{ minWidth: 120, marginLeft: '10%', marginTop: '30' }} />
               </Grid>
             </Grid>
 
 
-            <Button value={"Submit"} color={'secondary'} variant={"contained"} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} style={{ width: '100%' }} />
+            <Button value={"Submit"} color={'primary'} variant={"contained"} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} style={{ width: '100%' }} />
             {/* }}  */}
           </div>} style={{ width: '40%', marginLeft: '26%', marginTop: '2%', paddingBottom: '1%', minWidth: '450px' }}
         />
@@ -163,7 +174,8 @@ const mapStateToProps = state => ({
   apistatus: state.apistatus,
   translation: state.translation,
   supportLanguage: state.supportLanguage,
-  langModel: state.langModel
+  langModel: state.langModel,
+  feedbackQuestions: state.feedbackQuestions
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

@@ -10,6 +10,7 @@ import CardContent from "@material-ui/core/CardContent";
 import { withStyles } from "@material-ui/core";
 import history from "../../../web.history";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
+import { translate } from "../../../assets/localisation";
 
 const styles = {
   card: {
@@ -26,35 +27,47 @@ class DataPipeline extends React.Component {
     super(props);
     this.state = {
       value: 2,
-      tools: ["Stage 1", "Stage 2", "Stage 3", "Stage 4", "Stage 5", "Stage 6", "Stage 7", "Stage 8", "Stage 9"]
+      tools: [
+        translate("dataPipeLine.page.tool.stage1"),
+        translate("dataPipeLine.page.tool.stage2"),
+        translate("dataPipeLine.page.tool.stage3"),
+        translate("dataPipeLine.page.tool.stage4"),
+        translate("dataPipeLine.page.tool.stage5"),
+        translate("dataPipeLine.page.tool.stage6"),
+        translate("dataPipeLine.page.tool.stage7"),
+        translate("dataPipeLine.page.tool.stage8"),
+        translate("dataPipeLine.page.tool.stage9")
+      ]
     };
   }
 
   handleClick = value => {
-    console.log(value);
-    if (value === "Stage 1") {
-      history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
-    } else if (value === "Stage 2") {
-      history.push(`${process.env.PUBLIC_URL}/stage2/existing-workspace`);
-    } else if (value === "Stage 3") {
-      history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
-    } else if (value === "Stage 4") {
-      history.push(`${process.env.PUBLIC_URL}/stage4/existing-workspace`);
-    } else {
-      alert("Still inprogress");
+    switch (value) {
+      case translate("dataPipeLine.page.tool.stage1"):
+        return history.push(`${process.env.PUBLIC_URL}/existing-workspace`);
+      case translate("dataPipeLine.page.tool.stage2"):
+        return history.push(`${process.env.PUBLIC_URL}/stage2/existing-workspace`);
+      case translate("dataPipeLine.page.tool.stage3"):
+        return history.push(`${process.env.PUBLIC_URL}/stage3/existing-workspace`);
+      case translate("dataPipeLine.page.tool.stage4"):
+        return history.push(`${process.env.PUBLIC_URL}/stage4/existing-workspace`);
+      default:
+        return alert(translate("common.page.label.stillinprogress"));
     }
   };
 
   handleDataClick = value => {
-    console.log(value);
-    if (value === "Stage 1") {
-      history.push(`${process.env.PUBLIC_URL}/data-source`);
-    } else if (value === "Stage 2") {
-      history.push(`${process.env.PUBLIC_URL}/stage2/data-source`);
-    } else if (value === "Stage 3") {
-      history.push(`${process.env.PUBLIC_URL}/stage3/data-source`);
-    } else {
-      alert("Still inprogress");
+    switch (value) {
+      case translate("dataPipeLine.page.tool.stage1"):
+        return history.push(`${process.env.PUBLIC_URL}/datasource`);
+      case translate("dataPipeLine.page.tool.stage2"):
+        return history.push(`${process.env.PUBLIC_URL}/stage2/datasource`);
+      case translate("dataPipeLine.page.tool.stage3"):
+        return history.push(`${process.env.PUBLIC_URL}/stage3/datasource`);
+      case translate("dataPipeLine.page.tool.stage4"):
+        return history.push(`${process.env.PUBLIC_URL}/stage4/datasource`);
+      default:
+        return alert(translate("common.page.label.stillinprogress"));
     }
   };
 
@@ -63,7 +76,7 @@ class DataPipeline extends React.Component {
     return (
       <div>
         <Grid container spacing={8}>
-          <Grid container item xs={12} spacing={3} id="cardGrid" style={{ marginLeft: "8%", marginTop: "2%" }}>
+          <Grid container item xs={12} spacing={8} id="cardGrid" style={{ marginLeft: "8%", marginTop: "2%" }}>
             <React.Fragment>
               {this.state.tools.map((text, index) => (
                 <Grid key={index} item xs={12} sm={4} className="slideUp" style={{ marginTop: "2%" }}>

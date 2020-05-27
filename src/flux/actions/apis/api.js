@@ -4,7 +4,7 @@
 import CONFIGS from "../../../configs/configs";
 
 export default class API {
-  constructor(method = "POST", timeout = 2000, auth = false, reqType='') {
+  constructor(method = "POST", timeout = 2000, auth = false, reqType = "") {
     this.code = null;
     this.message = null;
     this.reqType = reqType;
@@ -22,6 +22,10 @@ export default class API {
 
   apiEndPoint() {
     return this.baseUrl;
+  }
+
+  dontShowApiLoader(){
+    return false;
   }
 
   apiEndPointAuto() {

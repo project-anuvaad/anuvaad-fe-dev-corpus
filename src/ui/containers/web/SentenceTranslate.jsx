@@ -11,12 +11,12 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
-import history from "../../../web.history";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
+import { translate } from '../../../assets/localisation';
 class SentenceTranslate extends React.Component {
   constructor(props) {
     super(props);
@@ -97,7 +97,6 @@ class SentenceTranslate extends React.Component {
     const { APITransport } = this.props;
         const apiObj = new BenchmarkTranslate( this.state.text, this.state.source, this.state.target);
         APITransport(apiObj);
-    (this.state.source, this.state.target, this.state.text);
   }
 
   render() {
@@ -105,7 +104,7 @@ class SentenceTranslate extends React.Component {
     return (
       <div>
         <Typography variant="h5" color="inherit" style={{ marginTop: "20px",marginLeft:'10%' }}>
-          <b>Translate Text</b>
+          <b>{translate('sentenceTranslate.page.text.translateTxt')}</b>
         </Typography>
         <Grid container spacing={4} style={{marginLeft:'10%'}}>
           <Grid item xs={6} sm={6} lg={6} xl={6}>
@@ -121,12 +120,12 @@ class SentenceTranslate extends React.Component {
                     }}
                     displayEmpty
                   >
-                    <MenuItem value={"English"}>English</MenuItem>
-                    <MenuItem value={"Hindi"}>Hindi</MenuItem>
+                    <MenuItem value={"English"}>{translate('common.page.label.english')}</MenuItem>
+                    <MenuItem value={"Hindi"}>{translate('common.page.label.hindi')}</MenuItem>
                   </Select>
 
                   <Typography variant="h6" color="inherit" style={{ marginLeft: "20%", flex: 1 }}>
-                    Translate to
+                  {translate('sentenceTranslate.page.label.translateTo')}
                   </Typography>
 
                   <Select
@@ -138,13 +137,13 @@ class SentenceTranslate extends React.Component {
                     }}
                     displayEmpty
                   >
-                   {this.state.source === "Hindi" && <MenuItem value={"English"}>English</MenuItem>}
-                   {this.state.source === "English" && <MenuItem value={"Hindi"}>Hindi</MenuItem>}
+                   {this.state.source === "Hindi" && <MenuItem value={"English"}>{translate('common.page.label.english')}</MenuItem>}
+                   {this.state.source === "English" && <MenuItem value={"Hindi"}>{translate('common.page.label.hindi')}</MenuItem>}
                   </Select>
                 </Toolbar>
               </AppBar>
               <TextArea
-                placeholder="Enter the text to translate"
+                placeholder={translate('sentenceTranslate.page.placeholder.textTranslate')}
                 value={this.state.text}
                 onChange={event => {
                   this.handleSelectChange("text", event);
@@ -156,16 +155,16 @@ class SentenceTranslate extends React.Component {
           <Grid item xs={6} sm={6} lg={6} xl={6} style={{ marginBottom: "5%", paddingTop: "180px" }}>
             {/* <Button variant="contained" color="primary" className={classes.button} onClick={() => { history.push(`${process.env.PUBLIC_URL}/translations`) }}>Cancel</Button> */}
             <Button variant="contained" disabled= {this.state.text ? false: true} color="primary" className={classes.buttons} onClick={this.handleSubmit.bind(this)}>
-              Translate
+            {translate('dashboard.page.heading.title')}
             </Button>
           </Grid>
         </Grid>
         <Grid container spacing={4} style={{ padding: "20px", marginTop:"-60px"}}>
         
           {this.state.sentences && this.state.sentences.map((value, i) => {
-            var val = i == 0 ? "A" : "B";
+            var val = i === 0 ? "A" : "B";
             return <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <Grader title={"Model " + val} index={i} description={value.target} handleStarClick={this.onStarClick.bind(this)} data={value} handleStarClick={this.onStarClick.bind(this)} handleStarClick={this.onStarClick.bind(this)} meaning={"rating"} structure={"context_rating"} vocabulary={"spelling_rating"} />
+              <Grader title={"Model " + val} index={i} description={value.target} handleStarClick={this.onStarClick.bind(this)} data={value}  meaning={"rating"} structure={"context_rating"} vocabulary={"spelling_rating"} />
             </Grid>
           })}
         </Grid>
@@ -183,7 +182,7 @@ class SentenceTranslate extends React.Component {
                 aria-label="edit"
                 style={{ width: "170px", marginBottom: "4%", marginTop: "1px" }}
               >
-                Save
+                {translate('common.page.button.save')}
               </Button>
             </Toolbar>}
         

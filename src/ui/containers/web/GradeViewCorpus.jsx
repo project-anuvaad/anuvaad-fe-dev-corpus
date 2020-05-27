@@ -1,14 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import ReadMoreAndLess from "react-read-more-less";
-import APITransport from "../../../flux/actions/apitransport/apitransport";
-
-import FetchSentences from "../../../flux/actions/apis/sentences";
-import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
 import Divider from "@material-ui/core/Divider";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -17,16 +12,18 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVDownload } from "react-csv";
 import StarRatingComponent from "react-star-rating-component";
-import TablePagination from "@material-ui/core/TablePagination";
-
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Select from "@material-ui/core/Select";
 import Toolbar from "@material-ui/core/Toolbar";
 import MenuItem from "@material-ui/core/MenuItem";
+import UpdateSentencesGrade from "../../../flux/actions/apis/upgrade-sentence-grade";
+import FetchSentences from "../../../flux/actions/apis/sentences";
+import APITransport from "../../../flux/actions/apitransport/apitransport";
+import { translate } from "../../../assets/localisation";
 
 const theme = createMuiTheme();
 class Corpus extends React.Component {
@@ -53,7 +50,7 @@ class Corpus extends React.Component {
       });
     }
     if (this.props.match.params.basename) {
-      let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, 1);
+      const api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, 1);
       this.props.APITransport(api);
     }
   }
@@ -61,14 +58,14 @@ class Corpus extends React.Component {
   handleChangePage = (event, offset) => {
     this.setState({ offset, lock: false });
     if (this.props.match.params.basename) {
-      let api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, offset + 1, this.state.inputStatus);
+      const api = new FetchSentences(this.props.match.params.basename, this.state.pageCount, offset + 1, this.state.inputStatus);
       this.props.APITransport(api);
     }
   };
 
   handleSelectChange = event => {
     this.setState({ pageCount: event.target.value, offset: 0 });
-    let api = new FetchSentences(this.props.match.params.basename, event.target.value, 1, this.state.inputStatus);
+    const api = new FetchSentences(this.props.match.params.basename, event.target.value, 1, this.state.inputStatus);
     this.props.APITransport(api);
   };
 
@@ -83,25 +80,25 @@ class Corpus extends React.Component {
   }
 
   handleStarClick(nextValue, prevValue, name) {
-    let sentences = this.state.sentences;
+    const { sentences } = this.state;
     sentences[name].rating = nextValue;
-    let api = new UpdateSentencesGrade(sentences[name]);
+    const api = new UpdateSentencesGrade(sentences[name]);
     this.props.APITransport(api);
     this.setState({ rating: nextValue });
   }
 
   handleSpellStarClick(nextValue, prevValue, name) {
-    let sentences = this.state.sentences;
+    const { sentences } = this.state;
     sentences[name].spelling_rating = nextValue;
-    let api = new UpdateSentencesGrade(sentences[name]);
+    const api = new UpdateSentencesGrade(sentences[name]);
     this.props.APITransport(api);
     this.setState({ spelling_rating: nextValue });
   }
 
   handleContextStarClick(nextValue, prevValue, name) {
-    let sentences = this.state.sentences;
+    const { sentences } = this.state;
     sentences[name].context_rating = nextValue;
-    let api = new UpdateSentencesGrade(sentences[name]);
+    const api = new UpdateSentencesGrade(sentences[name]);
     this.props.APITransport(api);
     this.setState({ context_rating: nextValue });
   }
@@ -114,17 +111,32 @@ class Corpus extends React.Component {
           this.state.sentences.map((row, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row">
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText="Read more" readLessText="">
+                <ReadMoreAndLess
+                  ref={this.ReadMore}
+                  className="read-more-content"
+                  readMoreText={translate("commonCorpus.page.text.readMore")}
+                  readLessText=""
+                >
                   {row.source}
                 </ReadMoreAndLess>
               </TableCell>
               <TableCell>
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText="Read more" readLessText="">
+                <ReadMoreAndLess
+                  ref={this.ReadMore}
+                  className="read-more-content"
+                  readMoreText={translate("commonCorpus.page.text.readMore")}
+                  readLessText=""
+                >
                   {row.target}
                 </ReadMoreAndLess>
               </TableCell>
               <TableCell>
-                <ReadMoreAndLess ref={this.ReadMore} className="read-more-content" readMoreText="Read more" readLessText="">
+                <ReadMoreAndLess
+                  ref={this.ReadMore}
+                  className="read-more-content"
+                  readMoreText={translate("commonCorpus.page.text.readMore")}
+                  readLessText=""
+                >
                   {row.translation ? row.translation.replace(/&quot;/g, '"') : ""}
                 </ReadMoreAndLess>
               </TableCell>
@@ -176,9 +188,9 @@ class Corpus extends React.Component {
         <Grid container spacing={24} style={{ padding: 5 }}>
           <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: "-4%", marginTop: "38px" }}>
             <Toolbar style={{ marginRight: "-1.2%" }}>
-              <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+              <Typography variant="title" color="inherit" style={{ flex: 1 }} />
               <Typography variant="h8" gutterBottom>
-                Rows per page:&nbsp;&nbsp;&nbsp;&nbsp;
+                {translate("common.page.text.rowsPerPage")}&nbsp;&nbsp;&nbsp;&nbsp;
                 <Select width="50%" value={this.state.pageCount} onChange={this.handleSelectChange} displayEmpty>
                   <MenuItem value={5}>5</MenuItem>
                   <MenuItem value={10}>10</MenuItem>
@@ -195,7 +207,7 @@ class Corpus extends React.Component {
                   align="right"
                   limit={1}
                   offset={this.state.offset}
-                  centerRipple={true}
+                  centerRipple
                   total={this.state.count / this.state.pageCount}
                   onClick={(event, offset) => {
                     this.handleChangePage(event, offset);
@@ -238,9 +250,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Corpus)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Corpus));

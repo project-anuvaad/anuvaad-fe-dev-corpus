@@ -6,6 +6,7 @@ import MUIDataTable from "mui-datatables";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchMTWorkspace from "../../../../flux/actions/apis/fetchmtworkspace";
+import { translate } from "../../../../assets/localisation";
 
 class ProcessingWorkspace extends React.Component {
   intervalID;
@@ -34,7 +35,7 @@ class ProcessingWorkspace extends React.Component {
   handleFetchWorkspace = () => {
     const { APITransport } = this.props;
 
-    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "","",this.props.target.language_code);
+    const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", "", this.props.target.language_code);
     APITransport(apiObj);
     this.setState({ showLoader: true });
   };
@@ -60,14 +61,11 @@ class ProcessingWorkspace extends React.Component {
   };
 
   handleFilterSubmit = filterList => () => {
-    console.log(filterList);
     clearTimeout(this.intervalID);
     const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", filterList, this.props.target.language_code);
     this.props.APITransport(apiObj);
     this.setState({ filter: filterList });
   };
-
-
 
   handleChange = value => {
     this.setState({ value });
@@ -77,7 +75,7 @@ class ProcessingWorkspace extends React.Component {
     const columns = [
       {
         name: "title",
-        label: "Workspace",
+        label: translate("common.page.table.workspace"),
         options: {
           filter: true,
           sort: true,
@@ -86,7 +84,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "session_id",
-        label: "id",
+        label: translate("common.page.label.id"),
         options: {
           display: "excluded",
           filter: false
@@ -94,7 +92,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "step",
-        label: "step",
+        label: translate("common.page.table.step"),
         options: {
           filter: false,
           display: "excluded"
@@ -102,7 +100,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "status",
-        label: "Status",
+        label: translate("common.page.table.status"),
         options: {
           filter: false,
           sort: false
@@ -110,7 +108,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "sentence_count",
-        label: "Sentence Count",
+        label: translate("common.page.table.sentenceCount"),
         options: {
           filter: false,
           sort: true
@@ -118,7 +116,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "username",
-        label: "Created By",
+        label: translate("common.page.table.username"),
         options: {
           filter: false,
           sort: false
@@ -126,7 +124,7 @@ class ProcessingWorkspace extends React.Component {
       },
       {
         name: "created_at",
-        label: "Created At",
+        label: translate("common.page.table.createdAt"),
         options: {
           filter: false,
           sort: false
@@ -135,7 +133,6 @@ class ProcessingWorkspace extends React.Component {
     ];
 
     const options = {
-
       filterType: "checkbox",
       download: false,
       print: false,
@@ -155,22 +152,21 @@ class ProcessingWorkspace extends React.Component {
 
       rowsSelected: this.state.rowsSelected,
       onRowsSelect: (rowsSelected, allRows) => {
-        // console.log(rowsSelected, allRows);
-        let selectedItems = []
+        const selectedItems = [];
         this.setState({ rowsSelected: allRows.map(row => row.dataIndex) });
         if (allRows && allRows.length > 0) {
-          allRows.map((selected) => {
-                selectedItems.push(this.state.workspaces[selected.index])
-              })
-            }
-            this.setState({selectedWorkspaces : selectedItems})
-            if (this.props.handleWorkspaceSelected) {
-              this.props.handleWorkspaceSelected(selectedItems)
-            }
-          
+          allRows.map(selected => {
+            selectedItems.push(this.state.workspaces[selected.index]);
+            return true;
+          });
+        }
+        this.setState({ selectedWorkspaces: selectedItems });
+        if (this.props.handleWorkspaceSelected) {
+          this.props.handleWorkspaceSelected(selectedItems);
+        }
       },
 
-      onFilterDialogClose: () => { },
+      onFilterDialogClose: () => {},
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -179,7 +175,7 @@ class ProcessingWorkspace extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            Apply Filters
+            {translate("common.page.button.applyFilter")}
           </Button>
         </div>
       ),
@@ -192,13 +188,14 @@ class ProcessingWorkspace extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
+          default:
+                return null;
         }
       }
     };
 
     return (
       <div>
-
         <div style={{ marginRight: "23.2%", marginTop: "40px" }}>
           <MUIDataTable data={this.state.workspaces} columns={columns} options={options} />
         </div>

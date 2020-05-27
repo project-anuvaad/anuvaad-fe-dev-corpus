@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -14,6 +13,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import FetchTranslationSentences from "../../../flux/actions/apis/translation_sentences";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
+import { translate } from "../../../assets/localisation";
 
 class Corpus extends React.Component {
   constructor(props) {
@@ -99,7 +99,8 @@ class Corpus extends React.Component {
         if (score.conf) {
           item_count++;
         }
-        count += score.conf ? parseInt(score.conf) : 0;
+        count += score.conf ? parseInt(score.conf, 10) : 0;
+        return true;
       });
     }
     if (item_count === 0) {
@@ -133,6 +134,7 @@ class Corpus extends React.Component {
     sentences.map(sentence => {
       const row = [sentence.source, sentence.target];
       downloadData.push(row);
+      return true;
     });
     this.setState({
       downloadData,
@@ -146,7 +148,7 @@ class Corpus extends React.Component {
         <Grid container spacing={24} style={{ padding: 24 }}>
           <Grid item xs={12} sm={12} lg={12} xl={12}>
             <Typography component="h2" variant="title" gutterBottom>
-              Translations
+              {translate("common.page.label.translation")}
             </Typography>
           </Grid>
           {/* <CSVDownload data={csvData} target="_blank" /> */}
@@ -158,8 +160,8 @@ class Corpus extends React.Component {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Source</TableCell>
-                      <TableCell align="right">Target</TableCell>
+                      <TableCell>{translate("common.page.label.source")}</TableCell>
+                      <TableCell align="right">{translate("common.page.label.target")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>

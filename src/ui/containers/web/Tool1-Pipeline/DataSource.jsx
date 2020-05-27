@@ -6,6 +6,7 @@ import MUIDataTable from "mui-datatables";
 import { Button } from "@material-ui/core";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchMTWorkspace from "../../../../flux/actions/apis/fetchworkspace";
+import { translate } from "../../../../assets/localisation";
 
 class DataSource extends React.Component {
   intervalID;
@@ -19,13 +20,12 @@ class DataSource extends React.Component {
       serverSideFilterList: [],
       filters: [],
       download: false,
-      fileId: ''
+      fileId: ""
     };
   }
 
   componentDidMount() {
     this.handleFetchWorkspace();
-    
   }
 
   componentWillUnmount() {
@@ -67,31 +67,24 @@ class DataSource extends React.Component {
     this.setState({ filter: filterList });
   };
 
-
   handleClick = rowData => {
-      this.setState({download:true, fileId: rowData[4]})
-      var link = document.createElement('a');
-      link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" + "/download/")+ rowData[4];
-      document.body.appendChild(link);
-      link.click();   
-    
+    this.setState({download: true, fileId: rowData[4] });
+    console.log(rowData);
+    const link = document.createElement("a");
+    link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org/download/") + rowData[4];
+    document.body.appendChild(link);
+    link.click();
   };
-
- 
-
- 
 
   handleChange = value => {
     this.setState({ value });
   };
 
   render() {
-
-    
     const columns = [
       {
         name: "title",
-        label: "Workspace",
+        label: translate("common.page.table.workspace"),
         options: {
           filter: true,
           sort: true,
@@ -100,7 +93,7 @@ class DataSource extends React.Component {
       },
       {
         name: "session_id",
-        label: "id",
+        label: translate("common.page.label.id"),
         options: {
           display: "excluded",
           filter: false
@@ -108,7 +101,7 @@ class DataSource extends React.Component {
       },
       {
         name: "username",
-        label: "Uploaded by",
+        label: translate("tool1.datasource.label.uploadBy"),
         options: {
           filter: false,
           sort: false
@@ -116,15 +109,14 @@ class DataSource extends React.Component {
       },
       {
         name: "created_at",
-        label: "Uploaded At",
+        label: translate("too1.datasource.label.uploadedAt"),
         options: {
           filter: false,
           sort: false
         }
       },
       {
-        name: "paragraph_file_location",
-        label: "Paragraph",
+        name: "sentence_file",
         options: {
           display: "excluded",
           filter: false
@@ -133,6 +125,19 @@ class DataSource extends React.Component {
     ];
 
     const options = {
+      textLabels: {
+        body: {
+          noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
+        },
+        toolbar: {
+          search: translate('graderReport.page.muiTable.search'),
+          viewColumns: translate('graderReport.page.muiTable.viewColumns'),
+          filterTable: translate('graderReport.page.muiTable.filterTable'),
+        },
+        pagination: {
+          rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
+        }
+    },
       filterType: "textField",
       download: false,
       print: false,
@@ -155,7 +160,7 @@ class DataSource extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            Apply Filters
+            {translate("common.page.button.applyFilter")}
           </Button>
         </div>
       ),
@@ -168,18 +173,20 @@ class DataSource extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
+            default:return null;
         }
       }
     };
 
     return (
       <div>
-        
-        
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title="Data Source" data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate("common.page.data.dataSource")} data={this.state.name} columns={columns} options={options} />
         </div>
-        {this.state.download && <a href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/`+ this.state.fileId }/>}
+        {console.log("----",this.state.fileId)}
+        {this.state.download && this.state.fileId !== null && (
+          <a dangerouslySetInnerHTML={{ __html: ' ' }} href={`${ process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${this.state.fileId}`} />
+        )}
       </div>
     );
   }

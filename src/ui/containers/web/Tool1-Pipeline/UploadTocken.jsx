@@ -19,19 +19,20 @@ import UploadApiToken from "../../../../flux/actions/apis/uploadtoken";
 import Snackbar from "../../../components/web/common/Snackbar";
 import Spinner from "../../../components/web/common/Spinner";
 import FetchWorkspaceDetails from "../../../../flux/actions/apis/fetchworkspacedetails";
+import { translate } from "../../../../assets/localisation";
 
 class UploadToken extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       value: 1,
-      processData: 'Press "Next" to extract sentences',
+      processData: translate("common.page.processData.pressNext"),
       activeStep: 1,
       positiveToken: "",
       negativeToken: "",
       workspaceName: this.props.match.params.name,
       session_id: this.props.match.params.session_id,
-      message: "Step 2 process started successfully ",
+      message: translate("common.page.message.step2Completed"),
       load: false,
       positiveChecked: false,
       negativeChecked: false
@@ -99,7 +100,7 @@ class UploadToken extends React.Component {
         this.setState({ load: true });
       }
     } else {
-      alert("Please upload token file properly");
+      alert(translate("common.page.alert.fileUpload"));
     }
 
     // history.push(`${process.env.PUBLIC_URL}/sentence-extraction`);
@@ -131,21 +132,21 @@ class UploadToken extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "1%", marginLeft: "12%" }}>
             <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "30px" }}>
               <Typography gutterBottom variant="title" component="h2">
-                Positive tokens :
+                {translate("common.page.label.positiveTocken")}
               </Typography>
               <br />
             </Grid>
             <Grid item xs={2} sm={2} lg={2} xl={2} style={{ paddingTop: "30px" }}>
               <FormControlLabel
                 control={<Checkbox checked={this.state.positiveChecked} color="primary" onChange={this.handleSwitchChange("positiveChecked")} />}
-                label="Select from previous"
+                label={translate("common.page.select.fromPrevious")}
               />
             </Grid>
             <Grid item xs={7} sm={7} lg={7} xl={7}>
               <Grid container spacing={8}>
                 <Grid item xs={1} sm={1} lg={1} xl={1}>
                   <Typography gutterBottom variant="title" component="h2" style={{ paddingTop: "28px" }}>
-                    or
+                    {translate("uploadTocken.page.label.or")}
                   </Typography>
                 </Grid>
 
@@ -176,21 +177,21 @@ class UploadToken extends React.Component {
             </Grid>
             <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "30px" }}>
               <Typography gutterBottom variant="title" component="h2">
-                Negative tokens :
+                {translate("uploadTocken.page.label.negativeTocken")}
               </Typography>
               <br />
             </Grid>
             <Grid item xs={2} sm={2} lg={2} xl={2} style={{ paddingTop: "30px" }}>
               <FormControlLabel
                 control={<Checkbox checked={this.state.negativeChecked} color="primary" onChange={this.handleSwitchChange("negativeChecked")} />}
-                label="Select from previous"
+                label={translate("common.page.select.fromPrevious")}
               />
             </Grid>
             <Grid item xs={7} sm={7} lg={7} xl={7}>
               <Grid container spacing={8}>
                 <Grid item xs={1} sm={1} lg={1} xl={1}>
                   <Typography gutterBottom variant="title" component="h2" style={{ paddingTop: "28px" }}>
-                    or
+                    {translate("uploadTocken.page.label.or")}
                   </Typography>
                 </Grid>
 
@@ -232,7 +233,7 @@ class UploadToken extends React.Component {
                 <Grid item xs={1} sm={1} lg={1} xl={1} />
                 <Grid item xs={8} sm={8} lg={8} xl={8} style={{ marginTop: "40px" }}>
                   <Button variant="contained" color="primary" style={{ width: "87%", height: "60px" }} onClick={this.handleSubmit.bind(this)}>
-                    Next
+                    {translate("common.page.button.next")}
                   </Button>
                 </Grid>
               </Grid>
