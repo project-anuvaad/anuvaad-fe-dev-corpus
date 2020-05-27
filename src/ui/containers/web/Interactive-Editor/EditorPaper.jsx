@@ -52,11 +52,8 @@ class EditorPaper extends React.Component {
         let selection = {}
         var activeEl = document.activeElement;
         var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
-        if (
-            (activeElTagName == "textarea") || (activeElTagName == "input" &&
-                /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
-            (typeof activeEl.selectionStart == "number")
-        ) {
+        
+        if ((activeElTagName === "textarea") || (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) && (typeof activeEl.selectionStart === "number")) {
             text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
         } else if (window.getSelection) {
             text = window.getSelection().toString();
@@ -75,6 +72,7 @@ class EditorPaper extends React.Component {
                 if (paragraph._id === startNode.split('_')[0] && !paragraph.is_table) {
                     selection.startNode = startNode
                 }
+                return true
             })
         }
 
@@ -84,9 +82,9 @@ class EditorPaper extends React.Component {
                 if (paragraph._id === endNode.split('_')[0] && !paragraph.is_table) {
                     selection.endNode = endNode
                 }
+                return true
             })
         }
-
         if (selection && selection.startNode && selection.endNode) {
             this.props.handleSelection(selection, event)
         }
@@ -106,6 +104,7 @@ class EditorPaper extends React.Component {
                                 color = "red"
                                 textColor = 'white'
                             }
+                            return true
                         })
                     }
 
@@ -144,50 +143,6 @@ class EditorPaper extends React.Component {
         }
     }
 
-    getSelectionText(event) {
-        var text = "";
-        let selection = {}
-        var activeEl = document.activeElement;
-        var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
-        if (
-            (activeElTagName == "textarea") || (activeElTagName == "input" &&
-                /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
-            (typeof activeEl.selectionStart == "number")
-        ) {
-            text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
-        } else if (window.getSelection) {
-            text = window.getSelection().toString();
-        }
-
-        let sentences = ""
-        let startNode = ""
-        let endNode = ""
-
-        if (window.getSelection()) {
-            sentences = window.getSelection()
-        }
-        if (sentences && sentences.anchorNode && sentences.anchorNode.parentElement && sentences.anchorNode.parentElement.id && sentences.anchorNode.textContent) {
-            startNode = window.getSelection().anchorNode.parentElement.id
-            this.props.sentences.map(paragraph => {
-                if (paragraph._id === startNode.split('_')[0] && !paragraph.is_table) {
-                    selection.startNode = startNode
-                }
-            })
-        }
-
-        if (sentences && sentences.focusNode && sentences.focusNode.parentElement && sentences.focusNode.parentElement.id && sentences.focusNode.textContent) {
-            endNode = window.getSelection().focusNode.parentElement.id
-            this.props.sentences.map(paragraph => {
-                if (paragraph._id === endNode.split('_')[0] && !paragraph.is_table) {
-                    selection.endNode = endNode
-                }
-            })
-        }
-        if (selection && selection.startNode && selection.endNode) {
-            this.props.handleSelection(selection, event)
-        }
-    }
-
     fetchSentence(sentence, prevSentence, index, noOfPage) {
         let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'left')
         let pageNo = sentence.page_no
@@ -195,10 +150,10 @@ class EditorPaper extends React.Component {
         if (!sentence.is_footer && sentence.text) {
             let printPageNo = false
             let isFirst = false
-            if(index == 0) {
+            if(index === 0) {
                 printPageNo = true
                 isFirst = true
-            } else if ( prevSentence && sentence.page_no != prevSentence.page_no) {
+            } else if ( prevSentence && sentence.page_no !== prevSentence.page_no) {
                 printPageNo = true
             }
 
@@ -241,10 +196,10 @@ class EditorPaper extends React.Component {
         let printPageNo = false
         let isFirst = false
 
-        if(tableIndex == 0){
+        if(tableIndex === 0){
             printPageNo = true
             isFirst = true
-        } else if (prevSentence && sentences[0][0].page_no != prevSentence.page_no) {
+        } else if (prevSentence && sentences[0][0].page_no !== prevSentence.page_no) {
             printPageNo = true
         }
 

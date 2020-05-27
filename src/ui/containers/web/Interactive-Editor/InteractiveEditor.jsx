@@ -264,10 +264,8 @@ class IntractiveTrans extends React.Component {
     this.setState({ addSentence: true, operation_type: "merge" })
   }
 
-
   handleApiMerge() {
     const { APITransport } = this.props;
-    let sen = {}
     if (this.state.operation_type === "merge" || this.state.operation_type === "split") {
       const apiObj = new SentenceMerge(this.state.mergeSentence, this.state.startSentence, this.state.operation_type, this.state.endSentence, this.state.splitSentence);
       APITransport(apiObj);
@@ -332,6 +330,7 @@ class IntractiveTrans extends React.Component {
             if (value.sentence_index === Number(startValue[1])) {
               startSentence = value;
             }
+            return true
           })
 
         }
@@ -342,8 +341,10 @@ class IntractiveTrans extends React.Component {
             if (value.sentence_index === Number(endValue[1])) {
               endSentence = value;
             }
+            return true
           })
         }
+        return true
       });
 
       const mergeSentence = this.state.sentences.slice(initialIndex, endIndex + 1);
