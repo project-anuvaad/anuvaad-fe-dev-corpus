@@ -28,7 +28,7 @@ export default class ConfigUpload extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/upload`;
+        return `${super.apiEndPointAuto()}/upload-endpoint`;
     }
 
     getFormData() {
