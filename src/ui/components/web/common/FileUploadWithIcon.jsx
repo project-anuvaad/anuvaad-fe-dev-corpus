@@ -1,8 +1,5 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import Videocam from '@material-ui/icons/Videocam';
 
 class FileUpload extends React.Component {
 
@@ -11,11 +8,12 @@ class FileUpload extends React.Component {
     };
 
 
-    render() {
-        const { accept, icon, iconStyle, title } = this.props;
-        return (
-            <div style={{ display: 'inline-block' }}>
 
+    render() {
+        const { accept, icon, iconStyle, title} = this.props;
+        return (
+            
+            <div style={{ display: 'inline-block' }}>
                 <label title={title}>
                     <IconButton title={title} style={iconStyle ? iconStyle : {}} color="primary" component="span">
                         <input
@@ -25,11 +23,14 @@ class FileUpload extends React.Component {
                             onChange={event => {
                                 this.handleFileChange(event);
                             }}
+
+                           
                         />
                         {icon}
                     </IconButton>
                 </label>
             </div>
+                        
         );
     }
 }

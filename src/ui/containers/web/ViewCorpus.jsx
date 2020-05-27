@@ -3,19 +3,20 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
-import APITransport from "../../../flux/actions/apitransport/apitransport";
-import FetchCorpus from "../../../flux/actions/apis/corp";
 import ViewIcon from "@material-ui/icons/Visibility";
 import Tooltip from "@material-ui/core/Tooltip";
-import history from "../../../web.history";
 import AddIcon from "@material-ui/icons/Add";
 import { withStyles } from "@material-ui/core/styles";
-import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Typography from "@material-ui/core/Typography";
 import MUIDataTable from "mui-datatables";
 import Toolbar from "@material-ui/core/Toolbar";
 import GradeIcon from "@material-ui/icons/Grade";
 import EditIcon from "@material-ui/icons/BorderColor";
+import NewCorpusStyle from "../../styles/web/Newcorpus";
+import history from "../../../web.history";
+import FetchCorpus from "../../../flux/actions/apis/corp";
+import APITransport from "../../../flux/actions/apitransport/apitransport";
+import { translate } from "../../../assets/localisation";
 
 class Corp extends React.Component {
   constructor(props) {
@@ -52,14 +53,14 @@ class Corp extends React.Component {
     const columns = [
       {
         name: "basename",
-        label: "basename",
+        label: translate("common.page.label.basename"),
         options: {
           display: "excluded"
         }
       },
       {
         name: "name",
-        label: "File Name",
+        label: translate("viewCorpus.page.label.fileName"),
         options: {
           filter: true,
           sort: true
@@ -68,7 +69,7 @@ class Corp extends React.Component {
 
       {
         name: "domain",
-        label: "Domain",
+        label: translate("viewCorpus.page.label.domain"),
         options: {
           filter: true,
           sort: false
@@ -76,7 +77,7 @@ class Corp extends React.Component {
       },
       {
         name: "no_of_sentences",
-        label: "Sentences",
+        label: translate("common.page.label.sentence"),
         options: {
           filter: true,
           sort: true
@@ -84,7 +85,7 @@ class Corp extends React.Component {
       },
       {
         name: "source_lang",
-        label: "Source",
+        label: translate("common.page.label.source"),
         options: {
           filter: true,
           sort: true
@@ -92,7 +93,7 @@ class Corp extends React.Component {
       },
       {
         name: "target_lang",
-        label: "Target",
+        label: translate("common.page.label.target"),
         options: {
           filter: true,
           sort: true
@@ -101,7 +102,7 @@ class Corp extends React.Component {
 
       {
         name: "status",
-        label: "Status",
+        label: translate("common.page.table.status"),
         options: {
           filter: true,
           sort: true
@@ -110,7 +111,7 @@ class Corp extends React.Component {
 
       {
         name: "created_on",
-        label: "Timestamp",
+        label: translate("common.page.label.timeStamp"),
         options: {
           filter: true,
           sort: true,
@@ -120,6 +121,7 @@ class Corp extends React.Component {
 
       {
         name: "Action",
+        label: translate("common.page.label.action"),
         options: {
           filter: true,
           sort: false,
@@ -128,36 +130,36 @@ class Corp extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div style={{ width: "90px" }}>
-                  {tableMeta.rowData[6] === "COMPLETED" && this.state.role.includes("editor") && (
-                    <Tooltip title="Edit Sentence">
+                  {(tableMeta.rowData[6] === "COMPLETED" || tableMeta.rowData[6] === "IN-PROGRESS") && this.state.role.includes("editor") && (
+                    <Tooltip title={translate("viewCorpus.title.viewSentence")}>
                       <EditIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
                         onClick={() => {
-                          history.push(`${process.env.PUBLIC_URL}/parallel-corpus/` + tableMeta.rowData[0]);
+                          history.push(`${process.env.PUBLIC_URL}/parallel-corpus/${tableMeta.rowData[0]}`);
                         }}
                       >
                         {" "}
                       </EditIcon>
                     </Tooltip>
                   )}
-                  {tableMeta.rowData[6] === "COMPLETED" && this.state.role.includes("grader") && (
-                    <Tooltip title="Grade Sentence">
+                  {(tableMeta.rowData[6] === "COMPLETED" || tableMeta.rowData[6] === "IN-PROGRESS") && this.state.role.includes("grader") && (
+                    <Tooltip title={translate("common.page.title.gradeSentence")}>
                       <GradeIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
                         onClick={() => {
-                          history.push(`${process.env.PUBLIC_URL}/view-corpus/` + tableMeta.rowData[0]);
+                          history.push(`${process.env.PUBLIC_URL}/view-corpus/${tableMeta.rowData[0]}`);
                         }}
                       >
                         {" "}
                       </GradeIcon>
                     </Tooltip>
                   )}
-                  {tableMeta.rowData[6] === "COMPLETED" && this.state.role.includes("dev") && (
-                    <Tooltip title="View Sentence">
+                  {(tableMeta.rowData[6] === "COMPLETED" || tableMeta.rowData[6] === "IN-PROGRESS") && this.state.role.includes("dev") && (
+                    <Tooltip title={translate("viewCorpus.title.viewSentence")}>
                       <ViewIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
                         onClick={() => {
-                          history.push(`${process.env.PUBLIC_URL}/view-corpus/` + tableMeta.rowData[0]);
+                          history.push(`${process.env.PUBLIC_URL}/view-corpus/${tableMeta.rowData[0]}`);
                         }}
                       >
                         {" "}
@@ -173,6 +175,18 @@ class Corp extends React.Component {
     ];
 
     const options = {
+      textLabels: {
+        body: {
+          noMatch: translate("gradeReport.page.muiNoTitle.sorryRecordNotFound")
+        },
+        toolbar: {
+          search: translate("graderReport.page.muiTable.search"),
+          viewColumns: translate("graderReport.page.muiTable.viewColumns")
+        },
+        pagination: {
+          rowsPerPage: translate("graderReport.page.muiTable.rowsPerPages")
+        }
+      },
       filterType: "checkbox",
       download: false,
       print: false,
@@ -184,7 +198,7 @@ class Corp extends React.Component {
     return (
       <div>
         <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
-          <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+          <Typography variant="title" color="inherit" style={{ flex: 1 }} />
           {this.state.role.includes("dev") ? (
             <Button
               variant="extendedFab"
@@ -195,14 +209,14 @@ class Corp extends React.Component {
                 history.push(`${process.env.PUBLIC_URL}/newcorpus`);
               }}
             >
-              <AddIcon /> Corpus
+              <AddIcon /> {translate("commonCorpus.page.button.corpus")}
             </Button>
           ) : (
             ""
           )}
         </Toolbar>
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={"Documents"} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );
@@ -224,11 +238,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  withStyles(NewCorpusStyle)(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(Corp)
-  )
-);
+export default withRouter(withStyles(NewCorpusStyle)(connect(mapStateToProps, mapDispatchToProps)(Corp)));

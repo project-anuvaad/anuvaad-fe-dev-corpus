@@ -8,6 +8,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import FetchSearchReplaceWorkspace from "../../../../flux/actions/apis/fetchsearchreplaceworkspace";
 import TabDetals from "./WorkspaceDetailsTab";
 import history from "../../../../web.history";
+import { translate } from "../../../../assets/localisation";
 
 class WorkspaceDetails extends React.Component {
   intervalID;
@@ -60,7 +61,6 @@ class WorkspaceDetails extends React.Component {
   };
 
   handleFilterSubmit = filterList => () => {
-    console.log(filterList);
     clearTimeout(this.intervalID);
     const apiObj = new FetchSearchReplaceWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", filterList);
     this.props.APITransport(apiObj);
@@ -70,7 +70,7 @@ class WorkspaceDetails extends React.Component {
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
     if (rowData[2] === "EDITING") {
-      history.push(`${`${process.env.PUBLIC_URL}/stage3/sentence-qaulity` + "/"}${rowData[0]}/${rowData[1]}`);
+      history.push(`${`${process.env.PUBLIC_URL}/stage3/sentence-qaulity/`}${rowData[0]}/${rowData[1]}`);
     }
   };
 
@@ -82,7 +82,7 @@ class WorkspaceDetails extends React.Component {
     const columns = [
       {
         name: "title",
-        label: "Workspace",
+        label: translate("common.page.table.workspace"),
         options: {
           filter: true,
           sort: true,
@@ -91,7 +91,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "session_id",
-        label: "id",
+
         options: {
           display: "excluded",
           filter: false
@@ -99,15 +99,13 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "step",
-        label: "Status",
+        label: translate("common.page.table.status"),
         options: {
-          filter: false,
           filter: false,
         }
       },
       {
         name: "status",
-        label: "Status",
         options: {
           display: "excluded",
           sort: false
@@ -115,7 +113,6 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "sentence_count",
-        label: "Sentence Count",
         options: {
           display: "excluded",
           filter: false
@@ -123,7 +120,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "username",
-        label: "Created By",
+        label: translate("common.page.table.username"),
         options: {
           filter: false,
           sort: false
@@ -131,7 +128,7 @@ class WorkspaceDetails extends React.Component {
       },
       {
         name: "created_at",
-        label: "Created At",
+        label: translate("common.page.table.createdAt"),
         options: {
           filter: false,
           sort: false
@@ -140,6 +137,19 @@ class WorkspaceDetails extends React.Component {
     ];
 
     const options = {
+      textLabels: {
+        body: {
+          noMatch: translate('gradeReport.page.muiNoTitle.sorryRecordNotFound')
+        },
+        toolbar: {
+          search: translate('graderReport.page.muiTable.search'),
+          viewColumns: translate('graderReport.page.muiTable.viewColumns'),
+          filterTable: translate('graderReport.page.muiTable.filterTable'),
+        },
+        pagination: {
+          rowsPerPage: translate('graderReport.page.muiTable.rowsPerPages'),
+        }
+      },
       filterType: "textField",
       download: false,
       print: false,
@@ -153,7 +163,7 @@ class WorkspaceDetails extends React.Component {
       onFilterDialogOpen: () => {
         clearTimeout(this.intervalID);
       },
-      onFilterDialogClose: () => {},
+      onFilterDialogClose: () => { },
       onFilterChange: (column, filterList, type, reset) => {
         if (type === "reset") {
           this.handleReset("");
@@ -162,7 +172,7 @@ class WorkspaceDetails extends React.Component {
       customFilterDialogFooter: filterList => (
         <div style={{ marginTop: "40px" }}>
           <Button color="primary" variant="contained" onClick={this.handleFilterSubmit(filterList[0])}>
-            Apply Filters
+            {translate("common.page.button.applyFilter")}
           </Button>
         </div>
       ),
@@ -175,6 +185,7 @@ class WorkspaceDetails extends React.Component {
           case "changeRowsPerPage":
             this.changePage(tableState.page, tableState.rowsPerPage);
             break;
+            default:return null;
         }
       }
     };
@@ -183,7 +194,7 @@ class WorkspaceDetails extends React.Component {
       <div>
         <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title="Processing Workspaces" data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate("common.tools.title.processingWorkspaces")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );

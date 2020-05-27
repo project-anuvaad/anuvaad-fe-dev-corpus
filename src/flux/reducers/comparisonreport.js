@@ -10,7 +10,7 @@ export default function (state = {}, action) {
                     if (data.model_name) {
                         data_arr.push(data)
                     }
-                    
+                    return true;
                 })
                 return data_arr
             }

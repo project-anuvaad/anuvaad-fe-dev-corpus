@@ -2,22 +2,23 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import APITransport from "../../../flux/actions/apitransport/apitransport";
-import FetchBenchmark from "../../../flux/actions/apis/benchmark";
 import SelectModel from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import Tooltip from "@material-ui/core/Tooltip";
-import history from "../../../web.history";
 import { withStyles } from "@material-ui/core/styles";
-import NewCorpusStyle from "../../styles/web/Newcorpus";
 import Typography from "@material-ui/core/Typography";
 import MUIDataTable from "mui-datatables";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Toolbar from "@material-ui/core/Toolbar";
 import GradeIcon from "@material-ui/icons/Grade";
+import NewCorpusStyle from "../../styles/web/Newcorpus";
+import history from "../../../web.history";
+import FetchBenchmark from "../../../flux/actions/apis/benchmark";
+import APITransport from "../../../flux/actions/apitransport/apitransport";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import Select from "../../components/web/common/Select";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
+import { translate } from "../../../assets/localisation";
 
 class Benchmark extends React.Component {
   constructor(props) {
@@ -59,34 +60,35 @@ class Benchmark extends React.Component {
   };
 
   handleTarget(modelLanguage, supportLanguage, sourceLanguage) {
-    var result = [];
-    var name = "";
+    const result = [];
+    let name = "";
 
     supportLanguage.map(value => (value.language_name === sourceLanguage ? (name = value.language_code) : ""));
 
     modelLanguage.map(item => {
-      item.source_language_code == name
-        ? supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null))
-        : "";
+      item.source_language_code === name &&
+        supportLanguage.map(value => (item.target_language_code === value.language_code ? result.push(value) : null));
+      return true;
     });
-    var value = new Set(result);
-    var target_language = [...value];
+    const value = new Set(result);
+    const target_language = [...value];
 
     return target_language;
   }
 
   handleModel(modelLanguage, source, target) {
-    var result = [];
-    var name = "";
+    const result = [];
+    let name = "";
     this.state.language.map(value => (value.language_name === source ? (name = value.language_code) : ""));
     modelLanguage.map(item => {
-      item.source_language_code === name && item.target_language_code === target ? result.push(item) : null;
+      item.source_language_code === name && item.target_language_code === target && result.push(item);
+      return true;
     });
     return result;
   }
 
   handleSubmit(row, modelid) {
-    history.push(`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/` + row + "/" + modelid);
+    history.push(`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/${  row  }/${  modelid}`);
   }
 
   componentDidUpdate(prevProps) {
@@ -114,14 +116,14 @@ class Benchmark extends React.Component {
     const columns = [
       {
         name: "basename",
-        label: "basename",
+        label: translate("common.page.label.basename"),
         options: {
           display: "excluded"
         }
       },
       {
         name: "name",
-        label: "Category",
+        label: translate("common.page.label.category"),
         options: {
           filter: true,
           sort: true
@@ -130,7 +132,7 @@ class Benchmark extends React.Component {
 
       {
         name: "no_of_sentences",
-        label: "Sentences",
+        label: translate("common.page.label.sentence"),
         options: {
           filter: true,
           sort: true
@@ -138,7 +140,7 @@ class Benchmark extends React.Component {
       },
       {
         name: "source_lang",
-        label: "Source",
+        label: translate("common.page.label.source"),
         options: {
           filter: true,
           sort: true
@@ -146,17 +148,17 @@ class Benchmark extends React.Component {
       },
       {
         name: "Target",
-
+        label: translate("common.page.label.target"),
         options: {
           filter: true,
           sort: false,
           empty: true,
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
-              let name = "target-" + tableMeta.rowData[0];
+              const name = `target-${  tableMeta.rowData[0]}`;
               return (
                 <Select
-                  id={"outlined-age-simple"}
+                  id="outlined-age-simple"
                   selectValue="language_code"
                   MenuItemValues={tableMeta.rowData[3] ? this.handleTarget(this.state.modelLanguage, this.state.language, tableMeta.rowData[3]) : []}
                   handleChange={this.handleSelectChange}
@@ -172,15 +174,15 @@ class Benchmark extends React.Component {
 
       {
         name: "Model",
-
+        label: translate("common.page.label.models"),
         options: {
           filter: true,
           sort: false,
           empty: true,
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
-              let targetname = "target-" + tableMeta.rowData[0];
-              let modelname = "model-" + tableMeta.rowData[0];
+              const targetname = `target-${  tableMeta.rowData[0]}`;
+              const modelname = `model-${  tableMeta.rowData[0]}`;
               return (
                 <SelectModel
                   style={{ minWidth: 160, align: "right", maxWidth: 100 }}
@@ -191,13 +193,11 @@ class Benchmark extends React.Component {
                   input={<OutlinedInput name={this.state.model} id="outlined-age-simple" />}
                 >
                   {tableMeta.rowData[3] && this.state[targetname]
-                    ? this.handleModel(this.state.modelLanguage, tableMeta.rowData[3], this.state[targetname]).map(item => {
-                        return (
+                    ? this.handleModel(this.state.modelLanguage, tableMeta.rowData[3], this.state[targetname]).map(item => (
                           <MenuItem key={item.model_id} value={item.model_id}>
                             {item.model_name}
                           </MenuItem>
-                        );
-                      })
+                        ))
                     : []}
                   >
                 </SelectModel>
@@ -209,7 +209,7 @@ class Benchmark extends React.Component {
 
       {
         name: "created_on",
-        label: "Timestamp",
+        label: translate("common.page.label.timeStamp"),
         options: {
           filter: true,
           sort: true,
@@ -219,18 +219,19 @@ class Benchmark extends React.Component {
 
       {
         name: "Action",
+        label: translate("common.page.label.action"),
         options: {
           filter: true,
           sort: false,
           empty: true,
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
-              let targetname = "target-" + tableMeta.rowData[0];
-              let modelname = "model-" + tableMeta.rowData[0];
+              const targetname = `target-${  tableMeta.rowData[0]}`;
+              const modelname = `model-${  tableMeta.rowData[0]}`;
               return (
                 <div style={{ width: "90px" }}>
                   {this.state[targetname] && this.state[modelname] && (
-                    <Tooltip title="Grade Sentence">
+                    <Tooltip title={translate("common.page.title.gradeSentence")}>
                       <GradeIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
                         onClick={() => {
@@ -250,6 +251,18 @@ class Benchmark extends React.Component {
     ];
 
     const options = {
+      textLabels: {
+        body: {
+          noMatch: translate("gradeReport.page.muiNoTitle.sorryRecordNotFound")
+        },
+        toolbar: {
+          search: translate("graderReport.page.muiTable.search"),
+          viewColumns: translate("graderReport.page.muiTable.viewColumns")
+        },
+        pagination: {
+          rowsPerPage: translate("graderReport.page.muiTable.rowsPerPages")
+        }
+      },
       filterType: "checkbox",
       download: false,
       print: false,
@@ -261,10 +274,10 @@ class Benchmark extends React.Component {
     return (
       <div>
         <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%" }}>
-          <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
+          <Typography variant="title" color="inherit" style={{ flex: 1 }} />
         </Toolbar>
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
-          <MUIDataTable title={"Documents"} data={this.state.name} columns={columns} options={options} />
+          <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>
     );
@@ -289,11 +302,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  withStyles(NewCorpusStyle)(
-    connect(
-      mapStateToProps,
-      mapDispatchToProps
-    )(Benchmark)
-  )
-);
+export default withRouter(withStyles(NewCorpusStyle)(connect(mapStateToProps, mapDispatchToProps)(Benchmark)));

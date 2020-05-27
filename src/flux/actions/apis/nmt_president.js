@@ -41,23 +41,29 @@ export default class NMT extends API {
                     if (s && s.trim().length > 0) {
                         modelArray.push({
                             src: s.trim() + '.',
-                            id: parseInt(item.model_id),
+                            id: parseInt(item.model_id,10),
                             s_id: item.model_name + "_Comma Split",
                             n_id: item.model_name
                         });
+                        
                     }
+                   ;
+                   return true;
                 });
             }
             else {
                 modelArray.push({
                     src: this.par,
-                    id: parseInt(item.model_id),
+                    id: parseInt(item.model_id,10),
                     s_id: item.model_name,
                     n_id: item.model_name
                 });
             }
+            console.log(modelArray)
+            return true
         });
         return modelArray;
+        
     }
 
     getHeaders() {

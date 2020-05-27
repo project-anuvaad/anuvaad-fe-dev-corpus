@@ -9,7 +9,7 @@ import translations from './translations';
 import translation_sentences from './translation_sentences';
 import sentences from './sentences';
 import userProfile from './userprofile';
-
+import interactiveUpdate from './interactivesavesentence';
 import uploadbenchmark from './uploadbenchmark';
 import source_translate from './source-translate';
 import supportLanguage from './fetchlanguages';
@@ -25,7 +25,7 @@ import translation from './translation';
 import configUplaod from './configupload';
 import workspaceDetails from './runexperiment';
 import audio from './audio';
-
+import mergeSentenceApi from './interactivemerge';
 import fetchDefaultConfig from './fetchdefaultconfig';
 import hindi from './hindi';
 import marathi from './marathi';
@@ -38,7 +38,7 @@ import gujarati from './gujarati';
 import bengali from './bengali';
 import courtList from './fetchcourtlist';
 import fetchtranslation from './viewtranslate';
-
+import feedbackQuestions from './feedbackquestions';
 import deletefile from './delete';
 import userList from './userdirectory';
 import userRoles from './userroles';
@@ -51,6 +51,14 @@ import uploadTokenValue from './uploadtoken';
 import uploadTranslated from './uploadTranslatedFile';
 import fetchSearch from './fetchsearchreplace';
 import sentenceReplace from './sentencereplace';
+import uploadpdf from './pdfupload';
+import pdfConfigUpload from './pdfuploadfile';
+import docpath from './pdf_to_doc';
+import fetchPdfSentence from './fetchpdfsentence';
+import intractiveTrans from './intractive_translate';
+import downloaddoc from './downloaddoc';
+import signup from './signup';
+import activate from './activate';
 
 export default {
     login,
@@ -102,5 +110,16 @@ export default {
     createWorkspaceDetails,
     courtList,
     fetchSearch,
-    sentenceReplace
+    sentenceReplace,
+    feedbackQuestions,
+    uploadpdf,
+    pdfConfigUpload,
+    fetchPdfSentence,
+    intractiveTrans,
+    docpath,
+    interactiveUpdate,
+    downloaddoc,
+    mergeSentenceApi,
+    signup,
+    activate
 };

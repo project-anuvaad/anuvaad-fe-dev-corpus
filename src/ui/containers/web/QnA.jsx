@@ -1,7 +1,5 @@
 import React from "react";
-
 import { withRouter } from "react-router-dom";
-
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -11,6 +9,7 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import Typography from "@material-ui/core/Typography";
 import QNAApi from "../../../flux/actions/apis/qna";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { translate } from '../../../assets/localisation';
 
 class QnA extends React.Component {
   constructor(props) {
@@ -71,7 +70,7 @@ class QnA extends React.Component {
                 this.handleTextChange("par", event);
               }}
               id="standard-multiline-static"
-              label="English Paragraph"
+              label={translate('qan.page.placeholder.englishPara')}
               multiline
               style={{ width: "100%" }}
               margin="normal"
@@ -84,17 +83,17 @@ class QnA extends React.Component {
                   this.handleTextChange("question1", event);
                 }}
                 id="standard-multiline-static"
-                label="Question1"
+                label={translate('qan.page.placeholder.question1')}
                 style={{ width: "100%" }}
                 margin="normal"
               />
               {this.props.apistatus.progress ? (
                 <CircularProgress />
               ) : (
-                <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
-                  Ans : {this.state.answer1}
-                </Typography>
-              )}
+                  <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
+                    {translate('common.page.button.submit')} {this.state.answer1}
+                  </Typography>
+                )}
             </Grid>
             <Grid item xs={12} sm={12} lg={12} xl={12}>
               <TextField
@@ -102,17 +101,17 @@ class QnA extends React.Component {
                   this.handleTextChange("question2", event);
                 }}
                 id="standard-multiline-static"
-                label="Question2"
+                label={translate('qan.page.placeholder.question2')}
                 style={{ width: "100%" }}
                 margin="normal"
               />
               {this.props.apistatus.progress ? (
                 <CircularProgress />
               ) : (
-                <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
-                  Ans : {this.state.answer2}
-                </Typography>
-              )}
+                  <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
+                    {translate('common.page.button.submit')} {this.state.answer2}
+                  </Typography>
+                )}
             </Grid>
 
             <Grid item xs={12} sm={12} lg={12} xl={12}>
@@ -121,17 +120,17 @@ class QnA extends React.Component {
                   this.handleTextChange("question3", event);
                 }}
                 id="standard-multiline-static"
-                label="Question3"
+                label={translate('qan.page.placeholder.question3')}
                 style={{ width: "100%" }}
                 margin="normal"
               />
               {this.props.apistatus.progress ? (
                 <CircularProgress />
               ) : (
-                <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
-                  Ans : {this.state.answer3}
-                </Typography>
-              )}
+                  <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
+                    {translate('common.page.button.submit')} {this.state.answer3}
+                  </Typography>
+                )}
             </Grid>
             <Grid item xs={12} sm={12} lg={12} xl={12}>
               <TextField
@@ -139,22 +138,22 @@ class QnA extends React.Component {
                   this.handleTextChange("question4", event);
                 }}
                 id="standard-multiline-static"
-                label="Question4"
+                label={translate('qan.page.placeholder.question4')}
                 style={{ width: "100%" }}
                 margin="normal"
               />
               {this.props.apistatus.progress ? (
                 <CircularProgress />
               ) : (
-                <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
-                  Ans : {this.state.answer4}
-                </Typography>
-              )}
+                  <Typography variant="subtitle2" style={{ paddingTop: "5%" }}>
+                    {translate('common.page.label.ans')} {this.state.answer4}
+                  </Typography>
+                )}
             </Grid>
             <br></br>
             <Grid item xs={12} sm={12} lg={12} xl={12}>
               <Button onClick={this.handleSubmit.bind(this)} variant="contained" color="primary">
-                Submit
+                {translate('common.page.button.submit')}
               </Button>
             </Grid>
           </Grid>

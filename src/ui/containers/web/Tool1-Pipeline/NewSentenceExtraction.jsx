@@ -17,8 +17,9 @@ import ConfigUpload from "../../../../flux/actions/apis/configupload";
 import FetchDefaultConfig from "../../../../flux/actions/apis/fetchdefaultconfig";
 import RunExperiment from "../../../../flux/actions/apis/runexperiment";
 import Spinner from "../../../components/web/common/Spinner";
+import { translate } from "../../../../assets/localisation";
 
-class NewExtraction extends React.Component {
+class NewSentanceExtraction extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,13 +30,12 @@ class NewExtraction extends React.Component {
       csvName: "",
       value: 1,
       load: false,
+      count: 1,
 
-      message: 'Process started, This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab',
+      message: translate("common.page.label.message"),
 
-      csvData:
-        "Please upload CSV file containing paragraphs (check with development team about the file format). Start by download global configuration file and provide workspace name.",
-      processData:
-        'Press "Start processing" to run the workspace. This might be long running operation, kindly look the status of your workspace under "Processing Workspace" tab'
+      csvData: translate("common.page.label.csvData"),
+      processData: translate("common.page.label.processData")
     };
   }
 
@@ -93,24 +93,32 @@ class NewExtraction extends React.Component {
     });
   }
 
+  renderApi() {
+    console.log("----", this.state.count);
+    if (this.state.count === 2) {
+      const { APITransport } = this.props;
+      const apiObj = new RunExperiment(
+        this.state.workspaceName,
+        "configFile" in this.props.configUplaod && this.props.configUplaod.configFile,
+        "csvFile" in this.props.configUplaod && this.props.configUplaod.csvFile
+      );
+      this.state.csvFile && APITransport(apiObj);
+      this.setState({ count: 1 });
+    }
+  }
+
   componentDidUpdate(prevProps) {
     if (prevProps.configUplaod !== this.props.configUplaod) {
-      this.setState({ files: this.props.configUplaod });
+      this.setState({ files: this.props.configUplaod, count: this.state.count + 1 });
+      console.log("-", this.state.count);
+      
 
-      const configFilepath = "configFile" in this.props.configUplaod && this.props.configUplaod.configFile;
-      const csvFilepath = "csvFile" in this.props.configUplaod && this.props.configUplaod.csvFile;
-
-      if (configFilepath && csvFilepath) {
-        const { APITransport } = this.props;
-        const apiObj = new RunExperiment(this.state.workspaceName, configFilepath, csvFilepath);
-        this.state.csvFile && APITransport(apiObj);
-        
-      }
+      this.renderApi();
     }
 
     if (prevProps.fetchDefaultConfig !== this.props.fetchDefaultConfig) {
-      console.log(this.props.fetchDefaultConfig.data)
-      this.setState({ defaultConfig: this.props.fetchDefaultConfig.data[0], defaultCsv: this.props.fetchDefaultConfig.data[1]});
+      console.log(this.props.fetchDefaultConfig.data);
+      this.setState({ defaultConfig: this.props.fetchDefaultConfig.data[0], defaultCsv: this.props.fetchDefaultConfig.data[1] });
     }
 
     if (prevProps.workspaceDetails !== this.props.workspaceDetails) {
@@ -142,7 +150,7 @@ class NewExtraction extends React.Component {
       this.state.csvFile && APITransport(apiObj2);
       this.setState({ load: true });
     } else {
-      alert("Fields should not be empty");
+      alert(translate("common.page.label.pageWarning"));
     }
     // history.push(`${process.env.PUBLIC_URL}/token-extraction`);
   }
@@ -155,7 +163,7 @@ class NewExtraction extends React.Component {
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                Enter workspace name :
+                {translate("common.page.label.enterWorkspace")}
               </Typography>
               <br />
             </Grid>
@@ -174,19 +182,19 @@ class NewExtraction extends React.Component {
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                Configuration file : &emsp;&emsp;{" "}
+                {translate("newSentenceExtraction.page.label.confiFile")} &emsp;&emsp;{" "}
                 <a
                   href={
                     this.state.defaultConfig
-                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" 
-                        }/download/${ 
-                        this.state.defaultConfig.path}`
+                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+                          this.state.defaultConfig.path
+                        }`
                       : ""
                   }
                   style={{ textDecoration: "none" }}
                 >
                   <Link component="button" variant="body2">
-                    Download global configuration
+                    {translate("newSentenceExtraction.page.link.globalConfig")}
                   </Link>
                 </a>
               </Typography>
@@ -195,7 +203,12 @@ class NewExtraction extends React.Component {
             <Grid item xs={6} sm={6} lg={6} xl={6} style={{ marginTop: "-7px", height: "56px" }}>
               <Grid container spacing={8}>
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
-                  <FileUpload accept=".yaml" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="configFile" />
+                  <FileUpload
+                    accept=".yaml"
+                    buttonName={translate("common.page.button.upload")}
+                    handleChange={this.handleChange.bind(this)}
+                    name="configFile"
+                  />
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -214,19 +227,19 @@ class NewExtraction extends React.Component {
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                CSV file : &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                {translate("common.page.label.csvFile")} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                 <a
                   href={
                     this.state.defaultConfig
-                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org" 
-                        }/download/${ 
-                        this.state.defaultCsv.path}`
+                      ? `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+                          this.state.defaultCsv.path
+                        }`
                       : ""
                   }
                   style={{ textDecoration: "none" }}
                 >
                   <Link component="button" variant="body2">
-                    Download sample csv
+                    {translate("newSentenceExtraction.page.link.SampleCsv")}
                   </Link>
                 </a>
               </Typography>
@@ -235,7 +248,12 @@ class NewExtraction extends React.Component {
             <Grid item xs={6} sm={6} lg={6} xl={6}>
               <Grid container spacing={8}>
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
-                  <FileUpload accept=".csv" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="csvFile" />
+                  <FileUpload
+                    accept=".csv"
+                    buttonName={translate("common.page.button.upload")}
+                    handleChange={this.handleChange.bind(this)}
+                    name="csvFile"
+                  />
                 </Grid>
 
                 <Grid item xs={4} sm={4} lg={4} xl={4}>
@@ -261,7 +279,7 @@ class NewExtraction extends React.Component {
                 style={{ width: "60%", marginTop: "6%", height: "56px" }}
                 onClick={this.handleSubmit.bind(this)}
               >
-                Start processing
+                {translate("common.page.button.start")}
               </Button>
             </Grid>
           </Grid>
@@ -303,4 +321,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewExtraction));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NewSentanceExtraction));

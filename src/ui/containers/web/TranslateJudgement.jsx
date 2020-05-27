@@ -17,6 +17,7 @@ import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import C from "../../../flux/actions/constants";
 import SCImage from "../../../assets/icon.jpg";
+import { translate } from "../../../assets/localisation";
 
 const langs = [
   { label: "Hindi", labelSecondary: "हिन्दी", code: "hi", type: C.HINDI, color: "#ff8000" },
@@ -58,6 +59,7 @@ class Translate extends React.Component {
           const api = new NMT(this.state.sentence, model, false, null, true, lang.type);
           this.props.TranslateAPI(api);
         }
+        return console.log(prevProps);
       });
     }
     langs.map(lang => {
@@ -69,12 +71,14 @@ class Translate extends React.Component {
           if (this.state[lang.label] && lang.label !== "Hindi") {
             opened = true;
           }
+          return true;
         });
         this.setState({
           Hindi: !!(this.props.hindi && !opened),
           [lang.label.toLowerCase()]: this.props[lang.label.toLowerCase()]
         });
       }
+      return true;
     });
   }
 
@@ -92,6 +96,7 @@ class Translate extends React.Component {
       } else {
         this.setState({ [lang.label]: false });
       }
+      return true;
     });
     this.setState(state => ({ [key]: !this.state[key], key, body }));
   };
@@ -129,6 +134,7 @@ class Translate extends React.Component {
         [lang.label.toLowerCase()]: null,
         [lang.label]: false
       });
+      return true;
     });
   };
 
@@ -141,14 +147,13 @@ class Translate extends React.Component {
               className="idbox"
               rows="5"
               cols="50"
-              placeholder="Please enter English text to translate..."
+              placeholder={translate("translateJundgement.page.placeholder.enterEnglishText")}
               onChange={event => {
                 this.handleTextChange("sentence", event);
               }}
             />
             <div>
               <Button
-                onClick={this.handleSubmit}
                 variant="contained"
                 color="primary"
                 style={{
@@ -157,10 +162,11 @@ class Translate extends React.Component {
                 }}
                 onClick={this.state.sentence && this.handleOnClick.bind(this)}
               >
-                Translate
+                {translate("dashboard.page.heading.title")}
               </Button>
               <img
                 src={SCImage}
+                alt=""
                 style={{
                   width: "15%",
                   height: "80%",
@@ -178,7 +184,7 @@ class Translate extends React.Component {
                 className="idbox"
                 rows="5"
                 cols="50"
-                placeholder="Please enter text here..."
+                placeholder={translate("common.page.placeholder.enterTextHere")}
                 onChange={event => {
                   this.handleTextChange("sentence", event);
                 }}
@@ -188,7 +194,7 @@ class Translate extends React.Component {
         )}
         <div>
           {this.state.showLangLayout ? (
-            <Grid container spacing={16} style={{ paddingLeft: "1%" }}>
+            <Grid container spacing={16} style={{ paddingLeft: "6%" }}>
               <Grid
                 container
                 item
@@ -246,24 +252,26 @@ class Translate extends React.Component {
               >
                 <React.Fragment>
                   {langs.map((lang, index) => (
-                      <Grid item xs={12} sm={12} lg={12} xl={12} sm={9} className="slideUp">
-                        <AppCard
-                          cardKey={lang.label}
-                          header={`${lang.label  } - ${  lang.labelSecondary}`}
-                          handleExpandClick={this.handleExpandClick.bind(this)}
-                          expanded={this.state[lang.label]}
-                          color={lang.color}
-                          body={
-                            this.state[lang.label.toLowerCase()] &&
-                            this.state[lang.label.toLowerCase()] &&
-                            Array.isArray(this.state[lang.label.toLowerCase()])
-                              ? this.state[lang.label.toLowerCase()].map((elem) => elem.tgt + (index === 0 && elem.tgt.indexOf("।") < 0 && elem.tgt.indexOf("?") < 0 ? "। " : " "))
-                              : ""
-                          }
-                          style={{ background: lang.color }}
-                        />
-                      </Grid>
-                    ))}
+                    <Grid item xs={12} sm={12} lg={12} xl={12} className="slideUp">
+                      <AppCard
+                        cardKey={lang.label}
+                        header={`${lang.label} - ${lang.labelSecondary}`}
+                        handleExpandClick={this.handleExpandClick.bind(this)}
+                        expanded={this.state[lang.label]}
+                        color={lang.color}
+                        body={
+                          this.state[lang.label.toLowerCase()] &&
+                          this.state[lang.label.toLowerCase()] &&
+                          Array.isArray(this.state[lang.label.toLowerCase()])
+                            ? this.state[lang.label.toLowerCase()].map(
+                                elem => elem.tgt + (index === 0 && elem.tgt.indexOf("।") < 0 && elem.tgt.indexOf("?") < 0 ? "। " : " ")
+                              )
+                            : ""
+                        }
+                        style={{ background: lang.color }}
+                      />
+                    </Grid>
+                  ))}
                 </React.Fragment>
               </Grid>
             </Grid>
