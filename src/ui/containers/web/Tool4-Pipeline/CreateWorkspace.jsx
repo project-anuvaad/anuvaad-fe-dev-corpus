@@ -133,7 +133,6 @@ class CreateWorkspace extends React.Component {
   };
 
   handleWorkspaceSelected(selectedWorkspaces) {
-    console.log("test-----", selectedWorkspaces);
     this.setState({
       selectedWorkspaces
     });

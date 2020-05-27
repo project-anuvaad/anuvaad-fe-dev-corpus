@@ -18,7 +18,6 @@ export default class FetchQuestions extends API {
     processResponse(res) {
         super.processResponse(res)
         if (res.data) {
-            console.log("response",res.data)
             this.feedbackQuestions = res.data;
         }
     }
@@ -42,7 +41,6 @@ export default class FetchQuestions extends API {
     }
 
     getPayload() {
-        console.log(",",this.feedbackQuestions)
         return this.feedbackQuestions
     }
 
