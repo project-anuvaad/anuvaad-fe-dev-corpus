@@ -74,7 +74,6 @@
 //             editor={ClassicEditor}
 //             data={this.state.value}
 //             onBlur={(event, editor) => {
-//               console.log(this.state.isFocus);
 //               if (this.state.isFocus) {
 //                 editor.editing.view.focus();
 //               }
@@ -83,12 +82,10 @@
 //               editor.editing.view.focus();
 
 //               const data = editor.getData();
-//               console.log("changed", editor.model.document.selection.getFirstPosition());
 //               this.handleTextChange("value", data);
 //               this.setState({ editor, isFocus: false });
 
 //               editor.editing.view.document.on("keydown", (evt, data) => {
-//                 console.log("", editor.getData());
 
 //                 if (data.keyCode === 9) {
 //                   this.handleApiCall(editor.getData());
