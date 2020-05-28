@@ -33,25 +33,22 @@ class Editor extends React.Component {
   }
 
   handleSuperSave(target, taggedTarget) {
-
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
 
-    console.log("splitvalue",splitValue)
     const temp = this.state.scriptSentence;
     let value = []
     if (this.props.superScriptToken) {
       this.state.scriptSentence.map((sentence, index) => {
         if (splitValue[0] === sentence._id) {
-          temp[index].tokenized_sentences.map((sentence,i) =>{
-           
-            if(sentence.sentence_index===Number(splitValue[1])){
+          temp[index].tokenized_sentences.map((sentence, i) => {
+            if (sentence.sentence_index === Number(splitValue[1])) {
               (sentence.target = `${this.state.superIndex} ${target}`);
               (sentence.tagged_tgt = taggedTarget);
             }
+            return true
           })
           value = temp[index];
         }
-        console.log(value)
         return true;
       });
     }
@@ -68,7 +65,6 @@ class Editor extends React.Component {
       this.handleSubmit();
     } else if (this.props.superScriptToken && this.state.superIndex) {
       this.props.handleScriptSave(this.state.translateText, this.state.superIndex);
-      console.log("---",temp)
       this.props.hadleSentenceSave(false, temp);
       this.setState({ target: this.state.translateText })
     } else {
@@ -152,14 +148,14 @@ class Editor extends React.Component {
         if (splitValue[0] === sentence._id) {
           let sentenceIndex;
 
-         if( sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0){
-          sentence.tokenized_sentences.map((sentence,i) =>{
-           
-            if(sentence.sentence_index===Number(splitValue[1])){
+          if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0) {
+            sentence.tokenized_sentences.map((sentence, i) => {
+              if (sentence.sentence_index === Number(splitValue[1])) {
                 sentenceIndex = i;
-            }
-          })
-         }
+              }
+              return true
+            })
+          }
           if (
             (sentence.tokenized_sentences.length === 1 && sentenceIndex === 0) ||
             (sentenceIndex === 0 && value === -1) ||
@@ -197,8 +193,8 @@ class Editor extends React.Component {
               sentenceIndex,
               checkedB: true
             });
-          } else if (sentence.tokenized_sentences.length >=  sentenceIndex&& sentenceIndex >= 0) {
-            const ind =  sentenceIndex + value;
+          } else if (sentence.tokenized_sentences.length >= sentenceIndex && sentenceIndex >= 0) {
+            const ind = sentenceIndex + value;
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
             !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value === 0 ? null : true);
             if (sentence.is_table) {
@@ -253,7 +249,7 @@ class Editor extends React.Component {
   componentDidUpdate(prevProps) {
 
     if (prevProps.sentences !== this.props.sentences) {
-      this.setState({target:''})
+      this.setState({ target: '' })
     }
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       if (this.state.apiToken) {
@@ -545,7 +541,7 @@ class Editor extends React.Component {
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
               onClick={event => {
-                 this.handleApiCall();
+                this.handleApiCall();
               }}
             >
               {" "}
@@ -559,7 +555,7 @@ class Editor extends React.Component {
                 this.props.sentences[this.props.sentences.length - 1]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken
               }
               onClick={event => {
-                 this.handleDialog(1);
+                this.handleDialog(1);
               }}
               style={{ fontWeight: "bold", width: "100%" }}
             >

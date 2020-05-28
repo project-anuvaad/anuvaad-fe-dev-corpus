@@ -22,7 +22,6 @@ export default class FetchMTWorkspace extends API {
     }
 
     processResponse(res) {
-        console.log(res)
         super.processResponse(res)
         if (res.data) {
             this.fetch_workspace =  {'data':res.data, 'count':res.count};

@@ -47,41 +47,13 @@ class EditorPaper extends React.Component {
         }
     }
 
-    fetchTable(id, sentences) {
-        let tableRow = []
-        let index = 0
-        for (let row in sentences) {
-            let col = []
-
-            for (let block in sentences[row]) {
-                let blockData = this.props.paperType === 'source' ? sentences[row][block].text : sentences[row][block].target
-                let blockId = id + '_' + sentences[row][block].sentence_index
-                let bgColor = !this.props.isPreview ? ((this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId ? '#4dffcf' : "") : ""
-
-                col.push(<td id={blockId} key={blockId}
-                    onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType)}
-                    onMouseEnter={() => this.tableHoverOn(id, blockId)}
-                    onMouseLeave={() => this.tableHoverOff()}
-                    style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
-                    {blockData}</td>)
-            }
-            tableRow.push(<tr key={index}>{col}</tr>)
-            index++
-        }
-        return <table key={id} ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}><tbody>{tableRow}</tbody></table>
-    }
-
-
     getSelectionText(event) {
         var text = "";
         let selection = {}
         var activeEl = document.activeElement;
         var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
-        if (
-            (activeElTagName == "textarea") || (activeElTagName == "input" &&
-                /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
-            (typeof activeEl.selectionStart == "number")
-        ) {
+        
+        if ((activeElTagName === "textarea") || (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) && (typeof activeEl.selectionStart === "number")) {
             text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
         } else if (window.getSelection) {
             text = window.getSelection().toString();
@@ -100,6 +72,7 @@ class EditorPaper extends React.Component {
                 if (paragraph._id === startNode.split('_')[0] && !paragraph.is_table) {
                     selection.startNode = startNode
                 }
+                return true
             })
         }
 
@@ -109,9 +82,9 @@ class EditorPaper extends React.Component {
                 if (paragraph._id === endNode.split('_')[0] && !paragraph.is_table) {
                     selection.endNode = endNode
                 }
+                return true
             })
         }
-
         if (selection && selection.startNode && selection.endNode) {
             this.props.handleSelection(selection, event)
         }
@@ -126,17 +99,21 @@ class EditorPaper extends React.Component {
                     let color = ""
                     let textColor = ""
                     if (this.props.selectedMergeSentence && Array.isArray(this.props.selectedMergeSentence) && this.props.selectedMergeSentence.length > 0) {
+<<<<<<< HEAD
                         
+=======
+>>>>>>> ba9d7ae81f8e8c7c682711090fc4ae9403575ea4
                         this.props.selectedMergeSentence.map(sentenceText => {
                             if ((sentence._id + '_' + tokenText.sentence_index === sentenceText.startNode) || (sentence._id + '_' + tokenText.sentence_index === sentenceText.endNode)) {
                                 color = "red"
                                 textColor = 'white'
                             }
+                            return true
                         })
                     }
 
                     let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : color ? color : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : '') : ""
-                   
+
                     sentenceArray.push(<span><span
                         id={sentence._id + '_' + tokenText.sentence_index}
                         style={{
@@ -170,84 +147,85 @@ class EditorPaper extends React.Component {
         }
     }
 
-    getSelectionText(event) {
-        var text = "";
-        let selection = {}
-        var activeEl = document.activeElement;
-        var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
-        if (
-            (activeElTagName == "textarea") || (activeElTagName == "input" &&
-                /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) &&
-            (typeof activeEl.selectionStart == "number")
-        ) {
-            text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
-        } else if (window.getSelection) {
-            text = window.getSelection().toString();
-        }
-
-        let sentences = ""
-        let startNode = ""
-        let endNode = ""
-
-        if (window.getSelection()) {
-            sentences = window.getSelection()
-        }
-        if (sentences && sentences.anchorNode && sentences.anchorNode.parentElement && sentences.anchorNode.parentElement.id && sentences.anchorNode.textContent) {
-            startNode = window.getSelection().anchorNode.parentElement.id
-            this.props.sentences.map(paragraph => {
-                if (paragraph._id === startNode.split('_')[0] && !paragraph.is_table) {
-                    selection.startNode = startNode
-                }
-            })
-        }
-
-        if (sentences && sentences.focusNode && sentences.focusNode.parentElement && sentences.focusNode.parentElement.id && sentences.focusNode.textContent) {
-            endNode = window.getSelection().focusNode.parentElement.id
-            this.props.sentences.map(paragraph => {
-                if (paragraph._id === endNode.split('_')[0] && !paragraph.is_table) {
-                    selection.endNode = endNode
-                }
-            })
-        }
-        if (selection && selection.startNode && selection.endNode) {
-            this.props.handleSelection(selection, event)
-        }
-    }
-
-    fetchSentence(sentence) {
+    fetchSentence(sentence, prevSentence, index, noOfPage) {
         let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'left')
+        let pageNo = sentence.page_no
 
         if (!sentence.is_footer && sentence.text) {
+            let printPageNo = false
+            let isFirst = false
+            if(index === 0) {
+                printPageNo = true
+                isFirst = true
+            } else if ( prevSentence && sentence.page_no !== prevSentence.page_no) {
+                printPageNo = true
+            }
+
             if (sentence.is_ner && !sentence.is_new_line) {
                 if (align === 'left') {
-                    return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
+
+                    return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
                         style={{ width: '60%', float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                         onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
-                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
+                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
                 } else {
-                    return (<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                    return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                         onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
-                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div>)
+                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
                 }
 
             } else if (sentence.is_ner) {
-                return (<div key={sentence._id} style={{ textAlign: 'justify' }} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id}
+                return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} style={{ textAlign: 'justify' }} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id}
                     style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
-                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div>)
+                    {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div></div>)
             } else {
-                return (<div key={sentence._id}
+                return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id}
                     style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
-                    <div style={{ textAlign: 'justify' }}>{this.fetchTokenizedSentence(sentence, true)}{sentence.sup_array ? <sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup> : ''}<br /><br /></div></div>)
+                    <div style={{ textAlign: 'justify' }}>{this.fetchTokenizedSentence(sentence, true)}{sentence.sup_array ? <sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup> : ''}<br /><br /></div></div></div>)
             }
         } else if (sentence.is_table) {
-            return this.fetchTable(sentence._id, sentence.table_items)
+            return this.fetchTable(sentence._id, sentence.table_items, prevSentence, index, pageNo,noOfPage)
 
         } else {
             return <div></div>
         }
 
+    }
+
+    fetchTable(id, sentences, prevSentence, tableIndex, pageNo,noOfPage) {
+        let tableRow = []
+        let index = 0
+        let printPageNo = false
+        let isFirst = false
+
+        if(tableIndex === 0){
+            printPageNo = true
+            isFirst = true
+        } else if (prevSentence && sentences[0][0].page_no !== prevSentence.page_no) {
+            printPageNo = true
+        }
+
+        for (let row in sentences) {
+            let col = []
+
+            for (let block in sentences[row]) {
+                let blockData = this.props.paperType === 'source' ? sentences[row][block].text : sentences[row][block].target
+                let blockId = id + '_' + sentences[row][block].sentence_index
+                let bgColor = !this.props.isPreview ? ((this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId ? '#4dffcf' : "") : ""
+
+                col.push(<td id={blockId} key={blockId}
+                    onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType)}
+                    onMouseEnter={() => this.tableHoverOn(id, blockId)}
+                    onMouseLeave={() => this.tableHoverOff()}
+                    style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
+                    {blockData}</td>)
+            }
+            tableRow.push(<tr key={index}>{col}</tr>)
+            index++
+        }
+        return <div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<table key={id} ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}><tbody>{tableRow}</tbody></table></div>
     }
 
     hoverOn(e) {
@@ -289,7 +267,7 @@ class EditorPaper extends React.Component {
         return (
             <div>
 
-                {header ? <div style={{ color: 'grey' }}>
+                {header ? <div style={{ color: 'grey', fontSize: 'small' }}>
                     <Grid container>
                         <Grid item xs={12} sm={8} lg={6} xl={6}>
                             {header}
@@ -300,9 +278,8 @@ class EditorPaper extends React.Component {
                     <br />
                 </div> : <div></div>}
                 <div style={{ paddingLeft: '20px' }}>
-
                     {sentences && Array.isArray(sentences) && sentences.length > 0 && sentences.map((sentence, index) => {
-                        return this.fetchSentence(sentence)
+                        return this.fetchSentence(sentence, sentences[index-1], index, sentences[sentences.length-1].page_no)
                     })}
                 </div>
                 {footer ?

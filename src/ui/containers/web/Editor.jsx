@@ -69,7 +69,6 @@ class Editor1 extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel) {
-      console.log("-----", this.props.fetchBenchmarkModel.data);
       this.setState({
         sentences: this.props.fetchBenchmarkModel.data,
         count: this.props.fetchBenchmarkModel.count
@@ -78,8 +77,6 @@ class Editor1 extends React.Component {
   }
 
   handleSelected = (event, text) => {
-    console.log("---sajish", this.reactQuillRef.getEditor());
-
     const quillRef = this.reactQuillRef.getEditor();
     const range = quillRef.getSelection();
     const position = range ? range.index : 0;
@@ -87,8 +84,6 @@ class Editor1 extends React.Component {
   };
 
   handleChange(value) {
-    console.log("---", this.state.text);
-
     this.setState({ text: value });
   }
 

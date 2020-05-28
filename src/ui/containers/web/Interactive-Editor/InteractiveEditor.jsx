@@ -62,7 +62,7 @@ class IntractiveTrans extends React.Component {
   componentDidMount() {
     this.handleSentenceApi()
   }
-  handleSentenceApi(){
+  handleSentenceApi() {
     const { APITransport } = this.props;
     const apiObj = new FetchDoc(this.props.match.params.fileid);
     APITransport(apiObj);
@@ -76,7 +76,7 @@ class IntractiveTrans extends React.Component {
           this.handleBack();
         }, 3000);
     }
-    if(prevProps.mergeSentenceApi !== this.props.mergeSentenceApi){
+    if (prevProps.mergeSentenceApi !== this.props.mergeSentenceApi) {
       this.handleSentenceApi()
       this.setState({
         merge: true,
@@ -90,85 +90,85 @@ class IntractiveTrans extends React.Component {
       const supScripts = {};
       const targetSupScript = {};
       temp.map(sentence => {
-        if(Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length){
+        if (Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length) {
 
-       
-        if (!sentence.is_footer && !sentence.is_header && !sentence.is_footer_text) {
-          sentenceArray.push(sentence);
+
+          if (!sentence.is_footer && !sentence.is_header && !sentence.is_footer_text) {
+            sentenceArray.push(sentence);
+          } else if (sentence.is_footer) {
+            superArray.push(sentence);
+            let sourceValue = "";
+
+            const key = sentence.text.substr(0, sentence.text.indexOf(" "));
+
+            if (!isNaN(key)) {
+              const sScript = {};
+              const tScript = {};
+
+              sScript.sentence_id = sentence._id;
+              tScript.sentence_id = sentence._id;
+
+              if (sentence.text) {
+                sScript.text = sentence.text.substr(sentence.text.indexOf(" ") + 1);
+              }
+              if (
+                sentence.tokenized_sentences &&
+                Array.isArray(sentence.tokenized_sentences) &&
+                sentence.tokenized_sentences[0] &&
+                sentence.tokenized_sentences[0].target
+              ) {
+                tScript.text = sentence.tokenized_sentences[0].target.substr(sentence.tokenized_sentences[0].target.indexOf(" ") + 1);
+              }
+
+              supScripts[key] = sScript;
+              targetSupScript[key] = tScript;
+            } else {
+              const sScript = {};
+              const tScript = {};
+
+              const prevKey = Object.keys(supScripts).length;
+
+              if (sentence.text && supScripts[prevKey] && supScripts[prevKey].sentence_id) {
+                sScript.sentence_id = supScripts[prevKey].sentence_id;
+                sourceValue = supScripts[prevKey].text;
+                if (sourceValue) {
+                  sScript.text = sourceValue.concat(" ", sentence.text);
+                } else {
+                  sScript.text = sentence.text;
+                }
+              }
+              if (
+                sentence.tokenized_sentences &&
+                Array.isArray(sentence.tokenized_sentences) &&
+                targetSupScript[prevKey] &&
+                targetSupScript[prevKey]._id
+              ) {
+                tScript.sentence_id = targetSupScript[prevKey].sentence_id;
+                tScript.text = targetSupScript[prevKey].text;
+
+                sentence.tokenized_sentences.map(tokenSentence => {
+                  tScript.text = tScript.text.concat(" ", tokenSentence.target);
+                  return true;
+                });
+              }
+              supScripts[prevKey] = sScript;
+              targetSupScript[prevKey] = tScript;
+            }
+          }
         } else if (sentence.is_header) {
           this.setState({ header: sentence.text });
         } else if (sentence.is_footer_text) {
           this.setState({ footer: sentence.text });
-        } else if (sentence.is_footer) {
-          superArray.push(sentence);
-          let sourceValue = "";
-
-          const key = sentence.text.substr(0, sentence.text.indexOf(" "));
-
-          if (!isNaN(key)) {
-            const sScript = {};
-            const tScript = {};
-
-            sScript.sentence_id = sentence._id;
-            tScript.sentence_id = sentence._id;
-
-            if (sentence.text) {
-              sScript.text = sentence.text.substr(sentence.text.indexOf(" ") + 1);
-            }
-            if (
-              sentence.tokenized_sentences &&
-              Array.isArray(sentence.tokenized_sentences) &&
-              sentence.tokenized_sentences[0] &&
-              sentence.tokenized_sentences[0].target
-            ) {
-              tScript.text = sentence.tokenized_sentences[0].target.substr(sentence.tokenized_sentences[0].target.indexOf(" ") + 1);
-            }
-
-            supScripts[key] = sScript;
-            targetSupScript[key] = tScript;
-          } else {
-            const sScript = {};
-            const tScript = {};
-
-            const prevKey = Object.keys(supScripts).length;
-
-            if (sentence.text && supScripts[prevKey] && supScripts[prevKey].sentence_id) {
-              sScript.sentence_id = supScripts[prevKey].sentence_id;
-              sourceValue = supScripts[prevKey].text;
-              if (sourceValue) {
-                sScript.text = sourceValue.concat(" ", sentence.text);
-              } else {
-                sScript.text = sentence.text;
-              }
-            }
-            if (
-              sentence.tokenized_sentences &&
-              Array.isArray(sentence.tokenized_sentences) &&
-              targetSupScript[prevKey] &&
-              targetSupScript[prevKey]._id
-            ) {
-              tScript.sentence_id = targetSupScript[prevKey].sentence_id;
-              tScript.text = targetSupScript[prevKey].text;
-
-              sentence.tokenized_sentences.map(tokenSentence => {
-                tScript.text = tScript.text.concat(" ", tokenSentence.target);
-                return true;
-              });
-            }
-            supScripts[prevKey] = sScript;
-            targetSupScript[prevKey] = tScript;
-          }
         }
-      }
         return true;
       });
 
       this.setState({ open: this.state.merge });
       this.state.merge &&
         setTimeout(() => {
-         this.setState({merge: false, open: false})
+          this.setState({ merge: false, open: false })
         }, 2000);
-      
+
       this.setState({
         sentences: sentenceArray,
         merge: false,
@@ -180,7 +180,7 @@ class IntractiveTrans extends React.Component {
         selectedSentenceId: '',
         contextToken: false,
         addSentence: false
-        
+
       });
     }
   }
@@ -192,7 +192,6 @@ class IntractiveTrans extends React.Component {
       temp.table_items[keyValue][cellValue].target = value.tgt ? value.tgt : value;
       temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt ? value.tagged_tgt : taggedValue;
     }
-    console.log(temp.tokenized_sentences[sentenceIndex],sentenceIndex)
     temp.tokenized_sentences[sentenceIndex].target = value.tgt ? value.tgt : value;
     temp.tokenized_sentences[sentenceIndex].tagged_tgt = value.tagged_tgt ? value.tagged_tgt : taggedValue;
 
@@ -205,7 +204,6 @@ class IntractiveTrans extends React.Component {
   }
 
   handleDone(token, value) {
-    console.log("value",value)
     const { APITransport } = this.props;
     const senArray = [];
     senArray.push(value);
@@ -265,19 +263,17 @@ class IntractiveTrans extends React.Component {
       }, 350);
     }
   }
-  handleAddSentence(){
-    this.setState({addSentence: true, operation_type:"merge"})
+  handleAddSentence() {
+    this.setState({ addSentence: true, operation_type: "merge" })
   }
 
- 
   handleApiMerge() {
     const { APITransport } = this.props;
-    let sen = {}
     if (this.state.operation_type === "merge" || this.state.operation_type === "split") {
-      const apiObj = new SentenceMerge(this.state.mergeSentence, this.state.startSentence,this.state.operation_type, this.state.endSentence,this.state.splitSentence );
+      const apiObj = new SentenceMerge(this.state.mergeSentence, this.state.startSentence, this.state.operation_type, this.state.endSentence, this.state.splitSentence);
       APITransport(apiObj);
     }
-    
+
 
   }
 
@@ -334,59 +330,53 @@ class IntractiveTrans extends React.Component {
   }
 
   handleSelection(selectedSentence, event) {
-    
-    if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode &&  window.getSelection().toString()) {
-      var  selectedMerge=[];
+    if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode && window.getSelection().toString()) {
       let initialIndex; let startSentence; let endIndex; let endSentence; let operation_type, selectedSplitValue;
       const startValue = selectedSentence.startNode.split("_");
       const endValue = selectedSentence.endNode.split("_");
       this.state.sentences.map((sentence, index) => {
         if (sentence._id === startValue[0]) {
           initialIndex = index;
-          sentence.tokenized_sentences.map((value,index)=>{
-            if(value.sentence_index === Number(startValue[1])){
+          sentence.tokenized_sentences.map((value, index) => {
+            if (value.sentence_index === Number(startValue[1])) {
               startSentence = value;
             }
+            return true
           })
-          
-        } 
+
+        }
         if (sentence._id === endValue[0]) {
           endIndex = index;
 
-           sentence.tokenized_sentences.map((value,index)=>{
-            if(value.sentence_index === Number(endValue[1])){
+          sentence.tokenized_sentences.map((value, index) => {
+            if (value.sentence_index === Number(endValue[1])) {
               endSentence = value;
             }
+            return true
           })
         }
-
-        
-     
+        return true
       });
 
       const mergeSentence = this.state.sentences.slice(initialIndex, endIndex + 1);
       if (startValue[0] === endValue[0] && startValue[1] === endValue[1]) {
         let selectedSplitEndIndex = window.getSelection() && window.getSelection().getRangeAt(0).endOffset
         operation_type = "split";
-        selectedSplitValue = startSentence.src.substring(0,selectedSplitEndIndex)
-        console.log(selectedSplitValue)
+        selectedSplitValue = startSentence.src.substring(0, selectedSplitEndIndex)
       } else {
         operation_type = "merge";
         selectedSplitValue = window.getSelection().toString()
       }
 
-     debugger;
-
-     console.log("sel----",this.state.selectedMergeSentence,selectedSentence)
       this.state.addSentence ?
         this.setState({
-          mergeSentence: [...this.state.mergeSentence, ...mergeSentence ],
-          selectedMergeSentence : [...this.state.selectedMergeSentence,selectedSentence],
+          mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
+          selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
           endSentence,
           openEl: true,
           contextToken: true,
           addSentence: true
-        }):
+        }) :
         this.setState({
           mergeSentence,
           selectedMergeSentence:[selectedSentence],
@@ -397,9 +387,9 @@ class IntractiveTrans extends React.Component {
           splitSentence: selectedSplitValue,
           contextToken: true
         });
-      }
     }
-  
+  }
+
 
   render() {
 
@@ -430,12 +420,12 @@ class IntractiveTrans extends React.Component {
                   style={{ width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold" }}
                 >
                   <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />
-                  {this.state.fileDetails && `${translate("common.page.label.source")  } : ${this.state.fileDetails.source_lang}`}
+                  {this.state.fileDetails && `${translate("common.page.label.source")} : ${this.state.fileDetails.source_lang}`}
                   <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
-                  {this.state.fileDetails && `${translate("common.page.label.target")  } : ${this.state.fileDetails.target_lang}`}
+                  {this.state.fileDetails && `${translate("common.page.label.target")} : ${this.state.fileDetails.target_lang}`}
                   <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
                   <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
-                    {this.state.fileDetails && `${translate("common.page.label.fileName")  } : ${this.state.fileDetails.process_name}`}
+                    {this.state.fileDetails && `${translate("common.page.label.fileName")} : ${this.state.fileDetails.process_name}`}
                   </div>
                 </Button>
               </Grid>
@@ -486,7 +476,7 @@ class IntractiveTrans extends React.Component {
                         </Typography>
                       </Toolbar>
                     </Toolbar>
-                    <div style={{ padding: "24px" }} id = "popUp">
+                    <div style={{ padding: "24px" }} id="popUp">
                       <EditorPaper
                         paperType="source"
                         sentences={this.state.sentences}
@@ -512,22 +502,22 @@ class IntractiveTrans extends React.Component {
                   </Paper>
                 </Grid>
               ) : (
-                <Grid item xs={1} sm={1} lg={1} xl={1}>
-                  <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
-                    <Toolbar
-                      onClick={event => {
-                        this.handleClick(false, 4);
-                      }}
-                      style={{ color: darkBlack, background: blueGrey50 }}
-                    >
-                      <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
+                  <Grid item xs={1} sm={1} lg={1} xl={1}>
+                    <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
+                      <Toolbar
+                        onClick={event => {
+                          this.handleClick(false, 4);
+                        }}
+                        style={{ color: darkBlack, background: blueGrey50 }}
+                      >
+                        <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
                       <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                        {translate("common.page.label.source")}
-                      </Typography>
-                    </Toolbar>
-                  </Paper>
-                </Grid>
-              )}
+                          {translate("common.page.label.source")}
+                        </Typography>
+                      </Toolbar>
+                    </Paper>
+                  </Grid>
+                )}
               <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
                 <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: "scroll" }}>
                   <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
@@ -588,7 +578,7 @@ class IntractiveTrans extends React.Component {
                 open={this.state.open}
                 autoHideDuration={3000}
                 variant="success"
-                message={this.state.token ?  `${this.state.fileDetails.process_name} saved successfully !...`: this.state.operation_type ==="merge"?"Sentence merged successfully!...":"Sentence splitted successfully!..." }
+                message={this.state.token ? `${this.state.fileDetails.process_name} saved successfully !...` : this.state.operation_type === "merge" ? "Sentence merged successfully!..." : "Sentence splitted successfully!..."}
               />
 
             }
