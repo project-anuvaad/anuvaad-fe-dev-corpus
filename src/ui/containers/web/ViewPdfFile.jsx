@@ -73,22 +73,6 @@ class PdfUpload extends React.Component {
         }
       },
       {
-        name: "source_lang",
-        label: translate("common.page.label.source"),
-        options: {
-          filter: false,
-          sort: false
-        }
-      },
-      {
-        name: "target_lang",
-        label: translate("common.page.label.target"),
-        options: {
-          filter: false,
-          sort: false
-        }
-      },
-      {
         name: "status",
         options: {
             display: 'excluded',
@@ -136,6 +120,7 @@ class PdfUpload extends React.Component {
                     return (
 
                         <div style={{ width: '120px' }}>
+                          
                             {(tableMeta.rowData[2]!== 'COMPLETED' &&  tableMeta.rowData[3]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[3] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[2]) : tableMeta.rowData[2]}
 
                         </div>
