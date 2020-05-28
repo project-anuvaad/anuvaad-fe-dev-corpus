@@ -51,7 +51,6 @@ class TextModel extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel) {
-      console.log("-----", this.props.fetchBenchmarkModel.data);
       this.setState({
         sentences: this.props.fetchBenchmarkModel.data,
         count: this.props.fetchBenchmarkModel.count
@@ -61,7 +60,6 @@ class TextModel extends React.Component {
 
   handleClick = (event, index, source) => {
     history.push(`${process.env.PUBLIC_URL}/anuvaad-editor/17`);
-    console.log(event, index, source);
   };
 
   render() {
