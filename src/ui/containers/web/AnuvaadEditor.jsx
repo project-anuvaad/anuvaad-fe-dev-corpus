@@ -57,9 +57,8 @@ class Editor1 extends React.Component {
   keyPress(e) {
     if (e.keyCode === 9) {
       const { APITransport } = this.props;
-      var start = e.target.selectionStart;
-      var end = e.target.selectionEnd;
       const api = new FetchModels(1573290229, 17, 5, 1);
+      
       APITransport(api);
       this.setState({ token: true });
     }

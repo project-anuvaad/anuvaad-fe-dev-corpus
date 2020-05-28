@@ -60,7 +60,6 @@ class DataSource extends React.Component {
   };
 
   handleFilterSubmit = filterList => () => {
-    console.log(filterList);
     clearTimeout(this.intervalID);
     const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "", "", filterList);
     this.props.APITransport(apiObj);
@@ -69,7 +68,6 @@ class DataSource extends React.Component {
 
   handleClick = rowData => {
     this.setState({download: true, fileId: rowData[4] });
-    console.log(rowData);
     const link = document.createElement("a");
     link.href = (process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org/download/") + rowData[4];
     document.body.appendChild(link);
@@ -183,7 +181,6 @@ class DataSource extends React.Component {
         <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
           <MUIDataTable title={translate("common.page.data.dataSource")} data={this.state.name} columns={columns} options={options} />
         </div>
-        {console.log("----",this.state.fileId)}
         {this.state.download && this.state.fileId !== null && (
           <a dangerouslySetInnerHTML={{ __html: ' ' }} href={`${ process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${this.state.fileId}`} />
         )}

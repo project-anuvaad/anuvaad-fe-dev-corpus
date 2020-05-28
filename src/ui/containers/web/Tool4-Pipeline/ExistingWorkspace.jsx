@@ -61,7 +61,6 @@ class ExistingWorkspace extends React.Component {
   };
 
   handleFilterSubmit = filterList => () => {
-    console.log(filterList);
     clearTimeout(this.intervalID);
     const apiObj = new FetchCompositionWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSED", "", filterList);
     this.props.APITransport(apiObj);
@@ -70,7 +69,6 @@ class ExistingWorkspace extends React.Component {
 
   handleClick = rowData => {
     this.setState({ workSpacename: rowData[0], id: rowData[1] });
-    console.log(rowData[0]);
     history.push(`${`${process.env.PUBLIC_URL}/stage4/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
   };
 

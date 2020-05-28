@@ -94,7 +94,6 @@ class ViewDocs extends Component {
     // let api = new HtmlToDoc(container.innerHTML)
     // this.props.APITransport(api)
     // var converted = htmlDocx.asBlob(container.outerHTML);
-    // console.log(converted)
   }
 
   render() {
