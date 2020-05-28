@@ -88,6 +88,24 @@ class PdfUpload extends React.Component {
         }
     },
 
+    {
+      name: "source_lang",
+      label: "Source",
+      options: {
+        filter: true,
+        sort: true
+      }
+    },
+
+    {
+      name: "target_lang",
+      label: "Target",
+      options: {
+        filter: true,
+        sort: true
+      }
+    },
+
       {
         name: "Status",
         label: translate('common.page.table.status'),
@@ -99,7 +117,7 @@ class PdfUpload extends React.Component {
             customBodyRender: (value, tableMeta, updateValue) => {
                 if (tableMeta.rowData) {
                   
-                    const result = tableMeta.rowData[3] * 1000 - (Date.now() - new Date(tableMeta.rowData[5]));
+                    const result = tableMeta.rowData[3] * 1000 - (Date.now() - new Date(tableMeta.rowData[7]));
                     return (
 
                         <div style={{ width: '120px' }}>
