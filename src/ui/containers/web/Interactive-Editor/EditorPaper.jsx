@@ -99,10 +99,6 @@ class EditorPaper extends React.Component {
                     let color = ""
                     let textColor = ""
                     if (this.props.selectedMergeSentence && Array.isArray(this.props.selectedMergeSentence) && this.props.selectedMergeSentence.length > 0) {
-<<<<<<< HEAD
-                        
-=======
->>>>>>> ba9d7ae81f8e8c7c682711090fc4ae9403575ea4
                         this.props.selectedMergeSentence.map(sentenceText => {
                             if ((sentence._id + '_' + tokenText.sentence_index === sentenceText.startNode) || (sentence._id + '_' + tokenText.sentence_index === sentenceText.endNode)) {
                                 color = "red"
