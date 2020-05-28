@@ -47,7 +47,7 @@ class IntractiveTrans extends React.Component {
       header: "",
       openDialog:'',
       footer: "",
-      selectedMergeSentence:[]
+      
     };
   }
 
@@ -79,7 +79,8 @@ class IntractiveTrans extends React.Component {
     if(prevProps.mergeSentenceApi !== this.props.mergeSentenceApi){
       this.handleSentenceApi()
       this.setState({
-        merge: true
+        merge: true,
+        selectedMergeSentence:[]
       })
     }
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
@@ -298,7 +299,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleClose = () => {
-    this.setState({openDialog: false,mergeSentence : [],selectedMergeSentence:[], })
+    this.setState({openDialog: false,mergeSentence : [],selectedMergeSentence:[] })
   };
   handleDialog(){
     this.setState({ openDialog: true });
@@ -333,7 +334,9 @@ class IntractiveTrans extends React.Component {
   }
 
   handleSelection(selectedSentence, event) {
+    
     if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode &&  window.getSelection().toString()) {
+      var  selectedMerge=[];
       let initialIndex; let startSentence; let endIndex; let endSentence; let operation_type, selectedSplitValue;
       const startValue = selectedSentence.startNode.split("_");
       const endValue = selectedSentence.endNode.split("_");
@@ -356,6 +359,9 @@ class IntractiveTrans extends React.Component {
             }
           })
         }
+
+        
+     
       });
 
       const mergeSentence = this.state.sentences.slice(initialIndex, endIndex + 1);
@@ -369,11 +375,13 @@ class IntractiveTrans extends React.Component {
         selectedSplitValue = window.getSelection().toString()
       }
 
-     console.log(this.state.selectedMergeSentence)
+     debugger;
+
+     console.log("sel----",this.state.selectedMergeSentence,selectedSentence)
       this.state.addSentence ?
         this.setState({
           mergeSentence: [...this.state.mergeSentence, ...mergeSentence ],
-          selectedMergeSentence : [...this.state.selectedMergeSentence, selectedSentence ],
+          selectedMergeSentence : [...this.state.selectedMergeSentence,selectedSentence],
           endSentence,
           openEl: true,
           contextToken: true,
@@ -381,7 +389,7 @@ class IntractiveTrans extends React.Component {
         }):
         this.setState({
           mergeSentence,
-          selectedMergeSentence:selectedSentence,
+          selectedMergeSentence:[selectedSentence],
           startSentence,
           endSentence,
           operation_type,
@@ -498,7 +506,7 @@ class IntractiveTrans extends React.Component {
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
                         handleSelection={this.handleSelection.bind(this)}
-                        selectedMergeSentence = {this.state.selectedMergeSentence}
+                        selectedMergeSentence = {this.state.addSentence ? this.state.selectedMergeSentence:[]}
                       />
                     </div>
                   </Paper>
@@ -596,13 +604,13 @@ class IntractiveTrans extends React.Component {
       closeOnClickOut: true
       
     },
-    // {
-    //   label: "Add another sentence",
-    //   onClick: this.handleAddSentence.bind(this),
-    //   closeOnClick: true,
-    //   closeOnClickOut: true
+    {
+      label: "Add another sentence",
+      onClick: this.handleAddSentence.bind(this),
+      closeOnClick: true,
+      closeOnClickOut: true
       
-    // }
+    }
   ]} />
             )}
           </div>

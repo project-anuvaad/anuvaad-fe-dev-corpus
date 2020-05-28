@@ -64,7 +64,9 @@ class Editor extends React.Component {
 
   handleApiCall() {
     const temp = this.handleSuperSave(this.state.checkedB ? this.state.target : this.state.translateText, this.state.taggedTarget);
-    if (this.props.superScriptToken && this.state.superIndex) {
+    if (this.state.checkedB) {
+      this.handleSubmit();
+    } else if (this.props.superScriptToken && this.state.superIndex) {
       this.props.handleScriptSave(this.state.translateText, this.state.superIndex);
       console.log("---",temp)
       this.props.hadleSentenceSave(false, temp);
@@ -149,7 +151,6 @@ class Editor extends React.Component {
       this.props.sentences.map((sentence, index) => {
         if (splitValue[0] === sentence._id) {
           let sentenceIndex;
-          console.log("sid-----",this.props.sentences[index].tokenized_sentences)
 
          if( sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0){
           sentence.tokenized_sentences.map((sentence,i) =>{
