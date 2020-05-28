@@ -61,7 +61,6 @@ class ExistingWorkspace extends React.Component {
   };
 
   handleFilterSubmit = filterList => () => {
-    console.log(filterList);
     clearTimeout(this.intervalID);
     const apiObj = new FetchWorkspace(this.state.rowsPerPage, this.state.page + 1, "", "At Step2", filterList);
     this.props.APITransport(apiObj);
@@ -74,7 +73,6 @@ class ExistingWorkspace extends React.Component {
       if (this.props.match.path !== "/stage2/datasource") {
         history.push(`${`${process.env.PUBLIC_URL}/sentence-extraction/`}${rowData[0]}/${rowData[1]}`);
       } else {
-        console.log("out---");
         history.push(`${`${process.env.PUBLIC_URL}/stage2/datasource/`}${rowData[0]}/${rowData[1]}`);
       }
     }
@@ -85,7 +83,6 @@ class ExistingWorkspace extends React.Component {
   };
 
   render() {
-    console.log(this.props.match.path === "/stage2/datasource");
     const columns = [
       {
         name: "title",

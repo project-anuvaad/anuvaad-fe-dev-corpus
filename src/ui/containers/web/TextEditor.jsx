@@ -29,7 +29,6 @@
 
 //   componentDidUpdate(prevProps) {
 //     if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel) {
-//       console.log("-----", this.props.fetchBenchmarkModel.data);
 //       this.setState({
 //         sentences: this.props.fetchBenchmarkModel.data,
 //         count: this.props.fetchBenchmarkModel.count
@@ -38,7 +37,6 @@
 //   }
 
 //   handleTextChange(key, event) {
-//     console.log(key, event);
 //     this.setState({
 //       [key]: event
 //     });
