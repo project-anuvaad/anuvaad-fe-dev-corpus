@@ -109,7 +109,9 @@ class EditorPaper extends React.Component {
                     }
 
                     let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : color ? color : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : '') : ""
-
+                    if(bgColor === 'yellow' || bgColor === '#4dffcf') {
+                        textColor= 'black'
+                    }
                     sentenceArray.push(<span><span
                         id={sentence._id + '_' + tokenText.sentence_index}
                         style={{
