@@ -239,7 +239,7 @@ class Editor extends React.Component {
     if (this.state.translateText) {
       res = this.handleCalc(this.state.translateText);
     }
-    const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails, true, );
+    const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails, true );
     if (this.state.source && res &&  !this.state.apiCall) {
       APITransport(apiObj);
       this.setState({apiCall:true})
