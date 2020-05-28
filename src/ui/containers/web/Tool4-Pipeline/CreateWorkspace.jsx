@@ -64,7 +64,6 @@ class CreateWorkspace extends React.Component {
       this.setState({ files: this.props.configUplaod });
 
       const configFilepath = "configFile" in this.props.configUplaod && this.props.configUplaod.configFile;
-      console.log("config", configFilepath);
       if (configFilepath) {
         const { APITransport } = this.props;
         const apiObj2 = new CompositionWorkspace(
@@ -133,7 +132,6 @@ class CreateWorkspace extends React.Component {
   };
 
   handleWorkspaceSelected(selectedWorkspaces) {
-    console.log("test-----", selectedWorkspaces);
     this.setState({
       selectedWorkspaces
     });

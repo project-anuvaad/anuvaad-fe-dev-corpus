@@ -39,7 +39,6 @@ class GraderReport extends React.Component {
   }
 
   handleClickCategoryModel = rowData => {
-    console.log("-----", rowData, rowData[1][0].category_name);
     this.setState({ categoryValue: true, categoryReport: rowData ? rowData[1] : "", title3: rowData[0] });
   };
 
@@ -48,7 +47,6 @@ class GraderReport extends React.Component {
   };
 
   handleClickModel = rowData => {
-    console.log("-----66666", rowData, rowData[1]);
     rowData[4] && this.setState({ tockenValue: true, graderRecords: rowData ? rowData[1] : "", title2: rowData[0] });
   };
 

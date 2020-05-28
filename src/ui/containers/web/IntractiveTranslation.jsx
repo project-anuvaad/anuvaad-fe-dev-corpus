@@ -140,7 +140,6 @@ class IntractiveTrans extends React.Component {
   }
 
   handleCalc(value) {
-    console.log("vallll---", value);
     const temp = value.split(" ");
     const tagged_tgt = this.state.nmtText[0].tagged_tgt.split(" ");
     const tagged_src = this.state.nmtText[0].tagged_src.split(" ");
@@ -152,7 +151,6 @@ class IntractiveTrans extends React.Component {
     temp.map(item => {
       if (item !== " ") {
         const ind = tgt.indexOf(item, resultArray.length);
-        console.log(item);
         const arr = [item, `${item},`, `${item}.`];
         let src_ind = -1;
         arr.map((el, i) => {
@@ -165,7 +163,6 @@ class IntractiveTrans extends React.Component {
         if (ind !== -1) {
           resultArray.push(tagged_tgt[ind]);
         } else if (src_ind !== -1) {
-          console.log(src_ind, index);
           if (index > 0) {
             const tem = tagged_src[src_ind];
             resultArray.push(tem.slice(0, tem.length - 1));
@@ -199,7 +196,6 @@ class IntractiveTrans extends React.Component {
     }
 
     if (!event.target.value && this.state.edit) {
-      console.log("test");
       const apiObj = new IntractiveApi(this.state.text, event.target.value, this.state.model[0]);
       this.props.APITransport(apiObj);
       this.focusDiv("blur");

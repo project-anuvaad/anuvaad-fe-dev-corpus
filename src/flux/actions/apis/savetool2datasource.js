@@ -26,7 +26,6 @@ export default class RunExperiment extends API {
   }
 
   getBody() {
-    console.log("-----",this.title,this.filepath)
     return {
         paragraph_workspace: {
         title: this.title,

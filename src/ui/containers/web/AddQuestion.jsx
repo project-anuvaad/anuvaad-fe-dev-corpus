@@ -53,8 +53,6 @@ class AddQuestion extends React.Component {
   }
 
   handleTextChange(event, i) {
-    console.log(event.target.value, i);
-
     const questionList = [...this.state.questionList];
     questionList[i].question = event.target.value;
 
@@ -82,7 +80,6 @@ class AddQuestion extends React.Component {
   }
 
   addClick() {
-    console.log(this.state.values);
     this.setState(prevState => ({ questionList: [...prevState.questionList, { question: "", type: "", status: "" }] }));
   }
 

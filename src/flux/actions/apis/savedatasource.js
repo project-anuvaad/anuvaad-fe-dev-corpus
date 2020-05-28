@@ -28,7 +28,6 @@ export default class RunExperiment extends API {
   }
 
   getBody() {
-    console.log(this.title,this.target_lang,this.selected_workspaces,this.filepath)
     return {
         mt_workspace: {
         title: this.title,
