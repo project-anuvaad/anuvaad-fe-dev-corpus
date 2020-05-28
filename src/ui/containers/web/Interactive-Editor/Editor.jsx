@@ -15,6 +15,9 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 import Dialog from "../../../components/web/common/SimpleDialog";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Fab from '@material-ui/core/Fab';
+import SaveIcon from '@material-ui/icons/Check';
+import Green from '@material-ui/core/colors/green';
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -441,7 +444,26 @@ class Editor extends React.Component {
           <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px" }}>
             {this.state.checkedB ? translate('dashbord.page.title.anuvaadModel') : "Recommended Sentence"}
           </Typography>
-          {this.state.checkedB ? this.state.apiCall ? <CircularProgress variant="indeterminate"/>:'' :
+          {this.state.checkedB ? this.state.apiCall ? <div style={{
+    position: 'relative'}}>
+          <Button
+            variant="contained"
+            color="primary"
+            
+            disabled={this.state.apiCall}
+            onClick={this.handleButtonClick}
+          >
+            Tab disabled
+          </Button>
+          <CircularProgress size={24} style={{color: '#238427',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,}}/>
+        </div>: this.state.translateText&&<Fab size="small" style={{background:'#238427',color:'white'}}>
+            <SaveIcon />
+          </Fab> :
 
             <Button size="small" color="primary" onClick={event => {
               this.setState({ tag: true, translateText: this.state.target });

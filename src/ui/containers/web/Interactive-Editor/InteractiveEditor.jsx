@@ -262,20 +262,22 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddSentence() {
-    this.setState({ addSentence: true, operation_type: "merge" });
+    this.setState({ addSentence: true, operation_type: "merge-individual" });
   }
 
   handleApiMerge() {
     const { APITransport } = this.props;
-    const totalSelectedSentence = [];
-    this.state.sentences.map(sentence => {
-      this.state.mergeSentence.map(selectedSentence => {
-        if (sentence._id === selectedSentence._id) {
-          totalSelectedSentence.push(sentence);
-        }
-      });
-    });
-    if (this.state.operation_type === "merge" || this.state.operation_type === "split") {
+    let totalSelectedSentence = this.state.mergeSentence
+    let splitArray = [];
+    
+    if(this.state.operation_type === "merge-individual" && totalSelectedSentence.length>2){
+          splitArray.push(totalSelectedSentence[0])
+          splitArray.push(totalSelectedSentence.slice(-1)[0])
+          totalSelectedSentence = splitArray
+
+          console.log(totalSelectedSentence)
+    }
+    if (this.state.operation_type === "merge" || this.state.operation_type === "split" || this.state.operation_type === "merge-individual") {
       const apiObj = new SentenceMerge(
         totalSelectedSentence,
         this.state.startSentence,
@@ -284,7 +286,9 @@ class IntractiveTrans extends React.Component {
         this.state.splitSentence
       );
       APITransport(apiObj);
+
     }
+    this.handleClose()
   }
 
   handleDialogSave() {
@@ -302,10 +306,12 @@ class IntractiveTrans extends React.Component {
       contextToken: false,
       superScript: token
     });
+    this.handleClose()
   }
 
   handleClose = () => {
-    this.setState({ openDialog: false, mergeSentence: [], selectedMergeSentence: [] });
+
+    this.setState({ openDialog: false,operation_type:'', mergeSentence: [], selectedMergeSentence: [],endSentence:'',startSentence:'' , addSentence: false, selectedMergeSentence:[]});
   };
 
   handleDialog() {
@@ -323,6 +329,7 @@ class IntractiveTrans extends React.Component {
       superScript: false,
       contextToken: false
     });
+    this.handleClose()
 
     if (next_previous) {
       this.setState({ parent: "target" });
@@ -509,7 +516,7 @@ class IntractiveTrans extends React.Component {
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
                         handleSelection={this.handleSelection.bind(this)}
-                        selectedMergeSentence={this.state.addSentence ? this.state.selectedMergeSentence : []}
+                         selectedMergeSentence={this.state.addSentence ? this.state.selectedMergeSentence:''}
                       />
                     </div>
                   </Paper>
@@ -579,6 +586,7 @@ class IntractiveTrans extends React.Component {
                     handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)}
                     submittedId={this.state.selectedSentenceId}
                     sentences={this.state.sentences}
+                    handleSelectionClose = {this.handleClose.bind(this)}
                   />
                 )}
               </Grid>
@@ -617,14 +625,15 @@ class IntractiveTrans extends React.Component {
                   contextId="popUp"
                   items={[
                     {
-                      label: this.state.operation_type === "merge" ? "Merge Sentence" : "Split Sentence",
+                      label: ((this.state.operation_type === "merge") || this.state.operation_type === ("merge-individual")) ? "Merge Sentence" : "Split Sentence",
                       onClick:
-                        this.state.operation_type === "merge" && this.state.addSentence
+                        this.state.operation_type === "merge-individual" && this.state.addSentence
                           ? this.handleDialog.bind(this)
                           : this.handleApiMerge.bind(this),
                       closeOnClick: true,
                       closeOnClickOut: true
                     },
+                    this.state.mergeSentence.length<2 &&
                     {
                       label: "Add another sentence",
                       onClick: this.handleAddSentence.bind(this),
