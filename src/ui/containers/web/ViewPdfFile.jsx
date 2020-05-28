@@ -13,6 +13,8 @@ import history from "../../../web.history";
 import FetchPdf from "../../../flux/actions/apis/fetchpdf";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import { translate } from "../../../assets/localisation";
+import Timer from "../../components/web/common/CountDown";
+import ProgressBar from "../../components/web/common/ProgressBar";
 
 class PdfUpload extends React.Component {
   constructor(props) {
@@ -33,15 +35,19 @@ class PdfUpload extends React.Component {
   }
 
   componentDidMount() {
-    const { APITransport } = this.props;
-    const apiObj = new FetchPdf();
-    APITransport(apiObj);
-    this.setState({ showLoader: true });
+    this.handleRefresh()
   }
 
   handleClick = rowData => {
     history.push(`${process.env.PUBLIC_URL}/interactive-editor/${rowData[0]}`);
   };
+
+  handleRefresh() {
+    const { APITransport } = this.props;
+    const apiObj = new FetchPdf();
+    APITransport(apiObj);
+    this.setState({ showLoader: true });
+}
 
   componentDidUpdate(prevProps) {
     if (prevProps.corp !== this.props.corp) {
@@ -69,12 +75,43 @@ class PdfUpload extends React.Component {
 
       {
         name: "status",
-        label: translate("common.page.table.status"),
         options: {
-          filter: true,
-          sort: true
+            display: 'excluded',
         }
-      },
+    },
+
+    {
+        name: "eta",
+        label: translate('viewTranslate.page.label.eta'),
+        options: {
+            display: 'excluded',
+        }
+    },
+
+      {
+        name: "Status",
+        label: translate('common.page.table.status'),
+        options: {
+            filter: true,
+            sort: false,
+            empty: true,
+
+            customBodyRender: (value, tableMeta, updateValue) => {
+                if (tableMeta.rowData) {
+                  
+                    const result = tableMeta.rowData[3] * 1000 - (Date.now() - new Date(tableMeta.rowData[5]));
+                    return (
+
+                        <div style={{ width: '120px' }}>
+                            {(tableMeta.rowData[2]!== 'COMPLETED' &&  tableMeta.rowData[3]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[3] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[2]) : tableMeta.rowData[2]}
+
+                        </div>
+                    );
+                }
+
+            }
+        }
+    },
 
       {
         name: "created_on",
