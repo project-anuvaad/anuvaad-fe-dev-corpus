@@ -24,7 +24,6 @@ import EditorPaper from "./EditorPaper";
 import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentence";
 import Snackbar from "../../../components/web/common/Snackbar";
 import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
-import Menu from "../../../components/web/common/Menu";
 import ContextMenu from 'react-context-menu';
 
 class IntractiveTrans extends React.Component {
@@ -45,7 +44,8 @@ class IntractiveTrans extends React.Component {
       superScript: false,
       token: false,
       header: "",
-      footer: ""
+      footer: "",
+      selectedMergeSentence:[]
     };
   }
 
@@ -358,10 +358,12 @@ class IntractiveTrans extends React.Component {
         operation_type = "merge";
         selectedSplitValue = window.getSelection().toString()
       }
-     
+
+     console.log(selectedSentence,this.state.selectedMergeSentence,this.state.mergeSentence)
       this.state.addSentence ?
         this.setState({
           mergeSentence: [...this.state.mergeSentence, ...mergeSentence ],
+          selectedMergeSentence : [...this.state.selectedMergeSentence, selectedSentence ],
           endSentence,
           openEl: true,
           contextToken: true,
@@ -369,6 +371,7 @@ class IntractiveTrans extends React.Component {
         }):
         this.setState({
           mergeSentence,
+          selectedMergeSentence:selectedSentence,
           startSentence,
           endSentence,
           operation_type,
@@ -485,6 +488,7 @@ class IntractiveTrans extends React.Component {
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
                         handleSelection={this.handleSelection.bind(this)}
+                        selectedMergeSentence = {this.state.selectedMergeSentence}
                       />
                     </div>
                   </Paper>
