@@ -72,7 +72,22 @@ class PdfUpload extends React.Component {
           sort: true
         }
       },
-
+      {
+        name: "source_lang",
+        label: translate("common.page.label.source"),
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
+      {
+        name: "target_lang",
+        label: translate("common.page.label.target"),
+        options: {
+          filter: false,
+          sort: false
+        }
+      },
       {
         name: "status",
         options: {
@@ -138,7 +153,7 @@ class PdfUpload extends React.Component {
         }
       },
       filterType: "checkbox",
-      onRowClick: rowData =>(rowData[2]==="COMPLETED"||rowData[2]==="TRANSLATING") && this.handleClick(rowData),
+      onRowClick: rowData =>(rowData[4]==="COMPLETED"||rowData[4]==="TRANSLATING") && this.handleClick(rowData),
       download: false,
       expandableRowsOnClick: true,
       print: false,
