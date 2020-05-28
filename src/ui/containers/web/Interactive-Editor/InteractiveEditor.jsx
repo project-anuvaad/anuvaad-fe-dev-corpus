@@ -15,6 +15,7 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import DoneIcon from "@material-ui/icons/Done";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
+import ContextMenu from "react-context-menu";
 import { translate } from "../../../../assets/localisation";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Editor from "./Editor";
@@ -24,7 +25,7 @@ import EditorPaper from "./EditorPaper";
 import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentence";
 import Snackbar from "../../../components/web/common/Snackbar";
 import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
-import ContextMenu from 'react-context-menu';
+import Dialog from "../../../components/web/common/SimpleDialog";
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -44,8 +45,8 @@ class IntractiveTrans extends React.Component {
       superScript: false,
       token: false,
       header: "",
-      footer: "",
-      selectedMergeSentence: []
+      openDialog: "",
+      footer: ""
     };
   }
 
@@ -58,8 +59,9 @@ class IntractiveTrans extends React.Component {
   }
 
   componentDidMount() {
-    this.handleSentenceApi()
+    this.handleSentenceApi();
   }
+
   handleSentenceApi() {
     const { APITransport } = this.props;
     const apiObj = new FetchDoc(this.props.match.params.fileid);
@@ -75,10 +77,11 @@ class IntractiveTrans extends React.Component {
         }, 3000);
     }
     if (prevProps.mergeSentenceApi !== this.props.mergeSentenceApi) {
-      this.handleSentenceApi()
+      this.handleSentenceApi();
       this.setState({
-        merge: true
-      })
+        merge: true,
+        selectedMergeSentence: []
+      });
     }
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
       const temp = this.props.fetchPdfSentence.data;
@@ -88,8 +91,6 @@ class IntractiveTrans extends React.Component {
       const targetSupScript = {};
       temp.map(sentence => {
         if (Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length) {
-
-
           if (!sentence.is_footer && !sentence.is_header && !sentence.is_footer_text) {
             sentenceArray.push(sentence);
           } else if (sentence.is_footer) {
@@ -163,7 +164,7 @@ class IntractiveTrans extends React.Component {
       this.setState({ open: this.state.merge });
       this.state.merge &&
         setTimeout(() => {
-          this.setState({ merge: false, open: false })
+          this.setState({ merge: false, open: false });
         }, 2000);
 
       this.setState({
@@ -173,11 +174,10 @@ class IntractiveTrans extends React.Component {
         fileDetails: this.props.fetchPdfSentence.pdf_process,
         sourceSupScripts: supScripts,
         targetSupScripts: targetSupScript,
-        clickedSentence: '',
-        selectedSentenceId: '',
+        clickedSentence: "",
+        selectedSentenceId: "",
         contextToken: false,
         addSentence: false
-
       });
     }
   }
@@ -260,18 +260,36 @@ class IntractiveTrans extends React.Component {
       }, 350);
     }
   }
+
   handleAddSentence() {
-    this.setState({ addSentence: true, operation_type: "merge" })
+    this.setState({ addSentence: true, operation_type: "merge" });
   }
 
   handleApiMerge() {
     const { APITransport } = this.props;
+    const totalSelectedSentence = [];
+    this.state.sentences.map(sentence => {
+      this.state.mergeSentence.map(selectedSentence => {
+        if (sentence._id === selectedSentence._id) {
+          totalSelectedSentence.push(sentence);
+        }
+      });
+    });
     if (this.state.operation_type === "merge" || this.state.operation_type === "split") {
-      const apiObj = new SentenceMerge(this.state.mergeSentence, this.state.startSentence, this.state.operation_type, this.state.endSentence, this.state.splitSentence);
+      const apiObj = new SentenceMerge(
+        totalSelectedSentence,
+        this.state.startSentence,
+        this.state.operation_type,
+        this.state.endSentence,
+        this.state.splitSentence
+      );
       APITransport(apiObj);
     }
+  }
 
-
+  handleDialogSave() {
+    this.handleApiMerge();
+    this.setState({ openDialog: false });
   }
 
   handleSuperScript(sentenceId, value, parent, token) {
@@ -287,8 +305,12 @@ class IntractiveTrans extends React.Component {
   }
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.setState({ openDialog: false, mergeSentence: [], selectedMergeSentence: [] });
   };
+
+  handleDialog() {
+    this.setState({ openDialog: true });
+  }
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, next_previous) {
     this.setState({
@@ -320,7 +342,12 @@ class IntractiveTrans extends React.Component {
 
   handleSelection(selectedSentence, event) {
     if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode && window.getSelection().toString()) {
-      let initialIndex; let startSentence; let endIndex; let endSentence; let operation_type, selectedSplitValue;
+      let initialIndex;
+      let startSentence;
+      let endIndex;
+      let endSentence;
+      let operation_type;
+      let selectedSplitValue;
       const startValue = selectedSentence.startNode.split("_");
       const endValue = selectedSentence.endNode.split("_");
       this.state.sentences.map((sentence, index) => {
@@ -330,9 +357,8 @@ class IntractiveTrans extends React.Component {
             if (value.sentence_index === Number(startValue[1])) {
               startSentence = value;
             }
-            return true
-          })
-
+            return true;
+          });
         }
         if (sentence._id === endValue[0]) {
           endIndex = index;
@@ -341,47 +367,45 @@ class IntractiveTrans extends React.Component {
             if (value.sentence_index === Number(endValue[1])) {
               endSentence = value;
             }
-            return true
-          })
+            return true;
+          });
         }
-        return true
+        return true;
       });
 
       const mergeSentence = this.state.sentences.slice(initialIndex, endIndex + 1);
       if (startValue[0] === endValue[0] && startValue[1] === endValue[1]) {
-        let selectedSplitEndIndex = window.getSelection() && window.getSelection().getRangeAt(0).endOffset
+        const selectedSplitEndIndex = window.getSelection() && window.getSelection().getRangeAt(0).endOffset;
         operation_type = "split";
-        selectedSplitValue = startSentence.src.substring(0, selectedSplitEndIndex)
+        selectedSplitValue = startSentence.src.substring(0, selectedSplitEndIndex);
       } else {
         operation_type = "merge";
-        selectedSplitValue = window.getSelection().toString()
+        selectedSplitValue = window.getSelection().toString();
       }
 
-      this.state.addSentence ?
-        this.setState({
-          mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
-          selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
-          endSentence,
-          openEl: true,
-          contextToken: true,
-          addSentence: true
-        }) :
-        this.setState({
-          mergeSentence,
-          selectedMergeSentence: selectedSentence,
-          startSentence,
-          endSentence,
-          operation_type,
-          openEl: true,
-          splitSentence: selectedSplitValue,
-          contextToken: true
-        });
+      this.state.addSentence
+        ? this.setState({
+            mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
+            selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
+            endSentence,
+            openEl: true,
+            contextToken: true,
+            addSentence: true
+          })
+        : this.setState({
+            mergeSentence,
+            selectedMergeSentence: [selectedSentence],
+            startSentence,
+            endSentence,
+            operation_type,
+            openEl: true,
+            splitSentence: selectedSplitValue,
+            contextToken: true
+          });
     }
   }
 
-
   render() {
-
     const { gridValue } = this.state;
     return (
       <div style={{ marginLeft: "-100px" }}>
@@ -485,28 +509,28 @@ class IntractiveTrans extends React.Component {
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
                         handleSelection={this.handleSelection.bind(this)}
-                        selectedMergeSentence={this.state.selectedMergeSentence}
+                        selectedMergeSentence={this.state.addSentence ? this.state.selectedMergeSentence : []}
                       />
                     </div>
                   </Paper>
                 </Grid>
               ) : (
-                  <Grid item xs={1} sm={1} lg={1} xl={1}>
-                    <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
-                      <Toolbar
-                        onClick={event => {
-                          this.handleClick(false, 4);
-                        }}
-                        style={{ color: darkBlack, background: blueGrey50 }}
-                      >
-                        <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
+                <Grid item xs={1} sm={1} lg={1} xl={1}>
+                  <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
+                    <Toolbar
+                      onClick={event => {
+                        this.handleClick(false, 4);
+                      }}
+                      style={{ color: darkBlack, background: blueGrey50 }}
+                    >
+                      <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
                       <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                          {translate("common.page.label.source")}
-                        </Typography>
-                      </Toolbar>
-                    </Paper>
-                  </Grid>
-                )}
+                        {translate("common.page.label.source")}
+                      </Typography>
+                    </Toolbar>
+                  </Paper>
+                </Grid>
+              )}
               <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
                 <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: "scroll" }}>
                   <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
@@ -559,37 +583,57 @@ class IntractiveTrans extends React.Component {
                 )}
               </Grid>
             </Grid>
-            {this.state.open &&
+
+            {this.state.openDialog && (
+              <Dialog
+                message="Selected sentence from different position. Do you want to merge ? "
+                handleSubmit={this.handleDialogSave.bind(this)}
+                handleClose={this.handleClose.bind(this)}
+                open
+                title="Merge"
+              />
+            )}
+            {this.state.open && (
               <Snackbar
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 open={this.state.open}
                 autoHideDuration={3000}
                 variant="success"
-                message={this.state.token ? `${this.state.fileDetails.process_name} saved successfully !...` : this.state.operation_type === "merge" ? "Sentence merged successfully!..." : "Sentence splitted successfully!..."}
+                message={
+                  this.state.token
+                    ? `${this.state.fileDetails.process_name} saved successfully !...`
+                    : this.state.operation_type === "merge"
+                    ? "Sentence merged successfully!..."
+                    : "Sentence splitted successfully!..."
+                }
               />
-
-            }
-            {window.getSelection().toString() && this.state.contextToken && this.state.startSentence && this.state.endSentence && this.state.operation_type && (
-
-              <ContextMenu
-                contextId={'popUp'}
-                items={[
-                  {
-                    label: this.state.operation_type === "merge" ? "Merge Sentence" : "Split Sentence",
-                    onClick: this.handleApiMerge.bind(this),
-                    closeOnClick: true,
-                    closeOnClickOut: true
-
-                  },
-                  // {
-                  //   label: "Add another sentence",
-                  //   onClick: this.handleAddSentence.bind(this),
-                  //   closeOnClick: true,
-                  //   closeOnClickOut: true
-
-                  // }
-                ]} />
             )}
+            {window.getSelection().toString() &&
+              this.state.contextToken &&
+              this.state.startSentence &&
+              this.state.endSentence &&
+              this.state.operation_type && (
+                <ContextMenu
+                  contextId="popUp"
+                  items={[
+                    {
+                      label: this.state.operation_type === "merge" ? "Merge Sentence" : "Split Sentence",
+                      onClick:
+                        this.state.operation_type === "merge" && this.state.addSentence
+                          ? this.handleDialog.bind(this)
+                          : this.handleApiMerge.bind(this),
+                      closeOnClick: true,
+                      closeOnClickOut: true
+                    },
+                    {
+                      label: "Add another sentence",
+                      onClick: this.handleAddSentence.bind(this),
+                      closeOnClick: true,
+                      closeOnClickOut: true
+                    }
+                  ]}
+                />
+              )}
           </div>
         )}
       </div>

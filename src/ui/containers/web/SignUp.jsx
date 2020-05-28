@@ -155,7 +155,7 @@ width=500,height=500`);
               </FormControl>
 
               <Typography style={{ marginLeft: '26%', marginBottom: '4%' }}>Already Having Account?
-                  <Link style={{ cursor: 'pointer' }} href="#" onClick={() => { { history.push("/") } }}> Log In</Link></Typography>
+                  <Link style={{ cursor: 'pointer' }} href="#" onClick={() => {  history.push("/") }}> Log In</Link></Typography>
 
               {/* </ValidatorForm> */}
               <hr style={{ height: '2px', borderwidth: '0', width: '70%', backgroundColor: ' #D8D8D8', color: '#D8D8D8', border: '0', marginTop: '2%' }} />
