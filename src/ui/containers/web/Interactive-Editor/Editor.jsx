@@ -17,7 +17,6 @@ import Dialog from "../../../components/web/common/SimpleDialog";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Fab from '@material-ui/core/Fab';
 import SaveIcon from '@material-ui/icons/Check';
-import Green from '@material-ui/core/colors/green';
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -63,9 +62,20 @@ class Editor extends React.Component {
 
 
   handleApiCall() {
+    console.log(this.state.value)
     const temp = this.handleSuperSave(this.state.checkedB ? this.state.target : this.state.translateText, this.state.taggedTarget);
     if (this.state.checkedB) {
-      this.handleSubmit();
+      this.props.handleSave(
+        this.state.target,
+        this.state.indexValue,
+        this.state.submittedId,
+        this.state.sentenceIndex,
+
+        this.state.keyValue,
+        this.state.cellValue,
+        this.handleCalc(this.state.target)
+      );
+      this.state.value !== 0 && this.handleSentence(this.state.value)
     } else if (this.props.superScriptToken && this.state.superIndex) {
       this.props.handleScriptSave(this.state.translateText, this.state.superIndex);
       this.props.hadleSentenceSave(false, temp);
@@ -86,7 +96,7 @@ class Editor extends React.Component {
 
     }
     this.setState({
-      targetDialog: this.state.checkedB ? this.state.target : this.state.translateText
+      targetDialog: this.state.checkedB ? this.state.target : this.state.translateText,value: 0,  apiToken: false
     })
   }
 
