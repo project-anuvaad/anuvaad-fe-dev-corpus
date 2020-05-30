@@ -480,7 +480,7 @@ class IntractiveTrans extends React.Component {
             <Grid container spacing={16} style={{ padding: "0 24px 0px 24px" }}>
               {!this.state.collapseToken ? (
                 <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
-                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: "scroll" }}>
+                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom:'12px' }}>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
                         {translate("common.page.label.source")}
@@ -496,7 +496,7 @@ class IntractiveTrans extends React.Component {
                         </Typography>
                       </Toolbar>
                     </Toolbar>
-                    <div style={{ padding: "24px" }} id="popUp">
+                    <div id="popUp" style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
                       <EditorPaper
                         paperType="source"
                         sentences={this.state.sentences}
@@ -539,14 +539,16 @@ class IntractiveTrans extends React.Component {
                 </Grid>
               )}
               <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
-                <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, overflowY: "scroll" }}>
+                <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom:'12px'}}>
                   <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                     <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "3%" }}>
                       {translate("common.page.label.target")}
                     </Typography>
                   </Toolbar>
-                  <div style={{ padding: "24px" }}>
+                  
+                  <div style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
                     <EditorPaper
+                      style={{overflowY:'scroll'}}
                       paperType="target"
                       sentences={this.state.sentences}
                       hoveredSentence={this.state.hoveredSentence}
