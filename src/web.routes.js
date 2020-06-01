@@ -80,6 +80,8 @@ import InteractiveEditor from "./ui/containers/web/Interactive-Editor/Interactiv
 import PdfSentence from "./ui/containers/web/PdfSentence";
 import InteractivePreview from "./ui/containers/web/Interactive-Editor/Preview"
 import { translate } from '../src/assets/localisation';
+import UpdatePassword from './ui/containers/web/UpdatePassword';
+import SetPassword from './ui/containers/web/SetPassword';
 
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader,dontShowHeader, authenticate, ...rest }) => (
   <Route
@@ -307,6 +309,22 @@ class AppRoutes extends React.Component {
               title="Sign up"
               authenticate={() => true}
               component={Signup}
+              drawer
+              dontShowHeader={true}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/forgot-password`}
+              title="Forgot Password"
+              authenticate={() => true}
+              component={UpdatePassword}
+              drawer
+              dontShowHeader={true}
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/set-password/:uid/:rid`}
+              title="Set Password"
+              authenticate={() => true}
+              component={SetPassword}
               drawer
               dontShowHeader={true}
             />
