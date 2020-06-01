@@ -87,9 +87,9 @@ class SignUp extends React.Component {
       <MuiThemeProvider theme={ThemeDefault}>
 
         <div >
-          <Grid container spacing={8}>
+          <Grid container spacing={8} >
             <Grid item xs={12} sm={4} lg={5} xl={5} >
-              <img src="Anuvaad.png" width="100%" alt=""/>
+              <img src="Anuvaad.png" width="100%" height="925px" alt=""/>
             </Grid>
             <Grid item xs={12} sm={8} lg={7} xl={7} style={{ backgroundColor: '#f1f5f7' }} >
               {/* <ValidatorForm
