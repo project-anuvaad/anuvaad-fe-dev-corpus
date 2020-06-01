@@ -313,15 +313,15 @@ class AppRoutes extends React.Component {
               dontShowHeader={true}
             />
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/update-password`}
-              title="Update Password"
+              path={`${process.env.PUBLIC_URL}/forgot-password`}
+              title="Forgot Password"
               authenticate={() => true}
               component={UpdatePassword}
               drawer
               dontShowHeader={true}
             />
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/set-password`}
+              path={`${process.env.PUBLIC_URL}/set-password/:uid/:rid`}
               title="Set Password"
               authenticate={() => true}
               component={SetPassword}
