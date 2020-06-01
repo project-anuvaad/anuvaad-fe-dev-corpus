@@ -86,7 +86,7 @@ class SignUp extends React.Component {
 
       <MuiThemeProvider theme={ThemeDefault}>
 
-        <div>
+        <div >
           <Grid container spacing={8}>
             <Grid item xs={12} sm={4} lg={5} xl={5} >
               <img src="Anuvaad.png" width="100%" alt=""/>
@@ -139,7 +139,7 @@ class SignUp extends React.Component {
                   <Link href="#" onClick={() => {
                     window.open('/Anuvaad-TnC.html', 'T&C', `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
 width=500,height=500`);
-                  }}> Privacy Policy</Link>
+                  }}> Privacy Policy</Link>  
                 </div>}
               />
               <br />
