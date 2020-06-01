@@ -14,7 +14,9 @@ import { translate } from "../../../../assets/localisation";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 import Dialog from "../../../components/web/common/SimpleDialog";
-
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Fab from '@material-ui/core/Fab';
+import SaveIcon from '@material-ui/icons/Check';
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -33,30 +35,25 @@ class Editor extends React.Component {
   }
 
   handleSuperSave(target, taggedTarget) {
-
     const splitValue = this.state.submittedId && this.state.submittedId.split("_");
 
-    console.log("splitvalue",splitValue)
     const temp = this.state.scriptSentence;
     let value = []
     if (this.props.superScriptToken) {
       this.state.scriptSentence.map((sentence, index) => {
         if (splitValue[0] === sentence._id) {
-          temp[index].tokenized_sentences.map((sentence,i) =>{
-           
-            if(sentence.sentence_index===Number(splitValue[1])){
+          temp[index].tokenized_sentences.map((sentence, i) => {
+            if (sentence.sentence_index === Number(splitValue[1])) {
               (sentence.target = `${this.state.superIndex} ${target}`);
               (sentence.tagged_tgt = taggedTarget);
             }
+            return true
           })
           value = temp[index];
         }
-        console.log(value)
         return true;
       });
     }
-
-    console.log("target value",temp);
     this.setState({ scriptSentence: temp, apiToken: true });
     return value;
 
@@ -65,12 +62,22 @@ class Editor extends React.Component {
 
 
   handleApiCall() {
+    console.log(this.state.value)
     const temp = this.handleSuperSave(this.state.checkedB ? this.state.target : this.state.translateText, this.state.taggedTarget);
     if (this.state.checkedB) {
-      this.handleSubmit();
+      this.props.handleSave(
+        this.state.target,
+        this.state.indexValue,
+        this.state.submittedId,
+        this.state.sentenceIndex,
+
+        this.state.keyValue,
+        this.state.cellValue,
+        this.handleCalc(this.state.target)
+      );
+      this.state.value !== 0 && this.handleSentence(this.state.value)
     } else if (this.props.superScriptToken && this.state.superIndex) {
       this.props.handleScriptSave(this.state.translateText, this.state.superIndex);
-      console.log("---",temp)
       this.props.hadleSentenceSave(false, temp);
       this.setState({ target: this.state.translateText })
     } else {
@@ -89,7 +96,7 @@ class Editor extends React.Component {
 
     }
     this.setState({
-      targetDialog: this.state.checkedB ? this.state.target : this.state.translateText
+      targetDialog: this.state.checkedB ? this.state.target : this.state.translateText,value: 0,  apiToken: false
     })
   }
 
@@ -153,16 +160,15 @@ class Editor extends React.Component {
       this.props.sentences.map((sentence, index) => {
         if (splitValue[0] === sentence._id) {
           let sentenceIndex;
-          console.log("sid-----",this.props.sentences[index].tokenized_sentences)
 
-         if( sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0){
-          sentence.tokenized_sentences.map((sentence,i) =>{
-           
-            if(sentence.sentence_index===Number(splitValue[1])){
+          if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0) {
+            sentence.tokenized_sentences.map((sentence, i) => {
+              if (sentence.sentence_index === Number(splitValue[1])) {
                 sentenceIndex = i;
-            }
-          })
-         }
+              }
+              return true
+            })
+          }
           if (
             (sentence.tokenized_sentences.length === 1 && sentenceIndex === 0) ||
             (sentenceIndex === 0 && value === -1) ||
@@ -200,8 +206,8 @@ class Editor extends React.Component {
               sentenceIndex,
               checkedB: true
             });
-          } else if (sentence.tokenized_sentences.length >=  sentenceIndex&& sentenceIndex >= 0) {
-            const ind =  sentenceIndex + value;
+          } else if (sentence.tokenized_sentences.length >= sentenceIndex && sentenceIndex >= 0) {
+            const ind = sentenceIndex + value;
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
             !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value === 0 ? null : true);
             if (sentence.is_table) {
@@ -246,16 +252,17 @@ class Editor extends React.Component {
     if (this.state.translateText) {
       res = this.handleCalc(this.state.translateText);
     }
-    const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails, true);
-    if (this.state.source && res) {
+    const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails, true );
+    if (this.state.source && res &&  !this.state.apiCall) {
       APITransport(apiObj);
+      this.setState({apiCall:true})
     }
   }
 
   componentDidUpdate(prevProps) {
 
     if (prevProps.sentences !== this.props.sentences) {
-      this.setState({target:''})
+      this.setState({ target: '' })
     }
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       if (this.state.apiToken) {
@@ -290,12 +297,13 @@ class Editor extends React.Component {
       this.setState({
         disable: false,
         token: false,
+        apiCall: false,
         apiToken: false,
         target: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt,
         taggedSource: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tagged_src,
         taggedTarget: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tagged_tgt
       });
-      this.focusDiv("focus");
+      // this.focusDiv("focus");
     }
     if (prevProps.clickedCell !== this.props.clickedCell) {
       this.setState({
@@ -364,8 +372,8 @@ class Editor extends React.Component {
     if (event.keyCode === 9 && this.state.checkedB) {
       if (this.state.disable && this.state.translateText) {
         const apiObj = new IntractiveApi(this.state.source, this.handleCalc(event.target.value), this.props.modelDetails, true);
-        this.props.APITransport(apiObj);
-        this.setState({ disable: false });
+        !this.state.apiCall && this.props.APITransport(apiObj);
+        this.setState({ disable: false,apiCall: true });
       } else {
         let temp;
         const prefix = this.state.target && this.state.target.split(" ");
@@ -420,10 +428,12 @@ class Editor extends React.Component {
       } else {
         const res = this.handleCalc(event.target.value);
         const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails, true);
-        this.props.APITransport(apiObj);
-        this.focusDiv("blur");
+        !this.state.apiCall && this.props.APITransport(apiObj);
+        
+        // this.focusDiv("blur");
         this.setState({
-          disable: true
+          disable: true,
+          apiCall: true,
         });
       }
     }
@@ -444,7 +454,26 @@ class Editor extends React.Component {
           <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px" }}>
             {this.state.checkedB ? translate('dashbord.page.title.anuvaadModel') : "Recommended Sentence"}
           </Typography>
-          {!this.state.checkedB &&
+          {this.state.checkedB ? this.state.apiCall ? <div style={{
+    position: 'relative'}}>
+          <Button
+            variant="contained"
+            color="primary"
+            
+            disabled={this.state.apiCall}
+            onClick={this.handleButtonClick}
+          >
+            Tab disabled
+          </Button>
+          <CircularProgress size={24} style={{color: '#238427',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,}}/>
+        </div>: this.state.translateText&&<Fab size="small" style={{background:'#238427',color:'white'}}>
+            <SaveIcon />
+          </Fab> :
 
             <Button size="small" color="primary" onClick={event => {
               this.setState({ tag: true, translateText: this.state.target });
@@ -544,7 +573,7 @@ class Editor extends React.Component {
               style={{ fontWeight: "bold", width: "100%" }}
               color="primary"
               onClick={event => {
-                 this.handleApiCall();
+                this.handleApiCall();
               }}
             >
               {" "}
@@ -558,7 +587,7 @@ class Editor extends React.Component {
                 this.props.sentences[this.props.sentences.length - 1]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken
               }
               onClick={event => {
-                 this.handleDialog(1);
+                this.handleDialog(1);
               }}
               style={{ fontWeight: "bold", width: "100%" }}
             >

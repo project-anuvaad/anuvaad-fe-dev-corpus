@@ -120,7 +120,6 @@ class UserUpdate extends React.Component {
   };
 
   handleSelectModelChange(key, event) {
-    console.log(event.target);
     this.setState({
       [key]: event.target.value
     });

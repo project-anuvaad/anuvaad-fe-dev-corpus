@@ -64,7 +64,6 @@ class BenchmarkGrade extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.match.params);
     this.setState({
       TableHeaderValues: [
         "Source Sentence",
@@ -160,13 +159,10 @@ class BenchmarkGrade extends React.Component {
   }
 
   handleChange = (name, index) => event => {
-    console.log(event.target.value, name);
     const sentence = this.state.sentences;
     sentence[index].comments = event.target.value;
     this.setState({ sentences: sentence });
     this.setState({ comments: event.target.value, sentences: sentence, tocken: true });
-
-    console.log(this.state.sentences);
   };
 
   handleStarClick(nextValue, prevValue, name) {

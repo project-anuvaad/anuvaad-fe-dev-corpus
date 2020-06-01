@@ -1,16 +1,6 @@
 import React from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Input from "@material-ui/core/Input";
-import FormControl from "@material-ui/core/FormControl";
-import { ValidatorForm } from 'react-material-ui-form-validator';
-// import {Link} from 'react-router';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -23,11 +13,7 @@ import SignupApi from "../../../flux/actions/apis/signup";
 import ActivateUser from "../../../flux/actions/apis/activate_user";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
-import TextField from '../../components/web/common/TextField';
-import Link from '@material-ui/core/Link';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Snackbar from "../../components/web/common/Snackbar";
-
 
 class Activate extends React.Component {
     constructor(props) {
@@ -35,7 +21,6 @@ class Activate extends React.Component {
         this.state = {
 
         }
-
     }
 
 
@@ -95,9 +80,8 @@ class Activate extends React.Component {
         return true
     }
 
-
     render() {
-        const { user, classes, location } = this.props;
+        const { classes } = this.props;
         return (
             <MuiThemeProvider theme={ThemeDefault}>
                 <div>

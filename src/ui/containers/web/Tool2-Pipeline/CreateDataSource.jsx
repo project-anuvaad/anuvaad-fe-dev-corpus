@@ -45,7 +45,6 @@ class CreateWorkspace extends React.Component {
       if (csvFilepath) {
         const { APITransport } = this.props;
 
-        console.log("file path---", csvFilepath);
         const apiObj2 = new SaveDataSource(this.state.workspaceName, csvFilepath);
         APITransport(apiObj2);
       }
@@ -73,7 +72,6 @@ class CreateWorkspace extends React.Component {
   };
 
   handleSubmit() {
-    console.log(this.state.workspaceName, this.state.csvName);
     if (this.state.workspaceName && this.state.csvName) {
       const { APITransport } = this.props;
 

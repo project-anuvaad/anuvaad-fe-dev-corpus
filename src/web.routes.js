@@ -197,7 +197,7 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/view-pdf`}
-
+              dontShowLoader
               title={translate('webroutes.page.title.pdfList')}
               component={ViewPdf}
               authenticate={this.authenticateUser}
