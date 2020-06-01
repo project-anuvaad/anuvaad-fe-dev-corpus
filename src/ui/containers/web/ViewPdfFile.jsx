@@ -42,12 +42,14 @@ class PdfUpload extends React.Component {
     history.push(`${process.env.PUBLIC_URL}/interactive-editor/${rowData[0]}`);
   };
 
+
   handleRefresh() {
     const { APITransport } = this.props;
     const apiObj = new FetchPdf();
     APITransport(apiObj);
     this.setState({ showLoader: true });
 }
+
 
   componentDidUpdate(prevProps) {
     if (prevProps.corp !== this.props.corp) {
@@ -121,7 +123,7 @@ class PdfUpload extends React.Component {
 
                         <div style={{ width: '120px' }}>
                           
-                            {(tableMeta.rowData[2]!== 'COMPLETED' &&  tableMeta.rowData[3]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[3] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[2]) : tableMeta.rowData[2]}
+                            {(tableMeta.rowData[2]=== 'TRANSLATING' &&  tableMeta.rowData[3]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[3] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[2]) : tableMeta.rowData[2]=== 'PROCESSING'? <ProgressBar val={result} eta={300 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar>: tableMeta.rowData[2]}
 
                         </div>
                     );
