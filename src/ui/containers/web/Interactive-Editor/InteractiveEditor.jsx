@@ -270,9 +270,12 @@ class IntractiveTrans extends React.Component {
     let totalSelectedSentence = this.state.mergeSentence
     let splitArray = [];
     
-    if(this.state.operation_type === "merge-individual" && totalSelectedSentence.length>2){
+    if(this.state.operation_type === "merge-individual"){
           splitArray.push(totalSelectedSentence[0])
-          splitArray.push(totalSelectedSentence.slice(-1)[0])
+          if(totalSelectedSentence[0]._id !== totalSelectedSentence.slice(-1)[0]._id){
+            splitArray.push(totalSelectedSentence.slice(-1)[0])
+          }
+          
           totalSelectedSentence = splitArray
 
           console.log(totalSelectedSentence)
@@ -633,7 +636,7 @@ class IntractiveTrans extends React.Component {
                       closeOnClick: true,
                       closeOnClickOut: true
                     },
-                    this.state.mergeSentence.length<2 &&
+                    this.state.mergeSentence.length<2 && this.state.operation_type === "split" && 
                     {
                       label: "Add another sentence",
                       onClick: this.handleAddSentence.bind(this),

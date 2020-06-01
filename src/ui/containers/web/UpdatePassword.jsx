@@ -80,7 +80,7 @@ class UpdatePassword extends React.Component {
                                         width: '50%', marginBottom: '2%', marginTop: '2%',
                                         backgroundColor: this.state.email ? '#1ca9c9' : 'gray', color: 'white',
                                     }} onClick={this.handleSubmit.bind(this)}>
-                                    Sign Up
+                                    Submit
                                 </Button>
                             </FormControl>
                         </Grid>
