@@ -26,10 +26,10 @@ import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentenc
 import Snackbar from "../../../components/web/common/Snackbar";
 import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
 import Dialog from "../../../components/web/common/SimpleDialog";
-import PDFViewer from 'pdf-viewer-reactjs';
-import { Document, Page,pdfjs } from 'react-pdf';
+import { Document, Page } from 'react-pdf/dist/entry.webpack';
 import CloseIcon from '@material-ui/icons/Close';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+
 class IntractiveTrans extends React.Component {
   constructor(props) {
     super(props);
@@ -223,9 +223,9 @@ class IntractiveTrans extends React.Component {
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
     if (this.state.selectedSentenceId) {
-      this.setState({ hoveredSentence: sentenceId, scrollToId: "", pageNo: pageNo, parent });
+      this.setState({ hoveredSentence: sentenceId, scrollToId: "", pageNo: pageNo? pageNo: this.state.pageNo, parent });
     } else {
-      this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, pageNo: pageNo, parent });
+      this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, pageNo: pageNo? pageNo: this.state.pageNo, parent });
     }
   }
 
@@ -235,9 +235,9 @@ class IntractiveTrans extends React.Component {
 
   handleTableHover(sentenceId, tableId, parent, pageNo) {
     if (this.state.clickedCell) {
-      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: "", pageNo: pageNo, parent });
+      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: "", pageNo: pageNo? pageNo: this.state.pageNo, parent });
     } else {
-      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, pageNo: pageNo, parent });
+      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, pageNo: pageNo? pageNo: this.state.pageNo, parent });
     }
   }
 
@@ -251,7 +251,7 @@ class IntractiveTrans extends React.Component {
       clickedSentence: value,
       selectedTableId: "",
       scrollToId: sentenceId,
-      pageNo: pageNo,
+      pageNo: pageNo? pageNo: this.state.pageNo,
       parent,
 
       superScript: false
@@ -431,7 +431,8 @@ class IntractiveTrans extends React.Component {
 
   render() {
     const { gridValue } = this.state;
-    pdfjs.GlobalWorkerOptions.workerSrc =  this.state.fileDetails && this.state.fileDetails.download_source_path && `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/download/${
+    let pagen= this.state.pageNo;
+    let url =  this.state.fileDetails && this.state.fileDetails.download_source_path && `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
       this.state.fileDetails.download_source_path ?this.state.fileDetails.download_source_path : ""
       }`;
     return (
@@ -595,9 +596,9 @@ class IntractiveTrans extends React.Component {
               </Grid>
               :
               <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom:'12px'}}>
+                <Paper elevation={2} >
                   <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                    <Typography value="" variant="h6" gutterBottom style={{ flex: 1,marginLeft: "3%" }}>
+                    <Typography value="" variant="h6" gutterBottom style={{ flex: 1,marginLeft: "10%" }}>
                       {translate("common.page.label.target")}
                     </Typography>
                     <Toolbar
@@ -612,22 +613,20 @@ class IntractiveTrans extends React.Component {
                       </Toolbar>
                   </Toolbar>
                   
-                  <div style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
-                  {/* <Document
-          file={url}
-          onLoadSuccess={this.onDocumentLoadSuccess}
-        >
-          <Page pageNumber={1} />
-        </Document> */}
+                  <div>
 
-
-{/* <Document
-          file={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/download/${
-            this.state.fileDetails.pdf_path ?this.state.fileDetails.download_source_path : ""}`}
-          onLoadSuccess={this.onDocumentLoadSuccess}
-        >
-          <Page pageNumber={1} />
-        </Document> */}
+<Document
+              file={url}
+              onLoadSuccess={this.onDocumentLoadSuccess}
+              width ={'300px'}
+            >
+              
+               <Page
+                      
+                      pageNumber={this.state.pageNo}
+                    />
+            </Document>
+    
 
                   </div>
                 </Paper>
