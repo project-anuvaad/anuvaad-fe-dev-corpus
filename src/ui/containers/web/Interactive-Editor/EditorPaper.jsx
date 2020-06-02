@@ -71,6 +71,7 @@ class EditorPaper extends React.Component {
             this.props.sentences.map(paragraph => {
                 if (paragraph._id === startNode.split('_')[0] && !paragraph.is_table) {
                     selection.startNode = startNode
+                    selection.pageNo = paragraph.page_no
                 }
                 return true
             })
@@ -81,6 +82,7 @@ class EditorPaper extends React.Component {
             this.props.sentences.map(paragraph => {
                 if (paragraph._id === endNode.split('_')[0] && !paragraph.is_table) {
                     selection.endNode = endNode
+                    selection.pageNo = paragraph.page_no
                 }
                 return true
             })
@@ -121,7 +123,7 @@ class EditorPaper extends React.Component {
                         }}
 
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
-                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
+                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
                         {tokenText.text}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                     return true
                 })
@@ -135,7 +137,7 @@ class EditorPaper extends React.Component {
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
                             backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "",
                         }}
-                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
+                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
                         {tokenText.target}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                     return true
                 })
@@ -214,8 +216,8 @@ class EditorPaper extends React.Component {
                 let bgColor = !this.props.isPreview ? ((this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId ? '#4dffcf' : "") : ""
 
                 col.push(<td id={blockId} key={blockId}
-                    onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType)}
-                    onMouseEnter={() => this.tableHoverOn(id, blockId)}
+                    onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType, pageNo)}
+                    onMouseEnter={() => this.tableHoverOn(id, blockId, pageNo)}
                     onMouseLeave={() => this.tableHoverOff()}
                     style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
                     {blockData}</td>)
@@ -226,9 +228,9 @@ class EditorPaper extends React.Component {
         return <div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<table key={id} ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}><tbody>{tableRow}</tbody></table></div>
     }
 
-    hoverOn(e) {
+    hoverOn(e, pageNo) {
         if (!this.props.isPreview) {
-            this.props.handleOnMouseEnter(e, this.props.paperType)
+            this.props.handleOnMouseEnter(e, this.props.paperType, pageNo)
         }
     }
 
@@ -238,24 +240,23 @@ class EditorPaper extends React.Component {
         }
     }
 
-    tableHoverOn(sentenceId, tableId) {
+    tableHoverOn(sentenceId, tableId, pageNo) {
         if (!this.props.isPreview) {
-            this.props.handleTableHover(sentenceId, tableId, this.props.paperType)
+            this.props.handleTableHover(sentenceId, tableId, this.props.paperType, pageNo)
         }
     }
 
     tableHoverOff() {
-
         if (!this.props.isPreview) {
             this.props.handleTableHover('', '')
         }
 
     }
 
-    handleOnClick(id) {
+    handleOnClick(id, pageNo) {
         if (!this.props.isPreview) {
             if (id) {
-                this.props.handleSentenceClick(id, true, this.props.paperType)
+                this.props.handleSentenceClick(id, true, this.props.paperType, pageNo)
             }
         }
     }

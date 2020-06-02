@@ -46,7 +46,8 @@ class IntractiveTrans extends React.Component {
       token: false,
       header: "",
       openDialog: "",
-      footer: ""
+      footer: "",
+      pageNo: 1
     };
   }
 
@@ -217,11 +218,11 @@ class IntractiveTrans extends React.Component {
     });
   }
 
-  handleOnMouseEnter(sentenceId, parent) {
+  handleOnMouseEnter(sentenceId, parent, pageNo) {
     if (this.state.selectedSentenceId) {
-      this.setState({ hoveredSentence: sentenceId, scrollToId: "", parent });
+      this.setState({ hoveredSentence: sentenceId, scrollToId: "", pageNo: pageNo, parent });
     } else {
-      this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, parent });
+      this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, pageNo: pageNo, parent });
     }
   }
 
@@ -229,11 +230,11 @@ class IntractiveTrans extends React.Component {
     this.setState({ hoveredSentence: "" });
   }
 
-  handleTableHover(sentenceId, tableId, parent) {
+  handleTableHover(sentenceId, tableId, parent, pageNo) {
     if (this.state.clickedCell) {
-      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: "", parent });
+      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: "", pageNo: pageNo, parent });
     } else {
-      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, parent });
+      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, pageNo: pageNo, parent });
     }
   }
 
@@ -241,12 +242,13 @@ class IntractiveTrans extends React.Component {
     this.setState({ hoveredSentence: "", hoveredTableId: "" });
   }
 
-  handleSenetenceOnClick(sentenceId, value, parent, next_previous) {
+  handleSenetenceOnClick(sentenceId, value, parent, pageNo, next_previous) {
     this.setState({
       selectedSentenceId: sentenceId,
       clickedSentence: value,
       selectedTableId: "",
       scrollToId: sentenceId,
+      pageNo: pageNo,
       parent,
 
       superScript: false
@@ -318,7 +320,7 @@ class IntractiveTrans extends React.Component {
     this.setState({ openDialog: true });
   }
 
-  handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, next_previous) {
+  handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, pageNo, next_previous) {
     this.setState({
       selectedSentenceId: tableId,
       selectedTableId: tableId,
@@ -327,7 +329,8 @@ class IntractiveTrans extends React.Component {
       clickedCell,
       parent,
       superScript: false,
-      contextToken: false
+      contextToken: false,
+      pageNo: pageNo
     });
     this.handleClose()
 
@@ -348,15 +351,18 @@ class IntractiveTrans extends React.Component {
   }
 
   handleSelection(selectedSentence, event) {
-    if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode && window.getSelection().toString()) {
+    if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode && selectedSentence.pageNo && window.getSelection().toString()) {
       let initialIndex;
       let startSentence;
       let endIndex;
       let endSentence;
       let operation_type;
       let selectedSplitValue;
+      let pageNo = selectedSentence.pageNo
+
       const startValue = selectedSentence.startNode.split("_");
       const endValue = selectedSentence.endNode.split("_");
+
       this.state.sentences.map((sentence, index) => {
         if (sentence._id === startValue[0]) {
           initialIndex = index;
@@ -397,7 +403,8 @@ class IntractiveTrans extends React.Component {
             endSentence,
             openEl: true,
             contextToken: true,
-            addSentence: true
+            addSentence: true,
+            pageNo: pageNo
           })
         : this.setState({
             mergeSentence,
@@ -407,7 +414,8 @@ class IntractiveTrans extends React.Component {
             operation_type,
             openEl: true,
             splitSentence: selectedSplitValue,
-            contextToken: true
+            contextToken: true,
+            pageNo: pageNo
           });
     }
   }
@@ -548,7 +556,6 @@ class IntractiveTrans extends React.Component {
                   
                   <div style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
                     <EditorPaper
-                      style={{overflowY:'scroll'}}
                       paperType="target"
                       sentences={this.state.sentences}
                       hoveredSentence={this.state.hoveredSentence}
