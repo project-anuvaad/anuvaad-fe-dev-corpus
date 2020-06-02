@@ -91,7 +91,7 @@ class PdfUpload extends React.Component {
 
     {
       name: "source_lang",
-      label: "Source",
+      label: translate('common.page.label.source'),
       options: {
         filter: true,
         sort: true
@@ -100,7 +100,7 @@ class PdfUpload extends React.Component {
 
     {
       name: "target_lang",
-      label: "Target",
+      label: translate('common.page.label.target'),
       options: {
         filter: true,
         sort: true
