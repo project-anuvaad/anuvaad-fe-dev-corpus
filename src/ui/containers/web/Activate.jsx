@@ -14,6 +14,7 @@ import ActivateUser from "../../../flux/actions/apis/activate_user";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 import Snackbar from "../../components/web/common/Snackbar";
+import { translate } from "../../../assets/localisation";
 
 class Activate extends React.Component {
     constructor(props) {
@@ -32,10 +33,10 @@ class Activate extends React.Component {
     handleSubmit() {
         if (this.handleValidation('firstName') && this.handleValidation('lastName') && this.handleValidation('email') && this.handleValidation('password') && this.handleValidation('confirmPassword')) {
             if (this.state.password !== this.state.confirmPassword) {
-                alert('Password and confirm password did not match')
+                alert(translate('common.page.alert.passwordDidNotMatch'))
             } else {
                 if (!this.state.termsAndCondition) {
-                    alert('Please accept terms and condition')
+                    alert(translate('common.page.alert.acceptTerms&Condition'))
                 } else {
                     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                     if (this.state.email.match(mailformat)) {
@@ -43,12 +44,12 @@ class Activate extends React.Component {
                         let apiObj = new SignupApi(this.state.email, this.state.firstName, this.state.lastName, this.state.password);
                         APITransport(apiObj);
                     } else {
-                        alert('Please provide valid email')
+                        alert(translate('common.page.alert.validEmail'))
                     }
                 }
             }
         } else {
-            alert('Please provide valid details')
+            alert(translate('common.page.alert.provideValidDetails'))
         }
 
     }
@@ -66,7 +67,7 @@ class Activate extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.activate !== this.props.activate) {
-            this.setState({ message: 'Account activation successfull, please relogin to continue', open: true })
+            this.setState({ message: translate('activate.page.message.accountActivatedSuccess'), open: true })
             setTimeout(()=>{
                 history.push(`${process.env.PUBLIC_URL}/logout`)
             },4000)
@@ -95,7 +96,7 @@ class Activate extends React.Component {
                             onSubmit={this.handleSubmit}
                             onError={errors => console.log(errors)}
                         > */}
-                            <Typography align='center' style={{ marginTop: '45%', marginBottom: '5%', fontSize: '25px', fontfamily: 'Arial, Helvetica, sans-serif', color: '#003366' }}>Please wait while we are activating your account, you will be redirected to login page automatically</Typography>
+                            <Typography align='center' style={{ marginTop: '45%', marginBottom: '5%', fontSize: '25px', fontfamily: 'Arial, Helvetica, sans-serif', color: '#003366' }}>{translate('activate.page.label.waitWhileWeActivateAccount')}</Typography>
                         </Grid>
                     </Grid>
                     <div className={classes.buttonsDiv} />
