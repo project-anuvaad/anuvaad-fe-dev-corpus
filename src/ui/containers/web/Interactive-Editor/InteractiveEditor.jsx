@@ -26,7 +26,10 @@ import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentenc
 import Snackbar from "../../../components/web/common/Snackbar";
 import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
 import Dialog from "../../../components/web/common/SimpleDialog";
-
+import PDFViewer from 'pdf-viewer-reactjs';
+import { Document, Page,pdfjs } from 'react-pdf';
+import CloseIcon from '@material-ui/icons/Close';
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 class IntractiveTrans extends React.Component {
   constructor(props) {
     super(props);
@@ -344,6 +347,9 @@ class IntractiveTrans extends React.Component {
     }
   }
 
+  onDocumentLoadSuccess = ({ numPages }) => {
+    this.setState({ numPages });
+  }
   handlePreview() {
     if (this.props.match.params.fileid) {
       history.push(`${process.env.PUBLIC_URL}/interactive-preview/${this.props.match.params.fileid}`);
@@ -417,6 +423,9 @@ class IntractiveTrans extends React.Component {
 
   render() {
     const { gridValue } = this.state;
+    pdfjs.GlobalWorkerOptions.workerSrc =  this.state.fileDetails && this.state.fileDetails.download_source_path && `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/download/${
+      this.state.fileDetails.download_source_path ?this.state.fileDetails.download_source_path : ""
+      }`;
     return (
       <div style={{ marginLeft: "-100px" }}>
         {this.state.sentences && (
@@ -481,23 +490,25 @@ class IntractiveTrans extends React.Component {
             </Grid>
 
             <Grid container spacing={16} style={{ padding: "0 24px 0px 24px" }}>
-              {!this.state.collapseToken ? (
-                <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
+              {!this.state.collapse ? (
+                <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
                   <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom:'12px' }}>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
                         {translate("common.page.label.source")}
                       </Typography>
+                      
+                      {!this.state.collapseToken &&
                       <Toolbar
                         onClick={event => {
-                          this.handleClick(true, 7);
+                          this.handleClick(true, 6);
                         }}
                       >
-                        <KeyboardBackspaceIcon style={{ cursor: "pointer" }} color="primary" />
+                        <PictureAsPdfIcon style={{ cursor: "pointer" }} color="primary" />
                         <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                          {translate("common.page.label.collapse")}
+                          Compare with original 
                         </Typography>
-                      </Toolbar>
+                      </Toolbar>}
                     </Toolbar>
                     <div id="popUp" style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
                       <EditorPaper
@@ -541,6 +552,7 @@ class IntractiveTrans extends React.Component {
                   </Paper>
                 </Grid>
               )}
+               {!this.state.collapseToken ? 
               <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
                 <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom:'12px'}}>
                   <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
@@ -574,8 +586,47 @@ class IntractiveTrans extends React.Component {
                   </div>
                 </Paper>
               </Grid>
+              :
+              <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
+                <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom:'12px'}}>
+                  <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+                    <Typography value="" variant="h6" gutterBottom style={{ flex: 1,marginLeft: "3%" }}>
+                      {translate("common.page.label.target")}
+                    </Typography>
+                    <Toolbar
+                        onClick={event => {
+                          this.handleClick(false, 4);
+                        }}
+                      >
+                        <CloseIcon style={{ cursor: "pointer" }} color="primary" />
+                        <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
+                          Close
+                        </Typography>
+                      </Toolbar>
+                  </Toolbar>
+                  
+                  <div style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
+                  {/* <Document
+          file={url}
+          onLoadSuccess={this.onDocumentLoadSuccess}
+        >
+          <Page pageNumber={1} />
+        </Document> */}
 
-              <Grid item xs={12} sm={12} lg={gridValue} xl={gridValue}>
+
+{/* <Document
+          file={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/download/${
+            this.state.fileDetails.pdf_path ?this.state.fileDetails.download_source_path : ""}`}
+          onLoadSuccess={this.onDocumentLoadSuccess}
+        >
+          <Page pageNumber={1} />
+        </Document> */}
+
+                  </div>
+                </Paper>
+              </Grid>}
+              {!this.state.collapseToken &&
+              <Grid item xs={12} sm={12} lg={4} xl={4}>
                 {this.state.sentences && this.state.sentences[0] && (
                   <Editor
                     handleScriptSave={this.handleScriptSave.bind(this)}
@@ -594,8 +645,9 @@ class IntractiveTrans extends React.Component {
                     handleSelectionClose = {this.handleClose.bind(this)}
                   />
                 )}
-              </Grid>
+              </Grid>}
             </Grid>
+                
 
             {this.state.openDialog && (
               <Dialog
