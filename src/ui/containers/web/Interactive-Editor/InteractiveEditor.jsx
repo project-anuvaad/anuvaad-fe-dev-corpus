@@ -29,6 +29,7 @@ import Dialog from "../../../components/web/common/SimpleDialog";
 import { Document, Page } from 'react-pdf/dist/entry.webpack';
 import CloseIcon from '@material-ui/icons/Close';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -353,6 +354,9 @@ class IntractiveTrans extends React.Component {
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState({ numPages });
   }
+  handlePageChange(value){
+    this.setState({pageNo:this.state.pageNo+value})
+  }
   handlePreview() {
     if (this.props.match.params.fileid) {
       history.push(`${process.env.PUBLIC_URL}/interactive-preview/${this.props.match.params.fileid}`);
@@ -439,6 +443,7 @@ class IntractiveTrans extends React.Component {
       <div style={{ marginLeft: "-100px" }}>
         {this.state.sentences && (
           <div>
+            {!this.state.collapseToken &&
             <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
               <Grid item xs={12} sm={6} lg={2} xl={2} className="GridFileDetails">
                 <Button
@@ -497,11 +502,11 @@ class IntractiveTrans extends React.Component {
                 </Button>
               </Grid>
             </Grid>
-
+  }
             <Grid container spacing={16} style={{ padding: "0 24px 0px 24px" }}>
               {!this.state.collapse ? (
                 <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom:'12px' }}>
+                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 180, paddingBottom:'12px' }}>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
                         {translate("common.page.label.source")}
@@ -519,7 +524,7 @@ class IntractiveTrans extends React.Component {
                         </Typography>
                       </Toolbar>}
                     </Toolbar>
-                    <div id="popUp" style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
+                    <div id="popUp" style={{ maxHeight: this.state.collapseToken ? window.innerHeight - 220: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
                       <EditorPaper
                         paperType="source"
                         sentences={this.state.sentences}
@@ -565,7 +570,7 @@ class IntractiveTrans extends React.Component {
               <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
                 <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom:'12px'}}>
                   <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                    <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "3%" }}>
+                    <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "10px" }}>
                       {translate("common.page.label.target")}
                     </Typography>
                   </Toolbar>
@@ -596,11 +601,13 @@ class IntractiveTrans extends React.Component {
               </Grid>
               :
               <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                <Paper elevation={2} >
+                <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
                   <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                    <Typography value="" variant="h6" gutterBottom style={{ flex: 1,marginLeft: "10%" }}>
-                      {translate("common.page.label.target")}
+                    <Typography value="" variant="h6" gutterBottom style={{ flex: 1,marginLeft: "3%" }}>
+                    Original PDF
+
                     </Typography>
+                    
                     <Toolbar
                         onClick={event => {
                           this.handleClick(false, 4);
@@ -613,22 +620,65 @@ class IntractiveTrans extends React.Component {
                       </Toolbar>
                   </Toolbar>
                   
-                  <div>
+                  <div style={{marginLeft:'13%'}}>
 
-<Document
+<Document 
               file={url}
               onLoadSuccess={this.onDocumentLoadSuccess}
-              width ={'300px'}
+
             >
               
                <Page
                       
+                      scale={0.975}
                       pageNumber={this.state.pageNo}
                     />
             </Document>
     
 
                   </div>
+                  <Grid container spacing={8} style={{ marginLeft: "35%" }}>
+          <Grid item xs={1} sm={1} lg={1} xl={1}>
+            <Button
+              style={{ fontWeight: "bold", width: "100%" }}
+              color="primary"
+              disabled={this.state.pageNo<=1}
+              onClick={event => {
+                this.handlePageChange(-1);
+              }}
+            >
+              {" "}
+              <ChevronLeftIcon size="large" />
+            </Button>
+          </Grid>
+          <Grid item xs={2} sm={2} lg={2} xl={2}>
+
+          <Button
+              style={{ fontWeight: "bold", width: "100%",pointerEvents: "none" }}
+              color="primary"
+              disabled={this.state.pageNo<=1}
+              
+            >
+          {this.state.numPages &&this.state.pageNo +" / "+ this.state.numPages}
+          </Button>
+          </Grid>
+          <Grid item xs={1} sm={1} lg={1} xl={1}>
+            <Button
+              color="primary"
+              disabled={
+                this.state.numPages<=this.state.pageNo
+              }
+              onClick={event => {
+                this.handlePageChange(1);
+              }}
+              style={{ fontWeight: "bold", width: "100%" }}
+            >
+              
+              <ChevronRightIcon size="large" />{" "}
+            </Button>
+          </Grid>
+        </Grid>
+                  
                 </Paper>
               </Grid>}
               {!this.state.collapseToken &&
