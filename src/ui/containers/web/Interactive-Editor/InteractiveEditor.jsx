@@ -28,8 +28,8 @@ import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
 import Dialog from "../../../components/web/common/SimpleDialog";
 import { Document, Page } from 'react-pdf/dist/entry.webpack';
 import CloseIcon from '@material-ui/icons/Close';
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
-
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';;
+ 
 class IntractiveTrans extends React.Component {
   constructor(props) {
     super(props);
@@ -355,6 +355,9 @@ class IntractiveTrans extends React.Component {
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState({ numPages });
   }
+  handlePageChange(value){
+    this.setState({pageNo:this.state.pageNo+value})
+  }
   handlePreview() {
     if (this.props.match.params.fileid) {
       history.push(`${process.env.PUBLIC_URL}/interactive-preview/${this.props.match.params.fileid}`);
@@ -433,9 +436,9 @@ class IntractiveTrans extends React.Component {
 
   render() {
     const { gridValue } = this.state;
-    let pagen = this.state.pageNo;
-    let url = this.state.fileDetails && this.state.fileDetails.download_source_path && `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
-      this.state.fileDetails.download_source_path ? this.state.fileDetails.download_source_path : ""
+    let pagen= this.state.pageNo;
+    let url =  this.state.fileDetails && this.state.fileDetails.download_source_path && `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
+      this.state.fileDetails.download_source_path ?this.state.fileDetails.download_source_path : ""
       }`;
     return (
       <div style={{ marginLeft: "-100px" }}>
@@ -503,25 +506,25 @@ class IntractiveTrans extends React.Component {
             <Grid container spacing={16} style={{ padding: "0 24px 0px 24px" }}>
               {!this.state.collapse ? (
                 <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom: '12px' }}>
+                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom:'12px' }}>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
                         {translate("common.page.label.source")}
                       </Typography>
-
+                      
                       {!this.state.collapseToken &&
-                        <Toolbar
-                          onClick={event => {
-                            this.handleClick(true, 6);
-                          }}
-                        >
-                          <PictureAsPdfIcon style={{ cursor: "pointer" }} color="primary" />
-                          <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                            Compare with original
+                      <Toolbar
+                        onClick={event => {
+                          this.handleClick(true, 6);
+                        }}
+                      >
+                        <PictureAsPdfIcon style={{ cursor: "pointer" }} color="primary" />
+                        <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
+                          Compare with original 
                         </Typography>
-                        </Toolbar>}
+                      </Toolbar>}
                     </Toolbar>
-                    <div id="popUp" style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px" }}>
+                    <div id="popUp" style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
                       <EditorPaper
                         paperType="source"
                         sentences={this.state.sentences}
@@ -541,69 +544,69 @@ class IntractiveTrans extends React.Component {
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
                         handleSelection={this.handleSelection.bind(this)}
-                        selectedMergeSentence={this.state.addSentence ? this.state.selectedMergeSentence : ''}
+                         selectedMergeSentence={this.state.addSentence ? this.state.selectedMergeSentence:''}
                       />
                     </div>
                   </Paper>
                 </Grid>
               ) : (
-                  <Grid item xs={1} sm={1} lg={1} xl={1}>
-                    <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
-                      <Toolbar
-                        onClick={event => {
-                          this.handleClick(false, 4);
-                        }}
-                        style={{ color: darkBlack, background: blueGrey50 }}
-                      >
-                        <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
+                <Grid item xs={1} sm={1} lg={1} xl={1}>
+                  <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
+                    <Toolbar
+                      onClick={event => {
+                        this.handleClick(false, 4);
+                      }}
+                      style={{ color: darkBlack, background: blueGrey50 }}
+                    >
+                      <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
                       <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                          {translate("common.page.label.source")}
-                        </Typography>
-                      </Toolbar>
-                    </Paper>
-                  </Grid>
-                )}
-              {!this.state.collapseToken ?
-                <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
-                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom: '12px' }}>
-                    <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                      <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "3%" }}>
-                        {translate("common.page.label.target")}
+                        {translate("common.page.label.source")}
                       </Typography>
                     </Toolbar>
-
-                    <div style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px" }}>
-                      <EditorPaper
-                        paperType="target"
-                        sentences={this.state.sentences}
-                        hoveredSentence={this.state.hoveredSentence}
-                        hoveredTableId={this.state.hoveredTableId}
-                        isPreview={false}
-                        header={this.state.header}
-                        footer={this.state.footer}
-                        scrollToId={this.state.scrollToId}
-                        parent={this.state.parent}
-                        handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                        handleTableHover={this.handleTableHover.bind(this)}
-                        selectedSentenceId={this.state.selectedSentenceId}
-                        selectedTableId={this.state.selectedTableId}
-                        supScripts={this.state.targetSupScripts}
-                        handleSuperScript={this.handleSuperScript.bind(this)}
-                        handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
-                        handleTableCellClick={this.handleCellOnClick.bind(this)}
-                        handleSelection={this.handleSelection.bind(this)}
-                      />
-                    </div>
                   </Paper>
                 </Grid>
-                :
-                <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                  <Paper elevation={2} >
-                    <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                      <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "10%" }}>
-                        {translate("common.page.label.target")}
-                      </Typography>
-                      <Toolbar
+              )}
+               {!this.state.collapseToken ? 
+              <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
+                <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom:'12px'}}>
+                  <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+                    <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "3%" }}>
+                      {translate("common.page.label.target")}
+                    </Typography>
+                  </Toolbar>
+                  
+                  <div style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
+                    <EditorPaper
+                      paperType="target"
+                      sentences={this.state.sentences}
+                      hoveredSentence={this.state.hoveredSentence}
+                      hoveredTableId={this.state.hoveredTableId}
+                      isPreview={false}
+                      header={this.state.header}
+                      footer={this.state.footer}
+                      scrollToId={this.state.scrollToId}
+                      parent={this.state.parent}
+                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                      handleTableHover={this.handleTableHover.bind(this)}
+                      selectedSentenceId={this.state.selectedSentenceId}
+                      selectedTableId={this.state.selectedTableId}
+                      supScripts={this.state.targetSupScripts}
+                      handleSuperScript={this.handleSuperScript.bind(this)}
+                      handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
+                      handleTableCellClick={this.handleCellOnClick.bind(this)}
+                      handleSelection={this.handleSelection.bind(this)}
+                    />
+                  </div>
+                </Paper>
+              </Grid>
+              :
+              <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
+                <Paper elevation={2} >
+                  <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+                    <Typography value="" variant="h6" gutterBottom style={{ flex: 1,marginLeft: "10%" }}>
+                      {translate("common.page.label.target")}
+                    </Typography>
+                    <Toolbar
                         onClick={event => {
                           this.handleClick(false, 4);
                         }}
@@ -613,47 +616,47 @@ class IntractiveTrans extends React.Component {
                           Close
                         </Typography>
                       </Toolbar>
-                    </Toolbar>
+                  </Toolbar>
+                  
+                  <div>
 
-                    <div>
-
-                      <Document
-                        file={url}
-                        onLoadSuccess={this.onDocumentLoadSuccess}
-                        width={'300px'}
-                      >
-
-                        <Page
-
-                          pageNumber={this.state.pageNo}
-                        />
-                      </Document>
-
-
-                    </div>
-                  </Paper>
-                </Grid>}
-              {!this.state.collapseToken &&
-                <Grid item xs={12} sm={12} lg={4} xl={4}>
-                  {this.state.sentences && this.state.sentences[0] && (
-                    <Editor
-                      handleScriptSave={this.handleScriptSave.bind(this)}
-                      superScriptToken={this.state.superScript}
-                      scriptSentence={this.state.scriptSentence}
-                      modelDetails={this.state.fileDetails.model}
-                      hadleSentenceSave={this.handleDone.bind(this)}
-                      handleSave={this.handleSave.bind(this)}
-                      clickedCell={this.state.clickedCell}
-                      selectedTableId={this.state.selectedTableId}
-                      clickedSentence={this.state.clickedSentence}
-                      handleCellOnClick={this.handleCellOnClick.bind(this)}
-                      handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)}
-                      submittedId={this.state.selectedSentenceId}
-                      sentences={this.state.sentences}
-                      handleSelectionClose={this.handleClose.bind(this)}
+<Document
+              file={url}
+              onLoadSuccess={this.onDocumentLoadSuccess}
+              width ={'300px'}
+            >
+              
+               <Page
+                      
+                      pageNumber={this.state.pageNo}
                     />
-                  )}
-                </Grid>}
+            </Document>
+    
+
+                  </div>
+                </Paper>
+              </Grid>}
+              {!this.state.collapseToken &&
+              <Grid item xs={12} sm={12} lg={4} xl={4}>
+                {this.state.sentences && this.state.sentences[0] && (
+                  <Editor
+                    handleScriptSave={this.handleScriptSave.bind(this)}
+                    superScriptToken={this.state.superScript}
+                    scriptSentence={this.state.scriptSentence}
+                    modelDetails={this.state.fileDetails.model}
+                    hadleSentenceSave={this.handleDone.bind(this)}
+                    handleSave={this.handleSave.bind(this)}
+                    clickedCell={this.state.clickedCell}
+                    selectedTableId={this.state.selectedTableId}
+                    clickedSentence={this.state.clickedSentence}
+                    handleCellOnClick={this.handleCellOnClick.bind(this)}
+                    handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)}
+                    submittedId={this.state.selectedSentenceId}
+                    sentences={this.state.sentences}
+                    handleSelectionClose = {this.handleClose.bind(this)}
+                  />
+                )}
+              </Grid>}
             </Grid>
 
             {
@@ -679,6 +682,7 @@ class IntractiveTrans extends React.Component {
                   ]}
                 /> : <div></div>
             }
+
             {this.state.openDialog && (
               <Dialog
                 message="Selected sentence from different position. Do you want to merge ? "
@@ -698,8 +702,8 @@ class IntractiveTrans extends React.Component {
                   this.state.token
                     ? `${this.state.fileDetails.process_name} saved successfully !...`
                     : this.state.operation_type === "merge"
-                      ? "Sentence merged successfully!..."
-                      : "Sentence splitted successfully!..."
+                    ? "Sentence merged successfully!..."
+                    : "Sentence splitted successfully!..."
                 }
               />
             )}
@@ -720,7 +724,7 @@ class IntractiveTrans extends React.Component {
                       closeOnClick: true,
                       closeOnClickOut: true
                     },
-                    this.state.mergeSentence.length < 2 && this.state.operation_type === "split" &&
+                    this.state.mergeSentence.length<2 && this.state.operation_type === "split" && 
                     {
                       label: "Add another sentence",
                       onClick: this.handleAddSentence.bind(this),
