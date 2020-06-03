@@ -29,6 +29,11 @@ class EditorPaper extends React.Component {
                     block: 'center',
                 })
             }
+        } else if (prevProps.scrollToPage !== this.props.scrollToPage) {
+            if (this.refs[this.props.scrollToPage + '_' + this.props.paperType])
+                this.refs[this.props.scrollToPage + '_' + this.props.paperType].scrollIntoView({
+                    behavior: 'smooth',
+                })
         }
     }
 
@@ -165,40 +170,41 @@ class EditorPaper extends React.Component {
             if (sentence.is_ner && !sentence.is_new_line) {
                 if (align === 'left') {
 
-                    return (<div>{printPageNo ? <div style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
+                    return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
                         style={{ width: '60%', float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                         onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                         {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
                 } else {
-                    return (<div>{printPageNo ? <div style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                    return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                         onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                         {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
                 }
 
             } else if (sentence.is_ner) {
-                return (<div>{printPageNo ? <div style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} style={{ textAlign: 'justify' }} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id}
+                return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} style={{ textAlign: 'justify' }} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id}
                     style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                     {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div></div>)
             } else {
-                return (<div>{printPageNo ? <div style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id}
+                return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id}
                     style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                     <div style={{ textAlign: 'justify' }}>{this.fetchTokenizedSentence(sentence, true)}{sentence.sup_array ? <sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup> : ''}<br /><br /></div></div></div>)
             }
         } else if (sentence.is_table) {
-            // return this.fetchTable(sentence._id, sentence.table_items, prevSentence, index, pageNo,noOfPage)
+            // return this.fetchTable(sentence._id, sentence.table_items, prevSentence, index, pageNo, noOfPage)
             return <CustomTable id={sentence._id} tableItems={sentence.table_items}
                 isPreview={this.props.isPreview}
                 hoveredTableId={this.props.hoveredTableId}
                 selectedTableId={this.props.selectedTableId}
-                prevSentence={prevSentence} tableIndex={index} pageNo={pageNo}
+                scrollToId={this.props.scrollToId}
+                scrollToPage={this.props.scrollToPage}
+                prevSentence={prevSentence} tableIndex={index} pageNo={pageNo} noOfPage={noOfPage}
                 paperType={this.props.paperType}
                 handleOnMouseEnter={this.tableHoverOn.bind(this)}
                 handleOnMouseLeave={this.tableHoverOff.bind(this)}
                 handleTableCellClick={this.handleTableOnCLick.bind(this)}
                 ></CustomTable>
-
         } else {
             return <div></div>
         }

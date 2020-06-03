@@ -27,7 +27,7 @@ import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
 import Dialog from "../../../components/web/common/SimpleDialog";
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import PdfPreview from "./PdfPreview";
- 
+
 class IntractiveTrans extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +49,8 @@ class IntractiveTrans extends React.Component {
       openDialog: "",
       footer: "",
       pageNo: 1,
-      isAddNewCell: false
+      isAddNewCell: false,
+      scrollToPage: ""
     };
   }
 
@@ -222,9 +223,9 @@ class IntractiveTrans extends React.Component {
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
     if (this.state.selectedSentenceId) {
-      this.setState({ hoveredSentence: sentenceId, scrollToId: "", pageNo: pageNo? pageNo: this.state.pageNo, parent });
+      this.setState({ hoveredSentence: sentenceId, scrollToId: "", pageNo: pageNo ? pageNo : this.state.pageNo, parent });
     } else {
-      this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, pageNo: pageNo? pageNo: this.state.pageNo, parent });
+      this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, pageNo: pageNo ? pageNo : this.state.pageNo, parent });
     }
   }
 
@@ -234,9 +235,9 @@ class IntractiveTrans extends React.Component {
 
   handleTableHover(sentenceId, tableId, parent, pageNo) {
     if (this.state.clickedCell) {
-      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: "", pageNo: pageNo? pageNo: this.state.pageNo, parent });
+      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: "", pageNo: pageNo ? pageNo : this.state.pageNo, parent });
     } else {
-      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, pageNo: pageNo? pageNo: this.state.pageNo, parent });
+      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, pageNo: pageNo ? pageNo : this.state.pageNo, parent });
     }
   }
 
@@ -250,7 +251,7 @@ class IntractiveTrans extends React.Component {
       clickedSentence: value,
       selectedTableId: "",
       scrollToId: sentenceId,
-      pageNo: pageNo? pageNo: this.state.pageNo,
+      pageNo: pageNo ? pageNo : this.state.pageNo,
       parent,
 
       superScript: false
@@ -273,16 +274,15 @@ class IntractiveTrans extends React.Component {
     const { APITransport } = this.props;
     let totalSelectedSentence = this.state.mergeSentence
     let splitArray = [];
-    
-    if(this.state.operation_type === "merge-individual"){
-          splitArray.push(totalSelectedSentence[0])
-          if(totalSelectedSentence[0]._id !== totalSelectedSentence.slice(-1)[0]._id){
-            splitArray.push(totalSelectedSentence.slice(-1)[0])
-          }
-          
-          totalSelectedSentence = splitArray
 
-          console.log(totalSelectedSentence)
+    if (this.state.operation_type === "merge-individual") {
+      splitArray.push(totalSelectedSentence[0])
+      if (totalSelectedSentence[0]._id !== totalSelectedSentence.slice(-1)[0]._id) {
+        splitArray.push(totalSelectedSentence.slice(-1)[0])
+      }
+
+      totalSelectedSentence = splitArray
+
     }
     if (this.state.operation_type === "merge" || this.state.operation_type === "split" || this.state.operation_type === "merge-individual") {
       const apiObj = new SentenceMerge(
@@ -318,7 +318,7 @@ class IntractiveTrans extends React.Component {
 
   handleClose = () => {
 
-    this.setState({ openDialog: false,operation_type:'', mergeSentence: [], selectedMergeSentence: [],endSentence:'',startSentence:'' , addSentence: false, selectedMergeSentence:[]});
+    this.setState({ openDialog: false, operation_type: '', mergeSentence: [], selectedMergeSentence: [], endSentence: '', startSentence: '', addSentence: false, selectedMergeSentence: [] });
   };
 
   handleDialog() {
@@ -353,9 +353,10 @@ class IntractiveTrans extends React.Component {
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState({ numPages });
   }
-  handlePageChange(value){
-    this.setState({pageNo:this.state.pageNo+value})
+  handlePageChange(value) {
+    this.setState({ pageNo: this.state.pageNo + value, scrollToPage: this.state.pageNo+value })
   }
+  
   handlePreview() {
     if (this.props.match.params.fileid) {
       history.push(`${process.env.PUBLIC_URL}/interactive-preview/${this.props.match.params.fileid}`);
@@ -410,120 +411,120 @@ class IntractiveTrans extends React.Component {
 
       this.state.addSentence
         ? this.setState({
-            mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
-            selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
-            endSentence,
-            openEl: true,
-            contextToken: true,
-            addSentence: true,
-            pageNo: pageNo
-          })
+          mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
+          selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
+          endSentence,
+          openEl: true,
+          contextToken: true,
+          addSentence: true,
+          pageNo: pageNo
+        })
         : this.setState({
-            mergeSentence,
-            selectedMergeSentence: [selectedSentence],
-            startSentence,
-            endSentence,
-            operation_type,
-            openEl: true,
-            splitSentence: selectedSplitValue,
-            contextToken: true,
-            pageNo: pageNo
-          });
+          mergeSentence,
+          selectedMergeSentence: [selectedSentence],
+          startSentence,
+          endSentence,
+          operation_type,
+          openEl: true,
+          splitSentence: selectedSplitValue,
+          contextToken: true,
+          pageNo: pageNo
+        });
     }
   }
 
   render() {
     const { gridValue } = this.state;
-    let pagen= this.state.pageNo;
-    let url =  this.state.fileDetails && this.state.fileDetails.download_source_path && `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
-      this.state.fileDetails.download_source_path ?this.state.fileDetails.download_source_path : ""
+    let pagen = this.state.pageNo;
+    let url = this.state.fileDetails && this.state.fileDetails.download_source_path && `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
+      this.state.fileDetails.download_source_path ? this.state.fileDetails.download_source_path : ""
       }`;
     return (
       <div style={{ marginLeft: "-100px" }}>
         {this.state.sentences && (
           <div>
             {!this.state.collapseToken &&
-            <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
-              <Grid item xs={12} sm={6} lg={2} xl={2} className="GridFileDetails">
-                <Button
-                  variant="outlined"
-                  size="large"
-                  onClick={event => {
-                    this.handleBack();
-                  }}
-                  color="primary"
-                  style={{ width: "100%", minWidth: "150px", fontSize: "90%", fontWeight: "bold" }}
-                >
-                  <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;{translate("common.page.title.document")}
-                </Button>
-              </Grid>
-              <Grid item xs={false} sm={6} lg={7} xl={7} className="GridFileDetails">
-                <Button
-                  variant="outlined"
-                  size="large"
-                  className="GridFileDetails"
-                  style={{ width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold" }}
-                >
-                  <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />
-                  {this.state.fileDetails && `${translate("common.page.label.source")} : ${this.state.fileDetails.source_lang}`}
-                  <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
-                  {this.state.fileDetails && `${translate("common.page.label.target")} : ${this.state.fileDetails.target_lang}`}
-                  <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
-                  <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
-                    {this.state.fileDetails && `${translate("common.page.label.fileName")} : ${this.state.fileDetails.process_name}`}
-                  </div>
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6} lg={2} xl={2}>
-                <Button
-                  variant="outlined"
-                  size="large"
-                  color="primary"
-                  style={{ width: "100%", minWidth: "110px", fontSize: "90%", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap" }}
-                  onClick={() => this.handlePreview()}
-                >
-                  <VisibilityIcon fontSize="large" />
+              <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
+                <Grid item xs={12} sm={6} lg={2} xl={2} className="GridFileDetails">
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    onClick={event => {
+                      this.handleBack();
+                    }}
+                    color="primary"
+                    style={{ width: "100%", minWidth: "150px", fontSize: "90%", fontWeight: "bold" }}
+                  >
+                    <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;{translate("common.page.title.document")}
+                  </Button>
+                </Grid>
+                <Grid item xs={false} sm={6} lg={7} xl={7} className="GridFileDetails">
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    className="GridFileDetails"
+                    style={{ width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold" }}
+                  >
+                    <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />
+                    {this.state.fileDetails && `${translate("common.page.label.source")} : ${this.state.fileDetails.source_lang}`}
+                    <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
+                    {this.state.fileDetails && `${translate("common.page.label.target")} : ${this.state.fileDetails.target_lang}`}
+                    <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
+                    <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
+                      {this.state.fileDetails && `${translate("common.page.label.fileName")} : ${this.state.fileDetails.process_name}`}
+                    </div>
+                  </Button>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={2} xl={2}>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    color="primary"
+                    style={{ width: "100%", minWidth: "110px", fontSize: "90%", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap" }}
+                    onClick={() => this.handlePreview()}
+                  >
+                    <VisibilityIcon fontSize="large" />
                   &nbsp;&nbsp;{translate("common.page.label.review/download")}
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6} lg={1} xl={1}>
-                <Button
-                  onClick={event => {
-                    this.handleDone(true, this.state.scriptSentence);
-                  }}
-                  variant="outlined"
-                  size="large"
-                  color="primary"
-                  style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold" }}
-                >
-                  <DoneIcon fontSize="large" />
+                  </Button>
+                </Grid>
+                <Grid item xs={12} sm={6} lg={1} xl={1}>
+                  <Button
+                    onClick={event => {
+                      this.handleDone(true, this.state.scriptSentence);
+                    }}
+                    variant="outlined"
+                    size="large"
+                    color="primary"
+                    style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold" }}
+                  >
+                    <DoneIcon fontSize="large" />
                   &nbsp;&nbsp;{translate("common.page.label.done")}
-                </Button>
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
-  }
+            }
             <Grid container spacing={16} style={{ padding: "0 24px 0px 24px" }}>
               {!this.state.collapse ? (
                 <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 180, paddingBottom:'12px' }}>
+                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 180, paddingBottom: '12px' }}>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
                         {translate("common.page.label.source")}
                       </Typography>
-                      
+
                       {!this.state.collapseToken &&
-                      <Toolbar
-                        onClick={event => {
-                          this.handleClick(true, 6);
-                        }}
-                      >
-                        <PictureAsPdfIcon style={{ cursor: "pointer" }} color="primary" />
-                        <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                          Compare with original 
+                        <Toolbar
+                          onClick={event => {
+                            this.handleClick(true, 6);
+                          }}
+                        >
+                          <PictureAsPdfIcon style={{ cursor: "pointer" }} color="primary" />
+                          <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
+                            Compare with original
                         </Typography>
-                      </Toolbar>}
+                        </Toolbar>}
                     </Toolbar>
-                    <div id="popUp" style={{ maxHeight: this.state.collapseToken ? window.innerHeight - 220: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
+                    <div id="popUp" style={{ maxHeight: this.state.collapseToken ? window.innerHeight - 220 : window.innerHeight - 280, overflowY: 'scroll', padding: "24px" }}>
                       <EditorPaper
                         paperType="source"
                         sentences={this.state.sentences}
@@ -534,6 +535,7 @@ class IntractiveTrans extends React.Component {
                         footer={this.state.footer}
                         handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                         scrollToId={this.state.scrollToId}
+                        scrollToPage={this.state.scrollToPage}
                         handleTableHover={this.handleTableHover.bind(this)}
                         parent={this.state.parent}
                         selectedSentenceId={this.state.selectedSentenceId}
@@ -543,88 +545,88 @@ class IntractiveTrans extends React.Component {
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
                         handleSelection={this.handleSelection.bind(this)}
-                         selectedMergeSentence={this.state.addSentence ? this.state.selectedMergeSentence:''}
+                        selectedMergeSentence={this.state.addSentence ? this.state.selectedMergeSentence : ''}
                       />
                     </div>
                   </Paper>
                 </Grid>
               ) : (
-                <Grid item xs={1} sm={1} lg={1} xl={1}>
-                  <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
-                    <Toolbar
-                      onClick={event => {
-                        this.handleClick(false, 4);
-                      }}
-                      style={{ color: darkBlack, background: blueGrey50 }}
-                    >
-                      <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
+                  <Grid item xs={1} sm={1} lg={1} xl={1}>
+                    <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
+                      <Toolbar
+                        onClick={event => {
+                          this.handleClick(false, 4);
+                        }}
+                        style={{ color: darkBlack, background: blueGrey50 }}
+                      >
+                        <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
                       <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                        {translate("common.page.label.source")}
+                          {translate("common.page.label.source")}
+                        </Typography>
+                      </Toolbar>
+                    </Paper>
+                  </Grid>
+                )}
+              {!this.state.collapseToken ?
+                <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
+                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom: '12px' }}>
+                    <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+                      <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "10px" }}>
+                        {translate("common.page.label.target")}
                       </Typography>
                     </Toolbar>
+
+                    <div style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px" }}>
+                      <EditorPaper
+                        paperType="target"
+                        sentences={this.state.sentences}
+                        hoveredSentence={this.state.hoveredSentence}
+                        hoveredTableId={this.state.hoveredTableId}
+                        isPreview={false}
+                        header={this.state.header}
+                        footer={this.state.footer}
+                        scrollToId={this.state.scrollToId}
+                        parent={this.state.parent}
+                        handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                        handleTableHover={this.handleTableHover.bind(this)}
+                        selectedSentenceId={this.state.selectedSentenceId}
+                        selectedTableId={this.state.selectedTableId}
+                        supScripts={this.state.targetSupScripts}
+                        handleSuperScript={this.handleSuperScript.bind(this)}
+                        handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
+                        handleTableCellClick={this.handleCellOnClick.bind(this)}
+                        handleSelection={this.handleSelection.bind(this)}
+                      />
+                    </div>
                   </Paper>
                 </Grid>
-              )}
-               {!this.state.collapseToken ? 
-              <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
-                <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom:'12px'}}>
-                  <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                    <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "10px" }}>
-                      {translate("common.page.label.target")}
-                    </Typography>
-                  </Toolbar>
-                  
-                  <div style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px"}}>
-                    <EditorPaper
-                      paperType="target"
-                      sentences={this.state.sentences}
-                      hoveredSentence={this.state.hoveredSentence}
-                      hoveredTableId={this.state.hoveredTableId}
-                      isPreview={false}
-                      header={this.state.header}
-                      footer={this.state.footer}
-                      scrollToId={this.state.scrollToId}
-                      parent={this.state.parent}
-                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                      handleTableHover={this.handleTableHover.bind(this)}
-                      selectedSentenceId={this.state.selectedSentenceId}
-                      selectedTableId={this.state.selectedTableId}
-                      supScripts={this.state.targetSupScripts}
-                      handleSuperScript={this.handleSuperScript.bind(this)}
-                      handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
-                      handleTableCellClick={this.handleCellOnClick.bind(this)}
-                      handleSelection={this.handleSelection.bind(this)}
-                    />
-                  </div>
-                </Paper>
-              </Grid>
-              :
-              <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                <PdfPreview pageNo={this.state.pageNo} fileDetails= {this.state.fileDetails} numPages= {this.state.numPages} onDocumentLoadSuccess ={this.onDocumentLoadSuccess.bind(this)} handlePageChange = {this.handlePageChange.bind(this)}handleClick={this.handleClick.bind(this)}/>
-              </Grid>}
+                :
+                <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
+                  <PdfPreview pageNo={this.state.pageNo} fileDetails={this.state.fileDetails} numPages={this.state.numPages} onDocumentLoadSuccess={this.onDocumentLoadSuccess.bind(this)} handlePageChange={this.handlePageChange.bind(this)} handleClick={this.handleClick.bind(this)} />
+                </Grid>}
               {!this.state.collapseToken &&
-              <Grid item xs={12} sm={12} lg={4} xl={4}>
-                {this.state.sentences && this.state.sentences[0] && (
-                  <Editor
-                    handleScriptSave={this.handleScriptSave.bind(this)}
-                    superScriptToken={this.state.superScript}
-                    scriptSentence={this.state.scriptSentence}
-                    modelDetails={this.state.fileDetails.model}
-                    hadleSentenceSave={this.handleDone.bind(this)}
-                    handleSave={this.handleSave.bind(this)}
-                    clickedCell={this.state.clickedCell}
-                    selectedTableId={this.state.selectedTableId}
-                    clickedSentence={this.state.clickedSentence}
-                    handleCellOnClick={this.handleCellOnClick.bind(this)}
-                    handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)}
-                    submittedId={this.state.selectedSentenceId}
-                    sentences={this.state.sentences}
-                    handleSelectionClose = {this.handleClose.bind(this)}
-                  />
-                )}
-              </Grid>}
+                <Grid item xs={12} sm={12} lg={4} xl={4}>
+                  {this.state.sentences && this.state.sentences[0] && (
+                    <Editor
+                      handleScriptSave={this.handleScriptSave.bind(this)}
+                      superScriptToken={this.state.superScript}
+                      scriptSentence={this.state.scriptSentence}
+                      modelDetails={this.state.fileDetails.model}
+                      hadleSentenceSave={this.handleDone.bind(this)}
+                      handleSave={this.handleSave.bind(this)}
+                      clickedCell={this.state.clickedCell}
+                      selectedTableId={this.state.selectedTableId}
+                      clickedSentence={this.state.clickedSentence}
+                      handleCellOnClick={this.handleCellOnClick.bind(this)}
+                      handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)}
+                      submittedId={this.state.selectedSentenceId}
+                      sentences={this.state.sentences}
+                      handleSelectionClose={this.handleClose.bind(this)}
+                    />
+                  )}
+                </Grid>}
             </Grid>
-                
+
             {
               this.state.isAddNewCell ?
                 <ContextMenu
@@ -668,8 +670,8 @@ class IntractiveTrans extends React.Component {
                   this.state.token
                     ? `${this.state.fileDetails.process_name} saved successfully !...`
                     : this.state.operation_type === "merge"
-                    ? "Sentence merged successfully!..."
-                    : "Sentence splitted successfully!..."
+                      ? "Sentence merged successfully!..."
+                      : "Sentence splitted successfully!..."
                 }
               />
             )}
@@ -690,7 +692,7 @@ class IntractiveTrans extends React.Component {
                       closeOnClick: true,
                       closeOnClickOut: true
                     },
-                    this.state.mergeSentence.length<2 && this.state.operation_type === "split" && 
+                    this.state.mergeSentence.length < 2 && this.state.operation_type === "split" &&
                     {
                       label: "Add another sentence",
                       onClick: this.handleAddSentence.bind(this),
