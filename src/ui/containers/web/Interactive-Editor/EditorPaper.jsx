@@ -2,6 +2,7 @@ import React from "react";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import CustomTable from '../../../components/web/common/CustomTable'
 
 const styles = {
     paperHeader: {
@@ -52,7 +53,7 @@ class EditorPaper extends React.Component {
         let selection = {}
         var activeEl = document.activeElement;
         var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
-        
+
         if ((activeElTagName === "textarea") || (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) && (typeof activeEl.selectionStart === "number")) {
             text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
         } else if (window.getSelection) {
@@ -111,8 +112,8 @@ class EditorPaper extends React.Component {
                     }
 
                     let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : color ? color : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : '') : ""
-                    if(bgColor === 'yellow' || bgColor === '#4dffcf') {
-                        textColor= 'black'
+                    if (bgColor === 'yellow' || bgColor === '#4dffcf') {
+                        textColor = 'black'
                     }
                     sentenceArray.push(<span><span
                         id={sentence._id + '_' + tokenText.sentence_index}
@@ -154,39 +155,49 @@ class EditorPaper extends React.Component {
         if (!sentence.is_footer && sentence.text) {
             let printPageNo = false
             let isFirst = false
-            if(index === 0) {
+            if (index === 0) {
                 printPageNo = true
                 isFirst = true
-            } else if ( prevSentence && sentence.page_no !== prevSentence.page_no) {
+            } else if (prevSentence && sentence.page_no !== prevSentence.page_no) {
                 printPageNo = true
             }
 
             if (sentence.is_ner && !sentence.is_new_line) {
                 if (align === 'left') {
 
-                    return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
+                    return (<div>{printPageNo ? <div style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
                         style={{ width: '60%', float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                         onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                         {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
                 } else {
-                    return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                    return (<div>{printPageNo ? <div style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                         onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                         {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
                 }
 
             } else if (sentence.is_ner) {
-                return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} style={{ textAlign: 'justify' }} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id}
+                return (<div>{printPageNo ? <div style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} style={{ textAlign: 'justify' }} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id}
                     style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                     {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div></div>)
             } else {
-                return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id}
+                return (<div>{printPageNo ? <div style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id}
                     style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                     <div style={{ textAlign: 'justify' }}>{this.fetchTokenizedSentence(sentence, true)}{sentence.sup_array ? <sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup> : ''}<br /><br /></div></div></div>)
             }
         } else if (sentence.is_table) {
-            return this.fetchTable(sentence._id, sentence.table_items, prevSentence, index, pageNo,noOfPage)
+            // return this.fetchTable(sentence._id, sentence.table_items, prevSentence, index, pageNo,noOfPage)
+            return <CustomTable id={sentence._id} tableItems={sentence.table_items}
+                isPreview={this.props.isPreview}
+                hoveredTableId={this.props.hoveredTableId}
+                selectedTableId={this.props.selectedTableId}
+                prevSentence={prevSentence} tableIndex={index} pageNo={pageNo}
+                paperType={this.props.paperType}
+                handleOnMouseEnter={this.tableHoverOn.bind(this)}
+                handleOnMouseLeave={this.tableHoverOff.bind(this)}
+                handleTableCellClick={this.handleTableOnCLick.bind(this)}
+                ></CustomTable>
 
         } else {
             return <div></div>
@@ -194,13 +205,13 @@ class EditorPaper extends React.Component {
 
     }
 
-    fetchTable(id, sentences, prevSentence, tableIndex, pageNo,noOfPage) {
+    fetchTable(id, sentences, prevSentence, tableIndex, pageNo, noOfPage) {
         let tableRow = []
         let index = 0
         let printPageNo = false
         let isFirst = false
 
-        if(tableIndex === 0){
+        if (tableIndex === 0) {
             printPageNo = true
             isFirst = true
         } else if (prevSentence && sentences[0][0].page_no !== prevSentence.page_no) {
@@ -225,7 +236,7 @@ class EditorPaper extends React.Component {
             tableRow.push(<tr key={index}>{col}</tr>)
             index++
         }
-        return <div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<table key={id} ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}><tbody>{tableRow}</tbody></table></div>
+        return <div>{printPageNo ? <div style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<table key={id} ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}><tbody>{tableRow}</tbody></table></div>
     }
 
     hoverOn(e, pageNo) {
@@ -261,6 +272,10 @@ class EditorPaper extends React.Component {
         }
     }
 
+    handleTableOnCLick(id, blockId, clisckedCell, value, parent, pageNo, next_previous) {
+        this.props.handleTableCellClick(id, blockId, clisckedCell, value, parent, pageNo, next_previous)
+    }
+
     render() {
         const { sentences, header, footer } = this.props;
         return (
@@ -278,7 +293,7 @@ class EditorPaper extends React.Component {
                 </div> : <div></div>}
                 <div style={{ paddingLeft: '20px' }}>
                     {sentences && Array.isArray(sentences) && sentences.length > 0 && sentences.map((sentence, index) => {
-                        return this.fetchSentence(sentence, sentences[index-1], index, sentences[sentences.length-1].page_no)
+                        return this.fetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no)
                     })}
                 </div>
                 {footer ?
