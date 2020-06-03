@@ -26,11 +26,9 @@ import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentenc
 import Snackbar from "../../../components/web/common/Snackbar";
 import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
 import Dialog from "../../../components/web/common/SimpleDialog";
-import { Document, Page } from 'react-pdf/dist/entry.webpack';
-import CloseIcon from '@material-ui/icons/Close';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-
+import PdfPreview from "./PdfPreview";
+ 
 class IntractiveTrans extends React.Component {
   constructor(props) {
     super(props);
@@ -601,85 +599,7 @@ class IntractiveTrans extends React.Component {
               </Grid>
               :
               <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
-                  <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                    <Typography value="" variant="h6" gutterBottom style={{ flex: 1,marginLeft: "3%" }}>
-                    Original PDF
-
-                    </Typography>
-                    
-                    <Toolbar
-                        onClick={event => {
-                          this.handleClick(false, 4);
-                        }}
-                      >
-                        <CloseIcon style={{ cursor: "pointer" }} color="primary" />
-                        <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                          Close
-                        </Typography>
-                      </Toolbar>
-                  </Toolbar>
-                  
-                  <div style={{marginLeft:'13%'}}>
-
-<Document 
-              file={url}
-              onLoadSuccess={this.onDocumentLoadSuccess}
-
-            >
-              
-               <Page
-                      
-                      scale={0.975}
-                      pageNumber={this.state.pageNo}
-                    />
-            </Document>
-    
-
-                  </div>
-                  <Grid container spacing={8} style={{ marginLeft: "35%" }}>
-          <Grid item xs={1} sm={1} lg={1} xl={1}>
-            <Button
-              style={{ fontWeight: "bold", width: "100%" }}
-              color="primary"
-              disabled={this.state.pageNo<=1}
-              onClick={event => {
-                this.handlePageChange(-1);
-              }}
-            >
-              {" "}
-              <ChevronLeftIcon size="large" />
-            </Button>
-          </Grid>
-          <Grid item xs={2} sm={2} lg={2} xl={2}>
-
-          <Button
-              style={{ fontWeight: "bold", width: "100%",pointerEvents: "none" }}
-              color="primary"
-              disabled={this.state.pageNo<=1}
-              
-            >
-          {this.state.numPages &&this.state.pageNo +" / "+ this.state.numPages}
-          </Button>
-          </Grid>
-          <Grid item xs={1} sm={1} lg={1} xl={1}>
-            <Button
-              color="primary"
-              disabled={
-                this.state.numPages<=this.state.pageNo
-              }
-              onClick={event => {
-                this.handlePageChange(1);
-              }}
-              style={{ fontWeight: "bold", width: "100%" }}
-            >
-              
-              <ChevronRightIcon size="large" />{" "}
-            </Button>
-          </Grid>
-        </Grid>
-                  
-                </Paper>
+                <PdfPreview pageNo={this.state.pageNo} fileDetails= {this.state.fileDetails} numPages= {this.state.numPages} onDocumentLoadSuccess ={this.onDocumentLoadSuccess.bind(this)} handlePageChange = {this.handlePageChange.bind(this)}handleClick={this.handleClick.bind(this)}/>
               </Grid>}
               {!this.state.collapseToken &&
               <Grid item xs={12} sm={12} lg={4} xl={4}>
