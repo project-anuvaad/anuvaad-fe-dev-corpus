@@ -12,7 +12,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Toolbar from "@material-ui/core/Toolbar";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import DoneIcon from "@material-ui/icons/Done";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 import ContextMenu from "react-context-menu";
