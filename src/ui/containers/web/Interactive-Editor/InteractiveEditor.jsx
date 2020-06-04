@@ -12,7 +12,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Toolbar from "@material-ui/core/Toolbar";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import DoneIcon from "@material-ui/icons/Done";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 import ContextMenu from "react-context-menu";
@@ -51,7 +50,9 @@ class IntractiveTrans extends React.Component {
       header: "",
       openDialog: "",
       footer: "",
-      pageNo: 1
+      pageNo: 1,
+      isAddNewCell: false,
+      scrollToPage: ""
     };
   }
 
@@ -283,18 +284,17 @@ class IntractiveTrans extends React.Component {
 
   handleApiMerge() {
     const { APITransport } = this.props;
-    let totalSelectedSentence = this.state.mergeSentence;
-    const splitArray = [];
+    let totalSelectedSentence = this.state.mergeSentence
+    let splitArray = [];
 
     if (this.state.operation_type === "merge-individual") {
-      splitArray.push(totalSelectedSentence[0]);
+      splitArray.push(totalSelectedSentence[0])
       if (totalSelectedSentence[0]._id !== totalSelectedSentence.slice(-1)[0]._id) {
-        splitArray.push(totalSelectedSentence.slice(-1)[0]);
+        splitArray.push(totalSelectedSentence.slice(-1)[0])
       }
 
-      totalSelectedSentence = splitArray;
+      totalSelectedSentence = splitArray
 
-      console.log(totalSelectedSentence);
     }
     if (this.state.operation_type === "merge" || this.state.operation_type === "split" || this.state.operation_type === "merge-individual") {
       const apiObj = new SentenceMerge(
@@ -328,16 +328,8 @@ class IntractiveTrans extends React.Component {
   }
 
   handleClose = () => {
-    this.setState({
-      openDialog: false,
-      operation_type: "",
-      mergeSentence: [],
-      selectedMergeSentence: [],
-      endSentence: "",
-      startSentence: "",
-      addSentence: false,
-      selectedMergeSentence: []
-    });
+
+    this.setState({ openDialog: false, operation_type: '', mergeSentence: [], selectedMergeSentence: [], endSentence: '', startSentence: '', addSentence: false, selectedMergeSentence: [] });
   };
 
   handleDialog() {
@@ -355,7 +347,8 @@ class IntractiveTrans extends React.Component {
       superScript: false,
       contextToken: false,
       pageNo,
-      selectedSourceId: ""
+      selectedSourceId: "",
+      isAddNewCell: true
     });
     this.handleClose();
 
@@ -376,7 +369,10 @@ class IntractiveTrans extends React.Component {
   handlePageChange(value) {
     this.setState({ pageNo: this.state.pageNo + value });
   }
-
+  handlePageChange(value) {
+    this.setState({ pageNo: this.state.pageNo + value, scrollToPage: this.state.pageNo+value })
+  }
+  
   handlePreview() {
     if (this.props.match.params.fileid) {
       history.push(`${process.env.PUBLIC_URL}/interactive-preview/${this.props.match.params.fileid}`);
@@ -608,6 +604,7 @@ class IntractiveTrans extends React.Component {
                         footer={this.state.footer}
                         handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                         scrollToId={this.state.scrollToId}
+                        scrollToPage={this.state.scrollToPage}
                         handleTableHover={this.handleTableHover.bind(this)}
                         parent={this.state.parent}
                         selectedSentenceId={this.state.selectedSentenceId}
@@ -628,22 +625,23 @@ class IntractiveTrans extends React.Component {
                   </Paper>
                 </Grid>
               ) : (
-                <Grid item xs={1} sm={1} lg={1} xl={1}>
-                  <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
-                    <Toolbar
-                      onClick={event => {
-                        this.handleClick(false, 4);
-                      }}
-                      style={{ color: darkBlack, background: blueGrey50 }}
-                    >
-                      <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
+                  <Grid item xs={1} sm={1} lg={1} xl={1}>
+                    <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
+                      <Toolbar
+                        onClick={event => {
+                          this.handleClick(false, 4);
+                        }}
+                        style={{ color: darkBlack, background: blueGrey50 }}
+                      >
+                        <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
                       <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                        {translate("common.page.label.source")}
-                      </Typography>
-                    </Toolbar>
-                  </Paper>
-                </Grid>
-              )}
+                          {translate("common.page.label.source")}
+                        </Typography>
+                      </Toolbar>
+                    </Paper>
+                  </Grid>
+                )}
+              
               {!this.state.collapseToken ? (
                 <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
                   <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom: "12px" }}>
@@ -709,9 +707,32 @@ class IntractiveTrans extends React.Component {
                       handleSelectionClose={this.handleClose.bind(this)}
                     />
                   )}
-                </Grid>
-              )}
+                </Grid>)}
             </Grid>
+
+            {
+              this.state.isAddNewCell ?
+                <ContextMenu
+                  contextId="popUp"
+                  items={[
+                    {
+                      label: "Add new row",
+                      onClick:
+                        this.state.operation_type === "merge-individual" && this.state.addSentence
+                          ? this.handleDialog.bind(this)
+                          : this.handleApiMerge.bind(this),
+                      closeOnClick: true,
+                      closeOnClickOut: true
+                    },
+                    {
+                      label: "Add new column",
+                      onClick: this.handleAddSentence.bind(this),
+                      closeOnClick: true,
+                      closeOnClickOut: true
+                    }
+                  ]}
+                /> : <div></div>
+            }
 
             {this.state.openDialog && (
               <Dialog
@@ -732,8 +753,8 @@ class IntractiveTrans extends React.Component {
                   this.state.token
                     ? `${this.state.fileDetails.process_name} saved successfully !...`
                     : this.state.operation_type === "merge"
-                    ? "Sentence merged successfully!..."
-                    : "Sentence splitted successfully!..."
+                      ? "Sentence merged successfully!..."
+                      : "Sentence splitted successfully!..."
                 }
               />
             )}
