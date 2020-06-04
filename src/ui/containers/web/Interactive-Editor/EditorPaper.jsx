@@ -2,7 +2,7 @@ import React from "react";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-
+import ContentEditable from 'react-contenteditable';
 const styles = {
     paperHeader: {
         color: darkBlack,
@@ -11,8 +11,14 @@ const styles = {
 
 };
 
-class EditorPaper extends React.Component {
 
+class EditorPaper extends React.Component {
+    constructor(props) {
+        super(props);
+        this.textInput = React.createRef();
+        this.state = {
+          html:''}}
+    
     componentDidUpdate(prevProps) {
         if (prevProps.scrollToId !== this.props.scrollToId) {
             let sid = this.props.scrollToId.split('_')[0]
@@ -114,7 +120,7 @@ class EditorPaper extends React.Component {
                     if(bgColor === 'yellow' || bgColor === '#4dffcf') {
                         textColor= 'black'
                     }
-                    sentenceArray.push(<span><span
+                    sentenceArray.push(     <span> <span
                         id={sentence._id + '_' + tokenText.sentence_index}
                         style={{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
@@ -123,8 +129,15 @@ class EditorPaper extends React.Component {
                         }}
 
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
-                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
-                        {tokenText.text}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
+                        key={sentence._id + '_' + tokenText.sentence_index} onDoubleClick={()=>this.props.handleonDoubleClick(sentence._id + '_' + tokenText.sentence_index, tokenText.text )} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
+                        {this.props.selectedSourceId === sentence._id + '_' + tokenText.sentence_index ? <ContentEditable
+        html={this.props.selectedSourceText}
+        disabled={false}
+        onBlur={this.props.handleCheck}
+        onChange={this.props.handleSourceChange} 
+        style={{ border: "1px dashed #aaa",
+            padding: "5px"}}
+      />: tokenText.text}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                     return true
                 })
                 return sentenceArray
@@ -252,6 +265,8 @@ class EditorPaper extends React.Component {
         }
 
     }
+   
+    
 
     handleOnClick(id, pageNo) {
         if (!this.props.isPreview) {

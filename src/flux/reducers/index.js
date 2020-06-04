@@ -61,7 +61,7 @@ import signup from './signup';
 import forgotpassword from './forgotpassword';
 import setpassword from './setpassword';
 import activate from './activate';
-
+import updateSource from './interactivesourceupdate';
 export default {
     login,
     automl,
@@ -125,5 +125,6 @@ export default {
     signup,
     forgotpassword,
     setpassword,
-    activate
+    activate,
+    updateSource
 };
