@@ -15,17 +15,19 @@ import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import DoneIcon from "@material-ui/icons/Done";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 import ContextMenu from "react-context-menu";
+import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
+import htmlToText from "html-to-text";
 import { translate } from "../../../../assets/localisation";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Editor from "./Editor";
 import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
+import InteractiveSourceUpdate from "../../../../flux/actions/apis/interactivesourceupdate";
 import history from "../../../../web.history";
 import EditorPaper from "./EditorPaper";
 import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentence";
 import Snackbar from "../../../components/web/common/Snackbar";
 import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
 import Dialog from "../../../components/web/common/SimpleDialog";
-import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
 import PdfPreview from "./PdfPreview";
 
 class IntractiveTrans extends React.Component {
@@ -79,6 +81,10 @@ class IntractiveTrans extends React.Component {
         setTimeout(() => {
           this.handleBack();
         }, 3000);
+    }
+    if(prevProps.updateSource!==this.props.updateSource){
+      this.handleSentenceApi();
+      this.setState({selectedSourceCheckText:"",selectedSourceText:'',selectedSourceId:''})
     }
     if (prevProps.mergeSentenceApi !== this.props.mergeSentenceApi) {
       this.handleSentenceApi();
@@ -223,9 +229,9 @@ class IntractiveTrans extends React.Component {
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
     if (this.state.selectedSentenceId) {
-      this.setState({ hoveredSentence: sentenceId, scrollToId: "", pageNo: pageNo ? pageNo : this.state.pageNo, parent });
+      this.setState({ hoveredSentence: sentenceId, scrollToId: "", pageNo: pageNo || this.state.pageNo, parent });
     } else {
-      this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, pageNo: pageNo ? pageNo : this.state.pageNo, parent });
+      this.setState({ hoveredSentence: sentenceId, scrollToId: sentenceId, pageNo: pageNo || this.state.pageNo, parent });
     }
   }
 
@@ -235,9 +241,15 @@ class IntractiveTrans extends React.Component {
 
   handleTableHover(sentenceId, tableId, parent, pageNo) {
     if (this.state.clickedCell) {
-      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: "", pageNo: pageNo ? pageNo : this.state.pageNo, parent });
+      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: "", pageNo: pageNo || this.state.pageNo, parent });
     } else {
-      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: sentenceId, pageNo: pageNo ? pageNo : this.state.pageNo, parent });
+      this.setState({
+        hoveredSentence: sentenceId,
+        hoveredTableId: tableId,
+        scrollToId: sentenceId,
+        pageNo: pageNo || this.state.pageNo,
+        parent
+      });
     }
   }
 
@@ -251,7 +263,7 @@ class IntractiveTrans extends React.Component {
       clickedSentence: value,
       selectedTableId: "",
       scrollToId: sentenceId,
-      pageNo: pageNo ? pageNo : this.state.pageNo,
+      pageNo: pageNo || this.state.pageNo,
       parent,
 
       superScript: false
@@ -293,9 +305,8 @@ class IntractiveTrans extends React.Component {
         this.state.splitSentence
       );
       APITransport(apiObj);
-
     }
-    this.handleClose()
+    this.handleClose();
   }
 
   handleDialogSave() {
@@ -313,7 +324,7 @@ class IntractiveTrans extends React.Component {
       contextToken: false,
       superScript: token
     });
-    this.handleClose()
+    this.handleClose();
   }
 
   handleClose = () => {
@@ -335,10 +346,11 @@ class IntractiveTrans extends React.Component {
       parent,
       superScript: false,
       contextToken: false,
-      pageNo: pageNo,
+      pageNo,
+      selectedSourceId: "",
       isAddNewCell: true
     });
-    this.handleClose()
+    this.handleClose();
 
     if (next_previous) {
       this.setState({ parent: "target" });
@@ -352,6 +364,10 @@ class IntractiveTrans extends React.Component {
 
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState({ numPages });
+  };
+
+  handlePageChange(value) {
+    this.setState({ pageNo: this.state.pageNo + value });
   }
   handlePageChange(value) {
     this.setState({ pageNo: this.state.pageNo + value, scrollToPage: this.state.pageNo+value })
@@ -363,6 +379,41 @@ class IntractiveTrans extends React.Component {
     }
   }
 
+  handleonDoubleClick(selectedSourceId, selectedSourceText) {
+    console.log("clicked");
+    this.setState({ selectedSourceId, selectedSourceText, selectedSourceCheckText: selectedSourceText });
+  }
+
+  handleSourceChange = evt => {
+    this.setState({ selectedSourceText: evt.target.value });
+  };
+
+  handleCheck = () => {
+    const startValue = this.state.selectedSourceId.split("_");
+    let sentenceObj; let updatedSentence;
+    
+    const text = htmlToText.fromString(this.state.selectedSourceText);
+    console.log(this.state.selectedSourceCheckText,text)
+    if (this.state.selectedSourceCheckText !== text) {
+      this.state.sentences.map((sentence, index) => {
+        if (sentence._id === startValue[0]) {
+          sentence.tokenized_sentences.map((value, index) => {
+            if (value.sentence_index === Number(startValue[1])) {
+              value.src = text;
+              value.text = text;
+              sentenceObj = sentence;
+              updatedSentence = value;
+            }
+          });
+        }
+      });
+      const { APITransport } = this.props;
+      const apiObj = new InteractiveSourceUpdate(sentenceObj,updatedSentence);
+      APITransport(apiObj);
+
+    }
+  };
+
   handleSelection(selectedSentence, event) {
     if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode && selectedSentence.pageNo && window.getSelection().toString()) {
       let initialIndex;
@@ -371,7 +422,7 @@ class IntractiveTrans extends React.Component {
       let endSentence;
       let operation_type;
       let selectedSplitValue;
-      let pageNo = selectedSentence.pageNo
+      const {pageNo} = selectedSentence;
 
       const startValue = selectedSentence.startNode.split("_");
       const endValue = selectedSentence.endNode.split("_");
@@ -411,39 +462,42 @@ class IntractiveTrans extends React.Component {
 
       this.state.addSentence
         ? this.setState({
-          mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
-          selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
-          endSentence,
-          openEl: true,
-          contextToken: true,
-          addSentence: true,
-          pageNo: pageNo
-        })
+            mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
+            selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
+            endSentence,
+            openEl: true,
+            contextToken: true,
+            addSentence: true,
+            pageNo
+          })
         : this.setState({
-          mergeSentence,
-          selectedMergeSentence: [selectedSentence],
-          startSentence,
-          endSentence,
-          operation_type,
-          openEl: true,
-          splitSentence: selectedSplitValue,
-          contextToken: true,
-          pageNo: pageNo
-        });
+            mergeSentence,
+            selectedMergeSentence: [selectedSentence],
+            startSentence,
+            endSentence,
+            operation_type,
+            openEl: true,
+            splitSentence: selectedSplitValue,
+            contextToken: true,
+            pageNo
+          });
     }
   }
 
   render() {
     const { gridValue } = this.state;
-    let pagen = this.state.pageNo;
-    let url = this.state.fileDetails && this.state.fileDetails.download_source_path && `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
-      this.state.fileDetails.download_source_path ? this.state.fileDetails.download_source_path : ""
+    const pagen = this.state.pageNo;
+    const url =
+      this.state.fileDetails &&
+      this.state.fileDetails.download_source_path &&
+      `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
+        this.state.fileDetails.download_source_path ? this.state.fileDetails.download_source_path : ""
       }`;
     return (
       <div style={{ marginLeft: "-100px" }}>
         {this.state.sentences && (
           <div>
-            {!this.state.collapseToken &&
+            {!this.state.collapseToken && (
               <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
                 <Grid item xs={12} sm={6} lg={2} xl={2} className="GridFileDetails">
                   <Button
@@ -484,7 +538,7 @@ class IntractiveTrans extends React.Component {
                     onClick={() => this.handlePreview()}
                   >
                     <VisibilityIcon fontSize="large" />
-                  &nbsp;&nbsp;{translate("common.page.label.review/download")}
+                    &nbsp;&nbsp;{translate("common.page.label.review/download")}
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={1} xl={1}>
@@ -498,21 +552,28 @@ class IntractiveTrans extends React.Component {
                     style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold" }}
                   >
                     <DoneIcon fontSize="large" />
-                  &nbsp;&nbsp;{translate("common.page.label.done")}
+                    &nbsp;&nbsp;{translate("common.page.label.done")}
                   </Button>
                 </Grid>
               </Grid>
-            }
+            )}
             <Grid container spacing={16} style={{ padding: "0 24px 0px 24px" }}>
               {!this.state.collapse ? (
                 <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 180, paddingBottom: '12px' }}>
+                  <Paper
+                    elevation={2}
+                    style={{
+                      paddingBottom: "10px",
+                      maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 180,
+                      paddingBottom: "12px"
+                    }}
+                  >
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
                         {translate("common.page.label.source")}
                       </Typography>
 
-                      {!this.state.collapseToken &&
+                      {!this.state.collapseToken && (
                         <Toolbar
                           onClick={event => {
                             this.handleClick(true, 6);
@@ -521,10 +582,18 @@ class IntractiveTrans extends React.Component {
                           <PictureAsPdfIcon style={{ cursor: "pointer" }} color="primary" />
                           <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
                             Compare with original
-                        </Typography>
-                        </Toolbar>}
+                          </Typography>
+                        </Toolbar>
+                      )}
                     </Toolbar>
-                    <div id="popUp" style={{ maxHeight: this.state.collapseToken ? window.innerHeight - 220 : window.innerHeight - 280, overflowY: 'scroll', padding: "24px" }}>
+                    <div
+                      id="popUp"
+                      style={{
+                        maxHeight: this.state.collapseToken ? window.innerHeight - 220 : window.innerHeight - 280,
+                        overflowY: "scroll",
+                        padding: "24px"
+                      }}
+                    >
                       <EditorPaper
                         paperType="source"
                         sentences={this.state.sentences}
@@ -545,7 +614,12 @@ class IntractiveTrans extends React.Component {
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
                         handleSelection={this.handleSelection.bind(this)}
-                        selectedMergeSentence={this.state.addSentence ? this.state.selectedMergeSentence : ''}
+                        selectedMergeSentence={this.state.addSentence ? this.state.selectedMergeSentence : ""}
+                        handleSourceChange={this.handleSourceChange}
+                        selectedSourceText={this.state.selectedSourceText}
+                        selectedSourceId={this.state.selectedSourceId}
+                        handleonDoubleClick={this.handleonDoubleClick.bind(this)}
+                        handleCheck={this.handleCheck}
                       />
                     </div>
                   </Paper>
@@ -567,16 +641,17 @@ class IntractiveTrans extends React.Component {
                     </Paper>
                   </Grid>
                 )}
-              {!this.state.collapseToken ?
+              
+              {!this.state.collapseToken ? (
                 <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
-                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom: '12px' }}>
+                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom: "12px" }}>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "10px" }}>
                         {translate("common.page.label.target")}
                       </Typography>
                     </Toolbar>
 
-                    <div style={{ maxHeight: window.innerHeight - 280, overflowY: 'scroll', padding: "24px" }}>
+                    <div style={{ maxHeight: window.innerHeight - 280, overflowY: "scroll", padding: "24px" }}>
                       <EditorPaper
                         paperType="target"
                         sentences={this.state.sentences}
@@ -600,11 +675,19 @@ class IntractiveTrans extends React.Component {
                     </div>
                   </Paper>
                 </Grid>
-                :
+              ) : (
                 <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                  <PdfPreview pageNo={this.state.pageNo} fileDetails={this.state.fileDetails} numPages={this.state.numPages} onDocumentLoadSuccess={this.onDocumentLoadSuccess.bind(this)} handlePageChange={this.handlePageChange.bind(this)} handleClick={this.handleClick.bind(this)} />
-                </Grid>}
-              {!this.state.collapseToken &&
+                  <PdfPreview
+                    pageNo={this.state.pageNo}
+                    fileDetails={this.state.fileDetails}
+                    numPages={this.state.numPages}
+                    onDocumentLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
+                    handlePageChange={this.handlePageChange.bind(this)}
+                    handleClick={this.handleClick.bind(this)}
+                  />
+                </Grid>
+              )}
+              {!this.state.collapseToken && (
                 <Grid item xs={12} sm={12} lg={4} xl={4}>
                   {this.state.sentences && this.state.sentences[0] && (
                     <Editor
@@ -624,7 +707,7 @@ class IntractiveTrans extends React.Component {
                       handleSelectionClose={this.handleClose.bind(this)}
                     />
                   )}
-                </Grid>}
+                </Grid>)}
             </Grid>
 
             {
@@ -684,7 +767,10 @@ class IntractiveTrans extends React.Component {
                   contextId="popUp"
                   items={[
                     {
-                      label: ((this.state.operation_type === "merge") || this.state.operation_type === ("merge-individual")) ? "Merge Sentence" : "Split Sentence",
+                      label:
+                        this.state.operation_type === "merge" || this.state.operation_type === "merge-individual"
+                          ? "Merge Sentence"
+                          : "Split Sentence",
                       onClick:
                         this.state.operation_type === "merge-individual" && this.state.addSentence
                           ? this.handleDialog.bind(this)
@@ -692,13 +778,13 @@ class IntractiveTrans extends React.Component {
                       closeOnClick: true,
                       closeOnClickOut: true
                     },
-                    this.state.mergeSentence.length < 2 && this.state.operation_type === "split" &&
-                    {
-                      label: "Add another sentence",
-                      onClick: this.handleAddSentence.bind(this),
-                      closeOnClick: true,
-                      closeOnClickOut: true
-                    }
+                    this.state.mergeSentence.length < 2 &&
+                      this.state.operation_type === "split" && {
+                        label: "Add another sentence",
+                        onClick: this.handleAddSentence.bind(this),
+                        closeOnClick: true,
+                        closeOnClickOut: true
+                      }
                   ]}
                 />
               )}
@@ -714,7 +800,8 @@ const mapStateToProps = state => ({
   apistatus: state.apistatus,
   fetchPdfSentence: state.fetchPdfSentence,
   interactiveUpdate: state.interactiveUpdate,
-  mergeSentenceApi: state.mergeSentenceApi
+  mergeSentenceApi: state.mergeSentenceApi,
+  updateSource: state.updateSource
 });
 
 const mapDispatchToProps = dispatch =>

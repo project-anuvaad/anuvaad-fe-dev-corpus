@@ -61,7 +61,8 @@ import signup from './signup';
 import forgotpassword from './forgotpassword';
 import setpassword from './setpassword';
 import activate from './activate';
-import updatePdfTable from './updatePdfTable'
+import updatePdfTable from './updatePdfTable';
+import updateSource from './interactivesourceupdate';
 
 export default {
     login,
@@ -127,5 +128,6 @@ export default {
     forgotpassword,
     setpassword,
     activate,
-    updatePdfTable
+    updatePdfTable,
+    updateSource,
 };
