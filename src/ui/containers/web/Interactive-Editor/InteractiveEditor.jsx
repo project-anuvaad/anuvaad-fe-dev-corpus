@@ -355,7 +355,6 @@ class IntractiveTrans extends React.Component {
       superScript: false,
       contextToken: false,
       pageNo,
-      selectedSourceId: "",
       isAddNewCell: true
     });
     this.handleClose();
@@ -388,11 +387,12 @@ class IntractiveTrans extends React.Component {
   }
 
   handleonDoubleClick(selectedSourceId, selectedSourceText) {
-    console.log("clicked");
+    console.log(selectedSourceId, selectedSourceText);
     this.setState({ selectedSourceId, selectedSourceText, selectedSourceCheckText: selectedSourceText });
   }
 
   handleSourceChange = evt => {
+    console.log(evt)
     this.setState({ selectedSourceText: evt.target.value });
   };
 

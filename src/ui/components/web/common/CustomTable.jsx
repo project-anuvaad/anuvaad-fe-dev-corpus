@@ -1,5 +1,6 @@
 import React from "react";
 import ContextMenu from "react-context-menu";
+import ContentEditable from 'react-contenteditable';
 
 class CustomTable extends React.Component {
     constructor(props){
@@ -61,9 +62,16 @@ class CustomTable extends React.Component {
                     onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType, pageNo)}
                     onMouseEnter={() => this.props.handleOnMouseEnter(id, blockId, pageNo)}
                     onMouseLeave={() => this.props.handleOnMouseLeave()}
-                    style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse', minWidth: '25px' }}
-                    >
-                    {blockData}</td>)
+                    onDoubleClick={()=>this.props.handleonDoubleClick(blockId, blockData )}
+                    style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse', minWidth: '25px' }}>
+                    {this.props.selectedSourceId === blockId && this.props.paperType === 'source' ? <ContentEditable
+        html={this.props.selectedSourceText}
+        disabled={false}
+        onBlur={this.props.handleCheck}
+        onChange={this.props.handleSourceChange} 
+        style={{ border: "1px dashed #aaa",
+            padding: "5px"}}
+      />: blockData}</td>)
             }
 
             if(!isHeightRequired){
