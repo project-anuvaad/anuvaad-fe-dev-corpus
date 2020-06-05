@@ -1,4 +1,5 @@
 import React from "react";
+import ContentEditable from 'react-contenteditable';
 
 class CustomTable extends React.Component {
 
@@ -51,8 +52,16 @@ class CustomTable extends React.Component {
                     onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType, pageNo)}
                     onMouseEnter={() => this.props.handleOnMouseEnter(id, blockId, pageNo)}
                     onMouseLeave={() => this.props.handleOnMouseLeave()}
+                    onDoubleClick={()=>this.props.handleonDoubleClick(blockId, blockData )}
                     style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
-                    {blockData}</td>)
+                    {this.props.selectedSourceId === blockId && this.props.paperType === 'source' ? <ContentEditable
+        html={this.props.selectedSourceText}
+        disabled={false}
+        onBlur={this.props.handleCheck}
+        onChange={this.props.handleSourceChange} 
+        style={{ border: "1px dashed #aaa",
+            padding: "5px"}}
+      />: blockData}</td>)
             }
             tableRow.push(<tr key={index}>{col}</tr>)
             index++

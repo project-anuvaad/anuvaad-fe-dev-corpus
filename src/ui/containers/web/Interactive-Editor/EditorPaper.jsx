@@ -218,6 +218,12 @@ class EditorPaper extends React.Component {
                 handleOnMouseEnter={this.tableHoverOn.bind(this)}
                 handleOnMouseLeave={this.tableHoverOff.bind(this)}
                 handleTableCellClick={this.handleTableOnCLick.bind(this)}
+                handleSourceChange={this.props.handleSourceChange}
+                selectedSourceText={this.props.selectedSourceText}
+                selectedSourceId={this.props.selectedSourceId}
+                handleonDoubleClick={this.handleonDoubleClick.bind(this)}
+                handleCheck={this.props.handleCheck}
+
                 ></CustomTable>
         } else {
             return <div></div>
@@ -284,7 +290,9 @@ class EditorPaper extends React.Component {
 
     }
    
-    
+    handleonDoubleClick(id,value){
+        this.props.handleonDoubleClick(id,value)
+    }
 
     handleOnClick(id, pageNo) {
         if (!this.props.isPreview) {
