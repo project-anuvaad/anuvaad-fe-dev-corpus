@@ -61,7 +61,9 @@ import signup from './signup';
 import forgotpassword from './forgotpassword';
 import setpassword from './setpassword';
 import activate from './activate';
+import updatePdfTable from './updatePdfTable';
 import updateSource from './interactivesourceupdate';
+
 export default {
     login,
     automl,
@@ -126,5 +128,6 @@ export default {
     forgotpassword,
     setpassword,
     activate,
-    updateSource
+    updatePdfTable,
+    updateSource,
 };
