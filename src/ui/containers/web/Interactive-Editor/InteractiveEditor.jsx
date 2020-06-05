@@ -29,6 +29,7 @@ import Snackbar from "../../../components/web/common/Snackbar";
 import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
 import Dialog from "../../../components/web/common/SimpleDialog";
 import PdfPreview from "./PdfPreview";
+import UpdatePdfTable from "../../../../flux/actions/apis/updatePdfTable"
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -82,9 +83,9 @@ class IntractiveTrans extends React.Component {
           this.handleBack();
         }, 3000);
     }
-    if(prevProps.updateSource!==this.props.updateSource){
+    if (prevProps.updateSource !== this.props.updateSource) {
       this.handleSentenceApi();
-      this.setState({selectedSourceCheckText:"",selectedSourceText:'',selectedSourceId:''})
+      this.setState({ selectedSourceCheckText: "", selectedSourceText: '', selectedSourceId: '' })
     }
     if (prevProps.mergeSentenceApi !== this.props.mergeSentenceApi) {
       this.handleSentenceApi();
@@ -93,6 +94,13 @@ class IntractiveTrans extends React.Component {
         selectedMergeSentence: []
       });
     }
+
+    if (prevProps.updatePdfTable !== this.props.updatePdfTable) {
+      const { APITransport } = this.props;
+      const apiObj = new FetchDoc(this.props.match.params.fileid);
+      APITransport(apiObj);
+    }
+
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
       const temp = this.props.fetchPdfSentence.data;
       const sentenceArray = [];
@@ -370,9 +378,9 @@ class IntractiveTrans extends React.Component {
     this.setState({ pageNo: this.state.pageNo + value });
   }
   handlePageChange(value) {
-    this.setState({ pageNo: this.state.pageNo + value, scrollToPage: this.state.pageNo+value })
+    this.setState({ pageNo: this.state.pageNo + value, scrollToPage: this.state.pageNo + value })
   }
-  
+
   handlePreview() {
     if (this.props.match.params.fileid) {
       history.push(`${process.env.PUBLIC_URL}/interactive-preview/${this.props.match.params.fileid}`);
@@ -391,9 +399,8 @@ class IntractiveTrans extends React.Component {
   handleCheck = () => {
     const startValue = this.state.selectedSourceId.split("_");
     let sentenceObj; let updatedSentence;
-    
+
     const text = htmlToText.fromString(this.state.selectedSourceText);
-    console.log(this.state.selectedSourceCheckText,text)
     if (this.state.selectedSourceCheckText !== text) {
       this.state.sentences.map((sentence, index) => {
         if (sentence._id === startValue[0]) {
@@ -408,7 +415,7 @@ class IntractiveTrans extends React.Component {
         }
       });
       const { APITransport } = this.props;
-      const apiObj = new InteractiveSourceUpdate(sentenceObj,updatedSentence);
+      const apiObj = new InteractiveSourceUpdate(sentenceObj, updatedSentence);
       APITransport(apiObj);
 
     }
@@ -422,7 +429,7 @@ class IntractiveTrans extends React.Component {
       let endSentence;
       let operation_type;
       let selectedSplitValue;
-      const {pageNo} = selectedSentence;
+      const { pageNo } = selectedSentence;
 
       const startValue = selectedSentence.startNode.split("_");
       const endValue = selectedSentence.endNode.split("_");
@@ -462,26 +469,35 @@ class IntractiveTrans extends React.Component {
 
       this.state.addSentence
         ? this.setState({
-            mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
-            selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
-            endSentence,
-            openEl: true,
-            contextToken: true,
-            addSentence: true,
-            pageNo
-          })
+          mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
+          selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
+          endSentence,
+          openEl: true,
+          contextToken: true,
+          addSentence: true,
+          pageNo
+        })
         : this.setState({
-            mergeSentence,
-            selectedMergeSentence: [selectedSentence],
-            startSentence,
-            endSentence,
-            operation_type,
-            openEl: true,
-            splitSentence: selectedSplitValue,
-            contextToken: true,
-            pageNo
-          });
+          mergeSentence,
+          selectedMergeSentence: [selectedSentence],
+          startSentence,
+          endSentence,
+          operation_type,
+          openEl: true,
+          splitSentence: selectedSplitValue,
+          contextToken: true,
+          pageNo
+        });
     }
+  }
+
+  handleAddCell(sentence, operationType) {
+    if(sentence && operationType) {
+          const { APITransport } = this.props;
+          const apiObj = new UpdatePdfTable(sentence, operationType);
+          APITransport(apiObj);
+    }
+
   }
 
   render() {
@@ -491,7 +507,7 @@ class IntractiveTrans extends React.Component {
       this.state.fileDetails &&
       this.state.fileDetails.download_source_path &&
       `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
-        this.state.fileDetails.download_source_path ? this.state.fileDetails.download_source_path : ""
+      this.state.fileDetails.download_source_path ? this.state.fileDetails.download_source_path : ""
       }`;
     return (
       <div style={{ marginLeft: "-100px" }}>
@@ -620,6 +636,7 @@ class IntractiveTrans extends React.Component {
                         selectedSourceId={this.state.selectedSourceId}
                         handleonDoubleClick={this.handleonDoubleClick.bind(this)}
                         handleCheck={this.handleCheck}
+                        handleAddCell={this.handleAddCell.bind(this)}
                       />
                     </div>
                   </Paper>
@@ -641,7 +658,7 @@ class IntractiveTrans extends React.Component {
                     </Paper>
                   </Grid>
                 )}
-              
+
               {!this.state.collapseToken ? (
                 <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
                   <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom: "12px" }}>
@@ -676,17 +693,17 @@ class IntractiveTrans extends React.Component {
                   </Paper>
                 </Grid>
               ) : (
-                <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                  <PdfPreview
-                    pageNo={this.state.pageNo}
-                    fileDetails={this.state.fileDetails}
-                    numPages={this.state.numPages}
-                    onDocumentLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
-                    handlePageChange={this.handlePageChange.bind(this)}
-                    handleClick={this.handleClick.bind(this)}
-                  />
-                </Grid>
-              )}
+                  <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
+                    <PdfPreview
+                      pageNo={this.state.pageNo}
+                      fileDetails={this.state.fileDetails}
+                      numPages={this.state.numPages}
+                      onDocumentLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
+                      handlePageChange={this.handlePageChange.bind(this)}
+                      handleClick={this.handleClick.bind(this)}
+                    />
+                  </Grid>
+                )}
               {!this.state.collapseToken && (
                 <Grid item xs={12} sm={12} lg={4} xl={4}>
                   {this.state.sentences && this.state.sentences[0] && (
@@ -709,30 +726,6 @@ class IntractiveTrans extends React.Component {
                   )}
                 </Grid>)}
             </Grid>
-
-            {
-              this.state.isAddNewCell ?
-                <ContextMenu
-                  contextId="popUp"
-                  items={[
-                    {
-                      label: "Add new row",
-                      onClick:
-                        this.state.operation_type === "merge-individual" && this.state.addSentence
-                          ? this.handleDialog.bind(this)
-                          : this.handleApiMerge.bind(this),
-                      closeOnClick: true,
-                      closeOnClickOut: true
-                    },
-                    {
-                      label: "Add new column",
-                      onClick: this.handleAddSentence.bind(this),
-                      closeOnClick: true,
-                      closeOnClickOut: true
-                    }
-                  ]}
-                /> : <div></div>
-            }
 
             {this.state.openDialog && (
               <Dialog
@@ -779,12 +772,12 @@ class IntractiveTrans extends React.Component {
                       closeOnClickOut: true
                     },
                     this.state.mergeSentence.length < 2 &&
-                      this.state.operation_type === "split" && {
-                        label: "Add another sentence",
-                        onClick: this.handleAddSentence.bind(this),
-                        closeOnClick: true,
-                        closeOnClickOut: true
-                      }
+                    this.state.operation_type === "split" && {
+                      label: "Add another sentence",
+                      onClick: this.handleAddSentence.bind(this),
+                      closeOnClick: true,
+                      closeOnClickOut: true
+                    }
                   ]}
                 />
               )}
@@ -801,7 +794,8 @@ const mapStateToProps = state => ({
   fetchPdfSentence: state.fetchPdfSentence,
   interactiveUpdate: state.interactiveUpdate,
   mergeSentenceApi: state.mergeSentenceApi,
-  updateSource: state.updateSource
+  updateSource: state.updateSource,
+  updatePdfTable: state.updatePdfTable
 });
 
 const mapDispatchToProps = dispatch =>

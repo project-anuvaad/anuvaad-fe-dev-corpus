@@ -6,10 +6,10 @@ export default class UpdatePdfTable extends API {
         super('POST', timeout, false);
         this.type = C.UPDATE_PDF_TABLE;
 
-        this.sentences = sentences
+        this.sentence = sentences
         this.operation_type = operation_type
 
-        this.usercreate = {}
+        this.updatePdfTableData = {}
 
     }
 
@@ -20,8 +20,7 @@ export default class UpdatePdfTable extends API {
     processResponse(res) {
         super.processResponse(res)
         if (res) {
-        debugger
-            this.usercreate = res;
+            this.updatePdfTableData = res;
         }
     }
 
@@ -31,7 +30,7 @@ export default class UpdatePdfTable extends API {
 
     getBody() {
         return {
-            sentences: this.sentences,
+            sentence: this.sentence,
             operation_type: this.operation_type,
     };
 }
@@ -47,8 +46,7 @@ getHeaders() {
 }
 
 getPayload() {
-    debugger
-    return this.usercreate;
+    return this.updatePdfTableData;
 }
 
 }

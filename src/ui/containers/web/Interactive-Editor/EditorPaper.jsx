@@ -218,6 +218,8 @@ class EditorPaper extends React.Component {
                 handleOnMouseEnter={this.tableHoverOn.bind(this)}
                 handleOnMouseLeave={this.tableHoverOff.bind(this)}
                 handleTableCellClick={this.handleTableOnCLick.bind(this)}
+                handleAddCell={this.props.handleAddCell}
+                sentence={sentence}
                 ></CustomTable>
         } else {
             return <div></div>
