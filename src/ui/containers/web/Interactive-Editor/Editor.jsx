@@ -62,7 +62,6 @@ class Editor extends React.Component {
 
 
   handleApiCall() {
-    console.log(this.state.value)
     const temp = this.handleSuperSave(this.state.checkedB ? this.state.target : this.state.translateText, this.state.taggedTarget);
     if (this.state.checkedB) {
       this.props.handleSave(
@@ -265,7 +264,13 @@ class Editor extends React.Component {
       this.setState({ target: '' })
     }
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
+      
+        if(this.state.translateText && this.state.prevTarget){
+          const apiObj = new IntractiveApi(this.state.source, this.handleCalc(this.state.translateText), this.props.modelDetails, true);
+          this.props.APITransport(apiObj);
+        }
       if (this.state.apiToken) {
+        
         if (this.props.superScriptToken && this.state.superIndex) {
           this.props.handleScriptSave(
             this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0],
@@ -299,6 +304,7 @@ class Editor extends React.Component {
         token: false,
         apiCall: false,
         apiToken: false,
+        prevTarget:this.state.prevTarget===this.state.translateText && "",
         target: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt,
         taggedSource: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tagged_src,
         taggedTarget: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tagged_tgt
@@ -425,15 +431,16 @@ class Editor extends React.Component {
     const space = event.target.value.endsWith(" ");
     if (this.state.target && space) {
       if (this.state.target.startsWith(event.target.value) && this.state.target.includes(event.target.value, 0)) {
-      } else {
+      } else if(!this.state.apiCall){
         const res = this.handleCalc(event.target.value);
         const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails, true);
-        !this.state.apiCall && this.props.APITransport(apiObj);
+        this.props.APITransport(apiObj);
         
         // this.focusDiv("blur");
         this.setState({
           disable: true,
           apiCall: true,
+          prevTarget: event.target.value 
         });
       }
     }
