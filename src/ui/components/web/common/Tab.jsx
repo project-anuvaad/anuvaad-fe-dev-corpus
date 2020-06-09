@@ -5,7 +5,6 @@ import Tab from "@material-ui/core/Tab";
 
 class CenteredTabs extends React.Component {
   handleChange = (event, value) => {
-    console.log(value);
     this.props.handleChange(value);
   };
 

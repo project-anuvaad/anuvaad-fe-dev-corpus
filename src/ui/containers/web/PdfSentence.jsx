@@ -65,13 +65,10 @@ handleSaveButton() {
 }
 
   handleTextChange(event) {
-    
-    console.log(event.target.value)
     this.setState({text: event.target.value})
 }
 
 handleRowClick = rowData => {
-    console.log(rowData)
     this.setState({text:rowData[1]})
     
   };

@@ -228,7 +228,6 @@ class UserDirectory extends React.Component {
       onRowClick: rowData => this.handleClick(rowData)
     };
 
-    console.log("user", this.state.status);
     const val = this.state.openValue ? 8 : 12;
     return (
       <div>

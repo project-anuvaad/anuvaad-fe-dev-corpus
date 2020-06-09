@@ -61,7 +61,6 @@ class WorkspaceDetails extends React.Component {
   };
 
   handleFilterSubmit = filterList => () => {
-    console.log(filterList);
     clearTimeout(this.intervalID);
     const apiObj = new FetchMTWorkspace(this.state.rowsPerPage, this.state.page + 1, "PROCESSING", "", filterList);
     this.props.APITransport(apiObj);

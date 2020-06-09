@@ -123,13 +123,11 @@ class ViewTranslate extends React.Component {
 
         if (prevProps.feedbackQuestions !== this.props.feedbackQuestions) {
 
-            console.log("feedback", this.props.feedbackQuestions)
             this.setState({ feedbackQuestions: this.props.feedbackQuestions })
             if (Object.getOwnPropertyNames(this.props.feedbackQuestions).length !== 0) {
                 this.setState({ value: true })
             }
         }
-
 
     }
 

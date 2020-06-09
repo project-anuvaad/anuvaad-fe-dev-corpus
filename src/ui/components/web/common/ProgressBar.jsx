@@ -35,6 +35,7 @@ class LinearDeterminate extends React.Component {
     } else {
       
       this.setState({ completed: completed + 1 });
+      this.props.handleRefresh();
     }
   };
 

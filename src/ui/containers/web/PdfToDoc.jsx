@@ -47,7 +47,6 @@ class PdfUpload extends Component {
   handleSubmit(e) {
     e.preventDefault();
     const { APITransport } = this.props;
-    console.log("---files", this.state.files.length);
     if (this.state.files.length > 0) {
       const apiObj = new PdfFileUpload(this.state.files[0]);
       APITransport(apiObj);
@@ -63,7 +62,6 @@ class PdfUpload extends Component {
   }
 
   readFileDataAsBinary(file) {
-    console.log(file);
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 

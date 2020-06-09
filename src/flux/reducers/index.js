@@ -58,6 +58,8 @@ import fetchPdfSentence from './fetchpdfsentence';
 import intractiveTrans from './intractive_translate';
 import downloaddoc from './downloaddoc';
 import signup from './signup';
+import forgotpassword from './forgotpassword';
+import setpassword from './setpassword';
 import activate from './activate';
 
 export default {
@@ -121,5 +123,7 @@ export default {
     downloaddoc,
     mergeSentenceApi,
     signup,
+    forgotpassword,
+    setpassword,
     activate
 };

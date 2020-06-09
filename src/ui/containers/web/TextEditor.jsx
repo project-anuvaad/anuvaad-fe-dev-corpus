@@ -29,7 +29,6 @@
 
 //   componentDidUpdate(prevProps) {
 //     if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel) {
-//       console.log("-----", this.props.fetchBenchmarkModel.data);
 //       this.setState({
 //         sentences: this.props.fetchBenchmarkModel.data,
 //         count: this.props.fetchBenchmarkModel.count
@@ -38,7 +37,6 @@
 //   }
 
 //   handleTextChange(key, event) {
-//     console.log(key, event);
 //     this.setState({
 //       [key]: event
 //     });
@@ -76,7 +74,6 @@
 //             editor={ClassicEditor}
 //             data={this.state.value}
 //             onBlur={(event, editor) => {
-//               console.log(this.state.isFocus);
 //               if (this.state.isFocus) {
 //                 editor.editing.view.focus();
 //               }
@@ -85,12 +82,10 @@
 //               editor.editing.view.focus();
 
 //               const data = editor.getData();
-//               console.log("changed", editor.model.document.selection.getFirstPosition());
 //               this.handleTextChange("value", data);
 //               this.setState({ editor, isFocus: false });
 
 //               editor.editing.view.document.on("keydown", (evt, data) => {
-//                 console.log("", editor.getData());
 
 //                 if (data.keyCode === 9) {
 //                   this.handleApiCall(editor.getData());

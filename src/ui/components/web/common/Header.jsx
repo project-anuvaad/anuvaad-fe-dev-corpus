@@ -85,7 +85,6 @@ class Header extends React.Component {
     });
   };
   handleDrawerClose() {
-    console.log()
     this.setState({
       open: false
     });
