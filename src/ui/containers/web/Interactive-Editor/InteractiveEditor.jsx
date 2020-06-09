@@ -387,12 +387,10 @@ class IntractiveTrans extends React.Component {
   }
 
   handleonDoubleClick(selectedSourceId, selectedSourceText) {
-    console.log(selectedSourceId, selectedSourceText);
     this.setState({ selectedSourceId, selectedSourceText, selectedSourceCheckText: selectedSourceText });
   }
 
   handleSourceChange = evt => {
-    console.log(evt)
     this.setState({ selectedSourceText: evt.target.value });
   };
 

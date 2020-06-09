@@ -25,7 +25,6 @@ class PdfPreview extends React.Component {
 
   render() {
     const { pageNo, fileDetails, numPages } = this.props;
-    const pagen = this.state.pageNo;
     const url =
       fileDetails &&
       fileDetails.download_source_path &&

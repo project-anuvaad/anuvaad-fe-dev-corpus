@@ -62,7 +62,6 @@ class Editor extends React.Component {
 
 
   handleApiCall() {
-    console.log(this.state.value)
     const temp = this.handleSuperSave(this.state.checkedB ? this.state.target : this.state.translateText, this.state.taggedTarget);
     if (this.state.checkedB) {
       this.props.handleSave(
