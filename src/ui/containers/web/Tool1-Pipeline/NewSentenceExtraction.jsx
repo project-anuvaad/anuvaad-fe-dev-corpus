@@ -94,7 +94,6 @@ class NewSentanceExtraction extends React.Component {
   }
 
   renderApi() {
-    console.log("----", this.state.count);
     if (this.state.count === 2) {
       const { APITransport } = this.props;
       const apiObj = new RunExperiment(
@@ -110,14 +109,10 @@ class NewSentanceExtraction extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.configUplaod !== this.props.configUplaod) {
       this.setState({ files: this.props.configUplaod, count: this.state.count + 1 });
-      console.log("-", this.state.count);
-      
-
       this.renderApi();
     }
 
     if (prevProps.fetchDefaultConfig !== this.props.fetchDefaultConfig) {
-      console.log(this.props.fetchDefaultConfig.data);
       this.setState({ defaultConfig: this.props.fetchDefaultConfig.data[0], defaultCsv: this.props.fetchDefaultConfig.data[1] });
     }
 

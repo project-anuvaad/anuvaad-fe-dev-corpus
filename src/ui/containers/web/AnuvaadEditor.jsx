@@ -36,7 +36,6 @@ class Editor1 extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchBenchmarkModel !== this.props.fetchBenchmarkModel) {
-      console.log("-----", this.props.fetchBenchmarkModel.data);
       this.setState({
         sentences: this.props.fetchBenchmarkModel.data,
         count: this.props.fetchBenchmarkModel.count
@@ -52,17 +51,14 @@ class Editor1 extends React.Component {
   };
 
   handleChange(value) {
-    console.log("---", this.state.text);
     this.setState({ text: value });
   }
 
   keyPress(e) {
     if (e.keyCode === 9) {
       const { APITransport } = this.props;
-      var start = e.target.selectionStart;
-      var end = e.target.selectionEnd;
-      console.log(start,end)
       const api = new FetchModels(1573290229, 17, 5, 1);
+      
       APITransport(api);
       this.setState({ token: true });
     }

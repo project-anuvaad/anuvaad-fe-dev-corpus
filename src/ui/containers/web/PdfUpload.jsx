@@ -66,11 +66,12 @@ class PdfUpload extends Component {
           : ""
       );
       this.state.language.map((lang) => {
-        if (lang.language_code == this.state.target) {
+        if (lang.language_code === this.state.target) {
           target_lang_name = lang.language_name
-        } if (lang.language_code == this.state.source) {
+        } if (lang.language_code === this.state.source) {
           source_lang_name = lang.language_name
         }
+        return true
       })
       e.preventDefault();
       const { APITransport } = this.props;

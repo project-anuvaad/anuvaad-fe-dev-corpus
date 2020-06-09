@@ -1,16 +1,6 @@
 import React from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Input from "@material-ui/core/Input";
-import FormControl from "@material-ui/core/FormControl";
-import { ValidatorForm } from 'react-material-ui-form-validator';
-// import {Link} from 'react-router';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -23,11 +13,8 @@ import SignupApi from "../../../flux/actions/apis/signup";
 import ActivateUser from "../../../flux/actions/apis/activate_user";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
-import TextField from '../../components/web/common/TextField';
-import Link from '@material-ui/core/Link';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Snackbar from "../../components/web/common/Snackbar";
-
+import { translate } from "../../../assets/localisation";
 
 class Activate extends React.Component {
     constructor(props) {
@@ -35,7 +22,6 @@ class Activate extends React.Component {
         this.state = {
 
         }
-
     }
 
 
@@ -47,10 +33,10 @@ class Activate extends React.Component {
     handleSubmit() {
         if (this.handleValidation('firstName') && this.handleValidation('lastName') && this.handleValidation('email') && this.handleValidation('password') && this.handleValidation('confirmPassword')) {
             if (this.state.password !== this.state.confirmPassword) {
-                alert('Password and confirm password did not match')
+                alert(translate('common.page.alert.passwordDidNotMatch'))
             } else {
                 if (!this.state.termsAndCondition) {
-                    alert('Please accept terms and condition')
+                    alert(translate('common.page.alert.acceptTerms&Condition'))
                 } else {
                     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                     if (this.state.email.match(mailformat)) {
@@ -58,12 +44,12 @@ class Activate extends React.Component {
                         let apiObj = new SignupApi(this.state.email, this.state.firstName, this.state.lastName, this.state.password);
                         APITransport(apiObj);
                     } else {
-                        alert('Please provide valid email')
+                        alert(translate('common.page.alert.validEmail'))
                     }
                 }
             }
         } else {
-            alert('Please provide valid details')
+            alert(translate('common.page.alert.provideValidDetails'))
         }
 
     }
@@ -81,7 +67,7 @@ class Activate extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.activate !== this.props.activate) {
-            this.setState({ message: 'Account activation successfull, please relogin to continue', open: true })
+            this.setState({ message: translate('activate.page.message.accountActivatedSuccess'), open: true })
             setTimeout(()=>{
                 history.push(`${process.env.PUBLIC_URL}/logout`)
             },4000)
@@ -95,9 +81,8 @@ class Activate extends React.Component {
         return true
     }
 
-
     render() {
-        const { user, classes, location } = this.props;
+        const { classes } = this.props;
         return (
             <MuiThemeProvider theme={ThemeDefault}>
                 <div>
@@ -111,7 +96,7 @@ class Activate extends React.Component {
                             onSubmit={this.handleSubmit}
                             onError={errors => console.log(errors)}
                         > */}
-                            <Typography align='center' style={{ marginTop: '45%', marginBottom: '5%', fontSize: '25px', fontfamily: 'Arial, Helvetica, sans-serif', color: '#003366' }}>Please wait while we are activating your account, you will be redirected to login page automatically</Typography>
+                            <Typography align='center' style={{ marginTop: '45%', marginBottom: '5%', fontSize: '25px', fontfamily: 'Arial, Helvetica, sans-serif', color: '#003366' }}>{translate('activate.page.label.waitWhileWeActivateAccount')}</Typography>
                         </Grid>
                     </Grid>
                     <div className={classes.buttonsDiv} />

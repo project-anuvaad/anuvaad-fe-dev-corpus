@@ -22,7 +22,6 @@ export default class FetchMTWorkspace extends API {
     }
 
     processResponse(res) {
-        console.log(res)
         super.processResponse(res)
         if (res.data) {
             this.fetch_workspace =  {'data':res.data, 'count':res.count};
@@ -42,7 +41,6 @@ let url = this.filter ?
  else if(this.status){
     url = url + `&status=${this.status}`
  }
-console.log("lcode",this.target)
  if(this.target){
     url= url+`&target_language=${this.target}`
 }

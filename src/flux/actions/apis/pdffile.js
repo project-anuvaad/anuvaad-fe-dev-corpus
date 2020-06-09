@@ -19,8 +19,6 @@ export default class ConfigUpload extends API {
     processResponse(res) {
         super.processResponse(res)
         
-        
-        console.log("resp",res.data)
         if (res.data) {
             this.config = res.data;
             

@@ -63,11 +63,9 @@ class UploadAudio extends React.Component {
     this.setState({ showLoader: true });
     // navigator.getUserMedia({ audio: true },
     //     () => {
-    //         console.log('Permission Granted');
     //         this.setState({ isBlocked: false });
     //     },
     //     () => {
-    //         console.log('Permission Denied');
     //         this.setState({ isBlocked: true })
     //     },
     // );

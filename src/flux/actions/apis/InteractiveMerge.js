@@ -24,8 +24,6 @@ export default class RunExperiment extends API {
   processResponse(res) {
     super.processResponse(res);
     if (res) {
-
-      console.log("response", res)
       this.sentences = res;
     }
   }
