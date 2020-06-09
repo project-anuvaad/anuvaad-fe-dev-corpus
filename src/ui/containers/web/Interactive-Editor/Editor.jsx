@@ -265,9 +265,13 @@ class Editor extends React.Component {
     }
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       
-        if(this.state.translateText && this.state.prevTarget){
+        if(this.state.translateText && this.state.prevTarget && this.state.prevTarget!==this.state.translateText){
           const apiObj = new IntractiveApi(this.state.source, this.handleCalc(this.state.translateText), this.props.modelDetails, true);
           this.props.APITransport(apiObj);
+          this.setState({prevTarget:this.state.translateText})
+        }
+        else{
+          this.setState({apiCall:false})
         }
       if (this.state.apiToken) {
         
@@ -302,9 +306,8 @@ class Editor extends React.Component {
       this.setState({
         disable: false,
         token: false,
-        apiCall: false,
         apiToken: false,
-        prevTarget:this.state.prevTarget===this.state.translateText && "",
+        
         target: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt,
         taggedSource: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tagged_src,
         taggedTarget: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tagged_tgt
@@ -338,6 +341,7 @@ class Editor extends React.Component {
     const tgt = this.state.target && this.state.target.split(" ");
     const src = this.state.source && this.state.source.split(" ");
     const resultArray = [];
+    console.log(tagged_tgt,temp,tgt)
     let index;
     temp.map(item => {
       if (item !== " ") {
@@ -399,7 +403,7 @@ class Editor extends React.Component {
           temp = prefix[0];
           event.preventDefault();
         }
-
+        console.log("temp",temp)
         this.setState({
           translateText: temp,
           disable: false
@@ -429,6 +433,7 @@ class Editor extends React.Component {
 
   handleTextChange(key, event) {
     const space = event.target.value.endsWith(" ");
+    console.log("event",event.target.value,this.handleCalc(event.target.value))
     if (this.state.target && space) {
       if (this.state.target.startsWith(event.target.value) && this.state.target.includes(event.target.value, 0)) {
       } else if(!this.state.apiCall){
@@ -461,7 +466,7 @@ class Editor extends React.Component {
           <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px" }}>
             {this.state.checkedB ? translate('dashbord.page.title.anuvaadModel') : "Recommended Sentence"}
           </Typography>
-          {this.state.checkedB ? this.state.apiCall ? <div style={{
+          {this.state.checkedB ? (this.state.apiCall || this.state.api) ? <div style={{
     position: 'relative'}}>
           <Button
             variant="contained"
