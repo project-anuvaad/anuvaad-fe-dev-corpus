@@ -17,23 +17,35 @@ import { translate } from "../../../assets/localisation";
 import Select from "../../components/web/common/Select";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 const styles = theme => ({
   paper: {
-    width: "40%",
+    width: "60%",
     minWidth: "200px",
-    marginTop: "2%",
+    marginTop: "3%",
     padding: "2%",
-    marginLeft: "22%"
+    marginLeft: "15%"
   },
   typography: {
-    textAlign: "center",
-    minWidth: "10%"
+    marginTop:'6%',
+    minWidth: "5%",
+    align:'center',
+    marginLeft:"40%",
+    fontfamily: 'Trebuchet MS, sans-serif	',
+     color: '#003366' 
+    
   },
   button: {
     marginTop: "4%",
-    marginLeft: "20%",
-    width: "60%"
+    marginLeft: "5%",
+    width: "90%",
+    backgroundColor:'#1ca9c9'
+  },
+  dropZone: {
+    height:"1200px",
+    color:'#1ca9c9'
   }
 });
 
@@ -197,85 +209,20 @@ class PdfUpload extends Component {
 
   render() {
     return (
-      <Paper className={this.props.classes.paper}>
-        <Grid container spacing={24} style={{ padding: 6 }}>
-          <Grid item xs={12} sm={12} lg={12} xl={12}>
-            <Typography value="" variant="h4" className={this.props.classes.typography}>
+     <div>
+      
+            <Typography value=""  variant="h4" className={this.props.classes.typography}>
               {translate("common.page.label.uploadFile")}
-            </Typography>
+            </Typography><br/>
+            <Typography style={{marginLeft:'38%'}}>
+              Upload file that you want to translate.
+            </Typography >
             <br />
-            <br />
-          </Grid>
-          <Grid container spacing={24} style={{ marginLeft: "3%" }}>
-            <Grid item xs={8} sm={8} lg={8} xl={8} style={{ paddingLeft: "2%" }}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "85%", paddingTop: "30px", paddingBottom: "30px" }}>
-                {translate("common.page.label.filename")}
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={4} sm={4} lg={4} xl={4}>
-              <TextField
-                value={this.state.workspaceName}
-                id="outlined-name"
-                margin="normal"
-                onChange={event => {
-                  this.handleTextChange("workspaceName", event);
-                }}
-                variant="outlined"
-                style={{ width: 158 }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={24} style={{ marginLeft: "3%" }}>
-            <Grid item xs={8} sm={8} lg={8} xl={8} style={{ paddingLeft: "2%" }}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "100%", paddingTop: "15px" }}>
-                {translate('common.page.label.sourceLang') + ' *'}
-              </Typography>
-            </Grid>
-            <Grid item xs={3} sm={3} lg={3} xl={3}>
+          <Paper className={this.props.classes.paper}>
+          <Grid container spacing={8}>
 
-              <Select
-                id="outlined-age-simple"
-                selectValue="language_code"
-                MenuItemValues={this.state.modelLanguage.length > 0 && this.handleSource(this.state.modelLanguage, this.state.language)}
-                // MenuItemValues={["English"]}
-                handleChange={this.handleSelectChange}
-                value={this.state.source}
-                name="source"
-                style={{ marginRight: "30%", marginBottom: "4%", marginTop: "4%" }}
-              />
-
-            </Grid>
-
-          </Grid>
-          <br />
-          <br />
-          <Grid container spacing={24} style={{ marginLeft: "3%" }}>
-            <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography
-                value="Select target language"
-                variant="title"
-                gutterBottom="true"
-                style={{ width: "100%", paddingTop: "15px", paddingBottom: "30px" }}
-              >
-                {translate('common.page.label.targetLang') + ' *'}
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={3} sm={3} lg={3} xl={3}>
-              <Select
-                id="outlined-age-simple"
-                selectValue="language_code"
-                MenuItemValues={this.state.source && this.state.modelLanguage.length > 0 ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
-                // MenuItemValues={["Hindi"]}
-                handleChange={this.handleSelectChange}
-                value={this.state.target}
-                name="target"
-                style={{ marginRight: "30%", marginBottom: "4%", marginTop: "4%", marginLeft: "10%" }}
-              />
-            </Grid>
-          </Grid>
-          <DropzoneArea
+          <Grid item xs={12} sm={6} lg={6} xl={6} >
+          <DropzoneArea style={{minHeight:'385px'}}
             showPreviewsInDropzone
             acceptedFiles={[".pdf"]}
             onChange={this.handleChange.bind(this)}
@@ -284,9 +231,74 @@ class PdfUpload extends Component {
             dropzoneText={translate("common.page.label.addDropFile")}
             onDelete={this.handleDelete.bind(this)}
           />
-          <Button variant="contained" color="primary" className={this.props.classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
-            {translate("common.page.button.submit")}
+            </Grid>
+
+            <Grid item xs={12} sm={6} lg={6} xl={6}  >
+         
+          
+            <Grid container spacing={24} style={{ marginLeft: "3%" }}>
+              <Typography gutterBottom variant="title"  style={{ width: "100%", paddingTop: "15px",fontSize:"20px"}}>
+                {translate('common.page.label.sourceLang')+ ' *' }
+              </Typography>
+          
+              <Select
+                id="outlined-age-simple"
+                selectValue="language_code"
+                fullWidth
+                MenuItemValues={this.state.modelLanguage.length > 0 && this.handleSource(this.state.modelLanguage, this.state.language)}
+                // MenuItemValues={["English"]}
+                handleChange={this.handleSelectChange}
+                value={this.state.source}
+                name="source"
+                style={{ marginRight: "30%", marginBottom: "4%", marginTop: "4%",width:"100%" }}
+              />
+    
+
+            </Grid>
+          <br />
+          <br />
+          <Grid container spacing={24} style={{ marginLeft: "3%" }}>
+            
+              <Typography
+                value="Select target language"
+                variant="title"
+                gutterBottom="true"
+                style={{ width: "100%", paddingTop: "15px",fontSize:"20px" }}
+              >
+                {translate('common.page.label.targetLang') + ' *'}
+              </Typography>
+              <br />
+              <Select
+                id="outlined-age-simple"
+                selectValue="language_code"
+                MenuItemValues={this.state.source && this.state.modelLanguage.length > 0 ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
+                // MenuItemValues={["Hindi"]}
+                handleChange={this.handleSelectChange}
+                value={this.state.target}
+                name="target"
+                style={{ marginRight: "30%", marginBottom: "4%", marginLeft: "10%", width:"100%" }}
+              />
+          </Grid>
+          <Grid container spacing={24} style={{ marginLeft: "3%" }}>
+              <Typography gutterBottom variant="title"  style={{  paddingTop: "30px",fontSize:"20px" }}>
+                {translate("common.page.label.filename")}
+              </Typography>
+              <br />
+              <TextField
+                value={this.state.workspaceName}
+                id="outlined-name"
+                margin="normal"
+                onChange={event => {
+                  this.handleTextChange("workspaceName", event);
+                }}
+                variant="outlined"
+                style={{ width: '90%' }}
+              />
+            </Grid>
+         <Button variant="contained" color="primary" className={this.props.classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
+            {translate("common.page.button.upload")}
           </Button>
+        </Grid>
         </Grid>
 
         {this.state.open && (
@@ -300,6 +312,7 @@ class PdfUpload extends Component {
           />
         )}
       </Paper>
+      </div>
     );
   }
 }

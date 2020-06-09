@@ -1,7 +1,7 @@
 const localization_EN_Data = {
   "dashboard.page.heading.title": "Translate",
-  "common.page.label.sourceLang": "Please select source language",
-  "common.page.label.targetLang": "Please select target language",
+  "common.page.label.sourceLang": "Select Source Language",
+  "common.page.label.targetLang": "Select Target Language",
   "common.page.button.submit": "submit",
   "common.page.button.clear": "clear",
   "dashboard.page.checkbox.mt": "Machine Translated",
@@ -79,7 +79,7 @@ const localization_EN_Data = {
   "corpus.page.text.alignmentAccuracy": "Alignment Accuracy",
   "common.page.text.download": "DOWNLOAD",
   "common.page.label.basename": "Basename",
-  "common.page.label.filename": "Enter Filename :",
+  "common.page.label.filename": "Enter File Name",
   "viewCorpus.page.label.fileName": "File Name",
   "viewCorpus.page.label.domain": "Domain",
   "common.page.label.sentence": "Sentences",
