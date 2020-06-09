@@ -15,7 +15,7 @@ class SimpleSelect extends React.Component {
     return (
       <form>
         <FormControl style={{
-          margin: 0,
+          width:'92%',
           fullWidth: true,
           display: "flex",
           wrap: "nowrap"

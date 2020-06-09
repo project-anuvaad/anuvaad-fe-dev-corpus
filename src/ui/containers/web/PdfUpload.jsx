@@ -240,7 +240,7 @@ class PdfUpload extends Component {
               <Typography gutterBottom variant="title"  style={{ width: "100%", paddingTop: "15px",fontSize:"20px"}}>
                 {translate('common.page.label.sourceLang')+ ' *' }
               </Typography>
-          
+              <Grid item xs={12} sm={12} lg={12} xl={12}  >
               <Select
                 id="outlined-age-simple"
                 selectValue="language_code"
@@ -252,7 +252,7 @@ class PdfUpload extends Component {
                 name="source"
                 style={{ marginRight: "30%", marginBottom: "4%", marginTop: "4%",width:"100%" }}
               />
-    
+              </Grid>
 
             </Grid>
           <br />
@@ -268,6 +268,7 @@ class PdfUpload extends Component {
                 {translate('common.page.label.targetLang') + ' *'}
               </Typography>
               <br />
+              <Grid item xs={12} sm={12} lg={12} xl={12}  >
               <Select
                 id="outlined-age-simple"
                 selectValue="language_code"
@@ -278,6 +279,7 @@ class PdfUpload extends Component {
                 name="target"
                 style={{ marginRight: "30%", marginBottom: "4%", marginLeft: "10%", width:"100%" }}
               />
+              </Grid>
           </Grid>
           <Grid container spacing={24} style={{ marginLeft: "3%" }}>
               <Typography gutterBottom variant="title"  style={{  paddingTop: "30px",fontSize:"20px" }}>
