@@ -327,6 +327,9 @@ const localization_EN_Data = {
   "intractive_translate.page.textarea.anuvaadModelPlaceholder": "Select sentence from target or press next..",
   "intractive_translate.page.textarea.updateManuallyPlaceholder": "Update sentence manually here...",
   "intractive_translate.page.textarea.ignoredPlaceholder": "Ignored Anuvaad Model",
+  "intractive_translate.page.preview.insertNewRow": "Insert new row",
+  "intractive_translate.page.preview.insertNewColumn": "Insert new column",
+  "intractive_translate.page.preview.deleteTable": "Delete table",
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
@@ -659,6 +662,9 @@ const localization_HI_Data = {
   "intractive_translate.page.textarea.anuvaadModelPlaceholder": "लक्ष्य से वाक्य चुनें या अगला दबाएं",
   "intractive_translate.page.textarea.updateManuallyPlaceholder": "यहां मैन्युअल रूप से वाक्य अपडेट करें...",
   "intractive_translate.page.textarea.ignoredPlaceholder": "अनुवाद मॉडल को नज़रंदाज़ करे",
+  "intractive_translate.page.preview.insertNewRow": "नई पंक्ति डालें",
+  "intractive_translate.page.preview.insertNewColumn": "नया कॉलम डालेंn",
+  "intractive_translate.page.preview.deleteTable": "तालिका हटाएँ",
 };
 
 export function translate(locale_text) {

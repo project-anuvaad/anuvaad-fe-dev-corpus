@@ -231,41 +231,6 @@ class EditorPaper extends React.Component {
         }
 
     }
-
-    fetchTable(id, sentences, prevSentence, tableIndex, pageNo, noOfPage) {
-        let tableRow = []
-        let index = 0
-        let printPageNo = false
-        let isFirst = false
-
-        if (tableIndex === 0) {
-            printPageNo = true
-            isFirst = true
-        } else if (prevSentence && sentences[0][0].page_no !== prevSentence.page_no) {
-            printPageNo = true
-        }
-
-        for (let row in sentences) {
-            let col = []
-
-            for (let block in sentences[row]) {
-                let blockData = this.props.paperType === 'source' ? sentences[row][block].text : sentences[row][block].target
-                let blockId = id + '_' + sentences[row][block].sentence_index
-                let bgColor = !this.props.isPreview ? ((this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId ? '#4dffcf' : "") : ""
-
-                col.push(<td id={blockId} key={blockId}
-                    onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType, pageNo)}
-                    onMouseEnter={() => this.tableHoverOn(id, blockId, pageNo)}
-                    onMouseLeave={() => this.tableHoverOff()}
-                    style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
-                    {blockData}</td>)
-            }
-            tableRow.push(<tr key={index}>{col}</tr>)
-            index++
-        }
-        return <div>{printPageNo ? <div style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<table key={id} ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}><tbody>{tableRow}</tbody></table></div>
-    }
-
     hoverOn(e, pageNo) {
         if (!this.props.isPreview) {
             this.props.handleOnMouseEnter(e, this.props.paperType, pageNo)
