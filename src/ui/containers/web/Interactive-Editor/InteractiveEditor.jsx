@@ -386,8 +386,9 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-  handleonDoubleClick(selectedSourceId, selectedSourceText) {
-    this.setState({ selectedSourceId, selectedSourceText, selectedSourceCheckText: selectedSourceText });
+  handleonDoubleClick(selectedSourceId, selectedSourceText,row,cell) {
+    
+    this.setState({ selectedSourceId, selectedSourceText, selectedSourceCheckText: selectedSourceText , row, cell});
   }
 
   handleSourceChange = evt => {
@@ -409,8 +410,13 @@ class IntractiveTrans extends React.Component {
               sentenceObj = sentence;
               updatedSentence = value;
             }
+            
           });
+          if(sentence.is_table){
+            sentence.table_items[this.state.row][this.state.cell].text = text;
+          }
         }
+        
       });
       const { APITransport } = this.props;
       const apiObj = new InteractiveSourceUpdate(sentenceObj, updatedSentence);
