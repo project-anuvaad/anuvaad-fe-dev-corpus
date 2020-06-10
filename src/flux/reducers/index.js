@@ -63,6 +63,7 @@ import setpassword from './setpassword';
 import activate from './activate';
 import updatePdfTable from './updatePdfTable';
 import updateSource from './interactivesourceupdate';
+import deleteSentence from './deleteSentence'
 
 export default {
     login,
@@ -130,4 +131,5 @@ export default {
     activate,
     updatePdfTable,
     updateSource,
+    deleteSentence
 };

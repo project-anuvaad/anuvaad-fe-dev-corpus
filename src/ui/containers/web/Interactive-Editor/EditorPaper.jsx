@@ -19,8 +19,10 @@ class EditorPaper extends React.Component {
         super(props);
         this.textInput = React.createRef();
         this.state = {
-          html:''}}
-    
+            html: ''
+        }
+    }
+
     componentDidUpdate(prevProps) {
         if (prevProps.scrollToId !== this.props.scrollToId) {
             let sid = this.props.scrollToId.split('_')[0]
@@ -85,6 +87,7 @@ class EditorPaper extends React.Component {
                 if (paragraph._id === startNode.split('_')[0] && !paragraph.is_table) {
                     selection.startNode = startNode
                     selection.pageNo = paragraph.page_no
+                    selection.startParagraph = paragraph
                 }
                 return true
             })
@@ -96,6 +99,7 @@ class EditorPaper extends React.Component {
                 if (paragraph._id === endNode.split('_')[0] && !paragraph.is_table) {
                     selection.endNode = endNode
                     selection.pageNo = paragraph.page_no
+                    selection.endParagraph = paragraph
                 }
                 return true
             })
@@ -111,41 +115,48 @@ class EditorPaper extends React.Component {
             if (this.props.paperType === 'source') {
 
                 sentence.tokenized_sentences.map((tokenText) => {
-                    let color = ""
-                    let textColor = ""
-                    if (this.props.selectedMergeSentence && Array.isArray(this.props.selectedMergeSentence) && this.props.selectedMergeSentence.length > 0) {
-                        this.props.selectedMergeSentence.map(sentenceText => {
-                            if ((sentence._id + '_' + tokenText.sentence_index === sentenceText.startNode) || (sentence._id + '_' + tokenText.sentence_index === sentenceText.endNode)) {
-                                color = "red"
-                                textColor = 'white'
-                            }
-                            return true
-                        })
-                    }
+                    if (tokenText.status !== "DELETED") {
+                        let color = ""
+                        let textColor = ""
+                        if (this.props.selectedMergeSentence && Array.isArray(this.props.selectedMergeSentence) && this.props.selectedMergeSentence.length > 0) {
+                            this.props.selectedMergeSentence.map(sentenceText => {
+                                if ((sentence._id + '_' + tokenText.sentence_index === sentenceText.startNode) || (sentence._id + '_' + tokenText.sentence_index === sentenceText.endNode)) {
+                                    color = "red"
+                                    textColor = 'white'
+                                }
+                                return true
+                            })
+                        }
 
-                    let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : color ? color : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : '') : ""
-                    if (bgColor === 'yellow' || bgColor === '#4dffcf') {
-                        textColor = 'black'
-                    }
-                    sentenceArray.push(     <span> <span
-                        id={sentence._id + '_' + tokenText.sentence_index}
-                        style={{
-                            fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: bgColor,
-                            color: textColor ? textColor : ''
-                        }}
+                        let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : color ? color : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : '') : ""
+                        if (bgColor === 'yellow' || bgColor === '#4dffcf') {
+                            textColor = 'black'
+                        }
+                        sentenceArray.push(<span> <span
+                            id={sentence._id + '_' + tokenText.sentence_index}
+                            key={sentence._id + '_' + tokenText.sentence_index}
+                            style={{
+                                fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
+                                backgroundColor: bgColor,
+                                color: textColor ? textColor : ''
+                            }}
 
-                        ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
-                        key={sentence._id + '_' + tokenText.sentence_index} onDoubleClick={()=>this.props.handleonDoubleClick(sentence._id + '_' + tokenText.sentence_index, tokenText.text )} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
-                        {this.props.selectedSourceId === sentence._id + '_' + tokenText.sentence_index ? <ContentEditable
-        html={this.props.selectedSourceText}
-        disabled={false}
-        onBlur={this.props.handleCheck}
-        onChange={this.props.handleSourceChange} 
-        style={{ border: "1px dashed #aaa",
-            padding: "5px"}}
-      />: tokenText.text}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
-                    return true
+                            ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
+                            key={sentence._id + '_' + tokenText.sentence_index} onDoubleClick={() => this.props.handleonDoubleClick(sentence._id + '_' + tokenText.sentence_index, tokenText.text)} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
+                            {this.props.selectedSourceId === sentence._id + '_' + tokenText.sentence_index ? <ContentEditable
+                                html={this.props.selectedSourceText}
+                                disabled={false}
+                                onBlur={this.props.handleCheck}
+                                onChange={this.props.handleSourceChange}
+                                style={{
+                                    border: "1px dashed #aaa",
+                                    padding: "5px"
+                                }}
+                            /> : tokenText.text}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
+                        return true
+                    } else {
+                        return true
+                    }
                 })
                 return sentenceArray
             }
@@ -225,7 +236,7 @@ class EditorPaper extends React.Component {
                 selectedSourceId={this.props.selectedSourceId}
                 handleonDoubleClick={this.handleonDoubleClick.bind(this)}
                 handleCheck={this.props.handleCheck}
-                ></CustomTable>
+            ></CustomTable>
         } else {
             return <div></div>
         }
@@ -255,9 +266,9 @@ class EditorPaper extends React.Component {
         }
 
     }
-   
-    handleonDoubleClick(id,value){
-        this.props.handleonDoubleClick(id,value)
+
+    handleonDoubleClick(id, value) {
+        this.props.handleonDoubleClick(id, value)
     }
 
     handleOnClick(id, pageNo) {
