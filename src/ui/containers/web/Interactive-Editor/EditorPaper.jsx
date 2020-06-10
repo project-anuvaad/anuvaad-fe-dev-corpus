@@ -238,6 +238,7 @@ class EditorPaper extends React.Component {
                 selectedSourceId={this.props.selectedSourceId}
                 handleonDoubleClick={this.handleonDoubleClick.bind(this)}
                 handleCheck={this.props.handleCheck}
+                handleDeleteTable = {this.props.handleDeleteTable}
             ></CustomTable>
         } else {
             return <div></div>

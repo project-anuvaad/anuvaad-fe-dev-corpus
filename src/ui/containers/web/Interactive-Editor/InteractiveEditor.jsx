@@ -31,6 +31,7 @@ import Dialog from "../../../components/web/common/SimpleDialog";
 import PdfPreview from "./PdfPreview";
 import UpdatePdfTable from "../../../../flux/actions/apis/updatePdfTable"
 import DeleteSentence from "../../../../flux/actions/apis/deleteSentence"
+import DeleteTable from "../../../../flux/actions/apis/deleteTable"
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -96,7 +97,7 @@ class IntractiveTrans extends React.Component {
       });
     }
 
-    if (prevProps.updatePdfTable !== this.props.updatePdfTable || prevProps.deleteSentence !== this.props.deleteSentence) {
+    if (prevProps.updatePdfTable !== this.props.updatePdfTable || prevProps.deleteSentence !== this.props.deleteSentence || prevProps.deleteTable !== this.props.deleteTable) {
       const { APITransport } = this.props;
       const apiObj = new FetchDoc(this.props.match.params.fileid);
       APITransport(apiObj);
@@ -387,9 +388,9 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-  handleonDoubleClick(selectedSourceId, selectedSourceText,row,cell) {
-    
-    this.setState({ selectedSourceId, selectedSourceText, selectedSourceCheckText: selectedSourceText , row, cell});
+  handleonDoubleClick(selectedSourceId, selectedSourceText, row, cell) {
+
+    this.setState({ selectedSourceId, selectedSourceText, selectedSourceCheckText: selectedSourceText, row, cell });
   }
 
   handleSourceChange = evt => {
@@ -411,13 +412,13 @@ class IntractiveTrans extends React.Component {
               sentenceObj = sentence;
               updatedSentence = value;
             }
-            
+
           });
-          if(sentence.is_table){
+          if (sentence.is_table) {
             sentence.table_items[this.state.row][this.state.cell].text = text;
           }
         }
-        
+
       });
       const { APITransport } = this.props;
       const apiObj = new InteractiveSourceUpdate(sentenceObj, updatedSentence);
@@ -515,21 +516,29 @@ class IntractiveTrans extends React.Component {
     let sentences = []
 
     let sentenceData = this.state.startParagraph.tokenized_sentences
-    sentenceData && Array.isArray(sentenceData) && sentenceData.length>0 && sentenceData.map(sentence => {
+    sentenceData && Array.isArray(sentenceData) && sentenceData.length > 0 && sentenceData.map(sentence => {
 
-      if(sentence.sentence_index >= startNode.sentence_index && sentence.sentence_index <= endNode.sentence_index) {
+      if (sentence.sentence_index >= startNode.sentence_index && sentence.sentence_index <= endNode.sentence_index) {
         sentences.push(sentence)
-      } else if(sentence.sentence_index <= startNode.sentence_index && sentence.sentence_index >= endNode.sentence_index) {
+      } else if (sentence.sentence_index <= startNode.sentence_index && sentence.sentence_index >= endNode.sentence_index) {
         sentences.push(sentence)
       }
     })
 
-    if (this.state.startParagraph === this.state.endParagraph && sentences && sentences.length>0) {
+    if (this.state.startParagraph === this.state.endParagraph && sentences && sentences.length > 0) {
       const { APITransport } = this.props;
       const apiObj = new DeleteSentence(this.state.startParagraph, sentences);
       APITransport(apiObj);
     }
 
+  }
+
+  handleDeleteTable(paragraph, cellData, operation_type) {
+    if (paragraph && cellData && operation_type) {
+      const { APITransport } = this.props;
+      const apiObj = new DeleteTable(paragraph, cellData, operation_type)
+      APITransport(apiObj)
+    }
   }
 
   render() {
@@ -669,6 +678,7 @@ class IntractiveTrans extends React.Component {
                         handleonDoubleClick={this.handleonDoubleClick.bind(this)}
                         handleCheck={this.handleCheck}
                         handleAddCell={this.handleAddCell.bind(this)}
+                        handleDeleteTable={this.handleDeleteTable.bind(this)}
                       />
                     </div>
                   </Paper>
@@ -834,7 +844,8 @@ const mapStateToProps = state => ({
   mergeSentenceApi: state.mergeSentenceApi,
   updateSource: state.updateSource,
   updatePdfTable: state.updatePdfTable,
-  deleteSentence: state.deleteSentence
+  deleteSentence: state.deleteSentence,
+  deleteTable: state.deleteTable
 });
 
 const mapDispatchToProps = dispatch =>
