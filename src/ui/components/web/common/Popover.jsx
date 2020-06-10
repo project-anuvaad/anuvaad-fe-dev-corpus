@@ -20,7 +20,7 @@ export default class Popovers extends React.Component {
                 anchorEl={this.props.anchorEl}
                 onClose={() => this.props.handlePopOverClose()}
                 anchorOrigin={{
-                    vertical: 'bottom',
+                    vertical: 'center',
                     horizontal: 'center',
                 }}
                 transformOrigin={{

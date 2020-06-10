@@ -30,6 +30,7 @@ import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
 import Dialog from "../../../components/web/common/SimpleDialog";
 import PdfPreview from "./PdfPreview";
 import UpdatePdfTable from "../../../../flux/actions/apis/updatePdfTable"
+import DeleteSentence from "../../../../flux/actions/apis/deleteSentence"
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -95,7 +96,7 @@ class IntractiveTrans extends React.Component {
       });
     }
 
-    if (prevProps.updatePdfTable !== this.props.updatePdfTable) {
+    if (prevProps.updatePdfTable !== this.props.updatePdfTable || prevProps.deleteSentence !== this.props.deleteSentence) {
       const { APITransport } = this.props;
       const apiObj = new FetchDoc(this.props.match.params.fileid);
       APITransport(apiObj);
@@ -426,7 +427,7 @@ class IntractiveTrans extends React.Component {
   };
 
   handleSelection(selectedSentence, event) {
-    if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode && selectedSentence.pageNo && window.getSelection().toString()) {
+    if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode && selectedSentence.pageNo && window.getSelection().toString() && selectedSentence.startParagraph && selectedSentence.endParagraph) {
       let initialIndex;
       let startSentence;
       let endIndex;
@@ -479,7 +480,9 @@ class IntractiveTrans extends React.Component {
           openEl: true,
           contextToken: true,
           addSentence: true,
-          pageNo
+          pageNo,
+          startParagraph: selectedSentence.startParagraph,
+          endParagraph: selectedSentence.endParagraph
         })
         : this.setState({
           mergeSentence,
@@ -490,16 +493,41 @@ class IntractiveTrans extends React.Component {
           openEl: true,
           splitSentence: selectedSplitValue,
           contextToken: true,
-          pageNo
+          pageNo,
+          startParagraph: selectedSentence.startParagraph,
+          endParagraph: selectedSentence.endParagraph
         });
     }
   }
 
   handleAddCell(sentence, operationType) {
-    if(sentence && operationType) {
-          const { APITransport } = this.props;
-          const apiObj = new UpdatePdfTable(sentence, operationType);
-          APITransport(apiObj);
+    if (sentence && operationType) {
+      const { APITransport } = this.props;
+      const apiObj = new UpdatePdfTable(sentence, operationType);
+      APITransport(apiObj);
+    }
+
+  }
+
+  handleDeleteSentence() {
+    let startNode = this.state.startSentence
+    let endNode = this.state.endSentence
+    let sentences = []
+
+    let sentenceData = this.state.startParagraph.tokenized_sentences
+    sentenceData && Array.isArray(sentenceData) && sentenceData.length>0 && sentenceData.map(sentence => {
+
+      if(sentence.sentence_index >= startNode.sentence_index && sentence.sentence_index <= endNode.sentence_index) {
+        sentences.push(sentence)
+      } else if(sentence.sentence_index <= startNode.sentence_index && sentence.sentence_index >= endNode.sentence_index) {
+        sentences.push(sentence)
+      }
+    })
+
+    if (this.state.startParagraph === this.state.endParagraph && sentences && sentences.length>0) {
+      const { APITransport } = this.props;
+      const apiObj = new DeleteSentence(this.state.startParagraph, sentences);
+      APITransport(apiObj);
     }
 
   }
@@ -781,6 +809,12 @@ class IntractiveTrans extends React.Component {
                       onClick: this.handleAddSentence.bind(this),
                       closeOnClick: true,
                       closeOnClickOut: true
+                    },
+                    this.state.startParagraph._id === this.state.endParagraph._id && {
+                      label: "Delete Sentence",
+                      onClick: this.handleDeleteSentence.bind(this),
+                      closeOnClick: true,
+                      closeOnClickOut: true
                     }
                   ]}
                 />
@@ -799,7 +833,8 @@ const mapStateToProps = state => ({
   interactiveUpdate: state.interactiveUpdate,
   mergeSentenceApi: state.mergeSentenceApi,
   updateSource: state.updateSource,
-  updatePdfTable: state.updatePdfTable
+  updatePdfTable: state.updatePdfTable,
+  deleteSentence: state.deleteSentence
 });
 
 const mapDispatchToProps = dispatch =>
