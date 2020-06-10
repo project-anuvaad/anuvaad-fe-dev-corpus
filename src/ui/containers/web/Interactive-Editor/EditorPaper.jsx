@@ -162,6 +162,7 @@ class EditorPaper extends React.Component {
             }
             if (this.props.paperType === 'target') {
                 sentence.tokenized_sentences.map((tokenText) => {
+                    if (tokenText.status !== "DELETED") {
                     sentenceArray.push(<span><span
                         ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                         style={{
@@ -171,6 +172,7 @@ class EditorPaper extends React.Component {
                         key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
                         {tokenText.target}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                     return true
+                    }
                 })
                 return sentenceArray
             }

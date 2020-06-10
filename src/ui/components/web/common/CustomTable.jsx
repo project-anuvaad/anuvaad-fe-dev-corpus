@@ -121,6 +121,7 @@ class CustomTable extends React.Component {
                 <table id={this.props.id}  key={this.props.id} ref={this.props.id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>
                     <tbody>{this.fetchTable(this.props.id, this.props.tableItems, this.props.prevSentence, this.props.tableIndex, this.props.pageNo)}</tbody>
                 </table>
+                {this.props.paperType === 'source' &&
                 <PopOver
                     id={this.props.id}
                     sentence={sentence}
@@ -128,7 +129,7 @@ class CustomTable extends React.Component {
                     anchorEl={this.state.anchorEl}
                     handleOnClick={this.handleOnClick.bind(this)}
                     handlePopOverClose={this.handlePopOverClose.bind(this)}>
-                </PopOver>
+                </PopOver>}
             </div>
         )
     }
