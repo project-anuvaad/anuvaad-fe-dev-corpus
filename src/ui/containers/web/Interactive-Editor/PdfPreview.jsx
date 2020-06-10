@@ -19,8 +19,20 @@ class PdfPreview extends React.Component {
       sentences: "",
       sourceSupScripts: "",
       targetSupScripts: "",
-      header: ""
+      header: "",
+      scale:1.0
     };
+  }
+
+  onPageLoad=(page)=> {
+    const parentDiv = document.querySelector('#pdfDocument')
+    console.log(parentDiv)
+    // let pageScale = parentDiv.clientHeight / page.originalHeight
+    let pageScale = parentDiv.clientWidth / page.originalWidth
+    console.log(this.state.header ,pageScale)
+    if (this.state.scale !== pageScale) {
+      this.setState({ scale: pageScale });
+    }
   }
 
   render() {
@@ -34,30 +46,15 @@ class PdfPreview extends React.Component {
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-          <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
+        <Grid item xs={4} sm={3} lg={3} xl={3}>
+          <Typography value="" variant="h6" gutterBottom style={{ width:'100%',flex: 1, marginLeft: "3%" }}>
             Original PDF
           </Typography>
-
-          <Toolbar
-            onClick={event => {
-              this.props.handleClick(false, 4);
-            }}
-          >
-            <CloseIcon style={{ cursor: "pointer" }} color="primary" />
-            <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-              Close
-            </Typography>
-          </Toolbar>
-        </Toolbar>
-
-        <div style={{ marginLeft: "13%" }}>
-          <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess}>
-            <Page scale={0.975} pageNumber={pageNo} />
-          </Document>
-        </div>
-        {numPages && (
-          <Grid container spacing={8} style={{ marginLeft: "35%" }}>
-            <Grid item xs={1} sm={1} lg={1} xl={1}>
+      </Grid>
+      <Grid item xs={7} sm={6} lg={6} xl={6}>
+          {numPages && (
+          <Grid container spacing={8} style={{marginLeft:'25%'}}>
+            <Grid item xs={4} sm={3} lg={2} xl={2}>
               <Button
                 style={{ fontWeight: "bold", width: "100%" }}
                 color="primary"
@@ -70,12 +67,13 @@ class PdfPreview extends React.Component {
                 <ChevronLeftIcon size="large" />
               </Button>
             </Grid>
-            <Grid item xs={2} sm={2} lg={2} xl={2}>
+            <Grid item xs={4} sm={3} lg={3} xl={3}>
               <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none" }} color="primary">
                 {`${pageNo  } / ${  numPages}`}
               </Button>
             </Grid>
-            <Grid item xs={1} sm={1} lg={1} xl={1}>
+            
+            <Grid item xs={4} sm={3} lg={1} xl={1}>
               <Button
                 color="primary"
                 disabled={numPages <= pageNo}
@@ -89,6 +87,32 @@ class PdfPreview extends React.Component {
             </Grid>
           </Grid>
         )}
+        </Grid>
+        <Grid item xs={1} sm={1} lg={1} xl={1}></Grid>
+        <Grid item xs={1} sm={1} lg={1} xl={1 }>
+          <Toolbar
+            onClick={event => {
+              this.props.handleClick(false, 4);
+            }}
+          >
+            
+            <CloseIcon style={{ cursor: "pointer" }} color="primary" />
+            <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
+              Close
+            </Typography>
+          </Toolbar>
+          </Grid>
+        </Toolbar>
+        {console.log(window.innerHeight)}
+        <div style={{ marginBottom:'0px',maxHeight: window.innerHeight - 180,overflowY: "auto" }} id="pdfDocument">
+        {console.log(this.state.scale)}
+          <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess}>
+            <Page onLoadSuccess={this.onPageLoad}
+              scale={this.state.scale} pageNumber={pageNo} onLoadSuccess={this.onPageLoad}/>
+          </Document>
+        
+       
+        </div>
       </Paper>
     );
   }
