@@ -41,9 +41,15 @@ class LinearDeterminate extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log("ete",this.props.token)
     return (
       <div className={classes.root}>
-        <LinearProgress variant="determinate" value={this.state.completed} />
+        {this.props.token===true ?
+        <LinearProgress/>
+        :
+        <LinearProgress  variant= "determinate" value={this.state.completed} />
+        
+  }
         
         <br />
       </div>
