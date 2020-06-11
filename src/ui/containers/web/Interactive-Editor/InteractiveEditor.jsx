@@ -638,7 +638,7 @@ class IntractiveTrans extends React.Component {
                         >
                           <PictureAsPdfIcon style={{ cursor: "pointer" }} color="primary" />
                           <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                            Compare with original
+                            {translate("intractive_translate.page.preview.compareWithOriginal")}
                           </Typography>
                         </Toolbar>
                       )}
@@ -771,7 +771,7 @@ class IntractiveTrans extends React.Component {
 
             {this.state.openDialog && (
               <Dialog
-                message="Selected sentence from different position. Do you want to merge ? "
+                message={translate("intractive_translate.page.message.mergeDifferentSentenceQuestion")}
                 handleSubmit={this.handleDialogSave.bind(this)}
                 handleClose={this.handleClose.bind(this)}
                 open
@@ -786,10 +786,10 @@ class IntractiveTrans extends React.Component {
                 variant="success"
                 message={
                   this.state.token
-                    ? `${this.state.fileDetails.process_name} saved successfully !...`
+                    ? `${this.state.fileDetails.process_name} ` + translate("intractive_translate.page.message.savedSuccessfully")
                     : this.state.operation_type === "merge"
-                      ? "Sentence merged successfully!..."
-                      : "Sentence splitted successfully!..."
+                      ? translate("intractive_translate.page.message.mergeSentenceSuccessfully")
+                      : translate("intractive_translate.page.message.splitSentenceSuccessfully")
                 }
               />
             )}
@@ -804,8 +804,8 @@ class IntractiveTrans extends React.Component {
                     {
                       label:
                         this.state.operation_type === "merge" || this.state.operation_type === "merge-individual"
-                          ? "Merge Sentence"
-                          : "Split Sentence",
+                          ? translate("intractive_translate.page.preview.mergeSentence")
+                          : translate("intractive_translate.page.preview.splitSentence"),
                       onClick:
                         this.state.operation_type === "merge-individual" && this.state.addSentence
                           ? this.handleDialog.bind(this)
@@ -815,13 +815,13 @@ class IntractiveTrans extends React.Component {
                     },
                     this.state.mergeSentence.length < 2 &&
                     this.state.operation_type === "split" && {
-                      label: "Add another sentence",
+                      label: translate("intractive_translate.page.preview.addAnotherSentence"),
                       onClick: this.handleAddSentence.bind(this),
                       closeOnClick: true,
                       closeOnClickOut: true
                     },
                     this.state.startParagraph._id === this.state.endParagraph._id && {
-                      label: "Delete Sentence",
+                      label: translate("intractive_translate.page.preview.deleteSentence"),
                       onClick: this.handleDeleteSentence.bind(this),
                       closeOnClick: true,
                       closeOnClickOut: true
