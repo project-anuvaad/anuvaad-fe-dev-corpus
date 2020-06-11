@@ -27,10 +27,8 @@ class PdfPreview extends React.Component {
 
   onPageLoad = (page) => {
     const parentDiv = document.querySelector('#pdfDocument')
-    console.log(parentDiv)
     // let pageScale = parentDiv.clientHeight / page.originalHeight
     let pageScale = parentDiv.clientWidth / page.originalWidth
-    console.log(this.state.header, pageScale)
     if (this.state.scale !== pageScale) {
       this.setState({ scale: pageScale });
     }
@@ -96,22 +94,17 @@ class PdfPreview extends React.Component {
                 this.props.handleClick(false, 4);
               }}
             >
-
               <CloseIcon style={{ cursor: "pointer" }} color="primary" />
               <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
                 {translate("common.page.label.close")}
-            </Typography>
+              </Typography>
             </Toolbar>
           </Grid>
         </Toolbar>
-        {console.log(window.innerHeight)}
         <div style={{ marginBottom: '0px', maxHeight: window.innerHeight - 180, overflowY: "auto" }} id="pdfDocument">
-          {console.log(this.state.scale)}
           <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess}>
-            <Page onLoadSuccess={this.onPageLoad}
-              scale={this.state.scale} pageNumber={pageNo} onLoadSuccess={this.onPageLoad} />
+            <Page scale={this.state.scale} pageNumber={pageNo} onLoadSuccess={this.onPageLoad} />
           </Document>
-
 
         </div>
       </Paper>
