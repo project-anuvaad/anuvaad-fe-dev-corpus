@@ -330,6 +330,8 @@ const localization_EN_Data = {
   "intractive_translate.page.preview.insertNewRow": "Insert new row",
   "intractive_translate.page.preview.insertNewColumn": "Insert new column",
   "intractive_translate.page.preview.deleteTable": "Delete table",
+  "intractive_translate.page.preview.deleteRow": "Delete row",
+  "intractive_translate.page.preview.deleteColumn": "Delete column",
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
@@ -665,6 +667,8 @@ const localization_HI_Data = {
   "intractive_translate.page.preview.insertNewRow": "नई पंक्ति डालें",
   "intractive_translate.page.preview.insertNewColumn": "नया कॉलम डालेंn",
   "intractive_translate.page.preview.deleteTable": "तालिका हटाएँ",
+  "intractive_translate.page.preview.deleteRow": "पंक्ति को हटाएं",
+  "intractive_translate.page.preview.deleteColumn": "कॉलम हटाएं",
 };
 
 export function translate(locale_text) {

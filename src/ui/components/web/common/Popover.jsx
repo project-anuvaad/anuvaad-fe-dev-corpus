@@ -30,7 +30,11 @@ export default class Popovers extends React.Component {
             >
                 <Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleOnClick(this.props.sentence, 'add-row')}>{translate("intractive_translate.page.preview.insertNewRow")}</Button><br/>
                 <Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleOnClick(this.props.sentence, 'add-column')}>{translate("intractive_translate.page.preview.insertNewColumn")}</Button><br/>
+                <hr style={{color: 'grey', opacity: '0.4'}}/>
+                <Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleOnClick(this.props.sentence, 'delete-row')}>{translate("intractive_translate.page.preview.deleteRow")}</Button><br/>
+                <Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleOnClick(this.props.sentence, 'delete-column')}>{translate("intractive_translate.page.preview.deleteColumn")}</Button><br/>
                 <Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleOnClick(this.props.sentence, 'delete-table')}>{translate("intractive_translate.page.preview.deleteTable")}</Button>
+
             </Popover>
         )
     }
