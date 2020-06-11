@@ -1,19 +1,19 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 
-const themeDefault = createMuiTheme({
+const themeAnuvaad = createMuiTheme({
 
   typography: {
-    fontFamily: '"Source Sans Pro", "Arial", sans-serif',
+    fontFamily: '"Source Sans Pro","Regular","Arial", sans-serif',
     fontSize: 15,
-    color:"inherit"
+    color:"#000000"
   },
   palette: {
     primary: {
-      light: '#1976d2',
-      main: '#1976d2',
-      dark: '1976d2',
-      contrastText: '#FFFFFF',
+      light: '#09d6a1',
+      main: '#FFFFFF',
+      dark: '#FFFFFF',
+      contrastText: '#000000',
       color:'inherit'
 
     },
@@ -41,13 +41,15 @@ const themeDefault = createMuiTheme({
   {
     fontFamily: '"Source Sans Pro", "Arial", sans-serif',
     fontSize: 16,
-    color:"inherit"
+    color:"#1C9AB7"
   },
-  
+ Button:{
+   borderRadius:'20px'
+ } ,
 
   
 
 });
 
 
-export default themeDefault;
+export default themeAnuvaad;

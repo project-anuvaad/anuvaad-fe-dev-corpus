@@ -343,7 +343,7 @@ const localization_EN_Data = {
   'signUp.page.label.firstName':"First name*",
   'signUp.page.label.lastName':"Last name*",
   'signUp.page.label.logIn':"Log In",
-  'signUp.page.label.allReadyHaveAccount':"Already Having Account?",
+  'signUp.page.label.allReadyHaveAccount':"Already signed up?",
   'common.page.alert.provideValidDetails':'Please provide valid details',
   'common.page.alert.acceptTerms&Condition':'Please accept terms and condition',
   'activate.page.label.waitWhileWeActivateAccount':"Please wait while we are activating your account, you will be redirected to login page automatically",

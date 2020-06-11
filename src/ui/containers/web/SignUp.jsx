@@ -90,7 +90,7 @@ class SignUp extends React.Component {
         <div >
           <Grid container spacing={8} >
             <Grid item xs={12} sm={4} lg={5} xl={5} >
-              <img src="Anuvaad.png" width="100%" height="925px" alt=""/>
+              <img src="Anuvaad.png" width="100%" height="925px" alt="" />
             </Grid>
             <Grid item xs={12} sm={8} lg={7} xl={7} style={{ backgroundColor: '#f1f5f7' }} >
               {/* <ValidatorForm
@@ -98,11 +98,11 @@ class SignUp extends React.Component {
                             onSubmit={this.handleSubmit}
                             onError={errors => console.log(errors)}
                         > */}
-              <Typography align='center' style={{ marginTop: '5%', marginBottom: '5%', fontSize: '33px', fontfamily: 'Trebuchet MS, sans-serif	', color: '#003366' }}>Sign Up</Typography>
+              <Typography align='center' style={{ marginTop: '5%', marginBottom: '5%', fontSize: '33px', color: '#003366' }}>Sign Up</Typography>
               <FormControl align='center' fullWidth >
 
                 <TextField value={this.state.firstName} id="outlined-required" placeholder={translate('signUp.page.label.firstName')}
-                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white', fontSize: '20px' }} onChange={this.handleInputReceived('firstName')}
+                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('firstName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
@@ -139,8 +139,8 @@ class SignUp extends React.Component {
                 label={<div><span>{translate('signUp.page.label.iAgree')}</span>
                   <Link href="#" onClick={() => {
                     window.open('/Anuvaad-TnC.html', 'T&C', `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-width=500,height=500`);
-                  }}> {translate('signUp.page.label.privacyPolicy')}</Link>  
+                    width=500,height=500`);
+                  }}> {translate('signUp.page.label.privacyPolicy')}</Link>
                 </div>}
               />
               <br />
@@ -152,15 +152,15 @@ width=500,height=500`);
                     backgroundColor: this.state.termsAndCondition ? '#1ca9c9' : 'gray', color: 'white',
                   }} onClick={this.handleSubmit.bind(this)}>
                   {translate('singUp.page.label.signUp')}
-                  </Button>
+                </Button>
               </FormControl>
 
               <Typography style={{ marginLeft: '26%', marginBottom: '4%' }}>{translate('signUp.page.label.allReadyHaveAccount')}
-                  <Link style={{ cursor: 'pointer' }} href="#" onClick={() => {  history.push("/") }}> {translate('signUp.page.label.logIn')}</Link></Typography>
+                <Link style={{ cursor: 'pointer' }} href="#" onClick={() => { history.push("/") }}> {translate('signUp.page.label.logIn')}</Link></Typography>
 
               {/* </ValidatorForm> */}
               <hr style={{ height: '2px', borderwidth: '0', width: '70%', backgroundColor: ' #D8D8D8', color: '#D8D8D8', border: '0', marginTop: '2%' }} />
-              <Typography align='center' style={{ marginTop: '3%', fontfamily: 'Gill Sans, sans-serif;' }}>{translate('signUp.page.label.enterDetailsToReceiveConfirmation')}<br />{translate('signUp.page.label.clickToActivateAccount')}</Typography>
+              <Typography align='center' style={{ marginTop: '3%',fontSize:"100%" }}>{translate('signUp.page.label.enterDetailsToReceiveConfirmation')}<br />{translate('signUp.page.label.clickToActivateAccount')}</Typography>
             </Grid>
           </Grid>
           <div className={classes.buttonsDiv} />
