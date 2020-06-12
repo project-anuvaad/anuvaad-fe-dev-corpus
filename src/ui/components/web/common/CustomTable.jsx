@@ -1,8 +1,6 @@
 import React from "react";
 import ContentEditable from 'react-contenteditable';
 import PopOver from "./Popover"
-import { compose } from "redux";
-import { translate } from "../../../../assets/localisation";
 
 class CustomTable extends React.Component {
     constructor(props) {
@@ -47,15 +45,6 @@ class CustomTable extends React.Component {
     fetchTable(id, sentences, prevSentence, tableIndex, pageNo) {
         let tableRow = []
         let index = 0
-        let printPageNo = false
-        let isFirst = false
-
-        if (tableIndex === 0) {
-            printPageNo = true
-            isFirst = true
-        } else if (prevSentence && sentences[0][0].page_no !== prevSentence.page_no) {
-            printPageNo = true
-        }
 
         for (let row in sentences) {
             let col = []
@@ -128,10 +117,8 @@ class CustomTable extends React.Component {
 
     render() {
         let printPageNo = false
-        let isFirst = false
         if (this.props.tableIndex === 0) {
             printPageNo = true
-            isFirst = true
         } else if (this.props.prevSentence && this.props.tableItems[0][0].page_no !== this.props.prevSentence.page_no) {
             printPageNo = true
         }

@@ -132,7 +132,7 @@ class EditorPaper extends React.Component {
                         if (bgColor === 'yellow' || bgColor === '#4dffcf') {
                             textColor = 'black'
                         }
-                        sentenceArray.push(<span> <span
+                        sentenceArray.push(<span key={sentence._id + '_' + tokenText.sentence_index}> <span
                             id={sentence._id + '_' + tokenText.sentence_index}
                             key={sentence._id + '_' + tokenText.sentence_index}
                             style={{
@@ -163,16 +163,16 @@ class EditorPaper extends React.Component {
             if (this.props.paperType === 'target') {
                 sentence.tokenized_sentences.map((tokenText) => {
                     if (tokenText.status !== "DELETED") {
-                    sentenceArray.push(<span><span
-                        ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
-                        style={{
-                            fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "",
-                        }}
-                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
-                        {tokenText.target}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
-                    return true
+                        sentenceArray.push(<span><span
+                            ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
+                            style={{
+                                fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
+                                backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "",
+                            }}
+                            key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
+                            {tokenText.target}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                     }
+                    return true
                 })
                 return sentenceArray
             }
@@ -202,7 +202,8 @@ class EditorPaper extends React.Component {
                         onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                         {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
                 } else {
-                    return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                    return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
+                        style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                         onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                         {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
                 }
@@ -238,7 +239,7 @@ class EditorPaper extends React.Component {
                 selectedSourceId={this.props.selectedSourceId}
                 handleonDoubleClick={this.handleonDoubleClick.bind(this)}
                 handleCheck={this.props.handleCheck}
-                handleDeleteTable = {this.props.handleDeleteTable}
+                handleDeleteTable={this.props.handleDeleteTable}
             ></CustomTable>
         } else {
             return <div></div>
@@ -269,9 +270,15 @@ class EditorPaper extends React.Component {
         }
 
     }
+<<<<<<< HEAD
    
     handleonDoubleClick(id,value,event,row,cell){
         this.props.handleonDoubleClick(id,value,event,row,cell)
+=======
+
+    handleonDoubleClick(id, value, row, cell) {
+        this.props.handleonDoubleClick(id, value, row, cell)
+>>>>>>> 6ec3ecd9968920d2ebfd0e7f3cbd189afe88770d
     }
 
     handleOnClick(id, pageNo) {

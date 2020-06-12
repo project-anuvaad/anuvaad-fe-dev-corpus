@@ -340,8 +340,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleClose = () => {
-
-    this.setState({ openDialog: false, operation_type: '', mergeSentence: [], selectedMergeSentence: [], endSentence: '', startSentence: '', addSentence: false, selectedMergeSentence: [] });
+    this.setState({ openDialog: false, operation_type: '', mergeSentence: [], endSentence: '', startSentence: '', addSentence: false, selectedMergeSentence: [] });
   };
 
   handleDialog() {
@@ -377,9 +376,9 @@ class IntractiveTrans extends React.Component {
     this.setState({ numPages });
   };
 
-  handlePageChange(value) {
-    this.setState({ pageNo: this.state.pageNo + value });
-  }
+  // handlePageChange(value) {
+  //   this.setState({ pageNo: this.state.pageNo + value });
+  // }
   handlePageChange(value) {
     this.setState({ pageNo: this.state.pageNo + value, scrollToPage: this.state.pageNo + value })
   }
@@ -414,13 +413,13 @@ class IntractiveTrans extends React.Component {
               sentenceObj = sentence;
               updatedSentence = value;
             }
-
+            return true
           });
           if (sentence.is_table) {
             sentence.table_items[this.state.row][this.state.cell].text = text;
           }
         }
-
+        return true;
       });
       const { APITransport } = this.props;
       const apiObj = new InteractiveSourceUpdate(sentenceObj, updatedSentence);
@@ -531,6 +530,7 @@ class IntractiveTrans extends React.Component {
       } else if (sentence.sentence_index <= startNode.sentence_index && sentence.sentence_index >= endNode.sentence_index) {
         sentences.push(sentence)
       }
+      return true
     })
 
     if (this.state.startParagraph === this.state.endParagraph && sentences && sentences.length > 0) {
@@ -554,13 +554,7 @@ class IntractiveTrans extends React.Component {
 
   render() {
     const { gridValue } = this.state;
-    const pagen = this.state.pageNo;
-    const url =
-      this.state.fileDetails &&
-      this.state.fileDetails.download_source_path &&
-      `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
-      this.state.fileDetails.download_source_path ? this.state.fileDetails.download_source_path : ""
-      }`;
+
     return (
       <div style={{ marginLeft: "-100px" }}>
         {this.state.sentences && (
@@ -631,7 +625,7 @@ class IntractiveTrans extends React.Component {
                   <Paper
                     elevation={2}
                     style={{
-                      paddingBottom: "10px",
+                      // paddingBottom: "10px",
                       maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 180,
                       paddingBottom: "12px"
                     }}
@@ -649,7 +643,7 @@ class IntractiveTrans extends React.Component {
                         >
                           <PictureAsPdfIcon style={{ cursor: "pointer" }} color="primary" />
                           <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                            Compare with original
+                            {translate("intractive_translate.page.preview.compareWithOriginal")}
                           </Typography>
                         </Toolbar>
                       )}
@@ -715,7 +709,7 @@ class IntractiveTrans extends React.Component {
 
               {!this.state.collapseToken ? (
                 <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
-                  <Paper elevation={2} style={{ paddingBottom: "10px", maxHeight: window.innerHeight - 180, paddingBottom: "12px" }}>
+                  <Paper elevation={2} style={{ maxHeight: window.innerHeight - 180, paddingBottom: "12px" }}>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "10px" }}>
                         {translate("common.page.label.target")}
@@ -783,7 +777,7 @@ class IntractiveTrans extends React.Component {
 
             {this.state.openDialog && (
               <Dialog
-                message="Selected sentence from different position. Do you want to merge ? "
+                message={translate("intractive_translate.page.message.mergeDifferentSentenceQuestion")}
                 handleSubmit={this.handleDialogSave.bind(this)}
                 handleClose={this.handleClose.bind(this)}
                 open
@@ -798,10 +792,10 @@ class IntractiveTrans extends React.Component {
                 variant="success"
                 message={
                   this.state.token
-                    ? `${this.state.fileDetails.process_name} saved successfully !...`
+                    ? `${this.state.fileDetails.process_name} ` + translate("intractive_translate.page.message.savedSuccessfully")
                     : this.state.operation_type === "merge"
-                      ? "Sentence merged successfully!..."
-                      : "Sentence splitted successfully!..."
+                      ? translate("intractive_translate.page.message.mergeSentenceSuccessfully")
+                      : translate("intractive_translate.page.message.splitSentenceSuccessfully")
                 }
               />
             )}
