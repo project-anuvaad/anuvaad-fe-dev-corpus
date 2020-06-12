@@ -64,7 +64,7 @@ class CustomTable extends React.Component {
                         onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType, pageNo)}
                         onMouseEnter={() => this.props.handleOnMouseEnter(id, blockId, pageNo)}
                         onMouseLeave={() => this.props.handleOnMouseLeave()}
-                        onDoubleClick={() => this.props.handleonDoubleClick(blockId, blockData, row, block)}
+                         onDoubleClick={() => this.props.paperType === 'source' && this.props.handleonDoubleClick(blockId, blockData, row, block)}
                         style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse', minWidth: '25px' }}>
                         {this.props.selectedSourceId === blockId && this.props.paperType === 'source' ? <ContentEditable
                             html={this.props.selectedSourceText}

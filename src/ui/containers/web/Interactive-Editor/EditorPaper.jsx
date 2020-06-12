@@ -143,7 +143,7 @@ class EditorPaper extends React.Component {
 
                             ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
                             key={sentence._id + '_' + tokenText.sentence_index} onDoubleClick={(event) => this.props.handleonDoubleClick(sentence._id + '_' + tokenText.sentence_index, tokenText.text, event)} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
-                            {this.props.selectedSourceId === sentence._id + '_' + tokenText.sentence_index ? <ContentEditable
+                            {this.props.selectedSourceId === sentence._id + '_' + tokenText.sentence_index || tokenText.text_pending ? <ContentEditable
                                 html={this.props.selectedSourceText}
                                 disabled={false}
                                 onBlur={this.props.handleCheck}
