@@ -32,6 +32,8 @@ import PdfPreview from "./PdfPreview";
 import UpdatePdfTable from "../../../../flux/actions/apis/updatePdfTable"
 import DeleteSentence from "../../../../flux/actions/apis/deleteSentence"
 import DeleteTable from "../../../../flux/actions/apis/deleteTable"
+import Divider from '@material-ui/core/Divider';
+import MenuItems from "../../../components/web/common/Menu";
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -289,7 +291,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddSentence() {
-    this.setState({ addSentence: true, operation_type: "merge-individual" });
+    this.setState({ addSentence: true, operation_type: "merge-individual" , openEl: false});
   }
 
   handleApiMerge() {
@@ -388,8 +390,8 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-  handleonDoubleClick(selectedSourceId, selectedSourceText, row, cell) {
-
+  handleonDoubleClick(selectedSourceId, selectedSourceText, row, cell,event) {
+    
     this.setState({ selectedSourceId, selectedSourceText, selectedSourceCheckText: selectedSourceText, row, cell });
   }
 
@@ -428,6 +430,8 @@ class IntractiveTrans extends React.Component {
   };
 
   handleSelection(selectedSentence, event) {
+
+    console.log(event.clientX)
     if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode && selectedSentence.pageNo && window.getSelection().toString() && selectedSentence.startParagraph && selectedSentence.endParagraph) {
       let initialIndex;
       let startSentence;
@@ -482,6 +486,8 @@ class IntractiveTrans extends React.Component {
           contextToken: true,
           addSentence: true,
           pageNo,
+          topValue: event.clientY-4,
+          leftValue: event.clientX-2,
           startParagraph: selectedSentence.startParagraph,
           endParagraph: selectedSentence.endParagraph
         })
@@ -494,6 +500,8 @@ class IntractiveTrans extends React.Component {
           openEl: true,
           splitSentence: selectedSplitValue,
           contextToken: true,
+          topValue: event.clientY-2,
+          leftValue: event.clientX-2,
           pageNo,
           startParagraph: selectedSentence.startParagraph,
           endParagraph: selectedSentence.endParagraph
@@ -530,9 +538,9 @@ class IntractiveTrans extends React.Component {
       const apiObj = new DeleteSentence(this.state.startParagraph, sentences);
       APITransport(apiObj);
     }
+    this.setState({openEl:true})
 
   }
-
   handleDeleteTable(paragraph, cellData, operation_type) {
     if (paragraph && cellData && operation_type) {
       const { APITransport } = this.props;
@@ -540,6 +548,9 @@ class IntractiveTrans extends React.Component {
       APITransport(apiObj)
     }
   }
+  handlePopOverClose() {
+    this.setState({ openContextMenu: false, anchorEl: null , leftValue:'',topValue:''})
+}
 
   render() {
     const { gridValue } = this.state;
@@ -644,6 +655,7 @@ class IntractiveTrans extends React.Component {
                       )}
                     </Toolbar>
                     <div
+                    onContextMenu={this.handleClickv }
                       id="popUp"
                       style={{
                         maxHeight: this.state.collapseToken ? window.innerHeight - 220 : window.innerHeight - 280,
@@ -797,37 +809,28 @@ class IntractiveTrans extends React.Component {
               this.state.contextToken &&
               this.state.startSentence &&
               this.state.endSentence &&
-              this.state.operation_type && (
-                <ContextMenu
-                  contextId="popUp"
-                  items={[
-                    {
-                      label:
-                        this.state.operation_type === "merge" || this.state.operation_type === "merge-individual"
-                          ? "Merge Sentence"
-                          : "Split Sentence",
-                      onClick:
-                        this.state.operation_type === "merge-individual" && this.state.addSentence
-                          ? this.handleDialog.bind(this)
-                          : this.handleApiMerge.bind(this),
-                      closeOnClick: true,
-                      closeOnClickOut: true
-                    },
-                    this.state.mergeSentence.length < 2 &&
-                    this.state.operation_type === "split" && {
-                      label: "Add another sentence",
-                      onClick: this.handleAddSentence.bind(this),
-                      closeOnClick: true,
-                      closeOnClickOut: true
-                    },
-                    this.state.startParagraph._id === this.state.endParagraph._id && {
-                      label: "Delete Sentence",
-                      onClick: this.handleDeleteSentence.bind(this),
-                      closeOnClick: true,
-                      closeOnClickOut: true
-                    }
-                  ]}
+              this.state.topValue&&
+              this.state.leftValue&&
+              this.state.openEl&&
+              
+              (
+                <MenuItems
+                isOpen = {this.state.openEl}
+                anchorEl = {this.state.anchorEl}
+                operation_type = { this.state.operation_type}
+                addSentence ={this.state.addSentence}
+                handleDialog = {this.handleDialog.bind(this)}
+                handleApiMerge = {this.handleApiMerge.bind(this)}
+                mergeSentence ={this.state.mergeSentence}
+                handleAddSentence = {this.handleAddSentence.bind(this)}
+                handleDeleteSentence = {this.handleDeleteSentence.bind(this)}
+                startParagraph = {this.state.startParagraph}
+                endParagraph = {this.state.endParagraph}
+                topValue={this.state.topValue}
+                leftValue = {this.state.leftValue}
+                handleClose = {this.handleClose.bind(this)}
                 />
+                  
               )}
           </div>
         )}

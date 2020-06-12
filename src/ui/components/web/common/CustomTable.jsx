@@ -2,6 +2,7 @@ import React from "react";
 import ContentEditable from 'react-contenteditable';
 import PopOver from "./Popover"
 import { compose } from "redux";
+import { translate } from "../../../../assets/localisation";
 
 class CustomTable extends React.Component {
     constructor(props) {
@@ -10,7 +11,11 @@ class CustomTable extends React.Component {
             openContextMenu: false,
             anchorEl: null,
             selectedRow: '',
-            selectedColumn: ''
+            selectedColumn: '',
+            topValue:'',
+            leftValue:'',
+            tableItems:['add-row','add-column','delete-row','delete-column','delete-table'],
+            tableTitles:[translate("intractive_translate.page.preview.insertNewRow"), translate("intractive_translate.page.preview.insertNewColumn"),translate("intractive_translate.page.preview.deleteRow"),translate("intractive_translate.page.preview.deleteColumn"),translate("intractive_translate.page.preview.deleteTable")]
         }
         this.handleMenu = this.handleMenu.bind(this)
     }
@@ -96,13 +101,16 @@ class CustomTable extends React.Component {
     }
 
     handleMenu(e) {
+        console.log(e.clientX-2,e.clientY-4)
         let row = e.target.id.split('_')[2]
         let column = e.target.id.split('_')[3]
 
-        this.setState({ openContextMenu: true, anchorEl: e.currentTarget, selectedRow: row, selectedColumn: column })
+        this.setState({ openContextMenu: true, anchorEl: e.currentTarget, selectedRow: row, selectedColumn: column,topValue: e.clientY-4, leftValue: e.clientX-2})
     }
 
     handleOnClick(sentence, operationType) {
+
+        
         if (this.state.openContextMenu && (operationType === 'add-column' || operationType === 'add-row')) {
             this.props.handleAddCell(sentence, operationType)
         } else if (this.state.openContextMenu && (operationType === 'delete-row' || operationType === 'delete-column' || operationType === 'delete-table')) {
@@ -111,11 +119,11 @@ class CustomTable extends React.Component {
                 this.props.handleDeleteTable(sentence, cellData, operationType)
             }
         }
-        this.setState({ openContextMenu: false, anchorEl: null })
+        this.setState({ openContextMenu: false, anchorEl: null, leftValue:'',topValue:''})
     }
 
     handlePopOverClose() {
-        this.setState({ openContextMenu: false, anchorEl: null })
+        this.setState({ openContextMenu: false, anchorEl: null , leftValue:'',topValue:''})
     }
 
     render() {
@@ -131,17 +139,21 @@ class CustomTable extends React.Component {
         let sentence = this.props.sentence
         return (
             <div>{printPageNo ? <div ref={this.props.pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}>{!this.props.isFirst ? <hr /> : ''}Page: {this.props.pageNo}/{this.props.noOfPage}<div>&nbsp;</div></div> : <div></div>}
-                <table id={this.props.id} key={this.props.id} ref={this.props.id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>
+                <table  id={this.props.id} key={this.props.id} ref={this.props.id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>
                     <tbody>{this.fetchTable(this.props.id, this.props.tableItems, this.props.prevSentence, this.props.tableIndex, this.props.pageNo)}</tbody>
                 </table>
-                {this.props.paperType === 'source' &&
+                {this.props.paperType === 'source' && this.state.topValue && this.state.leftValue && this.state.tableItems && this.state.tableTitles &&
                     <PopOver
                         id={this.props.id}
                         sentence={sentence}
                         isOpen={this.state.openContextMenu}
+                        topValue={this.state.topValue}
+                        leftValue={this.state.leftValue}
                         anchorEl={this.state.anchorEl}
                         handleOnClick={this.handleOnClick.bind(this)}
                         handlePopOverClose={this.handlePopOverClose.bind(this)}
+                        tableItems={this.state.tableItems}
+                        tableValues={this.state.tableTitles}
 
                     >
                     </PopOver>}

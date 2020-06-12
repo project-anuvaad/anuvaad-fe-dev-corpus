@@ -12,16 +12,19 @@ export default class Popovers extends React.Component {
     }
 
     render() {
-        const { id, isOpen } = this.props;
+        const { id, isOpen,topValue,leftValue } = this.props;
+        console.log("top",this.props.topValue,this.props.leftValue)
         return (
             <Popover
                 id={id}
                 open={isOpen}
-                anchorEl={this.props.anchorEl}
+                anchorReference="anchorPosition"
+  anchorPosition={{ top: topValue, left: leftValue }}
+                
                 onClose={() => this.props.handlePopOverClose()}
                 anchorOrigin={{
-                    vertical: 'center',
-                    horizontal: 'center',
+                    vertical: 'top',
+                    horizontal: 'left',
                 }}
                 transformOrigin={{
                     vertical: 'top',
