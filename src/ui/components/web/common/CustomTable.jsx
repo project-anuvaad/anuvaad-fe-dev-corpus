@@ -12,8 +12,8 @@ class CustomTable extends React.Component {
             selectedColumn: '',
             topValue:'',
             leftValue:'',
-            tableItems:['add-row','add-column','delete-row','delete-column','delete-table'],
-            tableTitles:[translate("intractive_translate.page.preview.insertNewRow"), translate("intractive_translate.page.preview.insertNewColumn"),translate("intractive_translate.page.preview.deleteRow"),translate("intractive_translate.page.preview.deleteColumn"),translate("intractive_translate.page.preview.deleteTable")]
+            // tableItems:['add-row','add-column','delete-row','delete-column','delete-table'],
+            // tableTitles:[translate("intractive_translate.page.preview.insertNewRow"), translate("intractive_translate.page.preview.insertNewColumn"),translate("intractive_translate.page.preview.deleteRow"),translate("intractive_translate.page.preview.deleteColumn"),translate("intractive_translate.page.preview.deleteTable")]
         }
         this.handleMenu = this.handleMenu.bind(this)
     }
@@ -129,7 +129,7 @@ class CustomTable extends React.Component {
                 <table  id={this.props.id} key={this.props.id} ref={this.props.id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>
                     <tbody>{this.fetchTable(this.props.id, this.props.tableItems, this.props.prevSentence, this.props.tableIndex, this.props.pageNo)}</tbody>
                 </table>
-                {this.props.paperType === 'source' && this.state.topValue && this.state.leftValue && this.state.tableItems && this.state.tableTitles &&
+                {this.props.paperType === 'source' && this.state.topValue && this.state.leftValue &&
                     <PopOver
                         id={this.props.id}
                         sentence={sentence}

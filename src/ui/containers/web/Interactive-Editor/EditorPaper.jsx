@@ -270,15 +270,9 @@ class EditorPaper extends React.Component {
         }
 
     }
-<<<<<<< HEAD
-   
-    handleonDoubleClick(id,value,event,row,cell){
-        this.props.handleonDoubleClick(id,value,event,row,cell)
-=======
 
     handleonDoubleClick(id, value, row, cell) {
         this.props.handleonDoubleClick(id, value, row, cell)
->>>>>>> 6ec3ecd9968920d2ebfd0e7f3cbd189afe88770d
     }
 
     handleOnClick(id, pageNo) {

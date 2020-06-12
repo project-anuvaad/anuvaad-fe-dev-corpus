@@ -1,5 +1,5 @@
 import React from "react";
-import Popover from '@material-ui/core/Popover';
+import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
 class MenuClass extends React.Component {
   render() {
@@ -22,21 +22,35 @@ class MenuClass extends React.Component {
           horizontal: "left"
         }}
       >
+        <div>
+          <Button
+            style={{ textTransform: "none", width: "100%", justifyContent: "left" }}
+            onClick={() =>
+              this.props.operation_type === "merge-individual" && this.props.addSentence ? this.props.handleDialog() : this.props.handleApiMerge()
+            }
+          >
+            {" "}
+            {this.props.operation_type === "merge" || this.props.operation_type === "merge-individual" ? "Merge Sentence" : "Split Sentence"}
+          </Button>
+          <br />
+        </div>
 
-<div><Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}}  onClick={() =>
-            this.props.operation_type === "merge-individual" && this.props.addSentence ? this.props.handleDialog() : this.props.handleApiMerge()
-          }> {this.props.operation_type === "merge" || this.props.operation_type === "merge-individual" ? "Merge Sentence" : "Split Sentence"}</Button><br/></div>
-        
-        {this.props.mergeSentence.length < 2 && this.props.operation_type === "split" &&
-        <div><Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleAddSentence()}> Add another sentence</Button><br/></div>
-                
-         }
-        {this.props.startParagraph._id === this.props.endParagraph._id &&
-         <Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleDeleteSentence()}>  Delete sentence</Button>
-        
-        }
-        
-        </Popover>
+        {this.props.mergeSentence.length < 2 && this.props.operation_type === "split" && (
+          <div>
+            <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddSentence()}>
+              {" "}
+              Add another sentence
+            </Button>
+            <br />
+          </div>
+        )}
+        {this.props.startParagraph._id === this.props.endParagraph._id && (
+          <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDeleteSentence()}>
+            {" "}
+            Delete sentence
+          </Button>
+        )}
+      </Popover>
     );
   }
 }
