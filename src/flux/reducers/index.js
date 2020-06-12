@@ -65,6 +65,7 @@ import updatePdfTable from './updatePdfTable';
 import updateSource from './interactivesourceupdate';
 import deleteSentence from './deleteSentence';
 import deleteTable from './deleteTable';
+import insertSentence from './insertSentence';
 
 export default {
     login,
@@ -133,6 +134,6 @@ export default {
     updatePdfTable,
     updateSource,
     deleteSentence,
-    deleteTable
-
+    deleteTable,
+    insertSentence,
 };

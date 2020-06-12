@@ -342,7 +342,7 @@ const localization_EN_Data = {
   "intractive_translate.page.message.splitSentenceSuccessfully": "Sentence splitted successfully!...",
   "intractive_translate.page.message.savedSuccessfully": "saved successfully !...",
   "intractive_translate.page.message.mergeDifferentSentenceQuestion": "Selected sentence from different position. Do you want to merge ? ",
-
+  "intractive_translate.page.preview.addNewSentence": "Add new sentence",
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
@@ -690,7 +690,7 @@ const localization_HI_Data = {
   "intractive_translate.page.message.splitSentenceSuccessfully": "वाक्य सफलता पूर्वक तोड़ लिए गए है!",
   "intractive_translate.page.message.savedSuccessfully": "सफलता पूर्वक सहेंजा गया",
   "intractive_translate.page.message.mergeDifferentSentenceQuestion": "चुने हुए वाक्य अलग स्थान से है। क्या आप जोड़ना चाहते है?",
-
+  "intractive_translate.page.preview.addNewSentence": "Add new sentence",
 };
 
 export function translate(locale_text) {
