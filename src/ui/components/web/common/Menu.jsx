@@ -1,6 +1,7 @@
 import React from "react";
 import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
+
 class MenuClass extends React.Component {
   render() {
     console.log("sajish", this.props.topValue, this.props.leftValue);
@@ -50,18 +51,15 @@ class MenuClass extends React.Component {
             Delete sentence
           </Button>
         )}
-        {this.props.operation_type === "split" && (
-          <div><Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence()}>
+          <div><Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("next")}>
             {" "}
             Add new sentence above
           </Button><br /></div>
-        )}
-        {this.props.operation_type === "split" && (
-         <div> <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence()}>
+       
+         <div> <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("previous")}>
             {" "}
             Add new sentence below
           </Button><br /></div>
-        )}
       </Popover>
     );
   }

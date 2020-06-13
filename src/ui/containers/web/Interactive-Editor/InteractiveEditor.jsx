@@ -34,6 +34,7 @@ import DeleteSentence from "../../../../flux/actions/apis/deleteSentence"
 import DeleteTable from "../../../../flux/actions/apis/deleteTable"
 import Divider from '@material-ui/core/Divider';
 import MenuItems from "../../../components/web/common/Menu";
+import InsertNewSentence from "../../../../flux/actions/apis/insertSentence"
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -57,7 +58,8 @@ class IntractiveTrans extends React.Component {
       footer: "",
       pageNo: 1,
       isAddNewCell: false,
-      scrollToPage: ""
+      scrollToPage: "",
+      isAddNewSentence: false
     };
   }
 
@@ -103,6 +105,10 @@ class IntractiveTrans extends React.Component {
       const { APITransport } = this.props;
       const apiObj = new FetchDoc(this.props.match.params.fileid);
       APITransport(apiObj);
+    }
+
+    if(prevProps.insertSentence !== this.props.insertSentence) {
+      this.setState({ isAddNewSentence: true})
     }
 
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
@@ -429,8 +435,6 @@ class IntractiveTrans extends React.Component {
   };
 
   handleSelection(selectedSentence, event) {
-
-    console.log(event.clientX)
     if (selectedSentence && selectedSentence.startNode && selectedSentence.endNode && selectedSentence.pageNo && window.getSelection().toString() && selectedSentence.startParagraph && selectedSentence.endParagraph) {
       let initialIndex;
       let startSentence;
@@ -552,7 +556,15 @@ class IntractiveTrans extends React.Component {
     this.setState({ openContextMenu: false, anchorEl: null , leftValue:'',topValue:''})
 }
 
-  render() {
+handleAddNewSentence(nodeType) {
+  if(this.state.startParagraph && this.state.endParagraph) {
+    const { APITransport } = this.props;
+    const apiObj = new InsertNewSentence(this.state.startParagraph, "text", nodeType)
+    APITransport(apiObj)
+  }
+}
+
+render() {
     const { gridValue } = this.state;
 
     return (
@@ -823,6 +835,7 @@ class IntractiveTrans extends React.Component {
                 topValue={this.state.topValue}
                 leftValue = {this.state.leftValue}
                 handleClose = {this.handleClose.bind(this)}
+                handleAddNewSentence = {this.handleAddNewSentence.bind(this)}
                 />
                   
               )}
@@ -842,7 +855,8 @@ const mapStateToProps = state => ({
   updateSource: state.updateSource,
   updatePdfTable: state.updatePdfTable,
   deleteSentence: state.deleteSentence,
-  deleteTable: state.deleteTable
+  deleteTable: state.deleteTable,
+  insertSentence: state.insertSentence
 });
 
 const mapDispatchToProps = dispatch =>

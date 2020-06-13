@@ -6,21 +6,20 @@ import { translate } from "../../../../assets/localisation";
 export default class Popovers extends React.Component {
     constructor(props) {
         super(props);
-        this.setState={
+        this.setState = {
             anchorEl: null
         }
     }
 
     render() {
-        const { id, isOpen,topValue,leftValue } = this.props;
-        console.log("top",this.props.topValue,this.props.leftValue)
+        const { id, isOpen, topValue, leftValue } = this.props;
         return (
             <Popover
                 id={id}
                 open={isOpen}
                 anchorReference="anchorPosition"
-  anchorPosition={{ top: topValue, left: leftValue }}
-                
+                anchorPosition={{ top: topValue, left: leftValue }}
+
                 onClose={() => this.props.handlePopOverClose()}
                 anchorOrigin={{
                     vertical: 'top',
@@ -31,12 +30,12 @@ export default class Popovers extends React.Component {
                     horizontal: 'left',
                 }}
             >
-                <Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleOnClick(this.props.sentence, 'add-row')}>{translate("intractive_translate.page.preview.insertNewRow")}</Button><br/>
-                <Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleOnClick(this.props.sentence, 'add-column')}>{translate("intractive_translate.page.preview.insertNewColumn")}</Button><br/>
-                <hr style={{color: 'grey', opacity: '0.4'}}/>
-                <Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleOnClick(this.props.sentence, 'delete-row')}>{translate("intractive_translate.page.preview.deleteRow")}</Button><br/>
-                <Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleOnClick(this.props.sentence, 'delete-column')}>{translate("intractive_translate.page.preview.deleteColumn")}</Button><br/>
-                <Button style={{textTransform: 'none', width: '100%', justifyContent: 'left'}} onClick={() => this.props.handleOnClick(this.props.sentence, 'delete-table')}>{translate("intractive_translate.page.preview.deleteTable")}</Button>
+                <Button style={{ textTransform: 'none', width: '100%', justifyContent: 'left' }} onClick={() => this.props.handleOnClick(this.props.sentence, 'add-row')}>{translate("intractive_translate.page.preview.insertNewRow")}</Button><br />
+                <Button style={{ textTransform: 'none', width: '100%', justifyContent: 'left' }} onClick={() => this.props.handleOnClick(this.props.sentence, 'add-column')}>{translate("intractive_translate.page.preview.insertNewColumn")}</Button><br />
+                <hr style={{ color: 'grey', opacity: '0.4' }} />
+                <Button style={{ textTransform: 'none', width: '100%', justifyContent: 'left' }} onClick={() => this.props.handleOnClick(this.props.sentence, 'delete-row')}>{translate("intractive_translate.page.preview.deleteRow")}</Button><br />
+                <Button style={{ textTransform: 'none', width: '100%', justifyContent: 'left' }} onClick={() => this.props.handleOnClick(this.props.sentence, 'delete-column')}>{translate("intractive_translate.page.preview.deleteColumn")}</Button><br />
+                <Button style={{ textTransform: 'none', width: '100%', justifyContent: 'left' }} onClick={() => this.props.handleOnClick(this.props.sentence, 'delete-table')}>{translate("intractive_translate.page.preview.deleteTable")}</Button>
 
             </Popover>
         )
