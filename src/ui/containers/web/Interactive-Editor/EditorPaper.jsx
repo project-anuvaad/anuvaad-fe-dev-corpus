@@ -240,6 +240,10 @@ class EditorPaper extends React.Component {
                 handleonDoubleClick={this.handleonDoubleClick.bind(this)}
                 handleCheck={this.props.handleCheck}
                 handleDeleteTable={this.props.handleDeleteTable}
+                handleAddNewTable={this.props.handleAddNewTable}
+                handleAddTableCancel={this.props.handleAddTableCancel}
+                handleAddNewSentence={this.props.handleAddNewSentence}
+
             ></CustomTable>
         } else {
             return <div></div>
@@ -258,9 +262,9 @@ class EditorPaper extends React.Component {
         }
     }
 
-    tableHoverOn(sentenceId, tableId, pageNo) {
+    tableHoverOn(sentenceId, tableId, pageNo, paragraph) {
         if (!this.props.isPreview) {
-            this.props.handleTableHover(sentenceId, tableId, this.props.paperType, pageNo)
+            this.props.handleTableHover(sentenceId, tableId, this.props.paperType, pageNo, paragraph)
         }
     }
 

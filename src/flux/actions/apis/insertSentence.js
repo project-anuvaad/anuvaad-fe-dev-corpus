@@ -30,18 +30,15 @@ export default class InsertSentence extends API {
     }
 
     getBody() {
-        let req = {}
-        req.type = this.sentenceType
-
         if (this.nodeType === "previous") {
             return {
                 previous_node: this.sentence,
-                sen_node: req
+                sen_node: this.sentenceType
             }
         } else if (this.nodeType === "next") {
             return {
                 next_node: this.sentence,
-                sen_node: req
+                sen_node: this.sentenceType
             }
         }
 

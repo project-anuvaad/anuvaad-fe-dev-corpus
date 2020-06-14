@@ -35,6 +35,7 @@ import DeleteTable from "../../../../flux/actions/apis/deleteTable"
 import Divider from '@material-ui/core/Divider';
 import MenuItems from "../../../components/web/common/Menu";
 import InsertNewSentence from "../../../../flux/actions/apis/insertSentence"
+import EditorDialog from "../../../components/web/common/EditorDialog"
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -59,7 +60,10 @@ class IntractiveTrans extends React.Component {
       pageNo: 1,
       isAddNewCell: false,
       scrollToPage: "",
-      isAddNewSentence: false
+      isAddNewSentence: false,
+      addNewTable: false,
+      tablePosition: "",
+      hoveredTable: ""
     };
   }
 
@@ -101,14 +105,10 @@ class IntractiveTrans extends React.Component {
       });
     }
 
-    if (prevProps.updatePdfTable !== this.props.updatePdfTable || prevProps.deleteSentence !== this.props.deleteSentence || prevProps.deleteTable !== this.props.deleteTable) {
+    if (prevProps.updatePdfTable !== this.props.updatePdfTable || prevProps.deleteSentence !== this.props.deleteSentence || prevProps.deleteTable !== this.props.deleteTable || prevProps.insertSentence !== this.props.insertSentence) {
       const { APITransport } = this.props;
       const apiObj = new FetchDoc(this.props.match.params.fileid);
       APITransport(apiObj);
-    }
-
-    if(prevProps.insertSentence !== this.props.insertSentence) {
-      this.setState({ isAddNewSentence: true})
     }
 
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
@@ -257,16 +257,23 @@ class IntractiveTrans extends React.Component {
     this.setState({ hoveredSentence: "" });
   }
 
-  handleTableHover(sentenceId, tableId, parent, pageNo) {
+  handleTableHover(sentenceId, tableId, parent, pageNo, paragraph) {
     if (this.state.clickedCell) {
-      this.setState({ hoveredSentence: sentenceId, hoveredTableId: tableId, scrollToId: "", pageNo: pageNo || this.state.pageNo, parent });
+      this.setState({
+        hoveredSentence: sentenceId,
+        hoveredTableId: tableId,
+        scrollToId: "", pageNo: pageNo || this.state.pageNo,
+        parent,
+        hoveredTable: paragraph
+      });
     } else {
       this.setState({
         hoveredSentence: sentenceId,
         hoveredTableId: tableId,
         scrollToId: sentenceId,
         pageNo: pageNo || this.state.pageNo,
-        parent
+        parent,
+        hoveredTable: paragraph
       });
     }
   }
@@ -297,7 +304,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddSentence() {
-    this.setState({ addSentence: true, operation_type: "merge-individual" , openEl: false});
+    this.setState({ addSentence: true, operation_type: "merge-individual", openEl: false });
   }
 
   handleApiMerge() {
@@ -395,8 +402,8 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-  handleonDoubleClick(selectedSourceId, selectedSourceText, row, cell,event) {
-    
+  handleonDoubleClick(selectedSourceId, selectedSourceText, row, cell, event) {
+
     this.setState({ selectedSourceId, selectedSourceText, selectedSourceCheckText: selectedSourceText, row, cell });
   }
 
@@ -489,8 +496,8 @@ class IntractiveTrans extends React.Component {
           contextToken: true,
           addSentence: true,
           pageNo,
-          topValue: event.clientY-4,
-          leftValue: event.clientX-2,
+          topValue: event.clientY - 4,
+          leftValue: event.clientX - 2,
           startParagraph: selectedSentence.startParagraph,
           endParagraph: selectedSentence.endParagraph
         })
@@ -503,8 +510,8 @@ class IntractiveTrans extends React.Component {
           openEl: true,
           splitSentence: selectedSplitValue,
           contextToken: true,
-          topValue: event.clientY-2,
-          leftValue: event.clientX-2,
+          topValue: event.clientY - 2,
+          leftValue: event.clientX - 2,
           pageNo,
           startParagraph: selectedSentence.startParagraph,
           endParagraph: selectedSentence.endParagraph
@@ -542,7 +549,7 @@ class IntractiveTrans extends React.Component {
       const apiObj = new DeleteSentence(this.state.startParagraph, sentences);
       APITransport(apiObj);
     }
-    this.setState({openEl:true})
+    this.setState({ openEl: true })
 
   }
   handleDeleteTable(paragraph, cellData, operation_type) {
@@ -553,18 +560,49 @@ class IntractiveTrans extends React.Component {
     }
   }
   handlePopOverClose() {
-    this.setState({ openContextMenu: false, anchorEl: null , leftValue:'',topValue:''})
-}
-
-handleAddNewSentence(nodeType) {
-  if(this.state.startParagraph && this.state.endParagraph) {
-    const { APITransport } = this.props;
-    const apiObj = new InsertNewSentence(this.state.startParagraph, "text", nodeType)
-    APITransport(apiObj)
+    this.setState({ openContextMenu: false, anchorEl: null, leftValue: '', topValue: '' })
   }
-}
 
-render() {
+  handleAddNewSentence(nodeType, sentence, selectedNodeType) {
+    let paragraph = ""
+    if(selectedNodeType === 'text' && this.state.startParagraph && this.state.endParagraph) {
+      paragraph = this.state.startParagraph
+    } else if(selectedNodeType === 'table') {
+      paragraph = sentence
+    }
+    if (paragraph) {
+      let req = {}
+      req.type = "text"
+
+      const { APITransport } = this.props;
+      const apiObj = new InsertNewSentence(paragraph, req, nodeType)
+      APITransport(apiObj)
+    }
+  }
+
+  handleAddNewTable(tablePosition, paragraph) {
+    this.setState({ addNewTable: true, openEl: false, tablePosition, hoveredTable: paragraph })
+  }
+
+  handleAddTableCancel() {
+    this.setState({ addNewTable: false, openEl: false })
+  }
+
+  handleAddTable(rows, columns) {
+    if (rows && columns) {
+      let sentenceNode = {}
+      sentenceNode.type = "table"
+      sentenceNode.row_count = rows.toString()
+      sentenceNode.column_count = columns.toString()
+
+      const { APITransport } = this.props;
+      const apiObj = new InsertNewSentence(this.state.hoveredTable ? this.state.hoveredTable : this.state.startParagraph, sentenceNode, this.state.tablePosition)
+      APITransport(apiObj)
+      this.setState({ addNewTable: false })
+    }
+  }
+
+  render() {
     const { gridValue } = this.state;
 
     return (
@@ -661,7 +699,7 @@ render() {
                       )}
                     </Toolbar>
                     <div
-                    onContextMenu={this.handleClickv }
+                      onContextMenu={this.handleClickv}
                       id="popUp"
                       style={{
                         maxHeight: this.state.collapseToken ? window.innerHeight - 220 : window.innerHeight - 280,
@@ -697,6 +735,10 @@ render() {
                         handleCheck={this.handleCheck}
                         handleAddCell={this.handleAddCell.bind(this)}
                         handleDeleteTable={this.handleDeleteTable.bind(this)}
+                        handleAddNewTable={this.handleAddNewTable.bind(this)}
+                        handleAddTableCancel={this.handleAddTableCancel.bind(this)}
+                        handleAddNewSentence={this.handleAddNewSentence.bind(this)}
+
                       />
                     </div>
                   </Paper>
@@ -787,6 +829,17 @@ render() {
                 </Grid>)}
             </Grid>
 
+            {this.state.addNewTable && (
+              <EditorDialog
+                open={true}
+                rowLabel="Rows"
+                columnLabel="Columns"
+                handleAddTableCancel={this.handleAddTableCancel.bind(this)}
+                handleAddTable={this.handleAddTable.bind(this)}
+              ></EditorDialog>
+            )
+            }
+
             {this.state.openDialog && (
               <Dialog
                 message={translate("intractive_translate.page.message.mergeDifferentSentenceQuestion")}
@@ -815,29 +868,31 @@ render() {
               this.state.contextToken &&
               this.state.startSentence &&
               this.state.endSentence &&
-              this.state.topValue&&
-              this.state.leftValue&&
-              this.state.openEl&&
-              
+              this.state.topValue &&
+              this.state.leftValue &&
+              this.state.openEl &&
+
               (
                 <MenuItems
-                isOpen = {this.state.openEl}
-                anchorEl = {this.state.anchorEl}
-                operation_type = { this.state.operation_type}
-                addSentence ={this.state.addSentence}
-                handleDialog = {this.handleDialog.bind(this)}
-                handleApiMerge = {this.handleApiMerge.bind(this)}
-                mergeSentence ={this.state.mergeSentence}
-                handleAddSentence = {this.handleAddSentence.bind(this)}
-                handleDeleteSentence = {this.handleDeleteSentence.bind(this)}
-                startParagraph = {this.state.startParagraph}
-                endParagraph = {this.state.endParagraph}
-                topValue={this.state.topValue}
-                leftValue = {this.state.leftValue}
-                handleClose = {this.handleClose.bind(this)}
-                handleAddNewSentence = {this.handleAddNewSentence.bind(this)}
+                  isOpen={this.state.openEl}
+                  anchorEl={this.state.anchorEl}
+                  operation_type={this.state.operation_type}
+                  addSentence={this.state.addSentence}
+                  handleDialog={this.handleDialog.bind(this)}
+                  handleApiMerge={this.handleApiMerge.bind(this)}
+                  mergeSentence={this.state.mergeSentence}
+                  handleAddSentence={this.handleAddSentence.bind(this)}
+                  handleDeleteSentence={this.handleDeleteSentence.bind(this)}
+                  startParagraph={this.state.startParagraph}
+                  endParagraph={this.state.endParagraph}
+                  topValue={this.state.topValue}
+                  leftValue={this.state.leftValue}
+                  handleClose={this.handleClose.bind(this)}
+                  handleAddNewSentence={this.handleAddNewSentence.bind(this)}
+                  handleAddNewTable={this.handleAddNewTable.bind(this)}
+                  handleAddTableCancel={this.handleAddTableCancel.bind(this)}
                 />
-                  
+
               )}
           </div>
         )}

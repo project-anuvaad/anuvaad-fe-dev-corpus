@@ -1,6 +1,7 @@
 import React from "react";
 import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
+import { translate } from "../../../../assets/localisation";
 
 class MenuClass extends React.Component {
   render() {
@@ -31,7 +32,7 @@ class MenuClass extends React.Component {
             }
           >
             {" "}
-            {this.props.operation_type === "merge" || this.props.operation_type === "merge-individual" ? "Merge Sentence" : "Split Sentence"}
+            {this.props.operation_type === "merge" || this.props.operation_type === "merge-individual" ? translate("intractive_translate.page.preview.mergeSentence") : translate("intractive_translate.page.preview.splitSentence")}
           </Button>
           <br />
         </div>
@@ -40,7 +41,7 @@ class MenuClass extends React.Component {
           <div>
             <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddSentence()}>
               {" "}
-              Add another sentence
+              {translate("intractive_translate.page.preview.addAnotherSentence")}
             </Button>
             <br />
           </div>
@@ -48,18 +49,28 @@ class MenuClass extends React.Component {
         {this.props.startParagraph._id === this.props.endParagraph._id && (
           <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDeleteSentence()}>
             {" "}
-            Delete sentence
+            {translate("intractive_translate.page.preview.deleteSentence")}
           </Button>
         )}
-          <div><Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("next")}>
-            {" "}
-            Add new sentence above
-          </Button><br /></div>
-       
-         <div> <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("previous")}>
-            {" "}
-            Add new sentence below
-          </Button><br /></div>
+        <hr style={{ color: 'grey', opacity: '0.4' }} />
+
+        <div><Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("next", "text")}>
+          {" "}
+          {translate("intractive_translate.page.preview.addNewSentenceAbove")}
+        </Button><br /></div>
+
+        <div> <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("previous", "text")}>
+          {" "}
+          {translate("intractive_translate.page.preview.addNewSentenceBelow")}
+        </Button><br /></div>
+        <div> <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewTable("next")}>
+          {" "}
+          {translate("intractive_translate.page.preview.addNewTableAbove")}
+        </Button><br /></div>
+        <div> <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewTable("previous")}>
+          {" "}
+          {translate("intractive_translate.page.preview.addNewTableBelow")}
+        </Button><br /></div>
       </Popover>
     );
   }
