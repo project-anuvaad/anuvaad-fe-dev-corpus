@@ -54,12 +54,12 @@ class MenuClass extends React.Component {
         )}
         <hr style={{ color: 'grey', opacity: '0.4' }} />
 
-        <div><Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("next", "text")}>
+        <div><Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("next", '',"text")}>
           {" "}
           {translate("intractive_translate.page.preview.addNewSentenceAbove")}
         </Button><br /></div>
 
-        <div> <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("previous", "text")}>
+        <div> <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("previous", '',"text")}>
           {" "}
           {translate("intractive_translate.page.preview.addNewSentenceBelow")}
         </Button><br /></div>
