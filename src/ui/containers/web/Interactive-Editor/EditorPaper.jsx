@@ -115,7 +115,7 @@ class EditorPaper extends React.Component {
             if (this.props.paperType === 'source') {
 
                 sentence.tokenized_sentences.map((tokenText) => {
-                    if (tokenText.status !== "DELETED") {
+                    if (tokenText.status !== "DELETED" && (tokenText.src)) {
                         let color = ""
                         let textColor = ""
                         if (this.props.selectedMergeSentence && Array.isArray(this.props.selectedMergeSentence) && this.props.selectedMergeSentence.length > 0) {

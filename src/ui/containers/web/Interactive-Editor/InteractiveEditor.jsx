@@ -63,7 +63,8 @@ class IntractiveTrans extends React.Component {
       isAddNewSentence: false,
       addNewTable: false,
       tablePosition: "",
-      hoveredTable: ""
+      hoveredTable: "",
+      zoom:false
     };
   }
 
@@ -412,6 +413,11 @@ class IntractiveTrans extends React.Component {
   handleSourceChange = evt => {
     this.setState({ selectedSourceText: evt.target.value });
   };
+  handleZoomChange=(value)=>{
+    
+    this.setState({zoom:!this.state.zoom})
+    
+  }
 
   handleCheck = () => {
     const startValue = this.state.selectedSourceId.split("_");
@@ -814,6 +820,8 @@ class IntractiveTrans extends React.Component {
                       onDocumentLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
                       handlePageChange={this.handlePageChange.bind(this)}
                       handleClick={this.handleClick.bind(this)}
+                      handleChange={this.handleZoomChange.bind(this)}
+                      zoom ={this.state.zoom}
                     />
                   </Grid>
                 )}
