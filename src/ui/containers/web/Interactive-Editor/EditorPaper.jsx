@@ -135,22 +135,24 @@ class EditorPaper extends React.Component {
                         sentenceArray.push(<span key={sentence._id + '_' + tokenText.sentence_index}> <span
                             id={sentence._id + '_' + tokenText.sentence_index}
                             key={sentence._id + '_' + tokenText.sentence_index}
-                            style={{
-                                fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                                backgroundColor: bgColor,
-                                color: textColor ? textColor : ''
-                            }}
+                            style={sentence.text_pending && this.props.selectedSourceId !== sentence._id + '_' + tokenText.sentence_index?{border: "1px solid #aaa",
+                            padding: "7px 49.5%", borderColor:'orange'
+                       }:{
+                            fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
+                            backgroundColor: bgColor,
+                            color: textColor ? textColor : ''
+                        }}
 
                             ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
-                            key={sentence._id + '_' + tokenText.sentence_index} onDoubleClick={(event) => this.props.handleonDoubleClick(sentence._id + '_' + tokenText.sentence_index, tokenText.text, event)} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
-                            {this.props.selectedSourceId === sentence._id + '_' + tokenText.sentence_index || tokenText.text_pending ? <ContentEditable
+                            key={sentence._id + '_' + tokenText.sentence_index} onDoubleClick={(event) => this.props.handleonDoubleClick(sentence._id + '_' + tokenText.sentence_index, tokenText.text, event)} onClick={(event) => {(sentence.text_pending) ? this.props.handleonDoubleClick(sentence._id + '_' + tokenText.sentence_index, tokenText.text) :this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)}} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
+                            {this.props.selectedSourceId === sentence._id + '_' + tokenText.sentence_index ? <ContentEditable
                                 html={this.props.selectedSourceText}
                                 disabled={false}
                                 onBlur={this.props.handleCheck}
                                 onChange={this.props.handleSourceChange}
                                 style={{
                                     border: "1px dashed #aaa",
-                                    padding: "5px"
+                                    padding: "5px",
                                 }}
                             /> : tokenText.text}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
                         return true
@@ -184,7 +186,7 @@ class EditorPaper extends React.Component {
         let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'left')
         let pageNo = sentence.page_no
 
-        if (!sentence.is_footer && sentence.text) {
+        if (!sentence.is_footer && !sentence.is_table&&(sentence.text||sentence.text_pending)) {
             let printPageNo = false
             let isFirst = false
             if (index === 0) {

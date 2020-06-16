@@ -402,8 +402,10 @@ class IntractiveTrans extends React.Component {
     }
   }
 
-  handleonDoubleClick(selectedSourceId, selectedSourceText, row, cell, event) {
+  handleonDoubleClick(selectedSourceId, selectedSourceText, row, cell) {
 
+    
+    
     this.setState({ selectedSourceId, selectedSourceText, selectedSourceCheckText: selectedSourceText, row, cell });
   }
 
@@ -416,6 +418,9 @@ class IntractiveTrans extends React.Component {
     let sentenceObj; let updatedSentence;
 
     const text = htmlToText.fromString(this.state.selectedSourceText);
+
+    console.log("value------",this.state.selectedSourceCheckText)
+    console.log("value------",text)
     if (this.state.selectedSourceCheckText !== text) {
       this.state.sentences.map((sentence, index) => {
         if (sentence._id === startValue[0]) {
@@ -426,6 +431,7 @@ class IntractiveTrans extends React.Component {
               sentenceObj = sentence;
               updatedSentence = value;
             }
+            sentence.text_pending = false
             return true
           });
           if (sentence.is_table) {
@@ -525,6 +531,7 @@ class IntractiveTrans extends React.Component {
       const apiObj = new UpdatePdfTable(sentence, operationType);
       APITransport(apiObj);
     }
+    this.handleClose();
 
   }
 
@@ -550,7 +557,7 @@ class IntractiveTrans extends React.Component {
       APITransport(apiObj);
     }
     this.setState({ openEl: true })
-
+    this.handleClose();
   }
   handleDeleteTable(paragraph, cellData, operation_type) {
     if (paragraph && cellData && operation_type) {
@@ -558,6 +565,7 @@ class IntractiveTrans extends React.Component {
       const apiObj = new DeleteTable(paragraph, cellData, operation_type)
       APITransport(apiObj)
     }
+    this.handleClose();
   }
   handlePopOverClose() {
     this.setState({ openContextMenu: false, anchorEl: null, leftValue: '', topValue: '' })
@@ -578,14 +586,17 @@ class IntractiveTrans extends React.Component {
       const apiObj = new InsertNewSentence(paragraph, req, nodeType)
       APITransport(apiObj)
     }
+    this.handleClose();
   }
 
   handleAddNewTable(tablePosition, paragraph) {
     this.setState({ addNewTable: true, openEl: false, tablePosition, hoveredTable: paragraph })
+    this.handleClose();
   }
 
   handleAddTableCancel() {
     this.setState({ addNewTable: false, openEl: false })
+    this.handleClose();
   }
 
   handleAddTable(rows, columns) {
@@ -600,6 +611,7 @@ class IntractiveTrans extends React.Component {
       APITransport(apiObj)
       this.setState({ addNewTable: false })
     }
+    this.handleClose();
   }
 
   render() {
