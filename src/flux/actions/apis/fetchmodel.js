@@ -3,12 +3,14 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchModel extends API {
   constructor(timeout = 200000) {
     super("GET", timeout, false);
     this.type = C.FETCH_MODEL;
     this.fetch_model = null;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.fetchmodel}`;
   }
 
   toString() {
@@ -21,7 +23,7 @@ export default class FetchModel extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/fetch-models`;
+    return this.endpoint;
   }
 
   getBody() {

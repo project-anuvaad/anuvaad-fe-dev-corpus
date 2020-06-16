@@ -1,5 +1,6 @@
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class DeleteSentence extends API {
     constructor(sentences, token_sentence, timeout = 2000) {
@@ -10,6 +11,7 @@ export default class DeleteSentence extends API {
         this.token_sentence = token_sentence
 
         this.deleteSentence = {}
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.deleteSentence}`;
 
     }
 
@@ -25,7 +27,7 @@ export default class DeleteSentence extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/delete-sentence`;
+        return this.endpoint;
     }
 
     getBody() {

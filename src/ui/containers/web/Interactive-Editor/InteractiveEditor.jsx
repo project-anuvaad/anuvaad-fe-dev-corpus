@@ -416,16 +416,14 @@ class IntractiveTrans extends React.Component {
   handleCheck = () => {
     const startValue = this.state.selectedSourceId.split("_");
     let sentenceObj; let updatedSentence;
-
+    
     const text = htmlToText.fromString(this.state.selectedSourceText);
-
-    console.log("value------",this.state.selectedSourceCheckText)
-    console.log("value------",text)
+    console.log("text",text,this.state.selectedSourceCheckText)
     if (this.state.selectedSourceCheckText !== text) {
       this.state.sentences.map((sentence, index) => {
         if (sentence._id === startValue[0]) {
           sentence.tokenized_sentences.map((value, index) => {
-            if (value.sentence_index === Number(startValue[1])) {
+            if (value.sentence_index === Number(startValue[1])) { 
               value.src = text;
               value.text = text;
               sentenceObj = sentence;
@@ -443,6 +441,7 @@ class IntractiveTrans extends React.Component {
       const { APITransport } = this.props;
       const apiObj = new InteractiveSourceUpdate(sentenceObj, updatedSentence);
       APITransport(apiObj);
+      
 
     }
   };

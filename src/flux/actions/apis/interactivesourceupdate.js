@@ -1,6 +1,6 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
   constructor(sentences,updateSentence, timeout = 2000) {
@@ -10,7 +10,7 @@ export default class RunExperiment extends API {
     this.sentences = sentences;
     this.updateSentence = updateSentence;
     
-    
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
     
     
   }
@@ -27,7 +27,7 @@ export default class RunExperiment extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/update-pdf-source-sentences`;
+    return this.endpoint;
   }
 
   getBody() {

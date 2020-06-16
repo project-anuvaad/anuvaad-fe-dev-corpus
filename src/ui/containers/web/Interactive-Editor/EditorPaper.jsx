@@ -186,7 +186,7 @@ class EditorPaper extends React.Component {
         let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'left')
         let pageNo = sentence.page_no
 
-        if (!sentence.is_footer && !sentence.is_table&&(sentence.text||sentence.text_pending)) {
+        if (!sentence.is_footer && !sentence.is_table) {
             let printPageNo = false
             let isFirst = false
             if (index === 0) {

@@ -1,5 +1,6 @@
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class InsertSentence extends API {
     constructor(sentences, sentenceType, nodeType, timeout = 2000) {
@@ -11,7 +12,7 @@ export default class InsertSentence extends API {
         this.nodeType = nodeType
 
         this.insertSentence = {}
-
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.insertSentence}`
     }
 
     toString() {
@@ -26,7 +27,7 @@ export default class InsertSentence extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/add-sentence-node`;
+        return this.endpoint;
     }
 
     getBody() {

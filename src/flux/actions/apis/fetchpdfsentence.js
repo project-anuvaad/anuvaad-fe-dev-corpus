@@ -1,12 +1,14 @@
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchPdf extends API {
     constructor(session, timeout = 2000) {
         super('GET', timeout, false);
         this.type = C.FETCH_PDFSENTENCE;
         this.session_id = session;
-        this.fetch_corpus_data = {}
+        this.fetch_corpus_data = {};
+        this.endpoint = ENDPOINTS.fetchpdfsentence;
     }
 
     toString() {
@@ -21,7 +23,7 @@ export default class FetchPdf extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/fetch-pdf-sentences?session_id=${this.session_id}`
+        return `${super.apiEndPointAuto()}${this.endpoint}?session_id=${this.session_id}`
     }
 
     getHeaders() {

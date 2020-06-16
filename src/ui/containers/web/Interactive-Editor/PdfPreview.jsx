@@ -27,8 +27,8 @@ class PdfPreview extends React.Component {
 
   onPageLoad = (page) => {
     const parentDiv = document.querySelector('#pdfDocument')
-    // let pageScale = parentDiv.clientHeight / page.originalHeight
-    let pageScale = parentDiv.clientWidth / page.originalWidth
+    let pageScale = parentDiv.clientHeight / page.originalHeight
+    // let pageScale = parentDiv.clientWidth / page.originalWidth
     if (this.state.scale !== pageScale) {
       this.setState({ scale: pageScale });
     }

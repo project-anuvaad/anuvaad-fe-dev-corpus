@@ -1,5 +1,6 @@
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class DeleteTable extends API {
     constructor(sentences, table_cell, operationType, timeout = 2000) {
@@ -10,7 +11,8 @@ export default class DeleteTable extends API {
         this.table_cell = table_cell
         this.operationType = operationType
 
-        this.deleteTable = {}
+        this.deleteTable = {};
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.deleteTable}`;
 
     }
 
@@ -26,7 +28,7 @@ export default class DeleteTable extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/delete-table-sentence`;
+        return this.endpoint;
     }
 
     getBody() {
