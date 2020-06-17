@@ -345,7 +345,11 @@ const localization_EN_Data = {
   "intractive_translate.page.preview.addNewSentenceAbove": "Insert new paragraph above",
   "intractive_translate.page.preview.addNewSentenceBelow": "Insert new paragraph below",
   "intractive_translate.page.preview.addNewTableAbove": "Insert new table above",
-  "intractive_translate.page.preview.addNewTableBelow": "Insert new table below"
+  "intractive_translate.page.preview.addNewTableBelow": "Insert new table below",
+  "intractive_translate.page.preview.newTableData": "Enter number of rows and columns",
+  "common.page.label.ok": "Ok",
+  "intractive_translate.page.preview.rows": "Rows",
+  "intractive_translate.page.preview.columns": "Columns",
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
@@ -693,10 +697,14 @@ const localization_HI_Data = {
   "intractive_translate.page.message.splitSentenceSuccessfully": "वाक्य सफलता पूर्वक तोड़ लिए गए है!",
   "intractive_translate.page.message.savedSuccessfully": "सफलता पूर्वक सहेंजा गया",
   "intractive_translate.page.message.mergeDifferentSentenceQuestion": "चुने हुए वाक्य अलग स्थान से है। क्या आप जोड़ना चाहते है?",
-  "intractive_translate.page.preview.addNewSentenceAbove": "Insert new paragraph above",
-  "intractive_translate.page.preview.addNewSentenceBelow": "Insert new paragraph below",
-  "intractive_translate.page.preview.addNewTableAbove": "Insert new table above",
-  "intractive_translate.page.preview.addNewTableBelow": "Insert new table below"
+  "intractive_translate.page.preview.addNewSentenceAbove": "नयी अनुच्छेद ऊपर जोड़े",
+  "intractive_translate.page.preview.addNewSentenceBelow": "नयी अनुच्छेद नीचे जोड़े",
+  "intractive_translate.page.preview.addNewTableAbove": "नयी तालिका ऊपर जोड़े",
+  "intractive_translate.page.preview.addNewTableBelow": "नयी तालिका नीचे जोड़े",
+  "intractive_translate.page.preview.newTableData": "पंक्ति संख्या और क़तार संख्या भरे",
+  "common.page.label.ok": "ठीक है",
+  "intractive_translate.page.preview.rows": "पंक्ति",
+  "intractive_translate.page.preview.columns": "कॉलम",
 };
 
 export function translate(locale_text) {

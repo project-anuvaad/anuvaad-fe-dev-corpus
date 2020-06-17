@@ -49,7 +49,7 @@ export default class EditorDialog extends React.Component {
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="standard-uncontrolled"
                 >
-                    <DialogTitle id="alert-dialog-title">{"Enter number of rows and columns"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{translate("intractive_translate.page.preview.newTableData")}</DialogTitle>
                     <DialogContent style={{ paddingBottom: '10px !important' }}>
                         <div style={{display: 'flex'}}>
                             {/* style={{ paddingRight: '40px', minWidth: '50px', maxWidth: '100px' }} */}
@@ -65,8 +65,7 @@ export default class EditorDialog extends React.Component {
                         <Button color="primary" autoFocus onClick={() => {
                             this.props.handleAddTable(this.state.rows, this.state.columns)
                         }}>
-                            Ok
-                           {/* {translate("")}  */}
+                           {translate("common.page.label.ok")} 
                         </Button>
                         <Button color="primary" autoFocus onClick={() => {this.props.handleAddTableCancel() }}>
                             {translate("common.page.button.cancel")}
