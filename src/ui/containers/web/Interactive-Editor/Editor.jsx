@@ -178,7 +178,7 @@ class Editor extends React.Component {
             }
             const val = `${this.props.sentences[index + value]._id}_${this.props.sentences[index + value].tokenized_sentences[0].sentence_index}`;
 
-            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value === 0 ? null : true);
+            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, null, value === 0 ? null : true);
 
             if (this.props.sentences[index + value].is_table && value !== 0) {
               const blockId = `${this.props.sentences[index + value]._id}_${this.props.sentences[index + value].table_items[0][0].sentence_index}`;
@@ -187,6 +187,7 @@ class Editor extends React.Component {
                 blockId,
                 this.props.sentences[index + value].table_items[0][0],
                 "true",
+                null,
                 null,
                 value === 0 ? null : true
               );
@@ -208,13 +209,13 @@ class Editor extends React.Component {
           } else if (sentence.tokenized_sentences.length >= sentenceIndex && sentenceIndex >= 0) {
             const ind = sentenceIndex + value;
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
-            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value === 0 ? null : true);
+            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, null,value === 0 ? null : true);
             if (sentence.is_table) {
               for (const key in sentence.table_items) {
                 for (const cell in sentence.table_items[key]) {
                   if (sentence.table_items[key][cell].sentence_index === ind) {
                     const blockId = `${sentence._id}_${sentence.table_items[key][cell].sentence_index}`;
-                    this.props.handleCellOnClick(sentence._id, blockId, sentence.table_items[key][cell], "true", null, value === 0 ? null : true);
+                    this.props.handleCellOnClick(sentence._id, blockId, sentence.table_items[key][cell], "true", null, null,value === 0 ? null : true);
                     this.setState({ keyValue: key, cellValue: cell, checkedB: true });
                   }
                 }
