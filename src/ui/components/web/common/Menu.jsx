@@ -52,6 +52,10 @@ class MenuClass extends React.Component {
             {translate("intractive_translate.page.preview.deleteSentence")}
           </Button>
         )}
+        <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleCopy()}>
+            {" "}
+            Copy
+          </Button>
         <hr style={{ color: 'grey', opacity: '0.4' }} />
 
         <div><Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("next", '',"text")}>
