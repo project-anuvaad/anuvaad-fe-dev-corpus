@@ -41,6 +41,7 @@ class LinearDeterminate extends React.Component {
 
   render() {
     const { classes } = this.props;
+    console.log("ete",this.props.token)
     return (
       <div className={classes.root}>
         {this.props.token===true ?

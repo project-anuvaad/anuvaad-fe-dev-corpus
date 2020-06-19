@@ -3,12 +3,14 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class HtmlToDoc extends API {
     constructor(html, timeout = 200000) {
         super("POST", timeout, false);
         this.html = html;
         this.type = C.HTML_TO_DOC;
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactive_translate}`
     }
 
     toString() {

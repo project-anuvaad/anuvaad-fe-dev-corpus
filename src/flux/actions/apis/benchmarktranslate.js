@@ -1,5 +1,6 @@
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class BenchmarkTranslate extends API {
     
@@ -8,7 +9,8 @@ export default class BenchmarkTranslate extends API {
         this.type = C.BENCHMARK_TRANSLATE;
         this.sentence = text;
         this.target = target;
-        this.result=""   
+        this.result="";
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.benchmarktranslate}`;
     }
 
     toString() {
@@ -26,7 +28,7 @@ export default class BenchmarkTranslate extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/translate-with-hemat`;
+        return this.endpoint;
     }
 
     getBody() {

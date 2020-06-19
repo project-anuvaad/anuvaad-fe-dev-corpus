@@ -1,5 +1,6 @@
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchBenchmarkCompareModel extends API {
   constructor(basename, pagesize, pageno, status, timeout = 200000) {
@@ -10,6 +11,7 @@ export default class FetchBenchmarkCompareModel extends API {
     this.pageno = pageno;
     this.status = status;
     this.type = C.FETCH_BENCHMARK_COMPARE_MODEL;
+    this.endpoint =ENDPOINTS.fetchenchmarkcomparemodel;
   }
 
   toString() {
@@ -24,7 +26,7 @@ export default class FetchBenchmarkCompareModel extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/fetch-benchmark-compare-sentences?basename=${this.basename}&pagesize=${
+    return `${super.apiEndPointAuto()}${this.endpoint}?basename=${this.basename}&pagesize=${
       this.pagesize
     }&pageno=${this.pageno}&status=${this.status}`;
   }

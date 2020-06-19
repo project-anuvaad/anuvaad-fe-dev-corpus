@@ -1,11 +1,13 @@
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchBenchmarkModel extends API {
   constructor(basename, model, pagesize, pageno, status, timeout = 200000) {
     super("GET", timeout, false);
     this.config =[]
     this.type = C.FETCH_DEFAULT_CONFIG;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.fetchdefaultconfig}`;
   }
 
   toString() {
@@ -20,7 +22,7 @@ export default class FetchBenchmarkModel extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/fetch-default-config`;
+    return this.endpoint;
   }
 
   getBody() {

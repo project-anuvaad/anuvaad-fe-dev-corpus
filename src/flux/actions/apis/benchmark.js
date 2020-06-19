@@ -3,12 +3,14 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchBenchmark extends API {
     constructor(timeout = 2000) {
         super('GET', timeout, false);
         this.type = C.FETCH_BENCH;
-        this.fetch_corpus_data = {}
+        this.fetch_corpus_data = {};
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.benchmark}`;
     }
 
     toString() {
@@ -23,7 +25,7 @@ export default class FetchBenchmark extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/fetch-benchmarks`
+        return this.endpoint
     }
 
     getHeaders() {
