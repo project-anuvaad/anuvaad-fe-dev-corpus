@@ -9,6 +9,7 @@
 		"@react-pdf/renderer": "^2.0.0-beta.6",
 		"axios": "^0.18.0",
 		"classnames": "^2.2.6",
+		"copy-to-clipboard": "^3.3.1",
 		"draft-js": "^0.11.4",
 		"draftjs-to-markdown": "^0.6.0",
 		"hide-scrollbar-react": "^1.1.6",

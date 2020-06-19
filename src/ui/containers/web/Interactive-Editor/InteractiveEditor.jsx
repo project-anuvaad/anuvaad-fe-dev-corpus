@@ -36,6 +36,7 @@ import Divider from "@material-ui/core/Divider";
 import MenuItems from "../../../components/web/common/Menu";
 import InsertNewSentence from "../../../../flux/actions/apis/insertSentence";
 import EditorDialog from "../../../components/web/common/EditorDialog";
+import copy from 'copy-to-clipboard';
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -580,7 +581,12 @@ class IntractiveTrans extends React.Component {
           });
     }
   }
+  handleCopy(){
+    console.log("copy", window.getSelection().toString());
+    copy( window.getSelection().toString())
+                    this.handleClose()
 
+  }
   handleAddCell(sentence, operationType) {
     if (sentence && operationType) {
       const { APITransport } = this.props;
@@ -955,6 +961,7 @@ class IntractiveTrans extends React.Component {
               this.state.openEl && (
                 <MenuItems
                   isOpen={this.state.openEl}
+                  handleCopy={this.handleCopy.bind(this)}
                   anchorEl={this.state.anchorEl}
                   operation_type={this.state.operation_type}
                   addSentence={this.state.addSentence}

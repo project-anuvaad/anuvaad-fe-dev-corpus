@@ -327,7 +327,6 @@ const localization_EN_Data = {
   "intractive_translate.page.textarea.anuvaadModelPlaceholder": "Select sentence from target or press next..",
   "intractive_translate.page.textarea.updateManuallyPlaceholder": "Update sentence manually here...",
   "intractive_translate.page.textarea.ignoredPlaceholder": "Ignored Anuvaad Model",
-<<<<<<< HEAD
   'setPassword.page.label.password':"Set Password",
   'setPassword.page.label.createPassword':"Create Password",
   'common.page.alert.passwordDidNotMatch':'Password and confirm password did not match',
@@ -352,8 +351,7 @@ const localization_EN_Data = {
   'signUp.page.message.successfullyCreatedACcount':'Successfully created the account. Please check your email for account verification',
   'signUp.page.label.enterDetailsToReceiveConfirmation':"Enter the required details,you will receive a confirmation mail to your registered email id.",
   'signUp.page.label.clickToActivateAccount':"Please click on that to activate your account.",
-  'updatePassword.page.message.forgotPasswordLinkSent':'Successfully sent forgot password link. Please check your email for setting  password'
-=======
+  'updatePassword.page.message.forgotPasswordLinkSent':'Successfully sent forgot password link. Please check your email for setting  password',
   "intractive_translate.page.preview.insertNewRow": "Insert new row",
   "intractive_translate.page.preview.insertNewColumn": "Insert new column",
   "intractive_translate.page.preview.deleteTable": "Delete table",
@@ -377,7 +375,6 @@ const localization_EN_Data = {
   "common.page.label.ok": "Ok",
   "intractive_translate.page.preview.rows": "Rows",
   "intractive_translate.page.preview.columns": "Columns",
->>>>>>> anuvaad-preview
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
