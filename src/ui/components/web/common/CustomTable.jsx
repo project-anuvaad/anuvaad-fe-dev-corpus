@@ -10,8 +10,8 @@ class CustomTable extends React.Component {
             anchorEl: null,
             selectedRow: '',
             selectedColumn: '',
-            topValue: '',
-            leftValue: '',
+            topValue:'',
+            leftValue:'',
             // tableItems:['add-row','add-column','delete-row','delete-column','delete-table'],
             // tableTitles:[translate("intractive_translate.page.preview.insertNewRow"), translate("intractive_translate.page.preview.insertNewColumn"),translate("intractive_translate.page.preview.deleteRow"),translate("intractive_translate.page.preview.deleteColumn"),translate("intractive_translate.page.preview.deleteTable")]
         }
@@ -62,9 +62,9 @@ class CustomTable extends React.Component {
                         ref={blockId + '_' + row + '_' + block}
                         onContextMenu={(e) => { e.preventDefault(); this.handleMenu(e); return false; }}
                         onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType, pageNo)}
-                        onMouseEnter={() => this.props.handleOnMouseEnter(id, blockId, pageNo, this.props.sentence)}
+                        onMouseEnter={() => this.props.handleOnMouseEnter(id, blockId, pageNo)}
                         onMouseLeave={() => this.props.handleOnMouseLeave()}
-                        onDoubleClick={() => this.props.paperType === 'source' && this.props.handleonDoubleClick(blockId, blockData, row, block)}
+                         onDoubleClick={() => this.props.paperType === 'source' && this.props.handleonDoubleClick(blockId, blockData, row, block)}
                         style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse', minWidth: '25px' }}>
                         {this.props.selectedSourceId === blockId && this.props.paperType === 'source' ? <ContentEditable
                             html={this.props.selectedSourceText}
@@ -90,16 +90,16 @@ class CustomTable extends React.Component {
     }
 
     handleMenu(e) {
-        console.log(e.clientX - 2, e.clientY - 4)
+        console.log(e.clientX-2,e.clientY-4)
         let row = e.target.id.split('_')[2]
         let column = e.target.id.split('_')[3]
 
-        this.setState({ openContextMenu: true, anchorEl: e.currentTarget, selectedRow: row, selectedColumn: column, topValue: e.clientY - 4, leftValue: e.clientX - 2 })
+        this.setState({ openContextMenu: true, anchorEl: e.currentTarget, selectedRow: row, selectedColumn: column,topValue: e.clientY-4, leftValue: e.clientX-2})
     }
 
     handleOnClick(sentence, operationType) {
 
-
+        
         if (this.state.openContextMenu && (operationType === 'add-column' || operationType === 'add-row')) {
             this.props.handleAddCell(sentence, operationType)
         } else if (this.state.openContextMenu && (operationType === 'delete-row' || operationType === 'delete-column' || operationType === 'delete-table')) {
@@ -108,11 +108,11 @@ class CustomTable extends React.Component {
                 this.props.handleDeleteTable(sentence, cellData, operationType)
             }
         }
-        this.setState({ openContextMenu: false, anchorEl: null, leftValue: '', topValue: '' })
+        this.setState({ openContextMenu: false, anchorEl: null, leftValue:'',topValue:''})
     }
 
     handlePopOverClose() {
-        this.setState({ openContextMenu: false, anchorEl: null, leftValue: '', topValue: '' })
+        this.setState({ openContextMenu: false, anchorEl: null , leftValue:'',topValue:''})
     }
 
     render() {
@@ -126,7 +126,7 @@ class CustomTable extends React.Component {
         let sentence = this.props.sentence
         return (
             <div>{printPageNo ? <div ref={this.props.pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}>{!this.props.isFirst ? <hr /> : ''}Page: {this.props.pageNo}/{this.props.noOfPage}<div>&nbsp;</div></div> : <div></div>}
-                <table id={this.props.id} key={this.props.id} ref={this.props.id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>
+                <table  id={this.props.id} key={this.props.id} ref={this.props.id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}>
                     <tbody>{this.fetchTable(this.props.id, this.props.tableItems, this.props.prevSentence, this.props.tableIndex, this.props.pageNo)}</tbody>
                 </table>
                 {this.props.paperType === 'source' && this.state.topValue && this.state.leftValue &&
@@ -141,9 +141,6 @@ class CustomTable extends React.Component {
                         handlePopOverClose={this.handlePopOverClose.bind(this)}
                         tableItems={this.state.tableItems}
                         tableValues={this.state.tableTitles}
-                        handleAddNewTable={this.props.handleAddNewTable}
-                        handleAddTableCancel={this.props.handleAddTableCancel}
-                        handleAddNewSentence={this.props.handleAddNewSentence}
 
                     >
                     </PopOver>}
