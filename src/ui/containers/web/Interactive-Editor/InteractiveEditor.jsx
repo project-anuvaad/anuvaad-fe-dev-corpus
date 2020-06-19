@@ -64,7 +64,8 @@ class IntractiveTrans extends React.Component {
       addNewTable: false,
       tablePosition: "",
       hoveredTable: "",
-      zoom: false
+      zoom: false,
+      popOver: true
     };
   }
 
@@ -628,6 +629,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddNewSentence(nodeType, sentence, selectedNodeType) {
+    this.setState({popOver: true})
     let paragraph = "";
     if (selectedNodeType === "text" && this.state.startParagraph && this.state.endParagraph) {
       paragraph = this.state.startParagraph;
@@ -646,12 +648,12 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddNewTable(tablePosition, paragraph) {
-    this.setState({ addNewTable: true, openEl: false, tablePosition, hoveredTable: paragraph });
+    this.setState({ addNewTable: true, openEl: false, tablePosition, hoveredTable: paragraph, popOver: false });
     this.handleClose();
   }
 
   handleAddTableCancel() {
-    this.setState({ addNewTable: false, openEl: false });
+    this.setState({ addNewTable: false, openEl: false, popOver: false });
     this.handleClose();
   }
 
@@ -669,9 +671,13 @@ class IntractiveTrans extends React.Component {
         this.state.tablePosition
       );
       APITransport(apiObj);
-      this.setState({ addNewTable: false });
+      this.setState({ addNewTable: false, popOver: false });
     }
     this.handleClose();
+  }
+
+  handlePopUp() {
+    this.setState({ popOver: true})
   }
 
   render() {
@@ -810,6 +816,8 @@ class IntractiveTrans extends React.Component {
                         handleAddNewTable={this.handleAddNewTable.bind(this)}
                         handleAddTableCancel={this.handleAddTableCancel.bind(this)}
                         handleAddNewSentence={this.handleAddNewSentence.bind(this)}
+                        popOver={this.state.popOver}
+                        handlePopUp={this.handlePopUp.bind(this)}
                       />
                     </div>
                   </Paper>
@@ -910,6 +918,7 @@ class IntractiveTrans extends React.Component {
                 columnLabel= {translate("intractive_translate.page.preview.columns")}
                 handleAddTableCancel={this.handleAddTableCancel.bind(this)}
                 handleAddTable={this.handleAddTable.bind(this)}
+                handlePopUp={this.handlePopUp.bind(this)}
               ></EditorDialog>
             )}
 

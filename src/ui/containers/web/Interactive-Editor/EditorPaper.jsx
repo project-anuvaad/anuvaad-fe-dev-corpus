@@ -246,6 +246,8 @@ class EditorPaper extends React.Component {
                 handleAddTableCancel={this.props.handleAddTableCancel}
                 handleAddNewSentence={this.props.handleAddNewSentence}
                 parent={this.props.parent}
+                popOver={this.props.popOver}
+                handlePopUp={this.props.handlePopUp}
 
             ></CustomTable>
         } else {

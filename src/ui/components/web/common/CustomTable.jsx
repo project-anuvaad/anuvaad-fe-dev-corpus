@@ -115,7 +115,7 @@ class CustomTable extends React.Component {
     console.log(e.clientX - 2, e.clientY - 4);
     let row = e.target.id.split("_")[2];
     let column = e.target.id.split("_")[3];
-
+    this.props.handlePopUp()
     this.setState({
       openContextMenu: true,
       anchorEl: e.currentTarget,
@@ -172,7 +172,7 @@ class CustomTable extends React.Component {
         >
           <tbody>{this.fetchTable(this.props.id, this.props.tableItems, this.props.prevSentence, this.props.tableIndex, this.props.pageNo)}</tbody>
         </table>
-        {this.props.paperType === "source" && this.state.topValue && this.state.leftValue && (
+        {this.props.paperType === "source" && this.state.topValue && this.state.leftValue && this.props.popOver && (
           <PopOver
             id={this.props.id}
             sentence={sentence}
@@ -187,6 +187,7 @@ class CustomTable extends React.Component {
             handleAddNewTable={this.props.handleAddNewTable}
             handleAddTableCancel={this.props.handleAddTableCancel}
             handleAddNewSentence={this.props.handleAddNewSentence}
+            handlePopUp={this.props.handlePopUp}
           ></PopOver>
         )}
       </div>
