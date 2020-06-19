@@ -629,7 +629,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddNewSentence(nodeType, sentence, selectedNodeType) {
-    this.setState({popOver: true})
+    this.setState({popOver: false})
     let paragraph = "";
     if (selectedNodeType === "text" && this.state.startParagraph && this.state.endParagraph) {
       paragraph = this.state.startParagraph;
