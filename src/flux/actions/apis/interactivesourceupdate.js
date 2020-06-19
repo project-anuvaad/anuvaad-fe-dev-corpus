@@ -3,17 +3,15 @@ import C from "../constants";
 import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
-  constructor(sentences,startSentence,operation_type, endSentence,selected_text, timeout = 2000) {
+  constructor(sentences,updateSentence, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
-    this.type = C.MERGEINTERACTIVESENTENCE;
+    this.type = C.UPDATESOURCESENTENCE;
     this.sentences = sentences;
-    this.start_sentence = startSentence;
-    this.end_sentence = endSentence;
-    this.selected_text = selected_text;
-    this.operation_type = operation_type;
+    this.updateSentence = updateSentence;
     
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.InteractiveMerge}`
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
+    
     
   }
 
@@ -35,11 +33,9 @@ export default class RunExperiment extends API {
   getBody() {
     
     return {
-        "sentences": this.sentences,
-        "start_sentence" : this.start_sentence,
-        "end_sentence": this.end_sentence,
-        "operation_type" : this.operation_type,
-        "selected_text" : this.selected_text
+        "sentence": this.sentences,
+        "update_sentence" : this.updateSentence,
+        
     };
   }
 

@@ -102,7 +102,6 @@ class CreateWorkspace extends React.Component {
 
 
   handleSubmit() {
-      console.log(this.state.workspaceName , this.state.source , this.state.target , this.state.csvName)
     if (this.state.workspaceName && this.state.source && this.state.target && this.state.csvName) {
         const { APITransport } = this.props;
 

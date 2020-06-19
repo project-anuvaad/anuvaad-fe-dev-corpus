@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class NMTSP extends API {
     constructor(source,target, model,dontshowloader, timeout = 200000) {
         super("POST", timeout, false);
@@ -13,6 +13,7 @@ export default class NMTSP extends API {
         this.dontshowloader = dontshowloader;
         this.answers = null;
         this.type = C.INTRACTIVE_TRANSLATE;
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactive_translate}`
     }
 
     toString() {
@@ -25,7 +26,7 @@ export default class NMTSP extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/interactive-translation`;
+        return this.endpoint;
     }
 
     dontShowApiLoader(){

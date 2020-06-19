@@ -2,8 +2,6 @@ import React from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import { withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 
 import { connect } from "react-redux";
@@ -15,9 +13,7 @@ import LoginStyles from "../../styles/web/LoginStyles";
 import Grid from '@material-ui/core/Grid';
 import ForgotPasswordApi from "../../../flux/actions/apis/forgotpassword";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
-import history from "../../../web.history";
 import TextField from '../../components/web/common/TextField';
-import Link from '@material-ui/core/Link';
 import Snackbar from "../../components/web/common/Snackbar";
 import { translate } from "../../../assets/localisation";
 
@@ -29,11 +25,9 @@ class UpdatePassword extends React.Component {
         }
     }
 
-
     handleInputReceived = prop => event => {
         this.setState({ [prop]: event.target.value });
     };
-
 
     handleSubmit(e) {
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -54,7 +48,6 @@ class UpdatePassword extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
         return (
             <MuiThemeProvider theme={ThemeDefault}>
 

@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class AutoML extends API {
     constructor(text, source, target, timeout = 200000) {
@@ -12,6 +12,7 @@ export default class AutoML extends API {
         this.source = source;
         this.target = target
         this.type = C.AUTO_ML;
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.auto_ml}`;
     }
 
     toString() {
@@ -24,7 +25,7 @@ export default class AutoML extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/translate`;
+        return this.endpoint;
     }
 
     getBody() {

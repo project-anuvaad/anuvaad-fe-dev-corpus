@@ -4,6 +4,7 @@
 
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class AddUser extends API {
     constructor(username, firstname, lastname, password,email, roles,courtId, timeout = 2000) {
@@ -19,6 +20,7 @@ export default class AddUser extends API {
         this.courtId = courtId
 
         this.usercreate = {}
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.adduser}`;
 
     }
 
@@ -37,7 +39,7 @@ export default class AddUser extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/create-user`;
+        return this.endpoint;
     }
 
     getBody() {

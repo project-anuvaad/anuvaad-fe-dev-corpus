@@ -1,5 +1,6 @@
 import C from "../constants";
 import API from "./api";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchQuestions extends API {
     constructor( timeout = 2000) {
@@ -7,7 +8,8 @@ export default class FetchQuestions extends API {
         this.type = C.FEEDBACK_QUESTIONS;
         
 
-        this.feedbackQuestions = []
+        this.feedbackQuestions = [];
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.fetchquestions}`
 
     }
 
@@ -24,7 +26,7 @@ export default class FetchQuestions extends API {
 
     apiEndPoint() {
 
-        return `${super.apiEndPointAuto()}/fetch-feedback-questions`;
+        return this.endpoint;
     }
 
     getBody() {

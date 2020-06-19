@@ -3,12 +3,14 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchLanguage extends API {
   constructor(timeout = 200000) {
     super("GET", timeout, false);
     this.type = C.FETCH_LANGUAGE;
     this.fetch_language = null;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.fetchlanguage}`;
   }
 
   toString() {
@@ -21,7 +23,7 @@ export default class FetchLanguage extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/fetch-languages`;
+    return this.endpoint;
   }
 
   getBody() {

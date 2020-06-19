@@ -57,7 +57,6 @@ class SetPassword extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
         return (
             <MuiThemeProvider theme={ThemeDefault}>
 

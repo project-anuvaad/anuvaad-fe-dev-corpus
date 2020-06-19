@@ -3,6 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class ConfigUpload extends API {
   constructor(configFile, name, timeout = 2000) {
@@ -10,6 +11,7 @@ export default class ConfigUpload extends API {
     this.type = C.CONFIGUPLOAD;
     this.file = configFile;
     this.name = name;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.configupload}`;
   }
 
   toString() {
@@ -24,7 +26,7 @@ export default class ConfigUpload extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/upload`;
+    return this.endpoint;
   }
 
   getFormData() {
