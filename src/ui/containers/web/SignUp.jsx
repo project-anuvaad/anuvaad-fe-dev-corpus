@@ -20,6 +20,7 @@ import TextField from '../../components/web/common/TextField';
 import Link from '@material-ui/core/Link';
 import Snackbar from "../../components/web/common/Snackbar";
 import { translate } from "../../../assets/localisation";
+import SignUpStyles from "../../styles/web/SignUpStyles";
 
 class SignUp extends React.Component {
   constructor(props) {
