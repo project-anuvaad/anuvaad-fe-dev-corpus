@@ -46,7 +46,7 @@ class PdfPreview extends React.Component {
       fileDetails &&
       fileDetails.download_source_path &&
       `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
-        fileDetails.download_source_path ? fileDetails.download_source_path : ""
+      fileDetails.download_source_path ? fileDetails.download_source_path : ""
       }`;
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
@@ -106,33 +106,34 @@ class PdfPreview extends React.Component {
                 <ZoomOutIcon size="Large" />
               </Button>
             ) : (
-              <Button
-                color="primary"
-                disabled={numPages <= pageNo}
-                onClick={event => {
-                  this.props.handleChange();
-                }}
-                style={{ fontWeight: "bold", width: "100%" }}
-              >
-                <ZoomInIcon size="Large" />
-              </Button>
-            )}
+                <Button
+                  color="primary"
+                  disabled={numPages <= pageNo}
+                  onClick={event => {
+                    this.props.handleChange();
+                  }}
+                  style={{ fontWeight: "bold", width: "100%" }}
+                >
+                  <ZoomInIcon size="Large" />
+                </Button>
+              )}
           </Grid>
-          <Grid item xs={1} sm={1} lg={1} xl={1}>
-            <Toolbar
-              onClick={event => {
-                this.props.handleClick(false, 4);
-              }}
-            >
-              <CloseIcon style={{ cursor: "pointer" }} color="primary" />
-              <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                {translate("common.page.label.close")}
-              </Typography>
-            </Toolbar>
+          <Grid item xs={1} sm={12} lg={2} xl={2}>
+              <Toolbar
+                onClick={event => {
+                  this.props.handleClick(false, 4);
+                }}
+              >
+                <CloseIcon style={{ cursor: "pointer" }} color="primary" />
+                <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
+                  {translate("common.page.label.close")}
+                </Typography>
+              </Toolbar>
           </Grid>
         </Toolbar>
-        <div style={{ marginLeft:!this.props.zoom&&'10%',marginBottom: "0px", maxHeight: window.innerHeight - 180, overflowY: "auto" }} id="pdfDocument">
-          <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess}style={{align:"center"}}>
+        {console.log("sajish")}
+        <div style={{ marginLeft: !this.props.zoom && '10%', marginBottom: "0px", maxHeight: window.innerHeight - 180, overflowY: "auto" }} id="pdfDocument">
+          <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess} style={{ align: "center" }}>
             <Page scale={!this.props.zoom ? this.state.scale : this.state.pageScaleWidth} pageNumber={pageNo} onLoadSuccess={this.onPageLoad} />
           </Document>
         </div>

@@ -906,8 +906,8 @@ class IntractiveTrans extends React.Component {
             {this.state.addNewTable && (
               <EditorDialog
                 open={true}
-                rowLabel="Rows"
-                columnLabel="Columns"
+                rowLabel= {translate("intractive_translate.page.preview.rows")}
+                columnLabel= {translate("intractive_translate.page.preview.columns")}
                 handleAddTableCancel={this.handleAddTableCancel.bind(this)}
                 handleAddTable={this.handleAddTable.bind(this)}
               ></EditorDialog>
