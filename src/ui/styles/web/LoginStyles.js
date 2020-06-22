@@ -99,7 +99,41 @@ const LoginStyles = theme => ({
   },
   btnSpan: {
     marginLeft: 5
+  },
+  //for signup page
+  typographyHeader:{
+  marginTop: '10%',
+   marginBottom: '5%',
+    fontSize: '33px', 
+    color: '#003366'
+  },
+  textfield:{
+    width: '50%', 
+    marginBottom: '2%',
+     backgroundColor: 'white' 
+  },
+  hrTag:{
+    height: '2px', 
+    borderwidth: '0', 
+    width: '70%', 
+    backgroundColor: ' #D8D8D8',
+     color: '#D8D8D8',
+      border: '0',
+       marginTop: '2%'
+  },
+  formControl:{
+    marginLeft: '25%'
+  },
+  typography1:{
+    marginLeft: '26%',
+     marginBottom: '4%'
+  },
+  typographyFooter:{
+    marginTop: '3%',
+    fontSize:"100%",
+    marginBottom:"8%"
   }
+
 });
 
 
