@@ -1,6 +1,6 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
   constructor(name, file, source, target, model, timeout = 2000) {
@@ -12,6 +12,7 @@ export default class RunExperiment extends API {
     this.source = source;
     this.target = target;
     this.model = JSON.stringify(model);
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.pdffileupload}`
 
 
   }
@@ -28,7 +29,7 @@ export default class RunExperiment extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/translate-pdf`;
+    return this.endpoint;
   }
 
   getFormData() {

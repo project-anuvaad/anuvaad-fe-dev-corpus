@@ -1,6 +1,6 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class UpdatePdfTable extends API {
     constructor(sentences, operation_type, lastname, password, email, roles, courtId, timeout = 2000) {
         super('POST', timeout, false);
@@ -10,6 +10,7 @@ export default class UpdatePdfTable extends API {
         this.operation_type = operation_type
 
         this.updatePdfTableData = {}
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.updatePdfTable}`
 
     }
 
@@ -25,7 +26,7 @@ export default class UpdatePdfTable extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/update-pdf-source-table`;
+        return this.endpoint;
     }
 
     getBody() {

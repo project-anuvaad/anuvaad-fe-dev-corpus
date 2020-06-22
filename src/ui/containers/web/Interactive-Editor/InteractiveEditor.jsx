@@ -664,7 +664,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddTable(rows, columns) {
-    if (rows && columns) {
+    if (rows > 0 && columns > 0) {
       let sentenceNode = {};
       sentenceNode.type = "table";
       sentenceNode.row_count = rows.toString();

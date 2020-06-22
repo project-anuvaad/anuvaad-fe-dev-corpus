@@ -1,6 +1,6 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 
 export default class SourceTranslate extends API {
@@ -10,6 +10,7 @@ export default class SourceTranslate extends API {
         this.source = source;
         this.sentences=[];
         this.basename=basename;
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
         
     }
 
