@@ -18,18 +18,20 @@ export default class EditorDialog extends React.Component {
         }
     }
 
-      handleTextChange(key, event) {
-        if(key && event.target.value) {
+    handleTextChange(key, event) {
+        if (key && event.target.value) {
             if (key === 'rows') {
                 this.setState({ rows: event.target.value })
-              } else if (key === 'columns') {
+            } else if (key === 'columns') {
                 this.setState({ columns: event.target.value })
-              }
+            }
         }
     };
 
     handleOnClick() {
-        this.props.handleAddTable(this.state.rows, this.state.columns)
+        if(this.state.rows > 0 && this.state.columns > 0) {
+            this.props.handleAddTable(this.state.rows, this.state.columns)
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -51,23 +53,23 @@ export default class EditorDialog extends React.Component {
                 >
                     <DialogTitle id="alert-dialog-title">{translate("intractive_translate.page.preview.newTableData")}</DialogTitle>
                     <DialogContent style={{ paddingBottom: '10px !important' }}>
-                        <div style={{display: 'flex'}}>
-                            {/* style={{ paddingRight: '40px', minWidth: '50px', maxWidth: '100px' }} */}
-                            <TextField name="rows" style={{ paddingRight: '50px',maxWidth: '150px'}} id="standard-number" label={this.props.rowLabel} type="number" InputLabelProps={{ shrink: true }} onChange={event => {
-                this.handleTextChange("rows", event);
-              }}/>
-                            <TextField name="columns" style={{ maxWidth: '150px'}} id="standard-number" label={this.props.columnLabel} type="number" InputLabelProps={{ shrink: true }} onChange={event => {
-                this.handleTextChange("columns", event);
-              }}/>
+                        <div style={{ display: 'flex' }}>
+                            <TextField name="rows" style={{ paddingRight: '50px', maxWidth: '150px' }} id="standard-number" label={this.props.rowLabel} type="number" InputLabelProps={{ shrink: true }} onChange={event => {
+                                this.handleTextChange("rows", event);
+                            }} InputProps={{ inputProps: { min: 1 } }} />
+                            <TextField name="columns" style={{ maxWidth: '150px' }} id="standard-number" label={this.props.columnLabel} type="number" InputLabelProps={{ shrink: true }} onChange={event => {
+                                this.handleTextChange("columns", event);
+                            }} InputProps={{ inputProps: { min: 1 } }} />
                         </div>
                     </DialogContent>
                     <DialogActions>
                         <Button color="primary" autoFocus onClick={() => {
                             this.props.handleAddTable(this.state.rows, this.state.columns)
+
                         }}>
-                           {translate("common.page.label.ok")} 
+                            {translate("common.page.label.ok")}
                         </Button>
-                        <Button color="primary" autoFocus onClick={() => {this.props.handleAddTableCancel() }}>
+                        <Button color="primary" autoFocus onClick={() => { this.props.handleAddTableCancel() }}>
                             {translate("common.page.button.cancel")}
                         </Button>
                     </DialogActions>
