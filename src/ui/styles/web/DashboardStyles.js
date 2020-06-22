@@ -1,6 +1,6 @@
 import { grey500, white } from 'material-ui/styles/colors';
 
-const PdfUploadStyles = theme => ({
+const DashboardStyles = theme => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap'
@@ -13,12 +13,7 @@ const PdfUploadStyles = theme => ({
     marginTop: theme.spacing.unit * 3
   },
   typographyHeader:{
-    marginTop:'6%',
-    minWidth: "5%",
-    align:'center',
-    marginLeft:"40%",
-    fontfamily: 'Trebuchet MS, sans-serif	',
-     color: '#003366' 
+    color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" 
     
 
   },
@@ -39,11 +34,9 @@ const PdfUploadStyles = theme => ({
     
   },
  paper: {
-    width: "60%",
-    minWidth: "200px",
-    marginTop: "3%",
-    padding: "2% 2% 4% 2%",
-    marginLeft: "15%",
+    marginLeft: "25%", 
+    width: "50%",
+     marginTop: "4%"
   },
   grid:{
     marginLeft: "4%" 
@@ -71,4 +64,4 @@ const PdfUploadStyles = theme => ({
 });
 
 
-export default PdfUploadStyles;
+export default DashboardStyles;

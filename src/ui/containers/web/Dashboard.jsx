@@ -24,7 +24,9 @@ import AutoML from "../../../flux/actions/apis/auto_ml";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import NewOrders from "../../components/web/dashboard/NewOrders";
 import { translate } from "../../../assets/localisation";
-import ThemeDefault from "../../theme/web/theme-anuvaad";
+import { withStyles } from "@material-ui/core/styles";
+import DashboardStyles from "../../styles/web/LoginStyles";
+
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -176,17 +178,17 @@ class Dashboard extends React.Component {
     const { APITransport, NMTApi } = this.props;
     role.includes("dev")
       ? this.state.modelLanguage.map(item =>
-          item.target_language_code === this.state.target &&
+        item.target_language_code === this.state.target &&
           item.source_language_code === this.state.source &&
           this.state.model.includes(item.model_name)
-            ? model.push(item)
-            : []
-        )
+          ? model.push(item)
+          : []
+      )
       : this.state.modelLanguage.map(item =>
-          item.target_language_code === this.state.target && item.source_language_code === this.state.source && model.length < 1 && item.is_primary
-            ? model.push(item)
-            : []
-        );
+        item.target_language_code === this.state.target && item.source_language_code === this.state.source && model.length < 1 && item.is_primary
+          ? model.push(item)
+          : []
+      );
     const apiObj = new AutoML(this.state.text, this.state.source, this.state.target);
     const nmt = new NMT(this.state.text, model, true, this.state.target, this.state.showSplitted);
     NMTApi(nmt);
@@ -201,9 +203,14 @@ class Dashboard extends React.Component {
 
   render() {
     const role = JSON.parse(localStorage.getItem("roles"));
+    const { user, classes, location } = this.props;
     return (
       <div>
-        <Paper style={{ marginLeft: "25%", width: "50%", marginTop: "4%" }}>
+        <Paper style={{
+          marginLeft: "25%",
+          width: "50%",
+          marginTop: "4%"
+        }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
             {translate("dashboard.page.heading.title")}
           </Typography>
@@ -224,7 +231,7 @@ class Dashboard extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.source}
                 name="source"
-                style={{ marginRight: "30%", marginBottom: "5%", marginTop: "4%" }}
+                style={{ marginRight: "30%", marginBottom: "5%", marginTop: "4%",width:"100%" }}
               />
             </Grid>
           </Grid>
@@ -244,7 +251,7 @@ class Dashboard extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.target}
                 name="target"
-                style={{ marginRight: "30%", marginBottom: "5%", marginTop: "4%", marginLeft: "10%" }}
+                style={{ marginRight: "30%", marginBottom: "5%", marginTop: "4%", marginLeft: "10%",width:"100%" }}
               />
             </Grid>
           </Grid>
@@ -262,7 +269,7 @@ class Dashboard extends React.Component {
                 <SelectModel
                   id="select-multiple-chip"
                   multiple
-                  style={{ minWidth: 160, align: "right", maxWidth: 160 }}
+                  style={{ width:"95%", align: "right",marginRight:"30%"  }}
                   value={this.state.model}
                   onChange={this.handleSelectModelChange}
                   renderValue={selected => selected.join(", ")}
@@ -270,18 +277,18 @@ class Dashboard extends React.Component {
                 >
                   {this.state.source && this.state.target
                     ? this.handleModel(this.state.modelLanguage, this.state.source, this.state.target).map(item => (
-                        <Tooltip
-                          placement="right"
-                          enterDelay={200}
-                          key={item.model_id}
-                          value={item.model_name}
-                          title={item.description ? item.description : "NA"}
-                        >
-                          <MenuItem key={item.model_id} value={item.model_name}>
-                            {item.model_name}
-                          </MenuItem>
-                        </Tooltip>
-                      ))
+                      <Tooltip
+                        placement="right"
+                        enterDelay={200}
+                        key={item.model_id}
+                        value={item.model_name}
+                        title={item.description ? item.description : "NA"}
+                      >
+                        <MenuItem key={item.model_id} value={item.model_name}>
+                          {item.model_name}
+                        </MenuItem>
+                      </Tooltip>
+                    ))
                     : []}
                   >
                 </SelectModel>
@@ -350,7 +357,7 @@ class Dashboard extends React.Component {
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
                 aria-label="edit"
-                style={{ marginLeft: "1.3%", width: "44%", marginBottom: "4%", marginTop: "4%", marginRight: "5%",backgroundColor:"#1C9AB7",color:"#FFFFFF" }}
+                style={{ marginLeft: "1.3%", width: "44%", marginBottom: "4%", marginTop: "4%", marginRight: "5%", backgroundColor: "#1C9AB7", color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '45px' }}
               >
                 {translate("common.page.button.clear")}
               </Button>
@@ -358,7 +365,7 @@ class Dashboard extends React.Component {
                 variant="contained"
                 onClick={this.handleSubmit.bind(this, role)}
                 aria-label="edit"
-                style={{ width: "44%", marginBottom: "4%", marginTop: "4%",backgroundColor:"#1C9AB7", color:"#FFFFFF" }}
+                style={{ width: "44%", marginBottom: "4%", marginTop: "4%", backgroundColor: "#1C9AB7", color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '45px' }}
               >
                 {translate("common.page.button.submit")}
               </Button>
@@ -399,4 +406,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Dashboard));
+export default withRouter(
+  withStyles(DashboardStyles)(
+    connect(mapStateToProps, mapDispatchToProps)
+      (Dashboard)));

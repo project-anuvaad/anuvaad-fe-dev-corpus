@@ -63,23 +63,27 @@ buttons: {
 
 button1: {
   justifyContent: 'center',
-  left: theme.spacing.unit*12,
+  // left: theme.spacing.unit*12,
   marginBottom:'2%',
-  marginTop:'5%'
-  ,
-  width:'220px',
+  marginTop:'5%',
+  marginLeft:'4%',
+  width:'43%',
+  height:'42px',
   backgroundColor:"#1C9AB7",
-   color:"#FFFFFF"
+   color:"#FFFFFF",
+   borderRadius:"20px 20px 20px 20px",
 },
 btns: {
   justifyContent: 'center',
   left: theme.spacing.unit*6,
   marginBottom:'2%',
   marginTop:'5%',
-  width:'240px',
-  marginLeft:'10%',
+  width:'43%',
+  height:'42px',
+  marginLeft:'1%',
   backgroundColor:"#1C9AB7",
-   color:"#FFFFFF"
+   color:"#FFFFFF",
+   borderRadius:"20px 20px 20px 20px",
 },
 
   paper: {

@@ -404,9 +404,9 @@ class IntractiveTrans extends React.Component {
               <Button
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
-                color="primary"
                 aria-label="edit"
-                style={{ marginLeft: "10%", width: "78%", marginBottom: "4%", marginTop: "4%", marginRight: "5%" }}
+                style={{ marginLeft: "10%", width: "78%", marginBottom: "4%", marginTop: "4%", marginRight: "5%", backgroundColor:"#1C9AB7",
+                color:"#FFFFFF" }}
               >
                 {translate("common.page.button.clear")}
               </Button>
@@ -415,9 +415,9 @@ class IntractiveTrans extends React.Component {
               <Button
                 variant="contained"
                 onClick={this.handleSubmit.bind(this)}
-                color="primary"
                 aria-label="edit"
-                style={{ width: "78%", marginBottom: "4%", marginTop: "4%" }}
+                style={{ width: "78%", marginBottom: "4%", marginTop: "4%", backgroundColor:"#1C9AB7",
+                color:"#FFFFFF" }}
               >
                 {this.state.update && this.state.nmtText[0] ? translate("common.page.title.edit") : translate("common.page.button.submit")}
               </Button>
