@@ -1,6 +1,6 @@
 import C from "../constants";
 import API from "./api";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class UserDirectory extends API {
     constructor( timeout = 2000) {
         super('GET', timeout, false);
@@ -8,6 +8,7 @@ export default class UserDirectory extends API {
         
 
         this.userDetails = []
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
 
     }
 

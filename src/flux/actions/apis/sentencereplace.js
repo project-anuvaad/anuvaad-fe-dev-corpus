@@ -3,13 +3,14 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class RunExperiment extends API {
   constructor( workspace, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
     this.type = C.SENTENCEREPLACE;
     this.workspace = workspace;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.sentencereplace}`
     
   }
 

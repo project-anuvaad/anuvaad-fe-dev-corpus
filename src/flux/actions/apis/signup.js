@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class Signup extends API {
     constructor(email, firstName, lastName, password, timeout = 2000) {
         super("POST", timeout, false);
@@ -13,6 +13,7 @@ export default class Signup extends API {
         this.lastName = lastName;
         this.password = password;
         this.signupres = null
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.signup}`
     }
 
     toString() {
@@ -27,7 +28,7 @@ export default class Signup extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/signup-user`;
+        return this.endpoint;
     }
 
     getBody() {

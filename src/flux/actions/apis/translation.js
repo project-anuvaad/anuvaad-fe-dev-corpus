@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class Translation extends API {
     constructor(sourceLanguage, targetLanguage, files, model,sourceLanguageCode,targetLanguageCode, timeout = 2000) {
         super('POST', timeout, false, 'MULTIPART');
@@ -15,6 +15,7 @@ export default class Translation extends API {
         this.targetLanguageCode = targetLanguageCode
         this.model = JSON.stringify(model)
         this.pdf_translate = {}
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
 
     }
 

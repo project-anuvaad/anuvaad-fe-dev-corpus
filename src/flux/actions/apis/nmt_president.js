@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class NMT extends API {
     constructor(par, model, reverse, target, showSplitted, type, timeout = 200000) {
         super("POST", timeout, false);
@@ -15,6 +15,7 @@ export default class NMT extends API {
         this.showSplitted = showSplitted;
         this.url_end_point = model[0] ? model[0].url_end_point : model.url_end_point;
         this.type = type ? type : C.NMT;
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.nmt_president}`
     }
 
     toString() {

@@ -8,7 +8,7 @@ export default class FetchDoc extends API {
         this.type = C.FETCH_PDFSENTENCE;
         this.session_id = session;
         this.fetch_corpus_data = {}
-        this.endpoint = ENDPOINTS.fetchdocsentence;
+        this.endpoint = ENDPOINTS.fetchpdfsentence;
     }
 
     toString() {
