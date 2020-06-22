@@ -44,7 +44,8 @@ const themeAnuvaad = createMuiTheme({
     color:"#1C9AB7"
   },
  Button:{
-   borderRadius:'20px'
+   borderRadius:'20px',
+   backgroundColor:'#1C9AB7'
  } ,
 
   

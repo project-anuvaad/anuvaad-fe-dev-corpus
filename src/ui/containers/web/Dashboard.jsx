@@ -24,6 +24,7 @@ import AutoML from "../../../flux/actions/apis/auto_ml";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import NewOrders from "../../components/web/dashboard/NewOrders";
 import { translate } from "../../../assets/localisation";
+import ThemeDefault from "../../theme/web/theme-anuvaad";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -348,18 +349,16 @@ class Dashboard extends React.Component {
               <Button
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
-                color="primary"
                 aria-label="edit"
-                style={{ marginLeft: "1.3%", width: "44%", marginBottom: "4%", marginTop: "4%", marginRight: "5%" }}
+                style={{ marginLeft: "1.3%", width: "44%", marginBottom: "4%", marginTop: "4%", marginRight: "5%",backgroundColor:"#1C9AB7",color:"#FFFFFF" }}
               >
                 {translate("common.page.button.clear")}
               </Button>
               <Button
                 variant="contained"
                 onClick={this.handleSubmit.bind(this, role)}
-                color="primary"
                 aria-label="edit"
-                style={{ width: "44%", marginBottom: "4%", marginTop: "4%" }}
+                style={{ width: "44%", marginBottom: "4%", marginTop: "4%",backgroundColor:"#1C9AB7", color:"#FFFFFF" }}
               >
                 {translate("common.page.button.submit")}
               </Button>

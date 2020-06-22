@@ -99,7 +99,7 @@ class SignUp extends React.Component {
                             onSubmit={this.handleSubmit}
                             onError={errors => console.log(errors)}
                         > */}
-              <Typography align='center' style={{ marginTop: '5%', marginBottom: '5%', fontSize: '33px', color: '#003366' }}>Sign Up</Typography>
+              <Typography align='center' style={{ marginTop: '10%', marginBottom: '5%', fontSize: '33px', color: '#003366' }}>Sign Up</Typography>
               <FormControl align='center' fullWidth >
 
                 <TextField value={this.state.firstName} id="outlined-required" placeholder={translate('signUp.page.label.firstName')}
@@ -161,7 +161,7 @@ class SignUp extends React.Component {
 
               {/* </ValidatorForm> */}
               <hr style={{ height: '2px', borderwidth: '0', width: '70%', backgroundColor: ' #D8D8D8', color: '#D8D8D8', border: '0', marginTop: '2%' }} />
-              <Typography align='center' style={{ marginTop: '3%',fontSize:"100%" }}>{translate('signUp.page.label.enterDetailsToReceiveConfirmation')}<br />{translate('signUp.page.label.clickToActivateAccount')}</Typography>
+              <Typography align='center' style={{ marginTop: '3%',fontSize:"100%",marginBottom:"8%" }}>{translate('signUp.page.label.enterDetailsToReceiveConfirmation')}<br />{translate('signUp.page.label.clickToActivateAccount')}</Typography>
             </Grid>
           </Grid>
           <div className={classes.buttonsDiv} />

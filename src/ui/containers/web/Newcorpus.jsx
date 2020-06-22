@@ -293,8 +293,8 @@ class Newcorpus extends React.Component {
           <form method="post">
           </form>
 
-          <Button variant="contained" color="primary" className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? translate('common.page.button.cancel') : translate('common.page.button.back')} </Button>
-          <Button variant="contained" color="primary" className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) : this.handleNext}> {this.state.activeStep === 2 ? translate('common.page.label.createCorpus') : translate('common.page.button.next')}</Button>
+          <Button variant="contained"  className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? translate('common.page.button.cancel') : translate('common.page.button.back')} </Button>
+          <Button variant="contained"  className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) : this.handleNext}> {this.state.activeStep === 2 ? translate('common.page.label.createCorpus') : translate('common.page.button.next')}</Button>
           <div style={{ color: 'red', marginLeft: "30%" }}>{this.state.warning}</div>
         </Paper>
 

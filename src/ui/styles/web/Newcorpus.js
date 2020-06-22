@@ -67,7 +67,9 @@ button1: {
   marginBottom:'2%',
   marginTop:'5%'
   ,
-  width:'220px'
+  width:'220px',
+  backgroundColor:"#1C9AB7",
+   color:"#FFFFFF"
 },
 btns: {
   justifyContent: 'center',
@@ -75,7 +77,9 @@ btns: {
   marginBottom:'2%',
   marginTop:'5%',
   width:'240px',
-  marginLeft:'10%'
+  marginLeft:'10%',
+  backgroundColor:"#1C9AB7",
+   color:"#FFFFFF"
 },
 
   paper: {
