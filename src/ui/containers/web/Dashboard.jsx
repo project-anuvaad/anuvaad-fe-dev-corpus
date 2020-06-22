@@ -211,7 +211,7 @@ class Dashboard extends React.Component {
           width: "50%",
           marginTop: "4%"
         }}>
-          <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
+          <Typography variant="h5" style={{ color: '#233466', background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
             {translate("dashboard.page.heading.title")}
           </Typography>
           <Grid container spacing={8}>

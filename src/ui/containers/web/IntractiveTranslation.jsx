@@ -352,7 +352,7 @@ class IntractiveTrans extends React.Component {
               <Grid item xs={12} sm={12} lg={12} xl={12}>
                 <div>
                   <textarea
-                    style={{ width: "86.5%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
+                    style={{ width: "95%", padding: "1%",height:'70px', fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
                     className="noter-text-area"
                     rows="3"
                     value={this.state.text}
@@ -373,7 +373,7 @@ class IntractiveTrans extends React.Component {
                 <Grid item xs={12} sm={12} lg={12} xl={12}>
                   <div>
                     <textarea
-                      style={{ width: "86.5%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
+                      style={{ width: "95%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
                       className="noter-text-area"
                       rows="3"
                       ref={textarea => {
@@ -399,14 +399,14 @@ class IntractiveTrans extends React.Component {
             </div>
           )}
 
-          <Grid container spacing={24} style={{ padding: 24, paddingBottom: "18", paddingTop: "18" }}>
+          <Grid container spacing={24} style={{ padding: 24, paddingBottom: "18", paddingTop: "2%" }}>
             <Grid item xs={6} sm={6} lg={6} xl={6}>
               <Button
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
                 aria-label="edit"
-                style={{ marginLeft: "10%", width: "78%", marginBottom: "4%", marginTop: "4%", marginRight: "5%", backgroundColor:"#1C9AB7",
-                color:"#FFFFFF" }}
+                style={{ marginLeft: "18%", width: "78%", marginBottom: "4%", marginTop: "4%", marginRight: "5%", backgroundColor:"#1C9AB7",
+                color:"#FFFFFF", borderRadius: "20px 20px 20px 20px",height:'45px' }}
               >
                 {translate("common.page.button.clear")}
               </Button>
@@ -417,7 +417,7 @@ class IntractiveTrans extends React.Component {
                 onClick={this.handleSubmit.bind(this)}
                 aria-label="edit"
                 style={{ width: "78%", marginBottom: "4%", marginTop: "4%", backgroundColor:"#1C9AB7",
-                color:"#FFFFFF" }}
+                color:"#FFFFFF", borderRadius: "20px 20px 20px 20px",height:'45px' }}
               >
                 {this.state.update && this.state.nmtText[0] ? translate("common.page.title.edit") : translate("common.page.button.submit")}
               </Button>

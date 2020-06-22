@@ -23,15 +23,17 @@ const styles = theme => ({
   },
   typography: {
     textAlign: "center",
-    minWidth: "10%"
+    minWidth: "10%",
+    color:'#233466'
   },
   button: {
     marginTop: "4%",
-    marginLeft: "20%",
-    width: "60%",
+    marginLeft: "9%",
+    width: "80%",
     backgroundColor:"#1C9AB7",
     color:"#FFFFFF",
     borderRadius:"20px 20px 20px 20px",
+    height:'45px'
   }
 });
 
@@ -120,6 +122,7 @@ class PdfUpload extends Component {
             maxFileSize={20000000}
             dropzoneText={translate("common.page.label.addDropFile")}
             onDelete={this.handleDelete.bind(this)}
+          
           />
           {this.state.filesPath && (
             <Grid container spacing={8}>

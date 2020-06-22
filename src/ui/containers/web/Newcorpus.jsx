@@ -274,7 +274,7 @@ class Newcorpus extends React.Component {
       <div className={classes.CorpusContainer}>
 
         <Paper className={classes.paper} elevation={2}>
-          <Typography gutterBottom variant="title" component="h2" style={{ marginTop: '-3.7%', paddingLeft: '35%', background: blueGrey50, paddingTop: '13px', paddingBottom: '13px', marginLeft: '-4%', marginRight: '-3.7%' }}>
+          <Typography gutterBottom variant="title" component="h2" style={{ marginTop: '-3.7%', paddingLeft: '35%',color:'#233466', background: blueGrey50, paddingTop: '13px', paddingBottom: '13px', marginLeft: '-4%', marginRight: '-3.7%' }}>
             {translate('newCorpus.page.text.createCorpus')}
           </Typography><br />
           <Stepper steps={["Add Source file", 'Add target file', 'Add file details']} activeStep={this.state.activeStep} alternativeLabel></Stepper>

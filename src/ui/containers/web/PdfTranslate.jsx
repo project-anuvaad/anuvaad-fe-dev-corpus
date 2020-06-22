@@ -121,8 +121,8 @@ class doctranslate extends React.Component {
           supportLanguage.map((value) => (
             item.target_language_code === value.language_code ?
               result.push(value) : null
-          )) 
-          return true;
+          ))
+        return true;
       })
     }
     var value = new Set(result);
@@ -138,7 +138,7 @@ class doctranslate extends React.Component {
         <Paper value={
           <div>
 
-            <Typography value='Document Translator' variant="h5" gutterBottom="true" style={{ paddingLeft: '30%', paddingTop: '3%', paddingBottom: '4%', background: blueGrey50, marginBottom: '3%' }} />
+            <Typography value='Document Translator' variant="h5" gutterBottom="true" style={{ paddingLeft: '30%', paddingTop: '3%', paddingBottom: '4%', background: blueGrey50, marginBottom: '3%', color: '#233466' }} />
 
             <Grid container spacing={4} >
               <DropZone handleChange={this.handleChange} supportFile={['.docx']} />
@@ -151,7 +151,7 @@ class doctranslate extends React.Component {
             </Grid><br /><br />
             <Grid container spacing={2}>
               <Grid item xs={8} sm={8} lg={8} xl={8}>
-                <Typography value='Select target language' variant="title" gutterBottom="true" style={{ marginLeft: '22%', paddingTop: '13                                                                         px', marginBottom: '15%' }} /><br />
+                <Typography value='Select target language' variant="title" gutterBottom="true" style={{ marginLeft: '22%', paddingTop: '13px', marginBottom: '15%' }} /><br />
               </Grid>
               <Grid item xs={3} sm={3} lg={3} xl={3}>
                 <Select id={"outlined-age-simple"} MenuItemValues={this.state.source.language_code ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source.language_code) : []} handleChange={this.handleSelectChange} value={this.state.target} name="target" style={{ minWidth: 120, marginLeft: '10%', marginTop: '30' }} />
@@ -159,7 +159,8 @@ class doctranslate extends React.Component {
             </Grid>
 
 
-            <Button value={"Submit"} color={'primary'} variant={"contained"} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} style={{ width: '100%' }} />
+            <Button value={"Submit"} variant={"contained"} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} 
+            style={{ marginLeft: '3%', width: '95%',height:'45px', backgroundColor: "#1C9AB7", color: "#FFFFFF", borderRadius: "20px 20px 20px 20px" }} />
             {/* }}  */}
           </div>} style={{ width: '40%', marginLeft: '26%', marginTop: '2%', paddingBottom: '1%', minWidth: '450px' }}
         />

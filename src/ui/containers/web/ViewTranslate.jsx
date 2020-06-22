@@ -236,14 +236,14 @@ class ViewTranslate extends React.Component {
                         if (tableMeta.rowData) {
                             return (
                                 <div style={{ width: '240px', marginLeft: '-20px' }}>
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadSource')}><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadTranslate')}><IconButton color="primary" component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadSource')}><IconButton style={{color:'#233466'}} component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadTranslate')}><IconButton style={{color:'#233466'}} component="a" href={(process.env.REACT_APP_DOWNLOAD_URL ? process.env.REACT_APP_DOWNLOAD_URL : 'http://auth.anuvaad.org') + "/download-docx?filename=" + tableMeta.rowData[0] + '_t.docx'}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
                                    
 
 
                                     {/* {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.label.Edit')}><IconButton color="primary" component="span" onClick={(event) => {history.push('/interactive-editor/'+tableMeta.rowData[0])}} ><AddIcon/></IconButton></Tooltip> : ''} */}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.label.delete')}><IconButton color="primary" component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
-                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.button.upload')}><FileUpload id={tableMeta.rowData[0]} icon={<UploadIcon />} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" value={this.state.value} handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.label.delete')}><IconButton style={{color:'#233466'}} component="span" onClick={(event) => { this.handleSubmit(tableMeta.rowData[0], tableMeta.rowData[1]) }} ><DeleteIcon> </DeleteIcon></IconButton></Tooltip> : ''}
+                                    {tableMeta.rowData[5] === 'COMPLETED' ? <Tooltip title={translate('common.page.button.upload')}><FileUpload id={tableMeta.rowData[0]} icon={<UploadIcon style={{color:'#233466'}}/>} iconStyle={tableMeta.rowData[7] ? { color: 'green' } : null} accept=".docx" value={this.state.value} handleChange={(name, event) => this.handleTranslatedUpload(event, tableMeta.rowData[0])} /></Tooltip> : ''}
 
                                 </div>
                             );
@@ -285,7 +285,7 @@ class ViewTranslate extends React.Component {
             <div style={{backgroundColor:"#F5F9FA"}}>
                 <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
                     <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
-                    <Fab variant="extended" color="primary" aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { history.push("/doctranslate") }}>
+                    <Fab variant="extended"  aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%',backgroundColor:'#1C9AB7',color:'#FFFFFF' }} onClick={() => { history.push("/doctranslate") }}>
                         <AddIcon />&nbsp;{translate('dashboard.page.heading.title')}
                     </Fab>
                 </Toolbar>
