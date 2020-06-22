@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class UploadToken extends API {
   constructor(session_id, workspaceName, configFilepath, csvFilepath, timeout = 2000) {
     console.log();
@@ -13,6 +13,7 @@ export default class UploadToken extends API {
     this.title = workspaceName;
     this.token_file = configFilepath;
     this.negative_token_file = csvFilepath;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
   }
 
   toString() {

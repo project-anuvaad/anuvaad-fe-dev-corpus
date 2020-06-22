@@ -10,7 +10,7 @@ export default class HtmlToDoc extends API {
         super("POST", timeout, false);
         this.html = html;
         this.type = C.HTML_TO_DOC;
-        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactive_translate}`
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.html_to_doc}`
     }
 
     toString() {

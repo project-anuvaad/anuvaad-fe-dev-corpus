@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class UploadBenchmark extends API {
     constructor(file,name,language, timeout = 2000) {
         super('POST', timeout, false, 'MULTIPART');
@@ -12,6 +12,7 @@ export default class UploadBenchmark extends API {
         this.source_lang= language
         this.add_name = name
         this.benchmark_data=""
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
         
     }
 

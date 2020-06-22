@@ -3,13 +3,14 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class ConfigUpload extends API {
     constructor(configFile,name, timeout = 2000) {
         super('POST', timeout, false, 'MULTIPART');
         this.type = C.PDFCONFIGUPLOAD;
         this.file = configFile
         this.name = name
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.pdffile}`
     }
 
     toString() {

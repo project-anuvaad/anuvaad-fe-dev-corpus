@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class FetchSentences extends API {
   constructor(basename, pageCount, pageno, status = "", accuracy, timeout = 200000) {
     super("GET", timeout, false);
@@ -14,6 +14,7 @@ export default class FetchSentences extends API {
     this.pageno = pageno;
     this.status = status;
     this.accuracy = accuracy;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.sentences}`
   }
 
   toString() {
