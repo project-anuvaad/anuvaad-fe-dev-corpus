@@ -141,7 +141,7 @@ class Header extends React.Component {
                   right: "130px"
                 }}
               >
-                {translate('header.page.heading.welcome')} {this.state.name} [{useRole}]
+                {this.state.name} [{useRole}]
             </Typography>
             }
             {this.state.drawerClose}

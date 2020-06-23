@@ -17,13 +17,16 @@ const PdfUploadStyles = theme => ({
     minWidth: "5%",
     align:'center',
     marginLeft:"40%",
-    fontfamily: 'Trebuchet MS, sans-serif	',
-     color: '#003366' 
+    fontfamily: 'sans-serif	',
+     color: '#003366',
+     fontWeight:'549'
     
 
   },
   typographySubHeader:{
-    marginLeft:'38%'
+    marginLeft:'38%',
+    fontWeight:'450',
+    color:'#000000'
   },
 
   typography: {
@@ -42,8 +45,9 @@ const PdfUploadStyles = theme => ({
     width: "60%",
     minWidth: "200px",
     marginTop: "3%",
-    padding: "2% 2% 4% 2%",
-    marginLeft: "15%",
+    marginBottom:'8%',
+    padding: "2.5% 2.5% 3% 2.5%",
+    marginLeft: "14%",
   },
   grid:{
     marginLeft: "4%" 
@@ -53,7 +57,7 @@ const PdfUploadStyles = theme => ({
     marginLeft:"3%"
   },
   button: {
-    marginTop: "4%",
+    marginTop: "5%",
     marginLeft: "5%",
     width: "90%",
     backgroundColor:'#1C9AB7',

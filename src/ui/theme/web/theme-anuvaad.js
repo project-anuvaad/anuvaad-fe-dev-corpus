@@ -24,7 +24,7 @@ const themeAnuvaad = createMuiTheme({
       contrastText: '#FFFFFF'
     },
     background: {
-      default: '#FFFFFF',
+      default: '#F5F9FA',
       color:"inherit"
     }
   },

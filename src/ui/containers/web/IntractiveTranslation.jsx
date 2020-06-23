@@ -296,7 +296,7 @@ class IntractiveTrans extends React.Component {
   render() {
     return (
       <div>
-        <Paper style={{ marginLeft: "23%", width: "50%", marginTop: "5%" }}>
+        <Paper style={{ marginLeft: "23%", width: "50%", marginTop: "6%",marginBottom:"12.5%" }}>
           <Typography variant="h5" style={{ color:'#233466', background: blueGrey50, paddingLeft: "35%", paddingBottom: "12px", paddingTop: "8px",font: 'Source Sans Pro',fontWeight:'540' }}>
             {translate("intractive_translate.page.main.title")}
           </Typography>

@@ -24,12 +24,13 @@ const Newcorpus = theme => ({
     minWidth: 720,
     maxWidth: 700,
     height: 'auto',
-    marginTop: '4%',
+    marginTop: '5%',
     left: 0,
     right: 0,
     margin: 'auto',
     marginLeft:'24%',
     flexWrap: 'wrap',
+    marginBottom:"6%"
   },
   createButton: {
   justifyContent: 'center',

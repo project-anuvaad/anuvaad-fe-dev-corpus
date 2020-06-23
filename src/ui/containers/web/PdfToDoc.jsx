@@ -17,9 +17,10 @@ const styles = theme => ({
   paper: {
     width: "40%",
     minWidth: "20%",
-    marginTop: "5%",
-    padding: "2%",
-    marginLeft: "22%"
+    marginTop: "7%",
+    padding: "2.5% 2.5% 3% 2.5%",
+    marginLeft: "22%",
+    marginBottom:'12%'
   },
   typography: {
     textAlign: "center",
@@ -27,8 +28,8 @@ const styles = theme => ({
     color:'#233466'
   },
   button: {
-    marginTop: "4%",
-    marginLeft: "9%",
+    marginTop: "6%",
+    marginLeft: "9.5%",
     width: "80%",
     backgroundColor:"#1C9AB7",
     color:"#FFFFFF",

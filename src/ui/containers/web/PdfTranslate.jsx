@@ -144,19 +144,13 @@ class doctranslate extends React.Component {
           marginTop: '6%',
           minWidth: "5%",
           align: 'center',
-          marginLeft: "40%",
+          marginLeft: "35%",
           fontfamily: 'Trebuchet MS, sans-serif	',
           color: '#003366'
         }} />
 
-        <br />
-        <Paper styles={{
-          width: "60%",
-          minWidth: "200px",
-          marginTop: "3%",
-          padding: "2% 2% 4% 2%",
-          marginLeft: "15%",
-        }} value={
+      
+        <Paper value={
           <div>
             <Grid container spacing={4} >
 
@@ -206,7 +200,7 @@ class doctranslate extends React.Component {
                 <Grid container spacing={24} >
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
                     <Button value={"Submit"} variant={"contained"} style={{
-                      marginTop: "2%",
+                      marginTop: "3%",
                       marginLeft: "12%",
                       width: "85%",
                       backgroundColor:'#1C9AB7',
@@ -218,7 +212,7 @@ class doctranslate extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-          </div>} style={{ width: '60%', marginLeft: "15%", marginTop: '5%', padding: "2% 2% 4% 2%", minWidth: "200px", }}
+          </div>} style={{ width: '55%', marginLeft: "15%", marginTop: '4%',marginBottom:'13%', padding: "2.5% 2.5% 3% 2.5%", minWidth: "200px", }}
         />
       </div>
 
