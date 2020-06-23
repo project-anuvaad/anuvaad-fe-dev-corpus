@@ -28,7 +28,10 @@ const styles = theme => ({
   button: {
     marginTop: "4%",
     marginLeft: "20%",
-    width: "60%"
+    width: "60%",
+    backgroundColor:"#1C9AB7",
+    color:"#FFFFFF",
+    borderRadius:"20px 20px 20px 20px",
   }
 });
 
@@ -127,14 +130,14 @@ class PdfUpload extends Component {
                   }`}
                   style={{ textDecoration: "none" }}
                 >
-                  <Button variant="contained" color="primary" className={this.props.classes.button} size="large">
+                  <Button variant="contained"  className={this.props.classes.button} size="large">
                     {translate("common.page.button.download&View")}
                   </Button>
                 </a>
               </Grid>
             </Grid>
           )}
-          <Button variant="contained" color="primary" className={this.props.classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
+          <Button variant="contained"  className={this.props.classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
             {translate("common.page.button.submit")}
           </Button>
         </Grid>

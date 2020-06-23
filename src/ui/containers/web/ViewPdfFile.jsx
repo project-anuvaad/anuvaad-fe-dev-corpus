@@ -174,8 +174,9 @@ class PdfUpload extends React.Component {
           {this.state.role.includes("dev") || this.state.role.includes("grader") || this.state.role.includes("user") || this.state.role.includes("interactive-editor")? (
             <Button
               variant="extendedFab"
-              color="primary"
-              style={{ marginRight: 0 }}
+              
+              style={{ marginRight: 0 , backgroundColor:"#1C9AB7",
+              color:"#FFFFFF"}}
               aria-label="Add"
               onClick={() => {
                 history.push(`${process.env.PUBLIC_URL}/pdf-upload`);
