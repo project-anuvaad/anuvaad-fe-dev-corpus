@@ -93,16 +93,16 @@ class SignUp extends React.Component {
             <Grid item xs={12} sm={4} lg={5} xl={5} >
               <img src="Anuvaad.png" width="100%" height="925px" alt="" />
             </Grid>
-            <Grid item xs={12} sm={8} lg={7} xl={7} style={{ backgroundColor: '#f1f5f7' }} >
+            <Grid item xs={12} sm={8} lg={7} xl={7} className={classes.signUpPaper} >
               {/* <ValidatorForm
                             ref="form"
                             onSubmit={this.handleSubmit}
                             onError={errors => console.log(errors)}
                         > */}
-              <Typography align='center' style={{ marginTop: '10%', marginBottom: '5%', fontSize: '33px', color: '#003366' }}>Sign Up</Typography>
+              <Typography align='center' className={classes.typographyHeader}>Sign Up</Typography>
               <FormControl align='center' fullWidth >
 
-                <TextField value={this.state.firstName} id="outlined-required" placeholder={translate('signUp.page.label.firstName')}
+              <TextField value={this.state.firstName} id="outlined-required" placeholder={translate('signUp.page.label.firstName')}
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('firstName')}
                 />
               </FormControl>
@@ -125,7 +125,7 @@ class SignUp extends React.Component {
                   margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('confirmPassword')}
                 />
               </FormControl>
-              <FormControlLabel fullWidth style={{ marginLeft: '25%' }}
+              <FormControlLabel fullWidth className={classes.formControl}
                 control={
                   <Checkbox
                     className={classes.checkRemember.className}
@@ -156,12 +156,12 @@ class SignUp extends React.Component {
                 </Button>
               </FormControl>
 
-              <Typography style={{ marginLeft: '26%', marginBottom: '4%' }}>{translate('signUp.page.label.allReadyHaveAccount')}
+              <Typography className={classes.typography1}>{translate('signUp.page.label.allReadyHaveAccount')}
                 <Link style={{ cursor: 'pointer' }} href="#" onClick={() => { history.push("/") }}> {translate('signUp.page.label.logIn')}</Link></Typography>
 
               {/* </ValidatorForm> */}
-              <hr style={{ height: '2px', borderwidth: '0', width: '70%', backgroundColor: ' #D8D8D8', color: '#D8D8D8', border: '0', marginTop: '2%' }} />
-              <Typography align='center' style={{ marginTop: '3%',fontSize:"100%",marginBottom:"8%" }}>{translate('signUp.page.label.enterDetailsToReceiveConfirmation')}<br />{translate('signUp.page.label.clickToActivateAccount')}</Typography>
+              <hr className={classes.hrTag} />
+              <Typography align='center' className={classes.typographyFooter}>{translate('signUp.page.label.enterDetailsToReceiveConfirmation')}<br />{translate('signUp.page.label.clickToActivateAccount')}</Typography>
             </Grid>
           </Grid>
           <div className={classes.buttonsDiv} />
