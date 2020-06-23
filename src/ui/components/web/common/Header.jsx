@@ -126,9 +126,11 @@ class Header extends React.Component {
                   marginLeft: '1%'
                 }} />
             }
+             
             <Typography variant="title" color="inherit" className={forDemo ? classes.felxDemo : classes.flex}>
               {title}
             </Typography>
+            {/* <img src="Logo.svg" alt="logo"/> */}
             {!dontShowHeader &&
               <Typography
                 variant="title"
@@ -222,7 +224,7 @@ class Header extends React.Component {
                       primary={
                         <Typography
                           type="body2"
-                          style={{ color: "#FFFFFF", paddingBottom: "2%", marginLeft: "21%" }}
+                          style={{ color: "#000000", paddingBottom: "2%", marginLeft: "21%" }}
                           variant="title"
                           color="inherit"
                           className={classes.flex}
@@ -248,7 +250,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('header.page.heading.dataPipeline')}
                           </Typography>
                         }
@@ -270,7 +272,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('dashboard.page.heading.title')}
                           </Typography>
                         }
@@ -292,7 +294,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('dashboard.page.heading.title')}
                           </Typography>
                         }
@@ -329,7 +331,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('header.page.heading.uploadFile')}
                           </Typography>
                         }
@@ -351,7 +353,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('commonCorpus.page.button.corpus')}
                           </Typography>
                         }
@@ -373,7 +375,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('webroutes.page.title.corpusList')}
                           </Typography>
                         }
@@ -395,7 +397,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('header.page.heading.benchMark')}
                           </Typography>
                         }
@@ -418,7 +420,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate("intractive_translate.page.main.title")}
                           </Typography>
                         }
@@ -440,7 +442,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('webroutes.page.title.pdfList')}
                           </Typography>
                         }
@@ -455,7 +457,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={(
-                          <Typography type="body2" style={{ color: '#FFFFFF' }}>
+                          <Typography type="body2" style={{ color: '#000000' }}>
                             {translate('webroutes.page.title.graderReport')}
                           </Typography>
                         )}
@@ -479,7 +481,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('common.page.title.comparisonReport')}
                           </Typography>
                         }
@@ -502,7 +504,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('webroutes.page.title.translateFile')}
                           </Typography>
                         }
@@ -524,7 +526,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('webroutes.page.title.pdfToDoc')}
                           </Typography>
                         }
@@ -546,7 +548,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('webroutes.page.title.pdfSentences')}
                           </Typography>
                         }
@@ -568,7 +570,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('common.page.title.document')}
                           </Typography>
                         }
@@ -591,7 +593,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('userDirectory.page.label.userManagement')}
                           </Typography>
                         }
@@ -637,7 +639,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          <Typography type="body2" style={{ color: "#000000" }}>
                             {translate('header.page.heading.feedBack')}
                           </Typography>
                         }
