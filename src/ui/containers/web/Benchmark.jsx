@@ -233,7 +233,7 @@ class Benchmark extends React.Component {
                   {this.state[targetname] && this.state[modelname] && (
                     <Tooltip title={translate("common.page.title.gradeSentence")}>
                       <GradeIcon
-                        style={{ width: "24",color:'#233466', height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
+                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
                         onClick={() => {
                           this.handleSubmit(tableMeta.rowData[0], this.state[modelname]);
                         }}

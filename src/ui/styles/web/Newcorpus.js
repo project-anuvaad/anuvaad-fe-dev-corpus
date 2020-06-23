@@ -24,7 +24,7 @@ const Newcorpus = theme => ({
     minWidth: 720,
     maxWidth: 700,
     height: 'auto',
-    marginTop: '4%',
+    top: '20%',
     left: 0,
     right: 0,
     margin: 'auto',
@@ -63,31 +63,24 @@ buttons: {
 
 button1: {
   justifyContent: 'center',
-  // left: theme.spacing.unit*12,
+  left: theme.spacing.unit*12,
   marginBottom:'2%',
-  marginTop:'5%',
-  marginLeft:'4%',
-  width:'43%',
-  height:'42px',
-  backgroundColor:"#1C9AB7",
-   color:"#FFFFFF",
-   borderRadius:"20px 20px 20px 20px",
+  marginTop:'5%'
+  ,
+  width:'220px'
 },
 btns: {
   justifyContent: 'center',
   left: theme.spacing.unit*6,
   marginBottom:'2%',
   marginTop:'5%',
-  width:'43%',
-  height:'42px',
-  marginLeft:'1%',
-  backgroundColor:"#1C9AB7",
-   color:"#FFFFFF",
-   borderRadius:"20px 20px 20px 20px",
+  width:'240px',
+  marginLeft:'10%'
 },
 
   paper: {
     padding: 25,
+    marginTop:'20px',
     overflow: 'auto',
     width: 'auto%',
     

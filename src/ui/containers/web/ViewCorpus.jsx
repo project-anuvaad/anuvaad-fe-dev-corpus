@@ -133,7 +133,7 @@ class Corp extends React.Component {
                   {(tableMeta.rowData[6] === "COMPLETED" || tableMeta.rowData[6] === "IN-PROGRESS") && this.state.role.includes("editor") && (
                     <Tooltip title={translate("viewCorpus.title.viewSentence")}>
                       <EditIcon
-                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%",color:'#233466' }}
+                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
                         onClick={() => {
                           history.push(`${process.env.PUBLIC_URL}/parallel-corpus/${tableMeta.rowData[0]}`);
                         }}
@@ -145,7 +145,7 @@ class Corp extends React.Component {
                   {(tableMeta.rowData[6] === "COMPLETED" || tableMeta.rowData[6] === "IN-PROGRESS") && this.state.role.includes("grader") && (
                     <Tooltip title={translate("common.page.title.gradeSentence")}>
                       <GradeIcon
-                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%",color:'#233466' }}
+                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
                         onClick={() => {
                           history.push(`${process.env.PUBLIC_URL}/view-corpus/${tableMeta.rowData[0]}`);
                         }}
@@ -157,7 +157,7 @@ class Corp extends React.Component {
                   {(tableMeta.rowData[6] === "COMPLETED" || tableMeta.rowData[6] === "IN-PROGRESS") && this.state.role.includes("dev") && (
                     <Tooltip title={translate("viewCorpus.title.viewSentence")}>
                       <ViewIcon
-                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%",color:'#233466' }}
+                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
                         onClick={() => {
                           history.push(`${process.env.PUBLIC_URL}/view-corpus/${tableMeta.rowData[0]}`);
                         }}
@@ -203,7 +203,7 @@ class Corp extends React.Component {
             <Button
               variant="extendedFab"
               color="primary"
-              style={{ marginRight: 0,backgroundColor:'#1C9AB7',color:'#FFFFFF' }}
+              style={{ marginRight: 0 }}
               aria-label="Add"
               onClick={() => {
                 history.push(`${process.env.PUBLIC_URL}/newcorpus`);

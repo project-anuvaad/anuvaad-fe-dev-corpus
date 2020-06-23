@@ -114,13 +114,13 @@ class Newcorpus extends React.Component {
       case 0:
         return <div>
           <Grid container spacing={8} >
-            <Grid item xs={7} sm={7} lg={7} xl={7}>
-              <Typography value='' variant="title" style={{ marginLeft: '12%', paddingTop: '15%' }} >{translate('common.page.label.sourceLang')}</Typography>
+            <Grid item xs={8} sm={8} lg={8} xl={8}>
+              <Typography value='' variant="title" style={{ marginLeft: '12%', paddingTop: '14%' }} >{translate('common.page.label.sourceLang')}</Typography>
 
             </Grid>
-            <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
+            <Grid item xs={3} sm={3} lg={2} xl={2}><br /><br />
               <Select
-                style={{ width:'95%'}}
+                style={{ minWidth: 120, align: 'right' }}
                 value={this.state.english}
                 onChange={this.handleSelectChange}
                 input={
@@ -134,7 +134,7 @@ class Newcorpus extends React.Component {
 
 
             </Grid>
-          </Grid><br /><br/>
+          </Grid><br />
           {this.state.val > 1 ?
             <DropzoneArea
               onDrop={this.handleSource} showPreviewsInDropzone={true} style={{ marginTop: '0%' }} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={1}
@@ -150,14 +150,14 @@ class Newcorpus extends React.Component {
       case 1:
         return <div>
           <Grid container spacing={8} >
-            <Grid item xs={7} sm={7} lg={7} xl={7}>
-              <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '5%', paddingTop: '15%' }} >{translate('common.page.label.targetLang')}</Typography>
+            <Grid item xs={8} sm={8} lg={8} xl={8}>
+              <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '5%', paddingTop: '14%' }} >{translate('common.page.label.targetLang')}</Typography>
 
             </Grid>
-            <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
+            <Grid item xs={3} sm={3} lg={2} xl={2}><br /><br />
 
               <Select
-                style={{ minWidth: 120,width:'95%', align: 'right' }}
+                style={{ minWidth: 120, align: 'right' }}
                 value={this.state.hindi}
                 onChange={this.handleSelectChange}
                 input={
@@ -274,7 +274,7 @@ class Newcorpus extends React.Component {
       <div className={classes.CorpusContainer}>
 
         <Paper className={classes.paper} elevation={2}>
-          <Typography gutterBottom variant="title" component="h2" style={{ marginTop: '-3.7%', paddingLeft: '35%',color:'#233466', background: blueGrey50, paddingTop: '2%', paddingBottom: '13px', marginLeft: '-4%', marginRight: '-3.7%',font: 'Source Sans Pro',fontWeight:'540' }}>
+          <Typography gutterBottom variant="title" component="h2" style={{ marginTop: '-3.7%', paddingLeft: '35%', background: blueGrey50, paddingTop: '13px', paddingBottom: '13px', marginLeft: '-4%', marginRight: '-3.7%' }}>
             {translate('newCorpus.page.text.createCorpus')}
           </Typography><br />
           <Stepper steps={["Add Source file", 'Add target file', 'Add file details']} activeStep={this.state.activeStep} alternativeLabel></Stepper>
@@ -293,8 +293,8 @@ class Newcorpus extends React.Component {
           <form method="post">
           </form>
 
-          <Button variant="contained"  className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? translate('common.page.button.cancel') : translate('common.page.button.back')} </Button>
-          <Button variant="contained"  className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) : this.handleNext}> {this.state.activeStep === 2 ? translate('common.page.label.createCorpus') : translate('common.page.button.next')}</Button>
+          <Button variant="contained" color="primary" className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? translate('common.page.button.cancel') : translate('common.page.button.back')} </Button>
+          <Button variant="contained" color="primary" className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) : this.handleNext}> {this.state.activeStep === 2 ? translate('common.page.label.createCorpus') : translate('common.page.button.next')}</Button>
           <div style={{ color: 'red', marginLeft: "30%" }}>{this.state.warning}</div>
         </Paper>
 
