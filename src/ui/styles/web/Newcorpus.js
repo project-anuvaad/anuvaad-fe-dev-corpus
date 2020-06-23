@@ -24,7 +24,7 @@ const Newcorpus = theme => ({
     minWidth: 720,
     maxWidth: 700,
     height: 'auto',
-    top: '20%',
+    marginTop: '4%',
     left: 0,
     right: 0,
     margin: 'auto',
@@ -88,7 +88,6 @@ btns: {
 
   paper: {
     padding: 25,
-    marginTop:'20px',
     overflow: 'auto',
     width: 'auto%',
     

@@ -207,11 +207,11 @@ class Dashboard extends React.Component {
     return (
       <div>
         <Paper style={{
-          marginLeft: "25%",
+          marginLeft: "23%",
           width: "50%",
-          marginTop: "4%"
+          marginTop: "5%"
         }}>
-          <Typography variant="h5" style={{ color: '#233466', background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
+          <Typography variant="h5" style={{ color: '#233466', background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px",font: 'Source Sans Pro',fontWeight:'540' }}>
             {translate("dashboard.page.heading.title")}
           </Typography>
           <Grid container spacing={8}>
@@ -231,7 +231,7 @@ class Dashboard extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.source}
                 name="source"
-                style={{ marginRight: "30%", marginBottom: "5%", marginTop: "4%",width:"100%" }}
+                style={{ marginBottom: "5%", marginTop: "4%",width:"100%" }}
               />
             </Grid>
           </Grid>
@@ -251,7 +251,7 @@ class Dashboard extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.target}
                 name="target"
-                style={{ marginRight: "30%", marginBottom: "5%", marginTop: "4%", marginLeft: "10%",width:"100%" }}
+                style={{ marginBottom: "5%", marginTop: "4%", width:"100%" }}
               />
             </Grid>
           </Grid>
@@ -269,7 +269,7 @@ class Dashboard extends React.Component {
                 <SelectModel
                   id="select-multiple-chip"
                   multiple
-                  style={{ width:"95%", align: "right",marginRight:"30%"  }}
+                  style={{ width:"93%"  }}
                   value={this.state.model}
                   onChange={this.handleSelectModelChange}
                   renderValue={selected => selected.join(", ")}
