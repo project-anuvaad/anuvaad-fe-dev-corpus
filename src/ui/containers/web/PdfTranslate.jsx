@@ -11,7 +11,7 @@ import history from "../../../web.history";
 import Button from "../../components/web/common/Button";
 import DropZone from '../../components/web/common/DropZone';
 import Paper from '../../components/web/common/Paper';
-import Select from "../../components/web/common/Select";
+import Select from "../../components/web/common/Select1";
 import Typography from '../../components/web/common/Typography';
 import { blueGrey50 } from "material-ui/styles/colors";
 import { withStyles } from "@material-ui/core/styles";
