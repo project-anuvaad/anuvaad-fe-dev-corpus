@@ -11,7 +11,7 @@ import history from "../../../web.history";
 import Button from "../../components/web/common/Button";
 import DropZone from '../../components/web/common/DropZone';
 import Paper from '../../components/web/common/Paper';
-import Select from '../../components/web/common/SimpleSelect';
+import Select from "../../components/web/common/Select";
 import Typography from '../../components/web/common/Typography';
 import { blueGrey50 } from "material-ui/styles/colors";
 import { withStyles } from "@material-ui/core/styles";
@@ -197,7 +197,7 @@ class doctranslate extends React.Component {
                     MenuItemValues={this.state.source.language_code ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source.language_code) : []} 
                     handleChange={this.handleSelectChange} value={this.state.target} name="target"
                       style={{
-                        marginRight: "30%",
+                        
                         width: "100%",
                       }} />
                   </Grid>
@@ -206,13 +206,13 @@ class doctranslate extends React.Component {
                 <Grid container spacing={24} >
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
                     <Button value={"Submit"} variant={"contained"} style={{
-                      marginTop: "4%",
-                      marginLeft: "11%",
-                      width: "80%",
-                      backgroundColor: '#1C9AB7',
-                      borderRadius: "20px 20px 20px 20px",
-                      color: "#FFFFFF",
-                      height: '46px'
+                      marginTop: "2%",
+                      marginLeft: "12%",
+                      width: "85%",
+                      backgroundColor:'#1C9AB7',
+                      borderRadius:"20px 20px 20px 20px",
+                      color:"#FFFFFF",
+                      height:'45px'
                     }} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} />
                   </Grid>
                 </Grid>
