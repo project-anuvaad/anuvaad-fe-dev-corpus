@@ -103,7 +103,7 @@ class IntractiveTrans extends React.Component {
     if (prevProps.mergeSentenceApi !== this.props.mergeSentenceApi) {
       this.handleSentenceApi();
       this.setState({
-        merge: true,
+        action: true,
         selectedMergeSentence: []
       });
     }
@@ -117,6 +117,10 @@ class IntractiveTrans extends React.Component {
       const { APITransport } = this.props;
       const apiObj = new FetchDoc(this.props.match.params.fileid);
       APITransport(apiObj);
+      this.setState({
+        action: true,
+        
+      });
     }
 
     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
@@ -156,9 +160,9 @@ class IntractiveTrans extends React.Component {
                 }
                 
               }
-              console.log("obj----",objSentfinal);
+              
                 sentence.table_items = objSentfinal;
-              console.log("sen----",sentence);
+              
             }
             if (sentence.status !== "DELETED") {
               sentenceArray.push(sentence);
@@ -231,15 +235,15 @@ class IntractiveTrans extends React.Component {
         return true;
       });
 
-      this.setState({ open: this.state.merge });
-      this.state.merge &&
+      this.setState({ open: this.state.action });
+      this.state.action &&
         setTimeout(() => {
-          this.setState({ merge: false, open: false });
+          this.setState({ action: false, open: false });
         }, 2000);
 
       this.setState({
         sentences: sentenceArray,
-        merge: false,
+        action: false,
         scriptSentence: superArray,
         fileDetails: this.props.fetchPdfSentence.pdf_process,
         sourceSupScripts: supScripts,
@@ -255,7 +259,7 @@ class IntractiveTrans extends React.Component {
   handleSave(value, index, submittedId, sentenceIndex, keyValue, cellValue, taggedValue) {
     const obj = this.state.sentences;
     const temp = this.state.sentences[index];
-    console.log(value, index, submittedId, sentenceIndex, keyValue, cellValue, taggedValue);
+    
     if (temp.is_table) {
       temp.table_items[keyValue][cellValue].target = value.tgt ? value.tgt : value;
       temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt ? value.tagged_tgt : taggedValue;
@@ -277,7 +281,7 @@ class IntractiveTrans extends React.Component {
     senArray.push(value);
     const apiObj = new InteractiveApi(senArray);
     APITransport(apiObj);
-    this.setState({ token });
+    this.setState({ token, message:`${this.state.fileDetails.process_name} ` + translate("intractive_translate.page.message.savedSuccessfully") });
   }
 
   handleScriptSave(target, indexValue) {
@@ -361,7 +365,7 @@ class IntractiveTrans extends React.Component {
       if (totalSelectedSentence[0]._id !== totalSelectedSentence.slice(-1)[0]._id) {
         splitArray.push(totalSelectedSentence.slice(-1)[0]);
       }
-
+      this.setState({message:'Sentence merged successfully'})
       totalSelectedSentence = splitArray;
     }
     if (this.state.operation_type === "merge" || this.state.operation_type === "split" || this.state.operation_type === "merge-individual") {
@@ -373,6 +377,12 @@ class IntractiveTrans extends React.Component {
         this.state.splitSentence
       );
       APITransport(apiObj);
+    }
+    if(this.state.operation_type === "merge"){
+      this.setState({message:'Sentence merged successfully'})
+    }
+    else if(this.state.operation_type === "split"){
+      this.setState({message:'Sentence splitted successfully'})
     }
     this.handleClose();
   }
@@ -412,7 +422,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, pageNo, next_previous) {
-    console.log(sentenceId, tableId, clickedCell, value, parent, pageNo, next_previous);
+    
     this.setState({
       selectedSentenceId: tableId,
       selectedTableId: tableId,
@@ -588,11 +598,13 @@ class IntractiveTrans extends React.Component {
 
   }
   handleAddCell(sentence, operationType) {
+    console.log(operationType)
     if (sentence && operationType) {
       const { APITransport } = this.props;
       const apiObj = new UpdatePdfTable(sentence, operationType);
       APITransport(apiObj);
     }
+    this.setState({ openEl: true, message:'', message: operationType=="add-row"? "New row added": "New column added." });
     this.handleClose();
   }
 
@@ -619,23 +631,25 @@ class IntractiveTrans extends React.Component {
       const apiObj = new DeleteSentence(this.state.startParagraph, sentences);
       APITransport(apiObj);
     }
-    this.setState({ openEl: true });
+    this.setState({ openEl: true, message:'Deleted sentence successfully' });
     this.handleClose();
   }
   handleDeleteTable(paragraph, cellData, operation_type) {
+    console.log(operation_type)
     if (paragraph && cellData && operation_type) {
       const { APITransport } = this.props;
       const apiObj = new DeleteTable(paragraph, cellData, operation_type);
       APITransport(apiObj);
     }
     this.handleClose();
+    this.setState({message:'Deleted successfully'})
   }
   handlePopOverClose() {
     this.setState({ openContextMenu: false, anchorEl: null, leftValue: "", topValue: "" });
   }
 
   handleAddNewSentence(nodeType, sentence, selectedNodeType) {
-    this.setState({popOver: false})
+    this.setState({popOver: false,message:'Added new sentence successfully'})
     let paragraph = "";
     if (selectedNodeType === "text" && this.state.startParagraph && this.state.endParagraph) {
       paragraph = this.state.startParagraph;
@@ -654,7 +668,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddNewTable(tablePosition, paragraph) {
-    this.setState({ addNewTable: true, openEl: false, tablePosition, hoveredTable: paragraph, popOver: false });
+    this.setState({ addNewTable: true, openEl: false, tablePosition, hoveredTable: paragraph, popOver: false, message:'Added new table successfully' });
     this.handleClose();
   }
 
@@ -677,7 +691,7 @@ class IntractiveTrans extends React.Component {
         this.state.tablePosition
       );
       APITransport(apiObj);
-      this.setState({ addNewTable: false, popOver: false });
+      this.setState({ addNewTable: false, popOver: false, message:'Added new table successfully' });
     }
     this.handleClose();
   }
@@ -937,18 +951,17 @@ class IntractiveTrans extends React.Component {
                 title="Merge"
               />
             )}
+            {console.log("ot---",this.state.operation_type)}
             {this.state.open && (
+              
               <Snackbar
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 open={this.state.open}
                 autoHideDuration={3000}
                 variant="success"
                 message={
-                  this.state.token
-                    ? `${this.state.fileDetails.process_name} ` + translate("intractive_translate.page.message.savedSuccessfully")
-                    : this.state.operation_type === "merge"
-                    ? translate("intractive_translate.page.message.mergeSentenceSuccessfully")
-                    : translate("intractive_translate.page.message.splitSentenceSuccessfully")
+                  this.state.message
+                   
                 }
               />
             )}
