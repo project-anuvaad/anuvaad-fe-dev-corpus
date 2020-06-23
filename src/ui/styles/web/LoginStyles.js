@@ -18,45 +18,41 @@ const LoginStyles = theme => ({
   loginContainer: {
     minWidth: '15%',
     maxWidth: '25%',
-
     height: 'auto',
     position: 'absolute',
     top: '20%',
     left: '32%',
-    
-    
   },
-
   signUpContainer: {
     minWidth: '15%',
     maxWidth: '25%',
 
     height: 'auto',
-    
+
     marginTop: '2%',
     marginLeft: '32%',
-    
-    
+
+
   },
   paper: {
-    width:'100%',
-    minWidth:'260px',
+    width: '100%',
+    minWidth: '260px',
     paddingLeft: '20%',
     paddingRight: '20%',
-    paddingTop:'3%',
-    paddingBottom:'3%',
+    paddingTop: '3%',
+    paddingBottom: '3%',
     overflow: 'auto',
-    marginLeft:'0%'
+    marginLeft: '0%'
   },
   paperSign: {
-    width:'100%',
+    width: '100%',
     paddingLeft: '20%',
     paddingRight: '20%',
-    paddingTop:'3%',
-    paddingBottom:'3%',
+    paddingTop: '3%',
+    paddingBottom: '3%',
     overflow: 'auto',
-    marginLeft:'0%',
-    marginTop:'30%'
+    marginLeft: '0%',
+    marginTop: '30%'
   },
   buttonsDiv: {
     textAlign: 'center',
@@ -99,7 +95,44 @@ const LoginStyles = theme => ({
   },
   btnSpan: {
     marginLeft: 5
+  },
+  //for signup page
+  signUpPaper: {
+    backgroundColor: '#f1f5f7'
+  },
+  typographyHeader: {
+    marginTop: '10%',
+    marginBottom: '5%',
+    fontSize: '33px',
+    color: '#003366'
+  },
+  textArea: {
+    width: '50%',
+    marginBottom: '2%',
+    backgroundColor: 'white'
+  },
+  hrTag: {
+    height: '2px',
+    borderwidth: '0',
+    width: '70%',
+    backgroundColor: ' #D8D8D8',
+    color: '#D8D8D8',
+    border: '0',
+    marginTop: '2%'
+  },
+  formControl: {
+    marginLeft: '25%'
+  },
+  typography1: {
+    marginLeft: '26%',
+    marginBottom: '4%'
+  },
+  typographyFooter: {
+    marginTop: '3%',
+    fontSize: "100%",
+    marginBottom: "8%"
   }
+
 });
 
 

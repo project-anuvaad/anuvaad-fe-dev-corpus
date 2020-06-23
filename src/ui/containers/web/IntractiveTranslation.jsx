@@ -296,8 +296,8 @@ class IntractiveTrans extends React.Component {
   render() {
     return (
       <div>
-        <Paper style={{ marginLeft: "25%", width: "50%", marginTop: "3%" }}>
-          <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "35%", paddingBottom: "12px", paddingTop: "8px" }}>
+        <Paper style={{ marginLeft: "23%", width: "50%", marginTop: "5%" }}>
+          <Typography variant="h5" style={{ color:'#233466', background: blueGrey50, paddingLeft: "35%", paddingBottom: "12px", paddingTop: "8px",font: 'Source Sans Pro',fontWeight:'540' }}>
             {translate("intractive_translate.page.main.title")}
           </Typography>
           {!this.state.edit && 
@@ -320,7 +320,7 @@ class IntractiveTrans extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.source}
                 name="source"
-                style={{ marginRight: "30%", marginBottom: "4%", marginTop: "4%" }}
+                style={{marginBottom: "4%", marginTop: "4%" }}
               />
             </Grid>
           </Grid>
@@ -341,18 +341,18 @@ class IntractiveTrans extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.target}
                 name="target"
-                style={{ marginRight: "30%", marginBottom: "4%", marginTop: "4%", marginLeft: "10%" }}
+                style={{ marginBottom: "4%", marginTop: "4%", marginLeft: "10%" }}
               />
             </Grid>
           </Grid>
           </div>}
 
           <div style={{ marginLeft: "5%" }}>
-            <Grid container spacing={24} style={{ padding: 24 }}>
+            <Grid container spacing={24} style={{ padding: 24,marginTop:'3%' }}>
               <Grid item xs={12} sm={12} lg={12} xl={12}>
                 <div>
                   <textarea
-                    style={{ width: "86.5%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
+                    style={{ width: "98%", padding: "1%",height:'90px', fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
                     className="noter-text-area"
                     rows="3"
                     value={this.state.text}
@@ -373,7 +373,7 @@ class IntractiveTrans extends React.Component {
                 <Grid item xs={12} sm={12} lg={12} xl={12}>
                   <div>
                     <textarea
-                      style={{ width: "86.5%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
+                      style={{ width: "98%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
                       className="noter-text-area"
                       rows="3"
                       ref={textarea => {
@@ -399,14 +399,14 @@ class IntractiveTrans extends React.Component {
             </div>
           )}
 
-          <Grid container spacing={24} style={{ padding: 24, paddingBottom: "18", paddingTop: "18" }}>
+          <Grid container spacing={24} style={{  paddingBottom: "3%" }}>
             <Grid item xs={6} sm={6} lg={6} xl={6}>
               <Button
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
-                color="primary"
                 aria-label="edit"
-                style={{ marginLeft: "10%", width: "78%", marginBottom: "4%", marginTop: "4%", marginRight: "5%" }}
+                style={{ marginLeft: "24%", width: "80%", marginBottom: "4%", marginTop: "4%", backgroundColor:"#1C9AB7",
+                color:"#FFFFFF", borderRadius: "20px 20px 20px 20px",height:'46px' }}
               >
                 {translate("common.page.button.clear")}
               </Button>
@@ -415,9 +415,9 @@ class IntractiveTrans extends React.Component {
               <Button
                 variant="contained"
                 onClick={this.handleSubmit.bind(this)}
-                color="primary"
                 aria-label="edit"
-                style={{ width: "78%", marginBottom: "4%", marginTop: "4%" }}
+                style={{ width: "80%", marginBottom: "4%",marginLeft:'5%', marginTop: "4%", backgroundColor:"#1C9AB7",
+                color:"#FFFFFF", borderRadius: "20px 20px 20px 20px",height:'46px' }}
               >
                 {this.state.update && this.state.nmtText[0] ? translate("common.page.title.edit") : translate("common.page.button.submit")}
               </Button>

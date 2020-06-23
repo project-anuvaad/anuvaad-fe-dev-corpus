@@ -17,25 +17,9 @@ import { translate } from "../../../assets/localisation";
 import Select from "../../components/web/common/Select";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
-
-const styles = theme => ({
-  paper: {
-    width: "40%",
-    minWidth: "200px",
-    marginTop: "2%",
-    padding: "2%",
-    marginLeft: "22%"
-  },
-  typography: {
-    textAlign: "center",
-    minWidth: "10%"
-  },
-  button: {
-    marginTop: "4%",
-    marginLeft: "20%",
-    width: "60%"
-  }
-});
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import PdfUploadStyles from "../../styles/web/PdfUploadStyles";
 
 class PdfUpload extends Component {
   constructor() {
@@ -196,73 +180,66 @@ class PdfUpload extends Component {
   };
 
   render() {
+    const { user, classes, location } = this.props;
     return (
-      <Paper className={this.props.classes.paper}>
-        <Grid container spacing={24} style={{ padding: 6 }}>
-          <Grid item xs={12} sm={12} lg={12} xl={12}>
-            <Typography value="" variant="h4" className={this.props.classes.typography}>
+     <div >
+      
+        <Typography value=""  variant="h4" className={this.props.classes.typographyHeader}>
               {translate("common.page.label.uploadFile")}
-            </Typography>
-            <br />
-            <br />
-          </Grid>
-          <Grid container spacing={24} style={{ marginLeft: "3%" }}>
-            <Grid item xs={8} sm={8} lg={8} xl={8} style={{ paddingLeft: "2%" }}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "85%", paddingTop: "30px", paddingBottom: "30px" }}>
-                {translate("common.page.label.filename")}
-              </Typography>
+        </Typography>
+        <br/>
+        <Typography className={classes.typographySubHeader}>
+              Upload file that you want to translate.
+        </Typography >
+        <br />
+        <Paper className={classes.paper}>
+          <Grid container spacing={8}>
+
+            <Grid item xs={12} sm={6} lg={6} xl={6} >
+              <DropzoneArea className={classes.DropZoneArea}
+                showPreviewsInDropzone
+                acceptedFiles={[".pdf"]}
+                onChange={this.handleChange.bind(this)}
+                filesLimit={1}
+                maxFileSize={20000000}
+                dropzoneText={translate("common.page.label.addDropFile")}
+                onDelete={this.handleDelete.bind(this)}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6} lg={6} xl={6}  >
+         
+              <Grid container spacing={24} className={classes.grid}>
+                <Typography gutterBottom variant="title" className={classes.typography}>
+                  {translate('common.page.label.sourceLang')+ ' *' }
+                </Typography>
+              <Grid item xs={12} sm={12} lg={12} xl={12}  >
+                  <Select
+                  id="outlined-age-simple"
+                  selectValue="language_code"
+                  fullWidth
+                  MenuItemValues={this.state.modelLanguage.length > 0 && this.handleSource(this.state.modelLanguage, this.state.language)}
+                  // MenuItemValues={["English"]}
+                  handleChange={this.handleSelectChange}
+                  value={this.state.source}
+                  name="source"
+                  className={classes.Select}
+                />
+              </Grid>
+              </Grid>
               <br />
-            </Grid>
-            <Grid item xs={4} sm={4} lg={4} xl={4}>
-              <TextField
-                value={this.state.workspaceName}
-                id="outlined-name"
-                margin="normal"
-                onChange={event => {
-                  this.handleTextChange("workspaceName", event);
-                }}
-                variant="outlined"
-                style={{ width: 158 }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={24} style={{ marginLeft: "3%" }}>
-            <Grid item xs={8} sm={8} lg={8} xl={8} style={{ paddingLeft: "2%" }}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "100%", paddingTop: "15px" }}>
-                {translate('common.page.label.sourceLang') + ' *'}
-              </Typography>
-            </Grid>
-            <Grid item xs={3} sm={3} lg={3} xl={3}>
-
-              <Select
-                id="outlined-age-simple"
-                selectValue="language_code"
-                MenuItemValues={this.state.modelLanguage.length > 0 && this.handleSource(this.state.modelLanguage, this.state.language)}
-                // MenuItemValues={["English"]}
-                handleChange={this.handleSelectChange}
-                value={this.state.source}
-                name="source"
-                style={{ marginRight: "30%", marginBottom: "4%", marginTop: "4%" }}
-              />
-
-            </Grid>
-
-          </Grid>
-          <br />
-          <br />
-          <Grid container spacing={24} style={{ marginLeft: "3%" }}>
-            <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography
+            <Grid container spacing={24} className={classes.grid}>
+            
+              <Typography 
                 value="Select target language"
                 variant="title"
                 gutterBottom="true"
-                style={{ width: "100%", paddingTop: "15px", paddingBottom: "30px" }}
+                className={classes.typography}
               >
                 {translate('common.page.label.targetLang') + ' *'}
               </Typography>
               <br />
-            </Grid>
-            <Grid item xs={3} sm={3} lg={3} xl={3}>
+              <Grid item xs={12} sm={12} lg={12} xl={12}  >
               <Select
                 id="outlined-age-simple"
                 selectValue="language_code"
@@ -271,22 +248,32 @@ class PdfUpload extends Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.target}
                 name="target"
-                style={{ marginRight: "30%", marginBottom: "4%", marginTop: "4%", marginLeft: "10%" }}
+                className={classes.Select}
               />
-            </Grid>
+              </Grid>
           </Grid>
-          <DropzoneArea
-            showPreviewsInDropzone
-            acceptedFiles={[".pdf"]}
-            onChange={this.handleChange.bind(this)}
-            filesLimit={1}
-            maxFileSize={20000000}
-            dropzoneText={translate("common.page.label.addDropFile")}
-            onDelete={this.handleDelete.bind(this)}
-          />
-          <Button variant="contained" color="primary" className={this.props.classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
-            {translate("common.page.button.submit")}
+          <Grid container spacing={24} className={classes.grid}>
+              <Typography gutterBottom variant="title"  className={classes.typography}>
+                {translate("common.page.label.filename")}
+              </Typography>
+              <TextField
+                  className={classes.textfield}
+                  value={this.state.workspaceName}
+                  id="outlined-name"
+                  margin="normal"
+                  onChange={event => {
+                    this.handleTextChange("workspaceName", event);
+                  }}
+                  variant="outlined"
+                
+                />
+          </Grid>
+          <Grid container spacing={24} style={{ marginLeft: "4%",width:"98%" }}>
+         <Button variant="contained" color="primary" className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
+            {translate("common.page.button.upload")}
           </Button>
+          </Grid>
+        </Grid>
         </Grid>
 
         {this.state.open && (
@@ -300,6 +287,7 @@ class PdfUpload extends Component {
           />
         )}
       </Paper>
+      </div>
     );
   }
 }
@@ -319,4 +307,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(PdfUpload)));
+export default withRouter(
+  withStyles(PdfUploadStyles)(
+    connect(mapStateToProps, mapDispatchToProps)
+    (PdfUpload)));
