@@ -20,7 +20,7 @@ import history from "../../../web.history";
 import { DropzoneArea } from 'material-ui-dropzone';
 import Select from "@material-ui/core/Select";
 import Stepper from "../../components/web/common/Stepper";
-import {  blueGrey50 } from "material-ui/styles/colors"
+import { blueGrey50 } from "material-ui/styles/colors"
 import MenuItem from '@material-ui/core/MenuItem';
 import { translate } from '../../../assets/localisation';
 
@@ -120,7 +120,7 @@ class Newcorpus extends React.Component {
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
               <Select
-                style={{ width:'95%'}}
+                style={{ width: '95%' }}
                 value={this.state.english}
                 onChange={this.handleSelectChange}
                 input={
@@ -134,7 +134,7 @@ class Newcorpus extends React.Component {
 
 
             </Grid>
-          </Grid><br /><br/>
+          </Grid><br /><br />
           {this.state.val > 1 ?
             <DropzoneArea
               onDrop={this.handleSource} showPreviewsInDropzone={true} style={{ marginTop: '0%' }} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={1}
@@ -157,7 +157,7 @@ class Newcorpus extends React.Component {
             <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
 
               <Select
-                style={{ minWidth: 120,width:'95%', align: 'right' }}
+                style={{ minWidth: 120, width: '95%', align: 'right' }}
                 value={this.state.hindi}
                 onChange={this.handleSelectChange}
                 input={
@@ -272,11 +272,15 @@ class Newcorpus extends React.Component {
     const { classes } = this.props;
     return (
       <div className={classes.CorpusContainer}>
-
+        <Typography gutterBottom variant="title" component="h4" style={{
+          fontfamily: 'sans-serif	',
+          color: '#003366',
+          fontWeight: '549', paddingBottom: "12px", marginTop: "4%", marginLeft: '34%',fontSize:'28px'
+        }}>
+          {translate('newCorpus.page.text.createCorpus')}
+        </Typography>
         <Paper className={classes.paper} elevation={2}>
-          <Typography gutterBottom variant="title" component="h2" style={{ marginTop: '-3.7%', paddingLeft: '35%',color:'#233466', background: blueGrey50, paddingTop: '2%', paddingBottom: '13px', marginLeft: '-4%', marginRight: '-3.7%',font: 'Source Sans Pro',fontWeight:'540' }}>
-            {translate('newCorpus.page.text.createCorpus')}
-          </Typography><br />
+
           <Stepper steps={["Add Source file", 'Add target file', 'Add file details']} activeStep={this.state.activeStep} alternativeLabel></Stepper>
 
 
@@ -293,8 +297,8 @@ class Newcorpus extends React.Component {
           <form method="post">
           </form>
 
-          <Button variant="contained"  className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? translate('common.page.button.cancel') : translate('common.page.button.back')} </Button>
-          <Button variant="contained"  className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) : this.handleNext}> {this.state.activeStep === 2 ? translate('common.page.label.createCorpus') : translate('common.page.button.next')}</Button>
+          <Button variant="contained" className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? translate('common.page.button.cancel') : translate('common.page.button.back')} </Button>
+          <Button variant="contained" className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) : this.handleNext}> {this.state.activeStep === 2 ? translate('common.page.label.createCorpus') : translate('common.page.button.next')}</Button>
           <div style={{ color: 'red', marginLeft: "30%" }}>{this.state.warning}</div>
         </Paper>
 
