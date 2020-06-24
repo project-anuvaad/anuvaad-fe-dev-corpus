@@ -14,7 +14,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import DoneIcon from "@material-ui/icons/Done";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
-import ContextMenu from "react-context-menu";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import htmlToText from "html-to-text";
 import { translate } from "../../../../assets/localisation";

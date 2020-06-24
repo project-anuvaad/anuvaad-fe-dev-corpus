@@ -6,7 +6,6 @@ import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import Select from "../../components/web/common/Select";

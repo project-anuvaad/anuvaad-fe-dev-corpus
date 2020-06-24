@@ -11,7 +11,7 @@ import Divider from "@material-ui/core/Divider";
 // import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
 import FileCopy from "@material-ui/icons/FileCopy";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+// import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Grid from "@material-ui/core/Grid";
 import AccountCircle from "@material-ui/icons/AccountBox";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -25,7 +25,6 @@ import InsertChart from "@material-ui/icons/InsertChart";
 import Receipt from "@material-ui/icons/Receipt";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import history from "../../../../web.history";
-import { Button } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import ActionDelete from "@material-ui/icons/QuestionAnswer";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -269,7 +268,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <SendIcon style={{ color: "white" }} />
+
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -291,7 +290,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <SearchIcon style={{ color: "white" }} />
+                      
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -313,7 +312,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <TranslateIcon style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -350,7 +349,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <SendIcon style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -372,7 +371,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <StarIcon style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -394,7 +393,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <SendIcon style={{ color: "white" }} />
+                      
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -416,7 +415,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <SendIcon style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -439,7 +438,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <SearchIcon style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -461,7 +460,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <FileCopy style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -476,7 +475,7 @@ class Header extends React.Component {
                   {role && Array.isArray(role) && role.includes('admin') &&
                     <ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
                       <ListItemIcon>
-                        <Receipt style={{ color: 'white' }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -500,7 +499,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <InsertChart style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -523,7 +522,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <TranslateIcon style={{ color: "white" }} />
+                      
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -545,7 +544,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <InsertDriveFileIcon style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -567,7 +566,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <InsertDriveFileIcon style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -589,7 +588,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <SendIcon style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -612,7 +611,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <GroupIcon style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography
@@ -658,7 +657,7 @@ class Header extends React.Component {
                       }}
                     >
                       <ListItemIcon>
-                        <ActionDelete style={{ color: "white" }} />
+                        
                       </ListItemIcon>
                       <ListItemText
                         disableTypography

@@ -17,8 +17,6 @@ import { translate } from "../../../assets/localisation";
 import Select from "../../components/web/common/Select";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import PdfUploadStyles from "../../styles/web/PdfUploadStyles";
 
 class PdfUpload extends Component {
@@ -180,7 +178,7 @@ class PdfUpload extends Component {
   };
 
   render() {
-    const { user, classes, location } = this.props;
+    const { classes } = this.props;
     return (
      <div >
       

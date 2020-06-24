@@ -106,7 +106,7 @@ class PdfUpload extends Component {
   };
 
   render() {
-    const { user, classes, location } = this.props;
+    const { classes, } = this.props;
     return (
       <Paper style={{
         width: "40%",
@@ -199,5 +199,4 @@ const mapDispatchToProps = dispatch =>
 
 export default withRouter(
   withStyles(PdfUploadStyles)(
-    connect(mapStateToProps, mapDispatchToProps)
-      (PdfUpload)));
+    connect(mapStateToProps, mapDispatchToProps)(PdfUpload)));

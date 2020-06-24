@@ -7,7 +7,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import SelectModel from "@material-ui/core/Select";
@@ -203,7 +202,7 @@ class Dashboard extends React.Component {
 
   render() {
     const role = JSON.parse(localStorage.getItem("roles"));
-    const { user, classes, location } = this.props;
+    // const { user, classes, location } = this.props;
     return (
       <div>
         <Typography variant="h4" style={{
