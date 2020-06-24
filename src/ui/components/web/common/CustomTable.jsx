@@ -128,14 +128,14 @@ class CustomTable extends React.Component {
 
   handleOnClick(sentence, operationType) {
     if (this.state.openContextMenu && (operationType === "add-column" || operationType === "add-row")) {
-      this.props.handleAddCell(sentence, operationType);
+        this.props.handleDialog(sentence,"", operationType);
     } else if (
       this.state.openContextMenu &&
       (operationType === "delete-row" || operationType === "delete-column" || operationType === "delete-table")
     ) {
       if (this.state.selectedRow && this.state.selectedColumn) {
         let cellData = sentence.table_items[this.state.selectedRow][this.state.selectedColumn];
-        this.props.handleDeleteTable(sentence, cellData, operationType);
+        this.props.handleDialog(sentence, cellData, operationType);
       }
     }
     this.setState({ openContextMenu: false, anchorEl: null, leftValue: "", topValue: "" });
