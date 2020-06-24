@@ -10,6 +10,7 @@ import APITransport from '../../../flux/actions/apitransport/apitransport';
 import history from "../../../web.history";
 import Button from "../../components/web/common/Button";
 import DropZone from '../../components/web/common/DropZone';
+import { DropzoneArea } from "material-ui-dropzone";
 import Paper from '../../components/web/common/Paper';
 import Select from "../../components/web/common/Select1";
 import Typography from '../../components/web/common/Typography';
@@ -149,17 +150,20 @@ class doctranslate extends React.Component {
           color: '#003366'
         }} />
 
-      
+
         <Paper value={
           <div>
             <Grid container spacing={4} >
 
               <Grid item xs={12} sm={6} lg={6} xl={6} >
-                <DropZone handleChange={this.handleChange} supportFile={['.docx']} />
+                <DropzoneArea onChange={this.handleChange} showPreviewsInDropzone
+                  acceptedFiles={[".docx"]} dropZoneClass={classes.dropZoneArea}
+                  dropzoneText="Add and Drop a docx File here"
+                 />
               </Grid>
 
               <Grid item xs={12} sm={6} lg={6} xl={6}  >
-                <Grid container spacing={24} style={{ marginLeft: "6%", marginTop: '1%' }}>
+                <Grid container spacing={24} style={{ marginLeft: "6%", marginTop: '3%' }}>
                   <Typography value='Select Source Language' variant="title" gutterBottom="true" styles={{
 
                     marginTop: '4%',
@@ -178,20 +182,20 @@ class doctranslate extends React.Component {
                   </Grid>
                 </Grid>
                 <br /><br /><br />
-                <Grid container spacing={24} style={{ marginLeft: "6%" }}>
+                <Grid container spacing={24} style={{ marginLeft: "6%",marginTop:'2%' }}>
                   <Typography value='Select Target Language' variant="title" gutterBottom="true" styles={{
 
-                    marginTop: '4%',
+                    marginTop: '6%',
                     height: "18px",
                     fontSize: '18px',
                   }} />
 
                   <Grid item xs={12} sm={12} lg={12} xl={12}  >
-                    <Select id="outlined-age-simple" 
-                    MenuItemValues={this.state.source.language_code ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source.language_code) : []} 
-                    handleChange={this.handleSelectChange} value={this.state.target} name="target"
+                    <Select id="outlined-age-simple"
+                      MenuItemValues={this.state.source.language_code ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source.language_code) : []}
+                      handleChange={this.handleSelectChange} value={this.state.target} name="target"
                       style={{
-                        
+
                         width: "100%",
                       }} />
                   </Grid>
@@ -200,19 +204,19 @@ class doctranslate extends React.Component {
                 <Grid container spacing={24} >
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
                     <Button value={"Submit"} variant={"contained"} style={{
-                      marginTop: "3%",
+                      marginTop: "4%",
                       marginLeft: "12%",
                       width: "85%",
-                      backgroundColor:'#1C9AB7',
-                      borderRadius:"20px 20px 20px 20px",
-                      color:"#FFFFFF",
-                      height:'45px'
+                      backgroundColor: '#1C9AB7',
+                      borderRadius: "20px 20px 20px 20px",
+                      color: "#FFFFFF",
+                      height: '45px'
                     }} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} />
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </div>} style={{ width: '55%', marginLeft: "15%", marginTop: '4%',marginBottom:'13%', padding: "2.5% 2.5% 3% 2.5%", minWidth: "200px", }}
+          </div>} style={{ width: '55%', marginLeft: "15%", marginTop: '4%', marginBottom: '13%', padding: "2.5% 2.5% 3% 2.5%", minWidth: "200px", }}
         />
       </div>
 
