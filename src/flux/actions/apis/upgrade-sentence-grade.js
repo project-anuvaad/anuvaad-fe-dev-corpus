@@ -1,6 +1,6 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class UpdateSentences extends API {
     constructor(updateSentence,modelid, timeout = 2000) {
@@ -9,6 +9,7 @@ export default class UpdateSentences extends API {
         this.updateSentence = updateSentence;
         this.modelid = modelid;
         this.sentences=[]
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
         
     }
 

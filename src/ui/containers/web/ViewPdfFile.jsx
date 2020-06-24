@@ -91,7 +91,7 @@ class PdfUpload extends React.Component {
 
     {
       name: "source_lang",
-      label: "Source",
+      label: translate('common.page.label.source'),
       options: {
         filter: true,
         sort: true
@@ -100,7 +100,7 @@ class PdfUpload extends React.Component {
 
     {
       name: "target_lang",
-      label: "Target",
+      label: translate('common.page.label.target'),
       options: {
         filter: true,
         sort: true
@@ -123,7 +123,7 @@ class PdfUpload extends React.Component {
 
                         <div style={{ width: '120px' }}>
                           
-                            {(tableMeta.rowData[2]=== 'TRANSLATING' &&  tableMeta.rowData[3]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[3] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[2]) : tableMeta.rowData[2]=== 'PROCESSING'? <ProgressBar val={result} eta={300 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar>: tableMeta.rowData[2]}
+                            {(tableMeta.rowData[2]=== 'TRANSLATING' &&  tableMeta.rowData[3]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[3] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[2]) : tableMeta.rowData[2]=== 'PROCESSING'? <ProgressBar  token={true} val={result} eta={300 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar>: tableMeta.rowData[2]}
 
                         </div>
                     );

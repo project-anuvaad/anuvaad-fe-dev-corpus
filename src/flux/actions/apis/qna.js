@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class QNAApi extends API {
     constructor(par, q1, q2, q3, q4, timeout = 200000) {
         super("POST", timeout, false);
@@ -14,6 +14,7 @@ export default class QNAApi extends API {
         this.q4 = q4;
         this.answers = null;
         this.type = C.QNA;
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.qna}`
     }
 
     toString() {

@@ -1,12 +1,13 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class DownloadDoc extends API {
     constructor(sessionID, timeout = 2000) {
         super('POST', timeout, false);
         this.type = C.DOWNLOAD_DOC;
         this.session_id = sessionID;
-        this.result = ""
+        this.result = "";
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.downloaddoc}`;
     }
 
     toString() {
@@ -21,7 +22,7 @@ export default class DownloadDoc extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/make-doc-from-sentences`;
+        return this.endpoint;
     }
 
     getBody() {

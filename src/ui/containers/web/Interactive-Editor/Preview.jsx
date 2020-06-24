@@ -36,7 +36,7 @@ class Preview extends React.Component {
     componentDidUpdate(prevProps) {
 
         if (prevProps.downloaddoc !== this.props.downloaddoc) {
-            let url = `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+            let url = `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/download/${
                 this.props.downloaddoc.data ? this.props.downloaddoc.data : ""
                 }`
             window.open(url, "_self")

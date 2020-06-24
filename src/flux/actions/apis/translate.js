@@ -3,13 +3,14 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class CreateTranslations extends API {
     constructor(hindiFile, timeout = 2000) {
         super('POST', timeout, false, 'MULTIPART');
         this.type = C.CREATE_TRANSLATIONS;
         this.hindiFile = hindiFile
         this.translations = null;
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
     }
 
     toString() {

@@ -61,6 +61,11 @@ import signup from './signup';
 import forgotpassword from './forgotpassword';
 import setpassword from './setpassword';
 import activate from './activate';
+import updatePdfTable from './updatePdfTable';
+import updateSource from './interactivesourceupdate';
+import deleteSentence from './deleteSentence';
+import deleteTable from './deleteTable';
+import insertSentence from './insertSentence';
 
 export default {
     login,
@@ -125,5 +130,10 @@ export default {
     signup,
     forgotpassword,
     setpassword,
-    activate
+    activate,
+    updatePdfTable,
+    updateSource,
+    deleteSentence,
+    deleteTable,
+    insertSentence,
 };

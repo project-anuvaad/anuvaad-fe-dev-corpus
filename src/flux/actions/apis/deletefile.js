@@ -3,6 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class Translation extends API {
   constructor(deleteFile, timeout = 2000) {
@@ -11,6 +12,7 @@ export default class Translation extends API {
     this.deleteFile = deleteFile;
 
     this.pdf_translate = {};
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.deletefile}`;
   }
 
   toString() {
@@ -25,7 +27,7 @@ export default class Translation extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/remove-process`;
+    return this.endpoint;
   }
 
   getFormData() {

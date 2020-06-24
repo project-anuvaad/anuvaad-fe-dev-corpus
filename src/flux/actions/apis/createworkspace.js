@@ -3,6 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
   constructor(selectedworkspace, workspaceName, useLatest, language, timeout = 2000) {
@@ -12,6 +13,7 @@ export default class RunExperiment extends API {
     this.target_lang = language;
     this.useLatest = useLatest;
     this.selected_workspaces = selectedworkspace;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.createworkspace}`;
   }
 
   toString() {
@@ -26,7 +28,7 @@ export default class RunExperiment extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/save-mt-workspace`;
+    return this.endpoint;
   }
 
   getBody() {

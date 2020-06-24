@@ -3,6 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class CreateCorpus extends API {
     constructor(file,name,domain,language,comment, timeout = 2000) {
@@ -13,6 +14,7 @@ export default class CreateCorpus extends API {
         this.add_name = name
         this.domain = domain
         this.comment = comment
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.createcorpus}`;
     }
 
     toString() {
@@ -27,7 +29,7 @@ export default class CreateCorpus extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/upload-corpus`;
+        return this.endpoint;
     }
 
     getFormData() {

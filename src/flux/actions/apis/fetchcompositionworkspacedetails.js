@@ -1,5 +1,6 @@
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchWorkspaceDetails extends API {
   constructor(session, timeout = 200000) {
@@ -8,6 +9,7 @@ export default class FetchWorkspaceDetails extends API {
     
     this.workspace = null;
     this.type = C.FETCH_WORKSPACE_DETAILS;
+    this.endpoint = ENDPOINTS.fetchcompositionworkspacedetails;
   }
 
   toString() {
@@ -22,7 +24,7 @@ export default class FetchWorkspaceDetails extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/fetch-composition-workspace-detail?session_id=${this.session_id}`;
+    return `${super.apiEndPointAuto()}${this.endpoint}?session_id=${this.session_id}`;
   }
 
   getBody() {

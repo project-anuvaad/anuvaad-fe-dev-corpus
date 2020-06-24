@@ -3,13 +3,15 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class ForgotPassword extends API {
     constructor(email, timeout = 2000) {
         super("POST", timeout, false);
         this.type = C.FORGOTPASSWORD;
         this.email = email;
-        this.res = null
+        this.res = null;
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.forgotpassword}`
     }
 
     toString() {
@@ -17,7 +19,7 @@ export default class ForgotPassword extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/forgot-user-password`;
+        return this.endpoint;
     }
 
     getBody() {

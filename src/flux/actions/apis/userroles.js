@@ -1,6 +1,6 @@
 import C from "../constants";
 import API from "./api";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class UserRoles extends API {
     constructor( timeout = 2000) {
         super('GET', timeout, false);
@@ -8,6 +8,7 @@ export default class UserRoles extends API {
         
 
         this.userRoles = []
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.userroles}`
 
     }
 

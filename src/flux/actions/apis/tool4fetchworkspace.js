@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class FetchMTWorkspace extends API {
     constructor(source, target,status, timeout = 2000) {
         super('GET', timeout, false);
@@ -13,6 +13,7 @@ export default class FetchMTWorkspace extends API {
     this.status = status;
     
         this.fetch_workspace = {}
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
     }
 
     toString() {
