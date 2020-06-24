@@ -9,16 +9,14 @@ import FetchFeedbackPending from "../../../flux/actions/apis/fetchfeedbackpendin
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import history from "../../../web.history";
 import Button from "../../components/web/common/Button";
-import DropZone from '../../components/web/common/DropZone';
 import { DropzoneArea } from "material-ui-dropzone";
 import Paper from '../../components/web/common/Paper';
 import Select from "../../components/web/common/Select1";
 import Typography from '../../components/web/common/Typography';
-import { blueGrey50 } from "material-ui/styles/colors";
 import { withStyles } from "@material-ui/core/styles";
 import PdfUploadStyles from "../../styles/web/PdfUploadStyles";
 import { withRouter } from 'react-router';
-
+import { translate } from "../../../assets/localisation";
 
 class doctranslate extends React.Component {
   state = {
@@ -136,12 +134,12 @@ class doctranslate extends React.Component {
 
   }
   render() {
-    const { user, classes, location } = this.props;
+    const { classes } = this.props;
     return (
 
       <div>
 
-        <Typography value="Document Translator" variant="h4" style={{
+        <Typography value={translate("doc_translate.page.documentTranslator")} variant="h4" style={{
           marginTop: '6%',
           minWidth: "5%",
           align: 'center',
@@ -158,13 +156,13 @@ class doctranslate extends React.Component {
               <Grid item xs={12} sm={6} lg={6} xl={6} >
                 <DropzoneArea onChange={this.handleChange} showPreviewsInDropzone
                   acceptedFiles={[".docx"]} dropZoneClass={classes.dropZoneArea}
-                  dropzoneText="Add and Drop a docx File here"
+                  dropzoneText= {translate("common.page.label.addAndDropFile")}
                  />
               </Grid>
 
               <Grid item xs={12} sm={6} lg={6} xl={6}  >
                 <Grid container spacing={24} style={{ marginLeft: "6%", marginTop: '3%' }}>
-                  <Typography value='Select Source Language' variant="title" gutterBottom="true" styles={{
+                  <Typography value={translate("doc_translate.page.selectSourceLang")} variant="title" gutterBottom="true" styles={{
 
                     marginTop: '4%',
                     height: "18px",
@@ -183,7 +181,7 @@ class doctranslate extends React.Component {
                 </Grid>
                 <br /><br /><br />
                 <Grid container spacing={24} style={{ marginLeft: "6%" }}>
-                  <Typography value='Select Target Language' variant="title" gutterBottom="true" styles={{
+                  <Typography value={translate("doc_translate.page.selectTargetLang")} variant="title" gutterBottom="true" styles={{
 
                     marginTop: '6%',
                     height: "18px",
@@ -205,7 +203,7 @@ class doctranslate extends React.Component {
                 <Grid container spacing={24} style={{ marginLeft: "6%" }}>
 
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
-                    <Button value={"Submit"} variant={"contained"} style={{
+                    <Button value={translate("common.page.label.submit")} variant={"contained"} style={{
                       // marginTop: "4%",
                       // marginLeft: "12%",
                       width: "92%",

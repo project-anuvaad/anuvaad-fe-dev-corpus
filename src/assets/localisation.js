@@ -375,6 +375,12 @@ const localization_EN_Data = {
   "common.page.label.ok": "Ok",
   "intractive_translate.page.preview.rows": "Rows",
   "intractive_translate.page.preview.columns": "Columns",
+  "doc_translate.page.documentTranslator": "Document Translator",
+  "doc_translate.page.selectSourceLang": "Select Source Language",
+  "doc_translate.page.selectTargetLang": "Select Target Language",
+  "common.page.label.submit": "Submit",
+  "common.page.label.addAndDropFile": "Add and Drop a docx File here",
+  
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
@@ -730,6 +736,11 @@ const localization_HI_Data = {
   "common.page.label.ok": "ठीक है",
   "intractive_translate.page.preview.rows": "पंक्ति",
   "intractive_translate.page.preview.columns": "कॉलम",
+  "doc_translate.page.documentTranslator": "दस्तावेज़ अनुवादक",
+  "doc_translate.page.selectSourceLang": "स्रोत भाषा का चयन करें",
+  "doc_translate.page.selectTargetLang": "लक्ष्य भाषा का चयन करें",
+  "common.page.label.submit": "प्रस्तुत करे",
+  "common.page.label.addAndDropFile": "यहाँ एक docx फ़ाइल जोड़ें और छोड़ें",
 };
 
 export function translate(locale_text) {
