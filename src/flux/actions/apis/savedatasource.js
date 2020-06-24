@@ -1,6 +1,6 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class RunExperiment extends API {
   constructor(workspaceName,source,target,filepath, timeout = 2000) {
     console.log();
@@ -10,6 +10,7 @@ export default class RunExperiment extends API {
     this.source = source;
     this.target = target;
     this.filepath = filepath;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.savedatasource}`
   }
 
   toString() {

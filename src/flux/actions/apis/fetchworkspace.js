@@ -3,6 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchMTWorkspace extends API {
     constructor(pagesize, pageno, status,step,filter, timeout = 2000) {
@@ -14,6 +15,7 @@ export default class FetchMTWorkspace extends API {
     this.filter = filter;
     this.step = step;
         this.fetch_workspace = {}
+        this.endpoint = ENDPOINTS.fetchworkspace
     }
 
     toString() {
@@ -29,9 +31,9 @@ export default class FetchMTWorkspace extends API {
 
     apiEndPoint() {
 let url = this.filter ? 
-`${super.apiEndPointAuto()}/fetch-paragraph-workspace?pagesize=${
+`${super.apiEndPointAuto()}${this.endpoint}?pagesize=${
    this.pagesize
- }&pageno=${this.pageno}&search_param=${this.filter}` : `${super.apiEndPointAuto()}/fetch-paragraph-workspace?pagesize=${
+ }&pageno=${this.pageno}&search_param=${this.filter}` : `${super.apiEndPointAuto()}${this.endpoint}?pagesize=${
    this.pagesize
  }&pageno=${this.pageno}`
  if(this.step){

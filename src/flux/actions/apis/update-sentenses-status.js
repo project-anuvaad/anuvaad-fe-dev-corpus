@@ -1,12 +1,13 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class UpdateSentencesStatus extends API {
   constructor(updateSentence, timeout = 2000) {
     super("POST", timeout, false);
     this.type = C.UPDATE_SENTENCE_STATUS;
     this.updateSentence = updateSentence;
     this.sentences = [];
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
   }
 
   toString() {

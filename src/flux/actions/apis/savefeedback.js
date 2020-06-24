@@ -1,6 +1,6 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
   constructor(questionList,basename, timeout = 2000) {
@@ -9,6 +9,7 @@ export default class RunExperiment extends API {
     this.type = C.CREATEWORKSPACE;
     this.questionList = questionList;
     this.basename = basename;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.savefeedback}`
     
     
   }

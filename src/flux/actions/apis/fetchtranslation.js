@@ -3,12 +3,14 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchTranslations extends API {
     constructor(timeout = 2000) {
         super('GET', timeout, false);
         this.type = C.FETCH_TRANSLATIONS;
         this.translations = {}
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.fetchtranslation}`
     }
 
     toString() {
@@ -23,7 +25,7 @@ export default class FetchTranslations extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/fetch-translation-process`
+        return this.endpoint
     }
 
     getHeaders() {

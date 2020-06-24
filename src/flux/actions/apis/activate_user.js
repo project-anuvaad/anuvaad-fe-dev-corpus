@@ -3,6 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class ActivateUser extends API {
     constructor(uid, rid, timeout = 2000) {
@@ -10,7 +11,8 @@ export default class ActivateUser extends API {
         this.type = C.ACTIVATE;
         this.uid = uid;
         this.rid = rid;
-        this.activateres = null
+        this.activateres = null;
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.activate_user}`;
     }
 
     toString() {
@@ -25,7 +27,7 @@ export default class ActivateUser extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/activate-account`;
+        return this.endpoint;
     }
 
     getBody() {

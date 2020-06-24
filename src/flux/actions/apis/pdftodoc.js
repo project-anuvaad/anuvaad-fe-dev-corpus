@@ -1,6 +1,6 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class PdfToDoc extends API {
   constructor(file, timeout = 2000) {
@@ -8,6 +8,7 @@ export default class PdfToDoc extends API {
     this.type = C.PDF_TO_DOC;
     this.file = file;
     this.filePath = ''
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.pdftodoc}`
   }
 
   toString() {

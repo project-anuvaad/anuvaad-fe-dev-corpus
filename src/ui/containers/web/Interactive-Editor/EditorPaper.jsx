@@ -2,6 +2,8 @@ import React from "react";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import ContentEditable from 'react-contenteditable';
+import CustomTable from '../../../components/web/common/CustomTable'
 
 const styles = {
     paperHeader: {
@@ -11,7 +13,15 @@ const styles = {
 
 };
 
+
 class EditorPaper extends React.Component {
+    constructor(props) {
+        super(props);
+        this.textInput = React.createRef();
+        this.state = {
+            html: ''
+        }
+    }
 
     componentDidUpdate(prevProps) {
         if (prevProps.scrollToId !== this.props.scrollToId) {
@@ -28,6 +38,11 @@ class EditorPaper extends React.Component {
                     block: 'center',
                 })
             }
+        } else if (prevProps.scrollToPage !== this.props.scrollToPage) {
+            if (this.refs[this.props.scrollToPage + '_' + this.props.paperType])
+                this.refs[this.props.scrollToPage + '_' + this.props.paperType].scrollIntoView({
+                    behavior: 'smooth',
+                })
         }
     }
 
@@ -52,7 +67,7 @@ class EditorPaper extends React.Component {
         let selection = {}
         var activeEl = document.activeElement;
         var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
-        
+
         if ((activeElTagName === "textarea") || (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type)) && (typeof activeEl.selectionStart === "number")) {
             text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
         } else if (window.getSelection) {
@@ -71,6 +86,8 @@ class EditorPaper extends React.Component {
             this.props.sentences.map(paragraph => {
                 if (paragraph._id === startNode.split('_')[0] && !paragraph.is_table) {
                     selection.startNode = startNode
+                    selection.pageNo = paragraph.page_no
+                    selection.startParagraph = paragraph
                 }
                 return true
             })
@@ -81,6 +98,8 @@ class EditorPaper extends React.Component {
             this.props.sentences.map(paragraph => {
                 if (paragraph._id === endNode.split('_')[0] && !paragraph.is_table) {
                     selection.endNode = endNode
+                    selection.pageNo = paragraph.page_no
+                    selection.endParagraph = paragraph
                 }
                 return true
             })
@@ -96,47 +115,65 @@ class EditorPaper extends React.Component {
             if (this.props.paperType === 'source') {
 
                 sentence.tokenized_sentences.map((tokenText) => {
-                    let color = ""
-                    let textColor = ""
-                    if (this.props.selectedMergeSentence && Array.isArray(this.props.selectedMergeSentence) && this.props.selectedMergeSentence.length > 0) {
-                        this.props.selectedMergeSentence.map(sentenceText => {
-                            if ((sentence._id + '_' + tokenText.sentence_index === sentenceText.startNode) || (sentence._id + '_' + tokenText.sentence_index === sentenceText.endNode)) {
-                                color = "red"
-                                textColor = 'white'
-                            }
-                            return true
-                        })
-                    }
+                    if (tokenText.status !== "DELETED" && (tokenText.src)) {
+                        let color = ""
+                        let textColor = ""
+                        if (this.props.selectedMergeSentence && Array.isArray(this.props.selectedMergeSentence) && this.props.selectedMergeSentence.length > 0) {
+                            this.props.selectedMergeSentence.map(sentenceText => {
+                                if ((sentence._id + '_' + tokenText.sentence_index === sentenceText.startNode) || (sentence._id + '_' + tokenText.sentence_index === sentenceText.endNode)) {
+                                    color = "red"
+                                    textColor = 'white'
+                                }
+                                return true
+                            })
+                        }
 
-                    let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : color ? color : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : '') : ""
-                    if(bgColor === 'yellow' || bgColor === '#4dffcf') {
-                        textColor= 'black'
-                    }
-                    sentenceArray.push(<span><span
-                        id={sentence._id + '_' + tokenText.sentence_index}
-                        style={{
+                        let bgColor = !this.props.isPreview ? ((this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : color ? color : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : '') : ""
+                        if (bgColor === 'yellow' || bgColor === '#4dffcf') {
+                            textColor = 'black'
+                        }
+                        sentenceArray.push(<span key={sentence._id + '_' + tokenText.sentence_index}> <span
+                            id={sentence._id + '_' + tokenText.sentence_index}
+                            key={sentence._id + '_' + tokenText.sentence_index}
+                            style={sentence.text_pending && this.props.selectedSourceId !== sentence._id + '_' + tokenText.sentence_index?{border: "1px solid #aaa",
+                            padding: "7px 49.5%", borderColor:'orange'
+                       }:{
                             fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
                             backgroundColor: bgColor,
                             color: textColor ? textColor : ''
                         }}
 
-                        ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
-                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
-                        {tokenText.text}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
-                    return true
+                            ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
+                            key={sentence._id + '_' + tokenText.sentence_index} onDoubleClick={(event) => this.props.handleonDoubleClick(sentence._id + '_' + tokenText.sentence_index, tokenText.text, event)} onClick={(event) => {(sentence.text_pending) ? this.props.handleonDoubleClick(sentence._id + '_' + tokenText.sentence_index, tokenText.text) :this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)}} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
+                            {this.props.selectedSourceId === sentence._id + '_' + tokenText.sentence_index ? <ContentEditable
+                                html={this.props.selectedSourceText}
+                                disabled={false}
+                                onBlur={this.props.handleCheck}
+                                onChange={this.props.handleSourceChange}
+                                style={{
+                                    border: "1px dashed #aaa",
+                                    padding: "5px",
+                                }}
+                            /> : tokenText.text}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
+                        return true
+                    } else {
+                        return true
+                    }
                 })
                 return sentenceArray
             }
             if (this.props.paperType === 'target') {
                 sentence.tokenized_sentences.map((tokenText) => {
-                    sentenceArray.push(<span><span
-                        ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
-                        style={{
-                            fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
-                            backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "",
-                        }}
-                        key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index)} onMouseLeave={() => this.hoverOff()}>
-                        {tokenText.target}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
+                    if (tokenText.status !== "DELETED") {
+                        sentenceArray.push(<span><span
+                            ref={sentence._id + '_' + tokenText.sentence_index + '_' + this.props.paperType}
+                            style={{
+                                fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '',
+                                backgroundColor: (this.props.hoveredSentence === sentence._id + '_' + tokenText.sentence_index) ? 'yellow' : this.props.selectedSentenceId === sentence._id + '_' + tokenText.sentence_index ? '#4dffcf' : "",
+                            }}
+                            key={sentence._id + '_' + tokenText.sentence_index} onClick={() => this.handleOnClick(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseEnter={() => this.hoverOn(sentence._id + '_' + tokenText.sentence_index, sentence.page_no)} onMouseLeave={() => this.hoverOff()}>
+                            {tokenText.target}</span>{isSpaceRequired ? <span>&nbsp;</span> : <span></span>}</span>)
+                    }
                     return true
                 })
                 return sentenceArray
@@ -149,86 +186,78 @@ class EditorPaper extends React.Component {
         let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'left')
         let pageNo = sentence.page_no
 
-        if (!sentence.is_footer && sentence.text) {
+        if (!sentence.is_footer && !sentence.is_table) {
             let printPageNo = false
             let isFirst = false
-            if(index === 0) {
+            if (index === 0) {
                 printPageNo = true
                 isFirst = true
-            } else if ( prevSentence && sentence.page_no !== prevSentence.page_no) {
+            } else if (prevSentence && sentence.page_no !== prevSentence.page_no) {
                 printPageNo = true
             }
 
             if (sentence.is_ner && !sentence.is_new_line) {
                 if (align === 'left') {
 
-                    return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
+                    return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
                         style={{ width: '60%', float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                         onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                         {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
                 } else {
-                    return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType} style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                    return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
+                        style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                         onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                         {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
                 }
 
             } else if (sentence.is_ner) {
-                return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} style={{ textAlign: 'justify' }} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id}
+                return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} style={{ textAlign: 'justify' }} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id}
                     style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                     {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div></div>)
             } else {
-                return (<div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id}
+                return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id}
                     style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                     <div style={{ textAlign: 'justify' }}>{this.fetchTokenizedSentence(sentence, true)}{sentence.sup_array ? <sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup> : ''}<br /><br /></div></div></div>)
             }
         } else if (sentence.is_table) {
-            return this.fetchTable(sentence._id, sentence.table_items, prevSentence, index, pageNo,noOfPage)
+            // return this.fetchTable(sentence._id, sentence.table_items, prevSentence, index, pageNo, noOfPage)
+            return <CustomTable id={sentence._id} tableItems={sentence.table_items}
+                isPreview={this.props.isPreview}
+                hoveredTableId={this.props.hoveredTableId}
+                selectedTableId={this.props.selectedTableId}
+                scrollToId={this.props.scrollToId}
+                scrollToPage={this.props.scrollToPage}
+                prevSentence={prevSentence} tableIndex={index} pageNo={pageNo} noOfPage={noOfPage}
+                paperType={this.props.paperType}
+                handleOnMouseEnter={this.tableHoverOn.bind(this)}
+                handleOnMouseLeave={this.tableHoverOff.bind(this)}
+                handleTableCellClick={this.handleTableOnCLick.bind(this)}
+                handleAddCell={this.props.handleAddCell}
+                sentence={sentence}
+                handleSourceChange={this.props.handleSourceChange}
+                selectedSourceText={this.props.selectedSourceText}
+                selectedSourceId={this.props.selectedSourceId}
+                handleonDoubleClick={this.handleonDoubleClick.bind(this)}
+                handleCheck={this.props.handleCheck}
+                handleDeleteTable={this.props.handleDeleteTable}
+                handleAddNewTable={this.props.handleAddNewTable}
+                handleAddTableCancel={this.props.handleAddTableCancel}
+                handleAddNewSentence={this.props.handleAddNewSentence}
+                parent={this.props.parent}
+                popOver={this.props.popOver}
+                handlePopUp={this.props.handlePopUp}
 
+            ></CustomTable>
         } else {
             return <div></div>
         }
 
     }
-
-    fetchTable(id, sentences, prevSentence, tableIndex, pageNo,noOfPage) {
-        let tableRow = []
-        let index = 0
-        let printPageNo = false
-        let isFirst = false
-
-        if(tableIndex === 0){
-            printPageNo = true
-            isFirst = true
-        } else if (prevSentence && sentences[0][0].page_no !== prevSentence.page_no) {
-            printPageNo = true
-        }
-
-        for (let row in sentences) {
-            let col = []
-
-            for (let block in sentences[row]) {
-                let blockData = this.props.paperType === 'source' ? sentences[row][block].text : sentences[row][block].target
-                let blockId = id + '_' + sentences[row][block].sentence_index
-                let bgColor = !this.props.isPreview ? ((this.props.hoveredTableId === blockId) ? "yellow" : this.props.selectedTableId === blockId ? '#4dffcf' : "") : ""
-
-                col.push(<td id={blockId} key={blockId}
-                    onClick={() => this.props.handleTableCellClick(id, blockId, sentences[row][block], "true", this.props.paperType)}
-                    onMouseEnter={() => this.tableHoverOn(id, blockId)}
-                    onMouseLeave={() => this.tableHoverOff()}
-                    style={{ backgroundColor: bgColor, padding: '8px', border: '1px solid black', borderCollapse: 'collapse' }}>
-                    {blockData}</td>)
-            }
-            tableRow.push(<tr key={index}>{col}</tr>)
-            index++
-        }
-        return <div>{printPageNo ? <div style={{ textAlign: 'right', color:'grey', fontSize: 'small' }}>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<table key={id} ref={id + '_' + this.props.paperType} style={{ marginBottom: '20px', border: '1px solid black', borderCollapse: 'collapse', width: '100%' }}><tbody>{tableRow}</tbody></table></div>
-    }
-
-    hoverOn(e) {
+    hoverOn(e, pageNo) {
         if (!this.props.isPreview) {
-            this.props.handleOnMouseEnter(e, this.props.paperType)
+            this.props.handleOnMouseEnter(e, this.props.paperType, pageNo)
         }
     }
 
@@ -238,26 +267,33 @@ class EditorPaper extends React.Component {
         }
     }
 
-    tableHoverOn(sentenceId, tableId) {
+    tableHoverOn(sentenceId, tableId, pageNo, paragraph) {
         if (!this.props.isPreview) {
-            this.props.handleTableHover(sentenceId, tableId, this.props.paperType)
+            this.props.handleTableHover(sentenceId, tableId, this.props.paperType, pageNo, paragraph)
         }
     }
 
     tableHoverOff() {
-
         if (!this.props.isPreview) {
             this.props.handleTableHover('', '')
         }
 
     }
 
-    handleOnClick(id) {
+    handleonDoubleClick(id, value, row, cell) {
+        this.props.handleonDoubleClick(id, value, row, cell)
+    }
+
+    handleOnClick(id, pageNo) {
         if (!this.props.isPreview) {
             if (id) {
-                this.props.handleSentenceClick(id, true, this.props.paperType)
+                this.props.handleSentenceClick(id, true, this.props.paperType, pageNo)
             }
         }
+    }
+
+    handleTableOnCLick(id, blockId, clisckedCell, value, parent, pageNo, next_previous) {
+        this.props.handleTableCellClick(id, blockId, clisckedCell, value, parent, pageNo, next_previous)
     }
 
     render() {
@@ -277,7 +313,7 @@ class EditorPaper extends React.Component {
                 </div> : <div></div>}
                 <div style={{ paddingLeft: '20px' }}>
                     {sentences && Array.isArray(sentences) && sentences.length > 0 && sentences.map((sentence, index) => {
-                        return this.fetchSentence(sentence, sentences[index-1], index, sentences[sentences.length-1].page_no)
+                        return this.fetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no)
                     })}
                 </div>
                 {footer ?

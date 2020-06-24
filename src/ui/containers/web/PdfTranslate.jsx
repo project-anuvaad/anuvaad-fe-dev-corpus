@@ -182,7 +182,7 @@ class doctranslate extends React.Component {
                   </Grid>
                 </Grid>
                 <br /><br /><br />
-                <Grid container spacing={24} style={{ marginLeft: "6%",marginTop:'2%' }}>
+                <Grid container spacing={24} style={{ marginLeft: "6%" }}>
                   <Typography value='Select Target Language' variant="title" gutterBottom="true" styles={{
 
                     marginTop: '6%',
@@ -201,12 +201,14 @@ class doctranslate extends React.Component {
                   </Grid>
                 </Grid>
                 <br />
-                <Grid container spacing={24} >
+                {/* <Grid container spacing={24} > */}
+                <Grid container spacing={24} style={{ marginLeft: "6%" }}>
+
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
                     <Button value={"Submit"} variant={"contained"} style={{
-                      marginTop: "4%",
-                      marginLeft: "12%",
-                      width: "85%",
+                      // marginTop: "4%",
+                      // marginLeft: "12%",
+                      width: "92%",
                       backgroundColor: '#1C9AB7',
                       borderRadius: "20px 20px 20px 20px",
                       color: "#FFFFFF",

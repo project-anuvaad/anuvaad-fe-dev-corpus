@@ -268,7 +268,7 @@ const localization_EN_Data = {
   "webroutes.page.title.feedbackForm": "FeedbackForm",
   "webroutes.page.title.dataPipeLine": "DATA PIPELINE DASHBOARD",
   "webroutes.page.title.anuvaadEditor": "Anuvaad Editor",
-  "webroutes.page.title.pdfToDoc":"PDF to DOC",
+  "webroutes.page.title.pdfToDoc": "PDF to DOC",
   "dashbord.page.title.anuvaadModel": "Anuvaad Model",
   "viewTranslate.page.title.downloadSource": "Download Source",
   "viewTranslate.page.title.downloadTranslate": "Download Translated",
@@ -351,7 +351,30 @@ const localization_EN_Data = {
   'signUp.page.message.successfullyCreatedACcount':'Successfully created the account. Please check your email for account verification',
   'signUp.page.label.enterDetailsToReceiveConfirmation':"Enter the required details,you will receive a confirmation mail to your registered email id.",
   'signUp.page.label.clickToActivateAccount':"Please click on that to activate your account.",
-  'updatePassword.page.message.forgotPasswordLinkSent':'Successfully sent forgot password link. Please check your email for setting  password'
+  'updatePassword.page.message.forgotPasswordLinkSent':'Successfully sent forgot password link. Please check your email for setting  password',
+  "intractive_translate.page.preview.insertNewRow": "Insert new row",
+  "intractive_translate.page.preview.insertNewColumn": "Insert new column",
+  "intractive_translate.page.preview.deleteTable": "Delete table",
+  "intractive_translate.page.preview.deleteRow": "Delete row",
+  "intractive_translate.page.preview.deleteColumn": "Delete column",
+  "intractive_translate.page.preview.compareWithOriginal": "Compare with original",
+  "intractive_translate.page.preview.splitSentence": "Split sentence",
+  "intractive_translate.page.preview.mergeSentence": "Merge sentences",
+  "intractive_translate.page.preview.addAnotherSentence": "Add another sentence",
+  "intractive_translate.page.preview.deleteSentence": "Delete sentence",
+  "intractive_translate.page.preview.originalPDF": "Original PDF",
+  "intractive_translate.page.message.mergeSentenceSuccessfully": "Sentence merged successfully!...",
+  "intractive_translate.page.message.splitSentenceSuccessfully": "Sentence splitted successfully!...",
+  "intractive_translate.page.message.savedSuccessfully": "saved successfully !...",
+  "intractive_translate.page.message.mergeDifferentSentenceQuestion": "Selected sentence from different position. Do you want to merge ? ",
+  "intractive_translate.page.preview.addNewSentenceAbove": "Insert new paragraph above",
+  "intractive_translate.page.preview.addNewSentenceBelow": "Insert new paragraph below",
+  "intractive_translate.page.preview.addNewTableAbove": "Insert new table above",
+  "intractive_translate.page.preview.addNewTableBelow": "Insert new table below",
+  "intractive_translate.page.preview.newTableData": "Enter number of rows and columns",
+  "common.page.label.ok": "Ok",
+  "intractive_translate.page.preview.rows": "Rows",
+  "intractive_translate.page.preview.columns": "Columns",
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
@@ -674,7 +697,7 @@ const localization_HI_Data = {
     'यहाँ लक्ष्य उपसर्ग दर्ज करें ... (प्रेस "Tab key" अनुवाड मॉडल से अगला शब्द कॉपी करने के लिए))',
   "intractive_translate.page.textarea.sourcePlaceholder": "यहां वाक्य दर्ज करें..",
   "intractive_translate.page.main.title": "इंटरएक्टिव अनुवाद",
-  "webroutes.page.title.pdfToDoc":"पीडीएफ से डॉक बनाए",
+  "webroutes.page.title.pdfToDoc": "पीडीएफ से डॉक बनाए",
   "common.page.label.collapse": "छिपाए",
   "common.page.label.review/download": "समीक्षा / डाउनलोड",
   "common.page.label.previousLine": "पिछली पंक्ति",
@@ -684,11 +707,34 @@ const localization_HI_Data = {
   "intractive_translate.page.textarea.anuvaadModelPlaceholder": "लक्ष्य से वाक्य चुनें या अगला दबाएं",
   "intractive_translate.page.textarea.updateManuallyPlaceholder": "यहां मैन्युअल रूप से वाक्य अपडेट करें...",
   "intractive_translate.page.textarea.ignoredPlaceholder": "अनुवाद मॉडल को नज़रंदाज़ करे",
+  "intractive_translate.page.preview.insertNewRow": "नई पंक्ति डालें",
+  "intractive_translate.page.preview.insertNewColumn": "नया कॉलम डालें",
+  "intractive_translate.page.preview.deleteTable": "तालिका हटाएँ",
+  "intractive_translate.page.preview.deleteRow": "पंक्ति को हटाएं",
+  "intractive_translate.page.preview.deleteColumn": "कॉलम हटाएं",
+  "intractive_translate.page.preview.compareWithOriginal": "मूल से तुलना करे",
+  "intractive_translate.page.preview.splitSentence": "वाक्य को तोड़े",
+  "intractive_translate.page.preview.mergeSentence": "वाक्य को जोड़े",
+  "intractive_translate.page.preview.addAnotherSentence": "एक और वाक्य जोड़े",
+  "intractive_translate.page.preview.deleteSentence": "वाक्य को हटाए",
+  "intractive_translate.page.preview.originalPDF": "मूल पी डी एफ",
+  "intractive_translate.page.message.mergeSentenceSuccessfully": "वाक्य सफलता पूर्वक जोड़ लिए गए है !",
+  "intractive_translate.page.message.splitSentenceSuccessfully": "वाक्य सफलता पूर्वक तोड़ लिए गए है!",
+  "intractive_translate.page.message.savedSuccessfully": "सफलता पूर्वक सहेंजा गया",
+  "intractive_translate.page.message.mergeDifferentSentenceQuestion": "चुने हुए वाक्य अलग स्थान से है। क्या आप जोड़ना चाहते है?",
+  "intractive_translate.page.preview.addNewSentenceAbove": "नयी अनुच्छेद ऊपर जोड़े",
+  "intractive_translate.page.preview.addNewSentenceBelow": "नयी अनुच्छेद नीचे जोड़े",
+  "intractive_translate.page.preview.addNewTableAbove": "नयी तालिका ऊपर जोड़े",
+  "intractive_translate.page.preview.addNewTableBelow": "नयी तालिका नीचे जोड़े",
+  "intractive_translate.page.preview.newTableData": "पंक्ति संख्या और क़तार संख्या भरे",
+  "common.page.label.ok": "ठीक है",
+  "intractive_translate.page.preview.rows": "पंक्ति",
+  "intractive_translate.page.preview.columns": "कॉलम",
 };
 
 export function translate(locale_text) {
-  if (localStorage.getItem("userProfile") && localStorage.getItem(`lang${  JSON.parse(localStorage.getItem("userProfile")).id}`)) {
-    const lang = localStorage.getItem(`lang${  JSON.parse(localStorage.getItem("userProfile")).id}`);
+  if (localStorage.getItem("userProfile") && localStorage.getItem(`lang${JSON.parse(localStorage.getItem("userProfile")).id}`)) {
+    const lang = localStorage.getItem(`lang${JSON.parse(localStorage.getItem("userProfile")).id}`);
     switch (lang) {
       case "hi":
         return localization_HI_Data[locale_text] || locale_text;

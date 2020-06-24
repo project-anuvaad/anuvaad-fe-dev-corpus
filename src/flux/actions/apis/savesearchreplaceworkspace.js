@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class RunExperiment extends API {
   constructor(selectedworkspace, workspaceName, language,filepath, timeout = 2000) {
     console.log();
@@ -13,6 +13,7 @@ export default class RunExperiment extends API {
     this.target_lang = language;
     this.selected_workspaces = selectedworkspace;
     this.filepath = filepath;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.savesearchreplaceworkspace}`
   }
 
   toString() {
