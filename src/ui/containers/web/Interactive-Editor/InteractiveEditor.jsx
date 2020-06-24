@@ -351,7 +351,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddSentence() {
-    this.setState({ addSentence: true, operation_type: "merge-individual", openEl: false });
+    this.setState({ addSentence: true, operation_type:'merge-individual' , openEl: false });
   }
 
   handleApiMerge() {
@@ -386,8 +386,48 @@ class IntractiveTrans extends React.Component {
     this.handleClose();
   }
 
+  handleDialogTable(sentence,cellData,operationType){
+    if(operationType==="add-row"){
+      this.setState({ openDialog: true,title:"Add row",dialogMessage:"Do you want to add row ?", addCellSentence: sentence, operationType });
+    }
+    else if(operationType==="add-column"){
+      this.setState({ openDialog: true,title:"Add column",dialogMessage:"Do you want to add column ?", addCellSentence: sentence, operationType });
+    }
+    else if(operationType==="delete-row"){
+      this.setState({ openDialog: true,title:"Delete row",dialogMessage:"Do you want to delete row ?", addCellSentence: sentence,cellData, operationType,message : "Row deleted successfully" });
+    }
+    else if(operationType==="delete-column"){
+      this.setState({ openDialog: true,title:"Delete column",dialogMessage:"Do you want to delete column ?", addCellSentence: sentence,cellData, operationType,message : "Column deleted successfully" });
+    }
+    else if(operationType==="delete-table"){
+      this.setState({ openDialog: true,title:"Delete table",dialogMessage:"Do you want to delete table ?", addCellSentence: sentence,cellData, operationType,message : "Table deleted successfully" });
+    }
+
+    
+  }
+
   handleDialogSave() {
-    this.handleApiMerge();
+
+    if(this.state.title ==="Merge" || this.state.title ==="Split"){
+      this.handleApiMerge();
+    }
+    else if(this.state.title==="Delete Sentence"){
+      this.handleDeleteSentence();
+    }
+    else if(this.state.title==="Add new paragraph above"){
+      this.handleAddNewSentence("next", '',"text")
+    }
+    else if(this.state.title==="Add new paragraph below"){
+      this.handleAddNewSentence("previous", '',"text")
+    }
+    else if(this.state.title==="Add row" || this.state.title==="Add column"){
+      this.handleAddCell(this.state.addCellSentence, this.state.operationType)
+    }
+    else if(this.state.title==="Delete row" || this.state.title==="Delete column" || this.state.title==="Delete table"){
+      this.handleDeleteTable(this.state.addCellSentence,this.state.cellData, this.state.operationType)
+    }
+    
+    
     this.setState({ openDialog: false });
   }
 
@@ -416,8 +456,8 @@ class IntractiveTrans extends React.Component {
     });
   };
 
-  handleDialog() {
-    this.setState({ openDialog: true });
+  handleDialog(title,dialogMessage) {
+    this.setState({ openDialog: true,title,dialogMessage });
   }
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, pageNo, next_previous) {
@@ -636,14 +676,14 @@ class IntractiveTrans extends React.Component {
       APITransport(apiObj);
     }
     this.handleClose();
-    this.setState({message:'Deleted successfully'})
+    
   }
   handlePopOverClose() {
     this.setState({ openContextMenu: false, anchorEl: null, leftValue: "", topValue: "" });
   }
 
   handleAddNewSentence(nodeType, sentence, selectedNodeType) {
-    this.setState({popOver: false,message:'Added new sentence successfully'})
+    this.setState({popOver: false,message:'Added new paragraph successfully'})
     let paragraph = "";
     if (selectedNodeType === "text" && this.state.startParagraph && this.state.endParagraph) {
       paragraph = this.state.startParagraph;
@@ -831,6 +871,7 @@ class IntractiveTrans extends React.Component {
                         handleAddTableCancel={this.handleAddTableCancel.bind(this)}
                         handleAddNewSentence={this.handleAddNewSentence.bind(this)}
                         popOver={this.state.popOver}
+                        handleDialog = {this.handleDialogTable.bind(this)}
                         handlePopUp={this.handlePopUp.bind(this)}
                       />
                     </div>
@@ -938,14 +979,14 @@ class IntractiveTrans extends React.Component {
 
             {this.state.openDialog && (
               <Dialog
-                message={translate("intractive_translate.page.message.mergeDifferentSentenceQuestion")}
+                message={this.state.dialogMessage}
                 handleSubmit={this.handleDialogSave.bind(this)}
                 handleClose={this.handleClose.bind(this)}
                 open
-                title="Merge"
+                title={this.state.title}
               />
             )}
-            {console.log("ot---",this.state.operation_type)}
+            
             {this.state.open && (
               
               <Snackbar
