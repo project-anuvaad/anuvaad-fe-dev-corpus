@@ -67,6 +67,7 @@ const PdfUploadStyles = theme => ({
     color:"#FFFFFF"
   },
   dropZoneArea:{
+    paddingTop: '80px',
     minHeight:'363px',
     height: "304px",
     borderColor:'#1C9AB7',
