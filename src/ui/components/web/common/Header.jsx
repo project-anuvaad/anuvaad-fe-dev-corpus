@@ -248,12 +248,12 @@ class Header extends React.Component {
                       primary={
                         <Typography
                           type="body2"
-                          style={{ color: "#000000", paddingBottom: "2%", marginLeft: "21%" }}
+                          style={{ color: "#D6D6D6", paddingBottom: "2%", marginLeft: "21%" }}
                           variant="title"
                           color="inherit"
                           className={classes.flex}
                         >
-                          {translate('header.page.heading.anuvaad')}
+                          MENU
                         </Typography>
                       }
                     />

@@ -209,15 +209,15 @@ class Dashboard extends React.Component {
         <Typography variant="h4" style={{
           fontfamily: 'sans-serif	',
           color: '#003366',
-          fontWeight: '549', paddingLeft: "41%", paddingBottom: "12px", paddingTop: "4%"
+          fontWeight: '549', paddingLeft: "41.5%", paddingBottom: "12px", paddingTop: "4%"
         }}>
           {translate("dashboard.page.heading.title")}
         </Typography>
         <Paper style={{
-          marginLeft: "20%",
+          marginLeft: "21%",
           width: "50%",
           marginTop: "3%",
-          marginBottom: "5%",
+          marginBottom: "4%",
           padding: '2% 2% 2% 2%'
         }}>
 

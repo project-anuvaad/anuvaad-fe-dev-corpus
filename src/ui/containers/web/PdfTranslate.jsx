@@ -158,7 +158,7 @@ class doctranslate extends React.Component {
               <Grid item xs={12} sm={6} lg={6} xl={6} >
                 <DropzoneArea onChange={this.handleChange} showPreviewsInDropzone
                   acceptedFiles={[".docx"]} dropZoneClass={classes.dropZoneArea}
-                  dropzoneText="Add/Drop a docx File here"
+                  dropzoneText="Drag and drop a docx file here or click"
                  />
               </Grid>
 

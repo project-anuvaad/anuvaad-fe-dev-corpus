@@ -275,7 +275,7 @@ class Newcorpus extends React.Component {
         <Typography gutterBottom variant="title" component="h4" style={{
           fontfamily: 'sans-serif	',
           color: '#003366',
-          fontWeight: '549', paddingBottom: "12px", marginTop: "4%", marginLeft: '34%',fontSize:'28px'
+          fontWeight: '549', paddingBottom: "12px", marginTop: "4%", marginLeft: '35%',fontSize:'28px'
         }}>
           {translate('newCorpus.page.text.createCorpus')}
         </Typography>

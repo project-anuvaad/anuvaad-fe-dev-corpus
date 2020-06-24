@@ -27,7 +27,7 @@ const Newcorpus = theme => ({
     height: 'auto',
     left: 0,
     right: 0,
-    marginLeft:'23%',
+    marginLeft:'25%',
     flexWrap: 'wrap',
     marginBottom:"2%"
   },
