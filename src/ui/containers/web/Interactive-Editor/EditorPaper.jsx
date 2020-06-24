@@ -235,6 +235,7 @@ class EditorPaper extends React.Component {
                 handleOnMouseLeave={this.tableHoverOff.bind(this)}
                 handleTableCellClick={this.handleTableOnCLick.bind(this)}
                 handleAddCell={this.props.handleAddCell}
+                handleDialog = {this.props.handleDialog}
                 sentence={sentence}
                 handleSourceChange={this.props.handleSourceChange}
                 selectedSourceText={this.props.selectedSourceText}
