@@ -28,6 +28,9 @@ import history from "../../../../web.history";
 import { Button } from "@material-ui/core";
 import Fab from "@material-ui/core/Fab";
 import ActionDelete from "@material-ui/icons/QuestionAnswer";
+import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 import GroupIcon from "@material-ui/icons/Group";
 import logo from '../../../../assets/logo.png';
 import { translate } from '../../../../../src/assets/localisation';
@@ -39,12 +42,15 @@ const styles = {
   },
   flex: {
     flex: 1,
-    marginLeft: "2%"
   },
   felxDemo: {
     flex: 1,
     marginLeft: "1%"
-  }
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
 };
 
 class Header extends React.Component {
@@ -98,6 +104,11 @@ class Header extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
+  handleMenuOpenClose = event => {
+    console.log('menu')
+    this.setState({ open: !this.state.open });
+  };
+
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
@@ -116,7 +127,14 @@ class Header extends React.Component {
     return (
       <div  >
         <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
+
           <Toolbar disableGutters={!open}>
+            <IconButton onClick={this.handleMenuOpenClose} className={classes.menuButton} color="inherit" aria-label="Menu">
+              {this.state.open ?
+                <CloseIcon /> :
+                <MenuIcon />
+              }
+            </IconButton>
             {forDemo &&
               <img src={logo}
                 alt=""
@@ -126,11 +144,17 @@ class Header extends React.Component {
                   marginLeft: '1%'
                 }} />
             }
-             
+
             <Typography variant="title" color="inherit" className={forDemo ? classes.felxDemo : classes.flex}>
               {title}
             </Typography>
-            {/* <img src="Logo.svg" alt="logo"/> */}
+            <img src="Logo.svg"
+              style={{
+                position: 'absolute',
+                marginLeft: '44%',
+                height: '27px'
+              }}
+              alt="logo" />
             {!dontShowHeader &&
               <Typography
                 variant="title"
@@ -405,7 +429,7 @@ class Header extends React.Component {
                     </ListItem>
                   )}
 
-                  {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader") || role.includes("interactive-editor"))   && (
+                  {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader") || role.includes("interactive-editor")) && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -427,7 +451,7 @@ class Header extends React.Component {
                       />
                     </ListItem>
                   )}
-                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user") || role.includes("grader") || role.includes("interactive-editor"))  && (
+                  {role && Array.isArray(role) && (role.includes("editor") || role.includes("user") || role.includes("grader") || role.includes("interactive-editor")) && (
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -661,7 +685,7 @@ class Header extends React.Component {
                 </List>
               </Drawer>
 
-              {!dontShowHeader &&
+              {/* {!dontShowHeader &&
                 <main
                   className={classNames(classes.content, {
                     [classes.contentShift]: open
@@ -676,7 +700,7 @@ class Header extends React.Component {
                     )}
                   <div className={classes.drawerHeader} />
                 </main>
-              }
+              } */}
             </Grid>
           }
         </div>

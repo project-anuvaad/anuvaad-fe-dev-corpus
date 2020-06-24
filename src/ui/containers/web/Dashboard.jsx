@@ -297,7 +297,7 @@ class Dashboard extends React.Component {
                       </Tooltip>
                     ))
                     : []}
-                  >
+                  
                 </SelectModel>
                 <br />
               </Grid>
@@ -364,7 +364,7 @@ class Dashboard extends React.Component {
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
                 aria-label="edit"
-                style={{ marginLeft: "1%", width: "44%", marginBottom: "4%", marginTop: "5%", marginRight: "5%", backgroundColor: "#1C9AB7", color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '46px' }}
+                style={{ width: "44%", marginBottom: "4%", marginTop: "5%", marginRight: "5%"}}
               >
                 {translate("common.page.button.clear")}
               </Button>
@@ -372,7 +372,7 @@ class Dashboard extends React.Component {
                 variant="contained"
                 onClick={this.handleSubmit.bind(this, role)}
                 aria-label="edit"
-                style={{ width: "44%", marginBottom: "4%", marginTop: "5%", marginLeft: '1%', backgroundColor: "#1C9AB7", color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '46px' }}
+                style={{width: "44%", marginTop:'5%', marginBottom:'4%'}}
               >
                 {translate("common.page.button.submit")}
               </Button>
