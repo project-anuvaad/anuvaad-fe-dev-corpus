@@ -218,7 +218,7 @@ class doctranslate extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-          </div>} style={{ width: '55%', marginLeft: "15%", marginTop: '4%', marginBottom: '13%', padding: "2.5% 2.5% 3% 2.5%", minWidth: "200px", }}
+          </div>} style={{ width: '55%', marginLeft: "15%", marginTop: '4%', marginBottom: '13%', padding: "2.5% 2.5% 2.5% 2.5%", minWidth: "200px", }}
         />
       </div>
 
