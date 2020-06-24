@@ -199,6 +199,7 @@ class PdfUpload extends Component {
               <DropzoneArea className={classes.DropZoneArea}
                 showPreviewsInDropzone
                 acceptedFiles={[".pdf"]}
+                dropZoneClass={classes.dropZoneArea}
                 onChange={this.handleChange.bind(this)}
                 filesLimit={1}
                 maxFileSize={20000000}
