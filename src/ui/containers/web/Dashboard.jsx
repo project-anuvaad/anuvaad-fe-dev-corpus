@@ -290,7 +290,7 @@ class Dashboard extends React.Component {
                       </Tooltip>
                     ))
                     : []}
-                  >
+                  
                 </SelectModel>
                 <br />
               </Grid>
@@ -365,7 +365,7 @@ class Dashboard extends React.Component {
                 variant="contained"
                 onClick={this.handleSubmit.bind(this, role)}
                 aria-label="edit"
-                style={{ width: "44%", marginBottom: "4%", marginTop: "4%", backgroundColor: "#1C9AB7", color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '45px' }}
+                style={{width: "44%", marginTop:'4%', marginBottom:'4%'}}
               >
                 {translate("common.page.button.submit")}
               </Button>

@@ -6,7 +6,7 @@ const themeAnuvaad = createMuiTheme({
   typography: {
     fontFamily: '"Source Sans Pro","Regular","Arial", sans-serif',
     fontSize: 15,
-    color:"#000000"
+    color: "#000000"
   },
   palette: {
     primary: {
@@ -14,7 +14,7 @@ const themeAnuvaad = createMuiTheme({
       main: '#FFFFFF',
       dark: '#FFFFFF',
       contrastText: '#000000',
-      color:'inherit'
+      color: 'inherit'
 
     },
     secondary: {
@@ -25,7 +25,7 @@ const themeAnuvaad = createMuiTheme({
     },
     background: {
       default: '#FFFFFF',
-      color:"inherit"
+      color: "inherit"
     }
   },
   status: {
@@ -34,21 +34,24 @@ const themeAnuvaad = createMuiTheme({
 
   drawer: {
     default: '#1976d2',
-    color:'nherit'
+    color: 'nherit'
   },
 
   Link:
   {
     fontFamily: '"Source Sans Pro", "Arial", sans-serif',
     fontSize: 16,
-    color:"#1C9AB7"
+    color: "#1C9AB7"
   },
- Button:{
-   borderRadius:'20px',
-   backgroundColor:'#1C9AB7'
- } ,
+  overrides: {
+    MuiButton: {
+      root: {
+        backgroundColor: "#1C9AB7 !important" , color: "#FFFFFF !important", borderRadius: "20px 20px 20px 20px", height: '45px'
+      }
+    },
+  }
 
-  
+
 
 });
 
