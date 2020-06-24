@@ -145,7 +145,7 @@ class doctranslate extends React.Component {
           marginTop: '6%',
           minWidth: "5%",
           align: 'center',
-          marginLeft: "35%",
+          marginLeft: "38%",
           fontfamily: 'Trebuchet MS, sans-serif	',
           color: '#003366'
         }} />
@@ -158,7 +158,7 @@ class doctranslate extends React.Component {
               <Grid item xs={12} sm={6} lg={6} xl={6} >
                 <DropzoneArea onChange={this.handleChange} showPreviewsInDropzone
                   acceptedFiles={[".docx"]} dropZoneClass={classes.dropZoneArea}
-                  dropzoneText="Add and Drop a docx File here"
+                  dropzoneText="Add/Drop a docx File here"
                  />
               </Grid>
 
@@ -216,7 +216,7 @@ class doctranslate extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-          </div>} style={{ width: '55%', marginLeft: "15%", marginTop: '4%', marginBottom: '13%', padding: "2.5% 2.5% 3% 2.5%", minWidth: "200px", }}
+          </div>} style={{ width: '55%', marginLeft: "18%", marginTop: '4%', marginBottom: '9%', padding: "2.5% 2.5% 3% 2.5%", minWidth: "200px", }}
         />
       </div>
 

@@ -114,7 +114,7 @@ class PdfUpload extends Component {
         marginTop: "6%",
         padding: "4% 4% 4% 4%",
         marginLeft: "22%",
-        marginBottom: '5%',
+        marginBottom: '4%',
       }}>
         <Grid container spacing={24} >
           <Grid item xs={12} sm={12} lg={12} xl={12}>

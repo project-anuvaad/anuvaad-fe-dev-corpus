@@ -301,7 +301,7 @@ class IntractiveTrans extends React.Component {
           fontWeight: '549', paddingLeft: "38%", paddingBottom: "12px", paddingTop: "5%" }}>
             {translate("intractive_translate.page.main.title")}
           </Typography>
-        <Paper style={{ marginLeft: "21%", width: "50%", marginTop: "3%",marginBottom:"6%",padding:'2% 2% 2% 2%' }}>
+        <Paper style={{ marginLeft: "21%", width: "50%", marginTop: "3%",marginBottom:"4%",padding:'2% 2% 2% 2%' }}>
          
           {!this.state.edit && 
           <div>

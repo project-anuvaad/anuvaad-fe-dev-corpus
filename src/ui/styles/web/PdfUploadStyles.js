@@ -45,7 +45,7 @@ const PdfUploadStyles = theme => ({
     width: "60%",
     minWidth: "200px",
     marginTop: "3%",
-    marginBottom:'8%',
+    marginBottom:'5%',
     padding: "2% 2% 4% 2%",
     marginLeft: "15%",
     
