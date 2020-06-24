@@ -44,6 +44,8 @@ const PdfUploadStyles = theme => ({
     marginTop: "3%",
     padding: "2% 2% 4% 2%",
     marginLeft: "15%",
+    
+    minHeight:'400px'
   },
   grid:{
     marginLeft: "4%" 
@@ -62,7 +64,21 @@ const PdfUploadStyles = theme => ({
   },
   dropZoneArea:{
     minHeight:'385px',
-    height: "304px"
+    height: "304px",
+    borderColor:'#1C9AB7',
+    backgroundColor: '#F5F9FA',
+    border: '1px dashed #1C9AB7',
+    fontColor:'#1C9AB7',
+    "& svg":{color:'#1C9AB7',},
+    "& p": {
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      fontSize: "19px",
+      color:'#1C9AB7',
+      
+    },
+
 
   }
   
