@@ -21,15 +21,15 @@ const Newcorpus = theme => ({
 
   },
   CorpusContainer: {
+    padding:'2% 2% 3% 2%',
     minWidth: 720,
     maxWidth: 700,
     height: 'auto',
-    marginTop: '4%',
     left: 0,
     right: 0,
-    margin: 'auto',
-    marginLeft:'24%',
+    marginLeft:'23%',
     flexWrap: 'wrap',
+    marginBottom:"2%"
   },
   createButton: {
   justifyContent: 'center',
@@ -66,9 +66,9 @@ button1: {
   // left: theme.spacing.unit*12,
   marginBottom:'2%',
   marginTop:'5%',
-  marginLeft:'4%',
-  width:'43%',
-  height:'42px',
+  marginLeft:'3%',
+  width:'44%',
+  height:'43px',
   backgroundColor:"#1C9AB7",
    color:"#FFFFFF",
    borderRadius:"20px 20px 20px 20px",
@@ -78,20 +78,20 @@ btns: {
   left: theme.spacing.unit*6,
   marginBottom:'2%',
   marginTop:'5%',
-  width:'43%',
-  height:'42px',
-  marginLeft:'1%',
+  width:'44%',
+  height:'43px',
+  marginLeft:'0%',
   backgroundColor:"#1C9AB7",
    color:"#FFFFFF",
    borderRadius:"20px 20px 20px 20px",
 },
 
   paper: {
-    padding: 25,
+    marginTop:'4%',
     overflow: 'auto',
     width: 'auto%',
-    
-    height:'65%'
+    padding:'4% 4% 5% 4%',
+  
   },
   buttonsDiv: {
     textAlign: 'center',
@@ -124,7 +124,7 @@ btns: {
     padding: 7,
     borderRadius: 2,
     margin: 2,
-    fontSize: 13
+    fontSize: 13,
   }
 });
 

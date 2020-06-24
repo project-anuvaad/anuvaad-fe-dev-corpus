@@ -283,7 +283,7 @@ class ViewTranslate extends React.Component {
 
         return (
             <div >
-                <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
+                <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px",marginBottom:'4%' }}>
                     <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
                     <Fab variant="extended"  aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%',backgroundColor:'#1C9AB7',color:'#FFFFFF' }} onClick={() => { history.push("/doctranslate") }}>
                         <AddIcon />&nbsp;{translate('dashboard.page.heading.title')}

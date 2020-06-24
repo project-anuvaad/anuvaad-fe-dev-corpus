@@ -206,14 +206,21 @@ class Dashboard extends React.Component {
     const { user, classes, location } = this.props;
     return (
       <div>
-        <Paper style={{
-          marginLeft: "23%",
-          width: "50%",
-          marginTop: "5%"
+        <Typography variant="h4" style={{
+          fontfamily: 'sans-serif	',
+          color: '#003366',
+          fontWeight: '549', paddingLeft: "41%", paddingBottom: "12px", paddingTop: "4%"
         }}>
-          <Typography variant="h5" style={{ color: '#233466', background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px",font: 'Source Sans Pro',fontWeight:'540' }}>
-            {translate("dashboard.page.heading.title")}
-          </Typography>
+          {translate("dashboard.page.heading.title")}
+        </Typography>
+        <Paper style={{
+          marginLeft: "20%",
+          width: "50%",
+          marginTop: "3%",
+          marginBottom: "5%",
+          padding: '2% 2% 2% 2%'
+        }}>
+
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
               <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
@@ -231,7 +238,7 @@ class Dashboard extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.source}
                 name="source"
-                style={{ marginBottom: "5%", marginTop: "4%",width:"100%" }}
+                style={{ marginBottom: "5%", marginTop: "4%", width: "100%" }}
               />
             </Grid>
           </Grid>
@@ -251,7 +258,7 @@ class Dashboard extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.target}
                 name="target"
-                style={{ marginBottom: "5%", marginTop: "4%", width:"100%" }}
+                style={{ marginBottom: "5%", marginTop: "4%", width: "100%" }}
               />
             </Grid>
           </Grid>
@@ -269,7 +276,7 @@ class Dashboard extends React.Component {
                 <SelectModel
                   id="select-multiple-chip"
                   multiple
-                  style={{ width:"93%"  }}
+                  style={{ width: "93%" }}
                   value={this.state.model}
                   onChange={this.handleSelectModelChange}
                   renderValue={selected => selected.join(", ")}
@@ -357,7 +364,7 @@ class Dashboard extends React.Component {
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
                 aria-label="edit"
-                style={{ marginLeft: "1.3%", width: "44%", marginBottom: "4%", marginTop: "4%", marginRight: "5%", backgroundColor: "#1C9AB7", color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '45px' }}
+                style={{ marginLeft: "1%", width: "44%", marginBottom: "4%", marginTop: "5%", marginRight: "5%", backgroundColor: "#1C9AB7", color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '46px' }}
               >
                 {translate("common.page.button.clear")}
               </Button>

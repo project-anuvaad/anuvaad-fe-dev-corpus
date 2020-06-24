@@ -24,8 +24,8 @@ const themeAnuvaad = createMuiTheme({
       contrastText: '#FFFFFF'
     },
     background: {
-      default: '#FFFFFF',
-      color: "inherit"
+      default: '#F5F9FA',
+      color:"inherit"
     }
   },
   status: {
@@ -34,7 +34,7 @@ const themeAnuvaad = createMuiTheme({
 
   drawer: {
     default: '#1976d2',
-    color: 'nherit'
+    color:'inherit'
   },
 
   Link:

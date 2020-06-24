@@ -198,7 +198,7 @@ const localization_EN_Data = {
   "feedback.page.text.feedbackSubmitted": "Feedback Submitted successfully!",
   "common.page.label.yes": "Yes",
   "common.page.label.stillinprogress": "Still inprogress",
-  "common.page.label.pleaseSelectModel": "Please select model",
+  "common.page.label.pleaseSelectModel": "Please Select Model",
   "common.page.title.comparisonReport": "Comparison Report",
   "userDirectory.page.message.deactivated": " user deactivated successfully!",
   "userDirectory.page.message.activated": " user activated successfully!",

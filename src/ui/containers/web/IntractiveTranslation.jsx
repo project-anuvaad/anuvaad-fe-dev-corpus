@@ -296,10 +296,13 @@ class IntractiveTrans extends React.Component {
   render() {
     return (
       <div>
-        <Paper style={{ marginLeft: "23%", width: "50%", marginTop: "5%" }}>
-          <Typography variant="h5" style={{ color:'#233466', background: blueGrey50, paddingLeft: "35%", paddingBottom: "12px", paddingTop: "8px",font: 'Source Sans Pro',fontWeight:'540' }}>
+         <Typography variant="h4" style={{  fontfamily: 'sans-serif	',
+          color: '#003366',
+          fontWeight: '549', paddingLeft: "38%", paddingBottom: "12px", paddingTop: "5%" }}>
             {translate("intractive_translate.page.main.title")}
           </Typography>
+        <Paper style={{ marginLeft: "21%", width: "50%", marginTop: "3%",marginBottom:"6%",padding:'2% 2% 2% 2%' }}>
+         
           {!this.state.edit && 
           <div>
           <Grid container spacing={24}>
@@ -405,7 +408,7 @@ class IntractiveTrans extends React.Component {
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
                 aria-label="edit"
-                style={{ marginLeft: "24%", width: "80%", marginBottom: "4%", marginTop: "4%", backgroundColor:"#1C9AB7",
+                style={{ marginLeft: "20%", width: "84%", marginBottom: "4%", marginTop: "5%", backgroundColor:"#1C9AB7",
                 color:"#FFFFFF", borderRadius: "20px 20px 20px 20px",height:'46px' }}
               >
                 {translate("common.page.button.clear")}
@@ -416,7 +419,7 @@ class IntractiveTrans extends React.Component {
                 variant="contained"
                 onClick={this.handleSubmit.bind(this)}
                 aria-label="edit"
-                style={{ width: "80%", marginBottom: "4%",marginLeft:'5%', marginTop: "4%", backgroundColor:"#1C9AB7",
+                style={{ width: "84%", marginBottom: "4%",marginLeft:'5%', marginTop: "5%", backgroundColor:"#1C9AB7",
                 color:"#FFFFFF", borderRadius: "20px 20px 20px 20px",height:'46px' }}
               >
                 {this.state.update && this.state.nmtText[0] ? translate("common.page.title.edit") : translate("common.page.button.submit")}
