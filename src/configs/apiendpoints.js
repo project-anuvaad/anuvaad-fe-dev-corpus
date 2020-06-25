@@ -15,7 +15,7 @@ const endpoints = {
   fetchtranslation: "/fetch-translation-process",
   fetchworkspace: "/fetch-paragraph-workspace",
   fetchworkspacedetails: "/fetch-paragraph-workspace-detail",
-  forgotpassword: "/v1/interactive-editor/user/forgot-user-password",
+  forgotpassword: "/v1/user/forgot-user-password",
   graderreport: "/fetch-benchmark-reports",
   html_to_doc: "/html-to-doc",
   insertSentence: "/v1/interactive-editor/add-sentence-node",
@@ -23,7 +23,7 @@ const endpoints = {
   interactivesourceupdate: "/v1/interactive-editor/update-pdf-source-sentences",
   InteractiveMerge: "/v1/interactive-editor/merge-split-sentence",
   acceptallsentence: "/accept-all-search-replace-sentence",
-  activate_user: "/v1/interactive-editor/user/activate-account",
+  activate_user: "/v1/user/activate-account",
   adduser: "/create-user",
   auto_ml: "/translate",
   benchmark: "/fetch-benchmarks",
@@ -46,7 +46,7 @@ const endpoints = {
   fetchcompositionworkspacedetails: "/fetch-composition-workspace-detail",
   fetchenchmarkmodel: "/fetch-benchmark-sentences",
   pdffileupload: "/v1/interactive-editor/translate-pdf",
-  signup: "/v1/interactive-editor//user/signup-user",
+  signup: "/v1/user/signup-user",
   updatePdfTable: "/v1/interactive-editor/update-pdf-source-table",
  
 
