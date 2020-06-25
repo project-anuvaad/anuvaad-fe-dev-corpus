@@ -91,7 +91,7 @@ class SignUp extends React.Component {
         <div >
           <Grid container spacing={8} >
             <Grid item xs={12} sm={4} lg={5} xl={5} >
-              <img src="Anuvaad.png" width="100%" height="925px" alt="" />
+              <img src="Anuvaad.png" width="100%" height="956px" alt=""  marginBottom="0px"/>
             </Grid>
             <Grid item xs={12} sm={8} lg={7} xl={7} className={classes.signUpPaper} >
               {/* <ValidatorForm
@@ -102,27 +102,27 @@ class SignUp extends React.Component {
               <Typography align='center' className={classes.typographyHeader}>Sign Up</Typography>
               <FormControl align='center' fullWidth >
 
-              <TextField value={this.state.firstName} id="outlined-required" placeholder={translate('signUp.page.label.firstName')}
-                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('firstName')}
+              <TextField value={this.state.firstName} id="outlined-margin-dense" placeholder={translate('signUp.page.label.firstName')}
+                   varient="outlined" margin="dense" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('firstName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
                 <TextField value={this.state.lastName} id="outlined-required" placeholder={translate('signUp.page.label.lastName')}
-                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('lastName')}
+                  margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('lastName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
                 <TextField value={this.state.email} id="outlined-required" type="email" placeholder={translate('common.page.placeholder.emailUsername')}
-                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('email')}
+                  margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('email')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
                 <TextField value={this.state.password} id="outlined-required" type="password" placeholder={translate('setPassword.page.placeholder.enterPassword')}
-                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('password')}
+                  margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('password')}
                 />                </FormControl>
               <FormControl align='center' fullWidth>
                 <TextField value={this.state.confirmPassword} id="outlined-required" type="password" placeholder={translate('setPassword.page.placeholder.reEnterPassword')}
-                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('confirmPassword')}
+                  margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('confirmPassword')}
                 />
               </FormControl>
               <FormControlLabel fullWidth className={classes.formControl}
@@ -141,7 +141,7 @@ class SignUp extends React.Component {
                   <Link href="#" onClick={() => {
                     window.open('/Anuvaad-TnC.html', 'T&C', `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
                     width=500,height=500`);
-                  }}> {translate('signUp.page.label.privacyPolicy')}</Link>
+                  }}style={{color:'#0C8AA9'}}> {translate('signUp.page.label.privacyPolicy')}</Link>
                 </div>}
               />
               <br />
@@ -157,9 +157,9 @@ class SignUp extends React.Component {
               </FormControl>
 
               <Typography className={classes.typography1}>{translate('signUp.page.label.allReadyHaveAccount')}
-                <Link style={{ cursor: 'pointer' }} href="#" onClick={() => { history.push("/") }}> {translate('signUp.page.label.logIn')}</Link></Typography>
+                <Link style={{ cursor: 'pointer',color:'#0C8AA9' }} href="#" onClick={() => { history.push("/") }}> {translate('signUp.page.label.logIn')}</Link></Typography>
 
-              {/* </ValidatorForm> */}
+            
               <hr className={classes.hrTag} />
               <Typography align='center' className={classes.typographyFooter}>{translate('signUp.page.label.enterDetailsToReceiveConfirmation')}<br />{translate('signUp.page.label.clickToActivateAccount')}</Typography>
             </Grid>

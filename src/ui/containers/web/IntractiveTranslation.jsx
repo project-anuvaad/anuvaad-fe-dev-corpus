@@ -306,7 +306,7 @@ class IntractiveTrans extends React.Component {
           <div>
           <Grid container spacing={24}>
             <Grid item xs={2} sm={4} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
+              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11.5%", paddingTop: "9.5%" }}>
                 {translate("common.page.label.sourceLang")}{" "}
               </Typography>
             </Grid>
@@ -328,7 +328,7 @@ class IntractiveTrans extends React.Component {
           </Grid>
           <Grid container spacing={24}>
             <Grid item xs={2} sm={4} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
+              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11.5%", paddingTop: "9.5%" }}>
                 {translate("common.page.label.targetLang")}&nbsp;
               </Typography>
             </Grid>
@@ -407,7 +407,7 @@ class IntractiveTrans extends React.Component {
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
                 aria-label="edit"
-                style={{ marginLeft: "20%", width: "84%", marginBottom: "4%", marginTop: "5%", backgroundColor:"#1C9AB7",
+                style={{ marginLeft: "16%", width: "84%", marginBottom: "4%", marginTop: "5%", backgroundColor:"#1C9AB7",
                 color:"#FFFFFF", borderRadius: "20px 20px 20px 20px",height:'46px' }}
               >
                 {translate("common.page.button.clear")}
@@ -418,7 +418,7 @@ class IntractiveTrans extends React.Component {
                 variant="contained"
                 onClick={this.handleSubmit.bind(this)}
                 aria-label="edit"
-                style={{ width: "84%", marginBottom: "4%",marginLeft:'5%', marginTop: "5%", backgroundColor:"#1C9AB7",
+                style={{ width: "84%", marginBottom: "4%",marginLeft:'11%', marginTop: "5%", backgroundColor:"#1C9AB7",
                 color:"#FFFFFF", borderRadius: "20px 20px 20px 20px",height:'46px' }}
               >
                 {this.state.update && this.state.nmtText[0] ? translate("common.page.title.edit") : translate("common.page.button.submit")}

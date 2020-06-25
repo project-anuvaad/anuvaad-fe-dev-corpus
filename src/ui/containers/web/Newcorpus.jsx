@@ -119,7 +119,7 @@ class Newcorpus extends React.Component {
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
               <Select
-                style={{ width: '95%' }}
+                style={{ width: '95%',marginLeft:'5%' }}
                 value={this.state.english}
                 onChange={this.handleSelectChange}
                 input={
@@ -156,7 +156,7 @@ class Newcorpus extends React.Component {
             <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
 
               <Select
-                style={{ minWidth: 120, width: '95%', align: 'right' }}
+                style={{ minWidth: 120, width: '95%', align: 'right',marginLeft:'5%' }}
                 value={this.state.hindi}
                 onChange={this.handleSelectChange}
                 input={

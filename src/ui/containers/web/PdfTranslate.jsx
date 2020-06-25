@@ -14,7 +14,7 @@ import Paper from '../../components/web/common/Paper';
 import Select from "../../components/web/common/Select1";
 import Typography from '../../components/web/common/Typography';
 import { withStyles } from "@material-ui/core/styles";
-import PdfUploadStyles from "../../styles/web/PdfUploadStyles";
+import PdfTranslateStyles from "../../styles/web/PdfTranslateStyles";
 import { withRouter } from 'react-router';
 import { translate } from "../../../assets/localisation";
 
@@ -161,12 +161,13 @@ class doctranslate extends React.Component {
               </Grid>
 
               <Grid item xs={12} sm={6} lg={6} xl={6}  >
-                <Grid container spacing={24} style={{ marginLeft: "6%", marginTop: '3%' }}>
+                <Grid container spacing={24} style={{ marginLeft: "4%", marginTop: '2%' }}>
                   <Typography value={translate("doc_translate.page.selectSourceLang")} variant="title" gutterBottom="true" styles={{
 
                     marginTop: '4%',
                     height: "18px",
-                    fontSize: "18px"
+                    fontSize: "18px",
+              
                   }} />
 
                   <Grid item xs={12} sm={12} lg={12} xl={12}  >
@@ -180,7 +181,7 @@ class doctranslate extends React.Component {
                   </Grid>
                 </Grid>
                 <br /><br /><br />
-                <Grid container spacing={24} style={{ marginLeft: "6%" }}>
+                <Grid container spacing={24} style={{ marginLeft: "4%" }}>
                   <Typography value={translate("doc_translate.page.selectTargetLang")} variant="title" gutterBottom="true" styles={{
 
                     marginTop: '6%',
@@ -200,11 +201,11 @@ class doctranslate extends React.Component {
                 </Grid>
                 <br />
                 {/* <Grid container spacing={24} > */}
-                <Grid container spacing={24} style={{ marginLeft: "6%" }}>
+                <Grid container spacing={24} style={{ marginLeft: "4%" }}>
 
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
                     <Button value={translate("common.page.label.submit")} variant={"contained"} style={{
-                      // marginTop: "4%",
+                      marginTop: "3%",
                       // marginLeft: "12%",
                       width: "92%",
                       backgroundColor: '#1C9AB7',
@@ -238,4 +239,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   PdfTranslation: APITransport,
 }, dispatch);
 export default withRouter(
-  withStyles(PdfUploadStyles)(connect(mapStateToProps, mapDispatchToProps)(doctranslate)));
+  withStyles(PdfTranslateStyles)(connect(mapStateToProps, mapDispatchToProps)(doctranslate)));

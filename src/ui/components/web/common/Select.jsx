@@ -18,7 +18,9 @@ class SimpleSelect extends React.Component {
           width:'92%',
           fullWidth: true,
           display: "flex",
-          wrap: "nowrap"
+          wrap: "nowrap",
+          height:'40px',
+          magin:'dense'
         }}>
           <Select
             disabled={disabled}

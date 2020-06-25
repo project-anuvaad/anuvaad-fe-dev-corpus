@@ -36,7 +36,8 @@ const styles = theme => ({
     color: "#FFFFFF",
     borderRadius: "20px 20px 20px 20px",
     height: '45px'
-  }
+  },
+  
 });
 
 class PdfUpload extends Component {

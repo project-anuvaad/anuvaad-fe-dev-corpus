@@ -267,13 +267,11 @@ class Header extends React.Component {
                         history.push("/data-pipeline-tools");
                       }}
                     >
-                      <ListItemIcon>
-
-                      </ListItemIcon>
+                     
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('header.page.heading.dataPipeline')}
                           </Typography>
                         }
@@ -289,13 +287,11 @@ class Header extends React.Component {
                         history.push(`${process.env.PUBLIC_URL}/translate`);
                       }}
                     >
-                      <ListItemIcon>
-                      
-                      </ListItemIcon>
+                     
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('dashboard.page.heading.title')}
                           </Typography>
                         }
@@ -311,13 +307,11 @@ class Header extends React.Component {
                         history.push(`${process.env.PUBLIC_URL}/dashboard`);
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                      
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('dashboard.page.heading.title')}
                           </Typography>
                         }
@@ -348,13 +342,11 @@ class Header extends React.Component {
                         history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`);
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                      
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('header.page.heading.uploadFile')}
                           </Typography>
                         }
@@ -370,13 +362,11 @@ class Header extends React.Component {
                         history.push(`${process.env.PUBLIC_URL}/newcorpus`);
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                      
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('commonCorpus.page.button.corpus')}
                           </Typography>
                         }
@@ -392,13 +382,11 @@ class Header extends React.Component {
                         history.push(`${process.env.PUBLIC_URL}/corpus`);
                       }}
                     >
-                      <ListItemIcon>
-                      
-                      </ListItemIcon>
+                    
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('webroutes.page.title.corpusList')}
                           </Typography>
                         }
@@ -414,13 +402,11 @@ class Header extends React.Component {
                         history.push(`${process.env.PUBLIC_URL}/benchmark`);
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                     
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('header.page.heading.benchMark')}
                           </Typography>
                         }
@@ -437,13 +423,11 @@ class Header extends React.Component {
                         history.push(`${process.env.PUBLIC_URL}/interactive-translate`);
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                      
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000" ,marginLeft:'6%'}}>
                             {translate("intractive_translate.page.main.title")}
                           </Typography>
                         }
@@ -459,13 +443,11 @@ class Header extends React.Component {
                         history.push("/view-pdf");
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                      
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('webroutes.page.title.pdfList')}
                           </Typography>
                         }
@@ -480,7 +462,7 @@ class Header extends React.Component {
                       <ListItemText
                         disableTypography
                         primary={(
-                          <Typography type="body2" style={{ color: '#000000' }}>
+                          <Typography type="body2" style={{ color: '#000000',marginLeft:'6%' }}>
                             {translate('webroutes.page.title.graderReport')}
                           </Typography>
                         )}
@@ -498,13 +480,11 @@ class Header extends React.Component {
                         history.push(`${process.env.PUBLIC_URL}/comparison-report`);
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                      
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('common.page.title.comparisonReport')}
                           </Typography>
                         }
@@ -521,13 +501,11 @@ class Header extends React.Component {
                         history.push("/doctranslate");
                       }}
                     >
-                      <ListItemIcon>
                       
-                      </ListItemIcon>
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000" ,marginLeft:'6%'}}>
                             {translate('webroutes.page.title.translateFile')}
                           </Typography>
                         }
@@ -543,13 +521,11 @@ class Header extends React.Component {
                         history.push("/pdf-to-doc");
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                     
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('webroutes.page.title.pdfToDoc')}
                           </Typography>
                         }
@@ -565,13 +541,11 @@ class Header extends React.Component {
                         history.push("/pdf-upload");
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                    
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('webroutes.page.title.pdfSentences')}
                           </Typography>
                         }
@@ -587,13 +561,11 @@ class Header extends React.Component {
                         history.push("/viewtranslate");
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                     
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
                             {translate('common.page.title.document')}
                           </Typography>
                         }
@@ -610,13 +582,11 @@ class Header extends React.Component {
                         history.push("/userdirectory");
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                      
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000" ,marginLeft:'6%'}}>
                             {translate('userDirectory.page.label.userManagement')}
                           </Typography>
                         }
@@ -656,13 +626,11 @@ class Header extends React.Component {
                         history.push(`${process.env.PUBLIC_URL}/feedback`);
                       }}
                     >
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
+                      
                       <ListItemText
                         disableTypography
                         primary={
-                          <Typography type="body2" style={{ color: "#000000" }}>
+                          <Typography type="body2" style={{ color: "#000000" ,marginLeft:'6%'}}>
                             {translate('header.page.heading.feedBack')}
                           </Typography>
                         }
