@@ -1,4 +1,4 @@
-import { grey500, white } from 'material-ui/styles/colors';
+
 
 const PdfUploadStyles = theme => ({
   root: {
@@ -16,7 +16,7 @@ const PdfUploadStyles = theme => ({
     marginTop:'6%',
     minWidth: "5%",
     align:'center',
-    marginLeft:"40%",
+    marginLeft:"40.5%",
     fontfamily: 'sans-serif	',
      color: '#003366',
      fontWeight:'549'
@@ -24,14 +24,14 @@ const PdfUploadStyles = theme => ({
 
   },
   typographySubHeader:{
-    marginLeft:'38%',
+    marginLeft:'39%',
     fontWeight:'450',
     color:'#000000'
   },
 
   typography: {
     marginLeft:"3%",
-    marginTop:'4%',
+    marginTop:'3%',
     height:"18px",
     fontSize:"18px" 
     
@@ -39,13 +39,14 @@ const PdfUploadStyles = theme => ({
   select:{
     marginRight: "30%",
     width:"100%" ,
+    height:'40px',
     
   },
  paper: {
     width: "60%",
     minWidth: "200px",
     marginTop: "3%",
-    marginBottom:'8%',
+    marginBottom:'5%',
     padding: "2% 2% 4% 2%",
     marginLeft: "15%",
     
@@ -55,13 +56,13 @@ const PdfUploadStyles = theme => ({
     marginLeft: "4%" 
   },
   textfield:{
-    width: '87%',
-    marginLeft:"3%"
+    width: '87.9%',
+    marginLeft:"2.3%"
   },
   button: {
     marginTop: "5%",
-    marginLeft: "5%",
-    width: "90%",
+    marginLeft: "2.4%",
+    width: "93.8%",
     backgroundColor:'#1C9AB7',
     borderRadius:"20px 20px 20px 20px",
     color:"#FFFFFF"
@@ -69,7 +70,7 @@ const PdfUploadStyles = theme => ({
   dropZoneArea:{
     paddingTop: '80px',
     minHeight:'363px',
-    height: "304px",
+    height: "413px",
     borderColor:'#1C9AB7',
     backgroundColor: '#F5F9FA',
     border: '1px dashed #1C9AB7',

@@ -7,7 +7,6 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import SelectModel from "@material-ui/core/Select";
@@ -203,27 +202,27 @@ class Dashboard extends React.Component {
 
   render() {
     const role = JSON.parse(localStorage.getItem("roles"));
-    const { user, classes, location } = this.props;
+    // const { user, classes, location } = this.props;
     return (
       <div>
         <Typography variant="h4" style={{
           fontfamily: 'sans-serif	',
           color: '#003366',
-          fontWeight: '549', paddingLeft: "41%", paddingBottom: "12px", paddingTop: "4%"
+          fontWeight: '549', paddingLeft: "41.5%", paddingBottom: "12px", paddingTop: "4%"
         }}>
           {translate("dashboard.page.heading.title")}
         </Typography>
         <Paper style={{
-          marginLeft: "20%",
+          marginLeft: "21%",
           width: "50%",
           marginTop: "3%",
-          marginBottom: "5%",
+          marginBottom: "4%",
           padding: '2% 2% 2% 2%'
         }}>
 
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
+              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%" }}>
                 {translate("common.page.label.sourceLang")}{" "}
               </Typography>
             </Grid>
@@ -238,13 +237,13 @@ class Dashboard extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.source}
                 name="source"
-                style={{ marginBottom: "5%", marginTop: "4%", width: "100%" }}
+                style={{ marginBottom: "5%", marginTop: "4%", width: "100%",marginLeft:'10%' }}
               />
             </Grid>
           </Grid>
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
+              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%" }}>
                 {translate("common.page.label.targetLang")}&nbsp;
               </Typography>
             </Grid>
@@ -265,7 +264,7 @@ class Dashboard extends React.Component {
           {role.includes("dev") && (
             <Grid container spacing={8}>
               <Grid item xs={8} sm={8} lg={8} xl={8}>
-                <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
+                <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%" }}>
                   {translate("common.page.label.pleaseSelectModel")}{" "}
                 </Typography>
               </Grid>
@@ -310,7 +309,7 @@ class Dashboard extends React.Component {
               )}
             </Grid>
           )}
-          <div style={{ marginLeft: "40px" }}>
+          <div style={{ marginLeft: "5%" }}>
             <Grid container spacing={24} style={{ padding: 24 }}>
               <Grid item xs={12} sm={12} lg={12} xl={12}>
                 <TextField
@@ -364,7 +363,7 @@ class Dashboard extends React.Component {
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
                 aria-label="edit"
-                style={{ width: "44%", marginBottom: "4%", marginTop: "5%", marginRight: "5%"}}
+                style={{ width: "44%", marginBottom: "4%", marginTop: "5%", marginRight: "5%",marginLeft:'1%'}}
               >
                 {translate("common.page.button.clear")}
               </Button>
@@ -372,7 +371,7 @@ class Dashboard extends React.Component {
                 variant="contained"
                 onClick={this.handleSubmit.bind(this, role)}
                 aria-label="edit"
-                style={{width: "44%", marginTop:'5%', marginBottom:'4%'}}
+                style={{width: "44%", marginTop:'5%', marginBottom:'4%',marginLeft:'0.5%'}}
               >
                 {translate("common.page.button.submit")}
               </Button>

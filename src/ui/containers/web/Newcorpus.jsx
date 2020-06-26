@@ -20,7 +20,6 @@ import history from "../../../web.history";
 import { DropzoneArea } from 'material-ui-dropzone';
 import Select from "@material-ui/core/Select";
 import Stepper from "../../components/web/common/Stepper";
-import { blueGrey50 } from "material-ui/styles/colors"
 import MenuItem from '@material-ui/core/MenuItem';
 import { translate } from '../../../assets/localisation';
 
@@ -120,7 +119,7 @@ class Newcorpus extends React.Component {
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
               <Select
-                style={{ width: '95%' }}
+                style={{ width: '95%',marginLeft:'5%' }}
                 value={this.state.english}
                 onChange={this.handleSelectChange}
                 input={
@@ -157,7 +156,7 @@ class Newcorpus extends React.Component {
             <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
 
               <Select
-                style={{ minWidth: 120, width: '95%', align: 'right' }}
+                style={{ minWidth: 120, width: '95%', align: 'right',marginLeft:'5%' }}
                 value={this.state.hindi}
                 onChange={this.handleSelectChange}
                 input={
@@ -275,7 +274,7 @@ class Newcorpus extends React.Component {
         <Typography gutterBottom variant="title" component="h4" style={{
           fontfamily: 'sans-serif	',
           color: '#003366',
-          fontWeight: '549', paddingBottom: "12px", marginTop: "4%", marginLeft: '34%',fontSize:'28px'
+          fontWeight: '549', paddingBottom: "12px", marginTop: "4%", marginLeft: '35%',fontSize:'28px'
         }}>
           {translate('newCorpus.page.text.createCorpus')}
         </Typography>

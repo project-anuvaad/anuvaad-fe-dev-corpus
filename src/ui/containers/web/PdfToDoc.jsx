@@ -36,7 +36,8 @@ const styles = theme => ({
     color: "#FFFFFF",
     borderRadius: "20px 20px 20px 20px",
     height: '45px'
-  }
+  },
+  
 });
 
 class PdfUpload extends Component {
@@ -106,7 +107,7 @@ class PdfUpload extends Component {
   };
 
   render() {
-    const { user, classes, location } = this.props;
+    const { classes, } = this.props;
     return (
       <Paper style={{
         width: "40%",
@@ -114,7 +115,7 @@ class PdfUpload extends Component {
         marginTop: "6%",
         padding: "4% 4% 4% 4%",
         marginLeft: "22%",
-        marginBottom: '5%',
+        marginBottom: '4%',
       }}>
         <Grid container spacing={24} >
           <Grid item xs={12} sm={12} lg={12} xl={12}>
@@ -199,5 +200,4 @@ const mapDispatchToProps = dispatch =>
 
 export default withRouter(
   withStyles(PdfUploadStyles)(
-    connect(mapStateToProps, mapDispatchToProps)
-      (PdfUpload)));
+    connect(mapStateToProps, mapDispatchToProps)(PdfUpload)));

@@ -3,7 +3,6 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import PropTypes from "prop-types";
 
 
 
@@ -19,7 +18,9 @@ class SimpleSelect extends React.Component {
           width:'92%',
           fullWidth: true,
           display: "flex",
-          wrap: "nowrap"
+          wrap: "nowrap",
+          height:'40px',
+          magin:'dense'
         }}>
           <Select
             disabled={disabled}

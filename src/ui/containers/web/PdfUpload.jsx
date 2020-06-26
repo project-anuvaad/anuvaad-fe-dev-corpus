@@ -17,8 +17,6 @@ import { translate } from "../../../assets/localisation";
 import Select from "../../components/web/common/Select";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import PdfUploadStyles from "../../styles/web/PdfUploadStyles";
 
 class PdfUpload extends Component {
@@ -180,7 +178,7 @@ class PdfUpload extends Component {
   };
 
   render() {
-    const { user, classes, location } = this.props;
+    const { classes } = this.props;
     return (
      <div >
       
@@ -212,7 +210,7 @@ class PdfUpload extends Component {
          
               <Grid container spacing={24} className={classes.grid}>
                 <Typography gutterBottom variant="title" className={classes.typography}>
-                  {translate('common.page.label.sourceLang')+ ' *' }
+                  {translate('common.page.label.sourceLang')}<span style={{color:'#FF0000'}}>*</span>
                 </Typography>
               <Grid item xs={12} sm={12} lg={12} xl={12}  >
                   <Select
@@ -228,7 +226,7 @@ class PdfUpload extends Component {
                 />
               </Grid>
               </Grid>
-              <br />
+              <br /><br/>
             <Grid container spacing={24} className={classes.grid}>
             
               <Typography 
@@ -237,7 +235,7 @@ class PdfUpload extends Component {
                 gutterBottom="true"
                 className={classes.typography}
               >
-                {translate('common.page.label.targetLang') + ' *'}
+                {translate('common.page.label.targetLang')}<span style={{color:'#FF0000'}}>*</span>
               </Typography>
               <br />
               <Grid item xs={12} sm={12} lg={12} xl={12}  >
@@ -253,6 +251,7 @@ class PdfUpload extends Component {
               />
               </Grid>
           </Grid>
+          <br/><br/>
           <Grid container spacing={24} className={classes.grid}>
               <Typography gutterBottom variant="title"  className={classes.typography}>
                 {translate("common.page.label.filename")}

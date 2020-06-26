@@ -27,7 +27,7 @@ const Newcorpus = theme => ({
     height: 'auto',
     left: 0,
     right: 0,
-    marginLeft:'23%',
+    marginLeft:'25%',
     flexWrap: 'wrap',
     marginBottom:"2%"
   },
@@ -125,6 +125,24 @@ btns: {
     borderRadius: 2,
     margin: 2,
     fontSize: 13,
+  },
+  dropZoneArea:{
+    paddingTop: '80px',
+    minHeight:'363px',
+    height: "413px",
+    borderColor:'#1C9AB7',
+    backgroundColor: '#F5F9FA',
+    border: '1px dashed #1C9AB7',
+    fontColor:'#1C9AB7',
+    "& svg":{color:'#1C9AB7',},
+    "& p": {
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      fontSize: "19px",
+      color:'#1C9AB7',
+      
+    }
   }
 });
 

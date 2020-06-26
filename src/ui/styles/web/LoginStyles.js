@@ -1,4 +1,7 @@
+// @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 import { grey500, white } from 'material-ui/styles/colors';
+
+
 
 const LoginStyles = theme => ({
   root: {
@@ -130,7 +133,8 @@ const LoginStyles = theme => ({
   typographyFooter: {
     marginTop: '3%',
     fontSize: "100%",
-    marginBottom: "8%"
+    marginBottom: "5%",
+    fontFamily: 'Source Sans Pro',
   }
 
 });
