@@ -35,6 +35,8 @@ import GroupIcon from "@material-ui/icons/Group";
 import logo from '../../../../assets/logo.png';
 import { translate } from '../../../../../src/assets/localisation';
 import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
+import DownIcon from '@material-ui/icons/ArrowDropDown';
+import PeopleIcon from '@material-ui/icons/Person';
 
 const styles = {
   root: {
@@ -155,65 +157,70 @@ class Header extends React.Component {
                 height: '27px'
               }}
               alt="logo" />
-            {!dontShowHeader &&
-              <Typography
-                variant="title"
-                color="inherit"
-                style={{
-                  position: "absolute",
-                  textTransform: "capitalize",
-                  right: "130px"
-                }}
-              >
-                {this.state.name} [{useRole}]
-            </Typography>
-            }
-            {this.state.drawerClose}
-            {!dontShowHeader && auth && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "10%",
-                  right: "50px"
-                }}
-              >
-                <Fab aria-owns={openEl ? "menu-appbar" : null} aria-haspopup="true" onClick={this.handleMenu} color="primary" size="medium">
-                  <AccountCircle />
-                </Fab>
-
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorEl}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
+            <div style={{marginRight: '20px', display: 'flex', flexDirection: 'row'}}>
+              {!dontShowHeader &&
+              <div style={{display: 'flex', flexDirection: 'row'}}>
+                <PeopleIcon style={{marginRight: '10px'}}></PeopleIcon>
+               <Typography
+                  variant="title"
+                  color="inherit"
+                  style={{
+                    // position: "absolute",
+                    textTransform: "capitalize",
+                    // right: "60px"
                   }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right"
-                  }}
-                  open={openEl}
-                  onClose={this.handleClose}
                 >
-                  <MenuItem
-                    onClick={() => {
-                      this.handleClose();
-                      history.push(`${process.env.PUBLIC_URL}/profile`);
+                  {this.state.name}
+                </Typography>
+                </div>
+              }
+              {this.state.drawerClose}
+              {!dontShowHeader && auth && (
+                <div
+                  style={{
+                    paddingLeft: '10px',
+                    // position: "absolute",
+                    top: "20px",
+                    // right: "21px"
+                  }}
+                >
+                  {/* <Fab aria-owns={openEl ? "menu-appbar" : null} aria-haspopup="true" onClick={this.handleMenu} color="primary" size="medium">
+                </Fab> */}
+                  <DownIcon onClick={this.handleMenu.bind(this)}></DownIcon>
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right"
                     }}
-                  >
-                    {translate('header.page.heading.MyProfile')}
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      this.handleClose();
-                      history.push(`${process.env.PUBLIC_URL}/logout`);
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right"
                     }}
+                    open={openEl}
+                    onClose={this.handleClose}
                   >
-                    {translate('header.page.heading.logout')}
-                  </MenuItem>
-                </Menu>
-              </div>
-            )}
+                    <MenuItem
+                      onClick={() => {
+                        this.handleClose();
+                        history.push(`${process.env.PUBLIC_URL}/profile`);
+                      }}
+                    >
+                      {translate('header.page.heading.MyProfile')}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        this.handleClose();
+                        history.push(`${process.env.PUBLIC_URL}/logout`);
+                      }}
+                    >
+                      {translate('header.page.heading.logout')}
+                    </MenuItem>
+                  </Menu>
+                </div>
+              )}
+            </div>
           </Toolbar>
         </AppBar>
         <div>
