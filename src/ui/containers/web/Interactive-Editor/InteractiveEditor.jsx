@@ -689,7 +689,7 @@ class IntractiveTrans extends React.Component {
     const { gridValue } = this.state;
 
     return (
-      <div style={{ marginLeft: "-100px" }}>
+      <div>
         {this.state.sentences && (
           <div>
             {!this.state.collapseToken && (
