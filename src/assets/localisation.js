@@ -380,6 +380,7 @@ const localization_EN_Data = {
   "doc_translate.page.selectTargetLang": "Select Target Language",
   "common.page.label.submit": "Submit",
   "common.page.label.addAndDropFile": "Add and Drop a docx File here",
+  "common.page.label.menu": "Menu",
   
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
@@ -741,6 +742,8 @@ const localization_HI_Data = {
   "doc_translate.page.selectTargetLang": "लक्ष्य भाषा का चयन करें",
   "common.page.label.submit": "प्रस्तुत करे",
   "common.page.label.addAndDropFile": "यहाँ एक docx फ़ाइल जोड़ें और छोड़ें",
+  "common.page.label.menu": "मेन्यू",
+
 };
 
 export function translate(locale_text) {
