@@ -764,7 +764,7 @@ class IntractiveTrans extends React.Component {
                     }}
                   >
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                      <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
+                      <Typography value="" variant="h6" gutterBottom style={{ flex: 1 }}>
                         {translate("common.page.label.source")}
                       </Typography>
 
@@ -849,7 +849,7 @@ class IntractiveTrans extends React.Component {
                 <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
                   <Paper elevation={2} style={{ maxHeight: window.innerHeight - 180, paddingBottom: "12px" }}>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                      <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "10px" }}>
+                      <Typography value="" variant="h6" gutterBottom>
                         {translate("common.page.label.target")}
                       </Typography>
                     </Toolbar>
