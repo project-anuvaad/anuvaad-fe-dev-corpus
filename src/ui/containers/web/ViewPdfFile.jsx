@@ -197,7 +197,7 @@ class PdfUpload extends React.Component {
               ""
             )}
         </Toolbar>
-        <div style={{ marginLeft: "4%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
+        <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
           <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>

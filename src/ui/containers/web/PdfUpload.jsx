@@ -187,7 +187,7 @@ class PdfUpload extends Component {
         </Typography>
         <br/>
         <Typography className={classes.typographySubHeader}>
-              Upload file that you want to translate.
+            {translate("pdf_upload.page.label.uploadMessage")}
         </Typography >
         <br />
         <Paper className={classes.paper}>

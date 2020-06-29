@@ -13,7 +13,7 @@ const PdfUploadStyles = theme => ({
     marginTop: theme.spacing.unit * 3
   },
   typographyHeader:{
-    marginTop:'6%',
+    paddingTop:'3%',
     minWidth: "5%",
     align:'center',
     marginLeft:"40.5%",
