@@ -16,7 +16,7 @@ const PdfUploadStyles = theme => ({
     paddingTop:'3%',
     minWidth: "5%",
     align:'center',
-    marginLeft:"40.5%",
+    // marginLeft:"40.5%",
     fontfamily: 'sans-serif	',
      color: '#003366',
      fontWeight:'549'
@@ -24,7 +24,7 @@ const PdfUploadStyles = theme => ({
 
   },
   typographySubHeader:{
-    marginLeft:'39%',
+    // marginLeft:'39%',
     fontWeight:'450',
     color:'#000000'
   },
@@ -48,7 +48,7 @@ const PdfUploadStyles = theme => ({
     marginTop: "3%",
     marginBottom:'5%',
     padding: "2% 2% 4% 2%",
-    marginLeft: "15%",
+    // marginLeft: "15%",
     
     minHeight:'400px'
   },

@@ -276,7 +276,7 @@ class Benchmark extends React.Component {
         <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%" }}>
           <Typography variant="title" color="inherit" style={{ flex: 1 }} />
         </Toolbar>
-        <div style={{ marginLeft: "4%", marginRight: "3%", marginTop: "0%" }}>
+        <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "0%" }}>
           <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>

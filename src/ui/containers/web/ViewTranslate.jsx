@@ -290,7 +290,7 @@ class ViewTranslate extends React.Component {
                     </Fab>
                 </Toolbar>
 
-                <div style={{ marginLeft: '4%', marginRight: '3%', marginTop: '1%',marginBottom:'2%' }}>
+                <div style={{ marginLeft: '3%', marginRight: '3%', marginTop: '1%',marginBottom:'2%' }}>
                     <MUIDataTable title={translate('common.page.title.document')} data={this.state.fetchtranslation} columns={columns} options={options} />
                 </div>
 
