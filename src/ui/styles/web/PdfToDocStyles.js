@@ -1,6 +1,6 @@
 
 
-const PdfTranslateStyles = theme => ({
+const PdfToDocStyles = theme => ({
     root: {
       display: 'flex',
       flexWrap: 'wrap'
@@ -12,22 +12,33 @@ const PdfTranslateStyles = theme => ({
     withoutLabel: {
       marginTop: theme.spacing.unit * 3
     },
-    div:{
-      width: '55%', marginLeft: "20%", marginTop: '5%', marginBottom: '9%',
-       padding: "2.5% 2.5% 3% 2.5%", minWidth: "200px",
-    },
     typographyHeader:{
-      marginTop: '6%',
-          minWidth: "5%",
-          textAlign: "center",
-          fontfamily: 'Trebuchet MS, sans-serif	',
-          color: '#003366'
+      textAlign: "center",
+              minWidth: "10%",
+              color: '#233466',marginTop:'4%'
+    },
+    paper:{
+      width: "40%",
+        minWidth: "20%",
+        marginTop: "2%",
+        padding: "5% 5% 3% 5%",
+        marginLeft: "25%",
+        marginBottom: '5.5%',
+    },
+    button:{
+      marginTop: "6%",
+            marginLeft: "9.5%",
+            width: "80%",
+            backgroundColor: "#1C9AB7",
+            color: "#FFFFFF",
+            borderRadius: "20px 20px 20px 20px",
+            height: '45px'
     },
     
     dropZoneArea:{
       paddingTop: '80px',
       minHeight:'363px',
-      height: "352px",
+      height: "60px",
       borderColor:'#1C9AB7',
       backgroundColor: '#F5F9FA',
       border: '1px dashed #1C9AB7',
@@ -50,5 +61,5 @@ const PdfTranslateStyles = theme => ({
   });
   
   
-  export default PdfTranslateStyles;
+  export default PdfToDocStyles;
   

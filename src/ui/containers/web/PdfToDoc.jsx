@@ -12,33 +12,9 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import PdfFileUpload from "../../../flux/actions/apis/pdftodoc";
 import Snackbar from "../../components/web/common/Snackbar";
 import { translate } from "../../../assets/localisation";
-import PdfUploadStyles from "../../styles/web/PdfUploadStyles";
+import PdfToDocStyles from "../../styles/web/PdfToDocStyles";
 
-const styles = theme => ({
-  paper: {
-    width: "40%",
-    minWidth: "20%",
-    marginTop: "7%",
-    padding: "2.5% 2.5% 3% 2.5%",
-    marginLeft: "22%",
-    marginBottom: '12%'
-  },
-  typography: {
-    textAlign: "center",
-    minWidth: "10%",
-    color: '#233466'
-  },
-  button: {
-    marginTop: "6%",
-    marginLeft: "9.5%",
-    width: "80%",
-    backgroundColor: "#1C9AB7",
-    color: "#FFFFFF",
-    borderRadius: "20px 20px 20px 20px",
-    height: '45px'
-  },
-  
-});
+
 
 class PdfUpload extends Component {
   constructor() {
@@ -109,26 +85,17 @@ class PdfUpload extends Component {
   render() {
     const { classes, } = this.props;
     return (
-      <Paper style={{
-        width: "40%",
-        minWidth: "20%",
-        marginTop: "6%",
-        padding: "4% 4% 4% 4%",
-        marginLeft: "22%",
-        marginBottom: '4%',
-      }}>
-        <Grid container spacing={24} >
-          <Grid item xs={12} sm={12} lg={12} xl={12}>
-            <Typography value="" variant="h4" style={{
-              textAlign: "center",
-              minWidth: "10%",
-              color: '#233466'
-            }}>
+      <div>
+      <Grid item xs={12} sm={12} lg={12} xl={12}>
+            <Typography value="" variant="h4" className={classes.typographyHeader}>
               {translate("common.page.label.uploadFile")}
             </Typography>
             <br />
             <br />
           </Grid>
+      <Paper className={classes.paper}>
+        <Grid container spacing={24} >
+          
           <DropzoneArea
             showPreviewsInDropzone
             acceptedFiles={[".pdf"]}
@@ -156,15 +123,7 @@ class PdfUpload extends Component {
               </Grid>
             </Grid>
           )}
-          <Button variant="contained" style={{
-            marginTop: "6%",
-            marginLeft: "9.5%",
-            width: "80%",
-            backgroundColor: "#1C9AB7",
-            color: "#FFFFFF",
-            borderRadius: "20px 20px 20px 20px",
-            height: '45px'
-          }} size="large" onClick={this.handleSubmit.bind(this)}>
+          <Button variant="contained" className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
             {translate("common.page.button.submit")}
           </Button>
         </Grid>
@@ -181,6 +140,7 @@ class PdfUpload extends Component {
           />
         )}
       </Paper>
+      </div>
     );
   }
 }
@@ -199,5 +159,5 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default withRouter(
-  withStyles(PdfUploadStyles)(
+  withStyles(PdfToDocStyles)(
     connect(mapStateToProps, mapDispatchToProps)(PdfUpload)));

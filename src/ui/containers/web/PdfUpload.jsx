@@ -180,9 +180,9 @@ class PdfUpload extends Component {
   render() {
     const { classes } = this.props;
     return (
-     <div style={{display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center'}}>
+     <div className={classes.div}>
       
-        <Typography value=""  variant="h4" className={this.props.classes.typographyHeader}>
+        <Typography value=""  variant="h4" className={classes.typographyHeader}>
               {translate("common.page.label.uploadFile")}
         </Typography>
         <br/>
@@ -210,7 +210,7 @@ class PdfUpload extends Component {
          
               <Grid container spacing={24} className={classes.grid}>
                 <Typography gutterBottom variant="title" className={classes.typography}>
-                  {translate('common.page.label.sourceLang')}<span style={{color:'#FF0000'}}>*</span>
+                  {translate('common.page.label.sourceLang')}<span className={classes.span}>*</span>
                 </Typography>
               <Grid item xs={12} sm={12} lg={12} xl={12}  >
                   <Select
@@ -235,7 +235,7 @@ class PdfUpload extends Component {
                 gutterBottom="true"
                 className={classes.typography}
               >
-                {translate('common.page.label.targetLang')}<span style={{color:'#FF0000'}}>*</span>
+                {translate('common.page.label.targetLang')}<span className={classes.span}>*</span>
               </Typography>
               <br />
               <Grid item xs={12} sm={12} lg={12} xl={12}  >

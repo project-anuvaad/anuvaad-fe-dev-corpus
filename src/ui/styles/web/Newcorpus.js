@@ -20,17 +20,12 @@ const Newcorpus = theme => ({
     marginBottom:'10px'
 
   },
-  CorpusContainer: {
-    padding:'2% 2% 3% 2%',
-    minWidth: 720,
-    maxWidth: 700,
-    height: 'auto',
-    left: 0,
-    right: 0,
-    marginLeft:'25%',
-    flexWrap: 'wrap',
-    marginBottom:"2%"
+  typographyHeader:{
+    fontfamily:'"Source Sans Pro", sans-serif',
+    color: '#003366',
+      marginTop: "3%",  textAlign: "center",fontSize:'28px'
   },
+  
   createButton: {
   justifyContent: 'center',
 },
@@ -39,10 +34,10 @@ label:{
   paddingLeft:'30%',
   paddingRight:'3%'
 },
-typography:{
-  marginLeft:"5%",
-  marginTop:'3%'
-},
+// typography:{
+//   marginLeft:"5%",
+//   marginTop:'3%'
+// },
 
 button: {
   justifyContent: 'center',
@@ -87,10 +82,12 @@ btns: {
 },
 
   paper: {
-    marginTop:'4%',
+    marginTop:'3%',
+    marginLeft:'27%',
     overflow: 'auto',
-    width: 'auto%',
-    padding:'4% 4% 5% 4%',
+    width: '40%',
+    padding:'3% 4% 2% 4%',
+
   
   },
   buttonsDiv: {
@@ -127,9 +124,9 @@ btns: {
     fontSize: 13,
   },
   dropZoneArea:{
-    paddingTop: '80px',
-    minHeight:'363px',
-    height: "413px",
+    paddingTop: '7%',
+    minHeight:'200px',
+    height: "300px",
     borderColor:'#1C9AB7',
     backgroundColor: '#F5F9FA',
     border: '1px dashed #1C9AB7',

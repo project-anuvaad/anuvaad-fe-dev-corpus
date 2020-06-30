@@ -114,7 +114,7 @@ class Newcorpus extends React.Component {
         return <div>
           <Grid container spacing={8} >
             <Grid item xs={7} sm={7} lg={7} xl={7}>
-              <Typography value='' variant="title" style={{ marginLeft: '12%', paddingTop: '15%' }} >{translate('common.page.label.sourceLang')}</Typography>
+              <Typography value='' variant="title" style={{  paddingTop: '15%' }} >{translate('common.page.label.sourceLang')}</Typography>
 
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
@@ -141,7 +141,9 @@ class Newcorpus extends React.Component {
           }
 
           <DropzoneArea
-            onDrop={this.handleSource} showPreviewsInDropzone={true} style={{ marginTop: '0%' }} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={1}
+            onDrop={this.handleSource} 
+            dropZoneClass={this.props.classes.dropZoneArea}
+            showPreviewsInDropzone={true} style={{ marginTop: '0%' }} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={1}
           ></DropzoneArea>
         </div>
 
@@ -171,7 +173,10 @@ class Newcorpus extends React.Component {
             </Grid>
           </Grid><br />
           <DropzoneArea Dropzoneiles=""
-            onDrop={this.handleTarget} id="source" showPreviewsInDropzone={true} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={2}
+          dropZoneClass={this.props.classes.dropZoneArea}
+            onDrop={this.handleTarget} id="source" 
+            showPreviewsInDropzone={true} acceptedFiles={['.pdf']} 
+            dropzoneText={translate('common.page.label.addDropFile')} filesLimit={2}
           ></DropzoneArea>
         </div>;
 
@@ -270,14 +275,12 @@ class Newcorpus extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.CorpusContainer}>
-        <Typography gutterBottom variant="title" component="h4" style={{
-          fontfamily: 'sans-serif	',
-          color: '#003366',
-          fontWeight: '549', paddingBottom: "12px", marginTop: "4%", marginLeft: '35%',fontSize:'28px'
-        }}>
+      <div>
+      
+        <Typography gutterBottom variant="title" component="h4" className={classes.typographyHeader}>
           {translate('newCorpus.page.text.createCorpus')}
         </Typography>
+        {/* <div className={classes.CorpusContainer}> */}
         <Paper className={classes.paper} elevation={2}>
 
           <Stepper steps={["Add Source file", 'Add target file', 'Add file details']} activeStep={this.state.activeStep} alternativeLabel></Stepper>
@@ -308,6 +311,7 @@ class Newcorpus extends React.Component {
             variant="success"
             message={this.state.message} />}
 
+      {/* </div> */}
       </div>
 
     );

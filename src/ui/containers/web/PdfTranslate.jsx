@@ -142,8 +142,7 @@ class doctranslate extends React.Component {
         <Typography value={translate("doc_translate.page.documentTranslator")} variant="h4" style={{
           marginTop: '6%',
           minWidth: "5%",
-          align: 'center',
-          marginLeft: "38%",
+          textAlign: "center",
           fontfamily: 'Trebuchet MS, sans-serif	',
           color: '#003366'
         }} />
@@ -156,8 +155,8 @@ class doctranslate extends React.Component {
               <Grid item xs={12} sm={6} lg={6} xl={6} >
                 <DropzoneArea onChange={this.handleChange} showPreviewsInDropzone
                   acceptedFiles={[".docx"]} dropZoneClass={classes.dropZoneArea}
-                  dropzoneText= {translate("common.page.label.addAndDropFile")}
-                 />
+                  dropzoneText={translate("common.page.label.addAndDropFile")}
+                />
               </Grid>
 
               <Grid item xs={12} sm={6} lg={6} xl={6}  >
@@ -167,7 +166,7 @@ class doctranslate extends React.Component {
                     marginTop: '4%',
                     height: "18px",
                     fontSize: "18px",
-              
+
                   }} />
 
                   <Grid item xs={12} sm={12} lg={12} xl={12}  >
@@ -205,8 +204,7 @@ class doctranslate extends React.Component {
 
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
                     <Button value={translate("common.page.label.submit")} variant={"contained"} style={{
-                      marginTop: "3%",
-                      // marginLeft: "12%",
+                      marginTop: "2.6%",
                       width: "92%",
                       backgroundColor: '#1C9AB7',
                       borderRadius: "20px 20px 20px 20px",
@@ -217,7 +215,7 @@ class doctranslate extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-          </div>} style={{ width: '55%', marginLeft: "18%", marginTop: '4%', marginBottom: '9%', padding: "2.5% 2.5% 3% 2.5%", minWidth: "200px", }}
+          </div>} style={{ width: '55%', marginLeft: "20%", marginTop: '5%', marginBottom: '9%', padding: "2.5% 2.5% 3% 2.5%", minWidth: "200px", }}
         />
       </div>
 

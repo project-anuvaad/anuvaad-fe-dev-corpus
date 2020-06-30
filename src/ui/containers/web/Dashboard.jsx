@@ -24,7 +24,7 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import NewOrders from "../../components/web/dashboard/NewOrders";
 import { translate } from "../../../assets/localisation";
 import { withStyles } from "@material-ui/core/styles";
-import DashboardStyles from "../../styles/web/LoginStyles";
+import DashboardStyles from "../../styles/web/DashboardStyles";
 
 
 class Dashboard extends React.Component {
@@ -202,27 +202,17 @@ class Dashboard extends React.Component {
 
   render() {
     const role = JSON.parse(localStorage.getItem("roles"));
-    // const { user, classes, location } = this.props;
+    const { user, classes, location } = this.props;
     return (
       <div>
-        <Typography variant="h4" style={{
-          fontfamily: 'sans-serif	',
-          color: '#003366',
-          fontWeight: '549', paddingLeft: "41.5%", paddingBottom: "12px", paddingTop: "4%"
-        }}>
+        <Typography variant="h4" className={classes.typographyHeader}>
           {translate("dashboard.page.heading.title")}
         </Typography>
-        <Paper style={{
-          marginLeft: "21%",
-          width: "50%",
-          marginTop: "3%",
-          marginBottom: "4%",
-          padding: '2% 2% 2% 2%'
-        }}>
+        <Paper className={classes.paper}>
 
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%" }}>
+              <Typography value="" variant="title" gutterBottom className={classes. typography}>
                 {translate("common.page.label.sourceLang")}{" "}
               </Typography>
             </Grid>
@@ -230,41 +220,41 @@ class Dashboard extends React.Component {
             <Grid item xs={3} sm={3} lg={3} xl={3}>
               <br />
               <br />
-              <Select
+              <Select className={classes.select}
                 id="outlined-age-simple"
                 selectValue="language_code"
                 MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
                 handleChange={this.handleSelectChange}
                 value={this.state.source}
                 name="source"
-                style={{ marginBottom: "5%", marginTop: "4%", width: "100%",marginLeft:'10%' }}
+                
               />
             </Grid>
           </Grid>
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%" }}>
+              <Typography value="" variant="title" gutterBottom className={classes.typography}>
                 {translate("common.page.label.targetLang")}&nbsp;
               </Typography>
             </Grid>
             <Grid item xs={3} sm={3} lg={3} xl={3}>
               <br />
               <br />
-              <Select
+              <Select className={classes.select}
                 id="outlined-age-simple"
                 selectValue="language_code"
                 MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
                 handleChange={this.handleSelectChange}
                 value={this.state.target}
                 name="target"
-                style={{ marginBottom: "5%", marginTop: "4%", width: "100%" }}
+                
               />
             </Grid>
           </Grid>
           {role.includes("dev") && (
             <Grid container spacing={8}>
               <Grid item xs={8} sm={8} lg={8} xl={8}>
-                <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%" }}>
+                <Typography value="" variant="title" gutterBottom className={classes. typography}>
                   {translate("common.page.label.pleaseSelectModel")}{" "}
                 </Typography>
               </Grid>
@@ -272,7 +262,7 @@ class Dashboard extends React.Component {
                 <br />
                 <br />
 
-                <SelectModel
+                <SelectModel 
                   id="select-multiple-chip"
                   multiple
                   style={{ width: "93%" }}

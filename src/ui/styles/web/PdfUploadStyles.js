@@ -12,10 +12,13 @@ const PdfUploadStyles = theme => ({
   withoutLabel: {
     marginTop: theme.spacing.unit * 3
   },
+  div:{
+    display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center'
+  },
   typographyHeader:{
     paddingTop:'3%',
     minWidth: "5%",
-    align:'center',
+    textAlign:'center',
     // marginLeft:"40.5%",
     fontfamily: 'sans-serif	',
      color: '#003366',
@@ -24,14 +27,14 @@ const PdfUploadStyles = theme => ({
 
   },
   typographySubHeader:{
-    // marginLeft:'39%',
+  textAlign:'center',
     fontWeight:'450',
     color:'#000000'
   },
 
   typography: {
-    marginLeft:"3%",
-    marginTop:'3%',
+    marginLeft:"2%",
+    marginTop:'2%',
     height:"18px",
     fontSize:"18px" 
     
@@ -46,7 +49,7 @@ const PdfUploadStyles = theme => ({
     width: "60%",
     minWidth: "200px",
     marginTop: "3%",
-    marginBottom:'5%',
+    marginBottom:'7%',
     padding: "2% 2% 4% 2%",
     // marginLeft: "15%",
     
@@ -59,18 +62,21 @@ const PdfUploadStyles = theme => ({
     width: '87.9%',
     marginLeft:"2.3%"
   },
+  span:{
+    color:'#FF0000'
+  },
   button: {
-    marginTop: "5%",
-    marginLeft: "2.4%",
-    width: "93.8%",
+    marginTop: "8.4%",
+    marginLeft: "2.8%",
+    width: "93.5%",
     backgroundColor:'#1C9AB7',
     borderRadius:"20px 20px 20px 20px",
     color:"#FFFFFF"
   },
   dropZoneArea:{
-    paddingTop: '80px',
+    paddingTop: '13%',
     minHeight:'363px',
-    height: "413px",
+    height: "416px",
     borderColor:'#1C9AB7',
     backgroundColor: '#F5F9FA',
     border: '1px dashed #1C9AB7',

@@ -13,31 +13,30 @@ const DashboardStyles = theme => ({
     marginTop: theme.spacing.unit * 3
   },
   typographyHeader:{
-    color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" 
+    fontfamily: '"Source Sans Pro", sans-serif',
+          color: '#003366',
+          fontWeight: '549', textAlign:'center',paddingBottom: "12px", paddingTop: "4%"
     
 
   },
-  typographySubHeader:{
-    marginLeft:'38%'
+  paper:{
+    marginLeft: "24.5%",
+          width: "50%",
+          marginTop: "3%",
+          marginBottom: "4%",
+          padding: '2% 2% 2% 2%'
   },
 
   typography: {
-    marginLeft:"3%",
-    marginTop:'4%',
-    height:"18px",
-    fontSize:"18px" 
+    marginLeft: "11%",
+     paddingTop: "9.5%",fontfamily: '"Source Sans Pro", sans-serif', 
     
   },
   select:{
-    marginRight: "30%",
-    width:"100%" ,
+    marginBottom: "5%", marginTop: "4%", width: "100%",marginLeft:'10%'  ,
     
   },
- paper: {
-    marginLeft: "25%", 
-    width: "50%",
-     marginTop: "4%"
-  },
+ 
   grid:{
     marginLeft: "4%" 
   },
