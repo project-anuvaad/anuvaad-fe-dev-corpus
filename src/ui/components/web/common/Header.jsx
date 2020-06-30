@@ -50,8 +50,13 @@ const styles = {
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20,
+    // marginRight: 20,
+    marginRight: "8px !important",
   },
+  divider: {
+    marginLeft: '12%',
+    marginRight: '12%'
+  }
 };
 
 class Header extends React.Component {
@@ -106,7 +111,6 @@ class Header extends React.Component {
   };
 
   handleMenuOpenClose = event => {
-    console.log('menu')
     this.setState({ open: !this.state.open });
   };
 
@@ -224,7 +228,8 @@ class Header extends React.Component {
         </AppBar>
         <div>
           {!drawer &&
-            <Grid container spacing={24} style={{ padding: 24 }}>
+            <Grid container spacing={24}>
+            {/* <Grid container spacing={24} style={{ padding: 24 }}> */}
               {/* <Grid item xs={12} sm={12} lg={12} xl={12}>
         <div style={{marginLeft:'-5%',marginTop:'-1%'}}>
         <AppBar />
@@ -254,18 +259,19 @@ class Header extends React.Component {
                       primary={
                         <Typography
                           type="body2"
-                          style={{ color: "#D6D6D6", paddingBottom: "2%", marginLeft: "21%" }}
+                          style={{ color: "#D6D6D6", paddingBottom: "2%", marginLeft: "6%" }}
                           variant="title"
                           color="inherit"
                           className={classes.flex}
                         >
-                          MENU
+                          {translate("common.page.label.menu")}
                         </Typography>
                       }
                     />
                   </ListItem>
-                  <Divider />
                   {role && Array.isArray(role) && role.includes("dev") && (
+                    <div>
+                  <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -284,8 +290,11 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
                   {role && Array.isArray(role) && role.includes("user") && (
+                    <div>
+                  <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -304,8 +313,11 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
                   {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") && !role.includes("user") && (
+                    <div>
+                  <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -324,6 +336,7 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
                   {/* {role.includes('analyzer') &&
 									<ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={() => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/texttranslate`) }}>
@@ -341,6 +354,8 @@ class Header extends React.Component {
 									</ListItem>
 								} */}
                   {role && Array.isArray(role) && role.includes("analyzer") && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -359,8 +374,11 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
                   {role && Array.isArray(role) && role.includes("dev") && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -379,8 +397,11 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
                   {role && Array.isArray(role) && role.includes("dev", "grader") && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -399,8 +420,11 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
                   {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader")) && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -419,9 +443,12 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
 
                   {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader") || role.includes("interactive-editor")) && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -440,8 +467,11 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
                   {role && Array.isArray(role) && (role.includes("editor") || role.includes("user") || role.includes("grader") || role.includes("interactive-editor")) && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -460,8 +490,11 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
                   {role && Array.isArray(role) && role.includes('admin') &&
+                    <div>
+                  <Divider className={classes.divider}/>s
                     <ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
                       <ListItemIcon>
                         
@@ -475,10 +508,13 @@ class Header extends React.Component {
                         )}
                       />
                     </ListItem>
+                    </div>
 
                   }
 
                   {role && Array.isArray(role) && role.includes("admin") && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -497,9 +533,12 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
 
                   {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -518,8 +557,11 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
                   {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <div>
+                  <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -538,8 +580,11 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
                   {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -558,8 +603,11 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
                   {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -578,9 +626,12 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
 
                   {role && Array.isArray(role) && role.includes("admin") && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -599,6 +650,7 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
 
                   {/* {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") && !role.includes("user") && (
@@ -625,6 +677,8 @@ class Header extends React.Component {
                   )} */}
 
                   {role && Array.isArray(role) && role.includes("admin") && (
+                    <div>
+                    <Divider className={classes.divider}/>
                     <ListItem
                       style={{ paddingTop: "8%", paddingBottom: "8%" }}
                       button
@@ -643,6 +697,7 @@ class Header extends React.Component {
                         }
                       />
                     </ListItem>
+                    </div>
                   )}
 
                   {/* <ListItem

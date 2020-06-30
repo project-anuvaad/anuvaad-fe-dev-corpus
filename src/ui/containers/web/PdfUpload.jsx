@@ -180,14 +180,14 @@ class PdfUpload extends Component {
   render() {
     const { classes } = this.props;
     return (
-     <div >
+     <div style={{display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center'}}>
       
         <Typography value=""  variant="h4" className={this.props.classes.typographyHeader}>
               {translate("common.page.label.uploadFile")}
         </Typography>
         <br/>
         <Typography className={classes.typographySubHeader}>
-              Upload file that you want to translate.
+            {translate("pdf_upload.page.label.uploadMessage")}
         </Typography >
         <br />
         <Paper className={classes.paper}>
