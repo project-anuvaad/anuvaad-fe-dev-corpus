@@ -12,17 +12,10 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import PdfFileUpload from "../../../flux/actions/apis/pdftodoc";
 import Snackbar from "../../components/web/common/Snackbar";
 import { translate } from "../../../assets/localisation";
-import PdfUploadStyles from "../../styles/web/PdfUploadStyles";
+import PdfToDocStyles from "../../styles/web/PdfToDocStyles";
 
 const styles = theme => ({
-  paper: {
-    width: "40%",
-    minWidth: "20%",
-    marginTop: "7%",
-    padding: "2.5% 2.5% 3% 2.5%",
-    marginLeft: "22%",
-    marginBottom: '12%'
-  },
+  
   typography: {
     textAlign: "center",
     minWidth: "10%",
@@ -109,26 +102,28 @@ class PdfUpload extends Component {
   render() {
     const { classes, } = this.props;
     return (
-      <Paper style={{
-        width: "40%",
-        minWidth: "20%",
-        marginTop: "6%",
-        padding: "4% 4% 4% 4%",
-        marginLeft: "22%",
-        marginBottom: '4%',
-      }}>
-        <Grid container spacing={24} >
-          <Grid item xs={12} sm={12} lg={12} xl={12}>
+      <div>
+      <Grid item xs={12} sm={12} lg={12} xl={12}>
             <Typography value="" variant="h4" style={{
               textAlign: "center",
               minWidth: "10%",
-              color: '#233466'
+              color: '#233466',marginTop:'4%'
             }}>
               {translate("common.page.label.uploadFile")}
             </Typography>
             <br />
             <br />
           </Grid>
+      <Paper style={{
+        width: "40%",
+        minWidth: "20%",
+        marginTop: "2%",
+        padding: "5% 5% 3% 5%",
+        marginLeft: "25%",
+        marginBottom: '5.5%',
+      }}>
+        <Grid container spacing={24} >
+          
           <DropzoneArea
             showPreviewsInDropzone
             acceptedFiles={[".pdf"]}
@@ -181,6 +176,7 @@ class PdfUpload extends Component {
           />
         )}
       </Paper>
+      </div>
     );
   }
 }
@@ -199,5 +195,5 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default withRouter(
-  withStyles(PdfUploadStyles)(
+  withStyles(PdfToDocStyles)(
     connect(mapStateToProps, mapDispatchToProps)(PdfUpload)));

@@ -156,7 +156,7 @@ class Header extends React.Component {
             <img src="Logo.svg"
               style={{
                 position: 'absolute',
-                marginLeft: '44%',
+                marginLeft: '47%',
                 height: '27px'
               }}
               alt="logo" />
