@@ -206,7 +206,7 @@ class Dashboard extends React.Component {
     return (
       <div>
         <Typography variant="h4" style={{
-          fontfamily: 'sans-serif	',
+          fontfamily: '"Source Sans Pro", sans-serif',
           color: '#003366',
           fontWeight: '549', paddingLeft: "41.5%", paddingBottom: "12px", paddingTop: "4%"
         }}>
@@ -222,7 +222,7 @@ class Dashboard extends React.Component {
 
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%" }}>
+              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%",fontfamily: '"Source Sans Pro", sans-serif', }}>
                 {translate("common.page.label.sourceLang")}{" "}
               </Typography>
             </Grid>
@@ -243,7 +243,7 @@ class Dashboard extends React.Component {
           </Grid>
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%" }}>
+              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%",fontfamily: '"Source Sans Pro", sans-serif', }}>
                 {translate("common.page.label.targetLang")}&nbsp;
               </Typography>
             </Grid>
@@ -264,7 +264,7 @@ class Dashboard extends React.Component {
           {role.includes("dev") && (
             <Grid container spacing={8}>
               <Grid item xs={8} sm={8} lg={8} xl={8}>
-                <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%" }}>
+                <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11%", paddingTop: "9.5%" ,fontfamily: '"Source Sans Pro", sans-serif',}}>
                   {translate("common.page.label.pleaseSelectModel")}{" "}
                 </Typography>
               </Grid>

@@ -205,7 +205,7 @@ class doctranslate extends React.Component {
 
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
                     <Button value={translate("common.page.label.submit")} variant={"contained"} style={{
-                      marginTop: "3%",
+                      marginTop: "2.6%",
                       // marginLeft: "12%",
                       width: "92%",
                       backgroundColor: '#1C9AB7',
