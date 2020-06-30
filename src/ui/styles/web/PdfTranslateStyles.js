@@ -12,6 +12,17 @@ const PdfTranslateStyles = theme => ({
     withoutLabel: {
       marginTop: theme.spacing.unit * 3
     },
+    div:{
+      width: '55%', marginLeft: "20%", marginTop: '5%', marginBottom: '9%',
+       padding: "2.5% 2.5% 3% 2.5%", minWidth: "200px",
+    },
+    typographyHeader:{
+      marginTop: '6%',
+          minWidth: "5%",
+          textAlign: "center",
+          fontfamily: 'Trebuchet MS, sans-serif	',
+          color: '#003366'
+    },
     
     dropZoneArea:{
       paddingTop: '80px',

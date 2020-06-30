@@ -12,6 +12,9 @@ const PdfUploadStyles = theme => ({
   withoutLabel: {
     marginTop: theme.spacing.unit * 3
   },
+  div:{
+    display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center'
+  },
   typographyHeader:{
     paddingTop:'3%',
     minWidth: "5%",
@@ -58,6 +61,9 @@ const PdfUploadStyles = theme => ({
   textfield:{
     width: '87.9%',
     marginLeft:"2.3%"
+  },
+  span:{
+    color:'#FF0000'
   },
   button: {
     marginTop: "8.4%",

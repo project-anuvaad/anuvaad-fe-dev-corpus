@@ -12,6 +12,28 @@ const PdfToDocStyles = theme => ({
     withoutLabel: {
       marginTop: theme.spacing.unit * 3
     },
+    typographyHeader:{
+      textAlign: "center",
+              minWidth: "10%",
+              color: '#233466',marginTop:'4%'
+    },
+    paper:{
+      width: "40%",
+        minWidth: "20%",
+        marginTop: "2%",
+        padding: "5% 5% 3% 5%",
+        marginLeft: "25%",
+        marginBottom: '5.5%',
+    },
+    button:{
+      marginTop: "6%",
+            marginLeft: "9.5%",
+            width: "80%",
+            backgroundColor: "#1C9AB7",
+            color: "#FFFFFF",
+            borderRadius: "20px 20px 20px 20px",
+            height: '45px'
+    },
     
     dropZoneArea:{
       paddingTop: '80px',

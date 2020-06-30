@@ -14,24 +14,7 @@ import Snackbar from "../../components/web/common/Snackbar";
 import { translate } from "../../../assets/localisation";
 import PdfToDocStyles from "../../styles/web/PdfToDocStyles";
 
-const styles = theme => ({
-  
-  typography: {
-    textAlign: "center",
-    minWidth: "10%",
-    color: '#233466'
-  },
-  button: {
-    marginTop: "6%",
-    marginLeft: "9.5%",
-    width: "80%",
-    backgroundColor: "#1C9AB7",
-    color: "#FFFFFF",
-    borderRadius: "20px 20px 20px 20px",
-    height: '45px'
-  },
-  
-});
+
 
 class PdfUpload extends Component {
   constructor() {
@@ -104,24 +87,13 @@ class PdfUpload extends Component {
     return (
       <div>
       <Grid item xs={12} sm={12} lg={12} xl={12}>
-            <Typography value="" variant="h4" style={{
-              textAlign: "center",
-              minWidth: "10%",
-              color: '#233466',marginTop:'4%'
-            }}>
+            <Typography value="" variant="h4" className={classes.typographyHeader}>
               {translate("common.page.label.uploadFile")}
             </Typography>
             <br />
             <br />
           </Grid>
-      <Paper style={{
-        width: "40%",
-        minWidth: "20%",
-        marginTop: "2%",
-        padding: "5% 5% 3% 5%",
-        marginLeft: "25%",
-        marginBottom: '5.5%',
-      }}>
+      <Paper className={classes.paper}>
         <Grid container spacing={24} >
           
           <DropzoneArea
@@ -151,15 +123,7 @@ class PdfUpload extends Component {
               </Grid>
             </Grid>
           )}
-          <Button variant="contained" style={{
-            marginTop: "6%",
-            marginLeft: "9.5%",
-            width: "80%",
-            backgroundColor: "#1C9AB7",
-            color: "#FFFFFF",
-            borderRadius: "20px 20px 20px 20px",
-            height: '45px'
-          }} size="large" onClick={this.handleSubmit.bind(this)}>
+          <Button variant="contained" className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
             {translate("common.page.button.submit")}
           </Button>
         </Grid>

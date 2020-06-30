@@ -15,6 +15,8 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import NewOrders from "../../components/web/dashboard/NewOrders";
 import { translate } from "../../../assets/localisation";
 import Snackbar from "../../components/web/common/Snackbar";
+import IntractiveTranslationStyles from "../../styles/web/IntractiveTranslationStyles";
+import { withStyles } from "@material-ui/core";
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -293,20 +295,19 @@ class IntractiveTrans extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
-         <Typography variant="h4" style={{  fontfamily: 'sans-serif	',
-          color: '#003366',
-          fontWeight: '549', textAlign:'center',paddingBottom: "12px", paddingTop: "5%" }}>
+         <Typography variant="h4" className={classes.typographyHeader}>
             {translate("intractive_translate.page.main.title")}
           </Typography>
-        <Paper style={{ marginLeft: "23.4%", width: "50%", marginTop: "3%",marginBottom:"4%",padding:'2% 2% 2% 2%' }}>
+        <Paper className={classes.paper}>
          
           {!this.state.edit && 
           <div>
           <Grid container spacing={24}>
             <Grid item xs={2} sm={4} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11.5%", paddingTop: "9.5%" }}>
+              <Typography value="" variant="title" gutterBottom className={classes.typography}>
                 {translate("common.page.label.sourceLang")}{" "}
               </Typography>
             </Grid>
@@ -314,7 +315,7 @@ class IntractiveTrans extends React.Component {
             <Grid item xs={1} sm={2} lg={4} xl={4}>
               <br />
               <br />
-              <Select
+              <Select className={classes.select}
                 id="outlined-age-simple"
                 selectValue="language_code"
                 MenuItemValues={this.state.modelLanguage.length>0 && this.handleSource(this.state.modelLanguage, this.state.language)}
@@ -322,20 +323,20 @@ class IntractiveTrans extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.source}
                 name="source"
-                style={{marginBottom: "4%", marginTop: "4%" }}
+                
               />
             </Grid>
           </Grid>
           <Grid container spacing={24}>
             <Grid item xs={2} sm={4} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "11.5%", paddingTop: "9.5%" }}>
+              <Typography value="" variant="title" gutterBottom className={classes.typography}>
                 {translate("common.page.label.targetLang")}&nbsp;
               </Typography>
             </Grid>
             <Grid item xs={1} sm={2} lg={4} xl={4}>
               <br />
               <br />
-              <Select
+              <Select className={classes.select}
                 id="outlined-age-simple"
                 selectValue="language_code"
                 MenuItemValues={this.state.source && this.state.modelLanguage ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
@@ -343,7 +344,7 @@ class IntractiveTrans extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.target}
                 name="target"
-                style={{ marginBottom: "4%", marginTop: "4%", marginLeft: "10%" }}
+              
               />
             </Grid>
           </Grid>
@@ -354,8 +355,8 @@ class IntractiveTrans extends React.Component {
               <Grid item xs={12} sm={12} lg={12} xl={12}>
                 <div>
                   <textarea
-                    style={{ width: "98%", padding: "1%",height:'90px', fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
-                    className="noter-text-area"
+                    className={classes.textArea}
+                    // className="noter-text-area"
                     rows="3"
                     value={this.state.text}
                     disabled={this.state.update || this.state.edit}
@@ -375,8 +376,8 @@ class IntractiveTrans extends React.Component {
                 <Grid item xs={12} sm={12} lg={12} xl={12}>
                   <div>
                     <textarea
-                      style={{ width: "98%", padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px" }}
-                      className="noter-text-area"
+                      className={classes.textArea}
+                      // className="noter-text-area"
                       rows="3"
                       ref={textarea => {
                         this.textInput = textarea;
@@ -403,23 +404,21 @@ class IntractiveTrans extends React.Component {
 
           <Grid container spacing={24} style={{  paddingBottom: "3%" }}>
             <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <Button
+              <Button className={classes.button1}
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
                 aria-label="edit"
-                style={{ marginLeft: "16%", width: "84%", marginBottom: "4%", marginTop: "5%", backgroundColor:"#1C9AB7",
-                color:"#FFFFFF", borderRadius: "20px 20px 20px 20px",height:'46px' }}
+                
               >
                 {translate("common.page.button.clear")}
               </Button>
             </Grid>
             <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <Button
+              <Button className={classes.button2}
                 variant="contained"
                 onClick={this.handleSubmit.bind(this)}
                 aria-label="edit"
-                style={{ width: "84%", marginBottom: "4%",marginLeft:'11%', marginTop: "5%", backgroundColor:"#1C9AB7",
-                color:"#FFFFFF", borderRadius: "20px 20px 20px 20px",height:'46px' }}
+                
               >
                 {this.state.update && this.state.nmtText[0] ? translate("common.page.title.edit") : translate("common.page.button.submit")}
               </Button>
@@ -463,4 +462,5 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IntractiveTrans));
+export default withRouter(
+  withStyles(IntractiveTranslationStyles)(connect(mapStateToProps, mapDispatchToProps)(IntractiveTrans)));
