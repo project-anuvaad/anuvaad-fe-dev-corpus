@@ -1,5 +1,4 @@
 import React from "react";
-import TranslateIcon from "@material-ui/icons/Translate";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import Drawer from "@material-ui/core/Drawer";
@@ -8,32 +7,22 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-// import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-import FileCopy from "@material-ui/icons/FileCopy";
-// import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Grid from "@material-ui/core/Grid";
-import AccountCircle from "@material-ui/icons/AccountBox";
+
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import SearchIcon from "@material-ui/icons/AddToQueue";
-import StarIcon from "@material-ui/icons/FiberNew";
-import SendIcon from "@material-ui/icons/Send";
-import InsertChart from "@material-ui/icons/InsertChart";
-import Receipt from "@material-ui/icons/Receipt";
+
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import history from "../../../../web.history";
-import Fab from "@material-ui/core/Fab";
-import ActionDelete from "@material-ui/icons/QuestionAnswer";
+
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import GroupIcon from "@material-ui/icons/Group";
 import logo from '../../../../assets/logo.png';
 import { translate } from '../../../../../src/assets/localisation';
-import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import DownIcon from '@material-ui/icons/ArrowDropDown';
 import PeopleIcon from '@material-ui/icons/Person';
 

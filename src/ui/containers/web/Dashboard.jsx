@@ -202,7 +202,7 @@ class Dashboard extends React.Component {
 
   render() {
     const role = JSON.parse(localStorage.getItem("roles"));
-    const { user, classes, location } = this.props;
+    const { classes} = this.props;
     return (
       <div>
         <Typography variant="h4" className={classes.typographyHeader}>
@@ -212,7 +212,7 @@ class Dashboard extends React.Component {
 
           <Grid container spacing={8}>
             <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom className={classes. typography}>
+              <Typography value="" variant="title" gutterBottom className={classes.typography}>
                 {translate("common.page.label.sourceLang")}{" "}
               </Typography>
             </Grid>
@@ -254,7 +254,7 @@ class Dashboard extends React.Component {
           {role.includes("dev") && (
             <Grid container spacing={8}>
               <Grid item xs={8} sm={8} lg={8} xl={8}>
-                <Typography value="" variant="title" gutterBottom className={classes. typography}>
+                <Typography value="" variant="title" gutterBottom className={classes.typography}>
                   {translate("common.page.label.pleaseSelectModel")}{" "}
                 </Typography>
               </Grid>
@@ -404,5 +404,4 @@ const mapDispatchToProps = dispatch =>
 
 export default withRouter(
   withStyles(DashboardStyles)(
-    connect(mapStateToProps, mapDispatchToProps)
-      (Dashboard)));
+    connect(mapStateToProps, mapDispatchToProps)(Dashboard)));

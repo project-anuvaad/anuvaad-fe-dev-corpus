@@ -309,5 +309,4 @@ const mapDispatchToProps = dispatch =>
 
 export default withRouter(
   withStyles(PdfUploadStyles)(
-    connect(mapStateToProps, mapDispatchToProps)
-    (PdfUpload)));
+    connect(mapStateToProps, mapDispatchToProps)(PdfUpload)));
