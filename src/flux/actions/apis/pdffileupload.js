@@ -12,9 +12,7 @@ export default class RunExperiment extends API {
     this.source = source;
     this.target = target;
     this.model = JSON.stringify(model);
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.pdffileupload}`
-
-
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.pdffileupload}`;
   }
 
   toString() {
@@ -34,11 +32,11 @@ export default class RunExperiment extends API {
 
   getFormData() {
     const formData = new FormData();
-    formData.append('pdf_data', this.file);
-    formData.append('process_name', this.name);
-    formData.append('source_lang',this.source);
-    formData.append('target_lang',this.target);
-    formData.append('model',this.model);
+    formData.append("pdf_data", this.file);
+    formData.append("process_name", this.name);
+    formData.append("source_lang", this.source);
+    formData.append("target_lang", this.target);
+    formData.append("model", this.model);
     return formData;
   }
 

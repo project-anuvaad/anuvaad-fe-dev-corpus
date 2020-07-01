@@ -48,26 +48,19 @@ const endpoints = {
   pdffileupload: "/v1/interactive-editor/translate-pdf",
   signup: "/v1/user/signup-user",
   updatePdfTable: "/v1/interactive-editor/update-pdf-source-table",
- 
-
-  // "login": "",
-  // "nmt": "",
-  // "nmt_president": "",
-  // "nmtsp": "",
-  // "pdffile": "",
-  // "pdffileupload": "",
-  // "pdftodoc": "",
-  // "qna": "",
-  // "questionupload": "",
-  // "runexperiment": "",
-  // "savedatasource": "",
-  // "savefeedback": "",
-  // "savesearchreplaceworkspace": "",
-  // "savetool2datasource": "",
-  // "sentencereplace": "",
-  // "sentences": "",
-  // "setpassword": "",
-
+  login: "/sysuser/login",
+  nmt: "/translation_en",
+  pdffile: "/upload",
+  pdftodoc: "/convert-pdf-to-doc",
+  qna: "/api",
+  questionupload: "/save-feedback-questions",
+  runexperiment: "/save-paragraph-workspace",
+  savedatasource: "/save-mt-workspace-data",
+  savefeedback: "/save-captured-feedback",
+  savesearchreplaceworkspace: "/save-search-replace-workspace",
+  savetool2datasource: "/save-paragraph-workspace-data",
+  sentencereplace: "/update-search-replace-sentence",
+  setpassword: "/set-user-password"
 };
 
 export default endpoints;
