@@ -313,17 +313,24 @@ class IntractiveTrans extends React.Component {
                   <Grid item xs={6} sm={6} lg={4} xl={4}>
                     {/* <br />
                   <br /> */}
-                      <Select
-                        id="outlined-age-simple"
-                        selectValue="language_code"
-                        MenuItemValues={this.state.modelLanguage.length > 0 && this.handleSource(this.state.modelLanguage, this.state.language)}
-                        // MenuItemValues={["English"]}
-                        handleChange={this.handleSelectChange}
-                        value={this.state.source}
-                        name="source"
-                        // style={{ marginBottom: "4%" }}
-                        class="pull-right"
-                      />
+                    <Select
+                      id="outlined-age-simple"
+                      selectValue="language_code"
+                      MenuItemValues={this.state.modelLanguage.length > 0 && this.handleSource(this.state.modelLanguage, this.state.language)}
+                      // MenuItemValues={["English"]}
+                      handleChange={this.handleSelectChange}
+                      value={this.state.source}
+                      name="source"
+                      style={{
+                        width: '92%',
+                        fullWidth: true,
+                        display: "flex",
+                        wrap: "nowrap",
+                        height: '40px',
+                        magin: 'dense',
+                        float: 'right'
+                      }}
+                    />
                   </Grid>
                 </Grid>
               </Grid>
@@ -346,7 +353,15 @@ class IntractiveTrans extends React.Component {
                       handleChange={this.handleSelectChange}
                       value={this.state.target}
                       name="target"
-                    // style={{ marginBottom: "4%" }}
+                      style={{
+                        width: '92%',
+                        fullWidth: true,
+                        display: "flex",
+                        wrap: "nowrap",
+                        height: '40px',
+                        magin: 'dense',
+                        float: 'right'
+                      }}
                     />
                   </Grid>
                 </Grid>

@@ -773,9 +773,10 @@ class IntractiveTrans extends React.Component {
                           onClick={event => {
                             this.handleClick(true, 6);
                           }}
+                          style={{paddingRight: '0px'}}
                         >
-                          <PictureAsPdfIcon style={{ cursor: "pointer" }} color="primary" />
-                          <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
+                          <PictureAsPdfIcon style={{ cursor: "pointer",color: '#233466' }} color="primary" />
+                          <Typography value="" variant="subtitle2" style={{ cursor: "pointer", color: '#233466', paddingLeft: '7px' }}>
                             {translate("intractive_translate.page.preview.compareWithOriginal")}
                           </Typography>
                         </Toolbar>

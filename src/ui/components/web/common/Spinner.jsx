@@ -7,7 +7,8 @@ const styles = theme => ({
   progress: {   
     position:'relative',
     top:'40%',
-    left:'50%',       
+    left:'46%',
+    color: '#1C9AB7'       
   },
   progressDiv:{
     position: 'fixed',
