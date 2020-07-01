@@ -15,8 +15,6 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import NewOrders from "../../components/web/dashboard/NewOrders";
 import { translate } from "../../../assets/localisation";
 import Snackbar from "../../components/web/common/Snackbar";
-import IntractiveTranslationStyles from "../../styles/web/IntractiveTranslationStyles";
-import { withStyles } from "@material-ui/core";
 
 class IntractiveTrans extends React.Component {
   constructor(props) {
@@ -257,9 +255,9 @@ class IntractiveTrans extends React.Component {
     const { APITransport } = this.props;
     this.state.modelLanguage.map(item =>
       item.target_language_code === this.state.target &&
-      item.source_language_code === this.state.source &&
-      model.length < 1 &&
-      item.interactive_end_point === "interactive-translation"
+        item.source_language_code === this.state.source &&
+        model.length < 1 &&
+        item.interactive_end_point === "interactive-translation"
         ? model.push(item)
         : []
     );
@@ -295,89 +293,94 @@ class IntractiveTrans extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
     return (
-      <div>
-         <Typography variant="h4" className={classes.typographyHeader}>
-            {translate("intractive_translate.page.main.title")}
-          </Typography>
-        <Paper className={classes.paper}>
-         
-          {!this.state.edit && 
-          <div>
-          <Grid container spacing={24}>
-            <Grid item xs={2} sm={4} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom className={classes.typography}>
-                {translate("common.page.label.sourceLang")}{" "}
-              </Typography>
-            </Grid>
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center' }}>
+        <Typography variant="h4" style={{ fontfamily: 'sans-serif', color: '#003366', fontWeight: '549', paddingBottom: "12px", paddingTop: "5%" }}>
+          {translate("intractive_translate.page.main.title")}
+        </Typography>
+        <Paper style={{ width: "40%", marginTop: "3%", marginBottom: "4%", padding: '3%' }}>
 
-            <Grid item xs={1} sm={2} lg={4} xl={4}>
-              <br />
-              <br />
-              <Select className={classes.select}
-                id="outlined-age-simple"
-                selectValue="language_code"
-                MenuItemValues={this.state.modelLanguage.length>0 && this.handleSource(this.state.modelLanguage, this.state.language)}
-                // MenuItemValues={["English"]}
-                handleChange={this.handleSelectChange}
-                value={this.state.source}
-                name="source"
-                
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={24}>
-            <Grid item xs={2} sm={4} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom className={classes.typography}>
-                {translate("common.page.label.targetLang")}&nbsp;
-              </Typography>
-            </Grid>
-            <Grid item xs={1} sm={2} lg={4} xl={4}>
-              <br />
-              <br />
-              <Select className={classes.select}
-                id="outlined-age-simple"
-                selectValue="language_code"
-                MenuItemValues={this.state.source && this.state.modelLanguage ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
-                // MenuItemValues={["Hindi"]}
-                handleChange={this.handleSelectChange}
-                value={this.state.target}
-                name="target"
-              
-              />
-            </Grid>
-          </Grid>
-          </div>}
+          {!this.state.edit &&
+            <div>
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end' }}>
+                  <Grid item xs={6} sm={6} lg={8} xl={8} style={{ textAlign: 'left' }}>
+                    <Typography value="" variant="title" gutterBottom>
+                      {translate("common.page.label.sourceLang")}{" "}
+                    </Typography>
+                  </Grid>
 
-          <div style={{ marginLeft: "5%" }}>
-            <Grid container spacing={24} style={{ padding: 24,marginTop:'3%' }}>
-              <Grid item xs={12} sm={12} lg={12} xl={12}>
-                <div>
-                  <textarea
-                    className={classes.textArea}
-                    // className="noter-text-area"
-                    rows="3"
-                    value={this.state.text}
-                    disabled={this.state.update || this.state.edit}
-                    placeholder={translate("intractive_translate.page.textarea.sourcePlaceholder")}
-                    cols="50"
-                    onChange={event => {
-                      this.handleTextChange("text", event);
-                    }}
-                  />
-                </div>
+                  <Grid item xs={6} sm={6} lg={4} xl={4}>
+                    {/* <br />
+                  <br /> */}
+                      <Select
+                        id="outlined-age-simple"
+                        selectValue="language_code"
+                        MenuItemValues={this.state.modelLanguage.length > 0 && this.handleSource(this.state.modelLanguage, this.state.language)}
+                        // MenuItemValues={["English"]}
+                        handleChange={this.handleSelectChange}
+                        value={this.state.source}
+                        name="source"
+                        // style={{ marginBottom: "4%" }}
+                        class="pull-right"
+                      />
+                  </Grid>
+                </Grid>
               </Grid>
+
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row', paddingTop: '8%', alignItems: 'flex-end' }}>
+                  <Grid item xs={6} sm={6} lg={8} xl={8} style={{ textAlign: 'left' }}>
+                    <Typography value="" variant="title" gutterBottom>
+                      {translate("common.page.label.targetLang")}&nbsp;
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={6} lg={4} xl={4}>
+                    {/* <br />
+                  <br /> */}
+                    <Select
+                      id="outlined-age-simple"
+                      selectValue="language_code"
+                      MenuItemValues={this.state.source && this.state.modelLanguage ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
+                      // MenuItemValues={["Hindi"]}
+                      handleChange={this.handleSelectChange}
+                      value={this.state.target}
+                      name="target"
+                    // style={{ marginBottom: "4%" }}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </div>}
+
+          {/* <div> */}
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ paddingTop: '8%' }}>
+              <div>
+                <textarea
+                  style={{ padding: "1%", height: '90px', fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px", width: '97%' }}
+                  className="noter-text-area"
+                  rows="3"
+                  value={this.state.text}
+                  disabled={this.state.update || this.state.edit}
+                  placeholder={translate("intractive_translate.page.textarea.sourcePlaceholder")}
+                  cols="50"
+                  onChange={event => {
+                    this.handleTextChange("text", event);
+                  }}
+                />
+              </div>
             </Grid>
-          </div>
+          </Grid>
+          {/* </div> */}
           {this.state.edit && (
-            <div style={{ marginLeft: "5%" }}>
-              <Grid container spacing={24} style={{ padding: 24 }}>
-                <Grid item xs={12} sm={12} lg={12} xl={12}>
+            <div>
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={12} lg={12} xl={12} style={{ paddingTop: '8%' }}>
                   <div>
                     <textarea
-                      className={classes.textArea}
-                      // className="noter-text-area"
+                      style={{ padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px", width: '97%' }}
+                      className="noter-text-area"
                       rows="3"
                       ref={textarea => {
                         this.textInput = textarea;
@@ -398,27 +401,33 @@ class IntractiveTrans extends React.Component {
           )}
           {this.state.nmtText[0] && (
             <div>
-              <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText}value={true} />
+              <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} value={true} />
             </div>
           )}
 
-          <Grid container spacing={24} style={{  paddingBottom: "3%" }}>
+          <Grid container spacing={24} style={{ paddingTop: '6%' }}>
             <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <Button className={classes.button1}
+              <Button
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
                 aria-label="edit"
-                
+                style={{
+                  width: "100%", backgroundColor: "#1C9AB7",
+                  color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '46px'
+                }}
               >
                 {translate("common.page.button.clear")}
               </Button>
             </Grid>
             <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <Button className={classes.button2}
+              <Button
                 variant="contained"
                 onClick={this.handleSubmit.bind(this)}
                 aria-label="edit"
-                
+                style={{
+                  width: "100%", backgroundColor: "#1C9AB7",
+                  color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '46px'
+                }}
               >
                 {this.state.update && this.state.nmtText[0] ? translate("common.page.title.edit") : translate("common.page.button.submit")}
               </Button>
@@ -462,5 +471,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  withStyles(IntractiveTranslationStyles)(connect(mapStateToProps, mapDispatchToProps)(IntractiveTrans)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IntractiveTrans));
