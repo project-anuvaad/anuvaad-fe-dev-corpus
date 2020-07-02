@@ -303,7 +303,7 @@ class IntractiveTrans extends React.Component {
           {!this.state.edit &&
             <div>
               <Grid container spacing={24}>
-                <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end' }}>
+                <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row', }}>
                   <Grid item xs={6} sm={6} lg={8} xl={8} style={{ textAlign: 'left' }}>
                     <Typography value="" variant="title" gutterBottom>
                       {translate("common.page.label.sourceLang")}{" "}
@@ -321,7 +321,7 @@ class IntractiveTrans extends React.Component {
                         handleChange={this.handleSelectChange}
                         value={this.state.source}
                         name="source"
-                        // style={{ marginBottom: "4%" }}
+                        style={{ marginLeft: "3%" }}
                         class="pull-right"
                       />
                   </Grid>

@@ -20,20 +20,33 @@ const DashboardStyles = theme => ({
 
   },
   paper:{
-    marginLeft: "24.5%",
+    marginLeft: "23%",
           width: "50%",
           marginTop: "3%",
-          marginBottom: "4%",
-          padding: '2% 2% 2% 2%'
+          marginBottom: "3%",
+          padding: '3% 3% 3% 3%'
+  },
+  grid1:{
+    marginLeft: "6.5%"
+  },
+  grid2:{
+    marginLeft: "6.3%" 
+  },
+  divChip:
+  {
+    marginLeft: "8%", paddingTop: "3%"
+  },
+  divTextField:{
+    marginLeft: "3.2%"
   },
 
   typography: {
-    marginLeft: "11%",
+    marginLeft: "4.5%",
      paddingTop: "9.5%",fontfamily: '"Source Sans Pro", sans-serif', 
     
   },
   select:{
-    marginBottom: "5%", marginTop: "4%", width: "100%",marginLeft:'10%'  ,
+    marginBottom: "5%", marginTop: "4%", width: "100%"  ,
     
   },
  
@@ -41,16 +54,14 @@ const DashboardStyles = theme => ({
     marginLeft: "4%" 
   },
   textfield:{
-    width: '87%',
-    marginLeft:"3%"
+    width: "96%"
+    
   },
-  button: {
-    marginTop: "4%",
-    marginLeft: "5%",
-    width: "90%",
-    backgroundColor:'#1C9AB7',
-    borderRadius:"20px 20px 20px 20px",
-    color:"#FFFFFF"
+  button1: {
+    width: "44%", marginBottom: "4%", marginTop: "5%", marginLeft:'1.3%'
+  },
+  button2:{
+    width: "44%", marginTop:'5%', marginLeft:'5.6%'
   },
   dropZoneArea:{
     minHeight:'385px',

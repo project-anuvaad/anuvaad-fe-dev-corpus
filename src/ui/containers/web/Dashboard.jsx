@@ -217,7 +217,7 @@ class Dashboard extends React.Component {
               </Typography>
             </Grid>
 
-            <Grid item xs={3} sm={3} lg={3} xl={3}>
+            <Grid item xs={3} sm={3} lg={3} xl={3} className={classes.grid1}>
               <br />
               <br />
               <Select className={classes.select}
@@ -228,6 +228,7 @@ class Dashboard extends React.Component {
                 value={this.state.source}
                 name="source"
                 
+                
               />
             </Grid>
           </Grid>
@@ -237,7 +238,7 @@ class Dashboard extends React.Component {
                 {translate("common.page.label.targetLang")}&nbsp;
               </Typography>
             </Grid>
-            <Grid item xs={3} sm={3} lg={3} xl={3}>
+            <Grid item xs={3} sm={3} lg={3} xl={3} className={classes.grid1}>
               <br />
               <br />
               <Select className={classes.select}
@@ -247,6 +248,7 @@ class Dashboard extends React.Component {
                 handleChange={this.handleSelectChange}
                 value={this.state.target}
                 name="target"
+                
                 
               />
             </Grid>
@@ -258,7 +260,7 @@ class Dashboard extends React.Component {
                   {translate("common.page.label.pleaseSelectModel")}{" "}
                 </Typography>
               </Grid>
-              <Grid item xs={3} sm={3} lg={3} xl={3}>
+              <Grid item xs={3} sm={3} lg={3} xl={3} className={classes.grid2}>
                 <br />
                 <br />
 
@@ -291,7 +293,7 @@ class Dashboard extends React.Component {
                 <br />
               </Grid>
               {role.includes("dev") && (
-                <div style={{ marginLeft: "8%", paddingTop: "10px" }}>
+                <div className={classes.divChip}>
                   {this.state.model.map(value => (
                     <Chip key={value} label={value} onDelete={this.handleDelete(value)} style={{ marginLeft: "5px", marginTop: "8px" }} />
                   ))}
@@ -299,14 +301,14 @@ class Dashboard extends React.Component {
               )}
             </Grid>
           )}
-          <div style={{ marginLeft: "5%" }}>
-            <Grid container spacing={24} style={{ padding: 24 }}>
+          <div className={classes.divTextField}>
+            <Grid container spacing={24} >
               <Grid item xs={12} sm={12} lg={12} xl={12}>
                 <TextField
                   value={this.state.text}
                   id="standard-multiline-static"
                   placeholder={translate("dashboard.page.alternatetext.enterTextHere")}
-                  style={{ width: "96%" }}
+                  className={classes.textfield}
                   multiline
                   onChange={event => {
                     this.handleTextChange("text", event);
@@ -353,7 +355,7 @@ class Dashboard extends React.Component {
                 variant="contained"
                 onClick={this.handleClear.bind(this)}
                 aria-label="edit"
-                style={{ width: "44%", marginBottom: "4%", marginTop: "5%", marginRight: "5%",marginLeft:'1%'}}
+                className={classes.button1}
               >
                 {translate("common.page.button.clear")}
               </Button>
@@ -361,7 +363,7 @@ class Dashboard extends React.Component {
                 variant="contained"
                 onClick={this.handleSubmit.bind(this, role)}
                 aria-label="edit"
-                style={{width: "44%", marginTop:'5%', marginBottom:'4%',marginLeft:'0.5%'}}
+                className={classes.button2}
               >
                 {translate("common.page.button.submit")}
               </Button>
