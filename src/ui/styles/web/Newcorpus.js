@@ -23,7 +23,7 @@ const Newcorpus = theme => ({
   typographyHeader:{
     fontfamily:'"Source Sans Pro", sans-serif',
     color: '#003366',
-      marginTop: "3%",  textAlign: "center",fontSize:'28px'
+      marginTop: "3%",  textAlign: "center",fontWeight: '549'
   },
   
   createButton: {
@@ -34,11 +34,9 @@ label:{
   paddingLeft:'30%',
   paddingRight:'3%'
 },
-// typography:{
-//   marginLeft:"5%",
-//   marginTop:'3%'
-// },
-
+select:{
+  minWidth: 120, width: '95%', align: 'right',marginLeft:'5%' 
+},
 button: {
   justifyContent: 'center',
   left: theme.spacing.unit*22,
@@ -82,8 +80,8 @@ btns: {
 },
 
   paper: {
-    marginTop:'3%',
-    marginLeft:'27%',
+    marginTop:'2%',
+    marginLeft:'26%',
     overflow: 'auto',
     width: '40%',
     padding:'3% 4% 2% 4%',

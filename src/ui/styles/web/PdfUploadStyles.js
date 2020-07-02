@@ -16,7 +16,7 @@ const PdfUploadStyles = theme => ({
     display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center'
   },
   typographyHeader:{
-    paddingTop:'3%',
+    paddingTop:'4%',
     minWidth: "5%",
     textAlign:'center',
     // marginLeft:"40.5%",
@@ -49,8 +49,8 @@ const PdfUploadStyles = theme => ({
     width: "60%",
     minWidth: "200px",
     marginTop: "3%",
-    marginBottom:'7%',
-    padding: "2% 2% 4% 2%",
+    marginBottom:'6%',
+    padding: "3% 3% 3% 3%",
     // marginLeft: "15%",
     
     minHeight:'400px'
