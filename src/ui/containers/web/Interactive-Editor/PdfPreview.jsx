@@ -62,7 +62,7 @@ class PdfPreview extends React.Component {
                 <Grid item xs={4} sm={3} lg={2} xl={2}>
                   <Button
                     style={{ fontWeight: "bold", width: "100%" }}
-                    color="primary"
+                    color="secondary"
                     disabled={pageNo <= 1}
                     onClick={event => {
                       this.props.handlePageChange(-1);
@@ -73,14 +73,14 @@ class PdfPreview extends React.Component {
                   </Button>
                 </Grid>
                 <Grid item xs={4} sm={3} lg={3} xl={3}>
-                  <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none" }} color="primary">
+                  <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none" }} color="secondary">
                     {`${pageNo} / ${numPages}`}
                   </Button>
                 </Grid>
 
                 <Grid item xs={4} sm={3} lg={1} xl={1}>
                   <Button
-                    color="primary"
+                    color="secondary"
                     disabled={numPages <= pageNo}
                     onClick={event => {
                       this.props.handlePageChange(1);
@@ -147,10 +147,10 @@ class PdfPreview extends React.Component {
                       }}
                       style={{ fontWeight: "bold", width: "100%" }}
                     >
-                      <ZoomInIcon size="Large" />
+                      <ZoomInIcon size="Large" style={{color: '#233466'}}/>
                     </Button>
                   )}
-                <CloseIcon style={{ cursor: "pointer", color: '#233466', fontSize: '20px', paddingLeft: '5px' }} color="primary" />
+                <CloseIcon style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }} color="primary" />
                 <Typography value="" variant="subtitle6" color="primary" style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }}>
                   {translate("common.page.label.close")}
                 </Typography>

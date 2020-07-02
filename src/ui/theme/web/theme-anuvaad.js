@@ -5,8 +5,8 @@ const themeAnuvaad = createMuiTheme({
 
   typography: {
     fontFamily: '"Source Sans Pro","Regular","Arial", sans-serif',
-    fontSize: 15,
-    color: "#000000"
+    fontSize: 14,
+    color: "#000000",
   },
   palette: {
     primary: {
@@ -14,14 +14,17 @@ const themeAnuvaad = createMuiTheme({
       main: '#FFFFFF',
       dark: '#FFFFFF',
       contrastText: '#000000',
-      color: 'inherit'
+      color: 'inherit',
+      backgroundColor: "#1C9AB7 !important",
 
     },
     secondary: {
       light: '#09d6a1',
-      main: '#09d6a1',
+      main: '#212121',
       dark: '09d6a1',
-      contrastText: '#FFFFFF'
+      contrastText: '#FFFFFF',
+      backgroundColor: "#1C9AB7 !important",
+      fontFamily: '"Source Sans Pro", "Arial", sans-serif',
     },
     background: {
       default: '#F5F9FA',
@@ -43,13 +46,13 @@ const themeAnuvaad = createMuiTheme({
     fontSize: 16,
     color: "#1C9AB7"
   },
-  overrides: {
-    MuiButton: {
-      root: {
-        backgroundColor: "#1C9AB7 !important" , color: "#FFFFFF !important", borderRadius: "20px 20px 20px 20px", height: '45px'
-      }
-    },
-  }
+  // overrides: {
+  //   MuiButton: {
+  //     root: {
+  //       backgroundColor: "#1C9AB7 !important" , color: "#FFFFFF !important", borderRadius: "20px 20px 20px 20px", height: '45px'
+  //     }
+  //   },
+  // }
 
 
 

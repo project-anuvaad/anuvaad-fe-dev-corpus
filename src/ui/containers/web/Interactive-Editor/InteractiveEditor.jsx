@@ -701,8 +701,8 @@ class IntractiveTrans extends React.Component {
                     onClick={event => {
                       this.handleBack();
                     }}
-                    color="primary"
-                    style={{ width: "100%", minWidth: "150px", fontSize: "90%", fontWeight: "bold" }}
+                    // color="primary"
+                    style={{ width: "100%", minWidth: "150px", fontSize: "90%", fontWeight: "bold", borderRadius: '30px', color: '#233466' }}
                   >
                     <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;{translate("common.page.title.document")}
                   </Button>
@@ -712,7 +712,7 @@ class IntractiveTrans extends React.Component {
                     variant="outlined"
                     size="large"
                     className="GridFileDetails"
-                    style={{ width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold" }}
+                    style={{ width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold", borderRadius: '30px' }}
                   >
                     <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />
                     {this.state.fileDetails && `${translate("common.page.label.source")} : ${this.state.fileDetails.source_lang}`}
@@ -729,7 +729,7 @@ class IntractiveTrans extends React.Component {
                     variant="outlined"
                     size="large"
                     color="primary"
-                    style={{ width: "100%", minWidth: "110px", fontSize: "90%", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap" }}
+                    style={{ backgroundColor: "#1C9AB7",color: "#FFFFFF", width: "100%", minWidth: "110px", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap",borderRadius: '30px' }}
                     onClick={() => this.handlePreview()}
                   >
                     <VisibilityIcon fontSize="large" />
@@ -743,10 +743,10 @@ class IntractiveTrans extends React.Component {
                     }}
                     variant="outlined"
                     size="large"
-                    color="primary"
-                    style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold" }}
+                    // color="primary"
+                    style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold", borderRadius: '30px', color: '#233466' }}
                   >
-                    <DoneIcon fontSize="large" />
+                    <DoneIcon fontSize="large" style={{color: '#233466'}}/>
                     &nbsp;&nbsp;{translate("common.page.label.done")}
                   </Button>
                 </Grid>
