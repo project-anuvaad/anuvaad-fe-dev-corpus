@@ -1,4 +1,4 @@
-import { grey500, white } from 'material-ui/styles/colors';
+
 
 const IntractiveTranslationStyles = theme => ({
   root: {

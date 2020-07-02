@@ -13,9 +13,9 @@ const PdfToDocStyles = theme => ({
       marginTop: theme.spacing.unit * 3
     },
     typographyHeader:{
-      textAlign: "center",
-              minWidth: "10%",
-              color: '#233466',marginTop:'4%'
+      fontfamily:'"Source Sans Pro", sans-serif',
+    color: '#003366',
+    textAlign: "center",fontWeight: '549',marginTop:'5%'
     },
     paper:{
       width: "40%",
@@ -23,7 +23,7 @@ const PdfToDocStyles = theme => ({
         marginTop: "2%",
         padding: "5% 5% 3% 5%",
         marginLeft: "25%",
-        marginBottom: '5.5%',
+        marginBottom: '5%',
     },
     button:{
       marginTop: "6%",
