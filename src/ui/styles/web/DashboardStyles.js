@@ -15,7 +15,7 @@ const DashboardStyles = theme => ({
   typographyHeader:{
     fontfamily: '"Source Sans Pro", sans-serif',
           color: '#003366',
-          fontWeight: '549', textAlign:'center',paddingBottom: "12px", paddingTop: "4%"
+          fontWeight: '549', textAlign:'center',paddingBottom: "12px", paddingTop: "3%"
     
 
   },
@@ -46,8 +46,12 @@ const DashboardStyles = theme => ({
     
   },
   select:{
-    marginBottom: "5%", marginTop: "4%", width: "100%"  ,
-    
+    width: '92%',
+    fullWidth: true,
+    display: "flex",
+    wrap: "nowrap",
+    height: '40px',
+    float: 'right'
   },
  
   grid:{
