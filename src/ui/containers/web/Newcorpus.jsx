@@ -112,93 +112,106 @@ class Newcorpus extends React.Component {
     switch (stepIndex) {
       case 0:
         return <div>
-          <Grid container spacing={8} >
-            <Grid item xs={7} sm={7} lg={7} xl={7}>
-              <Typography value='' variant="title" style={{  paddingTop: '15%' }} >{translate('common.page.label.sourceLang')}</Typography>
+          <Grid container>
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row', marginTop: '5%' }}>
+              <Grid item xs={8} sm={8} lg={7} xl={7} style={{ textAlign: 'left' }}>
+                <Typography value='' variant="title" style={{ paddingTop: '3%' }} >{translate('common.page.label.sourceLang')}</Typography>
+              </Grid>
+              <Grid item xs={5} sm={5} lg={6} xl={6}>
+                <Select
+                  style={{ width: '95%', marginLeft: '5%' }}
+                  value={this.state.english}
+                  onChange={this.handleSelectChange}
+                  input={
+                    <OutlinedInput name='english' id="outlined-age-simple" />
+                  }
+                >
+                  {this.state.MenuItemValues.map((item) => (
+                    <MenuItem key={item} value={item}>{item}</MenuItem>
+                  ))}
+                </Select>
 
+
+              </Grid>
             </Grid>
-            <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
-              <Select
-                style={{ width: '95%',marginLeft:'5%' }}
-                value={this.state.english}
-                onChange={this.handleSelectChange}
-                input={
-                  <OutlinedInput name='english' id="outlined-age-simple" />
-                }
-              >
-                {this.state.MenuItemValues.map((item) => (
-                  <MenuItem key={item} value={item}>{item}</MenuItem>
-                ))}
-              </Select>
-
-
+            {this.state.val > 1 ?
+              <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginTop: '5%' }}>
+                <DropzoneArea
+                  onDrop={this.handleSource} showPreviewsInDropzone={true} style={{ marginTop: '0%' }} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={1}
+                ></DropzoneArea>
+              </Grid> : ''
+            }
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginTop: '5%' }}>
+              <DropzoneArea
+                onDrop={this.handleSource}
+                dropZoneClass={this.props.classes.dropZoneArea}
+                showPreviewsInDropzone={true} style={{ marginTop: '0%' }} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={1}
+              ></DropzoneArea>
             </Grid>
-          </Grid><br /><br />
-          {this.state.val > 1 ?
-            <DropzoneArea
-              onDrop={this.handleSource} showPreviewsInDropzone={true} style={{ marginTop: '0%' }} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={1}
-            ></DropzoneArea> : ''
-          }
-
-          <DropzoneArea
-            onDrop={this.handleSource} 
-            dropZoneClass={this.props.classes.dropZoneArea}
-            showPreviewsInDropzone={true} style={{ marginTop: '0%' }} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={1}
-          ></DropzoneArea>
+          </Grid>
         </div>
 
 
       case 1:
         return <div>
-          <Grid container spacing={8} >
-            <Grid item xs={7} sm={7} lg={7} xl={7}>
-              <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '5%', paddingTop: '15%' }} >{translate('common.page.label.targetLang')}</Typography>
+          <Grid container>
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row', marginTop: '5%' }}>
+              <Grid item xs={8} sm={8} lg={7} xl={7} style={{ textAlign: 'left' }}>
+                <Typography value='' variant="title" style={{ paddingTop: '3%' }} >{translate('common.page.label.targetLang')}</Typography>
 
+              </Grid>
+              <Grid item xs={5} sm={5} lg={5} xl={5}>
+
+                <Select
+                  style={{ minWidth: 120, width: '95%', align: 'right', marginLeft: '5%' }}
+                  value={this.state.hindi}
+                  onChange={this.handleSelectChange}
+                  input={
+                    <OutlinedInput name='hindi' id="outlined-age-simple" />
+                  }
+                >
+                  {this.state.MenuItargettemValues.map((item) => (
+                    <MenuItem key={item} value={item}>{item}</MenuItem>
+                  ))}
+                </Select>
+              </Grid>
             </Grid>
-            <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
-
-              <Select
-                style={{ minWidth: 120, width: '95%', align: 'right',marginLeft:'5%' }}
-                value={this.state.hindi}
-                onChange={this.handleSelectChange}
-                input={
-                  <OutlinedInput name='hindi' id="outlined-age-simple" />
-                }
-              >
-                {this.state.MenuItargettemValues.map((item) => (
-                  <MenuItem key={item} value={item}>{item}</MenuItem>
-                ))}
-              </Select>
-
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginTop: '5%' }}>
+              <DropzoneArea Dropzoneiles=""
+                dropZoneClass={this.props.classes.dropZoneArea}
+                onDrop={this.handleTarget} id="source"
+                showPreviewsInDropzone={true} acceptedFiles={['.pdf']}
+                dropzoneText={translate('common.page.label.addDropFile')} filesLimit={2}
+              ></DropzoneArea>
             </Grid>
-          </Grid><br />
-          <DropzoneArea Dropzoneiles=""
-          dropZoneClass={this.props.classes.dropZoneArea}
-            onDrop={this.handleTarget} id="source" 
-            showPreviewsInDropzone={true} acceptedFiles={['.pdf']} 
-            dropzoneText={translate('common.page.label.addDropFile')} filesLimit={2}
-          ></DropzoneArea>
+          </Grid>
         </div>;
 
       case 2:
+        return <div >
+          <Grid container>
+            <Grid item xs={12} sm={12} lg={12} xl={12}>
+              <FormControl fullWidth>
+                <InputLabel htmlFor="Add Name">{translate('newCorpus.page.text.outputFilename')}</InputLabel>
+                <Input id="name" required onChange={(event) => { this.handleTextChange('add_name', event) }} />
+                <div style={{ color: 'red' }}>{this.state.nameError}</div>
+              </FormControl></Grid>
+            <Grid item xs={12} sm={12} lg={12} xl={12}>
 
-        return <div ><FormControl fullWidth>
-          <InputLabel htmlFor="Add Name">{translate('newCorpus.page.text.outputFilename')}</InputLabel>
-          <Input id="name" required onChange={(event) => { this.handleTextChange('add_name', event) }} />
-          <div style={{ color: 'red' }}>{this.state.nameError}</div>
-        </FormControl>
-
-          <FormControl fullWidth>
-            <InputLabel htmlFor="Domain">{translate('newCorpus.page.text.domain')}</InputLabel>
-            <Input id="domain" onChange={(event) => { this.handleTextChange('domain', event) }} />
-            <div style={{ color: 'red' }}>{this.state.domainError}</div>
-          </FormControl>
-          <FormControl fullWidth>
-            <InputLabel htmlFor="Comment">{translate('newCorpus.page.text.comment')}</InputLabel>
-            <Input id="comment" onChange={(event) => { this.handleTextChange('comment', event) }} />
-            <div style={{ color: 'red' }}>{this.state.commentError}</div>
-          </FormControl>
-        </div>;
+              <FormControl fullWidth>
+                <InputLabel htmlFor="Domain">{translate('newCorpus.page.text.domain')}</InputLabel>
+                <Input id="domain" onChange={(event) => { this.handleTextChange('domain', event) }} />
+                <div style={{ color: 'red' }}>{this.state.domainError}</div>
+              </FormControl></Grid>
+            <Grid item xs={12} sm={12} lg={12} xl={12}>
+              <FormControl fullWidth>
+                <InputLabel htmlFor="Comment">{translate('newCorpus.page.text.comment')}</InputLabel>
+                <Input id="comment" onChange={(event) => { this.handleTextChange('comment', event) }} />
+                <div style={{ color: 'red' }}>{this.state.commentError}</div>
+              </FormControl>
+            </Grid>
+          </Grid>
+        </div>
       default:
         return translate('newCorpus.page.text.tryAgain');
     }
@@ -275,33 +288,43 @@ class Newcorpus extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-      
+      <div className={classes.root}>
+
         <Typography gutterBottom variant="title" variant="h4" className={classes.typographyHeader}>
           {translate('newCorpus.page.text.createCorpus')}
         </Typography>
         {/* <div className={classes.CorpusContainer}> */}
         <Paper className={classes.paper} elevation={2}>
+          <Grid container spacing={8}>
+            <Grid item xs={12} sm={12} lg={12} xl={12}>
+              <Stepper style={{paddingBottom: '0px'}} steps={["Add Source file", 'Add target file', 'Add file details']} activeStep={this.state.activeStep} alternativeLabel></Stepper>
+            </Grid>
 
-          <Stepper steps={["Add Source file", 'Add target file', 'Add file details']} activeStep={this.state.activeStep} alternativeLabel></Stepper>
 
+            {this.state.activeStep === 3 ? (
+              <Grid item xs={12} sm={12} lg={12} xl={12}>
+                <Typography >{translate('newCorpus.page.text.allStepsCompleted')}</Typography>
+              </Grid>
+            ) : (
+                <Grid item xs={12} sm={12} lg={12} xl={12}>
+                  {this.getStepContent(this.state.activeStep)}
+                </Grid>
+              )}
+            <form method="post">
+            </form>
 
-          {this.state.activeStep === 3 ? (
-            <div>
-              <Typography >{translate('newCorpus.page.text.allStepsCompleted')}</Typography>
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row' }}>
+              <Button variant="contained" className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? translate('common.page.button.cancel') : translate('common.page.button.back')} </Button>
+              <Button variant="contained" className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) : this.handleNext}> {this.state.activeStep === 2 ? translate('common.page.label.createCorpus') : translate('common.page.button.next')}</Button>
+            </Grid>
+            {
+              this.state.warning ? <Grid item xs={12} sm={12} lg={12} xl={12} style={{ textAlign: 'center' }}>
+                <Typography style={{ color: 'red', textAlign: 'center' }}>{this.state.warning}</Typography>
+              </Grid> : <div></div>
+            }
 
-            </div>
-          ) : (
-              <div>
-                <Typography >{this.getStepContent(this.state.activeStep)}</Typography>
-              </div>
-            )}
-          <form method="post">
-          </form>
+          </Grid>
 
-          <Button variant="contained" className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? translate('common.page.button.cancel') : translate('common.page.button.back')} </Button>
-          <Button variant="contained" className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) : this.handleNext}> {this.state.activeStep === 2 ? translate('common.page.label.createCorpus') : translate('common.page.button.next')}</Button>
-          <div style={{ color: 'red', marginLeft: "30%" }}>{this.state.warning}</div>
         </Paper>
 
         {this.state.openSnack &&
@@ -311,7 +334,7 @@ class Newcorpus extends React.Component {
             variant="success"
             message={this.state.message} />}
 
-      {/* </div> */}
+        {/* </div> */}
       </div>
 
     );
