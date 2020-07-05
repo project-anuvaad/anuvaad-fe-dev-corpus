@@ -384,7 +384,8 @@ const localization_EN_Data = {
   "pdf_upload.page.label.uploadMessage": "Upload file that you want to translate.",
   "newCorpus.page.stepper.label.addSourceFile": "Add Source file",
   "newCorpus.page.stepper.label.addTargetFile": "Add target file",
-  "newCorpus.page.stepper.label.addFileDetails": "Add file details"
+  "newCorpus.page.stepper.label.addFileDetails": "Add file details",
+  "profile.page.label.role": "Role"
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
@@ -749,7 +750,8 @@ const localization_HI_Data = {
   "pdf_upload.page.label.uploadMessage": "वह फ़ाइल अपलोड करें जिसका आप अनुवाद करना चाहते हैं।",
   "newCorpus.page.stepper.label.addSourceFile": "स्रोत फ़ाइल जोड़ें",
   "newCorpus.page.stepper.label.addTargetFile": "लक्ष्य फ़ाइल जोड़ें",
-  "newCorpus.page.stepper.label.addFileDetails": "फ़ाइल विवरण जोड़ें"
+  "newCorpus.page.stepper.label.addFileDetails": "फ़ाइल विवरण जोड़ें",
+  "profile.page.label.role": "भूमिका"
 };
 
 export function translate(locale_text) {
