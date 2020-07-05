@@ -297,7 +297,7 @@ class Newcorpus extends React.Component {
         <Paper className={classes.paper} elevation={2}>
           <Grid container spacing={8}>
             <Grid item xs={12} sm={12} lg={12} xl={12}>
-              <Stepper style={{paddingBottom: '0px'}} steps={["Add Source file", 'Add target file', 'Add file details']} activeStep={this.state.activeStep} alternativeLabel></Stepper>
+              <Stepper style={{paddingBottom: '0px', paddingLeft: '0px', paddingRight: '0px'}} steps={[translate('newCorpus.page.stepper.label.addSourceFile'), translate('newCorpus.page.stepper.label.addTargetFile'), translate('newCorpus.page.stepper.label.addFileDetails')]} activeStep={this.state.activeStep} alternativeLabel></Stepper>
             </Grid>
 
 
