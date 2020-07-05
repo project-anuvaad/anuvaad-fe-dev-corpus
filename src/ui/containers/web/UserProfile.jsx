@@ -164,7 +164,7 @@ class UserProfile extends React.Component {
     });
     return (
       <div>
-        <Paper style={{ marginLeft: "23%", width: "46%", marginTop: "5%" }}>
+        <Paper style={{ marginLeft: "auto", marginRight: 'auto', width: "40%", marginTop: "5%" }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
             {translate("common.page.label.myProfile")}{" "}
           </Typography>
