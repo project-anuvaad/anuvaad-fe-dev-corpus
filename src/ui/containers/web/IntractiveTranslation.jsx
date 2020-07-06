@@ -336,7 +336,7 @@ class IntractiveTrans extends React.Component {
               </Grid>
 
               <Grid container spacing={24}>
-                <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row', paddingTop: '8%', alignItems: 'flex-end' }}>
+                <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row', paddingTop: '8%',  }}>
                   <Grid item xs={6} sm={6} lg={8} xl={8} style={{ textAlign: 'left' }}>
                     <Typography value="" variant="title" gutterBottom>
                       {translate("common.page.label.targetLang")}&nbsp;
@@ -357,7 +357,7 @@ class IntractiveTrans extends React.Component {
                         width: '92%',
                         fullWidth: true,
                         display: "flex",
-                        wrap: "nowrap",
+                        // wrap: "nowrap",
                         height: '40px',
                         magin: 'dense',
                         float: 'right'
@@ -373,7 +373,7 @@ class IntractiveTrans extends React.Component {
             <Grid item xs={12} sm={12} lg={12} xl={12} style={{ paddingTop: '8%' }}>
               <div>
                 <textarea
-                  style={{ padding: "1%", height: '90px', fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px", width: '97%' }}
+                  style={{  height: '90px', fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px", width: '99.2%' }}
                   className="noter-text-area"
                   rows="3"
                   value={this.state.text}
@@ -394,7 +394,7 @@ class IntractiveTrans extends React.Component {
                 <Grid item xs={12} sm={12} lg={12} xl={12} style={{ paddingTop: '8%' }}>
                   <div>
                     <textarea
-                      style={{ padding: "1%", fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px", width: '97%' }}
+                      style={{ fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px", width: '99.2%' }}
                       className="noter-text-area"
                       rows="3"
                       ref={textarea => {
@@ -428,7 +428,7 @@ class IntractiveTrans extends React.Component {
                 aria-label="edit"
                 style={{
                   width: "100%", backgroundColor: "#1C9AB7",
-                  color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '46px'
+                  color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '46px',marginLeft:'0.5%'
                 }}
               >
                 {translate("common.page.button.clear")}
