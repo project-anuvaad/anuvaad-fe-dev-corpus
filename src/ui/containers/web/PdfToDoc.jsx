@@ -85,61 +85,63 @@ class PdfUpload extends Component {
   render() {
     const { classes, } = this.props;
     return (
-      <div>
-      <Grid item xs={12} sm={12} lg={12} xl={12}>
-            <Typography value="" variant="h4" className={classes.typographyHeader}>
-              {translate("common.page.label.uploadFile")}
-            </Typography>
-            <br />
-            <br />
-          </Grid>
-      <Paper className={classes.paper}>
-        <Grid container spacing={24} >
-          
-          <DropzoneArea
-            showPreviewsInDropzone
-            acceptedFiles={[".pdf"]}
-            onChange={this.handleChange.bind(this)}
-            filesLimit={1}
-            maxFileSize={20000000}
-            dropzoneText={translate("common.page.label.addDropFile")}
-            onDelete={this.handleDelete.bind(this)}
-            dropZoneClass={classes.dropZoneArea}
-
-          />
-          {this.state.filesPath && (
-            <Grid container spacing={8}>
-              <Grid item xs={12} sm={12} lg={12} xl={12}>
-                <a
-                  href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
-                    this.state.filesPath
-                    }`}
-                  style={{ textDecoration: "none" }}
-                >
-                  <Button variant="contained" className={this.props.classes.button} size="large">
-                    {translate("common.page.button.download&View")}
-                  </Button>
-                </a>
-              </Grid>
-            </Grid>
-          )}
-          <Button variant="contained" className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
-            {translate("common.page.button.submit")}
-          </Button>
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center' }}>
+        <Grid item xs={12} sm={12} lg={12} xl={12}>
+          <Typography value="" variant="h4" className={classes.typographyHeader}>
+            {translate("common.page.label.uploadFile")}
+          </Typography>
+          <br />
+          <br />
         </Grid>
+        <Paper className={classes.paper}>
+          <Grid container spacing={24} >
 
-        {this.state.open && (
-          <Snackbar
-            anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={this.state.open}
-            autoHideDuration={6000}
-            onClose={this.handleClose}
-            variant="success"
-            message={this.state.message}
-            style={{color:'#000000'}}
-          />
-        )}
-      </Paper>
+            <DropzoneArea
+              showPreviewsInDropzone
+              acceptedFiles={[".pdf"]}
+              onChange={this.handleChange.bind(this)}
+              filesLimit={1}
+              maxFileSize={20000000}
+              dropzoneText={translate("common.page.label.addDropFile")}
+              onDelete={this.handleDelete.bind(this)}
+              dropZoneClass={classes.dropZoneArea}
+
+            />
+            {this.state.filesPath && (
+              <Grid container spacing={8}>
+                <Grid item xs={12} sm={12} lg={12} xl={12}>
+                  <a
+                    href={`${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+                      this.state.filesPath
+                      }`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Button variant="contained" className={this.props.classes.button} size="large">
+                      {translate("common.page.button.download&View")}
+                    </Button>
+                  </a>
+                </Grid>
+              </Grid>
+            )}
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{padding: '0px'}}>
+              <Button variant="contained" className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
+                {translate("common.page.button.submit")}
+              </Button>
+            </Grid>
+          </Grid>
+
+          {this.state.open && (
+            <Snackbar
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+              open={this.state.open}
+              autoHideDuration={6000}
+              onClose={this.handleClose}
+              variant="success"
+              message={this.state.message}
+              style={{ color: '#000000' }}
+            />
+          )}
+        </Paper>
       </div>
     );
   }
