@@ -36,7 +36,7 @@ const styles = {
   },
   header: {
     color: '#003366', fontWeight: '549', textAlign: 'center', paddingBottom: "12px", paddingTop: "3%"
-  }
+  },
   dataRow: {
     marginTop: '3%',
     display: 'flex',
