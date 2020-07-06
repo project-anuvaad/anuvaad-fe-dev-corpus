@@ -152,7 +152,7 @@ class Newcorpus extends React.Component {
         return <div>
           <Grid container spacing={8} >
             <Grid item xs={7} sm={7} lg={7} xl={7}>
-              <Typography value='' variant="title" gutterBottom="true" style={{ marginLeft: '5%', paddingTop: '15%' }} >{translate('common.page.label.targetLang')}</Typography>
+              <Typography value='' variant="title" gutterBottom="true" style={{paddingTop: '15%' }} >{translate('common.page.label.targetLang')}</Typography>
 
             </Grid>
             <Grid item xs={5} sm={5} lg={5} xl={5}><br /><br />
@@ -171,7 +171,7 @@ class Newcorpus extends React.Component {
               </Select>
 
             </Grid>
-          </Grid><br />
+          </Grid><br /><br/>
           <DropzoneArea Dropzoneiles=""
           dropZoneClass={this.props.classes.dropZoneArea}
             onDrop={this.handleTarget} id="source" 

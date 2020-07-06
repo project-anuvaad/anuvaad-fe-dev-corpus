@@ -20,7 +20,7 @@ const PdfUploadStyles = theme => ({
     minWidth: "5%",
     textAlign:'center',
     // marginLeft:"40.5%",
-    fontfamily: 'sans-serif	',
+    fontfamily: '"Source Sans Pro", sans-serif',
      color: '#003366',
      fontWeight:'549'
     
@@ -40,7 +40,7 @@ const PdfUploadStyles = theme => ({
     
   },
   select:{
-    marginRight: "30%",
+    // marginRight: "30%",
     width:"100%" ,
     height:'40px',
     
@@ -76,7 +76,7 @@ const PdfUploadStyles = theme => ({
   dropZoneArea:{
     paddingTop: '13%',
     minHeight:'363px',
-    height: "416px",
+    height: "412px",
     borderColor:'#1C9AB7',
     backgroundColor: '#F5F9FA',
     border: '1px dashed #1C9AB7',

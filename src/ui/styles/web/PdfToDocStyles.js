@@ -23,7 +23,7 @@ const PdfToDocStyles = theme => ({
         marginTop: "2%",
         padding: "5% 5% 3% 5%",
         marginLeft: "25%",
-        marginBottom: '5%',
+        marginBottom: '4%',
     },
     button:{
       marginTop: "6%",
