@@ -185,8 +185,8 @@ class Corpus extends React.Component {
     return (
       <div>
         {this.state.download ? <CSVDownload data={this.state.downloadData} target="_blank" /> : ""}
-        <Grid container spacing={24} style={{ padding: 5 }}>
-          <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: "-4%", marginTop: "38px" }}>
+        <Grid container spacing={24}>
+          <Grid item xs={12} sm={12} lg={12} xl={12} style={{ margin: '2% 3%' }}>
             <Toolbar style={{ marginRight: "-1.2%" }}>
               <Typography variant="title" color="inherit" style={{ flex: 1 }} />
               <Typography variant="h8" gutterBottom>

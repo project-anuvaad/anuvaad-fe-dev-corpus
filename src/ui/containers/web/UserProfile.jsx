@@ -157,9 +157,14 @@ class UserProfile extends React.Component {
   }
 
   render() {
+    let useRole = []
+    this.state.userDetails.roles && Array.isArray(this.state.userDetails.roles) && this.state.userDetails.roles.length> 0 && this.state.userDetails.roles.map((item, value) => {
+      useRole.push(item); value !== this.state.userDetails.roles.length - 1 && useRole.push(", ")
+      return true;
+    });
     return (
       <div>
-        <Paper style={{ marginLeft: "23%", width: "46%", marginTop: "5%" }}>
+        <Paper style={{ marginLeft: "auto", marginRight: 'auto', width: "40%", marginTop: "5%" }}>
           <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
             {translate("common.page.label.myProfile")}{" "}
           </Typography>
@@ -205,6 +210,22 @@ class UserProfile extends React.Component {
                 <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", marginTop: "-1%" }}>
                   {" "}
                   {this.state.userDetails.email}{" "}
+                </Typography>
+              </Grid>
+            </Grid>
+
+            <Grid container spacing={4}>
+              <Grid item xs={5} sm={5} lg={5} xl={5}>
+                <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
+                  {translate("profile.page.label.role")}{" "}
+                </Typography>
+              </Grid>
+              <Grid item xs={6} sm={6} lg={6} xl={6}>
+                <br />
+                <br />
+                <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", marginTop: "-1%" }}>
+                  {" "}
+                  [{useRole}]{" "}
                 </Typography>
               </Grid>
             </Grid>

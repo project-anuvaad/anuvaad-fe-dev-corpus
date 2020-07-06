@@ -2,8 +2,11 @@ import { grey500, white } from 'material-ui/styles/colors';
 
 const Newcorpus = theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap'
+    display: 'flex', 
+    flexDirection: 'column', 
+    flex: 1, 
+    textAlign: 'center', 
+    alignItems: 'center',
   },
   margin: {
     margin: theme.spacing.unit,
@@ -21,9 +24,9 @@ const Newcorpus = theme => ({
 
   },
   typographyHeader:{
-    fontfamily:'"Source Sans Pro", sans-serif',
-    color: '#003366',
-      marginTop: "3%",  textAlign: "center",fontWeight: '549'
+    fontfamily: '"Source Sans Pro", sans-serif',
+          color: '#003366',
+          fontWeight: '549', textAlign:'center',paddingTop: "2%"
   },
   
   createButton: {
@@ -57,7 +60,6 @@ buttons: {
 button1: {
   // justifyContent: 'center',
   // left: theme.spacing.unit*12,
-  marginBottom:'2%',
   marginTop:'5%',
   marginLeft:'0%',
   width:'48%',
@@ -69,7 +71,6 @@ button1: {
 btns: {
   justifyContent: 'center',
   left: theme.spacing.unit*6,
-  marginBottom:'2%',
   marginTop:'5%',
   width:'48%',
   height:'43px',
@@ -78,15 +79,11 @@ btns: {
    color:"#FFFFFF",
    borderRadius:"20px 20px 20px 20px",
 },
-
   paper: {
     marginTop:'2%',
-    marginLeft:'26%',
     overflow: 'auto',
     width: '40%',
-    padding:'3% 4% 2% 4%',
-
-  
+    padding:'3%',
   },
   buttonsDiv: {
     textAlign: 'center',
