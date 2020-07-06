@@ -123,7 +123,7 @@ class Header extends React.Component {
 
     return (
       <div  >
-        <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
+        <AppBar position="fixed" color="secondary" className={classNames(classes.appBar, open && classes.appBarShift)}>
 
           <Toolbar disableGutters={!open}>
             <IconButton onClick={this.handleMenuOpenClose} className={classes.menuButton} color="inherit" aria-label="Menu">
