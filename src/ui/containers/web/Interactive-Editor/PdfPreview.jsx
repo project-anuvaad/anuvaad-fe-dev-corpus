@@ -61,7 +61,7 @@ class PdfPreview extends React.Component {
               <Grid container spacing={8} style={{ marginLeft: "25%" }}>
                 <Grid item xs={4} sm={3} lg={2} xl={2}>
                   <Button
-                    style={{ fontWeight: "bold", width: "100%" }}
+                    style={{ fontWeight: "bold", width: "100%", color: pageNo <= 1 ? "#FFFFFF" : "#233466" }}
                     color="secondary"
                     disabled={pageNo <= 1}
                     onClick={event => {
@@ -73,7 +73,7 @@ class PdfPreview extends React.Component {
                   </Button>
                 </Grid>
                 <Grid item xs={4} sm={3} lg={3} xl={3}>
-                  <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none" }} color="secondary">
+                  <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none", color: "#233466" }} color="secondary">
                     {`${pageNo} / ${numPages}`}
                   </Button>
                 </Grid>
@@ -85,7 +85,7 @@ class PdfPreview extends React.Component {
                     onClick={event => {
                       this.props.handlePageChange(1);
                     }}
-                    style={{ fontWeight: "bold", width: "100%" }}
+                    style={{ fontWeight: "bold", width: "100%", color: numPages <= pageNo ? "#FFFFFF" : "#233466" }}
                   >
                     <ChevronRightIcon size="large" />{" "}
                   </Button>
