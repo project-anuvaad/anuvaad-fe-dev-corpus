@@ -151,7 +151,7 @@ class Header extends React.Component {
                 height: '27px'
               }}
               alt="logo" />
-            <div style={{marginRight: '20px', display: 'flex', flexDirection: 'row'}}>
+            <div style={{position: 'absolute' , right: '20px', display: 'flex', flexDirection: 'row'}}>
               {!dontShowHeader &&
               <div style={{display: 'flex', flexDirection: 'row'}}>
                 <PeopleIcon style={{marginRight: '10px'}}></PeopleIcon>
