@@ -11,7 +11,7 @@ import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Toolbar from "@material-ui/core/Toolbar";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import PlayArrowIcon from "@material-ui/icons/LineStyle";
 import DoneIcon from "@material-ui/icons/Done";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
@@ -153,11 +153,9 @@ class IntractiveTrans extends React.Component {
                   objSentfinal[i] = objSent;
                   i = i + 1;
                 }
-                
+
               }
-              console.log("obj----",objSentfinal);
-                sentence.table_items = objSentfinal;
-              console.log("sen----",sentence);
+              sentence.table_items = objSentfinal;
             }
             if (sentence.status !== "DELETED") {
               sentenceArray.push(sentence);
@@ -551,39 +549,38 @@ class IntractiveTrans extends React.Component {
 
       this.state.addSentence
         ? this.setState({
-            mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
-            selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
-            endSentence,
-            openEl: true,
-            contextToken: true,
-            addSentence: true,
-            pageNo,
-            topValue: event.clientY - 4,
-            leftValue: event.clientX - 2,
-            startParagraph: selectedSentence.startParagraph,
-            endParagraph: selectedSentence.endParagraph
-          })
+          mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
+          selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
+          endSentence,
+          openEl: true,
+          contextToken: true,
+          addSentence: true,
+          pageNo,
+          topValue: event.clientY - 4,
+          leftValue: event.clientX - 2,
+          startParagraph: selectedSentence.startParagraph,
+          endParagraph: selectedSentence.endParagraph
+        })
         : this.setState({
-            mergeSentence,
-            selectedMergeSentence: [selectedSentence],
-            startSentence,
-            endSentence,
-            operation_type,
-            openEl: true,
-            splitSentence: selectedSplitValue,
-            contextToken: true,
-            topValue: event.clientY - 2,
-            leftValue: event.clientX - 2,
-            pageNo,
-            startParagraph: selectedSentence.startParagraph,
-            endParagraph: selectedSentence.endParagraph
-          });
+          mergeSentence,
+          selectedMergeSentence: [selectedSentence],
+          startSentence,
+          endSentence,
+          operation_type,
+          openEl: true,
+          splitSentence: selectedSplitValue,
+          contextToken: true,
+          topValue: event.clientY - 2,
+          leftValue: event.clientX - 2,
+          pageNo,
+          startParagraph: selectedSentence.startParagraph,
+          endParagraph: selectedSentence.endParagraph
+        });
     }
   }
-  handleCopy(){
-    console.log("copy", window.getSelection().toString());
-    copy( window.getSelection().toString())
-                    this.handleClose()
+  handleCopy() {
+    copy(window.getSelection().toString())
+    this.handleClose()
 
   }
   handleAddCell(sentence, operationType) {
@@ -634,7 +631,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddNewSentence(nodeType, sentence, selectedNodeType) {
-    this.setState({popOver: false})
+    this.setState({ popOver: false })
     let paragraph = "";
     if (selectedNodeType === "text" && this.state.startParagraph && this.state.endParagraph) {
       paragraph = this.state.startParagraph;
@@ -682,7 +679,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handlePopUp() {
-    this.setState({ popOver: true})
+    this.setState({ popOver: true })
   }
 
   render() {
@@ -712,15 +709,24 @@ class IntractiveTrans extends React.Component {
                     variant="outlined"
                     size="large"
                     className="GridFileDetails"
-                    style={{ width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold", borderRadius: '30px' }}
+                    style={{ justifyContent: 'left', height: '100%', width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold", borderRadius: '30px' }}
                   >
-                    <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />
-                    {this.state.fileDetails && `${translate("common.page.label.source")} : ${this.state.fileDetails.source_lang}`}
-                    <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
-                    {this.state.fileDetails && `${translate("common.page.label.target")} : ${this.state.fileDetails.target_lang}`}
-                    <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
+                    {/* <PlayArrowIcon fontSize="large" style={{ color: "grey" }} /> */}
+                    {this.state.fileDetails && <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      <div style={{ color: "#909090" }}>&nbsp;&nbsp;{translate("common.page.label.source")}&nbsp;&nbsp;</div> <div>{":"}</div> <div>&nbsp;&nbsp;{this.state.fileDetails.source_lang}&nbsp;&nbsp;</div>
+                    </div>}
+                    <span fontSize="large" style={{ color: "grey", marginLeft: '4%', marginRight: '1%'}}>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
+                    {/* <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "} */}
+                    {this.state.fileDetails && <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      <div style={{ color: "#909090" }}>&nbsp;&nbsp;{translate("common.page.label.target")}&nbsp;&nbsp;</div> <div>{":"}</div> <div>&nbsp;&nbsp;{this.state.fileDetails.target_lang}&nbsp;&nbsp;</div>
+                    </div>}
+                    {/* <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "} */}
+                    <span fontSize="large" style={{ color: "grey", marginLeft: '4%', marginRight: '1%' }}>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
+
                     <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
-                      {this.state.fileDetails && `${translate("common.page.label.fileName")} : ${this.state.fileDetails.process_name}`}
+                      {this.state.fileDetails && <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <div style={{ color: "#909090" }}>&nbsp;&nbsp;{translate("common.page.label.fileName")}&nbsp;&nbsp;</div> <div>{" : "}</div> <div>&nbsp;&nbsp;{this.state.fileDetails.process_name}&nbsp;&nbsp;</div>
+                      </div>}
                     </div>
                   </Button>
                 </Grid>
@@ -729,7 +735,7 @@ class IntractiveTrans extends React.Component {
                     variant="outlined"
                     size="large"
                     color="primary"
-                    style={{ backgroundColor: "#1C9AB7",color: "#FFFFFF", width: "100%", minWidth: "110px", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap",borderRadius: '30px' }}
+                    style={{ backgroundColor: "#1C9AB7", color: "#FFFFFF", width: "100%", minWidth: "110px", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
                     onClick={() => this.handlePreview()}
                   >
                     <VisibilityIcon fontSize="large" />
@@ -746,7 +752,7 @@ class IntractiveTrans extends React.Component {
                     // color="primary"
                     style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold", borderRadius: '30px', color: '#233466' }}
                   >
-                    <DoneIcon fontSize="large" style={{color: '#233466'}}/>
+                    <DoneIcon fontSize="large" style={{ color: '#233466' }} />
                     &nbsp;&nbsp;{translate("common.page.label.done")}
                   </Button>
                 </Grid>
@@ -773,9 +779,9 @@ class IntractiveTrans extends React.Component {
                           onClick={event => {
                             this.handleClick(true, 6);
                           }}
-                          style={{paddingRight: '0px'}}
+                          style={{ paddingRight: '0px' }}
                         >
-                          <PictureAsPdfIcon style={{ cursor: "pointer",color: '#233466' }} color="primary" />
+                          <PictureAsPdfIcon style={{ cursor: "pointer", color: '#233466' }} color="primary" />
                           <Typography value="" variant="subtitle2" style={{ cursor: "pointer", color: '#233466', paddingLeft: '7px' }}>
                             {translate("intractive_translate.page.preview.compareWithOriginal")}
                           </Typography>
@@ -829,22 +835,22 @@ class IntractiveTrans extends React.Component {
                   </Paper>
                 </Grid>
               ) : (
-                <Grid item xs={1} sm={1} lg={1} xl={1}>
-                  <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
-                    <Toolbar
-                      onClick={event => {
-                        this.handleClick(false, 4);
-                      }}
-                      style={{ color: darkBlack, background: blueGrey50 }}
-                    >
-                      <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
+                  <Grid item xs={1} sm={1} lg={1} xl={1}>
+                    <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
+                      <Toolbar
+                        onClick={event => {
+                          this.handleClick(false, 4);
+                        }}
+                        style={{ color: darkBlack, background: blueGrey50 }}
+                      >
+                        <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
                       <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                        {translate("common.page.label.source")}
-                      </Typography>
-                    </Toolbar>
-                  </Paper>
-                </Grid>
-              )}
+                          {translate("common.page.label.source")}
+                        </Typography>
+                      </Toolbar>
+                    </Paper>
+                  </Grid>
+                )}
 
               {!this.state.collapseToken ? (
                 <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
@@ -880,19 +886,19 @@ class IntractiveTrans extends React.Component {
                   </Paper>
                 </Grid>
               ) : (
-                <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                  <PdfPreview
-                    pageNo={this.state.pageNo}
-                    fileDetails={this.state.fileDetails}
-                    numPages={this.state.numPages}
-                    onDocumentLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
-                    handlePageChange={this.handlePageChange.bind(this)}
-                    handleClick={this.handleClick.bind(this)}
-                    handleChange={this.handleZoomChange.bind(this)}
-                    zoom={this.state.zoom}
-                  />
-                </Grid>
-              )}
+                  <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
+                    <PdfPreview
+                      pageNo={this.state.pageNo}
+                      fileDetails={this.state.fileDetails}
+                      numPages={this.state.numPages}
+                      onDocumentLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
+                      handlePageChange={this.handlePageChange.bind(this)}
+                      handleClick={this.handleClick.bind(this)}
+                      handleChange={this.handleZoomChange.bind(this)}
+                      zoom={this.state.zoom}
+                    />
+                  </Grid>
+                )}
               {!this.state.collapseToken && (
                 <Grid item xs={12} sm={12} lg={4} xl={4}>
                   {this.state.sentences && this.state.sentences[0] && (
@@ -920,8 +926,8 @@ class IntractiveTrans extends React.Component {
             {this.state.addNewTable && (
               <EditorDialog
                 open={true}
-                rowLabel= {translate("intractive_translate.page.preview.rows")}
-                columnLabel= {translate("intractive_translate.page.preview.columns")}
+                rowLabel={translate("intractive_translate.page.preview.rows")}
+                columnLabel={translate("intractive_translate.page.preview.columns")}
                 handleAddTableCancel={this.handleAddTableCancel.bind(this)}
                 handleAddTable={this.handleAddTable.bind(this)}
                 handlePopUp={this.handlePopUp.bind(this)}
@@ -947,8 +953,8 @@ class IntractiveTrans extends React.Component {
                   this.state.token
                     ? `${this.state.fileDetails.process_name} ` + translate("intractive_translate.page.message.savedSuccessfully")
                     : this.state.operation_type === "merge"
-                    ? translate("intractive_translate.page.message.mergeSentenceSuccessfully")
-                    : translate("intractive_translate.page.message.splitSentenceSuccessfully")
+                      ? translate("intractive_translate.page.message.mergeSentenceSuccessfully")
+                      : translate("intractive_translate.page.message.splitSentenceSuccessfully")
                 }
               />
             )}

@@ -55,7 +55,8 @@ class Header extends React.Component {
     anchorEl: null,
     heading: translate('header.page.heading.translation'),
     name: localStorage.getItem("userDetails"),
-    userName: ""
+    userName: "",
+    currentPage: 'dashboard'
   };
 
   handleDrawerOpen = () => {
@@ -118,6 +119,7 @@ class Header extends React.Component {
       useRole.push(item); value !== role.length - 1 && useRole.push(", ")
       return true;
     });
+
     return (
       <div  >
         <AppBar position="fixed" className={classNames(classes.appBar, open && classes.appBarShift)}>
@@ -149,7 +151,7 @@ class Header extends React.Component {
                 height: '27px'
               }}
               alt="logo" />
-            <div style={{marginRight: '20px', display: 'flex', flexDirection: 'row'}}>
+            <div style={{position: 'absolute' , right: '20px', display: 'flex', flexDirection: 'row'}}>
               {!dontShowHeader &&
               <div style={{display: 'flex', flexDirection: 'row'}}>
                 <PeopleIcon style={{marginRight: '10px'}}></PeopleIcon>
@@ -218,7 +220,7 @@ class Header extends React.Component {
         <div>
           {!drawer &&
             <Grid container spacing={24}>
-            {/* <Grid container spacing={24} style={{ padding: 24 }}> */}
+              {/* <Grid container spacing={24} style={{ padding: 24 }}> */}
               {/* <Grid item xs={12} sm={12} lg={12} xl={12}>
         <div style={{marginLeft:'-5%',marginTop:'-1%'}}>
         <AppBar />
@@ -260,71 +262,74 @@ class Header extends React.Component {
                   </ListItem>
                   {role && Array.isArray(role) && role.includes("dev") && (
                     <div>
-                  <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={event => {
-                        this.handleDrawerClose();
-                        history.push("/data-pipeline-tools");
-                      }}
-                    >
-                     
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('header.page.heading.dataPipeline')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "data-pipeline-tools" && '#1C9AB7', color: this.state.currentPage === "data-pipeline-tools" && '#FFFFFF' }}
+                        button
+                        onClick={event => {
+                          this.handleDrawerClose();
+                          history.push("/data-pipeline-tools");
+                          this.setState({ currentPage: 'data-pipeline-tools' })
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "data-pipeline-tools" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('header.page.heading.dataPipeline')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
                   {role && Array.isArray(role) && role.includes("user") && (
                     <div>
-                  <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={() => {
-                        this.handleDrawerClose();
-                        history.push(`${process.env.PUBLIC_URL}/translate`);
-                      }}
-                    >
-                     
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('dashboard.page.heading.title')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "translate" && '#1C9AB7', color: this.state.currentPage === "translate" && '#FFFFFF' }}
+                        button
+                        onClick={() => {
+                          this.handleDrawerClose();
+                          history.push(`${process.env.PUBLIC_URL}/translate`);
+                          this.setState({ currentPage: 'translate' })
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "translate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('dashboard.page.heading.title')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
                   {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") && !role.includes("user") && (
                     <div>
-                  <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={() => {
-                        this.handleDrawerClose();
-                        history.push(`${process.env.PUBLIC_URL}/dashboard`);
-                      }}
-                    >
-                      
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('dashboard.page.heading.title')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "dashboard" && '#1C9AB7', color: this.state.currentPage === "dashboard" && '#FFFFFF' }}
+                        button
+                        onClick={() => {
+                          this.handleDrawerClose();
+                          history.push(`${process.env.PUBLIC_URL}/dashboard`);
+                          this.setState({ currentPage: 'dashboard' })
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "dashboard" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('dashboard.page.heading.title')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
                   {/* {role.includes('analyzer') &&
@@ -344,301 +349,319 @@ class Header extends React.Component {
 								} */}
                   {role && Array.isArray(role) && role.includes("analyzer") && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={() => {
-                        this.handleDrawerClose();
-                        history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`);
-                      }}
-                    >
-                      
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('header.page.heading.uploadFile')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "benchmarktranslate" && '#1C9AB7', color: this.state.currentPage === "benchmarktranslate" && '#FFFFFF' }}
+                        button
+                        onClick={() => {
+                          this.handleDrawerClose();
+                          history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`);
+                          this.setState({ currentPage: 'benchmarktranslate' })
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "benchmarktranslate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('header.page.heading.uploadFile')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
                   {role && Array.isArray(role) && role.includes("dev") && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={() => {
-                        this.handleDrawerClose();
-                        history.push(`${process.env.PUBLIC_URL}/newcorpus`);
-                      }}
-                    >
-                      
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('commonCorpus.page.button.corpus')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "newcorpus" && '#1C9AB7', color: this.state.currentPage === "newcorpus" && '#FFFFFF' }}
+                        button
+                        onClick={() => {
+                          this.handleDrawerClose();
+                          history.push(`${process.env.PUBLIC_URL}/newcorpus`);
+                          this.setState({ currentPage: 'newcorpus' })
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "newcorpus" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('commonCorpus.page.button.corpus')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
                   {role && Array.isArray(role) && role.includes("dev", "grader") && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={() => {
-                        this.handleDrawerClose();
-                        history.push(`${process.env.PUBLIC_URL}/corpus`);
-                      }}
-                    >
-                    
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('webroutes.page.title.corpusList')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "corpus" && '#1C9AB7', color: this.state.currentPage === "corpus" && '#FFFFFF' }}
+                        button
+                        onClick={() => {
+                          this.handleDrawerClose();
+                          history.push(`${process.env.PUBLIC_URL}/corpus`);
+                          this.setState({ currentPage: 'corpus' })
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "corpus" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('webroutes.page.title.corpusList')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
                   {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader")) && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={() => {
-                        this.handleDrawerClose();
-                        history.push(`${process.env.PUBLIC_URL}/benchmark`);
-                      }}
-                    >
-                     
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('header.page.heading.benchMark')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "benchmark" && '#1C9AB7', color: this.state.currentPage === "benchmark" && '#FFFFFF' }}
+                        button
+                        onClick={() => {
+                          this.handleDrawerClose();
+                          history.push(`${process.env.PUBLIC_URL}/benchmark`);
+                          this.setState({ currentPage: 'benchmark' })
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "benchmark" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('header.page.heading.benchMark')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
 
                   {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader") || role.includes("interactive-editor")) && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={() => {
-                        this.handleDrawerClose();
-                        history.push(`${process.env.PUBLIC_URL}/interactive-translate`);
-                      }}
-                    >
-                      
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000" ,marginLeft:'6%'}}>
-                            {translate("intractive_translate.page.main.title")}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "interactive-translate" && '#1C9AB7', color: this.state.currentPage === "interactive-translate" && '#FFFFFF' }}
+                        button
+                        onClick={() => {
+                          this.handleDrawerClose();
+                          history.push(`${process.env.PUBLIC_URL}/interactive-translate`);
+                          this.setState({ currentPage: 'interactive-translate' })
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "interactive-translate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate("intractive_translate.page.main.title")}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
                   {role && Array.isArray(role) && (role.includes("editor") || role.includes("user") || role.includes("grader") || role.includes("interactive-editor")) && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={event => {
-                        this.handleDrawerClose();
-                        history.push("/view-pdf");
-                      }}
-                    >
-                      
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('webroutes.page.title.pdfList')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "view-pdf" && '#1C9AB7', color: this.state.currentPage === "view-pdf" && '#FFFFFF' }}
+                        button
+                        onClick={event => {
+                          this.handleDrawerClose();
+                          history.push("/view-pdf");
+                          this.setState({ currentPage: 'view-pdf' })
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "view-pdf" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('webroutes.page.title.pdfList')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
                   {role && Array.isArray(role) && role.includes('admin') &&
                     <div>
-                  <Divider className={classes.divider}/>s
-                    <ListItem style={{ paddingTop: '8%', paddingBottom: '8%' }} button onClick={(event) => { this.handleDrawerClose(); history.push(`${process.env.PUBLIC_URL}/graderreport`) }}>
-                      <ListItemIcon>
-                        
-                      </ListItemIcon>
-                      <ListItemText
-                        disableTypography
-                        primary={(
-                          <Typography type="body2" style={{ color: '#000000',marginLeft:'6%' }}>
-                            {translate('webroutes.page.title.graderReport')}
-                          </Typography>
-                        )}
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />s
+                    <ListItem style={{ paddingTop: '8%', paddingBottom: '8%', backgroundColor: this.state.currentPage === "graderreport" && '#1C9AB7', color: this.state.currentPage === "graderreport" && '#FFFFFF' }}
+                        button
+                        onClick={(event) => {
+                          this.handleDrawerClose();
+                          history.push(`${process.env.PUBLIC_URL}/graderreport`);
+                          this.setState({ currentPage: 'graderreport' })
+                        }}>
+                        <ListItemIcon>
+
+                        </ListItemIcon>
+                        <ListItemText
+                          disableTypography
+                          primary={(
+                            <Typography type="body2" style={{ color: this.state.currentPage === "graderreport" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('webroutes.page.title.graderReport')}
+                            </Typography>
+                          )}
+                        />
+                      </ListItem>
                     </div>
 
                   }
 
                   {role && Array.isArray(role) && role.includes("admin") && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={event => {
-                        this.handleDrawerClose();
-                        history.push(`${process.env.PUBLIC_URL}/comparison-report`);
-                      }}
-                    >
-                      
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('common.page.title.comparisonReport')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "comparison-report" && '#1C9AB7', color: this.state.currentPage === "comparison-report" && '#FFFFFF' }}
+                        button
+                        onClick={event => {
+                          this.handleDrawerClose();
+                          history.push(`${process.env.PUBLIC_URL}/comparison-report`);
+                          this.setState({ currentPage: 'comparison-report'})
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "comparison-report" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('common.page.title.comparisonReport')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
 
                   {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={event => {
-                        this.handleDrawerClose();
-                        history.push("/doctranslate");
-                      }}
-                    >
-                      
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000" ,marginLeft:'6%'}}>
-                            {translate('webroutes.page.title.translateFile')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "doctranslate" && '#1C9AB7', color: this.state.currentPage === "doctranslate" && '#FFFFFF' }}
+                        button
+                        onClick={event => {
+                          this.handleDrawerClose();
+                          history.push("/doctranslate");
+                          this.setState({ currentPage: 'doctranslate'})
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "doctranslate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('webroutes.page.title.translateFile')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
                   {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
                     <div>
-                  <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={event => {
-                        this.handleDrawerClose();
-                        history.push("/pdf-to-doc");
-                      }}
-                    >
-                     
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('webroutes.page.title.pdfToDoc')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "pdf-to-doc" && '#1C9AB7', color: this.state.currentPage === "pdf-to-doc" && '#FFFFFF' }}
+                        button
+                        onClick={event => {
+                          this.handleDrawerClose();
+                          history.push("/pdf-to-doc");
+                          this.setState({ currentPage: 'pdf-to-doc'})
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "pdf-to-doc" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('webroutes.page.title.pdfToDoc')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
                   {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={event => {
-                        this.handleDrawerClose();
-                        history.push("/pdf-upload");
-                      }}
-                    >
-                    
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('webroutes.page.title.pdfSentences')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "pdf-upload" && '#1C9AB7', color: this.state.currentPage === "pdf-upload" && '#FFFFFF' }}
+                        button
+                        onClick={event => {
+                          this.handleDrawerClose();
+                          history.push("/pdf-upload");
+                          this.setState({ currentPage: 'pdf-upload'})
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "pdf-upload" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('webroutes.page.title.pdfSentences')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
                   {role && Array.isArray(role) && (role.includes("editor") || role.includes("user")) && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={event => {
-                        this.handleDrawerClose();
-                        history.push("/viewtranslate");
-                      }}
-                    >
-                     
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000",marginLeft:'6%' }}>
-                            {translate('common.page.title.document')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "viewtranslate" && '#1C9AB7', color: this.state.currentPage === "viewtranslate" && '#FFFFFF' }}
+                        button
+                        onClick={event => {
+                          this.handleDrawerClose();
+                          history.push("/viewtranslate");
+                          this.setState({ currentPage: 'viewtranslate'})
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "viewtranslate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('common.page.title.document')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
 
                   {role && Array.isArray(role) && role.includes("admin") && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={event => {
-                        this.handleDrawerClose();
-                        history.push("/userdirectory");
-                      }}
-                    >
-                      
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000" ,marginLeft:'6%'}}>
-                            {translate('userDirectory.page.label.userManagement')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "userdirectory" && '#1C9AB7', color: this.state.currentPage === "userdirectory" && '#FFFFFF' }}
+                        button
+                        onClick={event => {
+                          this.handleDrawerClose();
+                          history.push("/userdirectory");
+                          this.setState({ currentPage: 'userdirectory'})
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "userdirectory" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('userDirectory.page.label.userManagement')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
 
@@ -667,25 +690,26 @@ class Header extends React.Component {
 
                   {role && Array.isArray(role) && role.includes("admin") && (
                     <div>
-                    <Divider className={classes.divider}/>
-                    <ListItem
-                      style={{ paddingTop: "8%", paddingBottom: "8%" }}
-                      button
-                      onClick={event => {
-                        this.handleDrawerClose();
-                        history.push(`${process.env.PUBLIC_URL}/feedback`);
-                      }}
-                    >
-                      
-                      <ListItemText
-                        disableTypography
-                        primary={
-                          <Typography type="body2" style={{ color: "#000000" ,marginLeft:'6%'}}>
-                            {translate('header.page.heading.feedBack')}
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "feedback" && '#1C9AB7', color: this.state.currentPage === "feedback" && '#FFFFFF' }}
+                        button
+                        onClick={event => {
+                          this.handleDrawerClose();
+                          history.push(`${process.env.PUBLIC_URL}/feedback`);
+                          this.setState({ currentPage: 'feedback'})
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: this.state.currentPage === "feedback" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                              {translate('header.page.heading.feedBack')}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
                     </div>
                   )}
 
