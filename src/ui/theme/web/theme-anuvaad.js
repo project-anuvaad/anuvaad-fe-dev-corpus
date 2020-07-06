@@ -11,20 +11,18 @@ const themeAnuvaad = createMuiTheme({
   palette: {
     primary: {
       light: '#09d6a1',
-      main: '#FFFFFF',
+      main: 'rgb(28, 154, 183)',
       dark: '#FFFFFF',
-      contrastText: '#000000',
+      contrastText: '#FFFFFF',
       color: 'inherit',
-      backgroundColor: "#1C9AB7 !important",
+      backgroundColor: "#1C9AB7 !important"
 
     },
     secondary: {
       light: '#09d6a1',
-      main: '#212121',
+      main: '#FFFFFF',
       dark: '09d6a1',
-      contrastText: '#FFFFFF',
-      backgroundColor: "#1C9AB7 !important",
-      fontFamily: '"Source Sans Pro", "Arial", sans-serif',
+      contrastText: '#233466'
     },
     background: {
       default: '#F5F9FA',
