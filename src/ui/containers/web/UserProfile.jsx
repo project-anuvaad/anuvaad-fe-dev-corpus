@@ -25,6 +25,24 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 import MySnackbarContentWrapper from "../../components/web/common/Snackbar";
 import { translate } from "../../../assets/localisation";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
+  root: {
+    display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center'
+  },
+  paper: {
+    marginLeft: "auto", marginRight: 'auto', width: "40%", marginTop: "3%", padding: '3%'
+  },
+  header: {
+    color: '#003366', fontWeight: '549', textAlign: 'center', paddingBottom: "12px", paddingTop: "3%"
+  }
+  dataRow: {
+    marginTop: '3%',
+    display: 'flex',
+    flexDirection: 'rows'
+  }
+};
 
 class UserProfile extends React.Component {
   constructor(props) {
@@ -158,92 +176,95 @@ class UserProfile extends React.Component {
 
   render() {
     let useRole = []
-    this.state.userDetails.roles && Array.isArray(this.state.userDetails.roles) && this.state.userDetails.roles.length> 0 && this.state.userDetails.roles.map((item, value) => {
+    this.state.userDetails.roles && Array.isArray(this.state.userDetails.roles) && this.state.userDetails.roles.length > 0 && this.state.userDetails.roles.map((item, value) => {
       useRole.push(item); value !== this.state.userDetails.roles.length - 1 && useRole.push(", ")
       return true;
     });
+    const { classes } = this.props;
     return (
-      <div>
-        <Paper style={{ marginLeft: "auto", marginRight: 'auto', width: "40%", marginTop: "5%" }}>
-          <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}>
-            {translate("common.page.label.myProfile")}{" "}
-          </Typography>
-
+      <div className={classes.root}>
+        <Typography variant="h4" className={classes.header}>
+          {translate("common.page.label.myProfile")}
+        </Typography>
+        <Paper className={classes.paper}>
           <Grid container spacing={4}>
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "10.5%" }}>
-                {translate("common.page.label.firstName")}{" "}
-              </Typography>
+            <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.dataRow} style={{marginTop: '0px'}}>
+              <Grid item xs={5} sm={5} lg={5} xl={5} style={{ textAlign: 'left' }}>
+                <Typography value="" variant="title" gutterBottom="true" style={{}}>
+                  {translate("common.page.label.firstName")}{" "}
+                </Typography>
+              </Grid>
+              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ textAlign: 'left' }}>
+                {/* <br /> */}
+                {/* <br /> */}
+                <Typography value="" variant="title" gutterBottom="true" style={{ textTransform: "capitalize" }}>
+                  {" "}
+                  {this.state.userDetails.firstname}{" "}
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <br />
-              <br />
-              <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", textTransform: "capitalize" }}>
-                {" "}
-                {this.state.userDetails.firstname}{" "}
-              </Typography>
-            </Grid>
-            <Grid container spacing={4}>
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.dataRow}>
+              <Grid item xs={5} sm={5} lg={5} xl={5} style={{ textAlign: 'left' }}>
+                <Typography value="" variant="title" gutterBottom="true">
                   {translate("common.page.label.lastName")}{" "}
                 </Typography>
               </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <br />
-                <br />
-                <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", textTransform: "capitalize" }}>
+              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ textAlign: 'left' }}>
+                {/* <br />
+                <br /> */}
+                <Typography value="" variant="title" gutterBottom="true" style={{ textTransform: "capitalize" }}>
                   {" "}
                   {this.state.userDetails.lastname}{" "}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid container spacing={4}>
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.dataRow}>
+              <Grid item xs={5} sm={5} lg={5} xl={5} style={{ textAlign: 'left' }}>
+                <Typography value="" variant="title" gutterBottom="true">
                   {translate("common.page.label.email")}{" "}
                 </Typography>
               </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <br />
-                <br />
-                <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", marginTop: "-1%" }}>
+              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ textAlign: 'left' }}>
+                {/* <br />
+                <br /> */}
+                <Typography value="" variant="title" gutterBottom="true" style={{ marginTop: "-1%" }}>
                   {" "}
                   {this.state.userDetails.email}{" "}
                 </Typography>
               </Grid>
             </Grid>
 
-            <Grid container spacing={4}>
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.dataRow}>
+              <Grid item xs={5} sm={5} lg={5} xl={5} style={{ textAlign: 'left' }}>
+                <Typography value="" variant="title" gutterBottom="true">
                   {translate("profile.page.label.role")}{" "}
                 </Typography>
               </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ textAlign: 'left' }}>
+                {/* <br />
                 <br />
-                <br />
-                <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", marginTop: "-1%" }}>
+                <br /> */}
+                <Typography value="" variant="title" gutterBottom="true" style={{ marginTop: "-1%" }}>
                   {" "}
                   [{useRole}]{" "}
                 </Typography>
               </Grid>
             </Grid>
 
-            <Grid container spacing={4}>
-              <Grid item xs={5} sm={5} lg={5} xl={5}>
-                <Typography value="" variant="title" gutterBottom="true" style={{ marginLeft: "12%", paddingTop: "11%" }}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.dataRow}>
+              <Grid item xs={5} sm={5} lg={5} xl={5} style={{ textAlign: 'left' }}>
+                <Typography value="" variant="title" gutterBottom="true" >
                   {translate("common.page.label.selectLanguage")}{" "}
                 </Typography>
               </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <br />
-                <br />
+              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ textAlign: 'initial' }}>
+                {/* <br />
+                <br /> */}
 
                 <Select
                   gutterBottom="true"
                   name="selectlanguage"
-                  style={{ marginLeft: "12%", marginTop: "-1%", minWidth: 120 }}
+                  style={{ marginTop: "-1%", minWidth: 120 }}
                   id="outlined-age-simple"
                   value={this.state.lang}
                   onChange={this.handleChangeLanguage.bind(this)}
@@ -255,13 +276,14 @@ class UserProfile extends React.Component {
               </Grid>
             </Grid>
           </Grid>
-          <div style={{ marginLeft: "90%", paddingBottom: "20px" }}>
-            <Tooltip title={translate("userProfile.page.placeholder.resetPassword")}>
-              <Fab aria-haspopup="true" onClick={this.handleReset} color="primary" size="medium">
-                <AccountCircle />
-              </Fab>
-            </Tooltip>
-          </div>
+
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
+              <Tooltip title={translate("userProfile.page.placeholder.resetPassword")}>
+                <Fab aria-haspopup="true" onClick={this.handleReset} color="primary" size="medium" style={{ color: '#1C9AB7' }}>
+                  <AccountCircle />
+                </Fab>
+              </Tooltip>
+          </Grid>
         </Paper>
 
         {this.state.drawer ? (
@@ -275,7 +297,7 @@ class UserProfile extends React.Component {
           >
             <Typography
               variant="h5"
-              style={{ color: darkBlack, background: blueGrey50, paddingLeft: "28%", paddingBottom: "12px", paddingTop: "8px" }}
+              style={{ color: darkBlack, background: blueGrey50, paddingBottom: "12px", paddingTop: "8px", textAlign: 'center' }}
             >
               {translate("userProfile.page.label.changePassword")}
             </Typography>
@@ -335,13 +357,13 @@ class UserProfile extends React.Component {
                   <Snackbar anchorOrigin={{ vertical: "top", horizontal: "right" }} open={this.state.open} autoHideDuration={6000}>
                     <MySnackbarContentWrapper onClose={this.handleClose} variant="success" message={this.state.messageSnack} />
                   </Snackbar>
-                  <DialogActions style={{ marginRight: "22px" }}>
+                  <DialogActions style={{ marginLeft: "0px", marginRight: '0px' }}>
                     <Button
                       variant="contained"
                       onClick={this.handleCancel}
-                      color="primary"
+                      color="secondary"
                       aria-label="edit"
-                      style={{ width: "50%", marginBottom: "4%", marginTop: "4%" }}
+                      style={{ width: "50%", marginBottom: "4%", marginTop: "4%", backgroundColor: "#1C9AB7", color: "#FFFFFF", marginLeft: "0px", borderRadius: "20px 20px 20px 20px" }}
                     >
                       {translate("common.page.button.cancel")}
                     </Button>
@@ -351,7 +373,7 @@ class UserProfile extends React.Component {
                       onClick={this.handleSubmit}
                       color="primary"
                       aria-label="edit"
-                      style={{ width: "50%", marginBottom: "4%", marginTop: "4%" }}
+                      style={{ width: "50%", marginBottom: "4%", marginTop: "4%", backgroundColor: "#1C9AB7", color: "#FFFFFF", marginRight: "0px", borderRadius: "20px 20px 20px 20px" }}
                     >
                       {translate("common.page.button.submit")}
                     </Button>
@@ -361,8 +383,8 @@ class UserProfile extends React.Component {
             </DialogContent>
           </Dialog>
         ) : (
-          ""
-        )}
+            ""
+          )}
       </div>
     );
   }
@@ -387,4 +409,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserProfile));
+export default withRouter(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(UserProfile)));
