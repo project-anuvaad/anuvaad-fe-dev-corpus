@@ -279,7 +279,7 @@ class UserProfile extends React.Component {
 
             <Grid item xs={12} sm={12} lg={12} xl={12} style={{ textAlign: 'right' }}>
               <Tooltip title={translate("userProfile.page.placeholder.resetPassword")}>
-                <Fab aria-haspopup="true" onClick={this.handleReset} color="primary" size="medium" style={{ color: '#1C9AB7' }}>
+                <Fab aria-haspopup="true" onClick={this.handleReset} color="primary" size="medium">
                   <AccountCircle />
                 </Fab>
               </Tooltip>

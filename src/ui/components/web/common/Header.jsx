@@ -98,7 +98,7 @@ class Header extends React.Component {
   };
 
   handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
+    this.setState({ anchorEl: event.currentTarget, currentPage: "" });
   };
 
   handleMenuOpenClose = event => {
