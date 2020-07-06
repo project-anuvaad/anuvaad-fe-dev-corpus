@@ -384,8 +384,7 @@ class Dashboard extends React.Component {
                   onClick={this.handleClear.bind(this)}
                   aria-label="edit"
                   style={{
-                    width: "100%", backgroundColor: "#1C9AB7",
-                    color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '46px'
+                    width: "100%", borderRadius: "20px 20px 20px 20px", height: '46px'
                   }}
                 // className={classes.button1}
                 >
@@ -399,8 +398,7 @@ class Dashboard extends React.Component {
                   onClick={this.handleSubmit.bind(this, role)}
                   aria-label="edit"
                   style={{
-                    width: "100%", backgroundColor: "#1C9AB7",
-                    color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '46px'
+                    width: "100%",  borderRadius: "20px 20px 20px 20px", height: '46px'
                   }}
                 // className={classes.button2}
                 >

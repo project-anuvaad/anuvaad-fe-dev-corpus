@@ -27,8 +27,7 @@ const PdfToDocStyles = theme => ({
   button: {
     marginTop: "6%",
     width: "100%",
-    backgroundColor: "#1C9AB7",
-    color: "#FFFFFF",
+    
     borderRadius: "20px 20px 20px 20px",
     height: '45px'
   },

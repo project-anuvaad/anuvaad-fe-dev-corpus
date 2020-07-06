@@ -22,6 +22,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import logo from '../../../../assets/logo.png';
+import anuvaadLogo from '../../../../assets/AnuvaadLogo.svg';
 import { translate } from '../../../../../src/assets/localisation';
 import DownIcon from '@material-ui/icons/ArrowDropDown';
 import PeopleIcon from '@material-ui/icons/Person';
@@ -144,13 +145,14 @@ class Header extends React.Component {
             <Typography variant="title" color="inherit" className={forDemo ? classes.felxDemo : classes.flex}>
               {title}
             </Typography>
-            <img src="Logo.svg"
+            
+            <img src={anuvaadLogo}
               style={{
                 position: 'absolute',
                 marginLeft: '47%',
                 height: '27px'
               }}
-              alt="logo" />
+              alt="" />
             <div style={{position: 'absolute' , right: '20px', display: 'flex', flexDirection: 'row'}}>
               {!dontShowHeader &&
               <div style={{display: 'flex', flexDirection: 'row'}}>

@@ -154,11 +154,30 @@ class Newcorpus extends React.Component {
 
       case 1:
         return <div>
-          <Grid container spacing={8} >
-            <Grid item xs={7} sm={7} lg={7} xl={7}>
-              <Typography value='' variant="title" gutterBottom="true" style={{paddingTop: '15%' }} >{translate('common.page.label.targetLang')}</Typography>
+                    <Grid container>
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row', marginTop: '5%' }}>
+              <Grid item xs={8} sm={8} lg={7} xl={7} style={{ textAlign: 'left' }}>
+          
+              <Typography value='' variant="title" style={{ paddingTop: '3%' }} >{translate('common.page.label.targetLang')}</Typography>
 
             </Grid>
+            <Grid item xs={5} sm={5} lg={6} xl={6}>
+
+              <Select
+                style={{ width: '95%', marginLeft: '5%' }}
+                value={this.state.hindi}
+                onChange={this.handleSelectChange}
+                input={
+                  <OutlinedInput name='hindi' id="outlined-age-simple" />
+                }
+              >
+                {this.state.MenuItargettemValues.map((item) => (
+                  <MenuItem key={item} value={item}>{item}</MenuItem>
+                ))}
+              </Select>
+
+            </Grid>
+          </Grid><br />
             <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginTop: '5%' }}>
               <DropzoneArea Dropzoneiles=""
                 dropZoneClass={this.props.classes.dropZoneArea}
@@ -297,8 +316,8 @@ class Newcorpus extends React.Component {
             </form>
 
             <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row' }}>
-              <Button variant="contained" className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? translate('common.page.button.cancel') : translate('common.page.button.back')} </Button>
-              <Button variant="contained" className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) : this.handleNext}> {this.state.activeStep === 2 ? translate('common.page.label.createCorpus') : translate('common.page.button.next')}</Button>
+              <Button variant="contained" color='primary' className={classes.button1} onClick={this.handleBack}> {this.state.activeStep === 0 ? translate('common.page.button.cancel') : translate('common.page.button.back')} </Button>
+              <Button variant="contained" color='primary'className={classes.btns} onClick={this.state.activeStep === 2 ? this.handleSubmit.bind(this) : this.handleNext}> {this.state.activeStep === 2 ? translate('common.page.label.createCorpus') : translate('common.page.button.next')}</Button>
             </Grid>
             {
               this.state.warning ? <Grid item xs={12} sm={12} lg={12} xl={12} style={{ textAlign: 'center' }}>

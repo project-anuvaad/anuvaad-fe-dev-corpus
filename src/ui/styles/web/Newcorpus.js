@@ -64,8 +64,7 @@ button1: {
   marginLeft:'0.1%',
   width:'48%',
   height:'43px',
-  backgroundColor:"#1C9AB7",
-   color:"#FFFFFF",
+  
    borderRadius:"20px 20px 20px 20px",
 },
 btns: {
@@ -75,8 +74,7 @@ btns: {
   width:'48%',
   height:'43px',
   marginLeft:'-2.6%',
-  backgroundColor:"#1C9AB7",
-   color:"#FFFFFF",
+  
    borderRadius:"20px 20px 20px 20px",
 },
   paper: {

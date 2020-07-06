@@ -204,12 +204,12 @@ class doctranslate extends React.Component {
                 <Grid container spacing={24} style={{ marginLeft: "5.5%" }}>
 
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
-                    <Button value={translate("common.page.label.submit")} variant={"contained"} style={{
+                    <Button color='primary'value={translate("common.page.label.submit")} variant={"contained"} style={{
                       marginTop: "2.8%",
                       width: "91.9%",
-                      backgroundColor: '#1C9AB7',
+                     
                       borderRadius: "20px 20px 20px 20px",
-                      color: "#FFFFFF",
+                     
                       height: '45px'
                     }} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} />
                   </Grid>
