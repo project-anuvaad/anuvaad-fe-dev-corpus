@@ -15,7 +15,7 @@ const PdfToDocStyles = theme => ({
   typographyHeader: {
     fontfamily: '"Source Sans Pro", sans-serif',
     color: '#003366',
-    textAlign: "center", fontWeight: '549', marginTop: '5%'
+    textAlign: "center", fontWeight: '549', marginTop: '30%'
   },
   paper: {
     width: "40%",

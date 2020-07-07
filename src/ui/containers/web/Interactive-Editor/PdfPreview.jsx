@@ -61,8 +61,8 @@ class PdfPreview extends React.Component {
               <Grid container spacing={8} style={{ marginLeft: "25%" }}>
                 <Grid item xs={4} sm={3} lg={2} xl={2}>
                   <Button
-                    style={{ fontWeight: "bold", width: "100%", color: pageNo <= 1 ? "#FFFFFF" : "#233466" }}
-                    color="secondary"
+                    style={{ fontWeight: "bold", width: "100%" }}
+                    color="primary"
                     disabled={pageNo <= 1}
                     onClick={event => {
                       this.props.handlePageChange(-1);
@@ -73,19 +73,19 @@ class PdfPreview extends React.Component {
                   </Button>
                 </Grid>
                 <Grid item xs={4} sm={3} lg={3} xl={3}>
-                  <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none", color: "#233466" }} color="secondary">
+                  <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none" }} color="primary">
                     {`${pageNo} / ${numPages}`}
                   </Button>
                 </Grid>
 
                 <Grid item xs={4} sm={3} lg={1} xl={1}>
                   <Button
-                    color="secondary"
+                    color="primary"
                     disabled={numPages <= pageNo}
                     onClick={event => {
                       this.props.handlePageChange(1);
                     }}
-                    style={{ fontWeight: "bold", width: "100%", color: numPages <= pageNo ? "#FFFFFF" : "#233466" }}
+                    style={{ fontWeight: "bold", width: "100%" }}
                   >
                     <ChevronRightIcon size="large" />{" "}
                   </Button>
@@ -93,17 +93,17 @@ class PdfPreview extends React.Component {
               </Grid>
             )}
           </Grid>
-          {/* <Grid item xs={1} sm={1} lg={1} xl={1}>
+          <Grid item xs={1} sm={1} lg={1} xl={1}>
             {this.props.zoom ? (
               <Button
-                color="primary"
+                color="secondary"
                 disabled={numPages <= pageNo}
                 onClick={event => {
                   this.props.handleChange();
                 }}
                 style={{ fontWeight: "bold", width: "100%" }}
               >
-                <ZoomOutIcon size="Large" />
+                <ZoomOutIcon size="Large" style={{color: '#233466'}}/>
               </Button>
             ) : (
                 <Button
@@ -114,10 +114,10 @@ class PdfPreview extends React.Component {
                   }}
                   style={{ fontWeight: "bold", width: "100%" }}
                 >
-                  <ZoomInIcon size="Large" />
+                  <ZoomInIcon size="Large" style={{color: '#233466'}}/>
                 </Button>
               )}
-          </Grid> */}
+          </Grid>
           <Grid item xs={1} sm={12} lg={3} xl={3} style={{ textAlign: 'right' }}>
             <div style={{ display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'flex-end', padding:'0px' }}>
 
@@ -125,31 +125,9 @@ class PdfPreview extends React.Component {
                 onClick={event => {
                   this.props.handleClick(false, 4);
                 }}
-                style={{ marginRight: '2px !important', justifyContent: 'flex-end', padding:'0px' }}
+                style={{ marginRight: '2px !important' }}
               >
-                {this.props.zoom ? (
-                  <Button
-                    color="primary"
-                    disabled={numPages <= pageNo}
-                    onClick={event => {
-                      this.props.handleChange();
-                    }}
-                    style={{ fontWeight: "bold", width: "100%" }}
-                  >
-                    <ZoomOutIcon size="Large" />
-                  </Button>
-                ) : (
-                    <Button
-                      color="primary"
-                      disabled={numPages <= pageNo}
-                      onClick={event => {
-                        this.props.handleChange();
-                      }}
-                      style={{ fontWeight: "bold", width: "100%" }}
-                    >
-                      <ZoomInIcon size="Large" style={{color: '#233466'}}/>
-                    </Button>
-                  )}
+                
                 <CloseIcon style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }} color="primary" />
                 <Typography value="" variant="subtitle6" color="primary" style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }}>
                   {translate("common.page.label.close")}
