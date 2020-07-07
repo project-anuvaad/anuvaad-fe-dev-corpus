@@ -431,7 +431,7 @@ class IntractiveTrans extends React.Component {
                 color='primary'
                 style={{
                   width: "100%", 
-                   borderRadius: "20px 20px 20px 20px", height: '46px',marginLeft:'0.5%'
+                   borderRadius: "20px 20px 20px 20px", height: '46px',marginLeft:'0.6%'
                 }}
               >
                 {translate("common.page.button.clear")}

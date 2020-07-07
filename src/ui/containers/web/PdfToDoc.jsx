@@ -124,7 +124,7 @@ class PdfUpload extends Component {
               </Grid>
             )}
             <Grid item xs={12} sm={12} lg={12} xl={12} style={{padding: '0px'}}>
-              <Button variant="contained" className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
+              <Button variant="contained" color='primary'className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
                 {translate("common.page.button.submit")}
               </Button>
             </Grid>

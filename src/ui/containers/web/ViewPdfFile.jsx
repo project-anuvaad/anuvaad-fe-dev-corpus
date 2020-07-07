@@ -172,11 +172,11 @@ class PdfUpload extends React.Component {
           <Typography variant="title" color="inherit" style={{ flex: 1 }} />
           {this.state.role.includes("dev") || this.state.role.includes("grader") || this.state.role.includes("user") || this.state.role.includes("interactive-editor") ? (
             <Button
+            color="primary"
               variant="extendedFab"
 
               style={{
-                marginRight: 0, backgroundColor: "#1C9AB7",
-                color: "#FFFFFF"
+                marginRight: 0
               }}
               aria-label="Add"
               onClick={() => {

@@ -203,7 +203,7 @@ class Corp extends React.Component {
             <Button
               variant="extendedFab"
               color="primary"
-              style={{ marginRight: 0,backgroundColor:'#1C9AB7',color:'#FFFFFF' }}
+              style={{ marginRight: 0}}
               aria-label="Add"
               onClick={() => {
                 history.push(`${process.env.PUBLIC_URL}/newcorpus`);
