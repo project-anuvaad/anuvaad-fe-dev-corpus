@@ -196,7 +196,7 @@ class UserDirectory extends React.Component {
                       aria-label="edit"
                       style={{ width: "170px", marginLeft: "-13%", marginBottom: "4%", marginTop: "4%" }}
                     >
-                      {tableMeta.rowData[7] ? translate("userDirectory.page.label.deactivated") : translate("userDirectory.page.label.deactivated")}
+                      {tableMeta.rowData[7] ? translate("userDirectory.page.label.deactivated") : translate("userDirectory.page.label.activated")}
                     </Button>
                   ) : (
                     ""
@@ -240,8 +240,6 @@ class UserDirectory extends React.Component {
           return data.sort((a, b) => {
             const dateA = new Date(a.data[dataIndex]).getTime();
             const dateB = new Date(b.data[dataIndex]).getTime();
-            console.log(dateA);
-            console.log(dateB);
             return (dateA < dateB ? -1 : 1) * (rowIndex === "desc" ? 1 : -1);
           });
         } else {

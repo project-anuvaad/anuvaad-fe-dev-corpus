@@ -375,6 +375,7 @@ const localization_EN_Data = {
   "common.page.label.ok": "Ok",
   "intractive_translate.page.preview.rows": "Rows",
   "intractive_translate.page.preview.columns": "Columns",
+  "userDirectory.page.label.activated": "Activate"
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
@@ -730,6 +731,7 @@ const localization_HI_Data = {
   "common.page.label.ok": "ठीक है",
   "intractive_translate.page.preview.rows": "पंक्ति",
   "intractive_translate.page.preview.columns": "कॉलम",
+  "userDirectory.page.label.activated": "सक्रिय"
 };
 
 export function translate(locale_text) {
