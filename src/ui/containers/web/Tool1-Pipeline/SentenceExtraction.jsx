@@ -52,9 +52,9 @@ class SentenceExtraction extends React.Component {
     return (
       <div>
         {this.props.match.path !== "/stage2/datasource" && (
-          <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "10%", marginTop: "40px" }} />
+          <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "3%", marginTop: "40px" }} />
         )}
-        <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
+        <Paper style={{ marginLeft: "3%", marginRight: "3%", marginTop: "3%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
           {this.props.match.path !== "/stage2/datasource" && (
             <StepDetails workSpace={this.props.match.params.name} activeStep={this.state.activeStep} />
           )}
