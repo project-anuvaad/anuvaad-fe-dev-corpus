@@ -732,10 +732,10 @@ class IntractiveTrans extends React.Component {
                 </Grid>
                 <Grid item xs={12} sm={6} lg={2} xl={2}>
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     size="large"
                     color="primary"
-                    style={{ backgroundColor: "#1C9AB7", color: "#FFFFFF", width: "100%", minWidth: "110px", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
+                    style={{ width: "100%", minWidth: "110px", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
                     onClick={() => this.handlePreview()}
                   >
                     <VisibilityIcon fontSize="large" />

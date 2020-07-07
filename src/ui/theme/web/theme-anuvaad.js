@@ -10,17 +10,17 @@ const themeAnuvaad = createMuiTheme({
   },
   palette: {
     primary: {
-      light: '#09d6a1',
+      light: 'rgb(28, 154, 183)',
       main: 'rgb(28, 154, 183)',
-      dark: '#FFFFFF',
+      dark: 'rgb(7, 80, 97)',
       contrastText: '#FFFFFF',
       color: 'inherit',
 
     },
     secondary: {
-      light: 'rgb(28, 154, 183)',
+      light: '#FFFFFF',
       main: '#FFFFFF',
-      dark: '09d6a1',
+      dark: '#FFFFFF',
       contrastText: '#233466'
     },
     background: {
@@ -33,6 +33,7 @@ const themeAnuvaad = createMuiTheme({
   },
 
   drawer: {
+
     default: '#1976d2',
     color:'inherit'
   },
@@ -43,13 +44,7 @@ const themeAnuvaad = createMuiTheme({
     fontSize: 16,
     color: "#1C9AB7"
   },
-  // overrides: {
-  //   MuiButton: {
-  //     root: {
-  //       backgroundColor: "#1C9AB7 !important" , color: "#FFFFFF !important", borderRadius: "20px 20px 20px 20px", height: '45px'
-  //     }
-  //   },
-  // }
+ 
 
 
 
