@@ -148,7 +148,7 @@ class ProcessingWorkspace extends React.Component {
 
     return (
       <div>
-        <div style={{ marginRight: "28%", marginTop: "40px" }}>
+        <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "40px" }}>
           <MUIDataTable data={this.state.workspaces} columns={columns} options={options} />
         </div>
       </div>

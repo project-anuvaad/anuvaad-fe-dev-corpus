@@ -183,8 +183,8 @@ class WorkspaceDetails extends React.Component {
 
     return (
       <div>
-        <TabDetals activeStep={this.state.value} style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }} />
-        <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+        <TabDetals activeStep={this.state.value} style={{ marginLeft: "3%", marginRight: "3%", marginTop: "40px" }} />
+        <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "40px" }}>
           <MUIDataTable title={translate("common.tools.title.processingWorkspaces")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>

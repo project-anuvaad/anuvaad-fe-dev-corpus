@@ -135,7 +135,7 @@ class CreateWorkspace extends React.Component {
           </Button>
         </Toolbar>
 
-        <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "1%", paddingTop: "5px", paddingBottom: "3%" }} elevation={4}>
+        <Paper style={{ marginLeft: "3%", marginRight: "3%", marginTop: "1%", paddingTop: "5px", paddingBottom: "3%" }} elevation={4}>
           <Typography
             gutterBottom
             variant="title"
