@@ -496,7 +496,7 @@ class Header extends React.Component {
                   )}
                   {role && Array.isArray(role) && role.includes('admin') &&
                     <div>
-                      <Divider className={classes.divider} />s
+                      <Divider className={classes.divider} />
                     <ListItem style={{ paddingTop: '8%', paddingBottom: '8%', backgroundColor: this.state.currentPage === "graderreport" && '#1C9AB7', color: this.state.currentPage === "graderreport" && '#FFFFFF' }}
                         button
                         onClick={(event) => {

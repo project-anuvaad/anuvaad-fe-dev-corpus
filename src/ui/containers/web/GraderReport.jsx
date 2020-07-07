@@ -344,13 +344,13 @@ class GraderReport extends React.Component {
       <div>
         {!this.state.tocken ? (
           <div>
-            <Grid container spacing={24} style={{ padding: 5 }}>
-              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "16%", marginTop: "38px" }}>
+            <Grid container spacing={24} style={{ padding: 5, marginLeft: "3%", marginRight: "3%" }}>
+              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "38px" }}>
                 <Typography variant="title" color="inherit">
                   {translate("common.page.label.fromDate")}
                 </Typography>
               </Grid>
-              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "-8%", marginTop: "20px", width: "40px" }}>
+              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "20px" }}>
                 <TextField
                   id={this.state.from_date}
                   value={this.state.from_date}
@@ -369,7 +369,7 @@ class GraderReport extends React.Component {
                   {translate("common.page.label.toDate")}
                 </Typography>
               </Grid>
-              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "-8%", marginTop: "20px" }}>
+              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "20px" }}>
                 <TextField
                   id={this.state.to_date}
                   value={this.state.to_date}
@@ -383,7 +383,7 @@ class GraderReport extends React.Component {
                 />
               </Grid>
 
-              <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginLeft: "-8%", marginTop: "34px" }}>
+              <Grid item xs={3} sm={3} lg={3} xl={3} style={{marginTop: "34px" }}>
                 <Button
                   variant="contained"
                   onClick={event => {
@@ -397,7 +397,7 @@ class GraderReport extends React.Component {
                 </Button>
               </Grid>
             </Grid>
-            <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+            <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
               <MUIDataTable
                 title={translate("GraderReport.page.title.graderDetails")}
                 data={this.state.graderDetails ? this.state.graderDetails : []}
@@ -412,7 +412,7 @@ class GraderReport extends React.Component {
               variant="extended"
               color="primary"
               aria-label="Add"
-              style={{ marginLeft: "-4%", marginTop: "1%" }}
+              style={{ marginTop: "1%" }}
               onClick={() => {
                 this.handleClose(
                   this.state.categoryValue
@@ -430,7 +430,7 @@ class GraderReport extends React.Component {
             </Fab>
 
             {!this.state.tockenValue ? (
-              <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+              <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
                 <MUIDataTable
                   title={this.state.title1 ? this.state.title1 : translate("gradeReport.page.label.modelDetails")}
                   data={this.state.graderReport ? this.state.graderReport : []}
@@ -439,7 +439,7 @@ class GraderReport extends React.Component {
                 />
               </div>
             ) : !this.state.categoryValue ? (
-              <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+              <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
                 <MUIDataTable
                   title={this.state.title2 ? this.state.title2 : translate("common.page.title.categoryDetails")}
                   data={this.state.graderRecords ? this.state.graderRecords : []}
@@ -448,7 +448,7 @@ class GraderReport extends React.Component {
                 />
               </div>
             ) : (
-              <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+              <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
                 <MUIDataTable
                   title={this.state.title3 ? this.state.title3 : translate("gradeReport.page.label.gradedRecords")}
                   data={this.state.categoryReport ? this.state.categoryReport : []}
