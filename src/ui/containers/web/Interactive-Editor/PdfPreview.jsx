@@ -85,7 +85,7 @@ class PdfPreview extends React.Component {
                     onClick={event => {
                       this.props.handlePageChange(1);
                     }}
-                    style={{ fontWeight: "bold", width: "100%", color: numPages <= pageNo ? "#FFFFFF" : "#233466" }}
+                    style={{ fontWeight: "bold", width: "100%" }}
                   >
                     <ChevronRightIcon size="large" />{" "}
                   </Button>
@@ -94,29 +94,29 @@ class PdfPreview extends React.Component {
             )}
           </Grid>
           <Grid item xs={1} sm={1} lg={1} xl={1}>
-          {this.props.zoom ? (
-                  <Button
-                    color=""
-                    disabled={numPages <= pageNo}
-                    onClick={event => {
-                      this.props.handleChange();
-                    }}
-                    style={{ fontWeight: "bold", width: "100%" }}
-                  >
-                    <ZoomOutIcon size="Large" style={{color: '#233466'}}/>
-                  </Button>
-                ) : (
-                    <Button
-                      color="primary"
-                      disabled={numPages <= pageNo}
-                      onClick={event => {
-                        this.props.handleChange();
-                      }}
-                      style={{ fontWeight: "bold", width: "100%" }}
-                    >
-                      <ZoomInIcon size="Large" style={{color: '#233466'}}/>
-                    </Button>
-                  )}
+            {this.props.zoom ? (
+              <Button
+                color="secondary"
+                disabled={numPages <= pageNo}
+                onClick={event => {
+                  this.props.handleChange();
+                }}
+                style={{ fontWeight: "bold", width: "100%" }}
+              >
+                <ZoomOutIcon size="Large" style={{color: '#233466'}}/>
+              </Button>
+            ) : (
+                <Button
+                  color="primary"
+                  disabled={numPages <= pageNo}
+                  onClick={event => {
+                    this.props.handleChange();
+                  }}
+                  style={{ fontWeight: "bold", width: "100%" }}
+                >
+                  <ZoomInIcon size="Large" style={{color: '#233466'}}/>
+                </Button>
+              )}
           </Grid>
           <Grid item xs={1} sm={12} lg={3} xl={3} style={{ textAlign: 'right' }}>
             <div style={{ display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'flex-end', padding:'0px' }}>
@@ -125,7 +125,7 @@ class PdfPreview extends React.Component {
                 onClick={event => {
                   this.props.handleClick(false, 4);
                 }}
-                style={{ marginRight: '2px !important', justifyContent: 'flex-end', padding:'0px' }}
+                style={{ marginRight: '2px !important' }}
               >
                 
                 <CloseIcon style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }} color="primary" />
