@@ -80,7 +80,7 @@ class GarderTranslate extends React.Component {
     return (
       <div>
         <Grid container spacing={4}>
-          <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginLeft: "-130px" }}>
+          <Grid item xs={3} sm={3} lg={3} xl={3}>
             <div>
               <div
                 style={{

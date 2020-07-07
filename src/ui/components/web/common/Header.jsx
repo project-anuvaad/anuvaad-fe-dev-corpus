@@ -504,9 +504,9 @@ class Header extends React.Component {
                           history.push(`${process.env.PUBLIC_URL}/graderreport`);
                           this.setState({ currentPage: 'graderreport' })
                         }}>
-                        <ListItemIcon>
+                        {/* <ListItemIcon>
 
-                        </ListItemIcon>
+                        </ListItemIcon> */}
                         <ListItemText
                           disableTypography
                           primary={(
