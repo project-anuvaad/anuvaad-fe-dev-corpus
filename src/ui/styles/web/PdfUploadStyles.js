@@ -56,7 +56,7 @@ const PdfUploadStyles = theme => ({
     minHeight:'400px'
   },
   grid:{
-    marginLeft: "6%" 
+    marginLeft: "5.5%" 
   },
   textfield:{
     width: '87.9%',
@@ -68,7 +68,7 @@ const PdfUploadStyles = theme => ({
   button: {
     marginTop: "6%",
     marginLeft: "2.7%",
-    width: "87.5%",
+    width: "87.6%",
     backgroundColor:'#1C9AB7',
     borderRadius:"20px 20px 20px 20px",
     color:"#FFFFFF"

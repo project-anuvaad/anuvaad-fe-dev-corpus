@@ -68,6 +68,7 @@ const DashboardStyles = theme => ({
   button1: {
     width: "100%", borderRadius: "20px 20px 20px 20px", height: '46px'
   },
+  
   button2:{
     width: "44%", marginTop:'5%', marginLeft:'5.6%'
   },

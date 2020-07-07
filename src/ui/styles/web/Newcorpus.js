@@ -38,7 +38,7 @@ label:{
   paddingRight:'3%'
 },
 select:{
-  minWidth: 120, width: '95%', align: 'right',marginLeft:'5%' 
+  minWidth: 120, width: '95%', align: 'right',marginLeft:'4.9%' 
 },
 button: {
   justifyContent: 'center',
