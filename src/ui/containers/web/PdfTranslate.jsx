@@ -94,7 +94,7 @@ class doctranslate extends React.Component {
         item.target_language_code === this.state.target.language_code && item.source_language_code === this.state.source.language_code && item.is_primary ?
           model = item : ''))
       const { APITransport } = this.props;
-      const apiObj = new PdfTranslation(this.state.source.language_name, this.state.target.language_name, this.state.files, model, this.state.source.language_code, this.state.target.language_code);
+      const apiObj = new PdfTranslation(this.state.source.language_name, this.state.target.language_name, this.state.files[0], model, this.state.source.language_code, this.state.target.language_code);
       APITransport(apiObj);
       this.setState({ showLoader: true })
 
@@ -202,7 +202,7 @@ class doctranslate extends React.Component {
                 <br />
                 {/* <Grid container spacing={24} > */}
                 <Grid container spacing={24} style={{ marginLeft: "5.5%" }}>
-
+                      
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
                     <Button color='primary'value={translate("common.page.label.submit")} variant={"contained"} style={{
                       marginTop: "2.8%",
@@ -211,7 +211,7 @@ class doctranslate extends React.Component {
                       borderRadius: "20px 20px 20px 20px",
                      
                       height: '45px'
-                    }} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} />
+                    }} dis={this.state.target.language_code && this.state.source.language_code && this.state.files[0].name ? false : true} onClick={this.handleSubmit} />
                   </Grid>
                 </Grid>
               </Grid>

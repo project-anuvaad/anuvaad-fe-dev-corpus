@@ -96,6 +96,7 @@ class Newcorpus extends React.Component {
   }
 
   handleSource = (files) => {
+    console.log(files)
     this.setState({
       englishFile: files
     });
@@ -110,6 +111,8 @@ class Newcorpus extends React.Component {
 
   getStepContent = (stepIndex) => {
     switch (stepIndex) {
+
+      
       case 0:
         return <div>
           <Grid container>
@@ -134,14 +137,16 @@ class Newcorpus extends React.Component {
 
               </Grid>
             </Grid>
+
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginTop: '5%' }}>
             {this.state.val > 1 ?
-              <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginTop: '5%' }}>
+              
                 <DropzoneArea
                   onDrop={this.handleSource} showPreviewsInDropzone={true} style={{ marginTop: '0%' }} acceptedFiles={['.pdf']} dropzoneText={translate('common.page.label.addDropFile')} filesLimit={1}
                 ></DropzoneArea>
-              </Grid> : ''
+               : ''
             }
-            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginTop: '5%' }}>
+            
               <DropzoneArea
                 onDrop={this.handleSource}
                 dropZoneClass={this.props.classes.dropZoneArea}
