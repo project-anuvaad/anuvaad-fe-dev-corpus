@@ -136,6 +136,7 @@ class UserDirectory extends React.Component {
           sort: true
         }
       },
+      
       {
         name: "roles",
 
@@ -162,6 +163,14 @@ class UserDirectory extends React.Component {
         name: "isActive",
         options: {
           display: "excluded"
+        }
+      },
+      {
+        name: "createdAt",
+        label: "Created At",
+        options: {
+          filter: true,
+          sort: false
         }
       },
 
