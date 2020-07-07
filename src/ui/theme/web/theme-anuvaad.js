@@ -15,11 +15,10 @@ const themeAnuvaad = createMuiTheme({
       dark: '#FFFFFF',
       contrastText: '#FFFFFF',
       color: 'inherit',
-      backgroundColor: "#1C9AB7 !important"
 
     },
     secondary: {
-      light: '#09d6a1',
+      light: 'rgb(28, 154, 183)',
       main: '#FFFFFF',
       dark: '09d6a1',
       contrastText: '#233466'
