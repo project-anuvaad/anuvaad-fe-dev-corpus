@@ -116,7 +116,7 @@ class PdfUpload extends Component {
                       }`}
                     style={{ textDecoration: "none" }}
                   >
-                    <Button variant="contained" className={this.props.classes.button} size="large">
+                    <Button variant="contained"  color="primary" className={this.props.classes.button} size="large">
                       {translate("common.page.button.download&View")}
                     </Button>
                   </a>

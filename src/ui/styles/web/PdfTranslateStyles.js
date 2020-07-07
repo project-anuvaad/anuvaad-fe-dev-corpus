@@ -20,14 +20,14 @@ const PdfTranslateStyles = theme => ({
       marginTop: '6%',
           minWidth: "5%",
           textAlign: "center",
-          fontfamily: 'Trebuchet MS, sans-serif	',
+          fontfamily: '"Source Sans Pro", sans-serif',
           color: '#003366'
     },
     
     dropZoneArea:{
       paddingTop: '80px',
-      minHeight:'363px',
-      height: "352px",
+      
+      height: "355px",
       borderColor:'#1C9AB7',
       backgroundColor: '#F5F9FA',
       border: '1px dashed #1C9AB7',

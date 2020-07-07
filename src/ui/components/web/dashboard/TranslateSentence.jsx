@@ -1,11 +1,11 @@
 import React from "react";
 import Paper from "@material-ui/core/Paper";
-import { blueGrey50,darkBlack } from "material-ui/styles/colors";
+import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import { ResponsiveContainer } from "recharts";
 import { typography } from "material-ui/styles";
 import Typography from '@material-ui/core/Typography';
 const TranslateSentence = props => {
-  const { title, data} = props;
+  const { title, data } = props;
   const styles = {
     paper: {
       backgroundColor: blueGrey50,
@@ -23,17 +23,18 @@ const TranslateSentence = props => {
       color: darkBlack,
       backgroundColor: blueGrey50,
       padding: 10,
-      marginLeft:"55px"
+      marginLeft: "12px",
+      textAlign: 'left'
     }
   };
 
   return (
     <Paper style={styles.paper}>
-      <div style={{ ...styles.header}}>{title}</div>
+      <div style={{ ...styles.header }}>{title}</div>
       <div style={styles.div}>
         <ResponsiveContainer>
           <div>
-          <Typography variant="subtitle1" gutterBottom style={{ color: darkBlack,marginLeft:"75px"}} >{data ? data: ''}</Typography>
+            <Typography variant="subtitle1" gutterBottom style={{ color: darkBlack, marginLeft: "30px" }} >{data ? data : ''}</Typography>
           </div>
         </ResponsiveContainer>
       </div>

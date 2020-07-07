@@ -203,23 +203,26 @@ class Dashboard extends React.Component {
   render() {
     const role = JSON.parse(localStorage.getItem("roles"));
     const { classes } = this.props;
+    let gridSizeLarge = role.includes("dev") ? 4 : 12
+    let gridSizeSmall = role.includes("dev") ? 6 : 12
+
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center' }}>
+      <div className={classes.root}>
         <Typography variant="h4" className={classes.typographyHeader}>
           {translate("dashboard.page.heading.title")}
         </Typography>
-        <Paper style={{ width: "40%", marginTop: "2%", marginBottom: "2%", padding: '3%' }}>
+        <Paper className={classes.paper}>
           <Grid container spacing={24}>
-            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row' }}>
-              <Grid item xs={6} sm={6} lg={8} xl={8} style={{ textAlign: 'left', marginTop: 'auto' }}>
-                <Typography value="" variant="title" style={{paddingTop: '3%'}}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.rowData} style={{ marginTop: "0%" }}>
+              <Grid item xs={6} sm={6} lg={8} xl={8} className={classes.label}>
+                <Typography value="" variant="title">
                   {translate("common.page.label.sourceLang")}{" "}
                 </Typography>
               </Grid>
 
               <Grid item xs={6} sm={6} lg={4} xl={4} >
                 <Select
-                  //  className={classes.select}
+                  className={classes.select}
                   id="outlined-age-simple"
                   selectValue="language_code"
                   MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
@@ -231,18 +234,18 @@ class Dashboard extends React.Component {
                     fullWidth: true,
                     display: "flex",
                     wrap: "nowrap",
-                    height: '40px',
+                    // height: '40px',
                     magin: 'dense',
                     float: 'right'
                   }}
                 />
               </Grid>
             </Grid>
-          </Grid>
-          <Grid container spacing={24}>
-            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row', paddingTop: '8%' }}>
-              <Grid item xs={6} sm={6} lg={8} xl={8} style={{ textAlign: 'left' }}>
-                <Typography value="" variant="title" style={{paddingTop: '3%'}}>
+
+            {/* </Grid> */}
+            <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.rowData}>
+              <Grid item xs={6} sm={6} lg={8} xl={8} className={classes.label}>
+                <Typography value="" variant="title">
                   {translate("common.page.label.targetLang")}&nbsp;
               </Typography>
               </Grid>
@@ -259,90 +262,91 @@ class Dashboard extends React.Component {
                     fullWidth: true,
                     display: "flex",
                     wrap: "nowrap",
-                    height: '40px',
+                    // height: '40px',
                     magin: 'dense',
                     float: 'right'
                   }}
                 />
               </Grid>
             </Grid>
-          </Grid>
 
-          {role.includes("dev") && (
-            <Grid container spacing={24}>
-              <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row', paddingTop: '8%' }}>
-                <Grid item xs={6} sm={6} lg={8} xl={8} style={{ textAlign: 'left' }}>
-                  <Typography value="" variant="title" style={{paddingTop: '3%'}}>
-                    {translate("common.page.label.pleaseSelectModel")}{" "}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} sm={6} lg={4} xl={4}>
-                  <SelectModel
-                    id="select-multiple-chip"
-                    multiple
-                    style={{
-                      width: '92%',
-                      fullWidth: true,
-                      display: "flex",
-                      wrap: "nowrap",
-                      // height: '40px',
-                      magin: 'dense',
-                      float: 'right'
-                    }}
-                    value={this.state.model}
-                    onChange={this.handleSelectModelChange}
-                    renderValue={selected => selected.join(", ")}
-                    input={<OutlinedInput name={this.state.model} id="select-multiple-checkbox" />}
-                  >
-                    {this.state.source && this.state.target
-                      ? this.handleModel(this.state.modelLanguage, this.state.source, this.state.target).map(item => (
-                        <Tooltip
-                          placement="right"
-                          enterDelay={200}
-                          key={item.model_id}
-                          value={item.model_name}
-                          title={item.description ? item.description : "NA"}
-                        >
-                          <MenuItem key={item.model_id} value={item.model_name}>
-                            {item.model_name}
-                          </MenuItem>
-                        </Tooltip>
-                      ))
-                      : []}
+            {role.includes("dev") && (
+              <Grid item xs={12} sm={12} lg={12} xl={12}>
+                <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.rowData}>
+                  <Grid item xs={6} sm={6} lg={8} xl={8} className={classes.label}>
+                    <Typography value="" variant="title">
+                      {translate("common.page.label.pleaseSelectModel")}{" "}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={6} lg={4} xl={4}>
+                    <SelectModel
+                      id="select-multiple-chip"
+                      multiple
+                      style={{
+                        width: '92%',
+                        fullWidth: true,
+                        display: "flex",
+                        wrap: "nowrap",
+                        // height: '40px',
+                        magin: 'dense',
+                        float: 'right'
+                      }}
+                      value={this.state.model}
+                      onChange={this.handleSelectModelChange}
+                      renderValue={selected => selected.join(", ")}
+                      input={<OutlinedInput name={this.state.model} id="select-multiple-checkbox" />}
+                    >
+                      {this.state.source && this.state.target
+                        ? this.handleModel(this.state.modelLanguage, this.state.source, this.state.target).map(item => (
+                          <Tooltip
+                            placement="right"
+                            enterDelay={200}
+                            key={item.model_id}
+                            value={item.model_name}
+                            title={item.description ? item.description : "NA"}
+                          >
+                            <MenuItem key={item.model_id} value={item.model_name}>
+                              {item.model_name}
+                            </MenuItem>
+                          </Tooltip>
+                        ))
+                        : []}
 
-                  </SelectModel>
+                    </SelectModel>
+                  </Grid>
                 </Grid>
+
                 {role.includes("dev") && (
-                  <div>
+                  <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.dataChip}>
                     {this.state.model.map(value => (
-                      value ?  <div className={classes.divChip}><Chip key={value} label={value} onDelete={this.handleDelete(value)} style={{ marginLeft: "5px", marginTop: "8px" }} /> </div>: <div></div>
+                      value ? <div className={classes.divChip}><Chip key={value} label={value} onDelete={this.handleDelete(value)} style={{ marginLeft: "5px", marginTop: "8px" }} /> </div> : <div></div>
                     ))}
-                  </div>
+                  </Grid>
                 )}
               </Grid>
+            )}
+            {/* <div> */}
+            {/* <Grid container spacing={24} > */}
+            <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.grid}>
+              <textarea
+                id="standard-multiline-static"
+                style={{ padding: "1%", height: '100px', fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px", width: '98%', borderRadius: '4px' }}
+                className="noter-text-area"
+                rows="3"
+                value={this.state.text}
+                disabled={this.state.update || this.state.edit}
+                placeholder={translate("dashboard.page.alternatetext.enterTextHere")}
+                // cols="50"
+                onChange={event => {
+                  this.handleTextChange("text", event);
+                }}
+              />
             </Grid>
-          )}
-          <div>
-            <Grid container spacing={24} >
-              <Grid item xs={12} sm={12} lg={12} xl={12} style={{ paddingTop: '7%', paddingBottom: '0px' }}>
-                <textarea
-                  id="standard-multiline-static"
-                  style={{ padding: "1%", height: '90px', fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px", width: '97%' }}
-                  className="noter-text-area"
-                  rows="3"
-                  value={this.state.text}
-                  disabled={this.state.update || this.state.edit}
-                  placeholder={translate("dashboard.page.alternatetext.enterTextHere")}
-                  // cols="50"
-                  onChange={event => {
-                    this.handleTextChange("text", event);
-                  }}
-                />
-              </Grid>
 
-              <Grid item xs={12} sm={12} lg={12} xl={12} style={{ paddingTop: '2%', textAlign: 'left', paddingLeft: '0px' }}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row' }}>
+              <Grid item xs={gridSizeSmall} sm={gridSizeSmall} lg={gridSizeLarge} xl={gridSizeLarge} style={{ textAlign: 'left', paddingLeft: '0px' }}>
                 <FormControlLabel
-                  style={{ marginLeft: "0%", width: role.includes("dev") ? "33.3%" : "60%", textAlign: 'left' }}
+                  style={{ marginLeft: "0%", textAlign: 'left' }}
                   control={
                     <Checkbox
                       color="default"
@@ -353,70 +357,71 @@ class Dashboard extends React.Component {
                   }
                   label={translate("dashboard.page.checkbox.mt")}
                 />
-                {role.includes("dev") && (
+              </Grid>
+              {role.includes("dev") && (
+                <Grid item xs={gridSizeSmall} sm={gridSizeSmall} lg={gridSizeLarge} xl={gridSizeLarge} style={{ textAlign: 'left', paddingLeft: '0px' }}>
                   <FormControlLabel
-                    style={{ marginLeft: "0%", width: "33.3%" }}
+                    style={{ marginLeft: "0%" }}
                     control={
                       <Checkbox color="default" checked={this.state.showSplitted} value="showSplitted" onChange={this.handleChange("showSplitted")} />
                     }
                     label={translate("dashboard.page.checkbox.splitted")}
                   />
-                )}
-                {role.includes("dev") && (
+                </Grid>
+              )}
+              {role.includes("dev") && (
+                <Grid item xs={gridSizeSmall} sm={gridSizeSmall} lg={gridSizeLarge} xl={gridSizeLarge} style={{ textAlign: 'left', paddingLeft: '0px' }}>
                   <FormControlLabel
+                    style={{ margin: '0%' }}
                     control={
                       <Checkbox
                         color="default"
                         checked={this.state.checkedSubwords}
                         value="checkedSubwords"
                         onChange={this.handleChange("checkedSubwords")}
-                        style={{paddingLeft: '0px !important'}}
+                        style={{ paddingLeft: '0px !important' }}
                       />
                     }
                     label={translate("dashboard.page.checkbox.ioSubwords")}
                   />
-                )}
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.handleClear.bind(this)}
-                  aria-label="edit"
-                  style={{
-                    width: "100%", backgroundColor: "#1C9AB7",
-                    color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '46px'
-                  }}
-                // className={classes.button1}
-                >
-                  {translate("common.page.button.clear")}
-                </Button>
-              </Grid>
-              <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={this.handleSubmit.bind(this, role)}
-                  aria-label="edit"
-                  style={{
-                    width: "100%", backgroundColor: "#1C9AB7",
-                    color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '46px'
-                  }}
-                // className={classes.button2}
-                >
-                  {translate("common.page.button.submit")}
-                </Button>
-              </Grid>
+                </Grid>
+              )}
+              {/* </Grid> */}
             </Grid>
-          </div>
-          {this.state.nmtText[0] && (
-            <div>
-              <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} status={this.state.checkedSubwords} />
-            </div>
-          )}
-          {this.state.checkedMachine && this.state.autoMlText && this.state.nmtText && (
-            <TranslateSentence title={translate("dashboard.page.checkbox.mt")} data={this.state.autoMlText} />
-          )}
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleClear.bind(this)}
+                aria-label="edit"
+                className={classes.button1}
+              >
+                {translate("common.page.button.clear")}
+              </Button>
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={this.handleSubmit.bind(this, role)}
+                aria-label="edit"
+                className={classes.button1}
+              >
+                {translate("common.page.button.submit")}
+              </Button>
+            </Grid>
+            {/* </div> */}
+            {this.state.nmtText[0] && (
+              <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.grid}>
+                <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} status={this.state.checkedSubwords} />
+              </Grid>
+            )}
+            {this.state.checkedMachine && this.state.autoMlText && this.state.nmtText && (
+              <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.grid}>
+                <TranslateSentence title={translate("dashboard.page.checkbox.mt")} data={this.state.autoMlText} />
+              </Grid>
+            )}
+          </Grid>
         </Paper>
       </div >
     );

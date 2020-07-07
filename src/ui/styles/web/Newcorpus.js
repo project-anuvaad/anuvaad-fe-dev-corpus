@@ -61,11 +61,10 @@ button1: {
   // justifyContent: 'center',
   // left: theme.spacing.unit*12,
   marginTop:'5%',
-  marginLeft:'0%',
+  marginLeft:'0.1%',
   width:'48%',
   height:'43px',
-  backgroundColor:"#1C9AB7",
-   color:"#FFFFFF",
+  
    borderRadius:"20px 20px 20px 20px",
 },
 btns: {
@@ -74,9 +73,8 @@ btns: {
   marginTop:'5%',
   width:'48%',
   height:'43px',
-  marginLeft:'-2.3%',
-  backgroundColor:"#1C9AB7",
-   color:"#FFFFFF",
+  marginLeft:'-2.6%',
+  
    borderRadius:"20px 20px 20px 20px",
 },
   paper: {

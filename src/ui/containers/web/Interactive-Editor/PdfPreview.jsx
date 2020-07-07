@@ -85,7 +85,7 @@ class PdfPreview extends React.Component {
                     onClick={event => {
                       this.props.handlePageChange(1);
                     }}
-                    style={{ fontWeight: "bold", width: "100%" }}
+                    style={{ fontWeight: "bold", width: "100%", color: numPages <= pageNo ? "#FFFFFF" : "#233466" }}
                   >
                     <ChevronRightIcon size="large" />{" "}
                   </Button>
