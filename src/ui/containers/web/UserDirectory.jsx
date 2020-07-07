@@ -110,7 +110,7 @@ class UserDirectory extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "asc"
+          
         }
       },
       {
@@ -170,7 +170,8 @@ class UserDirectory extends React.Component {
         label: "Created At",
         options: {
           filter: true,
-          sort: false
+          sortDirection: "asc"
+          
         }
       },
 
@@ -234,6 +235,24 @@ class UserDirectory extends React.Component {
       filter: false,
       selectableRows: "none",
       rowsPerPage: 10,
+      customSort: (data, dataIndex, rowIndex) => {
+        if (dataIndex === 8) {
+          return data.sort((a, b) => {
+            const dateA = new Date(a.data[dataIndex]).getTime();
+            const dateB = new Date(b.data[dataIndex]).getTime();
+            console.log(dateA);
+            console.log(dateB);
+            return (dateA < dateB ? -1 : 1) * (rowIndex === "desc" ? 1 : -1);
+          });
+        } else {
+          return data.sort((a, b) => {
+            return (
+              (a.data[dataIndex].length < b.data[dataIndex].length ? -1 : 1) *
+              (rowIndex === "desc" ? 1 : -1)
+            );
+          });
+        }
+      },
       onRowClick: rowData => this.handleClick(rowData)
     };
 
