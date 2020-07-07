@@ -2,8 +2,11 @@
 
 const DashboardStyles = theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap'
+    display: 'flex', 
+    flexDirection: 'column', 
+    flex: 1, 
+    textAlign: 'center', 
+    alignItems: 'center'
   },
   margin: {
     margin: theme.spacing.unit,
@@ -20,11 +23,10 @@ const DashboardStyles = theme => ({
 
   },
   paper:{
-    marginLeft: "23%",
-          width: "50%",
-          marginTop: "3%",
-          marginBottom: "3%",
-          padding: '3% 3% 3% 3%'
+    width: "40%", 
+    marginTop: "2%", 
+    marginBottom: "2%", 
+    padding: '3%'
   },
   grid1:{
     marginLeft: "6.5%"
@@ -34,7 +36,8 @@ const DashboardStyles = theme => ({
   },
   divChip:
   {
-    marginLeft: "8%", paddingTop: "3%"
+    // marginLeft: "8%",
+    paddingTop: "3%"
   },
   divTextField:{
     marginLeft: "3.2%"
@@ -51,18 +54,19 @@ const DashboardStyles = theme => ({
     display: "flex",
     wrap: "nowrap",
     height: '40px',
+    magin: 'dense',
     float: 'right'
   },
  
   grid:{
-    marginLeft: "4%" 
+    marginTop: "3%" 
   },
   textfield:{
     width: "96%"
     
   },
   button1: {
-    width: "44%", marginBottom: "4%", marginTop: "5%", marginLeft:'1.3%'
+    width: "100%", borderRadius: "20px 20px 20px 20px", height: '46px'
   },
   button2:{
     width: "44%", marginTop:'5%', marginLeft:'5.6%'
@@ -71,8 +75,16 @@ const DashboardStyles = theme => ({
     minHeight:'385px',
     height: "304px"
 
+  },
+  label:{
+    textAlign: 'left', marginTop: 'auto', marginBottom: 'auto'
+  },
+  rowData: {
+    display: 'flex', flexDirection: 'row', marginTop: '3%'
+  },
+  dataChip: {
+    display: 'flex', flexDirection: 'column', textAlign: 'right'
   }
-  
  
   
 });
