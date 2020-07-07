@@ -189,8 +189,8 @@ class UserDirectory extends React.Component {
                       {tableMeta.rowData[7] ? translate("userDirectory.page.label.deactivated") : translate("userDirectory.page.label.deactivated")}
                     </Button>
                   ) : (
-                    ""
-                  )}
+                      ""
+                    )}
                 </div>
               );
             }
@@ -231,19 +231,21 @@ class UserDirectory extends React.Component {
     const val = this.state.openValue ? 8 : 12;
     return (
       <div>
-        <Fab
-          variant="extended"
-          color="primary"
-          aria-label="Add"
-          style={{ marginLeft: this.state.newUser ? "1" : "-2.5%", marginTop: "1%" }}
-          onClick={() => this.handleClick([])}
-        >
-          <AddIcon />
-          {translate("userDirectory.page.label.addUser")}
-        </Fab>
-        <Grid container spacing={24} style={{ padding: 24 }}>
+        <Grid container spacing={24}>
+          <Grid item xs={12} sm={12} lg={12} xl={12} style={{textAlign: 'right',marginLeft: "3%", marginRight: "3%", }}>
+            <Fab
+              variant="extended"
+              color="primary"
+              aria-label="Add"
+              style={{ marginTop: "1%", textAlign: 'right' }}
+              onClick={() => this.handleClick([])}
+            >
+              <AddIcon />
+              {translate("userDirectory.page.label.addUser")}
+            </Fab>
+          </Grid>
           <Grid item xs={val} sm={val} lg={val} xl={val}>
-            <div style={{ marginLeft: val === 8 ? "-6%" : "-4%", marginRight: "3%", marginTop: "10px" }}>
+            <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "10px" }}>
               <MUIDataTable
                 title={translate("userDirectory.page.label.userManagement")}
                 data={this.state.userList}
