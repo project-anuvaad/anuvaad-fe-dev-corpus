@@ -26,6 +26,7 @@ import anuvaadLogo from '../../../../assets/AnuvaadLogo.svg';
 import { translate } from '../../../../../src/assets/localisation';
 import DownIcon from '@material-ui/icons/ArrowDropDown';
 import PeopleIcon from '@material-ui/icons/Person';
+import themeAnuvaad from "../../../theme/web/theme-anuvaad";
 
 const styles = {
   root: {
@@ -266,7 +267,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "data-pipeline-tools" && '#1C9AB7', color: this.state.currentPage === "data-pipeline-tools" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "data-pipeline-tools" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "data-pipeline-tools" && '#FFFFFF' }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
@@ -290,7 +291,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "translate" && '#1C9AB7', color: this.state.currentPage === "translate" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "translate" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "translate" && '#FFFFFF' }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
@@ -313,8 +314,9 @@ class Header extends React.Component {
                   {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") && !role.includes("user") && (
                     <div>
                       <Divider className={classes.divider} />
-                      <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "dashboard" && '#1C9AB7', color: this.state.currentPage === "dashboard" && '#FFFFFF' }}
+                      
+                      <ListItem 
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "dashboard" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "dashboard" && '#FFFFFF' }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
@@ -353,7 +355,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "benchmarktranslate" && '#1C9AB7', color: this.state.currentPage === "benchmarktranslate" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "benchmarktranslate" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "benchmarktranslate" && '#FFFFFF' }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
@@ -377,7 +379,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "newcorpus" && '#1C9AB7', color: this.state.currentPage === "newcorpus" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "newcorpus" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "newcorpus" && '#FFFFFF' }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
@@ -401,7 +403,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "corpus" && '#1C9AB7', color: this.state.currentPage === "corpus" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "corpus" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "corpus" && '#FFFFFF' }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
@@ -425,7 +427,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "benchmark" && '#1C9AB7', color: this.state.currentPage === "benchmark" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "benchmark" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "benchmark" && '#FFFFFF' }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
@@ -450,7 +452,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "interactive-translate" && '#1C9AB7', color: this.state.currentPage === "interactive-translate" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "interactive-translate" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "interactive-translate" && '#FFFFFF' }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
@@ -474,7 +476,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "view-pdf" && '#1C9AB7', color: this.state.currentPage === "view-pdf" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "view-pdf" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "view-pdf" && '#FFFFFF' }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
@@ -497,7 +499,7 @@ class Header extends React.Component {
                   {role && Array.isArray(role) && role.includes('admin') &&
                     <div>
                       <Divider className={classes.divider} />
-                    <ListItem style={{ paddingTop: '8%', paddingBottom: '8%', backgroundColor: this.state.currentPage === "graderreport" && '#1C9AB7', color: this.state.currentPage === "graderreport" && '#FFFFFF' }}
+                    <ListItem style={{ paddingTop: '8%', paddingBottom: '8%', backgroundColor: this.state.currentPage === "graderreport" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "graderreport" && '#FFFFFF' }}
                         button
                         onClick={(event) => {
                           this.handleDrawerClose();
@@ -524,7 +526,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "comparison-report" && '#1C9AB7', color: this.state.currentPage === "comparison-report" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "comparison-report" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "comparison-report" && '#FFFFFF' }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
@@ -549,7 +551,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "doctranslate" && '#1C9AB7', color: this.state.currentPage === "doctranslate" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "doctranslate" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "doctranslate" && '#FFFFFF' }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
@@ -573,7 +575,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "pdf-to-doc" && '#1C9AB7', color: this.state.currentPage === "pdf-to-doc" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "pdf-to-doc" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "pdf-to-doc" && '#FFFFFF' }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
@@ -597,7 +599,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "pdf-upload" && '#1C9AB7', color: this.state.currentPage === "pdf-upload" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "pdf-upload" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "pdf-upload" && '#FFFFFF' }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
@@ -621,7 +623,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "viewtranslate" && '#1C9AB7', color: this.state.currentPage === "viewtranslate" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "viewtranslate" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "viewtranslate" && '#FFFFFF' }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
@@ -646,7 +648,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "userdirectory" && '#1C9AB7', color: this.state.currentPage === "userdirectory" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "userdirectory" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "userdirectory" && '#FFFFFF' }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
@@ -694,7 +696,7 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "feedback" && '#1C9AB7', color: this.state.currentPage === "feedback" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "feedback" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "feedback" && '#FFFFFF' }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
