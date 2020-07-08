@@ -15,6 +15,7 @@ const TranslateSentence = props => {
       // height: 95,
       padding: "5px 15px 15px 15px",
       color: darkBlack,
+      textAlign: "left"
 
     },
     header: {
@@ -34,7 +35,7 @@ const TranslateSentence = props => {
       <div style={styles.div}>
         <ResponsiveContainer>
           <div>
-            <Typography variant="subtitle1" gutterBottom style={{ color: darkBlack, marginLeft: "30px" }} >{data ? data : ''}</Typography>
+            <Typography variant="subtitle1" gutterBottom style={{ color: darkBlack, marginLeft: "30px", textAlign: "left" }} >{data ? data : ''}</Typography>
           </div>
         </ResponsiveContainer>
       </div>
