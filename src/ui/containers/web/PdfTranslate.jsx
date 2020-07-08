@@ -83,7 +83,7 @@ class doctranslate extends React.Component {
 
   handleChange = (files) => {
     this.setState({
-      files: files
+      files: files[0]
     });
   }
 
@@ -94,7 +94,7 @@ class doctranslate extends React.Component {
         item.target_language_code === this.state.target.language_code && item.source_language_code === this.state.source.language_code && item.is_primary ?
           model = item : ''))
       const { APITransport } = this.props;
-      const apiObj = new PdfTranslation(this.state.source.language_name, this.state.target.language_name, this.state.files[0], model, this.state.source.language_code, this.state.target.language_code);
+      const apiObj = new PdfTranslation(this.state.source.language_name, this.state.target.language_name, this.state.files, model, this.state.source.language_code, this.state.target.language_code);
       APITransport(apiObj);
       this.setState({ showLoader: true })
 
@@ -211,7 +211,7 @@ class doctranslate extends React.Component {
                       borderRadius: "20px 20px 20px 20px",
                      
                       height: '45px'
-                    }} dis={this.state.target.language_code && this.state.source.language_code && this.state.files[0].name ? false : true} onClick={this.handleSubmit} />
+                    }} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} />
                   </Grid>
                 </Grid>
               </Grid>
