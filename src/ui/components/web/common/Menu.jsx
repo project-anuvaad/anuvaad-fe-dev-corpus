@@ -5,7 +5,7 @@ import { translate } from "../../../../assets/localisation";
 
 class MenuClass extends React.Component {
   render() {
-    console.log("sajish", this.props.topValue, this.props.leftValue);
+
     const { anchorEl, topValue, leftValue, isOpen, handleApiMerge, operation_type } = this.props;
     var val = [];
     return (

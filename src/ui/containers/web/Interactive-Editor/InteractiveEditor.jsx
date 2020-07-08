@@ -248,7 +248,8 @@ class IntractiveTrans extends React.Component {
         clickedSentence: "",
         selectedSentenceId: "",
         contextToken: false,
-        addSentence: false
+        addSentence: false,
+        sText:''
       });
     }
   }
@@ -437,7 +438,8 @@ class IntractiveTrans extends React.Component {
       scrollToId: sentenceId,
       parent,
       contextToken: false,
-      superScript: token
+      superScript: token,
+      sText:''
     });
     this.handleClose();
   }
@@ -470,7 +472,8 @@ class IntractiveTrans extends React.Component {
       superScript: false,
       contextToken: false,
       pageNo,
-      isAddNewCell: true
+      isAddNewCell: true,
+      sText:''
     });
     this.handleClose();
 
@@ -544,6 +547,7 @@ class IntractiveTrans extends React.Component {
   };
 
   handleSelection(selectedSentence, event) {
+    this.setState({sText: window.getSelection().toString()})
     if (
       selectedSentence &&
       selectedSentence.startNode &&
@@ -744,6 +748,7 @@ class IntractiveTrans extends React.Component {
       <div>
         {this.state.sentences && (
           <div>
+            
             {!this.state.collapseToken && (
               <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
                 <Grid item xs={12} sm={6} lg={2} xl={2} className="GridFileDetails">
@@ -1013,7 +1018,7 @@ class IntractiveTrans extends React.Component {
                 }
               />
             )}
-            {window.getSelection().toString() &&
+            {this.state.sText &&
               this.state.contextToken &&
               this.state.startSentence &&
               this.state.endSentence &&
