@@ -18,7 +18,7 @@ const DashboardStyles = theme => ({
   typographyHeader:{
     fontfamily: '"Source Sans Pro", sans-serif',
           color: '#003366',
-          fontWeight: '549', textAlign:'center',paddingBottom: "12px", paddingTop: "3%"
+          fontWeight: '549', textAlign:'center',paddingBottom: "12px", paddingTop: "2%"
     
 
   },
@@ -83,7 +83,7 @@ const DashboardStyles = theme => ({
     display: 'flex', flexDirection: 'row', marginTop: '3%'
   },
   dataChip: {
-    display: 'flex', flexDirection: 'column', textAlign: 'right'
+    display: 'flex', flexDirection: 'row', marginLeft: '0px'
   }
  
   
