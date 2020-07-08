@@ -5,7 +5,7 @@ const themeDefault = createMuiTheme({
 
   typography: {
     fontFamily: '"Source Sans Pro", "Arial", sans-serif',
-    fontSize: 16,
+    fontSize: 15,
     color:"inherit"
   },
   palette: {
@@ -34,7 +34,7 @@ const themeDefault = createMuiTheme({
 
   drawer: {
     default: '#1976d2',
-    color:'nherit'
+    color:'inherit'
   },
 
   Link:

@@ -24,7 +24,8 @@ const NewOrders = props => {
       color: darkBlack,
       backgroundColor: blueGrey50,
       padding: 12,
-      marginLeft:"55px"
+      marginLeft:"12px",
+      textAlign: 'left'
     }
   };
   return (
@@ -35,14 +36,16 @@ const NewOrders = props => {
           <div>
               {data ?
                 data.map(item=>
-                  <div key ={item.s_id}>
+                  <div key ={item.s_id} style={{textAlign: "left"}}>
                     {data.length>1 &&
-                     <Typography variant="h6" gutterBottom  style={{ color: darkBlack,marginLeft:"65px"}} >{item.s_id}</Typography>}
-                     <Typography variant="h6" gutterBottom style={value ?{ color: darkBlack,marginLeft:"55px",marginRight:'12%'}:{ color: darkBlack,marginLeft:"65px"}} >{item.tgt}</Typography>
+                     <Typography variant="h6" gutterBottom  style={{ color: darkBlack,marginLeft:"40px", textAlign: 'left'}} >{item.s_id}</Typography>}
+                     <Typography variant="h6" gutterBottom style={value ?{ color: darkBlack,marginLeft:"30px", textAlign: 'left'}:{ color: darkBlack,marginLeft:"30px"}} >{item.tgt}</Typography>
                      
-                     {status && <div>
-                     <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"75px"}} >{translate('neworders.page.label.inputSubwords')}&nbsp; &nbsp; : {item.input_subwords? item.input_subwords: 'NA'}</Typography>
-                     <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"75px"}} >{translate('neworders.page.label.outputSubwords')}&nbsp;: {item.output_subwords? item.output_subwords : 'NA'}</Typography> </div>}
+                     {/* {status &&  */}
+                     <div>
+                     <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"50px"}} >{translate('neworders.page.label.inputSubwords')}&nbsp; &nbsp; : {item.input_subwords? item.input_subwords: 'NA'}</Typography>
+                     <Typography variant="subtitle2" gutterBottom style={{ color: darkBlack,marginLeft:"50px"}} >{translate('neworders.page.label.outputSubwords')}&nbsp;: {item.output_subwords? item.output_subwords : 'NA'}</Typography> </div>
+                     {/* } */}
                   
                   <br/>
                 

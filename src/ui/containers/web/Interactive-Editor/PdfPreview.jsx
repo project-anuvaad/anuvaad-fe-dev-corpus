@@ -51,17 +51,17 @@ class PdfPreview extends React.Component {
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-          <Grid item xs={4} sm={3} lg={3} xl={3}>
-            <Typography value="" variant="h6" gutterBottom style={{ width: "100%", flex: 1, marginLeft: "3%" }}>
+          <Grid item xs={3} sm={3} lg={3} xl={3}>
+            <Typography value="" variant="h6" gutterBottom style={{ width: "100%", flex: 1, color: '#1C9AB7' }}>
               {translate("intractive_translate.page.preview.originalPDF")}
             </Typography>
           </Grid>
-          <Grid item xs={7} sm={6} lg={6} xl={6}>
+          <Grid item xs={6} sm={6} lg={6} xl={6}>
             {numPages && (
-              <Grid container spacing={8} style={{ marginLeft: "25%" }}>
-                <Grid item xs={4} sm={3} lg={2} xl={2}>
+              <Grid container spacing={8}>
+                <Grid item xs={4} sm={4} lg={4} xl={4} style={{textAlign: 'right'}}>
                   <Button
-                    style={{ fontWeight: "bold", width: "100%" }}
+                    style={{ fontWeight: "bold", width: "60%" }}
                     color="primary"
                     disabled={pageNo <= 1}
                     onClick={event => {
@@ -72,20 +72,20 @@ class PdfPreview extends React.Component {
                     <ChevronLeftIcon size="large" />
                   </Button>
                 </Grid>
-                <Grid item xs={4} sm={3} lg={3} xl={3}>
+                <Grid item xs={4} sm={4} lg={4} xl={4} style={{textAlign: 'center'}}>
                   <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none" }} color="primary">
                     {`${pageNo} / ${numPages}`}
                   </Button>
                 </Grid>
 
-                <Grid item xs={4} sm={3} lg={1} xl={1}>
+                <Grid item xs={4} sm={4} lg={4} xl={4} style={{textAlign: 'left'}}>
                   <Button
                     color="primary"
                     disabled={numPages <= pageNo}
                     onClick={event => {
                       this.props.handlePageChange(1);
                     }}
-                    style={{ fontWeight: "bold", width: "100%" }}
+                    style={{ fontWeight: "bold", width: "60%" }}
                   >
                     <ChevronRightIcon size="large" />{" "}
                   </Button>
@@ -93,17 +93,17 @@ class PdfPreview extends React.Component {
               </Grid>
             )}
           </Grid>
-          <Grid item xs={1} sm={1} lg={1} xl={1}>
+          <Grid item xs={1} sm={1} lg={1} xl={1} style={{textAlign: "left"}}>
             {this.props.zoom ? (
               <Button
-                color="primary"
+                color="secondary"
                 disabled={numPages <= pageNo}
                 onClick={event => {
                   this.props.handleChange();
                 }}
                 style={{ fontWeight: "bold", width: "100%" }}
               >
-                <ZoomOutIcon size="Large" />
+                <ZoomOutIcon size="Large" style={{color: '#233466'}}/>
               </Button>
             ) : (
                 <Button
@@ -114,24 +114,28 @@ class PdfPreview extends React.Component {
                   }}
                   style={{ fontWeight: "bold", width: "100%" }}
                 >
-                  <ZoomInIcon size="Large" />
+                  <ZoomInIcon size="Large" style={{color: '#233466'}}/>
                 </Button>
               )}
           </Grid>
-          <Grid item xs={1} sm={12} lg={2} xl={2}>
+          <Grid item xs={2} sm={2} lg={2} xl={2} style={{ textAlign: 'right' }}>
+            <div style={{ display: 'flex', flexDirection: 'row', flex: 1, justifyContent: 'flex-end', padding:'0px' }}>
+
               <Toolbar
                 onClick={event => {
                   this.props.handleClick(false, 4);
                 }}
+                style={{ marginRight: '0px !important', paddingRight: '0px !important' }}
               >
-                <CloseIcon style={{ cursor: "pointer" }} color="primary" />
-                <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
+                
+                <CloseIcon style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }} color="primary" />
+                <Typography value="" variant="subtitle6" color="primary" style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }}>
                   {translate("common.page.label.close")}
                 </Typography>
               </Toolbar>
+            </div>
           </Grid>
         </Toolbar>
-        {console.log("sajish")}
         <div style={{ marginLeft: !this.props.zoom && '10%', marginBottom: "0px", maxHeight: window.innerHeight - 180, overflowY: "auto" }} id="pdfDocument">
           <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess} style={{ align: "center" }}>
             <Page scale={!this.props.zoom ? this.state.scale : this.state.pageScaleWidth} pageNumber={pageNo} onLoadSuccess={this.onPageLoad} />

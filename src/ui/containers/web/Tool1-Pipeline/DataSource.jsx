@@ -178,7 +178,7 @@ class DataSource extends React.Component {
 
     return (
       <div>
-        <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+        <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "40px" }}>
           <MUIDataTable title={translate("common.page.data.dataSource")} data={this.state.name} columns={columns} options={options} />
         </div>
         {this.state.download && this.state.fileId !== null && (

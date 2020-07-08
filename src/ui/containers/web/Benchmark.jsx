@@ -233,7 +233,7 @@ class Benchmark extends React.Component {
                   {this.state[targetname] && this.state[modelname] && (
                     <Tooltip title={translate("common.page.title.gradeSentence")}>
                       <GradeIcon
-                        style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
+                        style={{ width: "24",color:'#233466', height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
                         onClick={() => {
                           this.handleSubmit(tableMeta.rowData[0], this.state[modelname]);
                         }}
@@ -273,10 +273,10 @@ class Benchmark extends React.Component {
 
     return (
       <div>
-        <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%" }}>
+        {/* <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%" }}>
           <Typography variant="title" color="inherit" style={{ flex: 1 }} />
-        </Toolbar>
-        <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+        </Toolbar> */}
+        <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "3%",marginBottom:'0%' }}>
           <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>

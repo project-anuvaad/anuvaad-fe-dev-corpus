@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import MUIDataTable from "mui-datatables";
@@ -48,7 +47,7 @@ class PdfUpload extends React.Component {
     const apiObj = new FetchPdf();
     APITransport(apiObj);
     this.setState({ showLoader: true });
-}
+  }
 
 
   componentDidUpdate(prevProps) {
@@ -77,61 +76,61 @@ class PdfUpload extends React.Component {
       {
         name: "status",
         options: {
-            display: 'excluded',
+          display: 'excluded',
         }
-    },
+      },
 
-    {
+      {
         name: "eta",
         label: translate('viewTranslate.page.label.eta'),
         options: {
-            display: 'excluded',
+          display: 'excluded',
         }
-    },
+      },
 
-    {
-      name: "source_lang",
-      label: translate('common.page.label.source'),
-      options: {
-        filter: true,
-        sort: true
-      }
-    },
+      {
+        name: "source_lang",
+        label: translate('common.page.label.source'),
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
 
-    {
-      name: "target_lang",
-      label: translate('common.page.label.target'),
-      options: {
-        filter: true,
-        sort: true
-      }
-    },
+      {
+        name: "target_lang",
+        label: translate('common.page.label.target'),
+        options: {
+          filter: true,
+          sort: true
+        }
+      },
 
       {
         name: "Status",
         label: translate('common.page.table.status'),
         options: {
-            filter: true,
-            sort: false,
-            empty: true,
+          filter: true,
+          sort: false,
+          empty: true,
 
-            customBodyRender: (value, tableMeta, updateValue) => {
-                if (tableMeta.rowData) {
-                  
-                    const result = tableMeta.rowData[3] * 1000 - (Date.now() - new Date(tableMeta.rowData[7]));
-                    return (
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (tableMeta.rowData) {
 
-                        <div style={{ width: '120px' }}>
-                          
-                            {(tableMeta.rowData[2]=== 'TRANSLATING' &&  tableMeta.rowData[3]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[3] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[2]) : tableMeta.rowData[2]=== 'PROCESSING'? <ProgressBar  token={true} val={result} eta={300 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar>: tableMeta.rowData[2]}
+              const result = tableMeta.rowData[3] * 1000 - (Date.now() - new Date(tableMeta.rowData[7]));
+              return (
 
-                        </div>
-                    );
-                }
+                <div style={{ width: '120px' }}>
 
+                  {(tableMeta.rowData[2] === 'TRANSLATING' && tableMeta.rowData[3]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[3] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[2]) : tableMeta.rowData[2] === 'PROCESSING' ? <ProgressBar token={true} val={result} eta={300 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> : tableMeta.rowData[2]}
+
+                </div>
+              );
             }
+
+          }
         }
-    },
+      },
 
       {
         name: "created_on",
@@ -158,7 +157,7 @@ class PdfUpload extends React.Component {
         }
       },
       filterType: "checkbox",
-      onRowClick: rowData =>(rowData[2]==="COMPLETED"||rowData[2]==="TRANSLATING") && this.handleClick(rowData),
+      onRowClick: rowData => (rowData[2] === "COMPLETED" || rowData[2] === "TRANSLATING") && this.handleClick(rowData),
       download: false,
       expandableRowsOnClick: true,
       print: false,
@@ -171,24 +170,33 @@ class PdfUpload extends React.Component {
       <div>
         <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
           <Typography variant="title" color="inherit" style={{ flex: 1 }} />
-          {this.state.role.includes("dev") || this.state.role.includes("grader") || this.state.role.includes("user") || this.state.role.includes("interactive-editor")? (
+          {this.state.role.includes("dev") || this.state.role.includes("grader") || this.state.role.includes("user") || this.state.role.includes("interactive-editor") ? (
             <Button
+            color="primary"
               variant="extendedFab"
-              color="primary"
-              style={{ marginRight: 0 }}
+
+              style={{
+                marginRight: 0
+              }}
               aria-label="Add"
               onClick={() => {
                 history.push(`${process.env.PUBLIC_URL}/pdf-upload`);
               }}
             >
-              <AddIcon />
+              {/* <AddIcon /> */}
+              <img src="upload.svg"
+                style={{
+                  marginRight: '5px',
+                  height: '16px'
+                }}
+                alt="" />
               {translate("common.page.button.upload")}
             </Button>
           ) : (
-            ""
-          )}
+              ""
+            )}
         </Toolbar>
-        <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+        <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
           <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>

@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withStyles, Typography } from "@material-ui/core";
-import ThemeDefault from "../../theme/web/theme-default";
+import ThemeDefault from "../../theme/web/theme-anuvaad";
 
 import LoginStyles from "../../styles/web/LoginStyles";
 import Grid from '@material-ui/core/Grid';

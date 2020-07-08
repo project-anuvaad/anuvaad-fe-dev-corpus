@@ -1,7 +1,7 @@
 const localization_EN_Data = {
   "dashboard.page.heading.title": "Translate",
-  "common.page.label.sourceLang": "Please select source language",
-  "common.page.label.targetLang": "Please select target language",
+  "common.page.label.sourceLang": "Select Source Language",
+  "common.page.label.targetLang": "Select Target Language",
   "common.page.button.submit": "submit",
   "common.page.button.clear": "clear",
   "dashboard.page.checkbox.mt": "Machine Translated",
@@ -79,7 +79,7 @@ const localization_EN_Data = {
   "corpus.page.text.alignmentAccuracy": "Alignment Accuracy",
   "common.page.text.download": "DOWNLOAD",
   "common.page.label.basename": "Basename",
-  "common.page.label.filename": "Enter Filename :",
+  "common.page.label.filename": "Enter File Name",
   "viewCorpus.page.label.fileName": "File Name",
   "viewCorpus.page.label.domain": "Domain",
   "common.page.label.sentence": "Sentences",
@@ -198,7 +198,7 @@ const localization_EN_Data = {
   "feedback.page.text.feedbackSubmitted": "Feedback Submitted successfully!",
   "common.page.label.yes": "Yes",
   "common.page.label.stillinprogress": "Still inprogress",
-  "common.page.label.pleaseSelectModel": "Please select model",
+  "common.page.label.pleaseSelectModel": "Please Select Model",
   "common.page.title.comparisonReport": "Comparison Report",
   "userDirectory.page.message.deactivated": " user deactivated successfully!",
   "userDirectory.page.message.activated": " user activated successfully!",
@@ -319,7 +319,7 @@ const localization_EN_Data = {
   "intractive_translate.page.textarea.sourcePlaceholder": "Enter sentence here..",
   "intractive_translate.page.main.title": "Interactive Translate",
   "common.page.label.collapse": "Collapse",
-  "common.page.label.review/download": "Review / Download",
+  "common.page.label.review/download": "Review & Download",
   "common.page.label.previousLine": "Previous Line",
   "common.page.label.nextLine": "Next Line",
   "common.page.label.done": "Done",
@@ -343,7 +343,7 @@ const localization_EN_Data = {
   'signUp.page.label.firstName':"First name*",
   'signUp.page.label.lastName':"Last name*",
   'signUp.page.label.logIn':"Log In",
-  'signUp.page.label.allReadyHaveAccount':"Already Having Account?",
+  'signUp.page.label.allReadyHaveAccount':"Already signed up?",
   'common.page.alert.provideValidDetails':'Please provide valid details',
   'common.page.alert.acceptTerms&Condition':'Please accept terms and condition',
   'activate.page.label.waitWhileWeActivateAccount':"Please wait while we are activating your account, you will be redirected to login page automatically",
@@ -375,7 +375,18 @@ const localization_EN_Data = {
   "common.page.label.ok": "Ok",
   "intractive_translate.page.preview.rows": "Rows",
   "intractive_translate.page.preview.columns": "Columns",
-  "userDirectory.page.label.activated": "Activate"
+  "userDirectory.page.label.activated": "Activate",
+  "doc_translate.page.documentTranslator": "Document Translator",
+  "doc_translate.page.selectSourceLang": "Select Source Language",
+  "doc_translate.page.selectTargetLang": "Select Target Language",
+  "common.page.label.submit": "Submit",
+  "common.page.label.addAndDropFile": "Add and Drop a docx File here",
+  "common.page.label.menu": "Menu",
+  "pdf_upload.page.label.uploadMessage": "Upload file that you want to translate.",
+  "newCorpus.page.stepper.label.addSourceFile": "Add Source file",
+  "newCorpus.page.stepper.label.addTargetFile": "Add target file",
+  "newCorpus.page.stepper.label.addFileDetails": "Add file details",
+  "profile.page.label.role": "Role"
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
@@ -700,7 +711,7 @@ const localization_HI_Data = {
   "intractive_translate.page.main.title": "इंटरएक्टिव अनुवाद",
   "webroutes.page.title.pdfToDoc": "पीडीएफ से डॉक बनाए",
   "common.page.label.collapse": "छिपाए",
-  "common.page.label.review/download": "समीक्षा / डाउनलोड",
+  "common.page.label.review/download": "समीक्षा & डाउनलोड",
   "common.page.label.previousLine": "पिछली पंक्ति",
   "common.page.label.nextLine": "अगली पंक्ति",
   "common.page.label.done": "पूर्ण",
@@ -731,7 +742,18 @@ const localization_HI_Data = {
   "common.page.label.ok": "ठीक है",
   "intractive_translate.page.preview.rows": "पंक्ति",
   "intractive_translate.page.preview.columns": "कॉलम",
-  "userDirectory.page.label.activated": "सक्रिय"
+  "userDirectory.page.label.activated": "सक्रिय",
+  "doc_translate.page.documentTranslator": "दस्तावेज़ अनुवादक",
+  "doc_translate.page.selectSourceLang": "स्रोत भाषा का चयन करें",
+  "doc_translate.page.selectTargetLang": "लक्ष्य भाषा का चयन करें",
+  "common.page.label.submit": "प्रस्तुत करे",
+  "common.page.label.addAndDropFile": "यहाँ एक docx फ़ाइल जोड़ें और छोड़ें",
+  "common.page.label.menu": "मेन्यू",
+  "pdf_upload.page.label.uploadMessage": "वह फ़ाइल अपलोड करें जिसका आप अनुवाद करना चाहते हैं।",
+  "newCorpus.page.stepper.label.addSourceFile": "स्रोत फ़ाइल जोड़ें",
+  "newCorpus.page.stepper.label.addTargetFile": "लक्ष्य फ़ाइल जोड़ें",
+  "newCorpus.page.stepper.label.addFileDetails": "फ़ाइल विवरण जोड़ें",
+  "profile.page.label.role": "भूमिका"
 };
 
 export function translate(locale_text) {
