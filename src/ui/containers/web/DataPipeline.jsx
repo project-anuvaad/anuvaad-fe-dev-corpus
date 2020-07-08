@@ -15,6 +15,8 @@ import { translate } from "../../../assets/localisation";
 const styles = {
   card: {
     width: "345px",
+    // marginLeft: '2%',
+    // marginRight: '2%',
     transition: "transform .2s",
     "&:hover": {
       transform: "scale(1.1)"
@@ -76,10 +78,10 @@ class DataPipeline extends React.Component {
     return (
       <div>
         <Grid container spacing={8}>
-          <Grid container item xs={12} spacing={8} id="cardGrid" style={{ marginLeft: "8%", marginTop: "2%" }}>
+          <Grid container item xs={12} spacing={8} id="cardGrid" style={{ marginTop: 'auto', marginBottom: 'auto', marginLeft: '2%', marginRight: '2%' }}>
             <React.Fragment>
               {this.state.tools.map((text, index) => (
-                <Grid key={index} item xs={12} sm={4} className="slideUp" style={{ marginTop: "2%" }}>
+                <Grid key={index} item xs={6} sm={6} lg={4} xl={4} className="slideUp" style={{ marginTop: "2%", display: 'flex', justifyContent: 'center' }}>
                   <Card className={classes.card}>
                     <CardContent>
                       <Typography variant="h5" component="h2" color="textSecondary" gutterBottom>

@@ -11,10 +11,9 @@ import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import Toolbar from "@material-ui/core/Toolbar";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
+import PlayArrowIcon from "@material-ui/icons/LineStyle";
 import DoneIcon from "@material-ui/icons/Done";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
-import ContextMenu from "react-context-menu";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 import htmlToText from "html-to-text";
 import { translate } from "../../../../assets/localisation";
@@ -158,11 +157,9 @@ class IntractiveTrans extends React.Component {
                   objSentfinal[i] = objSent;
                   i = i + 1;
                 }
-                
+
               }
-              
-                sentence.table_items = objSentfinal;
-              
+              sentence.table_items = objSentfinal;
             }
             if (sentence.status !== "DELETED") {
               sentenceArray.push(sentence);
@@ -744,7 +741,7 @@ class IntractiveTrans extends React.Component {
     const { gridValue } = this.state;
 
     return (
-      <div style={{ marginLeft: "-100px" }}>
+      <div>
         {this.state.sentences && (
           <div>
             {!this.state.collapseToken && (
@@ -756,8 +753,8 @@ class IntractiveTrans extends React.Component {
                     onClick={event => {
                       this.handleBack();
                     }}
-                    color="primary"
-                    style={{ width: "100%", minWidth: "150px", fontSize: "90%", fontWeight: "bold" }}
+                    // color="primary"
+                    style={{ width: "100%", minWidth: "150px", fontSize: "90%", fontWeight: "bold", borderRadius: '30px', color: '#233466' }}
                   >
                     <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;{translate("common.page.title.document")}
                   </Button>
@@ -767,24 +764,33 @@ class IntractiveTrans extends React.Component {
                     variant="outlined"
                     size="large"
                     className="GridFileDetails"
-                    style={{ width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold" }}
+                    style={{ justifyContent: 'left', height: '100%', width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold", borderRadius: '30px' }}
                   >
-                    <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />
-                    {this.state.fileDetails && `${translate("common.page.label.source")} : ${this.state.fileDetails.source_lang}`}
-                    <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
-                    {this.state.fileDetails && `${translate("common.page.label.target")} : ${this.state.fileDetails.target_lang}`}
-                    <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "}
+                    {/* <PlayArrowIcon fontSize="large" style={{ color: "grey" }} /> */}
+                    {this.state.fileDetails && <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      <div style={{ color: "#909090" }}>&nbsp;&nbsp;{translate("common.page.label.source")}&nbsp;&nbsp;</div> <div>{":"}</div> <div>&nbsp;&nbsp;{this.state.fileDetails.source_lang}&nbsp;&nbsp;</div>
+                    </div>}
+                    <span fontSize="large" style={{ color: "grey", marginLeft: '4%', marginRight: '1%'}}>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
+                    {/* <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "} */}
+                    {this.state.fileDetails && <div style={{ display: 'flex', flexDirection: 'row' }}>
+                      <div style={{ color: "#909090" }}>&nbsp;&nbsp;{translate("common.page.label.target")}&nbsp;&nbsp;</div> <div>{":"}</div> <div>&nbsp;&nbsp;{this.state.fileDetails.target_lang}&nbsp;&nbsp;</div>
+                    </div>}
+                    {/* <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "} */}
+                    <span fontSize="large" style={{ color: "grey", marginLeft: '4%', marginRight: '1%' }}>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
+
                     <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>
-                      {this.state.fileDetails && `${translate("common.page.label.fileName")} : ${this.state.fileDetails.process_name}`}
+                      {this.state.fileDetails && <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <div style={{ color: "#909090" }}>&nbsp;&nbsp;{translate("common.page.label.fileName")}&nbsp;&nbsp;</div> <div>{" : "}</div> <div>&nbsp;&nbsp;{this.state.fileDetails.process_name}&nbsp;&nbsp;</div>
+                      </div>}
                     </div>
                   </Button>
                 </Grid>
                 <Grid item xs={12} sm={6} lg={2} xl={2}>
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     size="large"
                     color="primary"
-                    style={{ width: "100%", minWidth: "110px", fontSize: "90%", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap" }}
+                    style={{ width: "100%", minWidth: "110px", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
                     onClick={() => this.handlePreview()}
                   >
                     <VisibilityIcon fontSize="large" />
@@ -798,10 +804,10 @@ class IntractiveTrans extends React.Component {
                     }}
                     variant="outlined"
                     size="large"
-                    color="primary"
-                    style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold" }}
+                    // color="primary"
+                    style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold", borderRadius: '30px', color: '#233466' }}
                   >
-                    <DoneIcon fontSize="large" />
+                    <DoneIcon fontSize="large" style={{ color: '#233466' }} />
                     &nbsp;&nbsp;{translate("common.page.label.done")}
                   </Button>
                 </Grid>
@@ -819,7 +825,7 @@ class IntractiveTrans extends React.Component {
                     }}
                   >
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                      <Typography value="" variant="h6" gutterBottom style={{ flex: 1, marginLeft: "3%" }}>
+                      <Typography value="" variant="h6" gutterBottom style={{ flex: 1 }}>
                         {translate("common.page.label.source")}
                       </Typography>
 
@@ -828,9 +834,10 @@ class IntractiveTrans extends React.Component {
                           onClick={event => {
                             this.handleClick(true, 6);
                           }}
+                          style={{ paddingRight: '0px' }}
                         >
-                          <PictureAsPdfIcon style={{ cursor: "pointer" }} color="primary" />
-                          <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
+                          <PictureAsPdfIcon style={{ cursor: "pointer", color: '#233466' }} color="primary" />
+                          <Typography value="" variant="subtitle2" style={{ cursor: "pointer", color: '#233466', paddingLeft: '7px' }}>
                             {translate("intractive_translate.page.preview.compareWithOriginal")}
                           </Typography>
                         </Toolbar>
@@ -884,28 +891,28 @@ class IntractiveTrans extends React.Component {
                   </Paper>
                 </Grid>
               ) : (
-                <Grid item xs={1} sm={1} lg={1} xl={1}>
-                  <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
-                    <Toolbar
-                      onClick={event => {
-                        this.handleClick(false, 4);
-                      }}
-                      style={{ color: darkBlack, background: blueGrey50 }}
-                    >
-                      <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
+                  <Grid item xs={1} sm={1} lg={1} xl={1}>
+                    <Paper elevation={2} style={{ height: "49px", paddingBottom: "15px" }}>
+                      <Toolbar
+                        onClick={event => {
+                          this.handleClick(false, 4);
+                        }}
+                        style={{ color: darkBlack, background: blueGrey50 }}
+                      >
+                        <KeyboardTabIcon color="primary" style={{ cursor: "pointer" }} /> &nbsp;&nbsp;
                       <Typography value="" variant="subtitle2" color="primary" style={{ cursor: "pointer" }}>
-                        {translate("common.page.label.source")}
-                      </Typography>
-                    </Toolbar>
-                  </Paper>
-                </Grid>
-              )}
+                          {translate("common.page.label.source")}
+                        </Typography>
+                      </Toolbar>
+                    </Paper>
+                  </Grid>
+                )}
 
               {!this.state.collapseToken ? (
                 <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
                   <Paper elevation={2} style={{ maxHeight: window.innerHeight - 180, paddingBottom: "12px" }}>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                      <Typography value="" variant="h6" gutterBottom style={{ marginLeft: "10px" }}>
+                      <Typography value="" variant="h6" gutterBottom>
                         {translate("common.page.label.target")}
                       </Typography>
                     </Toolbar>
@@ -935,19 +942,19 @@ class IntractiveTrans extends React.Component {
                   </Paper>
                 </Grid>
               ) : (
-                <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
-                  <PdfPreview
-                    pageNo={this.state.pageNo}
-                    fileDetails={this.state.fileDetails}
-                    numPages={this.state.numPages}
-                    onDocumentLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
-                    handlePageChange={this.handlePageChange.bind(this)}
-                    handleClick={this.handleClick.bind(this)}
-                    handleChange={this.handleZoomChange.bind(this)}
-                    zoom={this.state.zoom}
-                  />
-                </Grid>
-              )}
+                  <Grid item xs={12} sm={6} lg={gridValue} xl={gridValue} className="GridFileDetails">
+                    <PdfPreview
+                      pageNo={this.state.pageNo}
+                      fileDetails={this.state.fileDetails}
+                      numPages={this.state.numPages}
+                      onDocumentLoadSuccess={this.onDocumentLoadSuccess.bind(this)}
+                      handlePageChange={this.handlePageChange.bind(this)}
+                      handleClick={this.handleClick.bind(this)}
+                      handleChange={this.handleZoomChange.bind(this)}
+                      zoom={this.state.zoom}
+                    />
+                  </Grid>
+                )}
               {!this.state.collapseToken && (
                 <Grid item xs={12} sm={12} lg={4} xl={4}>
                   {this.state.sentences && this.state.sentences[0] && (

@@ -417,13 +417,13 @@ class ComparisonReport extends React.Component {
       <div>
         {!this.state.tocken ? (
           <div>
-            <Grid container spacing={24} style={{ padding: 5 }}>
-              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "16%", marginTop: "38px" }}>
+            <Grid container spacing={24} style={{ padding: 5, marginLeft: "3%",marginRight: "3%"  }}>
+              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "38px" }}>
                 <Typography variant="title" color="inherit">
                   {translate('common.page.label.fromDate')}
                 </Typography>
               </Grid>
-              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "-8%", marginTop: "20px", width: "40px" }}>
+              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "20px", width: "40px" }}>
                 <TextField
                   id={this.state.from_date}
                   value={this.state.from_date}
@@ -442,7 +442,7 @@ class ComparisonReport extends React.Component {
                   {translate('common.page.label.toDate')}
                 </Typography>
               </Grid>
-              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginLeft: "-8%", marginTop: "20px" }}>
+              <Grid item xs={2} sm={2} lg={2} xl={2} style={{ marginTop: "20px" }}>
                 <TextField
                   id={this.state.to_date}
                   value={this.state.to_date}
@@ -456,7 +456,7 @@ class ComparisonReport extends React.Component {
                 />
               </Grid>
 
-              <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginLeft: "-8%", marginTop: "34px" }}>
+              <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginTop: "34px" }}>
                 <Button
                   variant="contained"
                   onClick={event => {
@@ -470,7 +470,7 @@ class ComparisonReport extends React.Component {
                 </Button>
               </Grid>
             </Grid>
-            <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+            <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "40px" }}>
               <MUIDataTable title={translate('common.page.title.comparisonReport')} data={this.state.graderDetails ? this.state.graderDetails : []} columns={Table1columns} options={options1} />
             </div>
           </div>
@@ -480,7 +480,7 @@ class ComparisonReport extends React.Component {
                 variant="extended"
                 color="primary"
                 aria-label="Add"
-                style={{ marginLeft: "-4%", marginTop: "1%" }}
+                style={{ marginTop: "1%" }}
                 onClick={() => {
                   this.handleClose(this.state.tockenValue ? "tockenValue" : "tocken");
                 }}
@@ -492,7 +492,7 @@ class ComparisonReport extends React.Component {
 
 
               {!this.state.tockenValue ? (
-                <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+                <div style={{  marginLeft: "3%", marginRight: "3%", marginTop: "40px" }}>
                   <MUIDataTable
                     title={this.state.title ? this.state.title : translate('common.page.title.categoryDetails')}
                     data={this.state.categoryReport ? this.state.categoryReport : []}
@@ -501,7 +501,7 @@ class ComparisonReport extends React.Component {
                   />
                 </div>
               ) : (
-                  <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+                  <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "40px" }}>
                     <MUIDataTable
                       title={this.state.detailedReport && this.state.detailedReport[0].category_name}
                       data={this.state.detailedReport ? this.state.detailedReport : []}

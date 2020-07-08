@@ -7,7 +7,7 @@ import GlobalStyles from "../../styles/web/styles";
 import Spinner from "../../components/web/common/Spinner";
 // import Theme from "../../theme/web/theme-red";
 import Snackbars from '../../components/web/common/Snackbar'
-import Theme from "../../theme/web/theme-default";
+import Theme from "../../theme/web/theme-anuvaad";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
 

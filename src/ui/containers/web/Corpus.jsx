@@ -345,7 +345,7 @@ class Corpus extends React.Component {
                         <div style={{ width: '95px' }}>
 
                             <Tooltip title={translate('common.page.title.accept')} disableTriggerFocus={true}><Accept style={{ cursor: 'pointer', marginRight: '5px', color: "green" }} onClick={() => {
-                                 !this.state.lock && this.handleActionButton(index, "ACCEPTED") 
+                                !this.state.lock && this.handleActionButton(index, "ACCEPTED")
 
                             }} />
                             </Tooltip>
@@ -416,7 +416,7 @@ class Corpus extends React.Component {
                             }
 
                             <Tooltip title={translate('corpus.page.title.reject')} disableTriggerFocus={true}><Close style={{ cursor: 'pointer', marginRight: '5px', color: "red" }} onClick={() => {
-                                 !this.state.lock && this.handleActionButton(index, "REJECTED") 
+                                !this.state.lock && this.handleActionButton(index, "REJECTED")
                             }} /></Tooltip>
                         </div>
 
@@ -455,7 +455,7 @@ class Corpus extends React.Component {
                 </Menu>
 
                 <Grid container spacing={24} style={{ padding: 5 }}>
-                    <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: '-4%', marginTop: '20px' }}>
+                    <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginTop: '20px', margin: '0% 3%' }}>
 
                         <Grid
                             container
@@ -468,7 +468,7 @@ class Corpus extends React.Component {
                     </Grid>
 
 
-                    <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: '-4%' }}>
+                    <Grid item xs={12} sm={12} lg={12} xl={12} style={{ margin: '3%', padding: '0px' }}>
                         <Toolbar style={{ marginRight: '-1.2%' }}>
 
 

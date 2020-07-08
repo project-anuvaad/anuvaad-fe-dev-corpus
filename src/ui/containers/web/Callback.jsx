@@ -9,7 +9,7 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import {  MuiThemeProvider } from "@material-ui/core/styles";
-import Theme from "../../theme/web/theme-default";
+import Theme from "../../theme/web/theme-anuvaad";
 
 class Callback extends React.Component {
   constructor(props) {

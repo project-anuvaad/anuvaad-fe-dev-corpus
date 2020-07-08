@@ -20,6 +20,7 @@ import TextField from '../../components/web/common/TextField';
 import Link from '@material-ui/core/Link';
 import Snackbar from "../../components/web/common/Snackbar";
 import { translate } from "../../../assets/localisation";
+// import SignUpStyles from "../../styles/web/SignUpStyles";
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -90,41 +91,41 @@ class SignUp extends React.Component {
         <div >
           <Grid container spacing={8} >
             <Grid item xs={12} sm={4} lg={5} xl={5} >
-              <img src="Anuvaad.png" width="100%" height="925px" alt=""/>
+              <img src="Anuvaad.png" width="100%" height="956px" alt=""  marginBottom="0px"/>
             </Grid>
-            <Grid item xs={12} sm={8} lg={7} xl={7} style={{ backgroundColor: '#f1f5f7' }} >
+            <Grid item xs={12} sm={8} lg={7} xl={7} className={classes.signUpPaper} >
               {/* <ValidatorForm
                             ref="form"
                             onSubmit={this.handleSubmit}
                             onError={errors => console.log(errors)}
                         > */}
-              <Typography align='center' style={{ marginTop: '5%', marginBottom: '5%', fontSize: '33px', fontfamily: 'Trebuchet MS, sans-serif	', color: '#003366' }}>Sign Up</Typography>
+              <Typography align='center' className={classes.typographyHeader}>Sign Up</Typography>
               <FormControl align='center' fullWidth >
 
-                <TextField value={this.state.firstName} id="outlined-required" placeholder={translate('signUp.page.label.firstName')}
-                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white', fontSize: '20px' }} onChange={this.handleInputReceived('firstName')}
+              <TextField value={this.state.firstName} id="outlined-margin-dense" placeholder={translate('signUp.page.label.firstName')}
+                   varient="outlined" margin="dense" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('firstName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
                 <TextField value={this.state.lastName} id="outlined-required" placeholder={translate('signUp.page.label.lastName')}
-                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('lastName')}
+                  margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('lastName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
                 <TextField value={this.state.email} id="outlined-required" type="email" placeholder={translate('common.page.placeholder.emailUsername')}
-                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('email')}
+                  margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('email')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
                 <TextField value={this.state.password} id="outlined-required" type="password" placeholder={translate('setPassword.page.placeholder.enterPassword')}
-                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('password')}
+                  margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('password')}
                 />                </FormControl>
               <FormControl align='center' fullWidth>
                 <TextField value={this.state.confirmPassword} id="outlined-required" type="password" placeholder={translate('setPassword.page.placeholder.reEnterPassword')}
-                  margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('confirmPassword')}
+                  margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('confirmPassword')}
                 />
               </FormControl>
-              <FormControlLabel fullWidth style={{ marginLeft: '25%' }}
+              <FormControlLabel fullWidth className={classes.formControl}
                 control={
                   <Checkbox
                     className={classes.checkRemember.className}
@@ -139,8 +140,8 @@ class SignUp extends React.Component {
                 label={<div><span>{translate('signUp.page.label.iAgree')}</span>
                   <Link href="#" onClick={() => {
                     window.open('/Anuvaad-TnC.html', 'T&C', `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
-width=500,height=500`);
-                  }}> {translate('signUp.page.label.privacyPolicy')}</Link>  
+                    width=500,height=500`);
+                  }}style={{color:'#0C8AA9'}}> {translate('signUp.page.label.privacyPolicy')}</Link>
                 </div>}
               />
               <br />
@@ -152,15 +153,15 @@ width=500,height=500`);
                     backgroundColor: this.state.termsAndCondition ? '#1ca9c9' : 'gray', color: 'white',
                   }} onClick={this.handleSubmit.bind(this)}>
                   {translate('singUp.page.label.signUp')}
-                  </Button>
+                </Button>
               </FormControl>
 
-              <Typography style={{ marginLeft: '26%', marginBottom: '4%' }}>{translate('signUp.page.label.allReadyHaveAccount')}
-                  <Link style={{ cursor: 'pointer' }} href="#" onClick={() => {  history.push("/") }}> {translate('signUp.page.label.logIn')}</Link></Typography>
+              <Typography className={classes.typography1}>{translate('signUp.page.label.allReadyHaveAccount')}
+                <Link style={{ cursor: 'pointer',color:'#0C8AA9' }} href="#" onClick={() => { history.push("/") }}> {translate('signUp.page.label.logIn')}</Link></Typography>
 
-              {/* </ValidatorForm> */}
-              <hr style={{ height: '2px', borderwidth: '0', width: '70%', backgroundColor: ' #D8D8D8', color: '#D8D8D8', border: '0', marginTop: '2%' }} />
-              <Typography align='center' style={{ marginTop: '3%', fontfamily: 'Gill Sans, sans-serif;' }}>{translate('signUp.page.label.enterDetailsToReceiveConfirmation')}<br />{translate('signUp.page.label.clickToActivateAccount')}</Typography>
+            
+              <hr className={classes.hrTag} />
+              <Typography align='center' className={classes.typographyFooter}>{translate('signUp.page.label.enterDetailsToReceiveConfirmation')}<br />{translate('signUp.page.label.clickToActivateAccount')}</Typography>
             </Grid>
           </Grid>
           <div className={classes.buttonsDiv} />
