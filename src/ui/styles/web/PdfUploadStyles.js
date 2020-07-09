@@ -35,8 +35,7 @@ const PdfUploadStyles = theme => ({
   typography: {
     marginLeft:"2%",
     marginTop:'2%',
-    height:"18px",
-    fontSize:"18px" 
+    height:"18px"
     
   },
   select:{
@@ -63,7 +62,7 @@ const PdfUploadStyles = theme => ({
     marginLeft:"2.3%"
   },
   span:{
-    color:'#FF0000'
+    
   },
   button: {
     marginTop: "6%",

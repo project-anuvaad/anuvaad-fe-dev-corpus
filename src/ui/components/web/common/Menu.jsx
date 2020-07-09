@@ -5,7 +5,7 @@ import { translate } from "../../../../assets/localisation";
 
 class MenuClass extends React.Component {
   render() {
-    console.log("sajish", this.props.topValue, this.props.leftValue);
+
     const { anchorEl, topValue, leftValue, isOpen, handleApiMerge, operation_type } = this.props;
     var val = [];
     return (
@@ -28,7 +28,7 @@ class MenuClass extends React.Component {
           <Button
             style={{ textTransform: "none", width: "100%", justifyContent: "left" }}
             onClick={() =>
-              this.props.operation_type === "merge-individual" && this.props.addSentence ? this.props.handleDialog() : this.props.handleApiMerge()
+              this.props.operation_type === "merge-individual" && this.props.addSentence ? this.props.handleDialog( "Merge", translate("intractive_translate.page.message.mergeDifferentSentenceQuestion")) : this.props.operation_type === "merge" ?this.props.handleDialog( "Merge", "Do you want to merge the sentence ?"):this.props.handleDialog( "Split", "Do you want to split the sentence ?")
             }
           >
             {" "}
@@ -47,7 +47,7 @@ class MenuClass extends React.Component {
           </div>
         )}
         {this.props.startParagraph._id === this.props.endParagraph._id && (
-          <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDeleteSentence()}>
+          <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Delete Sentence", "Do you want to delete the sentence ? ")}>
             {" "}
             {translate("intractive_translate.page.preview.deleteSentence")}
           </Button>
@@ -58,12 +58,12 @@ class MenuClass extends React.Component {
           </Button>
         <hr style={{ color: 'grey', opacity: '0.4' }} />
 
-        <div><Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("next", '',"text")}>
+        <div><Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() =>this.props.handleDialog( "Add new paragraph above", "Do you want to add new paragraph above? ") }>
           {" "}
           {translate("intractive_translate.page.preview.addNewSentenceAbove")}
         </Button><br /></div>
 
-        <div> <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddNewSentence("previous", '',"text")}>
+        <div> <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Add new paragraph below", "Do you want to add new paragraph below? ")}>
           {" "}
           {translate("intractive_translate.page.preview.addNewSentenceBelow")}
         </Button><br /></div>
