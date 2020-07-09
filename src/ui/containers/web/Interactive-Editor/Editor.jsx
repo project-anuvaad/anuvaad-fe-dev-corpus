@@ -220,17 +220,16 @@ class Editor extends React.Component {
               checkedB: true
             });
           } else if (sentence.tokenized_sentences.length >= sentenceIndex && sentenceIndex >= 0) {
+            console.log("index",sentenceIndex , value)
             const ind = sentenceIndex + value;
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
-            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, null, value === 0 ? null : true);
+            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, null,value === 0 ? null : true);
             if (sentence.is_table) {
               for (const key in sentence.table_items) {
                 for (const cell in sentence.table_items[key]) {
-                  console.log(sentence.table_items)
                   if (sentence.table_items[key][cell].sentence_index === sentence.tokenized_sentences[ind].sentence_index) {
-                    console.log(key, cell, ind, sentence.table_items[key][cell].sentence_index)
                     const blockId = `${sentence._id}_${sentence.table_items[key][cell].sentence_index}`;
-                    this.props.handleCellOnClick(sentence._id, blockId, sentence.table_items[key][cell], "true", null, null, value === 0 ? null : true);
+                    this.props.handleCellOnClick(sentence._id, blockId, sentence.table_items[key][cell], "true", null, null,value === 0 ? null : true);
                     this.setState({ keyValue: key, cellValue: cell, checkedB: true });
                   }
                 }
@@ -280,17 +279,17 @@ class Editor extends React.Component {
       this.setState({ target: '' })
     }
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
-
-      if (this.state.translateText && this.state.prevTarget && this.state.prevTarget !== this.state.translateText) {
-        const apiObj = new IntractiveApi(this.state.source, this.handleCalc(this.state.translateText), this.props.modelDetails, true);
-        this.props.APITransport(apiObj);
-        this.setState({ prevTarget: this.state.translateText })
-      }
-      else {
-        this.setState({ apiCall: false })
-      }
+      
+        if(this.state.translateText && this.state.prevTarget && this.state.prevTarget!==this.state.translateText){
+          const apiObj = new IntractiveApi(this.state.source, this.handleCalc(this.state.translateText), this.props.modelDetails, true);
+          this.props.APITransport(apiObj);
+          this.setState({prevTarget:this.state.translateText})
+        }
+        else{
+          this.setState({apiCall:false})
+        }
       if (this.state.apiToken) {
-
+        
         if (this.props.superScriptToken && this.state.superIndex) {
           this.props.handleScriptSave(
             this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0],
@@ -323,7 +322,7 @@ class Editor extends React.Component {
         disable: false,
         token: false,
         apiToken: false,
-
+        
         target: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt,
         taggedSource: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tagged_src,
         taggedTarget: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tagged_tgt
@@ -357,6 +356,7 @@ class Editor extends React.Component {
     const tgt = this.state.target && this.state.target.split(" ");
     const src = this.state.source && this.state.source.split(" ");
     const resultArray = [];
+    console.log(tagged_tgt,temp,tgt)
     let index;
     temp.map(item => {
       if (item !== " ") {
@@ -458,7 +458,7 @@ class Editor extends React.Component {
         this.setState({
           disable: true,
           apiCall: true,
-          prevTarget: event.target.value
+          prevTarget: event.target.value 
         });
       }
     }
@@ -481,16 +481,15 @@ class Editor extends React.Component {
             {this.state.checkedB ? translate('dashbord.page.title.anuvaadModel') : "Recommended Sentence"}
           </Typography>
           {this.state.checkedB ? (this.state.apiCall || this.state.api) ? <div style={{
-            position: 'relative'
-          }}>
-            <Button
-              variant="contained"
-              color="primary"
-
-              disabled={this.state.apiCall}
-              onClick={this.handleButtonClick}
-            >
-              Tab disabled
+    position: 'relative'}}>
+          <Button
+            variant="contained"
+            color="primary"
+            
+            disabled={this.state.apiCall}
+            onClick={this.handleButtonClick}
+          >
+            Tab disabled
           </Button>
             <CircularProgress size={24} style={{
               color: '#238427',
@@ -567,8 +566,7 @@ class Editor extends React.Component {
               height: "23vh",
               fontFamily: '"Source Sans Pro", "Arial", sans-serif',
               fontSize: "18px",
-              borderRadius: "4px",
-              color: 'red'
+              borderRadius: "4px"
             }}
             className="noter-text-area"
             rows="10"

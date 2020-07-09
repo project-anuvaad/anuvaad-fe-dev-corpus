@@ -110,7 +110,7 @@ class UserDirectory extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "asc"
+          
         }
       },
       {
@@ -136,6 +136,7 @@ class UserDirectory extends React.Component {
           sort: true
         }
       },
+      
       {
         name: "roles",
 
@@ -164,6 +165,15 @@ class UserDirectory extends React.Component {
           display: "excluded"
         }
       },
+      {
+        name: "createdAt",
+        label: "Created At",
+        options: {
+          filter: true,
+          sortDirection: "asc"
+          
+        }
+      },
 
       {
         name: "Action",
@@ -186,7 +196,7 @@ class UserDirectory extends React.Component {
                       aria-label="edit"
                       style={{ width: "170px", marginLeft: "-13%", marginBottom: "4%", marginTop: "4%" }}
                     >
-                      {tableMeta.rowData[7] ? translate("userDirectory.page.label.deactivated") : translate("userDirectory.page.label.deactivated")}
+                      {tableMeta.rowData[7] ? translate("userDirectory.page.label.deactivated") : translate("userDirectory.page.label.activated")}
                     </Button>
                   ) : (
                       ""
@@ -225,6 +235,22 @@ class UserDirectory extends React.Component {
       filter: false,
       selectableRows: "none",
       rowsPerPage: 10,
+      customSort: (data, dataIndex, rowIndex) => {
+        if (dataIndex === 8) {
+          return data.sort((a, b) => {
+            const dateA = new Date(a.data[dataIndex]).getTime();
+            const dateB = new Date(b.data[dataIndex]).getTime();
+            return (dateA < dateB ? -1 : 1) * (rowIndex === "desc" ? 1 : -1);
+          });
+        } else {
+          return data.sort((a, b) => {
+            return (
+              (a.data[dataIndex].length < b.data[dataIndex].length ? -1 : 1) *
+              (rowIndex === "desc" ? 1 : -1)
+            );
+          });
+        }
+      },
       onRowClick: rowData => this.handleClick(rowData)
     };
 
