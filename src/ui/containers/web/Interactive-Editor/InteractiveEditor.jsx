@@ -825,7 +825,7 @@ class IntractiveTrans extends React.Component {
                     elevation={2}
                     style={{
                       // paddingBottom: "10px",
-                      maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 180,
+                      maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 200,
                       paddingBottom: "12px"
                     }}
                   >
@@ -852,7 +852,7 @@ class IntractiveTrans extends React.Component {
                       onContextMenu={this.handleClickv}
                       id="popUp"
                       style={{
-                        maxHeight: this.state.collapseToken ? window.innerHeight - 220 : window.innerHeight - 280,
+                        maxHeight: this.state.collapseToken ? window.innerHeight - 220 : window.innerHeight - 300,
                         overflowY: "scroll",
                         padding: "24px"
                       }}
@@ -915,14 +915,14 @@ class IntractiveTrans extends React.Component {
 
               {!this.state.collapseToken ? (
                 <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
-                  <Paper elevation={2} style={{ maxHeight: window.innerHeight - 180, paddingBottom: "12px" }}>
+                  <Paper elevation={2} style={{ maxHeight: window.innerHeight - 200, paddingBottom: "12px" }}>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom>
                         {translate("common.page.label.target")}
                       </Typography>
                     </Toolbar>
 
-                    <div style={{ maxHeight: window.innerHeight - 280, overflowY: "scroll", padding: "24px" }}>
+                    <div style={{ maxHeight: window.innerHeight - 300, overflowY: "scroll", padding: "24px" }}>
                       <EditorPaper
                         paperType="target"
                         sentences={this.state.sentences}

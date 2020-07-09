@@ -566,8 +566,7 @@ class Editor extends React.Component {
               height: "23vh",
               fontFamily: '"Source Sans Pro", "Arial", sans-serif',
               fontSize: "18px",
-              borderRadius: "4px",
-              color: 'red'
+              borderRadius: "4px"
             }}
             className="noter-text-area"
             rows="10"
