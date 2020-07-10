@@ -141,9 +141,7 @@ class doctranslate extends React.Component {
 
         <Typography value={translate("doc_translate.page.documentTranslator")} variant="h4" style={{
           marginTop: '6%',
-          fontfamily: '"Source Sans Pro", sans-serif',
-          color: '#003366',
-          textAlign: "center", fontWeight: '549'
+          
         }} />
 
 

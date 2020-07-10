@@ -330,7 +330,7 @@ class Dashboard extends React.Component {
             <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.grid}>
               <textarea
                 id="standard-multiline-static"
-                style={{ padding: "1%", height: '100px', fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px", width: '98%', borderRadius: '4px' }}
+                style={{ padding: "1%", height: '100px', fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px", width: '97.8%', borderRadius: '4px' }}
                 className="noter-text-area"
                 rows="3"
                 value={this.state.text}

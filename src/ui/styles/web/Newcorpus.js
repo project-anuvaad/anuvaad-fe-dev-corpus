@@ -24,9 +24,7 @@ const Newcorpus = theme => ({
 
   },
   typographyHeader:{
-    fontfamily: '"Source Sans Pro", sans-serif',
-          color: '#003366',
-          fontWeight: '549', textAlign:'center',paddingTop: "2%"
+    paddingTop: "2%"
   },
   
   createButton: {
@@ -38,7 +36,7 @@ label:{
   paddingRight:'3%'
 },
 select:{
-  minWidth: 120, width: '95%', align: 'right',marginLeft:'5%' 
+  minWidth: 120, width: '95%', align: 'right',marginLeft:'4.9%' 
 },
 button: {
   justifyContent: 'center',

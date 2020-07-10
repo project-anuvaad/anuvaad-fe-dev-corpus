@@ -131,7 +131,7 @@ class Corp extends React.Component {
               return (
                 <div style={{ width: "90px" }}>
                   {(tableMeta.rowData[6] === "COMPLETED" || tableMeta.rowData[6] === "IN-PROGRESS") && this.state.role.includes("editor") && (
-                    <Tooltip title={translate("viewCorpus.title.viewSentence")}>
+                    <Tooltip title={translate("viewCorpus.title.editSentence")}>
                       <EditIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%",color:'#233466' }}
                         onClick={() => {

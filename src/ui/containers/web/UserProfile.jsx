@@ -361,9 +361,9 @@ class UserProfile extends React.Component {
                     <Button
                       variant="contained"
                       onClick={this.handleCancel}
-                      color="secondary"
+                      color='primary'
                       aria-label="edit"
-                      style={{ width: "50%", marginBottom: "4%", marginTop: "4%", backgroundColor: "#1C9AB7", color: "#FFFFFF", marginLeft: "0px", borderRadius: "20px 20px 20px 20px" }}
+                      style={{ width: "50%", marginBottom: "4%", marginTop: "4%",  marginLeft: "0px", borderRadius: "20px 20px 20px 20px" }}
                     >
                       {translate("common.page.button.cancel")}
                     </Button>
@@ -371,9 +371,9 @@ class UserProfile extends React.Component {
                       variant="contained"
                       disabled={!(this.state.oldpassword && this.state.newpassword && this.state.repassword)}
                       onClick={this.handleSubmit}
-                      color="primary"
+                      color='primary'
                       aria-label="edit"
-                      style={{ width: "50%", marginBottom: "4%", marginTop: "4%", backgroundColor: "#1C9AB7", color: "#FFFFFF", marginRight: "0px", borderRadius: "20px 20px 20px 20px" }}
+                      style={{ width: "50%", marginBottom: "4%", marginTop: "4%", marginRight: "0px", borderRadius: "20px 20px 20px 20px" }}
                     >
                       {translate("common.page.button.submit")}
                     </Button>

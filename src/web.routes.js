@@ -83,13 +83,14 @@ import { translate } from '../src/assets/localisation';
 import UpdatePassword from './ui/containers/web/UpdatePassword';
 import SetPassword from './ui/containers/web/SetPassword';
 
-const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader,dontShowHeader, authenticate, ...rest }) => (
+const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader,dontShowHeader,currentMenu, authenticate, ...rest }) => (
   <Route
     {...rest}
     render={props =>
       authenticate(userRoles) ? (
         <Layout
           dontShowLoader={dontShowLoader}
+          currentMenu={currentMenu}
           showLogo={showLogo}
           component={Component}
           title={title}
@@ -411,6 +412,7 @@ class AppRoutes extends React.Component {
               path={`${process.env.PUBLIC_URL}/data-pipeline-tools`}
               title={translate('webroutes.page.title.dataPipeLine')}
               userRoles={["dev"]}
+              currentMenu="data-pipeline"
               component={DataPipeline}
               authenticate={this.authenticateUser}
             />
