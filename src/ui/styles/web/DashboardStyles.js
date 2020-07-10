@@ -83,7 +83,7 @@ const DashboardStyles = theme => ({
     display: 'flex', flexDirection: 'row', marginTop: '3%'
   },
   dataChip: {
-    display: 'flex', flexDirection: 'row', marginLeft: '0px'
+    display: 'flex', flexDirection: 'row', marginLeft: '0px',flexWrap: 'wrap'
   }
  
   
