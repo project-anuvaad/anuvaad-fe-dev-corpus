@@ -4,11 +4,11 @@ const drawerWidth = 240;
 
 const GlobalStyles = theme => ({
   container: {
-    margin: '5em 0em 1em 0em',
+    margin: '5em 0em 0em 0em',
     width: '100%',
     background: theme.palette.background.default,
     fontFamily: theme.typography.fontFamily,
-    minHeight: '-webkit-fill-available'
+    minHeight: 'calc(100vh - 5em)'
   },
   containerDemo: {
     margin: '5em 0em 0em 0em',
@@ -24,6 +24,7 @@ const GlobalStyles = theme => ({
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
+    minHeight:'720px',
     display: 'flex'
   },
   appBar: {
