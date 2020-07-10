@@ -13,9 +13,7 @@ const PdfToDocStyles = theme => ({
     marginTop: theme.spacing.unit * 3
   },
   typographyHeader: {
-    fontfamily: '"Source Sans Pro", sans-serif',
-    color: '#003366',
-    textAlign: "center", fontWeight: '549', marginTop: '30%'
+    marginTop: '30%'
   },
   paper: {
     width: "40%",

@@ -24,9 +24,7 @@ const Newcorpus = theme => ({
 
   },
   typographyHeader:{
-    fontfamily: '"Source Sans Pro", sans-serif',
-          color: '#003366',
-          fontWeight: '549', textAlign:'center',paddingTop: "2%"
+    paddingTop: "2%"
   },
   
   createButton: {

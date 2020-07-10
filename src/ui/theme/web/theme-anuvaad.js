@@ -4,6 +4,13 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const themeAnuvaad = createMuiTheme({
 
   typography: {
+    h4:{
+      fontWeight: '549',
+      fontfamily: '"Source Sans Pro", sans-serif',
+      color: '#003366',
+      textAlign:'center'
+
+    },
     fontFamily: '"Source Sans Pro","Regular","Arial", sans-serif',
     fontSize: 16,
     color: "#000000",
@@ -44,10 +51,10 @@ const themeAnuvaad = createMuiTheme({
     fontSize: 16,
     color: "#1C9AB7"
   },
- 
 
 
 
+  
 });
 
 

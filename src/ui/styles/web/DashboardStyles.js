@@ -16,9 +16,7 @@ const DashboardStyles = theme => ({
     marginTop: theme.spacing.unit * 3
   },
   typographyHeader:{
-    fontfamily: '"Source Sans Pro", sans-serif',
-          color: '#003366',
-          fontWeight: '549', textAlign:'center',paddingBottom: "12px", paddingTop: "2%"
+     paddingBottom: "12px", paddingTop: "2%"
     
 
   },

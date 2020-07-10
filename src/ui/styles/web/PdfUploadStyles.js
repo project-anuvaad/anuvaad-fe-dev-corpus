@@ -18,11 +18,7 @@ const PdfUploadStyles = theme => ({
   typographyHeader:{
     paddingTop:'4%',
     minWidth: "5%",
-    textAlign:'center',
-    // marginLeft:"40.5%",
-    fontfamily: '"Source Sans Pro", sans-serif',
-     color: '#003366',
-     fontWeight:'549'
+   
     
 
   },
