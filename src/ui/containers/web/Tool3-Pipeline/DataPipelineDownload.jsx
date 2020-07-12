@@ -47,7 +47,7 @@ class SentenceExtraction extends React.Component {
   render() {
     return (
       <div>
-        <Toolbar style={{ marginRight: "8%", marginTop: "20px" }}>
+        <Toolbar style={{ marginTop: "20px", marginRight: "3%", marginLeft: "3%", padding: "0px" }}>
           <Typography variant="title" color="inherit" style={{ flex: 1 }} />
 
           <Button
@@ -100,7 +100,7 @@ class SentenceExtraction extends React.Component {
                     }`}
                     style={{ textDecoration: "none" }}
                   >
-                    <Button variant="contained" color="primary" style={{ width: "85%", height: "56px", marginTop: "-30px" }}>
+                    <Button variant="contained" color="primary" style={{ width: "85%", height: "56px", marginTop: "-20px" }}>
                       {translate("common.page.button.download&View")}
                     </Button>{" "}
                   </a>
