@@ -52,73 +52,72 @@ class Corp extends React.Component {
 
   render() {
     return (
-      <Grid container spacing={24} style={{ padding: 30 }}>
+      <div style={{ marginLeft: "3%", marginRight: "3%", paddingTop: "2%"}}>
+
         <Grid item xs={12} sm={12} lg={12} xl={12}>
-          <Typography gutterBottom variant="title" component="h2">
+          <Typography variant="title" variant="h4">
             {translate("translation.page.label.translationList")}
           </Typography>
-          <Grid container direction="row" justify="flex-end" alignItems="right">
-            <Grid item xs={1} sm={1} lg={1} xl={1}>
-              <Button
-                variant="extendedFab"
-                color="primary"
-                aria-label="Add"
-                onClick={() => {
-                  history.push(`${process.env.PUBLIC_URL}/translate`);
-                }}
-              >
-                <AddIcon /> {translate("dashboard.page.heading.message")}
-              </Button>
-            </Grid>
-          </Grid>
+          <div style={{textAlign: "right", paddingTop: "2%"}}>
+            <Button
+              variant="extendedFab"
+              color="primary"
+              aria-label="Add"
+              onClick={() => {
+                history.push(`${process.env.PUBLIC_URL}/translate`);
+              }}
+            >
+              <AddIcon /> {translate("sentenceTranslate.page.text.translateTxt")}
+            </Button>
+          </div>
         </Grid>
 
         <Grid item xs={12} sm={12} lg={12} xl={12}>
           {this.props.apistatus.progress ? (
             <CircularProgress />
           ) : (
-            <Paper>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="right">{translate("common.page.label.name")}</TableCell>
-                    <TableCell align="right">Created On</TableCell>
-                    <TableCell align="right">Status</TableCell>
-                    <TableCell align="right">Action</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {this.state.translations &&
-                    Array.isArray(this.state.translations) &&
-                    this.state.translations.map(row => (
-                      <TableRow key={row.created_on}>
-                        <TableCell align="right">{row.name}</TableCell>
-                        <TableCell align="right">{row.created_on.split(",")[0]}</TableCell>
-                        <TableCell align="right">{row.status}</TableCell>
-                        <TableCell align="right">
-                          {row.status === "COMPLETED" ? (
-                            <Button
-                              variant="contained"
-                              onClick={() => {
-                                history.push(`${process.env.PUBLIC_URL}/view-translations/${row.basename}`);
-                              }}
-                              color="secondary"
-                              aria-label="edit"
-                            >
-                              View
-                            </Button>
-                          ) : (
-                            ""
-                          )}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            </Paper>
-          )}
+              <Paper style={{ marginTop: "2%" }}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="right">{translate("common.page.label.name")}</TableCell>
+                      <TableCell align="right">Created On</TableCell>
+                      <TableCell align="right">Status</TableCell>
+                      <TableCell align="right">Action</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {this.state.translations &&
+                      Array.isArray(this.state.translations) &&
+                      this.state.translations.map(row => (
+                        <TableRow key={row.created_on}>
+                          <TableCell align="right">{row.name}</TableCell>
+                          <TableCell align="right">{row.created_on.split(",")[0]}</TableCell>
+                          <TableCell align="right">{row.status}</TableCell>
+                          <TableCell align="right">
+                            {row.status === "COMPLETED" ? (
+                              <Button
+                                variant="contained"
+                                onClick={() => {
+                                  history.push(`${process.env.PUBLIC_URL}/view-translations/${row.basename}`);
+                                }}
+                                color="secondary"
+                                aria-label="edit"
+                              >
+                                View
+                              </Button>
+                            ) : (
+                                ""
+                              )}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </Paper>
+            )}
         </Grid>
-      </Grid>
+      </div>
     );
   }
 }

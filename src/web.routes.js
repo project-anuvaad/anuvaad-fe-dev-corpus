@@ -83,13 +83,14 @@ import { translate } from '../src/assets/localisation';
 import UpdatePassword from './ui/containers/web/UpdatePassword';
 import SetPassword from './ui/containers/web/SetPassword';
 
-const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader,dontShowHeader, authenticate, ...rest }) => (
+const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, dontShowHeader, currentMenu, authenticate, ...rest }) => (
   <Route
     {...rest}
     render={props =>
       authenticate(userRoles) ? (
         <Layout
           dontShowLoader={dontShowLoader}
+          currentMenu={currentMenu}
           showLogo={showLogo}
           component={Component}
           title={title}
@@ -157,6 +158,7 @@ class AppRoutes extends React.Component {
               title={translate('webroutes.page.title.anuvaadTranslate')}
               component={TPresident}
               authenticate={this.authenticateUser}
+              currentMenu="anuvaad-translates"
             />
 
             <PrivateRoute
@@ -168,14 +170,21 @@ class AppRoutes extends React.Component {
               userRoles={["user"]}
               component={TranslatePresident}
               authenticate={this.authenticateUser}
+              currentMenu="translate"
             />
-
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/profile`} title={translate('webroutes.page.title.profile')} component={UserProfile} authenticate={this.authenticateUser} />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/profile`}
+              title={translate('webroutes.page.title.profile')}
+              component={UserProfile}
+              authenticate={this.authenticateUser}
+              currentMenu="profile"
+            />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/dashboard`}
               title={translate('dashboard.page.heading.title')}
               component={DashboardTamil}
               authenticate={this.authenticateUser}
+              currentMenu="dashboard"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/anuvaad-wheel`}
@@ -183,19 +192,22 @@ class AppRoutes extends React.Component {
               title="Anuvaad Game"
               component={AnuvaadGame}
               authenticate={this.authenticateUser}
+              currentMenu="anuvaad-wheel"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdf-to-doc`}
               title={translate('webroutes.page.title.pdfToDoc')}
               component={PdfToDoc}
               authenticate={this.authenticateUser}
+              currentMenu="pdf-to-doc"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdf-upload`}
-              userRoles={["user","grader", "dev","editor", "interactive-editor"]}
+              userRoles={["user", "grader", "dev", "editor", "interactive-editor"]}
               title={translate('webroutes.page.title.pdfSentences')}
               component={PdfUpload}
               authenticate={this.authenticateUser}
+              currentMenu="pdf-upload"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/view-pdf`}
@@ -203,13 +215,14 @@ class AppRoutes extends React.Component {
               title={translate('webroutes.page.title.pdfList')}
               component={ViewPdf}
               authenticate={this.authenticateUser}
+              currentMenu="view-pdf"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/pdf-sentence/:session_id`}
-
               title={translate('webroutes.page.title.pdfSentences')}
               component={PdfSentence}
               authenticate={this.authenticateUser}
+              currentMenu="pdf-sentence"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/anuvaad-game`}
@@ -217,6 +230,7 @@ class AppRoutes extends React.Component {
               title="Anuvaad Game"
               component={AnuvaadGame}
               authenticate={this.authenticateUser}
+              currentMenu="anuvaad-game"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/view-corpus/:basename`}
@@ -224,14 +238,16 @@ class AppRoutes extends React.Component {
               userRoles={["grader", "dev"]}
               component={GradeViewCorpus}
               authenticate={this.authenticateUser}
+              currentMenu="view-corpus"
             />
-             <PrivateRoute
+            <PrivateRoute
               path={`${process.env.PUBLIC_URL}/activate/:uid/:rid`}
               title="Activate"
               authenticate={() => true}
               component={Activate}
               drawer
               dontShowHeader={true}
+              currentMenu="activate"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/:basename/:modelid`}
@@ -239,6 +255,7 @@ class AppRoutes extends React.Component {
               userRoles={["grader", "dev"]}
               component={BenchmarkGrade}
               authenticate={this.authenticateUser}
+              currentMenu="benchmark"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/graderreport`}
@@ -246,6 +263,7 @@ class AppRoutes extends React.Component {
               component={GraderReport}
               userRoles={["admin"]}
               authenticate={this.authenticateUser}
+              currentMenu="graderreport"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/comparison-report`}
@@ -253,6 +271,7 @@ class AppRoutes extends React.Component {
               component={ComparisonReport}
               userRoles={["admin"]}
               authenticate={this.authenticateUser}
+              currentMenu="comparison-report"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/benchmarktranslate`}
@@ -260,6 +279,7 @@ class AppRoutes extends React.Component {
               component={FileTranslate}
               title={translate('webroutes.page.title.fileUpload')}
               authenticate={this.authenticateUser}
+              currentMenu="benchmarktranslate"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/texttranslate`}
@@ -267,11 +287,13 @@ class AppRoutes extends React.Component {
               component={GraderTranslate}
               title={translate('dashboard.page.heading.title')}
               authenticate={this.authenticateUser}
+              currentMenu="texttranslate"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/view-translations/:basename`}
               component={ViewTranslations}
               authenticate={this.authenticateUser}
+              currentMenu="view-translations"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/corpus`}
@@ -279,6 +301,7 @@ class AppRoutes extends React.Component {
               title={translate('webroutes.page.title.corpusList')}
               userRoles={["grader", "dev"]}
               authenticate={this.authenticateUser}
+              currentMenu="corpus"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/benchmark`}
@@ -286,6 +309,7 @@ class AppRoutes extends React.Component {
               userRoles={["grader", "dev"]}
               title={translate('webroutes.page.title.benchmark')}
               authenticate={this.authenticateUser}
+              currentMenu="benchmark"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/parallel-corpus/:basename`}
@@ -293,16 +317,33 @@ class AppRoutes extends React.Component {
               userRoles={["editor", "dev"]}
               component={Corpus}
               authenticate={this.authenticateUser}
+              currentMenu="corpus"
             />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/translations`} component={Translations} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/translate-v1`} component={Translate} authenticate={this.authenticateUser} />
-            <PrivateRoute path={`${process.env.PUBLIC_URL}/upload-audio`} component={UploadAudio} authenticate={this.authenticateUser} />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/translations`}
+              component={Translations}
+              authenticate={this.authenticateUser}
+              currentMenu="translations"
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/translate-v1`}
+              component={Translate}
+              authenticate={this.authenticateUser}
+              currentMenu="translate-v1"
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/upload-audio`}
+              component={UploadAudio}
+              authenticate={this.authenticateUser}
+              currentMenu="upload-audio"
+            />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/qna`}
               title={translate('webroutes.page.title.q&a')}
               userRoles={["editor"]}
               component={QnA}
               authenticate={this.authenticateUser}
+              currentMenu="qna"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/signup`}
@@ -311,6 +352,7 @@ class AppRoutes extends React.Component {
               component={Signup}
               drawer
               dontShowHeader={true}
+              currentMenu="signup"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/forgot-password`}
@@ -319,6 +361,7 @@ class AppRoutes extends React.Component {
               component={UpdatePassword}
               drawer
               dontShowHeader={true}
+              currentMenu="forgot-password"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/set-password/:uid/:rid`}
@@ -327,6 +370,7 @@ class AppRoutes extends React.Component {
               component={SetPassword}
               drawer
               dontShowHeader={true}
+              currentMenu="set-password"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/newcorpus`}
@@ -334,6 +378,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={newcorpus}
               authenticate={this.authenticateUser}
+              currentMenu="newcorpus"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/create-corpus`}
@@ -341,6 +386,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={createcorpus}
               authenticate={this.authenticateUser}
+              currentMenu="create-corpus"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/doctranslate`}
@@ -348,6 +394,7 @@ class AppRoutes extends React.Component {
               component={PdfTranslate}
               userRoles={["editor", "user"]}
               authenticate={this.authenticateUser}
+              currentMenu="doctranslate"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/userdirectory`}
@@ -355,6 +402,7 @@ class AppRoutes extends React.Component {
               component={UserDirectory}
               userRoles={["admin"]}
               authenticate={this.authenticateUser}
+              currentMenu="userdirectory"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/edittranslate`}
@@ -362,6 +410,7 @@ class AppRoutes extends React.Component {
               component={EditTranslate}
               userRoles={["notactive"]}
               authenticate={this.authenticateUser}
+              currentMenu="edittranslate"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/viewtranslate`}
@@ -369,6 +418,7 @@ class AppRoutes extends React.Component {
               component={ViewTranslate}
               userRoles={["editor", "user"]}
               authenticate={this.authenticateUser}
+              currentMenu="viewtranslate"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/view-doc/:basename`}
@@ -376,6 +426,7 @@ class AppRoutes extends React.Component {
               component={ViewDoc}
               userRoles={["editor"]}
               authenticate={this.authenticateUser}
+              currentMenu="view-doc"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/feedback`}
@@ -383,6 +434,7 @@ class AppRoutes extends React.Component {
               userRoles={["admin"]}
               component={AddQuestion}
               authenticate={this.authenticateUser}
+              currentMenu="feedback"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/existing-workspace`}
@@ -391,6 +443,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={ExistingWorkspace}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/workspace-details`}
@@ -399,6 +452,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={ExistingWorkspaceDetails}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/apply-token/:name/:session_id`}
@@ -406,6 +460,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={ApplyTocken}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/data-pipeline-tools`}
@@ -413,6 +468,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={DataPipeline}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/upload-token/:name/:session_id`}
@@ -420,6 +476,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={UploadTocken}
               authenticate={this.authenticateUser}
+              currentMenu="upload-token"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/sentence-extraction/:name/:session_id`}
@@ -427,6 +484,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={SentenceExtraction}
               authenticate={this.authenticateUser}
+              currentMenu="sentence-extraction"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/new-extraction`}
@@ -434,6 +492,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={NewSentenceExtraction}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/token-extraction`}
@@ -441,6 +500,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={TockenExtraction}
               authenticate={this.authenticateUser}
+              currentMenu="token-extraction"
             />
 
             <PrivateRoute
@@ -449,6 +509,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={ExtractionSteps}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -457,6 +518,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={DownloadSentence}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -466,6 +528,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool2ExistingWorkspace}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -475,6 +538,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool3ExistingWorkspace}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -483,6 +547,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool2SentenceExtraction}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -491,6 +556,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool3SentenceExtraction}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -499,6 +565,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool4SentenceExtraction}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -508,6 +575,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={WorkspaceDetails}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -516,6 +584,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool3CreateWorkspace}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -524,6 +593,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool4CreateWorkspace}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -532,6 +602,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={SentenceQualityCheck}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -541,6 +612,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool3WorkspaceDetails}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -550,6 +622,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool4WorkspaceDetails}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -558,6 +631,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={CreateWorkspace}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage2/create-datasource`}
@@ -565,6 +639,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool2CreateDataSource}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage3/create-datasource`}
@@ -572,6 +647,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool3CreateDataSource}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -580,6 +656,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool3CreateDataSource}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -588,6 +665,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={DataPipelineDownload}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -597,6 +675,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool4ExistingWorkspace}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -605,6 +684,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={DataSource}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -612,6 +692,7 @@ class AppRoutes extends React.Component {
               title={translate('webroutes.page.title.feedbackForm')}
               component={FeedbackForm}
               authenticate={this.authenticateUser}
+              currentMenu="feedback-form"
             />
 
             <PrivateRoute
@@ -620,6 +701,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Stage3DataPipelineDownload}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -629,6 +711,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Stage2DataSource}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute
@@ -638,6 +721,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool3DataSource}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/anuvaad-editor`}
@@ -646,6 +730,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={AnuvaadEditor}
               authenticate={this.authenticateUser}
+              currentMenu="anuvaad-editor"
             />
 
             <PrivateRoute
@@ -655,6 +740,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Editor}
               authenticate={this.authenticateUser}
+              currentMenu="editor"
             />
 
             <PrivateRoute
@@ -663,6 +749,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={AnuvaadModels}
               authenticate={this.authenticateUser}
+              currentMenu="anuvaad-models"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/interactive-translate`}
@@ -670,21 +757,23 @@ class AppRoutes extends React.Component {
               userRoles={["editor", "dev", "interactive-editor", "grader"]}
               component={IntractiveTranslate}
               authenticate={this.authenticateUser}
+              currentMenu="interactive-translate"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/interactive-editor/:fileid`}
               title={translate('webroutes.page.title.anuvaadEditor')}
-              userRoles={["editor", "dev", "grader","interactive-editor"]}
-
+              userRoles={["editor", "dev", "grader", "interactive-editor"]}
               component={InteractiveEditor}
               authenticate={this.authenticateUser}
+              currentMenu="view-pdf"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/interactive-preview/:fileid`}
               title={translate('webroutes.page.title.anuvaadEditor')}
-              userRoles={["editor", "dev", "interactive-editor", "grader"]}
+              userRoles={["editor", "dev", "interactive-editor"]}
               component={InteractivePreview}
               authenticate={this.authenticateUser}
+              currentMenu="view-pdf"
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/stage4/datasource`}
@@ -693,6 +782,7 @@ class AppRoutes extends React.Component {
               userRoles={["dev"]}
               component={Tool4DataSource}
               authenticate={this.authenticateUser}
+              currentMenu="data-pipeline-tools"
             />
 
             <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser} />

@@ -153,7 +153,7 @@ class Translate extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div style={{padding: "0% 3%", display: "flex", flexDirection: "column", textAlign: "center"}}>
         {!this.state.showLayout ? (
           <div>
             <textarea

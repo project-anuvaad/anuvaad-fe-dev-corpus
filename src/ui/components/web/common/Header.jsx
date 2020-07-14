@@ -111,7 +111,7 @@ class Header extends React.Component {
   };
 
   render() {
-    const { classes, title, drawer, forDemo, dontShowHeader } = this.props;
+    const { classes, title, drawer, forDemo, dontShowHeader, currentMenu } = this.props;
 
     const { auth, anchorEl, open } = this.state;
     const openEl = Boolean(anchorEl);
@@ -121,7 +121,6 @@ class Header extends React.Component {
       useRole.push(item); value !== role.length - 1 && useRole.push(", ")
       return true;
     });
-
     return (
       <div  >
         <AppBar position="fixed" color="secondary" className={classNames(classes.appBar, open && classes.appBarShift)}>
@@ -267,19 +266,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "data-pipeline-tools" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "data-pipeline-tools" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "data-pipeline-tools" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
                           history.push("/data-pipeline-tools");
-                          this.setState({ currentPage: 'data-pipeline-tools' })
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "data-pipeline-tools" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "data-pipeline-tools" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('header.page.heading.dataPipeline')}
                             </Typography>
                           }
@@ -291,19 +289,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "translate" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "translate" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "translate" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
                           history.push(`${process.env.PUBLIC_URL}/translate`);
-                          this.setState({ currentPage: 'translate' })
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "translate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "translate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('dashboard.page.heading.title')}
                             </Typography>
                           }
@@ -316,19 +313,18 @@ class Header extends React.Component {
                       <Divider className={classes.divider} />
                       
                       <ListItem 
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "dashboard" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "dashboard" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "dashboard" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
                           history.push(`${process.env.PUBLIC_URL}/dashboard`);
-                          this.setState({ currentPage: 'dashboard' })
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "dashboard" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "dashboard" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('dashboard.page.heading.title')}
                             </Typography>
                           }
@@ -355,19 +351,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "benchmarktranslate" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "benchmarktranslate" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "benchmarktranslate" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
                           history.push(`${process.env.PUBLIC_URL}/benchmarktranslate`);
-                          this.setState({ currentPage: 'benchmarktranslate' })
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "benchmarktranslate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "benchmarktranslate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('header.page.heading.uploadFile')}
                             </Typography>
                           }
@@ -379,19 +374,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "newcorpus" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "newcorpus" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "newcorpus" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
                           history.push(`${process.env.PUBLIC_URL}/newcorpus`);
-                          this.setState({ currentPage: 'newcorpus' })
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "newcorpus" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "newcorpus" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('commonCorpus.page.button.corpus')}
                             </Typography>
                           }
@@ -403,19 +397,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "corpus" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "corpus" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "corpus" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
                           history.push(`${process.env.PUBLIC_URL}/corpus`);
-                          this.setState({ currentPage: 'corpus' })
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "corpus" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "corpus" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('webroutes.page.title.corpusList')}
                             </Typography>
                           }
@@ -427,19 +420,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "benchmark" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "benchmark" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "benchmark" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
                           history.push(`${process.env.PUBLIC_URL}/benchmark`);
-                          this.setState({ currentPage: 'benchmark' })
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "benchmark" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "benchmark" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('header.page.heading.benchMark')}
                             </Typography>
                           }
@@ -452,19 +444,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "interactive-translate" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "interactive-translate" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "interactive-translate" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={() => {
                           this.handleDrawerClose();
                           history.push(`${process.env.PUBLIC_URL}/interactive-translate`);
-                          this.setState({ currentPage: 'interactive-translate' })
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "interactive-translate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "interactive-translate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate("intractive_translate.page.main.title")}
                             </Typography>
                           }
@@ -476,19 +467,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "view-pdf" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "view-pdf" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "view-pdf" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
                           history.push("/view-pdf");
-                          this.setState({ currentPage: 'view-pdf' })
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "view-pdf" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "view-pdf" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('webroutes.page.title.pdfList')}
                             </Typography>
                           }
@@ -499,12 +489,11 @@ class Header extends React.Component {
                   {role && Array.isArray(role) && role.includes('admin') &&
                     <div>
                       <Divider className={classes.divider} />
-                    <ListItem style={{ paddingTop: '8%', paddingBottom: '8%', backgroundColor: this.state.currentPage === "graderreport" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "graderreport" && '#FFFFFF' }}
+                    <ListItem style={{ paddingTop: '8%', paddingBottom: '8%', backgroundColor: currentMenu === "graderreport" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={(event) => {
                           this.handleDrawerClose();
                           history.push(`${process.env.PUBLIC_URL}/graderreport`);
-                          this.setState({ currentPage: 'graderreport' })
                         }}>
                         {/* <ListItemIcon>
 
@@ -512,7 +501,7 @@ class Header extends React.Component {
                         <ListItemText
                           disableTypography
                           primary={(
-                            <Typography type="body2" style={{ color: this.state.currentPage === "graderreport" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "graderreport" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('webroutes.page.title.graderReport')}
                             </Typography>
                           )}
@@ -526,19 +515,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "comparison-report" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "comparison-report" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "comparison-report" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
                           history.push(`${process.env.PUBLIC_URL}/comparison-report`);
-                          this.setState({ currentPage: 'comparison-report'})
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "comparison-report" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "comparison-report" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('common.page.title.comparisonReport')}
                             </Typography>
                           }
@@ -551,19 +539,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "doctranslate" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "doctranslate" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "doctranslate" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
                           history.push("/doctranslate");
-                          this.setState({ currentPage: 'doctranslate'})
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "doctranslate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "doctranslate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('webroutes.page.title.translateFile')}
                             </Typography>
                           }
@@ -575,19 +562,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "pdf-to-doc" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "pdf-to-doc" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "pdf-to-doc" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
                           history.push("/pdf-to-doc");
-                          this.setState({ currentPage: 'pdf-to-doc'})
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "pdf-to-doc" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "pdf-to-doc" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('webroutes.page.title.pdfToDoc')}
                             </Typography>
                           }
@@ -599,19 +585,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "pdf-upload" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "pdf-upload" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "pdf-upload" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
                           history.push("/pdf-upload");
-                          this.setState({ currentPage: 'pdf-upload'})
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "pdf-upload" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "pdf-upload" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('webroutes.page.title.pdfSentences')}
                             </Typography>
                           }
@@ -623,19 +608,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "viewtranslate" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "viewtranslate" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "viewtranslate" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
                           history.push("/viewtranslate");
-                          this.setState({ currentPage: 'viewtranslate'})
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "viewtranslate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "viewtranslate" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('common.page.title.document')}
                             </Typography>
                           }
@@ -648,19 +632,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "userdirectory" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "userdirectory" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "userdirectory" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
                           history.push("/userdirectory");
-                          this.setState({ currentPage: 'userdirectory'})
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "userdirectory" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "userdirectory" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('userDirectory.page.label.userManagement')}
                             </Typography>
                           }
@@ -696,19 +679,18 @@ class Header extends React.Component {
                     <div>
                       <Divider className={classes.divider} />
                       <ListItem
-                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: this.state.currentPage === "feedback" && themeAnuvaad.palette.primary.main, color: this.state.currentPage === "feedback" && '#FFFFFF' }}
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "feedback" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={event => {
                           this.handleDrawerClose();
                           history.push(`${process.env.PUBLIC_URL}/feedback`);
-                          this.setState({ currentPage: 'feedback'})
                         }}
                       >
 
                         <ListItemText
                           disableTypography
                           primary={
-                            <Typography type="body2" style={{ color: this.state.currentPage === "feedback" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            <Typography type="body2" style={{ color: currentMenu === "feedback" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
                               {translate('header.page.heading.feedBack')}
                             </Typography>
                           }

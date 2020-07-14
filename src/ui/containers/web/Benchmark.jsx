@@ -88,7 +88,7 @@ class Benchmark extends React.Component {
   }
 
   handleSubmit(row, modelid) {
-    history.push(`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/${  row  }/${  modelid}`);
+    history.push(`${process.env.PUBLIC_URL}/fetch-benchmark-sentences/${row}/${modelid}`);
   }
 
   componentDidUpdate(prevProps) {
@@ -155,9 +155,16 @@ class Benchmark extends React.Component {
           empty: true,
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
-              const name = `target-${  tableMeta.rowData[0]}`;
+              const name = `target-${tableMeta.rowData[0]}`;
               return (
                 <Select
+                  style={{
+                    fullWidth: true,
+                    display: "flex",
+                    wrap: "nowrap",
+                    minWidth: 160,
+                    maxWidth: 100
+                  }}
                   id="outlined-age-simple"
                   selectValue="language_code"
                   MenuItemValues={tableMeta.rowData[3] ? this.handleTarget(this.state.modelLanguage, this.state.language, tableMeta.rowData[3]) : []}
@@ -181,8 +188,8 @@ class Benchmark extends React.Component {
           empty: true,
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
-              const targetname = `target-${  tableMeta.rowData[0]}`;
-              const modelname = `model-${  tableMeta.rowData[0]}`;
+              const targetname = `target-${tableMeta.rowData[0]}`;
+              const modelname = `model-${tableMeta.rowData[0]}`;
               return (
                 <SelectModel
                   style={{ minWidth: 160, align: "right", maxWidth: 100 }}
@@ -194,10 +201,10 @@ class Benchmark extends React.Component {
                 >
                   {tableMeta.rowData[3] && this.state[targetname]
                     ? this.handleModel(this.state.modelLanguage, tableMeta.rowData[3], this.state[targetname]).map(item => (
-                          <MenuItem key={item.model_id} value={item.model_id}>
-                            {item.model_name}
-                          </MenuItem>
-                        ))
+                      <MenuItem key={item.model_id} value={item.model_id}>
+                        {item.model_name}
+                      </MenuItem>
+                    ))
                     : []}
                   >
                 </SelectModel>
@@ -226,14 +233,14 @@ class Benchmark extends React.Component {
           empty: true,
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
-              const targetname = `target-${  tableMeta.rowData[0]}`;
-              const modelname = `model-${  tableMeta.rowData[0]}`;
+              const targetname = `target-${tableMeta.rowData[0]}`;
+              const modelname = `model-${tableMeta.rowData[0]}`;
               return (
                 <div style={{ width: "90px" }}>
                   {this.state[targetname] && this.state[modelname] && (
                     <Tooltip title={translate("common.page.title.gradeSentence")}>
                       <GradeIcon
-                        style={{ width: "24",color:'#233466', height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
+                        style={{ width: "24", color: '#233466', height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%" }}
                         onClick={() => {
                           this.handleSubmit(tableMeta.rowData[0], this.state[modelname]);
                         }}
@@ -276,7 +283,7 @@ class Benchmark extends React.Component {
         {/* <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%" }}>
           <Typography variant="title" color="inherit" style={{ flex: 1 }} />
         </Toolbar> */}
-        <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "3%",marginBottom:'0%' }}>
+        <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "3%", marginBottom: '0%' }}>
           <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>

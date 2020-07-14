@@ -21,9 +21,7 @@ const IntractiveTranslationStyles = theme => ({
 
   },
   typographyHeader:{
-    fontfamily: 'sans-serif	',
-    color: '#003366',
-    fontWeight: '549', textAlign:'center',paddingBottom: "12px", paddingTop: "5%"
+    paddingBottom: "12px", paddingTop: "5%"
   },
   typography:{
     marginLeft: "11.5%", paddingTop: "9.5%" 
