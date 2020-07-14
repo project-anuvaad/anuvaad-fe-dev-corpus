@@ -27,7 +27,7 @@ const PdfTranslateStyles = theme => ({
     dropZoneArea:{
       paddingTop: '80px',
       
-      height: "355px",
+      height: "370px",
       borderColor:'#1C9AB7',
       backgroundColor: '#F5F9FA',
       border: '1px dashed #1C9AB7',
