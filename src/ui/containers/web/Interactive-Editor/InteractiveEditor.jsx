@@ -795,7 +795,7 @@ class IntractiveTrans extends React.Component {
                     variant="contained"
                     size="large"
                     color="primary"
-                    style={{ width: "100%", minWidth: "110px", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
+                    style={{ width: "100%", minWidth: "110px", fontWeight: "bold",fontSize: "90%", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
                     onClick={() => this.handlePreview()}
                   >
                     <VisibilityIcon fontSize="large" />
