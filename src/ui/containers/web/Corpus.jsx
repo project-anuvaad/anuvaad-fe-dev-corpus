@@ -361,7 +361,7 @@ class Corpus extends React.Component {
                                     disableEscapeKeyDown
                                     fullWidth
                                     aria-labelledby="form-dialog-title">
-                                    <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: '12%', paddingBottom: '12px', paddingTop: '8px' }} >Edit source and target sentence here</Typography>
+                                    <Typography variant="h5" style={{ color: darkBlack, background: blueGrey50, paddingLeft: '12%', paddingBottom: '12px', paddingTop: '8px' }} >{translate("parallel_corpus.page.dialog.message")}</Typography>
 
                                     <DialogContent>
                                         <DialogContentText /><br />
