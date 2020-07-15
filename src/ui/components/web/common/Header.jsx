@@ -155,7 +155,8 @@ class Header extends React.Component {
               alt="" />
             <div style={{position: 'absolute' , right: '20px', display: 'flex', flexDirection: 'row'}}>
               {!dontShowHeader &&
-              <div style={{display: 'flex', flexDirection: 'row'}}>
+              <div style={{display: 'flex', flexDirection: 'row',cursor: "pointer"}} onClick={this.handleMenu.bind(this)}>
+                
                 <PeopleIcon style={{marginRight: '10px'}}></PeopleIcon>
                <Typography
                   variant="title"
@@ -182,7 +183,7 @@ class Header extends React.Component {
                 >
                   {/* <Fab aria-owns={openEl ? "menu-appbar" : null} aria-haspopup="true" onClick={this.handleMenu} color="primary" size="medium">
                 </Fab> */}
-                  <DownIcon onClick={this.handleMenu.bind(this)}></DownIcon>
+                  <DownIcon onClick={this.handleMenu.bind(this)} style={{cursor: "pointer"}}></DownIcon>
                   <Menu
                     id="menu-appbar"
                     anchorEl={anchorEl}
