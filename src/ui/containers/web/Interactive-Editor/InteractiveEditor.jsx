@@ -304,7 +304,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleTableHover(sentenceId, tableId, parent, pageNo, paragraph) {
-    if (this.state.clickedCell) {
+    if (this.state.clickedCell && this.state.selectedSentenceId) {
       this.setState({
         hoveredSentence: sentenceId,
         hoveredTableId: tableId,
