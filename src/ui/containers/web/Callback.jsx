@@ -96,8 +96,8 @@ class Callback extends React.Component {
     return (
       <MuiThemeProvider theme={Theme}>
         {!this.state.loading ?
-          <Paper style={{ marginLeft: "30%", width: "30%", marginTop: "4%", textAlign: 'center', padding: '5%' }} >
-            <Grid container spacing={8} style={{ paddingTop: '4%' }}>
+          <Paper style={{ marginLeft: "30%", width: "30%", marginTop: "8%", textAlign: 'center', padding: '5%' }} >
+            <Grid container spacing={8} style={{ paddingBottom:'4%' }}>
               <Grid item xs={12} sm={12} lg={12} xl={12}  >
                 <Typography variant="title">
                   Select Your Preferred Language{" "}
@@ -111,6 +111,7 @@ class Callback extends React.Component {
                   variant="contained"
                   color="primary"
                   fullWidth
+                  style={{borderRadius:'20px',height: '46px'}}
                   onClick={event => {
                     this.handleButtonClick('en');
                   }}
@@ -125,6 +126,7 @@ class Callback extends React.Component {
                 <Button
                   variant="contained"
                   color="primary"
+                  style={{borderRadius:'20px',height: '46px'}}
                   fullWidth
                   onClick={event => {
                     this.handleButtonClick('hi');
