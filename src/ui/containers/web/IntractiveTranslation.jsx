@@ -434,7 +434,7 @@ class IntractiveTrans extends React.Component {
             )}
             {this.state.nmtText[0] && (
               <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.grid}>
-                <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} value={true} />
+                <NewOrders title={translate("dashbord.page.title.anuvaadModel")} isSubWordsNotRequired={true} data={this.state.nmtText} value={true} />
               </Grid>
             )}
 

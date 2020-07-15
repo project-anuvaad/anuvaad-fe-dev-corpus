@@ -137,7 +137,7 @@ class GarderTranslate extends React.Component {
                   onClick={this.handleSubmit}
                   variant="contained"
                   style={{
-                    width: "22.4%",
+                    width: "21.6%",
                     // marginLeft: "-53px",
                     height: 96,
                     backgroundColor: "#CB1E60",

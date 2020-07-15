@@ -9,7 +9,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import VisibilityIcon from "@material-ui/icons/Visibility";
+
+import GetAppIcon from '@material-ui/icons/GetApp';
 import Toolbar from "@material-ui/core/Toolbar";
 import PlayArrowIcon from "@material-ui/icons/LineStyle";
 import DoneIcon from "@material-ui/icons/Done";
@@ -798,7 +799,7 @@ class IntractiveTrans extends React.Component {
                     style={{ width: "100%", minWidth: "110px", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
                     onClick={() => this.handlePreview()}
                   >
-                    <VisibilityIcon fontSize="large" />
+                    <GetAppIcon fontSize="large" />
                     &nbsp;&nbsp;{translate("common.page.label.review/download")}
                   </Button>
                 </Grid>

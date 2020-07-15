@@ -316,8 +316,8 @@ class GraderReport extends React.Component {
                 ? tableMeta.rowData[0] === "Names Benchmark"
                   ? (tableMeta.rowData[2] * 2 + tableMeta.rowData[3] * 6 + tableMeta.rowData[4] * 1 + tableMeta.rowData[5] * 1) / 10
                   : tableMeta.rowData[0] === "SC Judgement Orders"
-                  ? (tableMeta.rowData[2] * 2 + tableMeta.rowData[4] * 2 + tableMeta.rowData[5] * 6) / 10
-                  : (tableMeta.rowData[2] * 6 + tableMeta.rowData[4] * 3 + tableMeta.rowData[5] * 1) / 10
+                    ? (tableMeta.rowData[2] * 2 + tableMeta.rowData[4] * 2 + tableMeta.rowData[5] * 6) / 10
+                    : (tableMeta.rowData[2] * 6 + tableMeta.rowData[4] * 3 + tableMeta.rowData[5] * 1) / 10
                 : 0}
             </div>
           )
@@ -336,8 +336,8 @@ class GraderReport extends React.Component {
       onRowClick: !this.state.tockenValue
         ? rowData => this.handleClickModel(rowData)
         : !this.state.categoryValue
-        ? rowData => this.handleClickCategoryModel(rowData)
-        : ""
+          ? rowData => this.handleClickCategoryModel(rowData)
+          : ""
     };
 
     return (
@@ -383,7 +383,7 @@ class GraderReport extends React.Component {
                 />
               </Grid>
 
-              <Grid item xs={3} sm={3} lg={3} xl={3} style={{marginTop: "34px" }}>
+              <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginTop: "34px" }}>
                 <Button
                   variant="contained"
                   onClick={event => {
@@ -407,58 +407,59 @@ class GraderReport extends React.Component {
             </div>
           </div>
         ) : (
-          <div>
-            <Fab
-              variant="extended"
-              color="primary"
-              aria-label="Add"
-              style={{ marginTop: "1%" }}
-              onClick={() => {
-                this.handleClose(
-                  this.state.categoryValue
-                    ? translate("gradeReport.page.label.categoryValue")
-                    : this.state.tockenValue
-                    ? translate("common.page.label.tockenValue")
-                    : "tocken"
-                );
-              }}
-            >
-              <CloseIcon />
-              {!this.state.categoryReport && !this.state.tockenValue && this.state.tocken
-                ? translate("common.page.label.close")
-                : translate("common.page.button.back")}
-            </Fab>
-
-            {!this.state.tockenValue ? (
-              <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
-                <MUIDataTable
-                  title={this.state.title1 ? this.state.title1 : translate("gradeReport.page.label.modelDetails")}
-                  data={this.state.graderReport ? this.state.graderReport : []}
-                  columns={Table2columns}
-                  options={options2}
-                />
+            <div style={{ marginLeft: "3%", marginRight: "3%" }}>
+              <div style={{textAlign: "right"}}>
+                <Fab
+                  variant="extended"
+                  color="primary"
+                  aria-label="Add"
+                  style={{ marginTop: "1%"}}
+                  onClick={() => {
+                    this.handleClose(
+                      this.state.categoryValue
+                        ? translate("gradeReport.page.label.categoryValue")
+                        : this.state.tockenValue
+                          ? translate("common.page.label.tockenValue")
+                          : "tocken"
+                    );
+                  }}
+                >
+                  <CloseIcon />
+                  {!this.state.categoryReport && !this.state.tockenValue && this.state.tocken
+                    ? translate("common.page.label.close")
+                    : translate("common.page.button.back")}
+                </Fab>
               </div>
-            ) : !this.state.categoryValue ? (
-              <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
-                <MUIDataTable
-                  title={this.state.title2 ? this.state.title2 : translate("common.page.title.categoryDetails")}
-                  data={this.state.graderRecords ? this.state.graderRecords : []}
-                  columns={Table3columns}
-                  options={options2}
-                />
-              </div>
-            ) : (
-              <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
-                <MUIDataTable
-                  title={this.state.title3 ? this.state.title3 : translate("gradeReport.page.label.gradedRecords")}
-                  data={this.state.categoryReport ? this.state.categoryReport : []}
-                  columns={Table4columns}
-                  options={options2}
-                />
-              </div>
-            )}
-          </div>
-        )}
+              {!this.state.tockenValue ? (
+                <div style={{ marginTop: "2%", marginBottom: '5%' }}>
+                  <MUIDataTable
+                    title={this.state.title1 ? this.state.title1 : translate("gradeReport.page.label.modelDetails")}
+                    data={this.state.graderReport ? this.state.graderReport : []}
+                    columns={Table2columns}
+                    options={options2}
+                  />
+                </div>
+              ) : !this.state.categoryValue ? (
+                <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
+                  <MUIDataTable
+                    title={this.state.title2 ? this.state.title2 : translate("common.page.title.categoryDetails")}
+                    data={this.state.graderRecords ? this.state.graderRecords : []}
+                    columns={Table3columns}
+                    options={options2}
+                  />
+                </div>
+              ) : (
+                    <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
+                      <MUIDataTable
+                        title={this.state.title3 ? this.state.title3 : translate("gradeReport.page.label.gradedRecords")}
+                        data={this.state.categoryReport ? this.state.categoryReport : []}
+                        columns={Table4columns}
+                        options={options2}
+                      />
+                    </div>
+                  )}
+            </div>
+          )}
       </div>
     );
   }

@@ -136,7 +136,7 @@ class UploadAudio extends React.Component {
                 value="Audio to Text"
                 variant="h5"
                 gutterBottom="true"
-                style={{ paddingLeft: "30%", paddingTop: "3%", paddingBottom: "4%", background: blueGrey50, marginBottom: "3%" }}
+                style={{ paddingTop: "3%", paddingBottom: "4%", background: blueGrey50, marginBottom: "3%", textAlign: "center" }}
               />
 
               <Grid container spacing={4}>
@@ -179,7 +179,7 @@ class UploadAudio extends React.Component {
               )}
             </div>
           }
-          style={{ width: "40%", marginLeft: "26%", marginTop: "2%", paddingBottom: "1%", minWidth: "450px" }}
+          style={{ width: "40%", margin: "0% 30%", marginTop: "2%", paddingBottom: "1%", minWidth: "450px" }}
         />
       </div>
     );
