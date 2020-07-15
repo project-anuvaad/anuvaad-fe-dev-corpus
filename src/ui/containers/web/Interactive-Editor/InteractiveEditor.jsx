@@ -793,9 +793,9 @@ class IntractiveTrans extends React.Component {
                 <Grid item xs={12} sm={6} lg={2} xl={2}>
                   <Button
                     variant="contained"
-                    size="large"
+                    
                     color="primary"
-                    style={{ width: "100%", minWidth: "110px", fontWeight: "bold", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
+                    style={{ width: "100%", minWidth: "110px", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
                     onClick={() => this.handlePreview()}
                   >
                     <VisibilityIcon fontSize="large" />
@@ -810,7 +810,7 @@ class IntractiveTrans extends React.Component {
                     variant="outlined"
                     size="large"
                     // color="primary"
-                    style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold", borderRadius: '30px', color: '#233466' }}
+                    style={{ width: "100%", minWidth: "55px",  borderRadius: '30px', color: '#233466' }}
                   >
                     <DoneIcon fontSize="large" style={{ color: '#233466' }} />
                     &nbsp;&nbsp;{translate("common.page.label.done")}
