@@ -840,6 +840,7 @@ class IntractiveTrans extends React.Component {
                       }}
                     >
                       <EditorPaper
+                      fileDetails={this.state.fileDetails}
                         paperType="source"
                         sentences={this.state.sentences}
                         hoveredSentence={this.state.hoveredSentence}
@@ -906,6 +907,7 @@ class IntractiveTrans extends React.Component {
 
                     <div style={{ maxHeight: window.innerHeight - 280, overflowY: "scroll", padding: "24px" }}>
                       <EditorPaper
+                      fileDetails={this.state.fileDetails}
                         paperType="target"
                         sentences={this.state.sentences}
                         hoveredSentence={this.state.hoveredSentence}

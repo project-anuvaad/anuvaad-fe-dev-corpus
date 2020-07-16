@@ -109,6 +109,64 @@ class EditorPaper extends React.Component {
         }
     }
 
+    newFetchSentence(sentence, prevSentence, index, noOfPage) {
+        
+        
+        let padding = (Number(sentence.x)-152)/1.4;
+        padding = sentence.x ? padding/5+'%' : 0
+        let pageNo = sentence.page_no
+
+        if (!sentence.is_footer && !sentence.is_table) {
+            let printPageNo = false
+            let isFirst = false
+            if (index === 0) {
+                printPageNo = true
+                isFirst = true
+            } else if (prevSentence && sentence.page_no !== prevSentence.page_no) {
+                printPageNo = true
+            }
+            
+            return <span>{printPageNo ? <span ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<span>&nbsp;</span></span> : <span></span>}<span key={sentence._id}
+            style={{ paddingLeft:padding, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+            onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
+            <span style={{ textAlign: 'justify' }}>{this.fetchTokenizedSentence(sentence, true)}{sentence.sup_array ? <sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup> : ''}<br /><br /></span></span></span>}
+                    
+         else if (sentence.is_table) {
+            // return this.fetchTable(sentence._id, sentence.table_items, prevSentence, index, pageNo, noOfPage)
+            return <CustomTable id={sentence._id} tableItems={sentence.table_items}
+                isPreview={this.props.isPreview}
+                hoveredTableId={this.props.hoveredTableId}
+                selectedTableId={this.props.selectedTableId}
+                scrollToId={this.props.scrollToId}
+                scrollToPage={this.props.scrollToPage}
+                prevSentence={prevSentence} tableIndex={index} pageNo={pageNo} noOfPage={noOfPage}
+                paperType={this.props.paperType}
+                handleOnMouseEnter={this.tableHoverOn.bind(this)}
+                handleOnMouseLeave={this.tableHoverOff.bind(this)}
+                handleTableCellClick={this.handleTableOnCLick.bind(this)}
+                handleAddCell={this.props.handleAddCell}
+                handleDialog = {this.props.handleDialog}
+                sentence={sentence}
+                handleSourceChange={this.props.handleSourceChange}
+                selectedSourceText={this.props.selectedSourceText}
+                selectedSourceId={this.props.selectedSourceId}
+                handleonDoubleClick={this.handleonDoubleClick.bind(this)}
+                handleCheck={this.props.handleCheck}
+                handleDeleteTable={this.props.handleDeleteTable}
+                handleAddNewTable={this.props.handleAddNewTable}
+                handleAddTableCancel={this.props.handleAddTableCancel}
+                handleAddNewSentence={this.props.handleAddNewSentence}
+                parent={this.props.parent}
+                popOver={this.props.popOver}
+                handlePopUp={this.props.handlePopUp}
+
+            ></CustomTable>
+        } else {
+            return <div></div>
+        }
+
+    }
+
     fetchTokenizedSentence(sentence, isSpaceRequired) {
         if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0) {
             let sentenceArray = []
@@ -184,9 +242,6 @@ class EditorPaper extends React.Component {
 
     fetchSentence(sentence, prevSentence, index, noOfPage) {
         let align = sentence.align === 'CENTER' ? 'center' : (sentence.align === 'RIGHT' ? 'right' : 'left')
-        let padding = (Number(sentence.x)-152)/2;
-        padding = sentence.x ? padding+'px' : 0
-        console.log(padding)
         let pageNo = sentence.page_no
 
         if (!sentence.is_footer && !sentence.is_table) {
@@ -198,24 +253,29 @@ class EditorPaper extends React.Component {
             } else if (prevSentence && sentence.page_no !== prevSentence.page_no) {
                 printPageNo = true
             }
-            console.log(sentence.x,sentence)
+
             if (sentence.is_ner && !sentence.is_new_line) {
-                
-                    
+                if (align === 'left') {
+
                     return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
-                        style={{ paddingLeft:padding,width: '60%',float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                        style={{ width: '60%', float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                         onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                         {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
-                
+                } else {
+                    return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} ref={sentence._id + '_' + this.props.paperType}
+                        style={{ float: align, textAlign: align, display: 'inline-block', fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                        onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
+                        {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div></div>)
+                }
 
             } else if (sentence.is_ner) {
                 return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id} style={{ textAlign: 'justify' }} ><div ref={sentence._id + '_' + this.props.paperType} key={sentence._id}
-                    style={{ paddingLeft:padding, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                    style={{ textAlign: align, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                     {this.fetchTokenizedSentence(sentence, false)}<sup>{this.fetchSuperScript(sentence.sup_array)}</sup></div> <div style={{ width: '100%' }}><br />&nbsp;<br /></div></div></div>)
             } else {
                 return (<div>{printPageNo ? <div ref={pageNo + '_' + this.props.paperType} style={{ textAlign: 'right', color: 'grey', fontSize: 'small' }}><div>&nbsp;</div>{!isFirst ? <hr /> : ''}Page: {pageNo}/{noOfPage}<div>&nbsp;</div></div> : <div></div>}<div key={sentence._id}
-                    style={{ paddingLeft:padding, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
+                    style={{ textAlign: align, right: 0, fontWeight: sentence.is_bold ? 'bold' : 'normal', textDecorationLine: sentence.underline ? 'underline' : '' }}
                     onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                     <div style={{ textAlign: 'justify' }}>{this.fetchTokenizedSentence(sentence, true)}{sentence.sup_array ? <sup><span>{this.fetchSuperScript(sentence.sup_array)}</span></sup> : ''}<br /><br /></div></div></div>)
             }
@@ -311,9 +371,14 @@ class EditorPaper extends React.Component {
                     <br />
                 </div> : <div></div>}
                 <div style={{ paddingLeft: '20px' }}>
-                    {sentences && Array.isArray(sentences) && sentences.length > 0 && sentences.map((sentence, index) => {
+                    {console.log(this.props.fileDetails)}
+                    {this.props.fileDetails&& this.props.fileDetails.api_version===2?(sentences && Array.isArray(sentences) && sentences.length > 0 && sentences.map((sentence, index) => {
+
+return this.newFetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no)
+})):
+                    (sentences && Array.isArray(sentences) && sentences.length > 0 && sentences.map((sentence, index) => {
                         return this.fetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no)
-                    })}
+}))}
                 </div>
                 {footer ?
                     <div>
