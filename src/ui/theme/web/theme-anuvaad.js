@@ -51,7 +51,13 @@ const themeAnuvaad = createMuiTheme({
     fontSize: 16,
     color: "#1C9AB7"
   },
-
+  overrides: {
+    MuiButton: {
+      label: {
+        textTransform: 'capitalize',
+      },
+    },
+  },
 
 });
 
