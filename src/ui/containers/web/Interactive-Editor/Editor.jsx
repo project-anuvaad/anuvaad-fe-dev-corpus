@@ -605,7 +605,7 @@ class Editor extends React.Component {
             </Grid>
             <Grid item xs={12} sm={12} lg={12} xl={12}>
               <Typography
-                style={{ fontWeight: "bold", width: "100%", color: "#233466", textAlign: "center" }}
+                style={{ width: "100%", color: "#233466", textAlign: "center" }}
                 color="primary"
                 disabled={this.props.sentences[0]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken}
               >
@@ -624,7 +624,7 @@ class Editor extends React.Component {
 
             <Grid item xs={12} sm={12} lg={12} xl={12}>
               <Typography
-                style={{ fontWeight: "bold", width: "100%", color: "#1C9AB7", textAlign: "center" }}
+                style={{ width: "100%", color: "#1C9AB7", textAlign: "center" }}
                 color="primary"
                 onClick={event => {
                   this.handleApiCall();
@@ -651,7 +651,7 @@ class Editor extends React.Component {
                 onClick={event => {
                   this.handleDialog(1);
                 }}
-                style={{ fontWeight: "bold", width: "100%", color: "#233466", textAlign: "center"  }}
+                style={{ width: "100%", color: "#233466", textAlign: "center"  }}
               >
                 {translate('common.page.label.nextLine')}&nbsp;
               </Typography>
