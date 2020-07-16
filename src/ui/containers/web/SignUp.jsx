@@ -99,10 +99,10 @@ class SignUp extends React.Component {
                             onSubmit={this.handleSubmit}
                             onError={errors => console.log(errors)}
                         > */}
-              <Typography align='center' className={classes.typographyHeader}>Sign Up</Typography>
+              <Typography align='center' variant='h4' className={classes.typographyHeader}>Sign Up</Typography>
               <FormControl align='center' fullWidth >
 
-              <TextField value={this.state.firstName} id="outlined-margin-dense" placeholder={translate('signUp.page.label.firstName')}
+              <TextField  value={this.state.firstName} id="outlined-margin-dense" placeholder={translate('signUp.page.label.firstName')}
                    varient="outlined" margin="dense" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('firstName')}
                 />
               </FormControl>
@@ -149,7 +149,7 @@ class SignUp extends React.Component {
                 <Button
                   disabled={!this.state.termsAndCondition}
                   variant="contained" aria-label="edit" style={{
-                    width: '50%', marginBottom: '2%', marginTop: '2%',
+                    width: '50%', marginBottom: '2%', marginTop: '2%',borderRadius:'20px',height:'45px',textTransform:'initial',fontWeight:'20px',
                     backgroundColor: this.state.termsAndCondition ? '#1ca9c9' : 'gray', color: 'white',
                   }} onClick={this.handleSubmit.bind(this)}>
                   {translate('singUp.page.label.signUp')}
