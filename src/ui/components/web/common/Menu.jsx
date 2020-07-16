@@ -6,8 +6,7 @@ import { translate } from "../../../../assets/localisation";
 class MenuClass extends React.Component {
   render() {
 
-    const { anchorEl, topValue, leftValue, isOpen, handleApiMerge, operation_type } = this.props;
-    var val = [];
+    const { topValue, leftValue, isOpen } = this.props;
     return (
       <Popover
         id="menu-appbar"

@@ -12,7 +12,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Toolbar from "@material-ui/core/Toolbar";
-import PlayArrowIcon from "@material-ui/icons/LineStyle";
 import DoneIcon from "@material-ui/icons/Done";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
@@ -32,7 +31,6 @@ import PdfPreview from "./PdfPreview";
 import UpdatePdfTable from "../../../../flux/actions/apis/updatePdfTable";
 import DeleteSentence from "../../../../flux/actions/apis/deleteSentence";
 import DeleteTable from "../../../../flux/actions/apis/deleteTable";
-import Divider from "@material-ui/core/Divider";
 import MenuItems from "../../../components/web/common/Menu";
 import InsertNewSentence from "../../../../flux/actions/apis/insertSentence";
 import EditorDialog from "../../../components/web/common/EditorDialog";
@@ -138,6 +136,7 @@ class IntractiveTrans extends React.Component {
               if (item.status !== "DELETED") {
                 a.push(item);
               }
+              return true
             });
 
             sentence.tokenized_sentences = a;
@@ -644,7 +643,7 @@ class IntractiveTrans extends React.Component {
       const apiObj = new UpdatePdfTable(sentence, operationType);
       APITransport(apiObj);
     }
-    this.setState({ openEl: true, message:'', message: operationType=="add-row"? "New row added": "New column added." });
+    this.setState({ openEl: true, message: operationType === "add-row"? "New row added": "New column added." });
     this.handleClose();
   }
 
