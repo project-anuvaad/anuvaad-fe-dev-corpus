@@ -112,7 +112,6 @@ class CustomTable extends React.Component {
   }
 
   handleMenu(e) {
-    console.log(e.clientX - 2, e.clientY - 4);
     let row = e.target.id.split("_")[2];
     let column = e.target.id.split("_")[3];
     this.props.handlePopUp()

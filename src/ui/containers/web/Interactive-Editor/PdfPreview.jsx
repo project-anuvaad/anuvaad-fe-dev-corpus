@@ -27,7 +27,6 @@ class PdfPreview extends React.Component {
   }
 
   onPageLoad = page => {
-    console.log(page, this.props.zoom);
     const parentDiv = document.querySelector("#pdfDocument");
 
     let pageScale = parentDiv.clientHeight / page.originalHeight;

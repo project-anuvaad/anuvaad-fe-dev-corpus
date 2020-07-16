@@ -634,13 +634,11 @@ class IntractiveTrans extends React.Component {
     }
   }
   handleCopy(){
-    console.log("copy", window.getSelection().toString());
     copy( window.getSelection().toString())
                     this.handleClose()
 
   }
   handleAddCell(sentence, operationType) {
-    console.log(operationType)
     if (sentence && operationType) {
       const { APITransport } = this.props;
       const apiObj = new UpdatePdfTable(sentence, operationType);
@@ -677,7 +675,6 @@ class IntractiveTrans extends React.Component {
     this.handleClose();
   }
   handleDeleteTable(paragraph, cellData, operation_type) {
-    console.log(operation_type)
     if (paragraph && cellData && operation_type) {
       const { APITransport } = this.props;
       const apiObj = new DeleteTable(paragraph, cellData, operation_type);

@@ -220,7 +220,6 @@ class Editor extends React.Component {
               checkedB: true
             });
           } else if (sentence.tokenized_sentences.length >= sentenceIndex && sentenceIndex >= 0) {
-            console.log("index",sentenceIndex , value)
             const ind = sentenceIndex + value;
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
             !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, null,value === 0 ? null : true);
@@ -356,7 +355,6 @@ class Editor extends React.Component {
     const tgt = this.state.target && this.state.target.split(" ");
     const src = this.state.source && this.state.source.split(" ");
     const resultArray = [];
-    console.log(tagged_tgt,temp,tgt)
     let index;
     temp.map(item => {
       if (item !== " ") {
