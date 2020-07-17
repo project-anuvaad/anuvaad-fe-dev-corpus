@@ -8,12 +8,19 @@ import React from "react";
 class SimpleSelect extends React.Component {
 
   render() {
-    const { id, MenuItemValues, handleChange, value, name } = this.props;
+    const { id, MenuItemValues, handleChange, value, name,style } = this.props;
     return (
       <form>
-        <FormControl>
+        <FormControl  style={ this.props.style ? this.props.style : {
+          width:'92%',
+          fullWidth: true,
+          display: "flex",
+          wrap: "nowrap",
+          height:'40px',
+          magin:'dense',
+        }}>
           <Select
-            style={{ minWidth: 145 }}
+            style={style? style:{ minWidth: 145 }}
             value={value}
 
             onChange={handleChange}
@@ -23,7 +30,7 @@ class SimpleSelect extends React.Component {
           >
             {MenuItemValues &&
             MenuItemValues.map((item) => (
-              <MenuItem value={item} key ={item}>{item.language_name}</MenuItem>
+              <MenuItem value={item} key ={item}>{typeof(item)==="string"?item: item.language_name}</MenuItem>
             ))}
           </Select>
         </FormControl>

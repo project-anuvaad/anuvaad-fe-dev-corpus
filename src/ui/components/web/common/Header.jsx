@@ -15,7 +15,6 @@ import Menu from "@material-ui/core/Menu";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import history from "../../../../web.history";
 
 import MenuIcon from '@material-ui/icons/Menu';

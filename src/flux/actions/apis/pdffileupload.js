@@ -3,7 +3,7 @@ import C from "../constants";
 import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
-  constructor(name, file, source, target, model, timeout = 2000) {
+  constructor(name, file, source, target, model,strategy, timeout = 2000) {
     super("POST", timeout, false, "MULTIPART");
     this.type = C.UPLOADPDF;
     this.name = name;
@@ -12,7 +12,8 @@ export default class RunExperiment extends API {
     this.source = source;
     this.target = target;
     this.model = JSON.stringify(model);
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.pdffileupload}`
+    this.endpoint = strategy === "OCR" ? `${super.apiEndPointAuto()}${ENDPOINTS.ocrpdffileupload}`:`${super.apiEndPointAuto()}${ENDPOINTS.pdffileupload}`
+   
 
 
   }

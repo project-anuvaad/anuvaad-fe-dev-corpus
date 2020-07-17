@@ -220,7 +220,6 @@ class Editor extends React.Component {
               checkedB: true
             });
           } else if (sentence.tokenized_sentences.length >= sentenceIndex && sentenceIndex >= 0) {
-            console.log("index",sentenceIndex , value)
             const ind = sentenceIndex + value;
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
             !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, null,value === 0 ? null : true);
@@ -356,7 +355,6 @@ class Editor extends React.Component {
     const tgt = this.state.target && this.state.target.split(" ");
     const src = this.state.source && this.state.source.split(" ");
     const resultArray = [];
-    console.log(tagged_tgt,temp,tgt)
     let index;
     temp.map(item => {
       if (item !== " ") {
@@ -605,7 +603,7 @@ class Editor extends React.Component {
             </Grid>
             <Grid item xs={12} sm={12} lg={12} xl={12}>
               <Typography
-                style={{ fontWeight: "bold", width: "100%", color: "#233466", textAlign: "center" }}
+                style={{ width: "100%", color: "#233466", textAlign: "center" }}
                 color="primary"
                 disabled={this.props.sentences[0]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken}
               >
@@ -624,7 +622,7 @@ class Editor extends React.Component {
 
             <Grid item xs={12} sm={12} lg={12} xl={12}>
               <Typography
-                style={{ fontWeight: "bold", width: "100%", color: "#1C9AB7", textAlign: "center" }}
+                style={{ width: "100%", color: "#1C9AB7", textAlign: "center" }}
                 color="primary"
                 onClick={event => {
                   this.handleApiCall();
@@ -651,7 +649,7 @@ class Editor extends React.Component {
                 onClick={event => {
                   this.handleDialog(1);
                 }}
-                style={{ fontWeight: "bold", width: "100%", color: "#233466", textAlign: "center"  }}
+                style={{ width: "100%", color: "#233466", textAlign: "center"  }}
               >
                 {translate('common.page.label.nextLine')}&nbsp;
               </Typography>

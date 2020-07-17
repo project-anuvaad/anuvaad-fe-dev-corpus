@@ -15,6 +15,7 @@ import history from "../../../web.history";
 import Snackbar from "../../components/web/common/Snackbar";
 import { translate } from "../../../assets/localisation";
 import Select from "../../components/web/common/Select";
+import SimpleSelect from "../../components/web/common/SimpleSelect";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
 import PdfUploadStyles from "../../styles/web/PdfUploadStyles";
@@ -57,13 +58,14 @@ class PdfUpload extends Component {
       })
       e.preventDefault();
       const { APITransport } = this.props;
-      if (this.state.files.length > 0 && this.state.workspaceName) {
+      if (this.state.files.length > 0 && this.state.workspaceName &&source_lang_name&&target_lang_name&& this.state.strategy) {
         const apiObj = new PdfFileUpload(
           this.state.workspaceName,
           this.state.files[0],
           source_lang_name,
           target_lang_name,
-          model
+          model,
+          this.state.strategy
         );
         APITransport(apiObj);
       } else {
@@ -252,6 +254,25 @@ class PdfUpload extends Component {
               </Grid>
           </Grid>
           <br/><br/>
+          <Grid container spacing={24} className={classes.grid}>
+                <Typography gutterBottom variant="title" className={classes.typography}>
+                 Strategy<span className={classes.span}>*</span>
+                </Typography>
+              <Grid item xs={12} sm={12} lg={12} xl={12}  >
+                  <SimpleSelect
+                  id="outlined-age-simple"
+                  selectValue="language_code"
+                  fullWidth
+                  
+                  MenuItemValues={["Pdf to Html","OCR"]}
+                  handleChange={this.handleSelectChange}
+                  value={this.state.strategy}
+                  name="strategy"
+                  className={classes.Select}
+                />
+              </Grid>
+              </Grid>
+              <br /><br/>
           <Grid container spacing={24} className={classes.grid}>
               <Typography gutterBottom variant="title"  className={classes.typography}>
                 {translate("common.page.label.filename")}

@@ -16,7 +16,7 @@ const localization_EN_Data = {
   "common.page.error.domainError": "Domain shouldn't be empty",
   "common.page.error.commentError": "Comment Shouldn't be empty",
   "common.page.error.languageError": "Language shouldn't be empty",
-  "common.page.label.addDropFile": "Please Add/Drop pdf file here",
+  "common.page.label.addDropFile": "Please Add/Drop pdf file here or click",
   "common.page.label.pageWarning": " * Fields shouldn't be empty ",
   "common.page.label.enterWorkspace": "Enter workspace name :",
   "newSentenceExtraction.page.label.confiFile": "Configuration file :",
@@ -386,7 +386,8 @@ const localization_EN_Data = {
   "newCorpus.page.stepper.label.addSourceFile": "Add Source file",
   "newCorpus.page.stepper.label.addTargetFile": "Add target file",
   "newCorpus.page.stepper.label.addFileDetails": "Add file details",
-  "profile.page.label.role": "Role"
+  "profile.page.label.role": "Role",
+  "parallel_corpus.page.dialog.message": "Edit source and target sentence here"
   // 'newCorpus.page.array.addFileTargetAndDetails':["Add Source file", 'Add target file', 'Add file details']
 };
 
@@ -753,7 +754,8 @@ const localization_HI_Data = {
   "newCorpus.page.stepper.label.addSourceFile": "स्रोत फ़ाइल जोड़ें",
   "newCorpus.page.stepper.label.addTargetFile": "लक्ष्य फ़ाइल जोड़ें",
   "newCorpus.page.stepper.label.addFileDetails": "फ़ाइल विवरण जोड़ें",
-  "profile.page.label.role": "भूमिका"
+  "profile.page.label.role": "भूमिका",
+  "parallel_corpus.page.dialog.message": "यहां स्रोत और लक्ष्य वाक्य संपादित करें"
 };
 
 export function translate(locale_text) {
