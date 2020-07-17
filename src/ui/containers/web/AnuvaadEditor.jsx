@@ -74,10 +74,13 @@ class Editor1 extends React.Component {
       >
         <div
           style={{
-            marginLeft: "14%",
+            // marginLeft: "14%",
             marginTop: "5%",
-            width: "70%",
-            marginBottom: "50%"
+            // width: "70%",
+            marginBottom: "50%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
           }}
         >
           <ReactQuill

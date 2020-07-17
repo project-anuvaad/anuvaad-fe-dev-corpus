@@ -7,7 +7,7 @@ import FormControl from "@material-ui/core/FormControl";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { withStyles, Typography } from "@material-ui/core";
-import ThemeDefault from "../../theme/web/theme-default";
+import ThemeDefault from "../../theme/web/theme-anuvaad";
 
 import LoginStyles from "../../styles/web/LoginStyles";
 import Grid from '@material-ui/core/Grid';
@@ -15,6 +15,7 @@ import ForgotPasswordApi from "../../../flux/actions/apis/forgotpassword";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import TextField from '../../components/web/common/TextField';
 import Snackbar from "../../components/web/common/Snackbar";
+import { translate } from "../../../assets/localisation";
 
 class UpdatePassword extends React.Component {
     constructor(props) {
@@ -35,13 +36,13 @@ class UpdatePassword extends React.Component {
             let apiObj = new ForgotPasswordApi(this.state.email);
             APITransport(apiObj);
         } else {
-            alert('Please provide valid email')
+            alert(translate('common.page.alert.validEmail'))
         }
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.forgotpassword !== this.props.forgotpassword) {
-            this.setState({ message: 'Successfully sent forgot password link. Please check your email for setting  password', open: true, firstName: '', lastName: '', email: '', password: '', confirmPassword: '', termsAndCondition: '' })
+            this.setState({ message: translate('updatePassword.page.message.forgotPasswordLinkSent'), open: true, firstName: '', lastName: '', email: '', password: '', confirmPassword: '', termsAndCondition: '' })
         }
 
     }
@@ -53,14 +54,14 @@ class UpdatePassword extends React.Component {
                 <div>
                     <Grid container spacing={8}>
                         <Grid item xs={12} sm={4} lg={5} xl={5} >
-                            <img src="Anuvaad.png" width="100%" alt="" />
+                            <img src="Anuvaad.png" width="100%"  height="925px" alt="" />
                         </Grid>
                         <Grid item xs={12} sm={8} lg={7} xl={7} style={{ backgroundColor: '#f1f5f7' }} >
                             <Typography align='center' style={{ marginTop: '30%', marginBottom: '5%', fontSize: '33px', fontfamily: 'Trebuchet MS, sans-serif', color: '#003366' }}>
-                                Forgot Password</Typography>
+                            {translate('updatePassword.page.label.forgotPassword')}</Typography>
                             <FormControl align='center' fullWidth >
 
-                                <TextField id="outlined-required" type="email" placeholder={"Email/Username*"}
+                                <TextField id="outlined-required" type="email" placeholder={translate('common.page.placeholder.emailUsername')}
                                     margin="normal" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }}
                                     onChange={this.handleInputReceived('email')}
                                     value={this.state.email}
@@ -73,7 +74,7 @@ class UpdatePassword extends React.Component {
                                         width: '50%', marginBottom: '2%', marginTop: '2%',
                                         backgroundColor: this.state.email ? '#1ca9c9' : 'gray', color: 'white',
                                     }} onClick={this.handleSubmit.bind(this)}>
-                                    Submit
+                                    {translate("common.page.button.submit")}
                                 </Button>
                             </FormControl>
                         </Grid>

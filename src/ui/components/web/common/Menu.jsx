@@ -5,7 +5,7 @@ import { translate } from "../../../../assets/localisation";
 
 class MenuClass extends React.Component {
   render() {
-    console.log("sajish", this.props.topValue, this.props.leftValue);
+
     const { anchorEl, topValue, leftValue, isOpen, handleApiMerge, operation_type } = this.props;
     var val = [];
     return (
@@ -52,6 +52,10 @@ class MenuClass extends React.Component {
             {translate("intractive_translate.page.preview.deleteSentence")}
           </Button>
         )}
+        <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleCopy()}>
+            {" "}
+            Copy
+          </Button>
         <hr style={{ color: 'grey', opacity: '0.4' }} />
 
         <div><Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() =>this.props.handleDialog( "Add new paragraph above", "Do you want to add new paragraph above? ") }>

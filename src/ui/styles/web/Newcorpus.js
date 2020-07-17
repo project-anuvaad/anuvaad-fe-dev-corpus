@@ -2,8 +2,11 @@ import { grey500, white } from 'material-ui/styles/colors';
 
 const Newcorpus = theme => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap'
+    display: 'flex', 
+    flexDirection: 'column', 
+    flex: 1, 
+    textAlign: 'center', 
+    alignItems: 'center',
   },
   margin: {
     margin: theme.spacing.unit,
@@ -20,17 +23,10 @@ const Newcorpus = theme => ({
     marginBottom:'10px'
 
   },
-  CorpusContainer: {
-    minWidth: 720,
-    maxWidth: 700,
-    height: 'auto',
-    top: '20%',
-    left: 0,
-    right: 0,
-    margin: 'auto',
-    marginLeft:'24%',
-    flexWrap: 'wrap',
+  typographyHeader:{
+    paddingTop: "2%"
   },
+  
   createButton: {
   justifyContent: 'center',
 },
@@ -39,11 +35,9 @@ label:{
   paddingLeft:'30%',
   paddingRight:'3%'
 },
-typography:{
-  marginLeft:"5%",
-  marginTop:'3%'
+select:{
+  minWidth: 120, width: '95%', align: 'right',marginLeft:'4.9%' 
 },
-
 button: {
   justifyContent: 'center',
   left: theme.spacing.unit*22,
@@ -62,29 +56,30 @@ buttons: {
 },
 
 button1: {
-  justifyContent: 'center',
-  left: theme.spacing.unit*12,
-  marginBottom:'2%',
-  marginTop:'5%'
-  ,
-  width:'220px'
+  // justifyContent: 'center',
+  // left: theme.spacing.unit*12,
+  marginTop:'5%',
+  marginLeft:'0.1%',
+  width:'48%',
+  height:'43px',
+  
+   borderRadius:"20px 20px 20px 20px",
 },
 btns: {
   justifyContent: 'center',
   left: theme.spacing.unit*6,
-  marginBottom:'2%',
   marginTop:'5%',
-  width:'240px',
-  marginLeft:'10%'
+  width:'48%',
+  height:'43px',
+  marginLeft:'-2.6%',
+  
+   borderRadius:"20px 20px 20px 20px",
 },
-
   paper: {
-    padding: 25,
-    marginTop:'20px',
+    marginTop:'2%',
     overflow: 'auto',
-    width: 'auto%',
-    
-    height:'65%'
+    width: '40%',
+    padding:'3%',
   },
   buttonsDiv: {
     textAlign: 'center',
@@ -117,7 +112,25 @@ btns: {
     padding: 7,
     borderRadius: 2,
     margin: 2,
-    fontSize: 13
+    fontSize: 13,
+  },
+  dropZoneArea:{
+    paddingTop: '7%',
+    minHeight:'200px',
+    height: "300px",
+    borderColor:'#1C9AB7',
+    backgroundColor: '#F5F9FA',
+    border: '1px dashed #1C9AB7',
+    fontColor:'#1C9AB7',
+    "& svg":{color:'#1C9AB7',},
+    "& p": {
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      fontSize: "19px",
+      color:'#1C9AB7',
+      
+    }
   }
 });
 

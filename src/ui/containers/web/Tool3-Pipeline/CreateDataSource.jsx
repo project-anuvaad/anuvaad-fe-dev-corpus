@@ -141,7 +141,7 @@ class CreateWorkspace extends React.Component {
   render() {
     return (
       <div>
-        <Toolbar style={{ marginRight: "8.5%", marginTop: "20px", marginBottom: "15px" }}>
+        <Toolbar style={{ marginTop: "1%", marginRight: "3%", marginLeft: "3%", padding: "0px" }}>
           <Typography variant="title" color="inherit" style={{ flex: 1 }} />
 
           <Button
@@ -155,126 +155,128 @@ class CreateWorkspace extends React.Component {
           </Button>
         </Toolbar>
 
-        <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "1%", paddingTop: "5px", paddingBottom: "3%" }} elevation={4}>
-          <Typography
-            gutterBottom
-            variant="title"
-            component="h2"
-            style={{
-              marginTop: "-.7%",
-              paddingLeft: "40%",
-              background: blueGrey50,
-              paddingTop: "25px",
-              paddingBottom: "16px"
-            }}
-          >
-            {translate("common.page.label.addDataSource")}
-          </Typography>
-          <br />
-          <Grid container spacing={24} style={{ marginTop: "1 %", marginLeft: "12%" }}>
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
-                {translate("common.page.label.enterWorkspace")}
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <TextField
-                value={this.state.workspaceName}
-                required
-                id="outlined-name"
-                margin="normal"
-                onChange={event => {
-                  this.handleTextChange("workspaceName", event);
-                }}
-                variant="outlined"
-                style={{ width: "60%" }}
-              />
-            </Grid>
+        <div style={{ marginLeft: "3%", marginRight: "3%", paddingTop: "2%", paddingBottom: "3%" }}>
+          <Paper elevation={4}>
+            <Typography
+              gutterBottom
+              variant="title"
+              component="h2"
+              style={{
+                marginTop: "-.7%",
+                paddingLeft: "40%",
+                background: blueGrey50,
+                paddingTop: "25px",
+                paddingBottom: "16px"
+              }}
+            >
+              {translate("common.page.label.addDataSource")}
+            </Typography>
+            <br />
+            <Grid container spacing={24} style={{ marginTop: "1 %", marginLeft: "12%" }}>
+              <Grid item xs={5} sm={5} lg={5} xl={5}>
+                <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>
+                  {translate("common.page.label.enterWorkspace")}
+                </Typography>
+                <br />
+              </Grid>
+              <Grid item xs={6} sm={6} lg={6} xl={6}>
+                <TextField
+                  value={this.state.workspaceName}
+                  required
+                  id="outlined-name"
+                  margin="normal"
+                  onChange={event => {
+                    this.handleTextChange("workspaceName", event);
+                  }}
+                  variant="outlined"
+                  style={{ width: "60%" }}
+                />
+              </Grid>
 
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                {translate("common.page.label.sourceLang")} &emsp;&emsp;{" "}
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
-              <Select
-                style={{ width: "60%", marginTop: "5px" }}
-                value={this.state.source}
-                onChange={this.handleSelectChange}
-                input={<OutlinedInput name="source" id="outlined-age-simple" />}
-              >
-                {this.state.language &&
-                  this.state.sourceLanguage.map(item => (
-                    <MenuItem key={item.language_name} value={item}>
-                      {item.language_name}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </Grid>
+              <Grid item xs={5} sm={5} lg={5} xl={5}>
+                <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
+                  {translate("common.page.label.sourceLang")} &emsp;&emsp;{" "}
+                </Typography>
+                <br />
+              </Grid>
+              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
+                <Select
+                  style={{ width: "60%", marginTop: "5px" }}
+                  value={this.state.source}
+                  onChange={this.handleSelectChange}
+                  input={<OutlinedInput name="source" id="outlined-age-simple" />}
+                >
+                  {this.state.language &&
+                    this.state.sourceLanguage.map(item => (
+                      <MenuItem key={item.language_name} value={item}>
+                        {item.language_name}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </Grid>
 
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                {translate("common.page.label.targetLang")} &emsp;&emsp;{" "}
-              </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
-              <Select
-                style={{ width: "60%", marginTop: "5px" }}
-                value={this.state.target}
-                onChange={this.handleSelectChange}
-                input={<OutlinedInput name="target" id="outlined-age-simple" />}
-              >
-                {this.state.language &&
-                  this.state.language.map(item => (
-                    <MenuItem key={item.language_name} value={item}>
-                      {item.language_name}
-                    </MenuItem>
-                  ))}
-              </Select>
-              {/* <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" /> */}
-            </Grid>
+              <Grid item xs={5} sm={5} lg={5} xl={5}>
+                <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
+                  {translate("common.page.label.targetLang")} &emsp;&emsp;{" "}
+                </Typography>
+                <br />
+              </Grid>
+              <Grid item xs={6} sm={6} lg={6} xl={6} style={{ height: "56px" }}>
+                <Select
+                  style={{ width: "60%", marginTop: "5px" }}
+                  value={this.state.target}
+                  onChange={this.handleSelectChange}
+                  input={<OutlinedInput name="target" id="outlined-age-simple" />}
+                >
+                  {this.state.language &&
+                    this.state.language.map(item => (
+                      <MenuItem key={item.language_name} value={item}>
+                        {item.language_name}
+                      </MenuItem>
+                    ))}
+                </Select>
+                {/* <Select id={"outlined-age-simple"} MenuItemValues={this.state.language} handleChange={this.handleSelectChange} value={this.state.target} name="target" /> */}
+              </Grid>
 
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
-                {translate("common.page.label.csvFile")} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+              <Grid item xs={5} sm={5} lg={5} xl={5}>
+                <Typography gutterBottom variant="title" component="h2" style={{ width: "80%", paddingTop: "25px" }}>
+                  {translate("common.page.label.csvFile")} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
               </Typography>
-              <br />
-            </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <Grid container spacing={8}>
-                <Grid item xs={4} sm={4} lg={4} xl={4}>
-                  <FileUpload accept=".csv" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="csvFile" />
-                </Grid>
+                <br />
+              </Grid>
+              <Grid item xs={6} sm={6} lg={6} xl={6}>
+                <Grid container spacing={8}>
+                  <Grid item xs={4} sm={4} lg={4} xl={4}>
+                    <FileUpload accept=".csv" buttonName="Upload" handleChange={this.handleChange.bind(this)} name="csvFile" />
+                  </Grid>
 
-                <Grid item xs={4} sm={4} lg={4} xl={4}>
-                  <TextField value={this.state.csvName} id="outlined-name" disabled margin="normal" variant="outlined" style={{ width: "80%" }} />
+                  <Grid item xs={4} sm={4} lg={4} xl={4}>
+                    <TextField value={this.state.csvName} id="outlined-name" disabled margin="normal" variant="outlined" style={{ width: "80%" }} />
+                  </Grid>
                 </Grid>
               </Grid>
-            </Grid>
 
-            <Grid item xs={5} sm={5} lg={5} xl={5}>
-              <Typography
-                variant="subtitle2"
-                color="inherit"
-                style={{ textAlign: "justify", color: "#ACACAC", marginTop: "10%", width: "80%", marginLeft: "2px" }}
-              />
-              <br />
+              <Grid item xs={5} sm={5} lg={5} xl={5}>
+                <Typography
+                  variant="subtitle2"
+                  color="inherit"
+                  style={{ textAlign: "justify", color: "#ACACAC", marginTop: "10%", width: "80%", marginLeft: "2px" }}
+                />
+                <br />
+              </Grid>
+              <Grid item xs={6} sm={6} lg={6} xl={6}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  style={{ width: "60%", marginTop: "3%", height: "56px" }}
+                  onClick={this.handleSubmit.bind(this)}
+                >
+                  {translate("common.page.button.submit")}
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6}>
-              <Button
-                variant="contained"
-                color="primary"
-                style={{ width: "60%", marginTop: "6%", height: "56px" }}
-                onClick={this.handleSubmit.bind(this)}
-              >
-                {translate("common.page.button.submit")}
-              </Button>
-            </Grid>
-          </Grid>
-        </Paper>
+          </Paper>
+        </div>
 
         {this.state.open && (
           <Snackbar

@@ -52,36 +52,36 @@ class AnuvaadGame extends React.Component {
       val: true,
       submit: true,
       result: ["This Court, while dealing with the issue for the purpose of deciding the question of obscenity in any book, story or article.",
-      'The Cabinet Mission Plan laid foundation for Constitution, functioning and procedure of Constituent Assembly',
-      'Every member of the collective has an inherent interest in such a trial.',
-      'It will further promote research into the institutional functioning of the courts.',
-      'I have no doubt that with adequate finances, in the near future, this ground can become one of the best in the country.',
-      'During the first three decades the Council functioned quite effectively and there was phenomenal development of technical education in this period.',
-      'A measure to achieve the intended purpose must therefore be suitable and necessary.',
-      'The whole approach is erroneous.',
-      'Andhra society runs Telugu medium schools outside Andhra Pradesh.',
-      'He was threatened that if the money was not paid Narendra would be killed or his daughter would be kidnapped.',
-      'To ensure their proper representation, a system of reservation becomes necessary.',
-      'Some rules can favour the majority community, others can protect the minorities.',
-      'But merely writing down a list of rights is not enough.',
-      'On the occasion of Mahavir Jayanti, the god Hanuman was worshipped on Devika beach.',
-      'This problem arose when the government sought to pass laws to abolish zamindari system.',
-      'The availability of housing for the general public will be increased.',
-      'For the appointment of a judge of the High Court also, consultation with the Chief Justice of India was mandatory. ',
-      'Over five crore tonnes of food grains was stored in the godowns of the Food Corporation of India.',
-      'A team of social scientists studied their poor condition and petitioned the Supreme Court.',
-      'In view of the said information, the commission withheld further action awaiting the opinion of the Supreme court in the matter. ',
-      'Similarly a game needs an impartial umpire whose decision is accepted by all the players.',
-      'Three years later, on 20 and 21 November 2017 articles were published in Caravan which was followed by a flurry of writ petitions. ',
-      'In spite of this, the blind faith of some of their devotees continues.',
-      'Given the severity of the case support from the cyber crime cell is being sought.',
-      'A definition is an explicit statement of the full connotation of a term.',
-      'I live in Shopian, which is believed to be a stronghold of terrorists.',
-      'Ms. Archana Pathak Dave, learned counsel for the State of Rajasthan.',
-      'The demand for a separate district was raised by Mewat Educational and Social Organisation and Mewat Saksharta Samiti in 1996.',
-      'Dr. S.S. Dahiya conducted postmortem examination on the dead body of Manju, wife of Pradeep Kumar.',
-      'The passion for respect and freedom are the basis of democracy.'
-    ]
+        'The Cabinet Mission Plan laid foundation for Constitution, functioning and procedure of Constituent Assembly',
+        'Every member of the collective has an inherent interest in such a trial.',
+        'It will further promote research into the institutional functioning of the courts.',
+        'I have no doubt that with adequate finances, in the near future, this ground can become one of the best in the country.',
+        'During the first three decades the Council functioned quite effectively and there was phenomenal development of technical education in this period.',
+        'A measure to achieve the intended purpose must therefore be suitable and necessary.',
+        'The whole approach is erroneous.',
+        'Andhra society runs Telugu medium schools outside Andhra Pradesh.',
+        'He was threatened that if the money was not paid Narendra would be killed or his daughter would be kidnapped.',
+        'To ensure their proper representation, a system of reservation becomes necessary.',
+        'Some rules can favour the majority community, others can protect the minorities.',
+        'But merely writing down a list of rights is not enough.',
+        'On the occasion of Mahavir Jayanti, the god Hanuman was worshipped on Devika beach.',
+        'This problem arose when the government sought to pass laws to abolish zamindari system.',
+        'The availability of housing for the general public will be increased.',
+        'For the appointment of a judge of the High Court also, consultation with the Chief Justice of India was mandatory. ',
+        'Over five crore tonnes of food grains was stored in the godowns of the Food Corporation of India.',
+        'A team of social scientists studied their poor condition and petitioned the Supreme Court.',
+        'In view of the said information, the commission withheld further action awaiting the opinion of the Supreme court in the matter. ',
+        'Similarly a game needs an impartial umpire whose decision is accepted by all the players.',
+        'Three years later, on 20 and 21 November 2017 articles were published in Caravan which was followed by a flurry of writ petitions. ',
+        'In spite of this, the blind faith of some of their devotees continues.',
+        'Given the severity of the case support from the cyber crime cell is being sought.',
+        'A definition is an explicit statement of the full connotation of a term.',
+        'I live in Shopian, which is believed to be a stronghold of terrorists.',
+        'Ms. Archana Pathak Dave, learned counsel for the State of Rajasthan.',
+        'The demand for a separate district was raised by Mewat Educational and Social Organisation and Mewat Saksharta Samiti in 1996.',
+        'Dr. S.S. Dahiya conducted postmortem examination on the dead body of Manju, wife of Pradeep Kumar.',
+        'The passion for respect and freedom are the basis of democracy.'
+      ]
     };
 
     this.theWheel = null;
@@ -90,7 +90,7 @@ class AnuvaadGame extends React.Component {
   componentDidMount() {
     this.setState({
       autoMlText: "",
-      
+
       nmtText: [],
       nmtTextSP: []
     });
@@ -194,8 +194,8 @@ class AnuvaadGame extends React.Component {
 
   handleClear() {
     window.location.reload();
-    
-    
+
+
     // this.setState({
     //   text: "",
     //   nmtText: "",
@@ -208,7 +208,7 @@ class AnuvaadGame extends React.Component {
     //   showSplitted: false,
     //   submit: true,
     //   val: true,
-      
+
     // });
   }
 
@@ -218,7 +218,6 @@ class AnuvaadGame extends React.Component {
 
   handleSelectChange = event => {
 
-    console.log( "select",event.target.value)
     this.setState({ [event.target.name]: event.target.value, model: [] });
   };
 
@@ -265,17 +264,17 @@ class AnuvaadGame extends React.Component {
     const { APITransport, NMTApi } = this.props;
     role.includes("dev")
       ? this.state.modelLanguage.map(item =>
-          item.target_language_code === this.state.target &&
+        item.target_language_code === this.state.target &&
           item.source_language_code === this.state.source &&
           this.state.model.includes(item.model_name)
-            ? model.push(item)
-            : []
-        )
+          ? model.push(item)
+          : []
+      )
       : this.state.modelLanguage.map(item =>
-          item.target_language_code === this.state.target && item.source_language_code === this.state.source && model.length < 1 && item.is_primary
-            ? model.push(item)
-            : []
-        );
+        item.target_language_code === this.state.target && item.source_language_code === this.state.source && model.length < 1 && item.is_primary
+          ? model.push(item)
+          : []
+      );
     const apiObj = new AutoML(this.state.text, this.state.source, this.state.target);
     const nmt = new NMT(this.state.text, model, true, this.state.target, this.state.showSplitted);
     NMTApi(nmt);
@@ -291,15 +290,15 @@ class AnuvaadGame extends React.Component {
   getPrice() {
     const winngSegment = this.theWheel.getIndicatedSegment();
 
-    
-   
-    this.setState({ textValue: winngSegment.text,val: false });
 
-    console.log(`On Interval${  winngSegment.text}`, this.theWheel);
+
+    this.setState({ textValue: winngSegment.text, val: false });
+
+    console.log(`On Interval${winngSegment.text}`, this.theWheel);
   }
 
   handleTranslate() {
-    this.setState({ submit: false, val: false, text :this.state.result[this.state.textValue-1] });
+    this.setState({ submit: false, val: false, text: this.state.result[this.state.textValue - 1] });
   }
 
   startTheWheel() {
@@ -308,20 +307,20 @@ class AnuvaadGame extends React.Component {
     console.log("start Interval");
 
     setTimeout(() => {
-    
+
       this.getPrice();
-      
+
     }, 5100);
     this.setState({ val: "false" });
-    
-    
+
+
   }
 
   stopTheWheel() {
     this.theWheel.stopAnimation();
     this.theWheel.rotationAngle = 0;
     this.theWheel.draw();
-    this.setState({ val : true,textValue:null});
+    this.setState({ val: true, textValue: null });
   }
 
   render() {
@@ -332,137 +331,160 @@ class AnuvaadGame extends React.Component {
           <div>
             <Grid container spacing={8}>
               <Grid item xs={2} sm={3} lg={5} xl={5}>
-                <div style={{ marginTop: "60px",marginLeft:'16%' }}>
+                <div style={{ marginTop: "60px", marginLeft: '16%' }}>
                   <canvas id="canvas" width="880" height="750">
                     Canvas not supported, use another browser.
                   </canvas>
                 </div>
               </Grid>
-              <Grid item xs={1} sm={1} lg={1} xl={1}><ArrowBackIcon style ={{marginTop:'320px',fontSize:'100px',marginLeft:'35px', color:'red'}}/></Grid>
-              {this.state.textValue  && (
+              <Grid item xs={1} sm={1} lg={1} xl={1}><ArrowBackIcon style={{ marginTop: '320px', fontSize: '100px', marginLeft: '35px', color: 'red' }} /></Grid>
+              {this.state.textValue && (
                 <Grid item xs={6} sm={6} lg={6} xl={6}>
-                  <Typography value="" variant="h4" gutterBottom style={{ marginTop: "30%" , marginRight:'30px'}}>
+                  <Typography value="" variant="h4" gutterBottom style={{ marginTop: "30%", marginRight: '30px' }}>
                     {this.state.result[this.state.textValue - 1]}
                   </Typography>
                 </Grid>
               )}
             </Grid>
-            
-              {this.state.val === true ? <Grid container spacing={8}>
-                <Grid item xs={5} sm={5} lg={5} xl={5}>
-                
 
-                  <Fab
-                    variant="contained"
-                    aria-label="edit"
-                    style={{ marginLeft: "47%", width: "15%",height:'50px', marginTop: "-100px",padding:'70px', backgroundColor: "green" }}
-                    onClick={this.startTheWheel.bind(this)}
-                  >
-                    Start
+            {this.state.val === true ? <Grid container spacing={8}>
+              <Grid item xs={5} sm={5} lg={5} xl={5}>
+
+
+                <Fab
+                  variant="contained"
+                  aria-label="edit"
+                  style={{ marginLeft: "47%", width: "15%", height: '50px', marginTop: "-100px", padding: '70px', backgroundColor: "green" }}
+                  onClick={this.startTheWheel.bind(this)}
+                >
+                  Start
                   </Fab>
-                </Grid>
-                </Grid>
-               :  !this.state.val  && <Grid container spacing={8}>
-                  <Grid item xs={5} sm={5} lg={5} xl={5}>
+              </Grid>
+            </Grid>
+              : !this.state.val && <Grid container spacing={8}>
+                <Grid item xs={5} sm={5} lg={5} xl={5}>
                   <Fab
                     variant="contained"
                     color="primary"
-                    style={{ marginLeft: "47%", width: "10%", marginTop:"-100px",padding:'70px', backgroundColor: "red" }}
+                    style={{ marginLeft: "47%", width: "10%", marginTop: "-100px", padding: '70px', backgroundColor: "red" }}
                     onClick={this.stopTheWheel.bind(this)}
                   >
                     Reset
                   </Fab>
-                  </Grid>
-                <Grid item xs={6} sm={6} lg={6} xl={6}>
-                  {this.state.textValue&&
-                  <Button
-                    variant="contained"
-                    onClick={this.handleTranslate.bind(this)}
-                    color="primary"
-                    aria-label="edit"
-                    style={{ marginLeft: "30%", width: "44%", marginTop: "-150px",}}
-                  >
-                    Translate
-                  </Button>
-  }
-                  </Grid>
-                 
                 </Grid>
-              }
-            
+                <Grid item xs={6} sm={6} lg={6} xl={6}>
+                  {this.state.textValue &&
+                    <Button
+                      variant="contained"
+                      onClick={this.handleTranslate.bind(this)}
+                      color="primary"
+                      aria-label="edit"
+                      style={{ marginLeft: "30%", width: "44%", marginTop: "-150px", }}
+                    >
+                      Translate
+                  </Button>
+                  }
+                </Grid>
+
+              </Grid>
+            }
+
           </div>
         ) : (
-          <Paper style={{ marginLeft: "25%", width: "50%", marginTop: "4%" }}>
-            <Typography
-              variant="h5"
-              style={{ color: darkBlack, background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px" }}
-            >
-              {translate("dashboard.page.heading.title")}
-            </Typography>
-            <Grid container spacing={8}>
-              <Grid item xs={8} sm={8} lg={8} xl={8}>
-                <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                  {translate("common.page.label.sourceLang")}{" "}
-                </Typography>
-              </Grid>
-
-              <Grid item xs={3} sm={3} lg={3} xl={3}>
-                <br />
-                <br />
-                <Select
-                disabled = {true}
-                  id="outlined-age-simple"
-                  selectValue="language_code"
-                  MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
-                  handleChange={this.handleSelectChange}
-                  value={this.state.source}
-                  name="source"
-                  style={{ marginRight: "30%", marginBottom: "5%", marginTop: "4%" }}
-                />
-              </Grid>
-            </Grid>
-            <Grid container spacing={8}>
-              <Grid item xs={8} sm={8} lg={8} xl={8}>
-                <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                  {translate("common.page.label.targetLang")}&nbsp;
-                </Typography>
-              </Grid>
-              <Grid item xs={3} sm={3} lg={3} xl={3}>
-                <br />
-                <br />
-                <Select
-                  id="outlined-age-simple"
-                  selectValue="language_code"
-                  MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
-                  handleChange={this.handleSelectChange}
-                  value={this.state.target}
-                  name="target"
-                  style={{ marginRight: "30%", marginBottom: "5%", marginTop: "4%", marginLeft: "10%" }}
-                />
-              </Grid>
-            </Grid>
-            {role.includes("dev") && (
+            <Paper style={{ marginLeft: "25%", width: "50%", marginTop: "4%" }}>
+              <Typography
+                variant="h5"
+                style={{ color: darkBlack, background: blueGrey50, textAlign: "center", paddingBottom: "12px", paddingTop: "8px" }}
+              >
+                {translate("dashboard.page.heading.title")}
+              </Typography>
               <Grid container spacing={8}>
                 <Grid item xs={8} sm={8} lg={8} xl={8}>
                   <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                    {translate("common.page.label.pleaseSelectModel")}{" "}
+                    {translate("common.page.label.sourceLang")}{" "}
                   </Typography>
+                </Grid>
+
+                <Grid item xs={3} sm={3} lg={3} xl={3}>
+                  <br />
+                  <br />
+                  <Select
+                    disabled={true}
+                    id="outlined-age-simple"
+                    selectValue="language_code"
+                    MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
+                    handleChange={this.handleSelectChange}
+                    value={this.state.source}
+                    name="source"
+                    style={{
+                      width: '92%',
+                      fullWidth: true,
+                      display: "flex",
+                      wrap: "nowrap",
+                      // height: '40px',
+                      magin: 'dense',
+                      float: 'right'
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container spacing={8}>
+                <Grid item xs={8} sm={8} lg={8} xl={8}>
+                  <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
+                    {translate("common.page.label.targetLang")}&nbsp;
+                </Typography>
                 </Grid>
                 <Grid item xs={3} sm={3} lg={3} xl={3}>
                   <br />
                   <br />
+                  <Select
+                    id="outlined-age-simple"
+                    selectValue="language_code"
+                    MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
+                    handleChange={this.handleSelectChange}
+                    value={this.state.target}
+                    name="target" style={{
+                      width: '92%',
+                      fullWidth: true,
+                      display: "flex",
+                      wrap: "nowrap",
+                      // height: '40px',
+                      magin: 'dense',
+                      float: 'right'
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              {role.includes("dev") && (
+                <Grid container spacing={8}>
+                  <Grid item xs={8} sm={8} lg={8} xl={8}>
+                    <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
+                      {translate("common.page.label.pleaseSelectModel")}{" "}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3} sm={3} lg={3} xl={3}>
+                    <br />
+                    <br />
 
-                  <SelectModel
-                    id="select-multiple-chip"
-                    multiple
-                    style={{ minWidth: 160, align: "right", maxWidth: 160 }}
-                    value={this.state.model}
-                    onChange={this.handleSelectModelChange}
-                    renderValue={selected => selected.join(", ")}
-                    input={<OutlinedInput name={this.state.model} id="select-multiple-checkbox" />}
-                  >
-                    {this.state.source && this.state.target
-                      ? this.handleModel(this.state.modelLanguage, this.state.source, this.state.target).map(item => (
+                    <SelectModel
+                      id="select-multiple-chip"
+                      multiple
+                      style={{
+                        width: '92%',
+                        fullWidth: true,
+                        display: "flex",
+                        wrap: "nowrap",
+                        // height: '40px',
+                        magin: 'dense',
+                        float: 'right'
+                      }}
+                      value={this.state.model}
+                      onChange={this.handleSelectModelChange}
+                      renderValue={selected => selected.join(", ")}
+                      input={<OutlinedInput name={this.state.model} id="select-multiple-checkbox" />}
+                    >
+                      {this.state.source && this.state.target
+                        ? this.handleModel(this.state.modelLanguage, this.state.source, this.state.target).map(item => (
                           <Tooltip
                             placement="right"
                             enterDelay={200}
@@ -475,36 +497,36 @@ class AnuvaadGame extends React.Component {
                             </MenuItem>
                           </Tooltip>
                         ))
-                      : []}
+                        : []}
                     >
                   </SelectModel>
-                  <br />
+                    <br />
+                  </Grid>
+                  {role.includes("dev") && (
+                    <div style={{ marginLeft: "8%", paddingTop: "10px" }}>
+                      {this.state.model.map(value => (
+                        <Chip key={value} label={value} onDelete={this.handleDelete(value)} style={{ marginLeft: "5px", marginTop: "8px" }} />
+                      ))}
+                    </div>
+                  )}
                 </Grid>
-                {role.includes("dev") && (
-                  <div style={{ marginLeft: "8%", paddingTop: "10px" }}>
-                    {this.state.model.map(value => (
-                      <Chip key={value} label={value} onDelete={this.handleDelete(value)} style={{ marginLeft: "5px", marginTop: "8px" }} />
-                    ))}
-                  </div>
-                )}
-              </Grid>
-            )}
-            <div style={{ marginLeft: "40px" }}>
-              <Grid container spacing={24} style={{ padding: 24 }}>
-                <Grid item xs={12} sm={12} lg={12} xl={12}>
-                  <TextField
-                    value={this.state.text}
-                    id="standard-multiline-static"
-                    placeholder={translate("dashboard.page.alternatetext.enterTextHere")}
-                    style={{ width: "96%" }}
-                    multiline
-                    onChange={event => {
-                      this.handleTextChange("text", event);
-                    }}
-                  />
-                </Grid>
+              )}
+              <div style={{ marginLeft: "40px" }}>
+                <Grid container spacing={24} style={{ padding: 24 }}>
+                  <Grid item xs={12} sm={12} lg={12} xl={12}>
+                    <TextField
+                      value={this.state.text}
+                      id="standard-multiline-static"
+                      placeholder={translate("dashboard.page.alternatetext.enterTextHere")}
+                      style={{ width: "96%" }}
+                      multiline
+                      onChange={event => {
+                        this.handleTextChange("text", event);
+                      }}
+                    />
+                  </Grid>
 
-                {/* <FormControlLabel
+                  {/* <FormControlLabel
                   style={{ marginLeft: "0%", width: role.includes("dev") ? "26%" : "60%", marginRight: "5%" }}
                   control={
                     <Checkbox
@@ -516,59 +538,59 @@ class AnuvaadGame extends React.Component {
                   }
                   label={translate("dashboard.page.checkbox.mt")}
                 /> */}
-                {role.includes("dev") && (
-                  <FormControlLabel
-                    style={{ marginLeft: "0%", width: "23%", marginRight: "5%" }}
-                    control={
-                      <Checkbox color="default" checked={this.state.showSplitted} value="showSplitted" onChange={this.handleChange("showSplitted")} />
-                    }
-                    label={translate("dashboard.page.checkbox.splitted")}
-                  />
-                )}
-                {role.includes("dev") && (
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        color="default"
-                        checked={this.state.checkedSubwords}
-                        value="checkedSubwords"
-                        onChange={this.handleChange("checkedSubwords")}
-                      />
-                    }
-                    label={translate("dashboard.page.checkbox.ioSubwords")}
-                  />
-                )}
+                  {role.includes("dev") && (
+                    <FormControlLabel
+                      style={{ marginLeft: "0%", width: "23%", marginRight: "5%" }}
+                      control={
+                        <Checkbox color="default" checked={this.state.showSplitted} value="showSplitted" onChange={this.handleChange("showSplitted")} />
+                      }
+                      label={translate("dashboard.page.checkbox.splitted")}
+                    />
+                  )}
+                  {role.includes("dev") && (
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          color="default"
+                          checked={this.state.checkedSubwords}
+                          value="checkedSubwords"
+                          onChange={this.handleChange("checkedSubwords")}
+                        />
+                      }
+                      label={translate("dashboard.page.checkbox.ioSubwords")}
+                    />
+                  )}
 
-                <Button
-                  variant="contained"
-                  onClick={this.handleClear.bind(this)}
-                  color="primary"
-                  aria-label="edit"
-                  style={{ marginLeft: "1.3%", width: "44%", marginBottom: "4%", marginTop: "4%", marginRight: "5%" }}
-                >
-                  {translate("common.page.button.cancel")}
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={this.handleSubmit.bind(this, role)}
-                  color="primary"
-                  aria-label="edit"
-                  style={{ width: "44%", marginBottom: "4%", marginTop: "4%" }}
-                >
-                  {translate("common.page.button.submit")}
-                </Button>
-              </Grid>
-            </div>
-            {this.state.nmtText[0] && (
-              <div>
-                <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} status={this.state.checkedSubwords} />
+                  <Button
+                    variant="contained"
+                    onClick={this.handleClear.bind(this)}
+                    color="primary"
+                    aria-label="edit"
+                    style={{ marginLeft: "1.3%", width: "44%", marginBottom: "4%", marginTop: "4%", marginRight: "5%" }}
+                  >
+                    {translate("common.page.button.cancel")}
+                  </Button>
+                  <Button
+                    variant="contained"
+                    onClick={this.handleSubmit.bind(this, role)}
+                    color="primary"
+                    aria-label="edit"
+                    style={{ width: "44%", marginBottom: "4%", marginTop: "4%" }}
+                  >
+                    {translate("common.page.button.submit")}
+                  </Button>
+                </Grid>
               </div>
-            )}
-            {this.state.checkedMachine && this.state.autoMlText && this.state.nmtText && (
-              <TranslateSentence title={translate("dashboard.page.checkbox.mt")} data={this.state.autoMlText} />
-            )}
-          </Paper>
-        )}
+              {this.state.nmtText[0] && (
+                <div>
+                  <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} status={this.state.checkedSubwords} />
+                </div>
+              )}
+              {this.state.checkedMachine && this.state.autoMlText && this.state.nmtText && (
+                <TranslateSentence title={translate("dashboard.page.checkbox.mt")} data={this.state.autoMlText} />
+              )}
+            </Paper>
+          )}
       </div>
     );
   }
