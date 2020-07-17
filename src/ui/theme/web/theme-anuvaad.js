@@ -12,7 +12,7 @@ const themeAnuvaad = createMuiTheme({
 
     },
     fontFamily: '"Source Sans Pro","Regular","Arial", sans-serif',
-    fontSize: 14,
+    fontSize: 16,
     color: "#000000",
   },
   palette: {
