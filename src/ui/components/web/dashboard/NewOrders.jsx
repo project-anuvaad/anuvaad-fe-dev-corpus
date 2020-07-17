@@ -5,8 +5,9 @@ import { ResponsiveContainer } from "recharts";
 import { typography } from "material-ui/styles";
 import Typography from '@material-ui/core/Typography';
 import { translate } from "../../../../assets/localisation";
+
 const NewOrders = props => {
-  const { title, data, status, value, isSubWordsNotRequired } = props;
+  const { title, data, value, isSubWordsNotRequired } = props;
   const styles = {
     paper: {
       backgroundColor: blueGrey50,

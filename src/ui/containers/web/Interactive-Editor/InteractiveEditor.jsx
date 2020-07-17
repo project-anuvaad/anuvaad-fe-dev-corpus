@@ -12,7 +12,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Toolbar from "@material-ui/core/Toolbar";
-import PlayArrowIcon from "@material-ui/icons/LineStyle";
 import DoneIcon from "@material-ui/icons/Done";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
@@ -32,7 +31,6 @@ import PdfPreview from "./PdfPreview";
 import UpdatePdfTable from "../../../../flux/actions/apis/updatePdfTable";
 import DeleteSentence from "../../../../flux/actions/apis/deleteSentence";
 import DeleteTable from "../../../../flux/actions/apis/deleteTable";
-import Divider from "@material-ui/core/Divider";
 import MenuItems from "../../../components/web/common/Menu";
 import InsertNewSentence from "../../../../flux/actions/apis/insertSentence";
 import EditorDialog from "../../../components/web/common/EditorDialog";
@@ -138,6 +136,7 @@ class IntractiveTrans extends React.Component {
               if (item.status !== "DELETED") {
                 a.push(item);
               }
+              return true
             });
 
             sentence.tokenized_sentences = a;
@@ -634,19 +633,17 @@ class IntractiveTrans extends React.Component {
     }
   }
   handleCopy(){
-    console.log("copy", window.getSelection().toString());
     copy( window.getSelection().toString())
                     this.handleClose()
 
   }
   handleAddCell(sentence, operationType) {
-    console.log(operationType)
     if (sentence && operationType) {
       const { APITransport } = this.props;
       const apiObj = new UpdatePdfTable(sentence, operationType);
       APITransport(apiObj);
     }
-    this.setState({ openEl: true, message:'', message: operationType=="add-row"? "New row added": "New column added." });
+    this.setState({ openEl: true, message: operationType === "add-row"? "New row added": "New column added." });
     this.handleClose();
   }
 
@@ -677,7 +674,6 @@ class IntractiveTrans extends React.Component {
     this.handleClose();
   }
   handleDeleteTable(paragraph, cellData, operation_type) {
-    console.log(operation_type)
     if (paragraph && cellData && operation_type) {
       const { APITransport } = this.props;
       const apiObj = new DeleteTable(paragraph, cellData, operation_type);
@@ -794,9 +790,9 @@ class IntractiveTrans extends React.Component {
                 <Grid item xs={12} sm={6} lg={2} xl={2}>
                   <Button
                     variant="contained"
-                    size="large"
+                    
                     color="primary"
-                    style={{ width: "100%", minWidth: "110px", fontWeight: "bold",fontSize: "90%", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
+                    style={{ width: "100%", minWidth: "110px", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
                     onClick={() => this.handlePreview()}
                   >
                     <GetAppIcon fontSize="large" />
@@ -811,7 +807,7 @@ class IntractiveTrans extends React.Component {
                     variant="outlined"
                     size="large"
                     // color="primary"
-                    style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold", borderRadius: '30px', color: '#233466' }}
+                    style={{ width: "100%", minWidth: "55px",  borderRadius: '30px', color: '#233466' }}
                   >
                     <DoneIcon fontSize="large" style={{ color: '#233466' }} />
                     &nbsp;&nbsp;{translate("common.page.label.done")}
