@@ -11,6 +11,7 @@ export default class RunExperiment extends API {
     this.workspace = [];
     this.source = source;
     this.target = target;
+    this.ner = strategy ==="Without NER"? true: false;
     this.model = JSON.stringify(model);
     this.endpoint = strategy === "OCR" ? `${super.apiEndPointAuto()}${ENDPOINTS.ocrpdffileupload}`:`${super.apiEndPointAuto()}${ENDPOINTS.pdffileupload}`
    
@@ -40,6 +41,7 @@ export default class RunExperiment extends API {
     formData.append('source_lang',this.source);
     formData.append('target_lang',this.target);
     formData.append('model',this.model);
+    formData.append('dont_use_ner',this.ner);
     return formData;
   }
 
