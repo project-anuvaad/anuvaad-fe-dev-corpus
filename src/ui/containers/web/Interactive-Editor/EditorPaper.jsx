@@ -136,8 +136,9 @@ class EditorPaper extends React.Component {
 
   newFetchSentence(sentence, prevSentence, index, noOfPage, sArray) {
     
-    let padding = (Number(sArray[0].x) - 152) / 1.4;
-    padding = padding / 5 + "%";
+    let padding = Number(sArray[0].x) *100 / Number(sArray[0].page_width);
+    let font_size = sArray[0].class_style['font-size']
+    padding = (padding-10) + "%";
     let pageNo = sArray[0].page_no;
     if (!sArray[0].is_footer && !sArray[0].is_table) {
       let printPageNo = false;
@@ -163,7 +164,7 @@ class EditorPaper extends React.Component {
           <span></span>
         )}
         </span>
-        <div style={{ textAlign: "justify",paddingLeft: padding }}>
+        <div style={{ textAlign: "justify",paddingLeft: padding, fontSize: font_size }}>
           
           {sArray.map(sen=>(
             
@@ -608,7 +609,7 @@ class EditorPaper extends React.Component {
           <div></div>
         )}
         <div style={{ paddingLeft: "20px" }}>
-          {this.props.fileDetails && this.props.fileDetails.api_version === 2
+          {this.props.fileDetails && (this.props.fileDetails.api_version === 2 || this.props.fileDetails.api_version === 3)
             ? sentences &&
               Array.isArray(sentences) &&
               sentences.length > 0 &&
