@@ -11,7 +11,7 @@ export default class RunExperiment extends API {
     this.workspace = [];
     this.source = source;
     this.target = target;
-    this.ner = strategy ==="Without NER"? true: false;
+    this.ner = strategy ==="Without NER"? 1: 0;
     this.model = JSON.stringify(model);
     this.endpoint = strategy === "OCR" ? `${super.apiEndPointAuto()}${ENDPOINTS.ocrpdffileupload}`:`${super.apiEndPointAuto()}${ENDPOINTS.pdffileupload}`
    
