@@ -619,7 +619,7 @@ class EditorPaper extends React.Component {
                 if( (index!==sentences.length-1 && sentences[index + 1].y!==sentence.y) || index===sentences.length-1 ){
                   
                   
-                  let a = this.newFetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no, sentences,sArray);
+                  let a = this.newFetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no,sArray);
                   sArray=[]
                   return a;
                 }
