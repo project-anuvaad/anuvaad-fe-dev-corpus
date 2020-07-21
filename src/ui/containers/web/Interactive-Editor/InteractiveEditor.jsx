@@ -12,7 +12,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
 import GetAppIcon from '@material-ui/icons/GetApp';
 import Toolbar from "@material-ui/core/Toolbar";
-import PlayArrowIcon from "@material-ui/icons/LineStyle";
 import DoneIcon from "@material-ui/icons/Done";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
@@ -32,7 +31,6 @@ import PdfPreview from "./PdfPreview";
 import UpdatePdfTable from "../../../../flux/actions/apis/updatePdfTable";
 import DeleteSentence from "../../../../flux/actions/apis/deleteSentence";
 import DeleteTable from "../../../../flux/actions/apis/deleteTable";
-import Divider from "@material-ui/core/Divider";
 import MenuItems from "../../../components/web/common/Menu";
 import InsertNewSentence from "../../../../flux/actions/apis/insertSentence";
 import EditorDialog from "../../../components/web/common/EditorDialog";
@@ -119,7 +117,7 @@ class IntractiveTrans extends React.Component {
       APITransport(apiObj);
       this.setState({
         action: true,
-        
+
       });
     }
 
@@ -138,6 +136,7 @@ class IntractiveTrans extends React.Component {
               if (item.status !== "DELETED") {
                 a.push(item);
               }
+              return true
             });
 
             sentence.tokenized_sentences = a;
@@ -250,7 +249,7 @@ class IntractiveTrans extends React.Component {
         selectedSentenceId: "",
         contextToken: false,
         addSentence: false,
-        sText:''
+        sText: ''
       });
     }
   }
@@ -258,7 +257,7 @@ class IntractiveTrans extends React.Component {
   handleSave(value, index, submittedId, sentenceIndex, keyValue, cellValue, taggedValue) {
     const obj = this.state.sentences;
     const temp = this.state.sentences[index];
-    
+
     if (temp.is_table) {
       temp.table_items[keyValue][cellValue].target = value.tgt ? value.tgt : value;
       temp.table_items[keyValue][cellValue].tagged_tgt = value.tagged_tgt ? value.tagged_tgt : taggedValue;
@@ -280,7 +279,7 @@ class IntractiveTrans extends React.Component {
     senArray.push(value);
     const apiObj = new InteractiveApi(senArray);
     APITransport(apiObj);
-    this.setState({ token, message:`${this.state.fileDetails.process_name} ` + translate("intractive_translate.page.message.savedSuccessfully") });
+    this.setState({ token, message: `${this.state.fileDetails.process_name} ` + translate("intractive_translate.page.message.savedSuccessfully") });
   }
 
   handleScriptSave(target, indexValue) {
@@ -304,7 +303,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleTableHover(sentenceId, tableId, parent, pageNo, paragraph) {
-    if (this.state.clickedCell) {
+    if (this.state.clickedCell && this.state.selectedSentenceId) {
       this.setState({
         hoveredSentence: sentenceId,
         hoveredTableId: tableId,
@@ -351,7 +350,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddSentence() {
-    this.setState({ addSentence: true, operation_type:'merge-individual' , openEl: false });
+    this.setState({ addSentence: true, operation_type: 'merge-individual', openEl: false });
   }
 
   handleApiMerge() {
@@ -364,7 +363,7 @@ class IntractiveTrans extends React.Component {
       if (totalSelectedSentence[0]._id !== totalSelectedSentence.slice(-1)[0]._id) {
         splitArray.push(totalSelectedSentence.slice(-1)[0]);
       }
-      this.setState({message:'Sentence merged successfully'})
+      this.setState({ message: 'Sentence merged successfully' })
       totalSelectedSentence = splitArray;
     }
     if (this.state.operation_type === "merge" || this.state.operation_type === "split" || this.state.operation_type === "merge-individual") {
@@ -377,57 +376,57 @@ class IntractiveTrans extends React.Component {
       );
       APITransport(apiObj);
     }
-    if(this.state.operation_type === "merge"){
-      this.setState({message:'Sentence merged successfully'})
+    if (this.state.operation_type === "merge") {
+      this.setState({ message: 'Sentence merged successfully' })
     }
-    else if(this.state.operation_type === "split"){
-      this.setState({message:'Sentence splitted successfully'})
+    else if (this.state.operation_type === "split") {
+      this.setState({ message: 'Sentence splitted successfully' })
     }
     this.handleClose();
   }
 
-  handleDialogTable(sentence,cellData,operationType){
-    if(operationType==="add-row"){
-      this.setState({ openDialog: true,title:"Add row",dialogMessage:"Do you want to add row ?", addCellSentence: sentence, operationType });
+  handleDialogTable(sentence, cellData, operationType) {
+    if (operationType === "add-row") {
+      this.setState({ openDialog: true, title: "Add row", dialogMessage: "Do you want to add row ?", addCellSentence: sentence, operationType });
     }
-    else if(operationType==="add-column"){
-      this.setState({ openDialog: true,title:"Add column",dialogMessage:"Do you want to add column ?", addCellSentence: sentence, operationType });
+    else if (operationType === "add-column") {
+      this.setState({ openDialog: true, title: "Add column", dialogMessage: "Do you want to add column ?", addCellSentence: sentence, operationType });
     }
-    else if(operationType==="delete-row"){
-      this.setState({ openDialog: true,title:"Delete row",dialogMessage:"Do you want to delete row ?", addCellSentence: sentence,cellData, operationType,message : "Row deleted successfully" });
+    else if (operationType === "delete-row") {
+      this.setState({ openDialog: true, title: "Delete row", dialogMessage: "Do you want to delete row ?", addCellSentence: sentence, cellData, operationType, message: "Row deleted successfully" });
     }
-    else if(operationType==="delete-column"){
-      this.setState({ openDialog: true,title:"Delete column",dialogMessage:"Do you want to delete column ?", addCellSentence: sentence,cellData, operationType,message : "Column deleted successfully" });
+    else if (operationType === "delete-column") {
+      this.setState({ openDialog: true, title: "Delete column", dialogMessage: "Do you want to delete column ?", addCellSentence: sentence, cellData, operationType, message: "Column deleted successfully" });
     }
-    else if(operationType==="delete-table"){
-      this.setState({ openDialog: true,title:"Delete table",dialogMessage:"Do you want to delete table ?", addCellSentence: sentence,cellData, operationType,message : "Table deleted successfully" });
+    else if (operationType === "delete-table") {
+      this.setState({ openDialog: true, title: "Delete table", dialogMessage: "Do you want to delete table ?", addCellSentence: sentence, cellData, operationType, message: "Table deleted successfully" });
     }
 
-    
+
   }
 
   handleDialogSave() {
 
-    if(this.state.title ==="Merge" || this.state.title ==="Split"){
+    if (this.state.title === "Merge" || this.state.title === "Split") {
       this.handleApiMerge();
     }
-    else if(this.state.title==="Delete Sentence"){
+    else if (this.state.title === "Delete Sentence") {
       this.handleDeleteSentence();
     }
-    else if(this.state.title==="Add new paragraph above"){
-      this.handleAddNewSentence("next", '',"text")
+    else if (this.state.title === "Add new paragraph above") {
+      this.handleAddNewSentence("next", '', "text")
     }
-    else if(this.state.title==="Add new paragraph below"){
-      this.handleAddNewSentence("previous", '',"text")
+    else if (this.state.title === "Add new paragraph below") {
+      this.handleAddNewSentence("previous", '', "text")
     }
-    else if(this.state.title==="Add row" || this.state.title==="Add column"){
+    else if (this.state.title === "Add row" || this.state.title === "Add column") {
       this.handleAddCell(this.state.addCellSentence, this.state.operationType)
     }
-    else if(this.state.title==="Delete row" || this.state.title==="Delete column" || this.state.title==="Delete table"){
-      this.handleDeleteTable(this.state.addCellSentence,this.state.cellData, this.state.operationType)
+    else if (this.state.title === "Delete row" || this.state.title === "Delete column" || this.state.title === "Delete table") {
+      this.handleDeleteTable(this.state.addCellSentence, this.state.cellData, this.state.operationType)
     }
-    
-    
+
+
     this.setState({ openDialog: false });
   }
 
@@ -440,7 +439,7 @@ class IntractiveTrans extends React.Component {
       parent,
       contextToken: false,
       superScript: token,
-      sText:''
+      sText: ''
     });
     this.handleClose();
   }
@@ -457,12 +456,12 @@ class IntractiveTrans extends React.Component {
     });
   };
 
-  handleDialog(title,dialogMessage) {
-    this.setState({ openDialog: true,title,dialogMessage });
+  handleDialog(title, dialogMessage) {
+    this.setState({ openDialog: true, title, dialogMessage });
   }
 
   handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, pageNo, next_previous) {
-    
+
     this.setState({
       selectedSentenceId: tableId,
       selectedTableId: tableId,
@@ -474,7 +473,7 @@ class IntractiveTrans extends React.Component {
       contextToken: false,
       pageNo,
       isAddNewCell: true,
-      sText:''
+      sText: ''
     });
     this.handleClose();
 
@@ -496,7 +495,7 @@ class IntractiveTrans extends React.Component {
   //   this.setState({ pageNo: this.state.pageNo + value });
   // }
   handlePageChange(value) {
-    this.setState({ pageNo: this.state.pageNo + value, scrollToPage: this.state.pageNo + value });
+    this.setState({ pageNo: Number(this.state.pageNo) + Number(value), scrollToPage: this.state.pageNo + value });
   }
 
   handlePreview() {
@@ -548,7 +547,7 @@ class IntractiveTrans extends React.Component {
   };
 
   handleSelection(selectedSentence, event) {
-    this.setState({sText: window.getSelection().toString()})
+    this.setState({ sText: window.getSelection().toString() })
     if (
       selectedSentence &&
       selectedSentence.startNode &&
@@ -604,49 +603,47 @@ class IntractiveTrans extends React.Component {
 
       this.state.addSentence
         ? this.setState({
-            mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
-            selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
-            endSentence,
-            openEl: true,
-            contextToken: true,
-            addSentence: true,
-            pageNo,
-            topValue: event.clientY - 4,
-            leftValue: event.clientX - 2,
-            startParagraph: selectedSentence.startParagraph,
-            endParagraph: selectedSentence.endParagraph
-          })
+          mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
+          selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
+          endSentence,
+          openEl: true,
+          contextToken: true,
+          addSentence: true,
+          pageNo,
+          topValue: event.clientY - 4,
+          leftValue: event.clientX - 2,
+          startParagraph: selectedSentence.startParagraph,
+          endParagraph: selectedSentence.endParagraph
+        })
         : this.setState({
-            mergeSentence,
-            selectedMergeSentence: [selectedSentence],
-            startSentence,
-            endSentence,
-            operation_type,
-            openEl: true,
-            splitSentence: selectedSplitValue,
-            contextToken: true,
-            topValue: event.clientY - 2,
-            leftValue: event.clientX - 2,
-            pageNo,
-            startParagraph: selectedSentence.startParagraph,
-            endParagraph: selectedSentence.endParagraph
-          });
+          mergeSentence,
+          selectedMergeSentence: [selectedSentence],
+          startSentence,
+          endSentence,
+          operation_type,
+          openEl: true,
+          splitSentence: selectedSplitValue,
+          contextToken: true,
+          topValue: event.clientY - 2,
+          leftValue: event.clientX - 2,
+          pageNo,
+          startParagraph: selectedSentence.startParagraph,
+          endParagraph: selectedSentence.endParagraph
+        });
     }
   }
   handleCopy(){
-    console.log("copy", window.getSelection().toString());
     copy( window.getSelection().toString())
                     this.handleClose()
 
   }
   handleAddCell(sentence, operationType) {
-    console.log(operationType)
     if (sentence && operationType) {
       const { APITransport } = this.props;
       const apiObj = new UpdatePdfTable(sentence, operationType);
       APITransport(apiObj);
     }
-    this.setState({ openEl: true, message:'', message: operationType=="add-row"? "New row added": "New column added." });
+    this.setState({ openEl: true, message: operationType === "add-row"? "New row added": "New column added." });
     this.handleClose();
   }
 
@@ -673,25 +670,24 @@ class IntractiveTrans extends React.Component {
       const apiObj = new DeleteSentence(this.state.startParagraph, sentences);
       APITransport(apiObj);
     }
-    this.setState({ openEl: true, message:'Deleted sentence successfully' });
+    this.setState({ openEl: true, message: 'Deleted sentence successfully' });
     this.handleClose();
   }
   handleDeleteTable(paragraph, cellData, operation_type) {
-    console.log(operation_type)
     if (paragraph && cellData && operation_type) {
       const { APITransport } = this.props;
       const apiObj = new DeleteTable(paragraph, cellData, operation_type);
       APITransport(apiObj);
     }
     this.handleClose();
-    
+
   }
   handlePopOverClose() {
     this.setState({ openContextMenu: false, anchorEl: null, leftValue: "", topValue: "" });
   }
 
   handleAddNewSentence(nodeType, sentence, selectedNodeType) {
-    this.setState({popOver: false,message:'Added new paragraph successfully'})
+    this.setState({ popOver: false, message: 'Added new paragraph successfully' })
     let paragraph = "";
     if (selectedNodeType === "text" && this.state.startParagraph && this.state.endParagraph) {
       paragraph = this.state.startParagraph;
@@ -710,7 +706,7 @@ class IntractiveTrans extends React.Component {
   }
 
   handleAddNewTable(tablePosition, paragraph) {
-    this.setState({ addNewTable: true, openEl: false, tablePosition, hoveredTable: paragraph, popOver: false, message:'Added new table successfully' });
+    this.setState({ addNewTable: true, openEl: false, tablePosition, hoveredTable: paragraph, popOver: false, message: 'Added new table successfully' });
     this.handleClose();
   }
 
@@ -733,13 +729,13 @@ class IntractiveTrans extends React.Component {
         this.state.tablePosition
       );
       APITransport(apiObj);
-      this.setState({ addNewTable: false, popOver: false, message:'Added new table successfully' });
+      this.setState({ addNewTable: false, popOver: false, message: 'Added new table successfully' });
     }
     this.handleClose();
   }
 
   handlePopUp() {
-    this.setState({ popOver: true})
+    this.setState({ popOver: true })
   }
 
   render() {
@@ -749,34 +745,33 @@ class IntractiveTrans extends React.Component {
       <div>
         {this.state.sentences && (
           <div>
-            
+
             {!this.state.collapseToken && (
               <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
                 <Grid item xs={12} sm={6} lg={2} xl={2} className="GridFileDetails">
                   <Button
                     variant="outlined"
-                    size="large"
+                    // size="large"
                     onClick={event => {
                       this.handleBack();
                     }}
-                    // color="primary"
-                    style={{ width: "100%", minWidth: "150px", fontSize: "90%", fontWeight: "bold", borderRadius: '30px', color: '#233466' }}
+                    style={{ textTransform: "capitalize",width: "100%", minWidth: "150px", borderRadius: '30px', color: '#233466' }}
                   >
-                    <ChevronLeftIcon fontSize="large" /> &nbsp;&nbsp;{translate("common.page.title.document")}
+                    <ChevronLeftIcon fontSize="large" />{translate("common.page.title.document")}
                   </Button>
                 </Grid>
                 <Grid item xs={false} sm={6} lg={7} xl={7} className="GridFileDetails">
                   <Button
                     variant="outlined"
-                    size="large"
+                    // size="large"
                     className="GridFileDetails"
-                    style={{ justifyContent: 'left', height: '100%', width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", fontSize: "90%", fontWeight: "bold", borderRadius: '30px' }}
+                    style={{ textTransform: "capitalize",justifyContent: 'left', height: '100%', width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", borderRadius: '30px'}}
                   >
                     {/* <PlayArrowIcon fontSize="large" style={{ color: "grey" }} /> */}
                     {this.state.fileDetails && <div style={{ display: 'flex', flexDirection: 'row' }}>
                       <div style={{ color: "#909090" }}>&nbsp;&nbsp;{translate("common.page.label.source")}&nbsp;&nbsp;</div> <div>{":"}</div> <div>&nbsp;&nbsp;{this.state.fileDetails.source_lang}&nbsp;&nbsp;</div>
                     </div>}
-                    <span fontSize="large" style={{ color: "grey", marginLeft: '4%', marginRight: '1%'}}>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
+                    <span fontSize="large" style={{ color: "grey", marginLeft: '4%', marginRight: '1%' }}>&nbsp;&nbsp; | &nbsp;&nbsp;</span>
                     {/* <PlayArrowIcon fontSize="large" style={{ color: "grey" }} />{" "} */}
                     {this.state.fileDetails && <div style={{ display: 'flex', flexDirection: 'row' }}>
                       <div style={{ color: "#909090" }}>&nbsp;&nbsp;{translate("common.page.label.target")}&nbsp;&nbsp;</div> <div>{":"}</div> <div>&nbsp;&nbsp;{this.state.fileDetails.target_lang}&nbsp;&nbsp;</div>
@@ -794,9 +789,9 @@ class IntractiveTrans extends React.Component {
                 <Grid item xs={12} sm={6} lg={2} xl={2}>
                   <Button
                     variant="contained"
-                    size="large"
+                    // size="large"
                     color="primary"
-                    style={{ width: "100%", minWidth: "110px", fontWeight: "bold",fontSize: "90%", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
+                    style={{ textTransform: "capitalize", width: "100%", minWidth: "110px", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
                     onClick={() => this.handlePreview()}
                   >
                     <GetAppIcon fontSize="large" />
@@ -809,9 +804,9 @@ class IntractiveTrans extends React.Component {
                       this.handleDone(true, this.state.scriptSentence);
                     }}
                     variant="outlined"
-                    size="large"
+                    // size="large"
                     // color="primary"
-                    style={{ width: "100%", minWidth: "55px", fontSize: "90%", fontWeight: "bold", borderRadius: '30px', color: '#233466' }}
+                    style={{ width: "100%", minWidth: "55px",  borderRadius: '30px', color: '#233466' }}
                   >
                     <DoneIcon fontSize="large" style={{ color: '#233466' }} />
                     &nbsp;&nbsp;{translate("common.page.label.done")}
@@ -891,7 +886,7 @@ class IntractiveTrans extends React.Component {
                         handleAddTableCancel={this.handleAddTableCancel.bind(this)}
                         handleAddNewSentence={this.handleAddNewSentence.bind(this)}
                         popOver={this.state.popOver}
-                        handleDialog = {this.handleDialogTable.bind(this)}
+                        handleDialog={this.handleDialogTable.bind(this)}
                         handlePopUp={this.handlePopUp.bind(this)}
                       />
                     </div>
@@ -990,8 +985,8 @@ class IntractiveTrans extends React.Component {
             {this.state.addNewTable && (
               <EditorDialog
                 open={true}
-                rowLabel= {translate("intractive_translate.page.preview.rows")}
-                columnLabel= {translate("intractive_translate.page.preview.columns")}
+                rowLabel={translate("intractive_translate.page.preview.rows")}
+                columnLabel={translate("intractive_translate.page.preview.columns")}
                 handleAddTableCancel={this.handleAddTableCancel.bind(this)}
                 handleAddTable={this.handleAddTable.bind(this)}
                 handlePopUp={this.handlePopUp.bind(this)}
@@ -1007,9 +1002,9 @@ class IntractiveTrans extends React.Component {
                 title={this.state.title}
               />
             )}
-            
+
             {this.state.open && (
-              
+
               <Snackbar
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 open={this.state.open}
@@ -1017,7 +1012,7 @@ class IntractiveTrans extends React.Component {
                 variant="success"
                 message={
                   this.state.message
-                   
+
                 }
               />
             )}
