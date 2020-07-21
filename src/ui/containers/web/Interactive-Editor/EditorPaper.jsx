@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import ContentEditable from "react-contenteditable";
 import CustomTable from "../../../components/web/common/CustomTable";
+import { array } from "prop-types";
 
 const styles = {
   paperHeader: {
@@ -133,13 +134,12 @@ class EditorPaper extends React.Component {
     }
   }
 
-  newFetchSentence(sentence, prevSentence, index, noOfPage, sentences) {
-    let padding = (Number(sentence.x) - 152) / 1.4;
-    let token = sentences.length-1 > index && sentences[index + 1].y !== sentences[index].y ? "div" :"span"
-    padding = sentence.x && 0< index && sentences[index -1].y !== sentences[index].y || index==0 ? padding / 5 + "%" : 0;
-    let pageNo = sentence.page_no;
-
-    if (!sentence.is_footer && !sentence.is_table) {
+  newFetchSentence(sentence, prevSentence, index, noOfPage, sArray) {
+    
+    let padding = (Number(sArray[0].x) - 152) / 1.4;
+    padding = padding / 5 + "%";
+    let pageNo = sArray[0].page_no;
+    if (!sArray[0].is_footer && !sArray[0].is_table) {
       let printPageNo = false;
       let isFirst = false;
       if (index === 0) {
@@ -149,78 +149,53 @@ class EditorPaper extends React.Component {
         printPageNo = true;
       }
 
-    //   return (
-    //     <div>
-    //       {printPageNo ? (
-    //         <span ref={pageNo + "_" + this.props.paperType} style={{ textAlign: "right", color: "grey", fontSize: "small", display: "inline" }}>
-    //           <div>&nbsp;</div>
-    //           {!isFirst ? <hr /> : ""}Page: {pageNo}/{noOfPage}
-    //           <span>&nbsp;</span>
-    //         </span>
-    //       ) : (
-    //         <span></span>
-    //       )}
-    //       <span
-    //         key={sentence._id}
-    //         style={{
-              
-    //           right: 0,
-    //           fontWeight: sentence.is_bold ? "bold" : "normal",
-    //           textDecorationLine: sentence.underline ? "underline" : ""
-    //         }}
-    //         onMouseUp={this.getSelectionText.bind(this)}
-    //         onKeyUp={this.getSelectionText.bind(this)}
-    //       >
-    //         <span style={{ textAlign: "justify", display: "inline",paddingLeft: padding }}>
-    //           {this.fetchTokenizedSentence(sentence, true)}
-    //           {sentence.sup_array ? (
-    //             <sup>
-    //               <span>{this.fetchSuperScript(sentence.sup_array)}</span>
-    //             </sup>
-    //           ) : (
-    //             ""
-    //           )}
-    //           {sentences.length-1 > index && sentences[index + 1].y !== sentences[index].y && <div><br /><br /></div>}
-    //         </span>
-    //       </span>
-    //     </div>
-    //    );
-return(
-    <div>
-    {printPageNo ? (
-      <div ref={pageNo + "_" + this.props.paperType} style={{ textAlign: "right", color: "grey", fontSize: "small" }}>
-        <div>&nbsp;</div>
-        {!isFirst ? <hr /> : ""}Page: {pageNo}/{noOfPage}
-        <div>&nbsp;</div>
-      </div>
-    ) : (
-      <div></div>
-    )}
-    <div
-      key={sentence._id}
-      style={{
-        paddingLeft:padding,
-        right: 0,
-        fontWeight: sentence.is_bold ? "bold" : "normal",
-        textDecorationLine: sentence.underline ? "underline" : ""
-      }}
-      onMouseUp={this.getSelectionText.bind(this)}
-      onKeyUp={this.getSelectionText.bind(this)}
-    >
-      <div style={{ textAlign: "justify" }}>
-        {this.fetchTokenizedSentence(sentence, true)}
-        {sentence.sup_array ? (
-          <sup>
-            <span>{this.fetchSuperScript(sentence.sup_array)}</span>
-          </sup>
+      
+      return (
+        <div>
+          <span>
+        {printPageNo ? (
+          <span ref={pageNo + "_" + this.props.paperType} style={{ textAlign: "right", color: "grey", fontSize: "small", display: "inline" }}>
+            <div>&nbsp;</div>
+            {!isFirst ? <hr /> : ""}Page: {pageNo}/{noOfPage}
+            <span>&nbsp;</span>
+          </span>
         ) : (
-          ""
+          <span></span>
         )}
-        <br />
-        <br />
-      </div>
-    </div>
-  </div>);
+        </span>
+        <div style={{ textAlign: "justify",paddingLeft: padding }}>
+          
+          {sArray.map(sen=>(
+            
+        <span>
+          
+          <span
+            key={sen._id}
+            style={{
+              
+              right: 0,
+              fontWeight: sen.is_bold ? "bold" : "normal",
+              textDecorationLine: sen.underline ? "underline" : ""
+            }}
+            onMouseUp={this.getSelectionText.bind(this)}
+            onKeyUp={this.getSelectionText.bind(this)}
+          >
+            <span style={{ textAlign: "justify" }}>
+              {this.fetchTokenizedSentence(sen, true)}
+              {sen.sup_array ? (
+                <sup>
+                  <span>{this.fetchSuperScript(sen.sup_array)}</span>
+                </sup>
+              ) : (
+                ""
+              )}
+              
+            </span>
+          </span>
+        </span>
+          ))}
+          <br/><br/>
+        </div></div>)
     } else if (sentence.is_table) {
       // return this.fetchTable(sentence._id, sentence.table_items, prevSentence, index, pageNo, noOfPage)
       return (
@@ -615,6 +590,7 @@ return(
 
   render() {
     const { sentences, header, footer } = this.props;
+    let sArray =[]
     return (
       <div>
         {header ? (
@@ -637,7 +613,19 @@ return(
               Array.isArray(sentences) &&
               sentences.length > 0 &&
               sentences.map((sentence, index) => {
-                return this.newFetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no, sentences);
+
+                sArray.push(sentence)
+                
+                if( (index!==sentences.length-1 && sentences[index + 1].y!==sentence.y) || index===sentences.length-1 ){
+                  
+                  
+                  let a = this.newFetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no, sentences,sArray);
+                  sArray=[]
+                  return a;
+                }
+                
+                
+                
               })
             : sentences &&
               Array.isArray(sentences) &&

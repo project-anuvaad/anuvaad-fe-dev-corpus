@@ -56,7 +56,7 @@ class PdfPreview extends React.Component {
             </Typography>
           </Grid>
           <Grid item xs={6} sm={6} lg={6} xl={6}>
-            {numPages && (
+            {numPages &&pageNo && (
               <Grid container spacing={8}>
                 <Grid item xs={4} sm={4} lg={4} xl={4} style={{textAlign: 'right'}}>
                   <Button
@@ -72,6 +72,7 @@ class PdfPreview extends React.Component {
                   </Button>
                 </Grid>
                 <Grid item xs={4} sm={4} lg={4} xl={4} style={{textAlign: 'center'}}>
+                  {console.log(pageNo)}
                   <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none" }} color="primary">
                     {`${pageNo} / ${numPages}`}
                   </Button>
@@ -137,7 +138,7 @@ class PdfPreview extends React.Component {
         </Toolbar>
         <div style={{ marginLeft: !this.props.zoom && '10%', marginBottom: "0px", maxHeight: window.innerHeight - 180, overflowY: "auto" }} id="pdfDocument">
           <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess} style={{ align: "center" }}>
-            <Page scale={!this.props.zoom ? this.state.scale : this.state.pageScaleWidth} pageNumber={pageNo} onLoadSuccess={this.onPageLoad} />
+            <Page scale={!this.props.zoom ? this.state.scale : this.state.pageScaleWidth} pageNumber={Number(pageNo) } onLoadSuccess={this.onPageLoad} />
           </Document>
         </div>
       </Paper>

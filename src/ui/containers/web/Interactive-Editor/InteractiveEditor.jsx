@@ -495,7 +495,7 @@ class IntractiveTrans extends React.Component {
   //   this.setState({ pageNo: this.state.pageNo + value });
   // }
   handlePageChange(value) {
-    this.setState({ pageNo: this.state.pageNo + value, scrollToPage: this.state.pageNo + value });
+    this.setState({ pageNo: Number(this.state.pageNo) + Number(value), scrollToPage: this.state.pageNo + value });
   }
 
   handlePreview() {
