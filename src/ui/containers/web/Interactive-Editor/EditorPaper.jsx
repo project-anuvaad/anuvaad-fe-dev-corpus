@@ -135,9 +135,9 @@ class EditorPaper extends React.Component {
   }
 
   newFetchSentence(sentence, prevSentence, index, noOfPage, sArray) {
-    
+    console.log(noOfPage)
     let padding = Number(sArray[0].x) *100 / Number(sArray[0].page_width);
-    let font_size = sArray[0].class_style['font-size']
+    
     padding = (padding-10) + "%";
     let pageNo = sArray[0].page_no;
     if (!sArray[0].is_footer && !sArray[0].is_table) {
@@ -164,7 +164,7 @@ class EditorPaper extends React.Component {
           <span></span>
         )}
         </span>
-        <div style={{ textAlign: "justify",paddingLeft: padding, fontSize: font_size }}>
+        <div style={{ textAlign: "justify",paddingLeft: padding }}>
           
           {sArray.map(sen=>(
             
@@ -176,12 +176,13 @@ class EditorPaper extends React.Component {
               
               right: 0,
               fontWeight: sen.is_bold ? "bold" : "normal",
-              textDecorationLine: sen.underline ? "underline" : ""
+              textDecorationLine: sen.underline ? "underline" : "",
+              fontSize:sen.class_style['font-size']
             }}
             onMouseUp={this.getSelectionText.bind(this)}
             onKeyUp={this.getSelectionText.bind(this)}
           >
-            <span style={{ textAlign: "justify" }}>
+            <span style={{ textAlign: "justify", fontSize:sen.class_style['font-size'] }}>
               {this.fetchTokenizedSentence(sen, true)}
               {sen.sup_array ? (
                 <sup>
@@ -616,13 +617,15 @@ class EditorPaper extends React.Component {
               sentences.map((sentence, index) => {
 
                 sArray.push(sentence)
-                
+                let fontValue= Number(sentence.class_style['font-size'].split('px')[0])
                 if( (index!==sentences.length-1 && sentences[index + 1].y!==sentence.y) || index===sentences.length-1 ){
-                  
-                  
-                  let a = this.newFetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no,sArray);
+                  if((index!==sentences.length-1 && (fontValue+Number(sentence.y_end)<Number(sentences[index + 1].y_end)|| Number(sentence.y_end)>Number(sentences[index + 1].y_end))) || index===sentences.length-1)
+{
+  let a = this.newFetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no,sArray);
                   sArray=[]
                   return a;
+}                  
+                  
                 }
                 
                 
@@ -655,3 +658,4 @@ class EditorPaper extends React.Component {
 }
 
 export default withStyles(styles)(EditorPaper);
+
