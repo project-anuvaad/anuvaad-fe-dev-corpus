@@ -31,14 +31,21 @@ class SignUp extends React.Component {
       email: "",
       password: "",
       confirmPassword: "",
-      termsAndCondition: ""
+      termsAndCondition: false
 
     }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputReceived = prop => event => {
-    this.setState({ [prop]: event.target.value });
+    if (prop === "termsAndCondition") {
+      if (this.state.firstName && this.state.lastName && this.state.email && this.state.password && this.state.confirmPassword) {
+        this.setState({ [prop]: !this.state.termsAndCondition });
+      }
+    } else {
+      this.setState({ [prop]: event.target.value });
+    }
+
   };
 
   handleSubmit(e) {
@@ -85,13 +92,11 @@ class SignUp extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-
       <MuiThemeProvider theme={ThemeDefault}>
-
         <div >
           <Grid container spacing={8} >
             <Grid item xs={12} sm={4} lg={5} xl={5} >
-              <img src="Anuvaad.png" width="100%" height="956px" alt=""  marginBottom="0px"/>
+              <img src="Anuvaad.png" width="100%" height="956px" alt="" marginBottom="0px" />
             </Grid>
             <Grid item xs={12} sm={8} lg={7} xl={7} className={classes.signUpPaper} >
               {/* <ValidatorForm
@@ -102,8 +107,8 @@ class SignUp extends React.Component {
               <Typography align='center' variant='h4' className={classes.typographyHeader}>Sign Up</Typography>
               <FormControl align='center' fullWidth >
 
-              <TextField  value={this.state.firstName} id="outlined-margin-dense" placeholder={translate('signUp.page.label.firstName')}
-                   varient="outlined" margin="dense" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('firstName')}
+                <TextField value={this.state.firstName} id="outlined-margin-dense" placeholder={translate('signUp.page.label.firstName')}
+                  varient="outlined" margin="dense" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('firstName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
@@ -131,17 +136,17 @@ class SignUp extends React.Component {
                     className={classes.checkRemember.className}
                     labelclassName={classes.checkRemember.labelclassName}
                     iconclassName={classes.checkRemember.iconclassName}
-                    value={this.state.termsAndCondition ? false : true}
+                    // value={this.state.termsAndCondition ? false : true}
                     checked={this.state.termsAndCondition}
                     onChange={this.handleInputReceived('termsAndCondition')}
                     color='#ffffff !important'
                   />
-                }
+                 }
                 label={<div><span>{translate('signUp.page.label.iAgree')}</span>
                   <Link href="#" onClick={() => {
                     window.open('/Anuvaad-TnC.html', 'T&C', `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
                     width=500,height=500`);
-                  }}style={{color:'#0C8AA9'}}> {translate('signUp.page.label.privacyPolicy')}</Link>
+                  }} style={{ color: '#0C8AA9' }}> {translate('signUp.page.label.privacyPolicy')}</Link>
                 </div>}
               />
               <br />
@@ -149,7 +154,7 @@ class SignUp extends React.Component {
                 <Button
                   disabled={!this.state.termsAndCondition}
                   variant="contained" aria-label="edit" style={{
-                    width: '50%', marginBottom: '2%', marginTop: '2%',borderRadius:'20px',height:'45px',textTransform:'initial',fontWeight:'20px',
+                    width: '50%', marginBottom: '2%', marginTop: '2%', borderRadius: '20px', height: '45px', textTransform: 'initial', fontWeight: '20px',
                     backgroundColor: this.state.termsAndCondition ? '#1ca9c9' : 'gray', color: 'white',
                   }} onClick={this.handleSubmit.bind(this)}>
                   {translate('singUp.page.label.signUp')}
@@ -157,9 +162,9 @@ class SignUp extends React.Component {
               </FormControl>
 
               <Typography className={classes.typography1}>{translate('signUp.page.label.allReadyHaveAccount')}
-                <Link style={{ cursor: 'pointer',color:'#0C8AA9' }} href="#" onClick={() => { history.push("/") }}> {translate('signUp.page.label.logIn')}</Link></Typography>
+                <Link style={{ cursor: 'pointer', color: '#0C8AA9' }} href="#" onClick={() => { history.push("/") }}> {translate('signUp.page.label.logIn')}</Link></Typography>
 
-            
+
               <hr className={classes.hrTag} />
               <Typography align='center' className={classes.typographyFooter}>{translate('signUp.page.label.enterDetailsToReceiveConfirmation')}<br />{translate('signUp.page.label.clickToActivateAccount')}</Typography>
             </Grid>
