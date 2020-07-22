@@ -16,7 +16,7 @@ const localization_EN_Data = {
   "common.page.error.domainError": "Domain shouldn't be empty",
   "common.page.error.commentError": "Comment Shouldn't be empty",
   "common.page.error.languageError": "Language shouldn't be empty",
-  "common.page.label.addDropFile": "Please Add/Drop pdf file here",
+  "common.page.label.addDropFile": "Please Add/Drop pdf file here or click",
   "common.page.label.pageWarning": " * Fields shouldn't be empty ",
   "common.page.label.enterWorkspace": "Enter workspace name :",
   "newSentenceExtraction.page.label.confiFile": "Configuration file :",

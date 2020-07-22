@@ -33,6 +33,7 @@ const endpoints = {
   configupload: "/upload",
   corp: "/fetch-corpus",
   corpus: "/multiple",
+  ocrpdffileupload:'/v2/interactive-editor/translate-pdf',
   createcorpus: "/upload-corpus",
   createworkspace: "/save-mt-workspace",
   deletefile: "/remove-process",

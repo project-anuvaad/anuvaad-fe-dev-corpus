@@ -16,7 +16,7 @@ const PdfUploadStyles = theme => ({
     display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center'
   },
   typographyHeader:{
-    paddingTop:'4%',
+    paddingTop:'3%',
     minWidth: "5%",
    
     
@@ -43,8 +43,8 @@ const PdfUploadStyles = theme => ({
  paper: {
     width: "60%",
     minWidth: "200px",
-    marginTop: "3%",
-    marginBottom:'6%',
+    marginTop: "2%",
+    marginBottom:'4%',
     padding: "3% 3% 3% 3%",
     // marginLeft: "15%",
     
@@ -69,9 +69,9 @@ const PdfUploadStyles = theme => ({
     color:"#FFFFFF"
   },
   dropZoneArea:{
-    paddingTop: '13%',
+    paddingTop: '18%',
     minHeight:'363px',
-    height: "402px",
+    height: "447px",
     borderColor:'#1C9AB7',
     backgroundColor: '#F5F9FA',
     border: '1px dashed #1C9AB7',
