@@ -20,7 +20,6 @@ const endpoints = {
   html_to_doc: "/html-to-doc",
   insertSentence: "/v1/interactive-editor/add-sentence-node",
   interactivesavesentence: "/v1/interactive-editor/update-pdf-sentences",
-  interactivesourceupdate: "/v1/interactive-editor/update-pdf-source-sentences",
   InteractiveMerge: "/v1/interactive-editor/merge-split-sentence",
   acceptallsentence: "/accept-all-search-replace-sentence",
   activate_user: "/v1/user/activate-account",

@@ -96,7 +96,7 @@ class SignUp extends React.Component {
         <div >
           <Grid container spacing={8} >
             <Grid item xs={12} sm={4} lg={5} xl={5} >
-              <img src="Anuvaad.png" width="100%" height="956px" alt="" marginBottom="0px" />
+              <img src="Anuvaad.png" width="100%" height="956px" alt="" />
             </Grid>
             <Grid item xs={12} sm={8} lg={7} xl={7} className={classes.signUpPaper} >
               {/* <ValidatorForm
@@ -106,40 +106,39 @@ class SignUp extends React.Component {
                         > */}
               <Typography align='center' variant='h4' className={classes.typographyHeader}>Sign Up</Typography>
               <FormControl align='center' fullWidth >
-
-                <TextField value={this.state.firstName} id="outlined-margin-dense" placeholder={translate('signUp.page.label.firstName')}
+                <TextField value={this.state.firstName} id="firstName" placeholder={translate('signUp.page.label.firstName')}
                   varient="outlined" margin="dense" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('firstName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.lastName} id="outlined-required" placeholder={translate('signUp.page.label.lastName')}
+                <TextField value={this.state.lastName} id="lastName" placeholder={translate('signUp.page.label.lastName')}
                   margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('lastName')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.email} id="outlined-required" type="email" placeholder={translate('common.page.placeholder.emailUsername')}
+                <TextField value={this.state.email} id="email" type="email" placeholder={translate('common.page.placeholder.emailUsername')}
                   margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('email')}
                 />
               </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.password} id="outlined-required" type="password" placeholder={translate('setPassword.page.placeholder.enterPassword')}
+                <TextField value={this.state.password} id="password" type="password" placeholder={translate('setPassword.page.placeholder.enterPassword')}
                   margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('password')}
                 />                </FormControl>
               <FormControl align='center' fullWidth>
-                <TextField value={this.state.confirmPassword} id="outlined-required" type="password" placeholder={translate('setPassword.page.placeholder.reEnterPassword')}
+              <TextField value={this.state.confirmPassword} id="confirmPassword" type="password" placeholder={translate('setPassword.page.placeholder.reEnterPassword')}
                   margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('confirmPassword')}
                 />
               </FormControl>
-              <FormControlLabel fullWidth className={classes.formControl}
+              <FormControlLabel className={classes.formControl}
                 control={
                   <Checkbox
-                    className={classes.checkRemember.className}
-                    labelclassName={classes.checkRemember.labelclassName}
-                    iconclassName={classes.checkRemember.iconclassName}
+                    // className={classes.checkRemember.className}
+                    // labelclassName={classes.checkRemember.labelclassName}
+                    // iconclassName={classes.checkRemember.iconclassName}
                     // value={this.state.termsAndCondition ? false : true}
                     checked={this.state.termsAndCondition}
                     onChange={this.handleInputReceived('termsAndCondition')}
-                    color='#ffffff !important'
+                    color="default"
                   />
                  }
                 label={<div><span>{translate('signUp.page.label.iAgree')}</span>

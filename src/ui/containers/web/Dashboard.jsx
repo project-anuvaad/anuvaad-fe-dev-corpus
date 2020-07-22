@@ -293,7 +293,7 @@ class Dashboard extends React.Component {
                       value={this.state.model}
                       onChange={this.handleSelectModelChange}
                       renderValue={selected => selected.join(", ")}
-                      input={<OutlinedInput name={this.state.model} id="select-multiple-checkbox" />}
+                      input={<OutlinedInput name={this.state.model && this.state.model.length>0 ? this.state.model.toString() : ""} id="select-multiple-checkbox" />}
                     >
                       {this.state.source && this.state.target
                         ? this.handleModel(this.state.modelLanguage, this.state.source, this.state.target).map(item => (
@@ -318,7 +318,7 @@ class Dashboard extends React.Component {
                 {role.includes("dev") && (
                   <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.dataChip}>
                     {this.state.model.map(value => (
-                      value ? <div className={classes.divChip}><Chip key={value} label={value} onDelete={this.handleDelete(value)} style={{ marginLeft: "5px", marginTop: "8px" }} /> </div> : <div></div>
+                      value ? <div key={value} className={classes.divChip}><Chip key={value} label={value} onDelete={this.handleDelete(value)} style={{ marginLeft: "5px", marginTop: "8px" }} /> </div> : <div></div>
                     ))}
                   </Grid>
                 )}

@@ -42,8 +42,7 @@ button: {
   justifyContent: 'center',
   left: theme.spacing.unit*22,
   marginBottom:'2%',
-  marginTop:'5%'
-  ,
+  marginTop:'5%',
   width:'220px'
 },
 buttons: {

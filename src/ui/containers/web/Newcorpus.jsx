@@ -96,7 +96,6 @@ class Newcorpus extends React.Component {
   }
 
   handleSource = (files) => {
-    console.log(files)
     this.setState({
       englishFile: files
     });
@@ -297,7 +296,7 @@ class Newcorpus extends React.Component {
     return (
       <div className={classes.root}>
 
-        <Typography gutterBottom variant="title" variant="h4" className={classes.typographyHeader}>
+        <Typography gutterBottom variant="h4" className={classes.typographyHeader}>
           {translate('newCorpus.page.text.createCorpus')}
         </Typography>
         {/* <div className={classes.CorpusContainer}> */}
