@@ -123,7 +123,7 @@ class PdfUpload extends React.Component {
 
                 <div style={{ width: '120px' }}>
 
-                  {(tableMeta.rowData[6] === 3 ?"Without NER": tableMeta.rowData[6] === 2 ? "OCR" : "With NER")}
+                  {(tableMeta.rowData[6] === 3 ?"Without NER": tableMeta.rowData[6] === 2 ? "OCR" : "NER")}
 
                 </div>
               );
