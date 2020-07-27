@@ -412,7 +412,7 @@ class Dashboard extends React.Component {
             {/* </div> */}
             {this.state.nmtText[0] && (
               <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.grid}>
-                <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} status={this.state.checkedSubwords} />
+                <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} status={this.state.checkedSubwords} isSubWordsNotRequired={!this.state.checkedSubwords} />
               </Grid>
             )}
             {this.state.checkedMachine && this.state.autoMlText && this.state.nmtText && (
