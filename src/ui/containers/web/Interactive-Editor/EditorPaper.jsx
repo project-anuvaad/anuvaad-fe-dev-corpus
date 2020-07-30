@@ -18,8 +18,29 @@ class EditorPaper extends React.Component {
     super(props);
     this.textInput = React.createRef();
     this.state = {
-      html: ""
+      html: "",
+      columns: 1
     };
+  }
+
+  componentDidMount() {
+    let previousNode = null
+    if (Array.isArray(this.props.sentences) &&
+      this.props.sentences.length > 0) {
+      this.props.sentences.map((sentence, index) => {
+        if (previousNode != null && sentence.page_no == 1) {
+          console.log("test")
+          if (parseInt(sentence.y) < parseInt(previousNode.y_end)) {
+            let difference = (previousNode.y_end - sentence.y) * 100 / previousNode.y_end
+            console.log(difference)
+            if (difference > 30) {
+              this.setState({ columns: this.state.columns + 1 })
+            }
+          }
+        }
+        previousNode = sentence
+      })
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -134,10 +155,20 @@ class EditorPaper extends React.Component {
     }
   }
 
+  renderPageNumber(pageNo, noOfPage) {
+    return <span ref={pageNo + "_" + this.props.paperType} style={{ textAlign: "right", color: "grey", fontSize: "small", display: "inline" }}>
+      <div>&nbsp;</div>
+      {pageNo !== 1 ? <hr /> : ""}Page: {pageNo}/{noOfPage}
+      <span>&nbsp;</span>
+    </span>
+  }
+
   newFetchSentence(sentence, prevSentence, index, noOfPage, sArray) {
     console.log(noOfPage)
     let padding = Number(sArray[0].x) * 100 / Number(sArray[0].page_width);
-
+    if (this.state.columns > 1 && padding > 40) {
+      padding = 10
+    }
     padding = (padding - 10) + "%";
     let pageNo = sArray[0].page_no;
     if (!sArray[0].is_footer && !sArray[0].is_table) {
@@ -154,15 +185,15 @@ class EditorPaper extends React.Component {
       return (
         <div>
           <span>
-            {printPageNo ? (
+            {/* {printPageNo ? (
               <span ref={pageNo + "_" + this.props.paperType} style={{ textAlign: "right", color: "grey", fontSize: "small", display: "inline" }}>
                 <div>&nbsp;</div>
                 {!isFirst ? <hr /> : ""}Page: {pageNo}/{noOfPage}
                 <span>&nbsp;</span>
               </span>
-            ) : (
+            ) : ( */}
                 <span></span>
-              )}
+              {/* )} */}
           </span>
           <div style={{ textAlign: "justify", paddingLeft: padding }}>
 
@@ -593,6 +624,7 @@ class EditorPaper extends React.Component {
   render() {
     const { sentences, header, footer } = this.props;
     let sArray = []
+    let elems = []
     return (
       <div>
         {header ? (
@@ -619,11 +651,16 @@ class EditorPaper extends React.Component {
               sArray.push(sentence)
               let fontValue = Number(sentence.class_style['font-size'].split('px')[0])
               // if ((index !== sentences.length - 1 && sentences[index + 1].y !== sentence.y) || index === sentences.length - 1) {
-                if ((index !== sentences.length - 1 && (fontValue + Number(sentence.y_end) < Number(sentences[index + 1].y))) || index === sentences.length - 1) {
-                  let a = this.newFetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no, sArray);
-                  sArray = []
-                  return a;
-                }
+              if ((index !== sentences.length - 1 && ((fontValue + Number(sentence.y_end) < Number(sentences[index + 1].y) || sentence.page_no != sentences[index + 1].page_no))) || index === sentences.length - 1) {
+                let a = this.newFetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no, sArray);
+                sArray = []
+                elems.push(a);
+              }
+              if (index == sentences.length - 1 || sentence.page_no != sentences[index + 1].page_no) {
+                let elemArray = elems
+                elems = []
+                return <div><p>{this.renderPageNumber(sentence.page_no, sentences[sentences.length - 1].page_no)}</p><div style={{ columnCount: this.state.columns }}><p>{elemArray}</p></div></div>
+              }
 
               // }
 
