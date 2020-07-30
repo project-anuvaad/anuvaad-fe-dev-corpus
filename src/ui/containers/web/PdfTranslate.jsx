@@ -141,13 +141,13 @@ class doctranslate extends React.Component {
 
         <Typography value={translate("doc_translate.page.documentTranslator")} variant="h4" style={{
           marginTop: '6%',
-          
+
         }} />
 
 
         <Paper value={
           <div>
-            <Grid container spacing={4} >
+            <Grid container spacing={8} >
 
               <Grid item xs={12} sm={6} lg={6} xl={6} >
                 <DropzoneArea onChange={this.handleChange} showPreviewsInDropzone
@@ -158,7 +158,7 @@ class doctranslate extends React.Component {
 
               <Grid item xs={12} sm={6} lg={6} xl={6}  >
                 <Grid container spacing={24} style={{ marginLeft: "7%", marginTop: '-1.5%' }}>
-                  <Typography value={translate("doc_translate.page.selectSourceLang")} variant="h6" gutterBottom="true"
+                  <Typography value={translate("doc_translate.page.selectSourceLang")} variant="h6" gutterBottom={true}
                     styles={{
 
                       fontfamily: '"Source Sans Pro", sans-serif',
@@ -168,19 +168,18 @@ class doctranslate extends React.Component {
                     }} />
 
                   <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: '-1.7%' }}>
-                    <Select id="outlined-age-simple"
+                    <Select id="source-select"
                       MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
                       handleChange={this.handleSelectChange} value={this.state.source}
                       name="source"
                       style={{
-
                         width: "100%",
                       }} />
                   </Grid>
                 </Grid>
                 <br /><br /><br />
                 <Grid container spacing={24} style={{ marginLeft: "7%" }}>
-                  <Typography value={translate("doc_translate.page.selectTargetLang")} variant="h6" gutterBottom="true" styles={{
+                  <Typography value={translate("doc_translate.page.selectTargetLang")} variant="h6" gutterBottom={true} styles={{
                     fontfamily: '"Source Sans Pro", sans-serif',
                     marginTop: '6%',
                     height: "18px",
@@ -188,11 +187,12 @@ class doctranslate extends React.Component {
                   }} />
 
                   <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: '-1.7%' }} >
-                    <Select id="outlined-age-simple"
+                    <Select id="target-select"
                       MenuItemValues={this.state.source.language_code ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source.language_code) : []}
-                      handleChange={this.handleSelectChange} value={this.state.target} name="target"
+                      handleChange={this.handleSelectChange}
+                      value={this.state.target}
+                      name="target"
                       style={{
-
                         width: "100%",
                       }} />
                   </Grid>
@@ -200,14 +200,14 @@ class doctranslate extends React.Component {
                 <br />
                 {/* <Grid container spacing={24} > */}
                 <Grid container spacing={24} style={{ marginLeft: "5.5%" }}>
-                      
+
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
-                    <Button color='primary'value={translate("common.page.label.submit")} variant={"contained"} style={{
+                    <Button color='primary' value={translate("common.page.label.submit")} variant={"contained"} style={{
                       marginTop: "2.8%",
                       width: "91.9%",
-                     
+
                       borderRadius: "20px 20px 20px 20px",
-                     
+
                       height: '45px'
                     }} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} />
                   </Grid>
