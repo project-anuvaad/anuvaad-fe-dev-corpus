@@ -176,6 +176,13 @@ class PdfUpload extends Component {
         files,
         workspaceName: this.state.workspaceName ? this.state.workspaceName : files[0].name.slice(0, -4)
       });
+      
+    }
+    else{
+      this.setState({
+        files,
+        workspaceName: ""
+      });
     }
   };
 
@@ -264,7 +271,7 @@ class PdfUpload extends Component {
                   selectValue="language_code"
                   fullWidth
                   
-                  MenuItemValues={["With NER","Without NER","OCR"]}
+                  MenuItemValues={["NER","Without NER","OCR"]}
                   handleChange={this.handleSelectChange}
                   value={this.state.strategy}
                   name="strategy"

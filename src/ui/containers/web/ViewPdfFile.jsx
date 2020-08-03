@@ -104,7 +104,35 @@ class PdfUpload extends React.Component {
           filter: true,
           sort: true
         }
+      },{
+        name: "api_version",
+        options: {
+          display: 'excluded',
+        }
+      },{
+        name: "api_version",
+        label:"Strategy",
+        options: {
+          filter: true,
+          sort: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (tableMeta.rowData) {
+
+              
+              return (
+
+                <div style={{ width: '120px' }}>
+
+                  {(tableMeta.rowData[6] === 3 ?"Without NER": tableMeta.rowData[6] === 2 ? "OCR" : "NER")}
+
+                </div>
+              );
+            }
+
+          }
+        }
       },
+
 
       {
         name: "Status",
@@ -117,7 +145,7 @@ class PdfUpload extends React.Component {
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
 
-              const result = tableMeta.rowData[3] * 1000 - (Date.now() - new Date(tableMeta.rowData[7]));
+              const result = tableMeta.rowData[3] * 1000 - (Date.now() - new Date(tableMeta.rowData[9]));
               return (
 
                 <div style={{ width: '120px' }}>
@@ -131,7 +159,7 @@ class PdfUpload extends React.Component {
           }
         }
       },
-
+      
       {
         name: "created_on",
         label: translate("common.page.label.timeStamp"),

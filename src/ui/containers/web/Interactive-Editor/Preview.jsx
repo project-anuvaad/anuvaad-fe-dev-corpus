@@ -106,7 +106,7 @@ class Preview extends React.Component {
                 }
                 return true;
             })
-            this.setState({ sentences: sentenceArray, sourceSupScripts: supScripts, targetSupScripts: targetSupScript })
+            this.setState({ sentences: sentenceArray, sourceSupScripts: supScripts, targetSupScripts: targetSupScript, fileDetails: this.props.fetchPdfSentence.pdf_process,})
         }
     }
 
@@ -129,7 +129,7 @@ class Preview extends React.Component {
                     </Grid>
                     <Grid item xs={12} sm={8} lg={6} xl={6} className='GridFileDetails'>
                         <Paper elevation={2} style={{ padding: '10%', overflowX: 'hidden' }}>
-                            <EditorPaper header={this.state.header} paperType="target" isPreview={true} sentences={this.state.sentences}
+                            <EditorPaper header={this.state.header} paperType="target" isPreview={true} sentences={this.state.sentences} fileDetails={this.state.fileDetails}
                                 supScripts={this.state.targetSupScripts}
                             ></EditorPaper>
                         </Paper>

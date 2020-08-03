@@ -18,8 +18,27 @@ class EditorPaper extends React.Component {
     super(props);
     this.textInput = React.createRef();
     this.state = {
-      html: ""
+      html: "",
+      columns: 1
     };
+  }
+
+  componentDidMount() {
+    let previousNode = null
+    if (Array.isArray(this.props.sentences) &&
+      this.props.sentences.length > 0) {
+      this.props.sentences.map((sentence, index) => {
+        if (previousNode != null && sentence.page_no == 1) {
+          if (parseInt(sentence.y) < parseInt(previousNode.y_end)) {
+            let difference = (previousNode.y_end - sentence.y) * 100 / previousNode.y_end
+            if (difference > 30) {
+              this.setState({ columns: this.state.columns + 1 })
+            }
+          }
+        }
+        previousNode = sentence
+      })
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -134,10 +153,21 @@ class EditorPaper extends React.Component {
     }
   }
 
+  renderPageNumber(pageNo, noOfPage) {
+    return <span ref={pageNo + "_" + this.props.paperType} style={{ textAlign: "right", color: "grey", fontSize: "small", display: "inline" }}>
+      <div>&nbsp;</div>
+      {pageNo !== 1 ? <hr /> : ""}Page: {pageNo}/{noOfPage}
+      <span>&nbsp;</span>
+    </span>
+  }
+
   newFetchSentence(sentence, prevSentence, index, noOfPage, sArray) {
-    
-    let padding = (Number(sArray[0].x) - 152) / 1.4;
-    padding = padding / 5 + "%";
+    console.log(noOfPage)
+    let padding = Number(sArray[0].x) * 100 / Number(sArray[0].page_width);
+    if (this.state.columns > 1 && padding > 40) {
+      padding = 10
+    }
+    padding = (padding - 10) + "%";
     let pageNo = sArray[0].page_no;
     if (!sArray[0].is_footer && !sArray[0].is_table) {
       let printPageNo = false;
@@ -149,53 +179,54 @@ class EditorPaper extends React.Component {
         printPageNo = true;
       }
 
-      
+
       return (
         <div>
           <span>
-        {printPageNo ? (
-          <span ref={pageNo + "_" + this.props.paperType} style={{ textAlign: "right", color: "grey", fontSize: "small", display: "inline" }}>
-            <div>&nbsp;</div>
-            {!isFirst ? <hr /> : ""}Page: {pageNo}/{noOfPage}
-            <span>&nbsp;</span>
+            {/* {printPageNo ? (
+              <span ref={pageNo + "_" + this.props.paperType} style={{ textAlign: "right", color: "grey", fontSize: "small", display: "inline" }}>
+                <div>&nbsp;</div>
+                {!isFirst ? <hr /> : ""}Page: {pageNo}/{noOfPage}
+                <span>&nbsp;</span>
+              </span>
+            ) : ( */}
+                <span></span>
+              {/* )} */}
           </span>
-        ) : (
-          <span></span>
-        )}
-        </span>
-        <div style={{ textAlign: "justify",paddingLeft: padding }}>
-          
-          {sArray.map(sen=>(
-            
-        <span>
-          
-          <span
-            key={sen._id}
-            style={{
-              
-              right: 0,
-              fontWeight: sen.is_bold ? "bold" : "normal",
-              textDecorationLine: sen.underline ? "underline" : ""
-            }}
-            onMouseUp={this.getSelectionText.bind(this)}
-            onKeyUp={this.getSelectionText.bind(this)}
-          >
-            <span style={{ textAlign: "justify" }}>
-              {this.fetchTokenizedSentence(sen, true)}
-              {sen.sup_array ? (
-                <sup>
-                  <span>{this.fetchSuperScript(sen.sup_array)}</span>
-                </sup>
-              ) : (
-                ""
-              )}
-              
-            </span>
-          </span>
-        </span>
-          ))}
-          <br/><br/>
-        </div></div>)
+          <div style={{ textAlign: "justify", paddingLeft: padding }}>
+
+            {sArray.map(sen => (
+
+              <span>
+
+                <span
+                  key={sen._id}
+                  style={{
+
+                    right: 0,
+                    fontWeight: sen.is_bold ? "bold" : "normal",
+                    textDecorationLine: sen.underline ? "underline" : "",
+                    fontSize: sen.class_style['font-size']
+                  }}
+                  onMouseUp={this.getSelectionText.bind(this)}
+                  onKeyUp={this.getSelectionText.bind(this)}
+                >
+                  <span style={{ textAlign: "justify", fontSize: sen.class_style['font-size'] }}>
+                    {this.fetchTokenizedSentence(sen, true)}
+                    {sen.sup_array ? (
+                      <sup>
+                        <span>{this.fetchSuperScript(sen.sup_array)}</span>
+                      </sup>
+                    ) : (
+                        ""
+                      )}
+
+                  </span>
+                </span>
+              </span>
+            ))}
+            <br /><br />
+          </div></div>)
     } else if (sentence.is_table) {
       // return this.fetchTable(sentence._id, sentence.table_items, prevSentence, index, pageNo, noOfPage)
       return (
@@ -262,10 +293,10 @@ class EditorPaper extends React.Component {
               ? this.props.hoveredSentence === sentence._id + "_" + tokenText.sentence_index
                 ? "yellow"
                 : color
-                ? color
-                : this.props.selectedSentenceId === sentence._id + "_" + tokenText.sentence_index
-                ? "#4dffcf"
-                : ""
+                  ? color
+                  : this.props.selectedSentenceId === sentence._id + "_" + tokenText.sentence_index
+                    ? "#4dffcf"
+                    : ""
               : "";
             if (bgColor === "yellow" || bgColor === "#4dffcf") {
               textColor = "black";
@@ -280,11 +311,11 @@ class EditorPaper extends React.Component {
                     sentence.text_pending && this.props.selectedSourceId !== sentence._id + "_" + tokenText.sentence_index
                       ? { border: "1px solid #aaa", padding: "7px 49.5%", borderColor: "orange" }
                       : {
-                          fontWeight: sentence.is_bold ? "bold" : "normal",
-                          textDecorationLine: sentence.underline ? "underline" : "",
-                          backgroundColor: bgColor,
-                          color: textColor ? textColor : ""
-                        }
+                        fontWeight: sentence.is_bold ? "bold" : "normal",
+                        textDecorationLine: sentence.underline ? "underline" : "",
+                        backgroundColor: bgColor,
+                        color: textColor ? textColor : ""
+                      }
                   }
                   ref={sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType}
                   key={sentence._id + "_" + tokenText.sentence_index}
@@ -309,8 +340,8 @@ class EditorPaper extends React.Component {
                       }}
                     />
                   ) : (
-                    tokenText.text
-                  )}
+                      tokenText.text
+                    )}
                 </span>
                 {isSpaceRequired ? <span>&nbsp;</span> : <span></span>}
               </span>
@@ -336,8 +367,8 @@ class EditorPaper extends React.Component {
                       this.props.hoveredSentence === sentence._id + "_" + tokenText.sentence_index
                         ? "yellow"
                         : this.props.selectedSentenceId === sentence._id + "_" + tokenText.sentence_index
-                        ? "#4dffcf"
-                        : ""
+                          ? "#4dffcf"
+                          : ""
                   }}
                   key={sentence._id + "_" + tokenText.sentence_index}
                   onClick={() => this.handleOnClick(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
@@ -382,8 +413,8 @@ class EditorPaper extends React.Component {
                   <div>&nbsp;</div>
                 </div>
               ) : (
-                <div></div>
-              )}
+                  <div></div>
+                )}
               <div
                 key={sentence._id}
                 ref={sentence._id + "_" + this.props.paperType}
@@ -413,8 +444,8 @@ class EditorPaper extends React.Component {
                   <div>&nbsp;</div>
                 </div>
               ) : (
-                <div></div>
-              )}
+                  <div></div>
+                )}
               <div
                 key={sentence._id}
                 ref={sentence._id + "_" + this.props.paperType}
@@ -444,8 +475,8 @@ class EditorPaper extends React.Component {
                 <div>&nbsp;</div>
               </div>
             ) : (
-              <div></div>
-            )}
+                <div></div>
+              )}
             <div key={sentence._id} style={{ textAlign: "justify" }}>
               <div
                 ref={sentence._id + "_" + this.props.paperType}
@@ -479,8 +510,8 @@ class EditorPaper extends React.Component {
                 <div>&nbsp;</div>
               </div>
             ) : (
-              <div></div>
-            )}
+                <div></div>
+              )}
             <div
               key={sentence._id}
               style={{
@@ -499,8 +530,8 @@ class EditorPaper extends React.Component {
                     <span>{this.fetchSuperScript(sentence.sup_array)}</span>
                   </sup>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
                 <br />
                 <br />
               </div>
@@ -590,7 +621,8 @@ class EditorPaper extends React.Component {
 
   render() {
     const { sentences, header, footer } = this.props;
-    let sArray =[]
+    let sArray = []
+    let elems = []
     return (
       <div>
         {header ? (
@@ -605,34 +637,40 @@ class EditorPaper extends React.Component {
             <br />
           </div>
         ) : (
-          <div></div>
-        )}
+            <div></div>
+          )}
         <div style={{ paddingLeft: "20px" }}>
-          {this.props.fileDetails && this.props.fileDetails.api_version === 2
+          {this.props.fileDetails && (this.props.fileDetails.api_version === 2 || this.props.fileDetails.api_version === 3)
             ? sentences &&
-              Array.isArray(sentences) &&
-              sentences.length > 0 &&
-              sentences.map((sentence, index) => {
+            Array.isArray(sentences) &&
+            sentences.length > 0 &&
+            sentences.map((sentence, index) => {
 
-                sArray.push(sentence)
-                
-                if( (index!==sentences.length-1 && sentences[index + 1].y!==sentence.y) || index===sentences.length-1 ){
-                  
-                  
-                  let a = this.newFetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no, sentences,sArray);
-                  sArray=[]
-                  return a;
-                }
-                
-                
-                
-              })
+              sArray.push(sentence)
+              let fontValue = Number(sentence.class_style['font-size'].split('px')[0])
+              // if ((index !== sentences.length - 1 && sentences[index + 1].y !== sentence.y) || index === sentences.length - 1) {
+              if ((index !== sentences.length - 1 && ((fontValue + Number(sentence.y_end) < Number(sentences[index + 1].y) || sentence.page_no != sentences[index + 1].page_no))) || index === sentences.length - 1) {
+                let a = this.newFetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no, sArray);
+                sArray = []
+                elems.push(a);
+              }
+              if (index == sentences.length - 1 || sentence.page_no != sentences[index + 1].page_no) {
+                let elemArray = elems
+                elems = []
+                return <div><p>{this.renderPageNumber(sentence.page_no, sentences[sentences.length - 1].page_no)}</p><div style={{ columnCount: this.state.columns }}><p>{elemArray}</p></div></div>
+              }
+
+              // }
+
+
+
+            })
             : sentences &&
-              Array.isArray(sentences) &&
-              sentences.length > 0 &&
-              sentences.map((sentence, index) => {
-                return this.fetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no);
-              })}
+            Array.isArray(sentences) &&
+            sentences.length > 0 &&
+            sentences.map((sentence, index) => {
+              return this.fetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no);
+            })}
         </div>
         {footer ? (
           <div>
@@ -646,11 +684,12 @@ class EditorPaper extends React.Component {
             </div>
           </div>
         ) : (
-          <div></div>
-        )}
+            <div></div>
+          )}
       </div>
     );
   }
 }
 
 export default withStyles(styles)(EditorPaper);
+
