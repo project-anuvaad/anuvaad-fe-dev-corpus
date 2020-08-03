@@ -37,7 +37,8 @@ class PdfFileEditor extends React.Component {
     let yAxis;
     return (
       <div>
-        <Paper style={{ marginLeft: "20%", width: this.state.sentences && this.state.sentences[0].page_width + "px" }}>
+        <Paper style={{ marginLeft: "20%", width: this.state.sentences && this.state.sentences[0].page_width + "px" , maxHeight: this.state.collapseToken ? window.innerHeight - 100 : window.innerHeight - 100,
+                        overflowY: "scroll"}}>
           {this.state.sentences &&
             this.state.sentences.map(sentence => {
               yAxis = parseInt(sentence.y_end) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
