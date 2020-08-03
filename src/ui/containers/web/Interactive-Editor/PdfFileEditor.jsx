@@ -42,7 +42,7 @@ class PdfFileEditor extends React.Component {
             this.state.sentences.map(sentence => {
               yAxis = parseInt(sentence.y_end) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
 
-              <SourceView sentence={sentence} y={yAxis} width={"200px"} height={"10px"} />;
+             return <SourceView sentence={sentence} y={yAxis} width={"200px"} height={"10px"} />;
             })}
         </Paper>
       </div>
