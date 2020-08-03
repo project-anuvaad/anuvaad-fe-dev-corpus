@@ -34,18 +34,23 @@ class PdfFileEditor extends React.Component {
     }
   }
   render() {
-    let yAxis;
+    let yAxis = 0;
+    let style = {
+      marginLeft: "20%",
+      width: this.state.sentences && this.state.sentences[0].page_width + "px",
+      maxHeight: this.state.collapseToken ? window.innerHeight - 100 : window.innerHeight - 100,
+      position: "relative",
+      overflowY: "scroll",
+      height: this.state.sentences && this.state.sentences[0].page_height + "px",
+    };
     return (
-      <div>
-        <Paper style={{ marginLeft: "20%", width: this.state.sentences && this.state.sentences[0].page_width + "px" , maxHeight: this.state.collapseToken ? window.innerHeight - 100 : window.innerHeight - 100,
-                        overflowY: "scroll"}}>
-          {this.state.sentences &&
-            this.state.sentences.map(sentence => {
-              yAxis = parseInt(sentence.y_end) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-
-             return <SourceView sentence={sentence} y={yAxis} width={"200px"} height={"10px"} />;
-            })}
-        </Paper>
+      <div style={style}>
+        {this.state.sentences &&
+          this.state.sentences.map(sentence => {
+            yAxis = parseInt(sentence.y_end) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
+            console.log(yAxis);
+            return <SourceView sentence={sentence} yAxis={yAxis} width={sentence.page_no === 1 ? "600px":"400px"} height={"100px"} />;
+          })}
       </div>
     );
   }
