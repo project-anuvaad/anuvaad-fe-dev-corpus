@@ -1,9 +1,4 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
-
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import APITransport from "../../../../flux/actions/apitransport/apitransport";
 
 
 class Preview extends React.Component {
@@ -20,37 +15,22 @@ class Preview extends React.Component {
 
 
     render() {
-        let a = 100;
+        const { sentence, yAxis, width, height  } = this.props;
         return (
             <div>
-                {this.props.sentences.map(sentence=>{
-                    a=parseInt(sentence.y_end)+((parseInt(sentence.page_no)-1)*parseInt(sentence.page_height))
-                    console.log(sentence.y,a,parseInt(sentence.page_no)-1),parseInt(sentence.page_height)
-                   return <p style={{position:'aboslute',
-                   top:a+'px',
+                
+                  <p style={{position:'aboslute',
+                   top:yAxis,
                    left: sentence.x+'px',
                    width: '600px',
                    height:'2px' }}>{sentence.text}</p>
-                })}
+                
             </div>
         )
     }
 
 }
 
-const mapStateToProps = state => ({
-    user: state.login,
-    apistatus: state.apistatus,
-    fetchPdfSentence: state.fetchPdfSentence,
-    downloaddoc: state.downloaddoc
-});
 
-const mapDispatchToProps = dispatch =>
-    bindActionCreators(
-        {
-            APITransport,
-        },
-        dispatch
-    );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Preview));
+export default(Preview);

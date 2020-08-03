@@ -22,7 +22,7 @@ import Editor from "./Editor";
 import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
 import InteractiveSourceUpdate from "../../../../flux/actions/apis/interactivesourceupdate";
 import history from "../../../../web.history";
-import EditorPaper from "./EditorPaper1";
+import EditorPaper from "./EditorPaper";
 import InteractiveApi from "../../../../flux/actions/apis/interactivesavesentence";
 import Snackbar from "../../../components/web/common/Snackbar";
 import SentenceMerge from "../../../../flux/actions/apis/InteractiveMerge";
