@@ -786,7 +786,7 @@ class AppRoutes extends React.Component {
               currentMenu="data-pipeline-tools"
             />
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/pdfFileEditor`}
+              path={`${process.env.PUBLIC_URL}/pdf-file-editor`}
               title={translate('webroutes.page.title.anuvaadEditor')}
               userRoles={["editor", "dev", "grader", "interactive-editor"]}
               component={pdfFileEditor}
