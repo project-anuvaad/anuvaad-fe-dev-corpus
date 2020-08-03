@@ -82,6 +82,7 @@ import InteractivePreview from "./ui/containers/web/Interactive-Editor/Preview"
 import { translate } from '../src/assets/localisation';
 import UpdatePassword from './ui/containers/web/UpdatePassword';
 import SetPassword from './ui/containers/web/SetPassword';
+import pdfFileEditor from './ui/containers/web/Interactive-Editor/PdfFileEditor'
 
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, dontShowHeader, currentMenu, authenticate, ...rest }) => (
   <Route
@@ -784,7 +785,14 @@ class AppRoutes extends React.Component {
               authenticate={this.authenticateUser}
               currentMenu="data-pipeline-tools"
             />
-
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/pdf-file-editor`}
+              title={translate('webroutes.page.title.anuvaadEditor')}
+              userRoles={["editor", "dev", "grader", "interactive-editor"]}
+              component={pdfFileEditor}
+              authenticate={this.authenticateUser}
+              currentMenu="view-pdf"
+            />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser} />
           </Switch>
         </div>
