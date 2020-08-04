@@ -6,21 +6,22 @@ class Preview extends React.Component {
     }
 
     render() {
-        const { key, sentence, yAxis, widthValue, printPageNo, pageNo } = this.props;
+        const { key, sentence, yAxis, widthValue,leftPaddingValue, printPageNo, pageNo } = this.props;
         var a = {
             position: "absolute ",
             top: yAxis,
             left: sentence.x + "px",
-            right: 70 + "px",
+            
             width: widthValue + "px",
             fontSize: this.props.sentence.class_style["font-size"],
             fontFamily: this.props.sentence.class_style["font-family"],
             fontWeight: this.props.sentence.class_style["font-family"].includes("Bold") && 'bold',
-            textAlign: "justify"
+            textAlign: "justify",
+            lineHeight:this.props.sentence.class_style["lineHeight"]? this.props.sentence.class_style["lineHeight"]:'17px'
         };
         return (
             <div key={key}>
-                {printPageNo ? <div style={{ position: "absolute ", top: yAxis + 40, width: "100%" }}><hr style={{ color: "white" }} /></div> : <div></div>}
+                {printPageNo ? <div style={{ position: "absolute ", top: yAxis + 70, width: "100%" }}><hr style={{ color: "white" }} /></div> : <div></div>}
                 <div style={a}>{sentence.text}</div>
             </div>
         );
