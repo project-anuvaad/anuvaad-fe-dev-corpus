@@ -56,7 +56,9 @@ class PdfFileEditor extends React.Component {
             let printPageNo = false
             let pageNo=sentence.page_no
 
-             if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no && index !== 0) {
+            if (index === 0) {
+              printPageNo = true
+            } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
               printPageNo = true
             }
 
