@@ -20,7 +20,7 @@ class Preview extends React.Component {
         };
         return (
             <div key={key}>
-                {printPageNo ? <div style={{ position: "absolute ", top: yAxis + 30, width: "100%" }}><hr style={{ color: "white" }} /></div> : <div></div>}
+                {printPageNo ? <div style={{ position: "absolute ", top: yAxis + 40, width: "100%" }}><hr style={{ color: "white" }} /></div> : <div></div>}
                 <div style={a}>{sentence.text}</div>
             </div>
         );
