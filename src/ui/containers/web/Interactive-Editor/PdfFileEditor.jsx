@@ -38,6 +38,13 @@ class PdfFileEditor extends React.Component {
   //   }
   render() {
     let yAxis = 0;
+    let leftPaddingValue=0;
+    this.state.sentences.map(sentence=>{
+        if(leftPaddingValue<sentence.x || leftPaddingValue==0){
+            leftPaddingValue = sentence.x
+        }
+        
+    })
     let style = {
       // marginLeft: "20%",
       width: this.state.sentences && this.state.sentences[0].page_width + "px",
@@ -48,6 +55,8 @@ class PdfFileEditor extends React.Component {
       borderStyle: "groove",
       backgroundColor: "white"
     };
+
+   
     return (
       <div style={{backgroundColor: '#F5F9FA', display: "flex", flexDirection: "row", justifyContent: "center"}}>
       <div style={style}>
@@ -65,7 +74,7 @@ class PdfFileEditor extends React.Component {
             }
 
             return (
-              <SourceView key={index} printPageNo={printPageNo} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 450 - parseInt(sentence.x)} />
+              <SourceView key={index} printPageNo={printPageNo} leftPaddingValue={leftPaddingValue} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 300} />
             );
           })}
       </div></div>
