@@ -3,19 +3,26 @@ import React from "react";
 class Preview extends React.Component {
   constructor(props) {
     super(props);
-    this.textInput = React.createRef();
-    this.state = {
-      sentences: "",
-      sourceSupScripts: "",
-      targetSupScripts: "",
-      header: ""
-    };
   }
 
   render() {
-    const { sentence, yAxis, width} = this.props;
-    var a = {position: "absolute ", top: yAxis, left: sentence.x + "px", width:width}
-    return <div style={a}>{sentence.text}</div>;
+    const { key, sentence, yAxis, widthValue } = this.props;
+    var a = {
+      position: "absolute ",
+      top: yAxis,
+      left: sentence.x + "px",
+      right: 70 + "px",
+      width: widthValue + "px",
+      fontSize: this.props.sentence.class_style["font-size"],
+      fontFamily: this.props.sentence.class_style["font-family"],
+      fontWeight: this.props.sentence.class_style["font-family"].includes("Bold") && 'bold',
+      textAlign: "justify"
+    };
+    return (
+      <div style={a} key={key}>
+        {sentence.text}
+      </div>
+    );
   }
 }
 
