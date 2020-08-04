@@ -43,15 +43,23 @@ class PdfFileEditor extends React.Component {
       position: "relative",
       overflowY: "scroll",
       height: this.state.sentences && this.state.sentences[0].page_height + "px",
-      borderStyle: "solid"
+      borderStyle: "groove"
     };
     return (
       <div style={style}>
         {this.state.sentences &&
           this.state.sentences.map((sentence, index) => {
             yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
+
+            let printPageNo = false
+            let pageNo=sentence.page_no
+
+             if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no && index !== 0) {
+              printPageNo = true
+            }
+
             return (
-              <SourceView key={index} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 450 - parseInt(sentence.x)} />
+              <SourceView key={index} printPageNo={printPageNo} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 450 - parseInt(sentence.x)} />
             );
           })}
       </div>
