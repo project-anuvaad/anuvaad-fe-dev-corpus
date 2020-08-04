@@ -13,8 +13,8 @@ class Preview extends React.Component {
   }
 
   render() {
-    const { sentence, yAxis, width, height } = this.props;
-    var a = {position: "absolute ", top: yAxis, left: sentence.x + "px", width:width, height: "2px" }
+    const { sentence, yAxis, width} = this.props;
+    var a = {position: "absolute ", top: yAxis, left: sentence.x + "px", width:width}
     return <div style={a}>{sentence.text}</div>;
   }
 }
