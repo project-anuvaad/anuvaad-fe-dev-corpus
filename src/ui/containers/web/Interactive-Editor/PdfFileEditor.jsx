@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./SourceView";
-
+import Data from "./Data.json";
 class PdfFileEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -14,25 +14,26 @@ class PdfFileEditor extends React.Component {
       sentences: "",
       sourceSupScripts: "",
       targetSupScripts: "",
-      header: ""
+      header: "",
+      sentences: Data.data
     };
   }
 
-  componentDidMount() {
-    const { APITransport } = this.props;
-    const apiObj = new FetchDoc("d72923e7-5a92-4e9e-93bc-3d1d89e73b5d");
-    APITransport(apiObj);
-  }
+  //   componentDidMount() {
+  //     const { APITransport } = this.props;
+  //     const apiObj = new FetchDoc("d72923e7-5a92-4e9e-93bc-3d1d89e73b5d");
+  //     APITransport(apiObj);
+  //   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
-      const temp = this.props.fetchPdfSentence.data;
-      console.log(temp);
-      this.setState({
-        sentences: temp
-      });
-    }
-  }
+  //   componentDidUpdate(prevProps) {
+  //     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
+  //       const temp = this.props.fetchPdfSentence.data;
+  //       console.log(temp);
+  //       this.setState({
+  //         sentences: temp
+  //       });
+  //     }
+  //   }
   render() {
     let yAxis = 0;
     let style = {
@@ -42,14 +43,16 @@ class PdfFileEditor extends React.Component {
       position: "relative",
       overflowY: "scroll",
       height: this.state.sentences && this.state.sentences[0].page_height + "px",
+      borderStyle: "solid"
     };
     return (
       <div style={style}>
         {this.state.sentences &&
-          this.state.sentences.map(sentence => {
-            yAxis = parseInt(sentence.y_end) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-            console.log(yAxis);
-            return <SourceView sentence={sentence} yAxis={yAxis} width={sentence.page_no === 1 ? "600px":"400px"} height={"100px"} />;
+          this.state.sentences.map((sentence, index) => {
+            yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
+            return (
+              <SourceView key={index} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 450 - parseInt(sentence.x)} />
+            );
           })}
       </div>
     );

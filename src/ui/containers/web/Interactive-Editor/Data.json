@@ -1,124 +1,8 @@
 {
     "data": [
+        
         {
-           "_id": "5f226b3b9e1f884ba5a59e61",
-            "y": "1086",
-            "x": "596",
-            "y_end": "1086",
-            "text": "October 12 - 15, 2011, Rapid City, SD",
-            "style": "position:absolute;top:1086px;left:596px;white-space:nowrap",
-            "class": "ft01",
-            "page_no": 1,
-            "is_bold": true,
-            "page_no_end": 1,
-            "page_height": "1188",
-            "page_width": "918",
-            "class_style": {
-                "font-size": "12px",
-                "font-family": "Times New Roman,Bold",
-                "color": "#000000",
-                "": null
-            },
-            "node_index": "4",
-            "para_index": 0,
-            "version": 0,
-            "status": "TRANSLATED",
-            "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-            "tokenized_sentences": [
-                {
-                    "text": "October 12 - 15, 2011, Rapid City, SD",
-                    "sentence_index": 0,
-                    "src": "October 12 - 15, 2011, Rapid City, SD",
-                    "id": 56,
-                    "n_id": "4__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-                    "s_id": 0,
-                    "version": 0,
-                    "tagged_src": "October NnUuMm२ - NnUuMm१, NnUuMm०, Rapid City, SD",
-                    "tagged_tgt": "NnUuMm२-NnUuMm१,NnUuMm०, रैपिड सिटी, SD",
-                    "target": "12-15,2011, रैपिड सिटी, SD"
-                }
-            ]
-        },
-        {
-            "_id": "5f226b3b9e1f889d6aa59e62",
-            "y": "1103",
-            "x": "293",
-            "y_end": "1103",
-            "text": "41",
-            "style": "position:absolute;top:1103px;left:293px;white-space:nowrap",
-            "class": "ft01",
-            "page_no": 1,
-            "is_bold": true,
-            "page_no_end": 1,
-            "page_height": "1188",
-            "page_width": "918",
-            "class_style": {
-                "font-size": "12px",
-                "font-family": "Times New Roman,Bold",
-                "color": "#000000",
-                "": null
-            },
-            "node_index": "6",
-            "para_index": 1,
-            "version": 0,
-            "status": "TRANSLATED",
-            "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-            "tokenized_sentences": [
-                {
-                    "text": "41",
-                    "sentence_index": 0,
-                    "src": "41",
-                    "id": 56,
-                    "n_id": "6__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-                    "s_id": 0,
-                    "version": 0,
-                    "tagged_src": "41",
-                    "tagged_tgt": "41",
-                    "target": "41"
-                }
-            ]
-        },
-        {
-            "_id": "5f226b3b9e1f884fcca59e63",
-            "y": "1100",
-            "x": "308",
-            "y_end": "1120",
-            "text": "st ASEE/IEEE Frontiers in Education Conference T1A - 1",
-            "style": "position:absolute;top:1100px;left:308px;white-space:nowrap",
-            "class": "ft02",
-            "page_no": 1,
-            "is_bold": true,
-            "page_no_end": 1,
-            "page_height": "1188",
-            "page_width": "918",
-            "class_style": {
-                "font-size": "7px",
-                "font-family": "Times New Roman,Bold",
-                "color": "#000000",
-                "": null
-            },
-            "node_index": "12",
-            "visual_break": null,
-            "para_index": 2,
-            "version": 0,
-            "status": "TRANSLATED",
-            "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-            "tokenized_sentences": [
-                {
-                    "text": "st ASEE/IEEE Frontiers in Education Conference T1A - 1",
-                    "sentence_index": 0,
-                    "src": "st ASEE/IEEE Frontiers in Education Conference T1A - 1",
-                    "id": 56,
-                    "n_id": "12__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-                    "s_id": 0,
-                    "version": 0,
-                    "tagged_src": "st ASEE/IEEE Frontiers in Education Conference TNnUuMm०A - NnUuMm१",
-                    "tagged_tgt": "शिक्षा सम्मेलन में ए. एस. ई. ई./आई. ई. ई. के आयामः",
-                    "target": "शिक्षा सम्मेलन में ए. एस. ई. ई./आई. ई. ई. के आयामः"
-                }
-            ]
-        },
-        {
+            "width":700,
             "_id": "5f226b3b9e1f887bb0a59e64",
             "y": "90",
             "x": "104",
@@ -159,6 +43,7 @@
             ]
         },
         {
+            "width":200,
             "_id": "5f226b3b9e1f885dfaa59e65",
             "y": "186",
             "x": "421",
@@ -198,6 +83,7 @@
             ]
         },
         {
+            "width":400,
             "_id": "5f226b3b9e1f883881a59e66",
             "y": "205",
             "x": "334",
@@ -237,6 +123,7 @@
             ]
         },
         {
+            "width":400,
             "_id": "5f226b3b9e1f88227ea59e67",
             "y": "236",
             "x": "313",
@@ -276,7 +163,7 @@
                 }
             ]
         },
-        {
+        {   "width":250,
             "_id": "5f226b3b9e1f88ad32a59e68",
             "y": "288",
             "x": "222",
@@ -315,7 +202,7 @@
                 }
             ]
         },
-        {
+        {"width":400,
             "_id": "5f226b3b9e1f88f59da59e69",
             "y": "319",
             "x": "310",
@@ -355,7 +242,7 @@
                 }
             ]
         },
-        {
+        {"width":400,
             "_id": "5f226b3b9e1f88baffa59e6a",
             "y": "371",
             "x": "216",
@@ -6880,7 +6767,8 @@
             ]
         },
         {
-            "width":"365","_id": "5f226b3b9e1f884c0aa59ede",
+            "width":"365",
+            "_id": "5f226b3b9e1f884c0aa59ede",
             "y": "1086",
             "x": "596",
             "y_end": "1120",
