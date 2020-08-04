@@ -1,0 +1,1357 @@
+{
+    "data": [
+        {
+            "_id": "5f05652fe8a1bb60744a47f2",
+            "align": "RIGHT",
+            "is_new_line": true,
+            "is_bold": true,
+            "text": "NON-REPORTABLE",
+            "is_ner": true,
+            "page_no": 1,
+            "node_index": "e80f60c9-9d43-4552-b938-416406eb6730",
+            "para_index": 0,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "NON-REPORTABLE",
+                    "sentence_index": 0,
+                    "src": "Non-reportable",
+                    "id": 56,
+                    "n_id": "e80f60c9-9d43-4552-b938-416406eb6730__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "Non-reportable",
+                    "tagged_tgt": "गैर-आयात योग्य",
+                    "target": "गैर-आयात योग्य"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb4e1b4a47f3",
+            "align": "CENTER",
+            "is_new_line": true,
+            "is_bold": true,
+            "text": "IN THE SUPREME COURT OF INDIA",
+            "is_ner": true,
+            "page_no": 1,
+            "node_index": "77ffcc1e-a26a-4433-9811-63133c27ceaa",
+            "para_index": 1,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "IN THE SUPREME COURT OF INDIA",
+                    "sentence_index": 0,
+                    "src": "In The Supreme Court Of India",
+                    "id": 56,
+                    "n_id": "77ffcc1e-a26a-4433-9811-63133c27ceaa__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "In The Supreme Court Of India",
+                    "tagged_tgt": "भारत के सर्वोच्च न्यायालय में",
+                    "target": "भारत के सर्वोच्च न्यायालय में"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb71b84a47f4",
+            "align": "CENTER",
+            "is_new_line": true,
+            "text": "CIVIL APPELLATE JURISDICTION",
+            "is_ner": true,
+            "page_no": 1,
+            "node_index": "31bf86e1-83be-4a0e-87cd-1abd20c446e2",
+            "para_index": 2,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "CIVIL APPELLATE JURISDICTION",
+                    "sentence_index": 0,
+                    "src": "Civil Appellate Jurisdiction",
+                    "id": 56,
+                    "n_id": "31bf86e1-83be-4a0e-87cd-1abd20c446e2__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "Civil Appellate Jurisdiction",
+                    "tagged_tgt": "दीवानी अपीलीय क्षेत्राधिकार",
+                    "target": "दीवानी अपीलीय क्षेत्राधिकार"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb86b34a47f5",
+            "align": "CENTER",
+            "is_new_line": true,
+            "text": "CIVIL APPEAL NO. 996 OF 2020",
+            "is_ner": true,
+            "page_no": 1,
+            "node_index": "49edfe9f-8a1f-495d-b00f-309ada4b478d",
+            "para_index": 3,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "CIVIL APPEAL NO. 996 OF 2020",
+                    "sentence_index": 0,
+                    "src": "Civil Appeal No. 996 Of 2020",
+                    "id": 56,
+                    "n_id": "49edfe9f-8a1f-495d-b00f-309ada4b478d__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "Civil Appeal No. NnUuMm१ Of NnUuMm०",
+                    "tagged_tgt": "NnUuMm० की दीवानी अपील सं. NnUuMm१",
+                    "target": "2020 की दीवानी अपील सं. 996"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb92f64a47f6",
+            "align": "CENTER",
+            "is_new_line": true,
+            "text": "(ARISING OUT OF SPECIAL LEAVE PETITION (C) NO. 17440 OF 2019)",
+            "is_ner": true,
+            "page_no": 1,
+            "node_index": "e7eb8d56-dc36-41dd-b14a-a4c024c3da60",
+            "para_index": 4,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "(ARISING OUT OF SPECIAL LEAVE PETITION (C) NO. 17440 OF 2019)",
+                    "sentence_index": 0,
+                    "src": "(Arising Out Of Special Leave Petition (C) No. 17440 Of 2019)",
+                    "id": 56,
+                    "n_id": "e7eb8d56-dc36-41dd-b14a-a4c024c3da60__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "(Arising Out Of Special Leave Petition (C) No. NnUuMm० Of NnUuMm१)",
+                    "tagged_tgt": "(विशेष अवकाश याचिका (ग) सं. NnUuMm०/NnUuMm१ से उत्पन्न",
+                    "target": "(विशेष अवकाश याचिका (ग) सं. 17440/2019 से उत्पन्न"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb30f64a47f7",
+            "align": "LEFT",
+            "text": "UNION OF INDIA AND ANOTHER",
+            "is_ner": true,
+            "page_no": 1,
+            "node_index": "5cf18246-8351-405c-b87e-77718c286adc",
+            "para_index": 5,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "UNION OF INDIA AND ANOTHER",
+                    "sentence_index": 0,
+                    "src": "Union Of India And Another",
+                    "id": 56,
+                    "n_id": "5cf18246-8351-405c-b87e-77718c286adc__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "Union Of India And Another",
+                    "tagged_tgt": "भारत और एक और",
+                    "target": "भारत और एक और"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb4a484a47f8",
+            "align": "RIGHT",
+            "is_new_line": true,
+            "text": "..... APPELLANT(S)",
+            "is_ner": true,
+            "page_no": 1,
+            "node_index": "a83ab430-f1d3-4157-b2fc-3ac81e239436",
+            "para_index": 6,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "..... APPELLANT(S)",
+                    "sentence_index": 0,
+                    "src": "..... Appellant(s)",
+                    "id": 56,
+                    "n_id": "a83ab430-f1d3-4157-b2fc-3ac81e239436__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "..... Appellant(s)",
+                    "tagged_tgt": "अपीलकर्ता (गण)",
+                    "target": "अपीलकर्ता (गण)"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb55154a47f9",
+            "align": "CENTER",
+            "is_new_line": true,
+            "text": "Versus",
+            "is_ner": true,
+            "page_no": 1,
+            "node_index": "44855680-a38c-4cfc-b5bd-c7a5b0e80793",
+            "para_index": 7,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "Versus",
+                    "sentence_index": 0,
+                    "src": "Versus",
+                    "id": 56,
+                    "n_id": "44855680-a38c-4cfc-b5bd-c7a5b0e80793__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "Versus",
+                    "tagged_tgt": " Versus",
+                    "target": "Versus"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb06864a47fa",
+            "align": "LEFT",
+            "text": "ROSAMMA BENNY AND OTHERS",
+            "is_ner": true,
+            "page_no": 1,
+            "node_index": "069cea05-855a-4ead-8f83-a4f54345784e",
+            "para_index": 8,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "ROSAMMA BENNY AND OTHERS",
+                    "sentence_index": 0,
+                    "src": "Rosamma Benny And Others",
+                    "id": 56,
+                    "n_id": "069cea05-855a-4ead-8f83-a4f54345784e__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "Rosamma Benny And Others",
+                    "tagged_tgt": "रोशम्मा बेनी और अन्य",
+                    "target": "रोशम्मा बेनी और अन्य"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bbe4db4a47fb",
+            "align": "RIGHT",
+            "is_new_line": true,
+            "text": "..... RESPONDENT(S)",
+            "is_ner": true,
+            "page_no": 1,
+            "node_index": "16bc1f12-ed92-4e1b-9336-e629b2597641",
+            "para_index": 9,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "..... RESPONDENT(S)",
+                    "sentence_index": 0,
+                    "src": "..... Respondent(s)",
+                    "id": 56,
+                    "n_id": "16bc1f12-ed92-4e1b-9336-e629b2597641__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "..... Respondent(s)",
+                    "tagged_tgt": "उत्तरदाता (गण)",
+                    "target": "उत्तरदाता (गण)"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb81184a47fc",
+            "align": "CENTER",
+            "is_new_line": true,
+            "is_bold": true,
+            "text": "J U D G M E N T",
+            "is_ner": true,
+            "page_no": 1,
+            "node_index": "13b34be3-1e88-43be-afd6-d8155a257f75",
+            "para_index": 10,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "J U D G M E N T",
+                    "sentence_index": 0,
+                    "src": "J U D G M E N T",
+                    "id": 56,
+                    "n_id": "13b34be3-1e88-43be-afd6-d8155a257f75__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "J U D G M E N T",
+                    "tagged_tgt": "निर्णय",
+                    "target": "निर्णय"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bbc6554a47fd",
+            "y": "673",
+            "x": "216",
+            "y_end": "673",
+            "text": "Leave granted.",
+            "style": "position:absolute;top:673px;left:216px;white-space:nowrap",
+            "class": "ft02",
+            "page_no": 1,
+            "is_bold": false,
+            "page_no_end": 1,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "14",
+            "para_index": 11,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "Leave granted.",
+                    "sentence_index": 0,
+                    "src": "Leave granted.",
+                    "id": 56,
+                    "n_id": "14__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "target": "अवकाश",
+                    "status": "TRANSLATED",
+                    "tagged_src": "Leave granted.",
+                    "tagged_tgt": "अवकाश"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb6b814a47fe",
+            "y": "714",
+            "x": "108",
+            "y_end": "495",
+            "text": "2. The impugned order dated 24.05.2018 passed by the Ernakulam Bench of the High Court of Kerala dismisses the Writ Petition filed by the Union of India and Senior Divisional Personnel Officer, Southern Railway, Trivandrum and affirms the order dated 13.10.2017 passed by the Ernakulum Bench of the Central Administrative Tribunal (‘the Tribunal’, for short) allowing O.A. No. 180/523/2014 filed by Rosamma Benny, Jessy S. Babu and Sreekala P.V., respondent Nos. 1, 2 and 3 respectively before us. 3. The High Court in the impugned order has held that the respondent Nos. 1, 2 and 3 were entitled to financial upgradation under the Modified Assured Career Progression Scheme (‘MACP’, for short) as they have been working as Enquiry-Cum-Reservation Clerks (‘ECRC’, for short) w.e.f. 01.11.2003 and therefore, have completed ten years in the cadre of ECRC. Accordingly, the Tribunal was justified and correct in granting the relief by placing the three respondents in the pay band- II with grade pay of Rs. 4600 w.e.f. 01.11.2013.",
+            "style": "position:absolute;top:714px;left:108px;white-space:nowrap",
+            "class": "ft02",
+            "page_no": 1,
+            "is_bold": false,
+            "page_no_end": 2,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "37",
+            "para_index": 12,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "2. The impugned order dated 24.05.2018 passed by the Ernakulam Bench of the High Court of Kerala dismisses the Writ Petition filed by the Union of India and Senior Divisional Personnel Officer, Southern Railway, Trivandrum and affirms the order dated 13.10.2017 passed by the Ernakulum Bench of the Central Administrative Tribunal (‘the Tribunal’, for short) allowing O.A. NO. 180/523/2014 filed by Rosamma Benny, Jessy",
+                    "sentence_index": 0,
+                    "src": "2. The impugned order dated 24.05.2018 passed by the Ernakulam Bench of the High Court of Kerala dismisses the Writ Petition filed by the Union of India and Senior Divisional Personnel Officer, Southern Railway, Trivandrum and affirms the order dated 13.10.2017 passed by the Ernakulum Bench of the Central Administrative Tribunal (‘the Tribunal’, for short) allowing O.A. NO. 180/523/2014 filed by Rosamma Benny, Jessy",
+                    "id": 56,
+                    "n_id": "37__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The impugned order dated NnUuMm५.0NnUuMm८.NnUuMm० passed by the Ernakulam Bench of the High Court of Kerala dismisses the Writ Petition filed by the Union of India and Senior Divisional Personnel Officer, Southern Railway, Trivandrum and affirms the order dated NnUuMm६.NnUuMm७.NnUuMm१ passed by the Ernakulum Bench of the Central Administrative Tribunal (‘the Tribunal’, for short) allowing O.A. NO. NnUuMm४/NnUuMm३/NnUuMm२ filed by Rosamma Benny, Jessy",
+                    "tagged_tgt": "2. NnUuMm५.0NnUuMm८.NnUuMm० को लगाया गया आदेश केरल के उच्च न्यायालय के एर्नाकुलम बेंच द्वारा पारित किया गया, जो भारत संघ और वरिष्ठ मंडल कार्मिक अधिकारी, दक्षिणी रेलवे, त्रिवेंद्रम द्वारा दायर रिट याचिका को खारिज कर देता है और NnUuMm६.NnUuMm७.NnUuMm१ के आदेश की पुष्टि करता है। केंद्रीय प्रशासनिक न्यायाधिकरण ('न्यायाधिकरण', संक्षेप में) के एर्नाकुलम बेंच ने OA सं। NnUuMm४/NnUuMm३/NnUuMm२ रोसमम्मा बेनी, जेसी",
+                    "target": "2. 24.05.2018 को लगाया गया आदेश केरल के उच्च न्यायालय के एर्नाकुलम बेंच द्वारा पारित किया गया, जो भारत संघ और वरिष्ठ मंडल कार्मिक अधिकारी, दक्षिणी रेलवे, त्रिवेंद्रम द्वारा दायर रिट याचिका को खारिज कर देता है और 13.10.2017 के आदेश की पुष्टि करता है। केंद्रीय प्रशासनिक न्यायाधिकरण ('न्यायाधिकरण', संक्षेप में) के एर्नाकुलम बेंच ने OA सं। 180/523/2014 रोसमम्मा बेनी, जेसी"
+                },
+                {
+                    "text": "S. Babu and Sreekala P.V., respondent NOS. 1, 2 and 3 respectively before us.",
+                    "sentence_index": 1,
+                    "src": "S. Babu and Sreekala P.V., respondent NOS. 1, 2 and 3 respectively before us.",
+                    "id": 56,
+                    "n_id": "37__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 1,
+                    "version": 0,
+                    "tagged_src": "S. Babu and Sreekala P.V., respondent NOS. NnUuMm२, NnUuMm१ and NnUuMm० respectively before us.",
+                    "tagged_tgt": "एस। बाबू और श्रीकला पीवी, प्रतिवादी सं. NnUuMm२,NnUuMm१ और NnUuMm० हमारे सामने क्रमशः।",
+                    "target": "एस। बाबू और श्रीकला पीवी, प्रतिवादी सं. 1,2 और 3 हमारे सामने क्रमशः।"
+                },
+                {
+                    "text": "",
+                    "sentence_index": 2,
+                    "src": "",
+                    "id": 56,
+                    "n_id": "37__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 2,
+                    "version": 0,
+                    "tagged_src": "",
+                    "tagged_tgt": "",
+                    "target": ""
+                },
+                {
+                    "text": "3. The High Court in the impugned order has held that the respondent NOS. 1, 2 and 3 were entitled to financial upgradation under the Modified Assured Career Progression Scheme (‘MACP’, for short) as they have been working as Enquiry-Cum-Reservation Clerks (‘ECRC’, for short) W.E.F. 01.11.2003 and therefore, have completed ten years in the cadre of ECRC.",
+                    "sentence_index": 3,
+                    "src": "3. The High Court in the impugned order has held that the respondent NOS. 1, 2 and 3 were entitled to financial upgradation under the Modified Assured Career Progression Scheme (‘MACP’, for short) as they have been working as Enquiry-Cum-Reservation Clerks (‘ECRC’, for short) W.E.F. 01.11.2003 and therefore, have completed ten years in the cadre of ECRC.",
+                    "id": 56,
+                    "n_id": "37__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 3,
+                    "version": 0,
+                    "tagged_src": "3. The High Court in the impugned order has held that the respondent NOS. NnUuMm४, NnUuMm३ and NnUuMm२ were entitled to financial upgradation under the Modified Assured Career Progression Scheme (‘MACP’, for short) as they have been working as Enquiry-Cum-Reservation Clerks (‘ECRC’, for short) W.E.F. 0NnUuMm५.NnUuMm१.NnUuMm० and therefore, have completed ten years in the cadre of ECRC.",
+                    "tagged_tgt": "3. उच्च न्यायालय ने आक्षेपित आदेश में यह अभिनिर्धारित किया है कि प्रत्यर्थी सं. NnUuMm४,NnUuMm३ और NnUuMm२, संशोधित आश्वासन कैरियर प्रगति योजना (“अर् संक्षेप में एमएसीपी”) के अधीन वित्तीय उन्नयन के हकदार थे क्योंकि वे जांच-सह-संरक्षण लिपिक (संक्षेप में 'ईसीआरसी') के रूप में कार्य कर रहे हैं, डब्ल्यूईएफ 0NnUuMm५.NnUuMm१.NnUuMm० और इसलिए, ईसीआरसी के संवर्ग में दस वर्ष पूरे कर लिए हैं.",
+                    "target": "3. उच्च न्यायालय ने आक्षेपित आदेश में यह अभिनिर्धारित किया है कि प्रत्यर्थी सं. 1,2 और 3, संशोधित आश्वासन कैरियर प्रगति योजना (“अर् संक्षेप में एमएसीपी”) के अधीन वित्तीय उन्नयन के हकदार थे क्योंकि वे जांच-सह-संरक्षण लिपिक (संक्षेप में 'ईसीआरसी') के रूप में कार्य कर रहे हैं, डब्ल्यूईएफ 01.11.2003 और इसलिए, ईसीआरसी के संवर्ग में दस वर्ष पूरे कर लिए हैं।"
+                },
+                {
+                    "text": "Accordingly, the Tribunal was justified and correct in granting the relief by placing the three respondents in the pay band- II with grade pay of Rs. 4600 W.E.F. 01.11.2013.",
+                    "sentence_index": 4,
+                    "src": "Accordingly, the Tribunal was justified and correct in granting the relief by placing the three respondents in the pay band- II with grade pay of Rs. 4600 W.E.F. 01.11.2013.",
+                    "id": 56,
+                    "n_id": "37__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 4,
+                    "version": 0,
+                    "tagged_src": "Accordingly, the Tribunal was justified and correct in granting the relief by placing the three respondents in the pay band- II with grade pay of Rs. NnUuMm० W.E.F. 0NnUuMm३.NnUuMm२.NnUuMm१.",
+                    "tagged_tgt": "तदनुसार, न्यायाधिकरण को रुपये के ग्रेड वेतन के साथ वेतन बैंड-II में तीन उत्तरदाताओं को रखकर राहत देने में उचित और सही था। NnUuMm० WEF 0NnUuMm३.NnUuMm२.NnUuMm१।",
+                    "target": "तदनुसार, न्यायाधिकरण को रुपये के ग्रेड वेतन के साथ वेतन बैंड-II में तीन उत्तरदाताओं को रखकर राहत देने में उचित और सही था। 4600 WEF 01.11.2013।"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bbd9e54a47ff",
+            "y": "543",
+            "x": "108",
+            "y_end": "930",
+            "text": "4. The impugned order, however, fails to notice and examine the circular dated 12.09.2012 issued by the Ministry of Railways (Railway Board) on behalf of the Government of India clarifying grant of benefits under the MACP Scheme to employees who had qualified and were appointed under the promotion quota after clearing Limited Departmental Competitive Examination (‘LDCE’, for short). The aforesaid clarification was issued after the matter was examined in consultation with the Department of Personnel & Training (DoP&T), the nodal department, and stipulates as under:",
+            "style": "position:absolute;top:543px;left:108px;white-space:nowrap",
+            "class": "ft00",
+            "page_no": 2,
+            "is_bold": false,
+            "page_no_end": 2,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "47",
+            "para_index": 13,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "4. The impugned order, however, fails to notice and examine the circular dated 12.09.2012 issued by the Ministry of Railways (Railway Board) on behalf of the Government of India clarifying grant of benefits under the MACP Scheme to employees who had qualified and were appointed under the promotion quota after clearing Limited Departmental Competitive Examination (‘LDCE’, for short).",
+                    "sentence_index": 0,
+                    "src": "4. The impugned order, however, fails to notice and examine the circular dated 12.09.2012 issued by the Ministry of Railways (Railway Board) on behalf of the Government of India clarifying grant of benefits under the MACP Scheme to employees who had qualified and were appointed under the promotion quota after clearing Limited Departmental Competitive Examination (‘LDCE’, for short).",
+                    "id": 56,
+                    "n_id": "47__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "4. The impugned order, however, fails to notice and examine the circular dated NnUuMm१.0NnUuMm२.NnUuMm० issued by the Ministry of Railways (Railway Board) on behalf of the Government of India clarifying grant of benefits under the MACP Scheme to employees who had qualified and were appointed under the promotion quota after clearing Limited Departmental Competitive Examination (‘LDCE’, for short).",
+                    "tagged_tgt": "4. हालांकि, भारत सरकार की ओर से रेलवे मंत्रालय (रेलवे बोर्ड) द्वारा जारी किए गए परिपत्र दिनांक NnUuMm१.0NnUuMm२.NnUuMm० को नोटिस और जांच करने में विफल रहता है, जो योग्य कर्मचारियों को एमएसीपी योजना के तहत लाभ के अनुदान को स्पष्ट करता है और नियुक्त किया गया था। सीमित विभागीय प्रतियोगी परीक्षा ('एलडीसीई', संक्षेप में) को मंजूरी देने के बाद पदोन्नति कोटा।",
+                    "target": "4. हालांकि, भारत सरकार की ओर से रेलवे मंत्रालय (रेलवे बोर्ड) द्वारा जारी किए गए परिपत्र दिनांक 12.09.2012 को नोटिस और जांच करने में विफल रहता है, जो योग्य कर्मचारियों को एमएसीपी योजना के तहत लाभ के अनुदान को स्पष्ट करता है और नियुक्त किया गया था। सीमित विभागीय प्रतियोगी परीक्षा ('एलडीसीई', संक्षेप में) को मंजूरी देने के बाद पदोन्नति कोटा।"
+                },
+                {
+                    "text": "The aforesaid clarification was issued after the matter was examined in consultation with the Department of Personnel & Training (DoP&T), the nodal department, and stipulates as under:",
+                    "sentence_index": 1,
+                    "src": "The aforesaid clarification was issued after the matter was examined in consultation with the Department of Personnel & Training (DoP&T), the nodal department, and stipulates as under:",
+                    "id": 56,
+                    "n_id": "47__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 1,
+                    "version": 0,
+                    "tagged_src": "The aforesaid clarification was issued after the matter was examined in consultation with the Department of Personnel & Training (DoP&T), the nodal department, and stipulates as under:",
+                    "tagged_tgt": "नोडल विभाग के कार्मिक और प्रशिक्षण (DoP & T) के विभाग के परामर्श से मामले की जांच करने के बाद पूर्वोक्त स्पष्टीकरण जारी किया गया था, और निम्नानुसार निर्धारित किया गया था:",
+                    "target": "नोडल विभाग के कार्मिक और प्रशिक्षण (DoP & T) के विभाग के परामर्श से मामले की जांच करने के बाद पूर्वोक्त स्पष्टीकरण जारी किया गया था, और निम्नानुसार निर्धारित किया गया था:"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bbeba74a4800",
+            "y": "990",
+            "x": "215",
+            "y_end": 133,
+            "text": "“References have been received from Zonal Railways seeking clarification regarding grant of benefits under MACPs in respect of the employees qualifying through LDCE/GDCE. The matter has been examined in consultation with Department of Personnel & Training (DoP&T), the nodal department of Government on MACPS and it has been declared as under:",
+            "style": "position:absolute;top:990px;left:215px;white-space:nowrap",
+            "class": "ft02",
+            "page_no": 2,
+            "is_bold": false,
+            "page_no_end": 3,
+            "class_style": {
+                "font-size": "19px",
+                "line-height": "24px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "51",
+            "para_index": 14,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "“References have been received from Zonal Railways seeking clarification regarding grant of benefits under MACPs in respect of the employees qualifying through LDCE/GDCE.",
+                    "sentence_index": 0,
+                    "src": "“References have been received from Zonal Railways seeking clarification regarding grant of benefits under MACPs in respect of the employees qualifying through LDCE/GDCE.",
+                    "id": 56,
+                    "n_id": "51__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "“References have been received from Zonal Railways seeking clarification regarding grant of benefits under MACPs in respect of the employees qualifying through LDCE/GDCE.",
+                    "tagged_tgt": "LDCE/GDCE के माध्यम से योग्य कर्मचारियों के संबंध में MACP के तहत लाभ प्रदान करने के बारे में स्पष्टीकरण मांगने के लिए जोनल रेलवे से संदर्भ प्राप्त किए गए हैं।",
+                    "target": "LDCE/GDCE के माध्यम से योग्य कर्मचारियों के संबंध में MACP के तहत लाभ प्रदान करने के बारे में स्पष्टीकरण मांगने के लिए जोनल रेलवे से संदर्भ प्राप्त किए गए हैं।"
+                },
+                {
+                    "text": "The matter has been examined in consultation with Department of Personnel & Training (DoP&T), the nodal department of Government on MACPS and it has been declared as under:",
+                    "sentence_index": 1,
+                    "src": "The matter has been examined in consultation with Department of Personnel & Training (DoP&T), the nodal department of Government on MACPS and it has been declared as under:",
+                    "id": 56,
+                    "n_id": "51__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 1,
+                    "version": 0,
+                    "tagged_src": "The matter has been examined in consultation with Department of Personnel & Training (DoP&T), the nodal department of Government on MACPS and it has been declared as under:",
+                    "tagged_tgt": "इस मामले की जांच कार्मिक और प्रशिक्षण विभाग (DoP & T), MACPS पर सरकार के नोडल विभाग के परामर्श से की गई है और इसे निम्नानुसार घोषित किया गया है:",
+                    "target": "इस मामले की जांच कार्मिक और प्रशिक्षण विभाग (DoP & T), MACPS पर सरकार के नोडल विभाग के परामर्श से की गई है और इसे निम्नानुसार घोषित किया गया है:"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb51b04a4801",
+            "y": "191",
+            "x": "215",
+            "y_end": 407,
+            "text": "(i) if the relevant RRs provide for filling up of vacancies in a grade by Direct Recruitment, induction of an employee to that grade through LDCE/GDCE may be treated as Direct Recruitment for the purpose of grant of financial upgradation under MACPS. In such cases past service rendered in a lower pay scale/Grade Pay shall NOT be counted for the purpose of MACP Scheme.",
+            "style": "position:absolute;top:191px;left:215px;white-space:nowrap",
+            "class": "ft00",
+            "page_no": 3,
+            "is_bold": false,
+            "page_no_end": 3,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "53",
+            "para_index": 15,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "(i) if the relevant RRs provide for filling up of vacancies in a grade by Direct Recruitment, induction of an employee to that grade through LDCE/GDCE may be treated as Direct Recruitment for the purpose of grant of financial upgradation under MACPS.",
+                    "sentence_index": 0,
+                    "src": "(i) if the relevant RRs provide for filling up of vacancies in a grade by Direct Recruitment, induction of an employee to that grade through LDCE/GDCE may be treated as Direct Recruitment for the purpose of grant of financial upgradation under MACPS.",
+                    "id": 56,
+                    "n_id": "53__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "(i) if the relevant RRs provide for filling up of vacancies in a grade by Direct Recruitment, induction of an employee to that grade through LDCE/GDCE may be treated as Direct Recruitment for the purpose of grant of financial upgradation under MACPS.",
+                    "tagged_tgt": "(i) यदि संबंधित आरआर सीधे भर्ती द्वारा एक ग्रेड में रिक्तियों को भरने के लिए प्रदान करते हैं, तो एलडीसीई/जीडीसीई के माध्यम से उस ग्रेड में किसी कर्मचारी को शामिल करने को एमएसीपीएस के तहत वित्तीय उन्नयन के अनुदान के उद्देश्य से सीधी भर्ती के रूप में माना जा सकता है।",
+                    "target": "(i) यदि संबंधित आरआर सीधे भर्ती द्वारा एक ग्रेड में रिक्तियों को भरने के लिए प्रदान करते हैं, तो एलडीसीई/जीडीसीई के माध्यम से उस ग्रेड में किसी कर्मचारी को शामिल करने को एमएसीपीएस के तहत वित्तीय उन्नयन के अनुदान के उद्देश्य से सीधी भर्ती के रूप में माना जा सकता है।"
+                },
+                {
+                    "text": "In such cases past service rendered in a lower pay scale/Grade Pay shall NOT be counted for the purpose of MACP Scheme.",
+                    "sentence_index": 1,
+                    "src": "In such cases past service rendered in a lower pay scale/Grade Pay shall NOT be counted for the purpose of MACP Scheme.",
+                    "id": 56,
+                    "n_id": "53__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 1,
+                    "version": 0,
+                    "tagged_src": "In such cases past service rendered in a lower pay scale/Grade Pay shall NOT be counted for the purpose of MACP Scheme.",
+                    "tagged_tgt": "ऐसे मामलों में कम वेतनमान/ग्रेड वेतन में प्रदान की गई पिछली सेवा को एमएसीपी योजना के उद्देश्य से नहीं गिना जाएगा।",
+                    "target": "ऐसे मामलों में कम वेतनमान/ग्रेड वेतन में प्रदान की गई पिछली सेवा को एमएसीपी योजना के उद्देश्य से नहीं गिना जाएगा।"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bbec3f4a4802",
+            "y": "457",
+            "x": "215",
+            "y_end": 625,
+            "text": "(ii) if the relevant RRs prescribe a promotion Quota to be filled on the basis of LDCE/GDCE, such appointment would be treated as promotion for the purpose of benefit under the MACPS and in such cases past regular service shall also be counted for further benefits, if any, under the MACP Scheme.",
+            "style": "position:absolute;top:457px;left:215px;white-space:nowrap",
+            "class": "ft00",
+            "page_no": 3,
+            "is_bold": false,
+            "page_no_end": 3,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "55",
+            "para_index": 16,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "(ii) if the relevant RRs prescribe a promotion Quota to be filled on the basis of LDCE/GDCE, such appointment would be treated as promotion for the purpose of benefit under the MACPS and in such cases past regular service shall also be counted for further benefits, if any, under the MACP Scheme.",
+                    "sentence_index": 0,
+                    "src": "(ii) if the relevant RRs prescribe a promotion Quota to be filled on the basis of LDCE/GDCE, such appointment would be treated as promotion for the purpose of benefit under the MACPS and in such cases past regular service shall also be counted for further benefits, if any, under the MACP Scheme.",
+                    "id": 56,
+                    "n_id": "55__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "(ii) if the relevant RRs prescribe a promotion Quota to be filled on the basis of LDCE/GDCE, such appointment would be treated as promotion for the purpose of benefit under the MACPS and in such cases past regular service shall also be counted for further benefits, if any, under the MACP Scheme.",
+                    "tagged_tgt": "(ii) यदि सुसंगत आरआर एलडीसीई/जीडीसीई के आधार पर भरे जाने के लिए पदोन्नति कोटा निर्धारित करते हैं, तो ऐसी नियुक्ति को एमएसीपीएस के तहत लाभ के उद्देश्य से पदोन्नति के रूप में माना जाएगा और ऐसे मामलों में एमएसीपी योजना के तहत पिछले नियमित सेवा को और लाभ के लिए भी गिना जाएगा, यदि कोई हो।",
+                    "target": "(ii) यदि सुसंगत आरआर एलडीसीई/जीडीसीई के आधार पर भरे जाने के लिए पदोन्नति कोटा निर्धारित करते हैं, तो ऐसी नियुक्ति को एमएसीपीएस के तहत लाभ के उद्देश्य से पदोन्नति के रूप में माना जाएगा और ऐसे मामलों में एमएसीपी योजना के तहत पिछले नियमित सेवा को और लाभ के लिए भी गिना जाएगा, यदि कोई हो।"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb59c54a4803",
+            "y": "674",
+            "x": "215",
+            "y_end": "723",
+            "text": "The Indian Railway Establishment Manual Vol. I with regard to the filling of posts to ECRC states as under:",
+            "style": "position:absolute;top:674px;left:215px;white-space:nowrap",
+            "class": "ft00",
+            "page_no": 3,
+            "is_bold": false,
+            "page_no_end": 3,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "57",
+            "para_index": 17,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "The Indian Railway Establishment Manual Vol. I with regard to the filling of posts to ECRC states as under:",
+                    "sentence_index": 0,
+                    "src": "The Indian Railway Establishment Manual Vol. I with regard to the filling of posts to ECRC states as under:",
+                    "id": 56,
+                    "n_id": "57__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "The Indian Railway Establishment Manual Vol. I with regard to the filling of posts to ECRC states as under:",
+                    "tagged_tgt": "भारतीय रेलवे स्थापना नियमावली वॉल्यूम। मैं ईसीआरसी राज्यों को पदों को भरने के संबंध में निम्नानुसार हूं:",
+                    "target": "भारतीय रेलवे स्थापना नियमावली वॉल्यूम। मैं ईसीआरसी राज्यों को पदों को भरने के संबंध में निम्नानुसार हूं:"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb099e4a4804",
+            "y": "783",
+            "x": "215",
+            "y_end": 205,
+            "text": "“129. (1) The posts in the category of Enquiry─ Cum─ Reservation Clerks (ECRC) in scale of Rs. 4500-7000 w.e.f 1.1.96 will be filled as under:- (i) 25% by direct recruitment through Railway Recruitment Board: and (ii) 75% by promotion by selection from amongst Sr. Commercial Clerks and Sr. Ticket Collectors in the scale of pay Rs. 4000-6000 (RSRP) and Commercial Clerks and Ticket Collectors in the scale of pay Rs. 3200-4900 (RSPP) and Rs. 3050-4590 (RSRP) respectively who are suitable for posting as ECRC involving direct contact with general public. Commercial Clerks and Ticket Collectors in grades Rs. 3050-4590 and 3200-4900 respectively should have completed a minimum of three years service in the respective grade.”",
+            "style": "position:absolute;top:783px;left:215px;white-space:nowrap",
+            "class": "ft02",
+            "page_no": 3,
+            "is_bold": false,
+            "page_no_end": 4,
+            "class_style": {
+                "font-size": "19px",
+                "line-height": "24px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "65",
+            "para_index": 18,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "“129.",
+                    "sentence_index": 0,
+                    "src": "“129.",
+                    "id": 56,
+                    "n_id": "65__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "“NnUuMm०.",
+                    "tagged_tgt": "NnUuMm०",
+                    "target": "129"
+                },
+                {
+                    "text": "(1) The posts in the category of Enquiry─ Cum─ Reservation Clerks (ECRC) in scale of Rs. 4500-7000 w.e.f 1.1.96 will be filled as under:-",
+                    "sentence_index": 1,
+                    "src": "(1) The posts in the category of Enquiry─ Cum─ Reservation Clerks (ECRC) in scale of Rs. 4500-7000 w.e.f 1.1.96 will be filled as under:-",
+                    "id": 56,
+                    "n_id": "65__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 1,
+                    "version": 0,
+                    "tagged_src": "(1) The posts in the category of Enquiry─ Cum─ Reservation Clerks (ECRC) in scale of Rs. NnUuMm१-NnUuMm० w.e.f NnUuMm३.NnUuMm४.NnUuMm२ will be filled as under:-",
+                    "tagged_tgt": "(1) रुपये के पैमाने पर पूछताछ NnUuMm१-NnUuMm० डब्ल्यूएफ NnUuMm३.NnUuMm४.NnUuMm२ के क्षेत्र में पूछताछ की श्रेणी में न्यूनतम आरक्षण क्लर्क (ईसीआरसी) के पद निम्नानुसार भरे जाएंगे: -",
+                    "target": "(1) रुपये के पैमाने पर पूछताछ 4500-7000 डब्ल्यूएफ 1.1.96 के क्षेत्र में पूछताछ की श्रेणी में न्यूनतम आरक्षण क्लर्क (ईसीआरसी) के पद निम्नानुसार भरे जाएंगे: -"
+                },
+                {
+                    "text": "(i) 25% by direct recruitment through Railway Recruitment Board:",
+                    "sentence_index": 2,
+                    "src": "(i) 25% by direct recruitment through Railway Recruitment Board:",
+                    "id": 56,
+                    "n_id": "65__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 2,
+                    "version": 0,
+                    "tagged_src": "(i) NnUuMm०% by direct recruitment through Railway Recruitment Board:",
+                    "tagged_tgt": "(i) रेलवे भर्ती बोर्ड के माध्यम से सीधी भर्ती द्वारा NnUuMm०%:",
+                    "target": "(i) रेलवे भर्ती बोर्ड के माध्यम से सीधी भर्ती द्वारा 25%:"
+                },
+                {
+                    "text": "and",
+                    "sentence_index": 3,
+                    "src": "and",
+                    "id": 56,
+                    "n_id": "65__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 3,
+                    "version": 0,
+                    "tagged_src": "and",
+                    "tagged_tgt": "and",
+                    "target": "and"
+                },
+                {
+                    "text": "(ii) 75% by promotion by selection from amongst Sr. Commercial Clerks and Sr. Ticket Collectors in the scale of pay Rs. 4000-6000 (RSRP) and Commercial Clerks and Ticket Collectors in the scale of pay Rs. 3200-4900 (RSPP) and Rs. 3050-4590 (RSRP) respectively who are suitable for posting as ECRC involving direct contact with general public.",
+                    "sentence_index": 4,
+                    "src": "(ii) 75% by promotion by selection from amongst Sr. Commercial Clerks and Sr. Ticket Collectors in the scale of pay Rs. 4000-6000 (RSRP) and Commercial Clerks and Ticket Collectors in the scale of pay Rs. 3200-4900 (RSPP) and Rs. 3050-4590 (RSRP) respectively who are suitable for posting as ECRC involving direct contact with general public.",
+                    "id": 56,
+                    "n_id": "65__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 4,
+                    "version": 0,
+                    "tagged_src": "(ii) NnUuMm६% by promotion by selection from amongst Sr. Commercial Clerks and Sr. Ticket Collectors in the scale of pay Rs. NnUuMm३-NnUuMm० (RSRP) and Commercial Clerks and Ticket Collectors in the scale of pay Rs. NnUuMm४-NnUuMm१ (RSPP) and Rs. NnUuMm५-NnUuMm२ (RSRP) respectively who are suitable for posting as ECRC involving direct contact with general public.",
+                    "tagged_tgt": "(ii) वेतनमान के पैमाने में सीनियर कमर्शियल क्लर्कों और सीनियर टिकट कलेक्टरों में से चयन द्वारा NnUuMm६% रु. NnUuMm३-NnUuMm० (RSRP) और वाणिज्यिक क्लर्क और टिकट कलेक्टरों में रु. NnUuMm४-NnUuMm१ (RSP) और रु. NnUuMm५-NnUuMm२ (RSRP) जो साधारण जनता के सीधे संपर्क में आने वाले ईसीआरसी के रूप में पदस्थापना के लिए उपयुक्त हैं",
+                    "target": "(ii) वेतनमान के पैमाने में सीनियर कमर्शियल क्लर्कों और सीनियर टिकट कलेक्टरों में से चयन द्वारा 75% रु. 4000-6000 (RSRP) और वाणिज्यिक क्लर्क और टिकट कलेक्टरों में रु. 3200-4900 (RSP) और रु. 3050-4590 (RSRP) जो साधारण जनता के सीधे संपर्क में आने वाले ईसीआरसी के रूप में पदस्थापना के लिए उपयुक्त हैं।"
+                },
+                {
+                    "text": "Commercial Clerks and Ticket Collectors in grades Rs. 3050-4590 and 3200-4900 respectively should have completed a minimum of three years service in the respective grade.”",
+                    "sentence_index": 5,
+                    "src": "Commercial Clerks and Ticket Collectors in grades Rs. 3050-4590 and 3200-4900 respectively should have completed a minimum of three years service in the respective grade.”",
+                    "id": 56,
+                    "n_id": "65__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 5,
+                    "version": 0,
+                    "tagged_src": "Commercial Clerks and Ticket Collectors in grades Rs. NnUuMm३-NnUuMm१ and NnUuMm२-NnUuMm० respectively should have completed a minimum of three years service in the respective grade.”",
+                    "tagged_tgt": "वाणिज्यिक लिपिक और टिकट कलेक्टरों को क्रमशः NnUuMm३-NnUuMm१ और NnUuMm२-NnUuMm० ग्रेड में न्यूनतम तीन वर्ष की सेवा पूरी करनी चाहिए थी।",
+                    "target": "वाणिज्यिक लिपिक और टिकट कलेक्टरों को क्रमशः 3050-4590 और 3200-4900 ग्रेड में न्यूनतम तीन वर्ष की सेवा पूरी करनी चाहिए थी।"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb300a4a4805",
+            "y": "264",
+            "x": "215",
+            "y_end": "409",
+            "text": "The contention of the appellants is that the three respondents were appointed to the post of ECRC under the promotion quota and their appointment cannot be treated as regular/direct recruitment to the service.",
+            "style": "position:absolute;top:264px;left:215px;white-space:nowrap",
+            "class": "ft00",
+            "page_no": 4,
+            "is_bold": false,
+            "page_no_end": 4,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "69",
+            "para_index": 19,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "The contention of the appellants is that the three respondents were appointed to the post of ECRC under the promotion quota and their appointment cannot be treated as regular/direct recruitment to the service.",
+                    "sentence_index": 0,
+                    "src": "The contention of the appellants is that the three respondents were appointed to the post of ECRC under the promotion quota and their appointment cannot be treated as regular/direct recruitment to the service.",
+                    "id": 56,
+                    "n_id": "69__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "The contention of the appellants is that the three respondents were appointed to the post of ECRC under the promotion quota and their appointment cannot be treated as regular/direct recruitment to the service.",
+                    "tagged_tgt": "अपीलकर्ताओं का तर्क यह है कि तीन उत्तरदाताओं को पदोन्नति कोटा के तहत ECRC के पद पर नियुक्त किया गया था और उनकी नियुक्ति को सेवा में नियमित/सीधी भर्ती नहीं माना जा सकता है।",
+                    "target": "अपीलकर्ताओं का तर्क यह है कि तीन उत्तरदाताओं को पदोन्नति कोटा के तहत ECRC के पद पर नियुक्त किया गया था और उनकी नियुक्ति को सेवा में नियमित/सीधी भर्ती नहीं माना जा सकता है।"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bbcae54a4806",
+            "y": "452",
+            "x": "108",
+            "y_end": "887",
+            "text": "5. The appellants in the reply filed before the Tribunal had stated that Rosamma Benny, respondent No. 1, was appointed as an Office Clerk on 01.04.1982 under Sports Quota in Western Railways in the scale of Rs.260-400/Rs.950-1500. Thereafter, she was transferred to the Palakkad Division in Southern Railway on 13.02.1989 as a Commercial Clerk in the scale of Rs.290- 430/Rs.975-1540. On 14.08.1995 (subsequently revised to 28.12.1993), she was promoted as ECRC-II in the scale of Rs.1200-2040/Rs.4500-7000. Subsequently, respondent No. 1 was promoted as ECRC-I in the scale of Rs.5000-8000 w.e.f.",
+            "style": "position:absolute;top:452px;left:108px;white-space:nowrap",
+            "class": "ft00",
+            "page_no": 4,
+            "is_bold": false,
+            "page_no_end": 4,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "81",
+            "para_index": 20,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "5. The appellants in the reply filed before the Tribunal had stated that Rosamma Benny, respondent NO. 1, was appointed as an Office Clerk on 01.04.1982 under Sports Quota in Western Railways in the scale of Rs.260-400/Rs.950-1500.",
+                    "sentence_index": 0,
+                    "src": "5. The appellants in the reply filed before the Tribunal had stated that Rosamma Benny, respondent NO. 1, was appointed as an Office Clerk on 01.04.1982 under Sports Quota in Western Railways in the scale of Rs.260-400/Rs.950-1500.",
+                    "id": 56,
+                    "n_id": "81__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "5. The appellants in the reply filed before the Tribunal had stated that Rosamma Benny, respondent NO. NnUuMm६, was appointed as an Office Clerk on 0NnUuMm७.0NnUuMm५.NnUuMm० under Sports Quota in Western Railways in the scale of Rs.NnUuMm४-NnUuMm३/Rs.NnUuMm२-NnUuMm१.",
+                    "tagged_tgt": "5. न्यायाधिकरण के समक्ष दायर जवाब में अपीलकर्ताओं ने कहा था कि रोशम्मा बेनी, प्रतिवादी सं। NnUuMm६,0NnUuMm७.0NnUuMm५.NnUuMm० को पश्चिम रेलवे में स्पोर्ट्स कोटा के तहत NnUuMm४-NnUuMm३/रु. NnUuMm२-NnUuMm१ के पैमाने पर एक कार्यालय क्लर्क के रूप में नियुक्त किया गया था।",
+                    "target": "5. न्यायाधिकरण के समक्ष दायर जवाब में अपीलकर्ताओं ने कहा था कि रोशम्मा बेनी, प्रतिवादी सं। 1,01.04.1982 को पश्चिम रेलवे में स्पोर्ट्स कोटा के तहत 260-400/रु. 950-1500 के पैमाने पर एक कार्यालय क्लर्क के रूप में नियुक्त किया गया था।"
+                },
+                {
+                    "text": "Thereafter, she was transferred to the Palakkad Division in Southern Railway on 13.02.1989 as a Commercial Clerk in the scale of Rs.290- 430/Rs.975-1540.",
+                    "sentence_index": 1,
+                    "src": "Thereafter, she was transferred to the Palakkad Division in Southern Railway on 13.02.1989 as a Commercial Clerk in the scale of Rs.290- 430/Rs.975-1540.",
+                    "id": 56,
+                    "n_id": "81__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 1,
+                    "version": 0,
+                    "tagged_src": "Thereafter, she was transferred to the Palakkad Division in Southern Railway on NnUuMm५.0NnUuMm६.NnUuMm० as a Commercial Clerk in the scale of Rs.NnUuMm४- NnUuMm३/Rs.NnUuMm२-NnUuMm१.",
+                    "tagged_tgt": "इसके बाद, उसे NnUuMm५.0NnUuMm६.NnUuMm० को दक्षिणी रेलवे में पलक्कड़ डिवीजन में NnUuMm४-NnUuMm३/NnUuMm२-NnUuMm१ रुपये के वाणिज्यिक क्लर्क के रूप में स्थानांतरित कर दिया गया।",
+                    "target": "इसके बाद, उसे 13.02.1989 को दक्षिणी रेलवे में पलक्कड़ डिवीजन में 290-430/975-1540 रुपये के वाणिज्यिक क्लर्क के रूप में स्थानांतरित कर दिया गया।"
+                },
+                {
+                    "text": "On 14.08.1995 (subsequently revised to 28.12.1993), she was promoted as ECRC-II in the scale of Rs.1200-2040/Rs.4500-7000.",
+                    "sentence_index": 2,
+                    "src": "On 14.08.1995 (subsequently revised to 28.12.1993), she was promoted as ECRC-II in the scale of Rs.1200-2040/Rs.4500-7000.",
+                    "id": 56,
+                    "n_id": "81__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 2,
+                    "version": 0,
+                    "tagged_src": "On NnUuMm७.0NnUuMm९.NnUuMm३ (subsequently revised to NnUuMm६.NnUuMm८.NnUuMm४), she was promoted as ECRC-II in the scale of Rs.NnUuMm५-NnUuMm२/Rs.NnUuMm१-NnUuMm०.",
+                    "tagged_tgt": "NnUuMm७.0NnUuMm९.NnUuMm३ को (बाद में NnUuMm६.NnUuMm८.NnUuMm४ तक संशोधित), उन्हें Rs. NnUuMm५-NnUuMm२/Rs. NnUuMm१-NnUuMm० के पैमाने में ECRC-II के रूप में पदोन्नत किया गया था।",
+                    "target": "14.08.1995 को (बाद में 28.12.1993 तक संशोधित), उन्हें Rs. 1200-2040/Rs. 4500-7000 के पैमाने में ECRC-II के रूप में पदोन्नत किया गया था।"
+                },
+                {
+                    "text": "Subsequently, respondent NO. 1 was promoted as ECRC-I in the scale of Rs.5000-8000 w.e.f.",
+                    "sentence_index": 3,
+                    "src": "Subsequently, respondent NO. 1 was promoted as ECRC-I in the scale of Rs.5000-8000 w.e.f.",
+                    "id": 56,
+                    "n_id": "81__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 3,
+                    "version": 0,
+                    "tagged_src": "Subsequently, respondent NO. NnUuMm२ was promoted as ECRC-I in the scale of Rs.NnUuMm१-NnUuMm० w.e.f.",
+                    "tagged_tgt": "इसके बाद, प्रतिवादी सं। NnUuMm२ को ECRC-I के रूप में NnUuMm१-NnUuMm० रुपये के पैमाने पर पदोन्नत किया गया था",
+                    "target": "इसके बाद, प्रतिवादी सं। 1 को ECRC-I के रूप में 5000-8000 रुपये के पैमाने पर पदोन्नत किया गया था।"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb1c214a4807",
+            "y": "935",
+            "x": "162",
+            "y_end": "592",
+            "text": "01.11.2003 (proforma) and 02.01.2009 (regular). Similarly, Jessy S. Babu, respondent No. 2, was appointed as an Office Clerk in South Eastern Railway on 02.03.1984 in the scale of Rs.260- 400/Rs.950-1500. She was transferred to the Trivandrum Division in Southern Railway on 25.06.1986 as a Commercial Clerk in the scale of Rs.290-430/Rs.975-1540. Subsequently, on 14.03.1995 she was promoted as ECRC-II in the scale of Rs.1200- 2040/Rs.4500-7000. On 01.11.2003 she was further promoted as ECRC-I in the scale of Rs.5000-8000. Sreekala P.V., respondent No. 3, was appointed as an Office Clerk on 13.03.1984 in the scale of Rs.260-400/Rs.950-1500 in South Central Railway. On 15.07.1987 she was transferred to the Madras Division in Southern Railway as a Commercial Clerk in the scale of Rs.290-430/Rs.975- 1540. Thereafter, she was promoted as ECRC-II on 22.08.1993 in the scale of Rs.1200-2040/4500-7000. On 01.11.2003 she was promoted as ECRC-I in the scale of Rs.5000-8000.",
+            "style": "position:absolute;top:935px;left:162px;white-space:nowrap",
+            "class": "ft00",
+            "page_no": 4,
+            "is_bold": false,
+            "page_no_end": 5,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "99",
+            "para_index": 21,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "01.11.2003 (proforma) and 02.01.2009 (regular).",
+                    "sentence_index": 0,
+                    "src": "01.11.2003 (proforma) and 02.01.2009 (regular).",
+                    "id": 56,
+                    "n_id": "99__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "0NnUuMm४.NnUuMm२.NnUuMm१ (proforma) and 0NnUuMm३.0NnUuMm५.NnUuMm० (regular).",
+                    "tagged_tgt": "0NnUuMm४.NnUuMm२.NnUuMm१ (प्रोफार्मा) और 0NnUuMm३.0NnUuMm५.NnUuMm० (नियमित)।",
+                    "target": "01.11.2003 (प्रोफार्मा) और 02.01.2009 (नियमित)।"
+                },
+                {
+                    "text": "Similarly, Jessy",
+                    "sentence_index": 1,
+                    "src": "Similarly, Jessy",
+                    "id": 56,
+                    "n_id": "99__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 1,
+                    "version": 0,
+                    "tagged_src": "Similarly, Jessy",
+                    "tagged_tgt": "इसी तरह, जेसी",
+                    "target": "इसी तरह, जेसी"
+                },
+                {
+                    "text": "S. Babu, respondent NO. 2, was appointed as an Office Clerk in South Eastern Railway on 02.03.1984 in the scale of Rs.260- 400/Rs.950-1500.",
+                    "sentence_index": 2,
+                    "src": "S. Babu, respondent NO. 2, was appointed as an Office Clerk in South Eastern Railway on 02.03.1984 in the scale of Rs.260- 400/Rs.950-1500.",
+                    "id": 56,
+                    "n_id": "99__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 2,
+                    "version": 0,
+                    "tagged_src": "S. Babu, respondent NO. NnUuMm६, was appointed as an Office Clerk in South Eastern Railway on 0NnUuMm७.0NnUuMm५.NnUuMm० in the scale of Rs.NnUuMm४- NnUuMm३/Rs.NnUuMm२-NnUuMm१.",
+                    "tagged_tgt": "एस। बाबू, प्रतिवादी सं। NnUuMm६, को दक्षिण पूर्व रेलवे में कार्यालय क्लर्क के रूप में 0NnUuMm७.0NnUuMm५.NnUuMm० को Rs. NnUuMm४-NnUuMm३/Rs. NnUuMm२-NnUuMm१ के पैमाने पर नियुक्त किया गया था।",
+                    "target": "एस। बाबू, प्रतिवादी सं। 2, को दक्षिण पूर्व रेलवे में कार्यालय क्लर्क के रूप में 02.03.1984 को Rs. 260-400/Rs. 950-1500 के पैमाने पर नियुक्त किया गया था।"
+                },
+                {
+                    "text": "She was transferred to the Trivandrum Division in Southern Railway on 25.06.1986 as a Commercial Clerk in the scale of Rs.290-430/Rs.975-1540.",
+                    "sentence_index": 3,
+                    "src": "She was transferred to the Trivandrum Division in Southern Railway on 25.06.1986 as a Commercial Clerk in the scale of Rs.290-430/Rs.975-1540.",
+                    "id": 56,
+                    "n_id": "99__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 3,
+                    "version": 0,
+                    "tagged_src": "She was transferred to the Trivandrum Division in Southern Railway on NnUuMm५.0NnUuMm६.NnUuMm० as a Commercial Clerk in the scale of Rs.NnUuMm४-NnUuMm३/Rs.NnUuMm२-NnUuMm१.",
+                    "tagged_tgt": "उन्हें NnUuMm५.0NnUuMm६.NnUuMm० को दक्षिण रेलवे में त्रिवेंद्रम डिवीजन में NnUuMm४-NnUuMm३/NnUuMm२-NnUuMm१ रुपये के पैमाने पर वाणिज्यिक क्लर्क के रूप में स्थानांतरित किया गया था।",
+                    "target": "उन्हें 25.06.1986 को दक्षिण रेलवे में त्रिवेंद्रम डिवीजन में 290-430/975-1540 रुपये के पैमाने पर वाणिज्यिक क्लर्क के रूप में स्थानांतरित किया गया था।"
+                },
+                {
+                    "text": "Subsequently, on 14.03.1995 she was promoted as ECRC-II in the scale of Rs.1200- 2040/Rs.4500-7000.",
+                    "sentence_index": 4,
+                    "src": "Subsequently, on 14.03.1995 she was promoted as ECRC-II in the scale of Rs.1200- 2040/Rs.4500-7000.",
+                    "id": 56,
+                    "n_id": "99__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 4,
+                    "version": 0,
+                    "tagged_src": "Subsequently, on NnUuMm५.0NnUuMm६.NnUuMm३ she was promoted as ECRC-II in the scale of Rs.NnUuMm४- NnUuMm२/Rs.NnUuMm१-NnUuMm०.",
+                    "tagged_tgt": "इसके बाद, NnUuMm५.0NnUuMm६.NnUuMm३ को उन्हें NnUuMm४-NnUuMm२/रु. NnUuMm१-NnUuMm० के पैमाने पर ECRC-II के रूप में पदोन्नत किया गया।",
+                    "target": "इसके बाद, 14.03.1995 को उन्हें 1200-2040/रु. 4500-7000 के पैमाने पर ECRC-II के रूप में पदोन्नत किया गया।"
+                },
+                {
+                    "text": "On 01.11.2003 she was further promoted as ECRC-I in the scale of Rs.5000-8000.",
+                    "sentence_index": 5,
+                    "src": "On 01.11.2003 she was further promoted as ECRC-I in the scale of Rs.5000-8000.",
+                    "id": 56,
+                    "n_id": "99__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 5,
+                    "version": 0,
+                    "tagged_src": "On 0NnUuMm४.NnUuMm३.NnUuMm२ she was further promoted as ECRC-I in the scale of Rs.NnUuMm१-NnUuMm०.",
+                    "tagged_tgt": "0NnUuMm४.NnUuMm३.NnUuMm२ को उन्हें आगे NnUuMm१-NnUuMm० रुपये के पैमाने पर ECRC-I के रूप में पदोन्नत किया गया।",
+                    "target": "01.11.2003 को उन्हें आगे 5000-8000 रुपये के पैमाने पर ECRC-I के रूप में पदोन्नत किया गया।"
+                },
+                {
+                    "text": "Sreekala P.V., respondent NO. 3, was appointed as an Office Clerk on 13.03.1984 in the scale of Rs.260-400/Rs.950-1500 in South Central Railway.",
+                    "sentence_index": 6,
+                    "src": "Sreekala P.V., respondent NO. 3, was appointed as an Office Clerk on 13.03.1984 in the scale of Rs.260-400/Rs.950-1500 in South Central Railway.",
+                    "id": 56,
+                    "n_id": "99__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 6,
+                    "version": 0,
+                    "tagged_src": "Sreekala P.V., respondent NO. NnUuMm६, was appointed as an Office Clerk on NnUuMm५.0NnUuMm७.NnUuMm० in the scale of Rs.NnUuMm४-NnUuMm३/Rs.NnUuMm२-NnUuMm१ in South Central Railway.",
+                    "tagged_tgt": "श्रीकला पीवी, प्रतिवादी सं। NnUuMm६, दक्षिण मध्य रेलवे में NnUuMm४-NnUuMm३/NnUuMm२-NnUuMm१ रुपये के पैमाने पर NnUuMm५.0NnUuMm७.NnUuMm० को कार्यालय क्लर्क के रूप में नियुक्त किया गया था।",
+                    "target": "श्रीकला पीवी, प्रतिवादी सं। 3, दक्षिण मध्य रेलवे में 260-400/950-1500 रुपये के पैमाने पर 13.03.1984 को कार्यालय क्लर्क के रूप में नियुक्त किया गया था।"
+                },
+                {
+                    "text": "On 15.07.1987 she was transferred to the Madras Division in Southern Railway as a Commercial Clerk in the scale of Rs.290-430/Rs.975- 1540.",
+                    "sentence_index": 7,
+                    "src": "On 15.07.1987 she was transferred to the Madras Division in Southern Railway as a Commercial Clerk in the scale of Rs.290-430/Rs.975- 1540.",
+                    "id": 56,
+                    "n_id": "99__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 7,
+                    "version": 0,
+                    "tagged_src": "On NnUuMm५.0NnUuMm६.NnUuMm० she was transferred to the Madras Division in Southern Railway as a Commercial Clerk in the scale of Rs.NnUuMm४-NnUuMm३/Rs.NnUuMm२- NnUuMm१.",
+                    "tagged_tgt": "NnUuMm५.0NnUuMm६.NnUuMm० को उन्हें दक्षिण रेलवे में मद्रास डिवीजन में रु। NnUuMm४-NnUuMm३/NnUuMm२-NnUuMm१ के पैमाने पर वाणिज्यिक क्लर्क के रूप में स्थानांतरित कर दिया गया था।",
+                    "target": "15.07.1987 को उन्हें दक्षिण रेलवे में मद्रास डिवीजन में रु। 290-430/975-1540 के पैमाने पर वाणिज्यिक क्लर्क के रूप में स्थानांतरित कर दिया गया था।"
+                },
+                {
+                    "text": "Thereafter, she was promoted as ECRC-II on 22.08.1993 in the scale of Rs.1200-2040/4500-7000.",
+                    "sentence_index": 8,
+                    "src": "Thereafter, she was promoted as ECRC-II on 22.08.1993 in the scale of Rs.1200-2040/4500-7000.",
+                    "id": 56,
+                    "n_id": "99__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 8,
+                    "version": 0,
+                    "tagged_src": "Thereafter, she was promoted as ECRC-II on NnUuMm५.0NnUuMm६.NnUuMm३ in the scale of Rs.NnUuMm४-NnUuMm२/NnUuMm१-NnUuMm०.",
+                    "tagged_tgt": "इसके बाद, उन्हें NnUuMm५.0NnUuMm६.NnUuMm३ को NnUuMm४-NnUuMm२/NnUuMm१-NnUuMm० रुपये के पैमाने पर ECRC-II के रूप में पदोन्नत किया गया।",
+                    "target": "इसके बाद, उन्हें 22.08.1993 को 1200-2040/4500-7000 रुपये के पैमाने पर ECRC-II के रूप में पदोन्नत किया गया।"
+                },
+                {
+                    "text": "On 01.11.2003 she was promoted as ECRC-I in the scale of Rs.5000-8000.",
+                    "sentence_index": 9,
+                    "src": "On 01.11.2003 she was promoted as ECRC-I in the scale of Rs.5000-8000.",
+                    "id": 56,
+                    "n_id": "99__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 9,
+                    "version": 0,
+                    "tagged_src": "On 0NnUuMm४.NnUuMm३.NnUuMm२ she was promoted as ECRC-I in the scale of Rs.NnUuMm१-NnUuMm०.",
+                    "tagged_tgt": "0NnUuMm४.NnUuMm३.NnUuMm२ को उन्हें NnUuMm१-NnUuMm० रुपये के पैमाने पर ECRC-I के रूप में पदोन्नत किया गया था।",
+                    "target": "01.11.2003 को उन्हें 5000-8000 रुपये के पैमाने पर ECRC-I के रूप में पदोन्नत किया गया था।"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bbe29b4a4808",
+            "y": "640",
+            "x": "108",
+            "y_end": "399",
+            "text": "6. We have referred to the aforesaid position as it has to be examined whether posting on transfer as Commercial Clerks in the case of the respondents can be and should be treated as the first promotion. It is also to be examined whether there has been any merger of pay scales/upgradations which may have a bearing on application of the MACP Scheme to the present respondents by taking into account the circular dated 10.06.2009 issued by the Ministry of Railways (Railway Board) which states that three financial upgradations would be “counted from the direct entry grade on completion of 10, 20 and 30 years of service”. A further circular dated 29.09.2010 issued by the Ministry of Railways (Railway Board) giving point-wise clarifications, inter alia , states that benefit under the MACP Scheme would be available from the date of actual joining of the post in the entry grade. As noted, enquiry in respect of appointment of the three respondents to the post of ECRC is required in terms of the circular dated 12.09.2012 and Clause 129 of the Indian Railway Establishment, Manual Vol. I, quoted above.",
+            "style": "position:absolute;top:640px;left:108px;white-space:nowrap",
+            "class": "ft00",
+            "page_no": 5,
+            "is_bold": false,
+            "page_no_end": 6,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "122",
+            "para_index": 22,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "6. We have referred to the aforesaid position as it has to be examined whether posting on transfer as Commercial Clerks in the case of the respondents can be and should be treated as the first promotion.",
+                    "sentence_index": 0,
+                    "src": "6. We have referred to the aforesaid position as it has to be examined whether posting on transfer as Commercial Clerks in the case of the respondents can be and should be treated as the first promotion.",
+                    "id": 56,
+                    "n_id": "122__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "6. We have referred to the aforesaid position as it has to be examined whether posting on transfer as Commercial Clerks in the case of the respondents can be and should be treated as the first promotion.",
+                    "tagged_tgt": "6. हमने पूर्वोक्त स्थिति का उल्लेख किया है क्योंकि यह जांच की जानी चाहिए कि क्या उत्तरदाताओं के मामले में वाणिज्यिक क्लर्क के रूप में स्थानांतरण पर पोस्टिंग हो सकती है और इसे पहली पदोन्नति के रूप में माना जाना चाहिए।",
+                    "target": "6. हमने पूर्वोक्त स्थिति का उल्लेख किया है क्योंकि यह जांच की जानी चाहिए कि क्या उत्तरदाताओं के मामले में वाणिज्यिक क्लर्क के रूप में स्थानांतरण पर पोस्टिंग हो सकती है और इसे पहली पदोन्नति के रूप में माना जाना चाहिए।"
+                },
+                {
+                    "text": "It is also to be examined whether there has been any merger of pay scales/upgradations which may have a bearing on application of the MACP Scheme to the present respondents by taking into account the circular dated 10.06.2009 issued by the Ministry of Railways (Railway Board) which states that three financial upgradations would be “counted from the direct entry grade on completion of 10, 20 and 30 years of service”.",
+                    "sentence_index": 1,
+                    "src": "It is also to be examined whether there has been any merger of pay scales/upgradations which may have a bearing on application of the MACP Scheme to the present respondents by taking into account the circular dated 10.06.2009 issued by the Ministry of Railways (Railway Board) which states that three financial upgradations would be “counted from the direct entry grade on completion of 10, 20 and 30 years of service”.",
+                    "id": 56,
+                    "n_id": "122__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 1,
+                    "version": 0,
+                    "tagged_src": "It is also to be examined whether there has been any merger of pay scales/upgradations which may have a bearing on application of the MACP Scheme to the present respondents by taking into account the circular dated NnUuMm३.0NnUuMm५.NnUuMm० issued by the Ministry of Railways (Railway Board) which states that three financial upgradations would be “counted from the direct entry grade on completion of NnUuMm४, NnUuMm२ and NnUuMm१ years of service”.",
+                    "tagged_tgt": "यह भी जांच की जानी चाहिए कि क्या वेतनमान/उन्नयन का कोई विलय हुआ है, जो रेलवे मंत्रालय (रेलवे बोर्ड) द्वारा जारी परिपत्र दिनांक NnUuMm३.0NnUuMm५.NnUuMm० को ध्यान में रखते हुए वर्तमान उत्तरदाताओं को एमएसीपी योजना के आवेदन पर असर डाल सकता है।) जिसमें कहा गया है कि तीन वित्तीय उन्नयन को 'NnUuMm४,NnUuMm२ और NnUuMm१ साल की सेवा पूरी होने पर प्रत्यक्ष प्रवेश ग्रेड से गिना जाएगा'।",
+                    "target": "यह भी जांच की जानी चाहिए कि क्या वेतनमान/उन्नयन का कोई विलय हुआ है, जो रेलवे मंत्रालय (रेलवे बोर्ड) द्वारा जारी परिपत्र दिनांक 10.06.2009 को ध्यान में रखते हुए वर्तमान उत्तरदाताओं को एमएसीपी योजना के आवेदन पर असर डाल सकता है।) जिसमें कहा गया है कि तीन वित्तीय उन्नयन को '10,20 और 30 साल की सेवा पूरी होने पर प्रत्यक्ष प्रवेश ग्रेड से गिना जाएगा'।"
+                },
+                {
+                    "text": "A further circular dated 29.09.2010 issued by the Ministry of Railways (Railway Board) giving point-wise clarifications, inter alia , states that benefit under the MACP Scheme would be available from the date of actual joining of the post in the entry grade.",
+                    "sentence_index": 2,
+                    "src": "A further circular dated 29.09.2010 issued by the Ministry of Railways (Railway Board) giving point-wise clarifications, inter alia , states that benefit under the MACP Scheme would be available from the date of actual joining of the post in the entry grade.",
+                    "id": 56,
+                    "n_id": "122__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 2,
+                    "version": 0,
+                    "tagged_src": "A further circular dated NnUuMm१.0NnUuMm२.NnUuMm० issued by the Ministry of Railways (Railway Board) giving point-wise clarifications, inter alia , states that benefit under the MACP Scheme would be available from the date of actual joining of the post in the entry grade.",
+                    "tagged_tgt": "रेलवे मंत्रालय (रेलवे बोर्ड) द्वारा बिंदु-वार स्पष्टीकरण देते हुए जारी किए गए NnUuMm१.0NnUuMm२.NnUuMm० के एक और परिपत्र में कहा गया है कि एमएसीपी योजना के तहत लाभ प्रवेश ग्रेड में पद के वास्तविक शामिल होने की तारीख से उपलब्ध होगा।",
+                    "target": "रेलवे मंत्रालय (रेलवे बोर्ड) द्वारा बिंदु-वार स्पष्टीकरण देते हुए जारी किए गए 29.09.2010 के एक और परिपत्र में कहा गया है कि एमएसीपी योजना के तहत लाभ प्रवेश ग्रेड में पद के वास्तविक शामिल होने की तारीख से उपलब्ध होगा।"
+                },
+                {
+                    "text": "As noted, enquiry in respect of appointment of the three respondents to the post of ECRC is required in terms of the circular dated 12.09.2012 and Clause 129 of the Indian Railway Establishment, Manual Vol. I, quoted above.",
+                    "sentence_index": 3,
+                    "src": "As noted, enquiry in respect of appointment of the three respondents to the post of ECRC is required in terms of the circular dated 12.09.2012 and Clause 129 of the Indian Railway Establishment, Manual Vol. I, quoted above.",
+                    "id": 56,
+                    "n_id": "122__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 3,
+                    "version": 0,
+                    "tagged_src": "As noted, enquiry in respect of appointment of the three respondents to the post of ECRC is required in terms of the circular dated NnUuMm२.0NnUuMm३.NnUuMm० and Clause NnUuMm१ of the Indian Railway Establishment, Manual Vol. I, quoted above.",
+                    "tagged_tgt": "जैसा कि उल्लेख किया गया है, ईसीआरसी के पद पर तीन उत्तरदाताओं की नियुक्ति के संबंध में जांच NnUuMm२.0NnUuMm३.NnUuMm० के परिपत्र और भारतीय रेलवे प्रतिष्ठान, मैनुअल वॉल्यूम I के खंड NnUuMm१ के संदर्भ में आवश्यक है।",
+                    "target": "जैसा कि उल्लेख किया गया है, ईसीआरसी के पद पर तीन उत्तरदाताओं की नियुक्ति के संबंध में जांच 12.09.2012 के परिपत्र और भारतीय रेलवे प्रतिष्ठान, मैनुअल वॉल्यूम I के खंड 129 के संदर्भ में आवश्यक है।"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb5a3b4a4809",
+            "y": "447",
+            "x": "108",
+            "y_end": "1075",
+            "text": "7. These aspects have not been examined by the Tribunal and the High Court in the impugned orders. Normally we would have decided the question but find ourselves in difficulty in absence of details as there is no clarity on facts. Keeping the aforesaid aspects in mind and as there is no discussion on the said issues, we would set aside the impugned orders passed by the High Court as well as the Tribunal and remand the matter to the Tribunal for a fresh decision and adjudication on merits without being influenced by the earlier orders passed by them, the High Court and this judgment/order. The Tribunal would independently apply their mind to the facts and the legal position after calling upon the appellant, that is, the Southern Railway, Trivandrum and the respondents, that is, the original applicants before the Tribunal to file additional affidavits, if required and necessary.",
+            "style": "position:absolute;top:447px;left:108px;white-space:nowrap",
+            "class": "ft00",
+            "page_no": 6,
+            "is_bold": false,
+            "page_no_end": 6,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "137",
+            "para_index": 23,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "7. These aspects have not been examined by the Tribunal and the High Court in the impugned orders.",
+                    "sentence_index": 0,
+                    "src": "7. These aspects have not been examined by the Tribunal and the High Court in the impugned orders.",
+                    "id": 56,
+                    "n_id": "137__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "7. These aspects have not been examined by the Tribunal and the High Court in the impugned orders.",
+                    "tagged_tgt": "7. न्यायाधिकरण और उच्च न्यायालय द्वारा इन पहलुओं की जांच नहीं की गई है।",
+                    "target": "7. न्यायाधिकरण और उच्च न्यायालय द्वारा इन पहलुओं की जांच नहीं की गई है।"
+                },
+                {
+                    "text": "Normally we would have decided the question but find ourselves in difficulty in absence of details as there is no clarity on facts.",
+                    "sentence_index": 1,
+                    "src": "Normally we would have decided the question but find ourselves in difficulty in absence of details as there is no clarity on facts.",
+                    "id": 56,
+                    "n_id": "137__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 1,
+                    "version": 0,
+                    "tagged_src": "Normally we would have decided the question but find ourselves in difficulty in absence of details as there is no clarity on facts.",
+                    "tagged_tgt": "आम तौर पर हमने सवाल का फैसला किया होता, लेकिन विवरण के अभाव में खुद को कठिनाई में पाता क्योंकि तथ्यों पर कोई स्पष्टता नहीं है।",
+                    "target": "आम तौर पर हमने सवाल का फैसला किया होता, लेकिन विवरण के अभाव में खुद को कठिनाई में पाता क्योंकि तथ्यों पर कोई स्पष्टता नहीं है।"
+                },
+                {
+                    "text": "Keeping the aforesaid aspects in mind and as there is no discussion on the said issues, we would set aside the impugned orders passed by the High Court as well as the Tribunal and remand the matter to the Tribunal for a fresh decision and adjudication on merits without being influenced by the earlier orders passed by them, the High Court and this judgment/order.",
+                    "sentence_index": 2,
+                    "src": "Keeping the aforesaid aspects in mind and as there is no discussion on the said issues, we would set aside the impugned orders passed by the High Court as well as the Tribunal and remand the matter to the Tribunal for a fresh decision and adjudication on merits without being influenced by the earlier orders passed by them, the High Court and this judgment/order.",
+                    "id": 56,
+                    "n_id": "137__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 2,
+                    "version": 0,
+                    "tagged_src": "Keeping the aforesaid aspects in mind and as there is no discussion on the said issues, we would set aside the impugned orders passed by the High Court as well as the Tribunal and remand the matter to the Tribunal for a fresh decision and adjudication on merits without being influenced by the earlier orders passed by them, the High Court and this judgment/order.",
+                    "tagged_tgt": "उपरोक्त पहलुओं को ध्यान में रखते हुए और जैसा कि उक्त मुद्दों पर कोई चर्चा नहीं है, हम उच्च न्यायालय के साथ-साथ न्यायाधिकरण द्वारा पारित किए गए लगाए गए आदेशों को अलग करेंगे और मामले को नए सिरे से निर्णय के लिए न्यायाधिकरण को भेजेंगे और योग्यता के बिना पक्षपात करेंगे। उनके द्वारा पारित पहले के आदेशों, उच्च न्यायालय और इस निर्णय/आदेश से प्रभावित होकर।",
+                    "target": "उपरोक्त पहलुओं को ध्यान में रखते हुए और जैसा कि उक्त मुद्दों पर कोई चर्चा नहीं है, हम उच्च न्यायालय के साथ-साथ न्यायाधिकरण द्वारा पारित किए गए लगाए गए आदेशों को अलग करेंगे और मामले को नए सिरे से निर्णय के लिए न्यायाधिकरण को भेजेंगे और योग्यता के बिना पक्षपात करेंगे। उनके द्वारा पारित पहले के आदेशों, उच्च न्यायालय और इस निर्णय/आदेश से प्रभावित होकर।"
+                },
+                {
+                    "text": "The Tribunal would independently apply their mind to the facts and the legal position after calling upon the appellant, that is, the Southern Railway, Trivandrum and the respondents, that is, the original applicants before the Tribunal to file additional affidavits, if required and necessary.",
+                    "sentence_index": 3,
+                    "src": "The Tribunal would independently apply their mind to the facts and the legal position after calling upon the appellant, that is, the Southern Railway, Trivandrum and the respondents, that is, the original applicants before the Tribunal to file additional affidavits, if required and necessary.",
+                    "id": 56,
+                    "n_id": "137__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 3,
+                    "version": 0,
+                    "tagged_src": "The Tribunal would independently apply their mind to the facts and the legal position after calling upon the appellant, that is, the Southern Railway, Trivandrum and the respondents, that is, the original applicants before the Tribunal to file additional affidavits, if required and necessary.",
+                    "tagged_tgt": "न्यायाधिकरण स्वतंत्र रूप से अपीलकर्ता, यानी दक्षिणी रेलवे, त्रिवेंद्रम और उत्तरदाताओं को कॉल करने के बाद तथ्यों और कानूनी स्थिति पर अपना दिमाग लगाएगा, अर्थात, अतिरिक्त शपथ पत्र दाखिल करने के लिए न्यायाधिकरण के समक्ष मूल आवेदक, यदि आवश्यक हो और आवश्यक हो।",
+                    "target": "न्यायाधिकरण स्वतंत्र रूप से अपीलकर्ता, यानी दक्षिणी रेलवे, त्रिवेंद्रम और उत्तरदाताओं को कॉल करने के बाद तथ्यों और कानूनी स्थिति पर अपना दिमाग लगाएगा, अर्थात, अतिरिक्त शपथ पत्र दाखिल करने के लिए न्यायाधिकरण के समक्ष मूल आवेदक, यदि आवश्यक हो और आवश्यक हो।"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb037d4a480a",
+            "y": "109",
+            "x": "108",
+            "y_end": "254",
+            "text": "8. The appeal is allowed in the aforesaid terms, with an order of remand to the Tribunal, without any order as to costs. To cut short the delay, parties are directed to appear before the Tribunal on 30.03.2020 when a further date of hearing would be fixed.",
+            "style": "position:absolute;top:109px;left:108px;white-space:nowrap",
+            "class": "ft00",
+            "page_no": 7,
+            "is_bold": false,
+            "page_no_end": 7,
+            "class_style": {
+                "font-size": "19px",
+                "font-family": "LiberationSans",
+                "color": "#000009",
+                "": null
+            },
+            "node_index": "144",
+            "para_index": 24,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "8. The appeal is allowed in the aforesaid terms, with an order of remand to the Tribunal, without any order as to costs.",
+                    "sentence_index": 0,
+                    "src": "8. The appeal is allowed in the aforesaid terms, with an order of remand to the Tribunal, without any order as to costs.",
+                    "id": 56,
+                    "n_id": "144__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "8. The appeal is allowed in the aforesaid terms, with an order of remand to the Tribunal, without any order as to costs.",
+                    "tagged_tgt": "8. अपील को पूर्वोक्त शब्दों में, न्यायाधिकरण को रिमांड के आदेश के साथ, बिना किसी आदेश के लागत के रूप में अनुमति दी गई है।",
+                    "target": "8. अपील को पूर्वोक्त शब्दों में, न्यायाधिकरण को रिमांड के आदेश के साथ, बिना किसी आदेश के लागत के रूप में अनुमति दी गई है।"
+                },
+                {
+                    "text": "To cut short the delay, parties are directed to appear before the Tribunal on 30.03.2020 when a further date of hearing would be fixed.",
+                    "sentence_index": 1,
+                    "src": "To cut short the delay, parties are directed to appear before the Tribunal on 30.03.2020 when a further date of hearing would be fixed.",
+                    "id": 56,
+                    "n_id": "144__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 1,
+                    "version": 0,
+                    "tagged_src": "To cut short the delay, parties are directed to appear before the Tribunal on NnUuMm१.0NnUuMm२.NnUuMm० when a further date of hearing would be fixed.",
+                    "tagged_tgt": "देरी को कम करने के लिए, पार्टियों को NnUuMm१.0NnUuMm२.NnUuMm० को न्यायाधिकरण के समक्ष उपस्थित होने के लिए निर्देशित किया जाता है जब सुनवाई की एक और तारीख तय की जाएगी।",
+                    "target": "देरी को कम करने के लिए, पार्टियों को 30.03.2020 को न्यायाधिकरण के समक्ष उपस्थित होने के लिए निर्देशित किया जाता है जब सुनवाई की एक और तारीख तय की जाएगी।"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb4e614a480b",
+            "align": "RIGHT",
+            "is_new_line": true,
+            "text": "…………………………, J.",
+            "is_ner": true,
+            "page_no": 7,
+            "node_index": "abf54228-1780-4f86-8a2b-301c72dd67c4",
+            "para_index": 25,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "…………………………, J.",
+                    "sentence_index": 0,
+                    "src": "…………………………, J.",
+                    "id": 56,
+                    "n_id": "abf54228-1780-4f86-8a2b-301c72dd67c4__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "…………………………, J.",
+                    "tagged_tgt": "......................जे.",
+                    "target": "......................जे."
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb3edd4a480c",
+            "align": "RIGHT",
+            "is_new_line": true,
+            "text": "(S. ABDUL NAZEER)",
+            "is_ner": true,
+            "page_no": 7,
+            "node_index": "a5a0be12-abfd-4860-ad7c-0a8a9e0c73ab",
+            "para_index": 26,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "(S. ABDUL NAZEER)",
+                    "sentence_index": 0,
+                    "src": "(S. Abdul Nazeer)",
+                    "id": 56,
+                    "n_id": "a5a0be12-abfd-4860-ad7c-0a8a9e0c73ab__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "(S. Abdul Nazeer)",
+                    "tagged_tgt": "(एस अब्दुल नाज़ेर",
+                    "target": "(एस अब्दुल नाज़ेर"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb7cdf4a480d",
+            "align": "RIGHT",
+            "is_new_line": true,
+            "text": "…………………………, J.",
+            "is_ner": true,
+            "page_no": 7,
+            "node_index": "a33e1bf8-f09c-4e15-aace-250ee1e1c2d3",
+            "para_index": 27,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "…………………………, J.",
+                    "sentence_index": 0,
+                    "src": "…………………………, J.",
+                    "id": 56,
+                    "n_id": "a33e1bf8-f09c-4e15-aace-250ee1e1c2d3__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "…………………………, J.",
+                    "tagged_tgt": "......................जे.",
+                    "target": "......................जे."
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bbae854a480e",
+            "align": "RIGHT",
+            "is_new_line": true,
+            "text": "(SANJIV KHANNA)",
+            "is_ner": true,
+            "page_no": 7,
+            "node_index": "9cf9dfc6-e78d-4212-9b08-bbbb019d2708",
+            "para_index": 28,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "(SANJIV KHANNA)",
+                    "sentence_index": 0,
+                    "src": "(Sanjiv Khanna)",
+                    "id": 56,
+                    "n_id": "9cf9dfc6-e78d-4212-9b08-bbbb019d2708__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "(Sanjiv Khanna)",
+                    "tagged_tgt": "(संजीव खन्ना)",
+                    "target": "(संजीव खन्ना)"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb40cd4a480f",
+            "align": "LEFT",
+            "is_new_line": true,
+            "text": "New Delhi",
+            "is_ner": true,
+            "page_no": 7,
+            "node_index": "2d384a12-a297-4a7b-84f9-022cbbed6f2a",
+            "para_index": 29,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "New Delhi",
+                    "sentence_index": 0,
+                    "src": "New Delhi",
+                    "id": 56,
+                    "n_id": "2d384a12-a297-4a7b-84f9-022cbbed6f2a__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "New Delhi",
+                    "tagged_tgt": "नई दिल्ली",
+                    "target": "नई दिल्ली"
+                }
+            ]
+        },
+        {
+            "_id": "5f05652fe8a1bb31284a4810",
+            "align": "LEFT",
+            "is_new_line": true,
+            "text": "FEBRUARY 04, 2020",
+            "is_ner": true,
+            "page_no": 7,
+            "node_index": "8b53b098-ccb2-4f45-96b0-af94d287d2c8",
+            "para_index": 30,
+            "version": 0,
+            "status": "TRANSLATED",
+            "session_id": "e7460d65-6a93-4e17-a7a6-087c53a8e188",
+            "tokenized_sentences": [
+                {
+                    "text": "FEBRUARY 04, 2020",
+                    "sentence_index": 0,
+                    "src": "February 04, 2020",
+                    "id": 56,
+                    "n_id": "8b53b098-ccb2-4f45-96b0-af94d287d2c8__e7460d65-6a93-4e17-a7a6-087c53a8e188",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "February 04, 2020",
+                    "tagged_tgt": "February 04, 2020",
+                    "target": "February 04, 2020"
+                }
+            ]
+        }
+    ]
+}
