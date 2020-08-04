@@ -7,6 +7,8 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./SourceView";
 import Data from "./Data.json";
+// import Data from "./PPT.json";
+
 class PdfFileEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -37,7 +39,7 @@ class PdfFileEditor extends React.Component {
   render() {
     let yAxis = 0;
     let style = {
-      marginLeft: "20%",
+      // marginLeft: "20%",
       width: this.state.sentences && this.state.sentences[0].page_width + "px",
       maxHeight: this.state.collapseToken ? window.innerHeight - 100 : window.innerHeight - 100,
       position: "relative",
@@ -47,7 +49,7 @@ class PdfFileEditor extends React.Component {
       backgroundColor: "white"
     };
     return (
-      <div style={{backgroundColor: '#F5F9FA'}}>
+      <div style={{backgroundColor: '#F5F9FA', display: "flex", flexDirection: "row", justifyContent: "center"}}>
       <div style={style}>
         {this.state.sentences &&
           this.state.sentences.map((sentence, index) => {
@@ -57,7 +59,7 @@ class PdfFileEditor extends React.Component {
             let pageNo=sentence.page_no
 
             if (index === 0) {
-              printPageNo = true
+              printPageNo = false
             } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
               printPageNo = true
             }
