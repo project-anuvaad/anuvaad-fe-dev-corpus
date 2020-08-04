@@ -29,10 +29,8 @@ class EditorPaper extends React.Component {
       this.props.sentences.length > 0) {
       this.props.sentences.map((sentence, index) => {
         if (previousNode != null && sentence.page_no == 1) {
-          console.log("test")
           if (parseInt(sentence.y) < parseInt(previousNode.y_end)) {
             let difference = (previousNode.y_end - sentence.y) * 100 / previousNode.y_end
-            console.log(difference)
             if (difference > 30) {
               this.setState({ columns: this.state.columns + 1 })
             }
