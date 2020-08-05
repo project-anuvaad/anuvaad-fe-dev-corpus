@@ -6,8 +6,9 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./SourceView";
-import Data from "./Data.json";
+// import Data from "./Data.json";
 // import Data from "./PPT.json";
+import Data from "./Judgement.json"
 
 class PdfFileEditor extends React.Component {
   constructor(props) {

@@ -17,7 +17,8 @@ class Preview extends React.Component {
             fontFamily: this.props.sentence.class_style["font-family"],
             fontWeight: this.props.sentence.class_style["font-family"].includes("Bold") && 'bold',
             textAlign: "justify",
-            lineHeight:this.props.sentence.class_style["lineHeight"]? this.props.sentence.class_style["lineHeight"]:'17px'
+            lineHeight:this.props.sentence.class_style["lineHeight"]? this.props.sentence.class_style["lineHeight"]:'17px',
+            textDecorationLine: this.props.sentence.sentence.underline ? "underline" : ""
         };
         return (
             <div key={key}>
