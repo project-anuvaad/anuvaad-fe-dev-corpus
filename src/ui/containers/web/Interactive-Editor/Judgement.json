@@ -16,7 +16,7 @@
             "page_width": "892",
             "class_style": {
                 "font-size": "16px",
-                "font-family": "DejaVuSans",
+                "font-family": "DejaVuSans, Bold",
                 "color": "#000009",
                 "": null
             },
@@ -42,7 +42,7 @@
             ]
         },
         {
-            "width": "275",
+            "width": "276",
             "_id": "5f29589ec0e1d9d5fb985eef",
             "y": "150",
             "x": "313",
@@ -57,7 +57,7 @@
             "page_width": "892",
             "class_style": {
                 "font-size": "16px",
-                "font-family": "DejaVuSans",
+                "font-family": "DejaVuSans, Bold",
                 "color": "#000009",
                 "": null
             },
@@ -97,7 +97,7 @@
             "page_width": "892",
             "class_style": {
                 "font-size": "16px",
-                "font-family": "DejaVuSans",
+                "font-family": "DejaVuSans, Bold",
                 "color": "#000009",
                 "": null
             },
@@ -122,7 +122,7 @@
             ]
         },
         {
-            "width": "233",
+            "width": "234",
             "_id": "5f29589ec0e1d91145985ef1",
             "y": "255",
             "x": "328",
@@ -137,7 +137,7 @@
             "page_width": "892",
             "class_style": {
                 "font-size": "16px",
-                "font-family": "DejaVuSans",
+                "font-family": "DejaVuSans, Bold",
                 "color": "#000009",
                 "": null
             },
@@ -163,7 +163,7 @@
             ]
         },
         {
-            "width": "267",
+            "width": "367",
             "_id": "5f29589ec0e1d99cad985ef2",
             "y": "276",
             "x": "239",
@@ -178,7 +178,7 @@
             "page_width": "892",
             "class_style": {
                 "font-size": "16px",
-                "font-family": "DejaVuSans",
+                "font-family": "DejaVuSans, Bold",
                 "color": "#000009",
                 "": null
             },
@@ -203,7 +203,7 @@
             ]
         },
         {
-            "width": "116",
+            "width": "117",
             "_id": "5f29589ec0e1d943de985ef3",
             "y": "339",
             "x": "152",
@@ -363,7 +363,7 @@
             "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483"
         },
         {
-            "width": "56",
+            "width": "57",
             "_id": "5f29589ec0e1d989c5985ef5",
             "y": "486",
             "x": "448",
@@ -378,7 +378,7 @@
             "page_width": "892",
             "class_style": {
                 "font-size": "16px",
-                "font-family": "DejaVuSans",
+                "font-family": "DejaVuSans, Bold",
                 "color": "#000009",
                 "": null
             },
@@ -404,7 +404,7 @@
             ]
         },
         {
-            "width": "233",
+            "width": "234",
             "_id": "5f29589ec0e1d9744e985ef6",
             "y": "528",
             "x": "328",
@@ -419,7 +419,7 @@
             "page_width": "892",
             "class_style": {
                 "font-size": "16px",
-                "font-family": "DejaVuSans",
+                "font-family": "DejaVuSans, Bold",
                 "color": "#000009",
                 "": null
             },
@@ -445,7 +445,7 @@
             ]
         },
         {
-            "width": "374",
+            "width": "375",
             "_id": "5f29589ec0e1d949fd985ef7",
             "y": "549",
             "x": "233",
@@ -460,7 +460,7 @@
             "page_width": "892",
             "class_style": {
                 "font-size": "16px",
-                "font-family": "DejaVuSans",
+                "font-family": "DejaVuSans, Bold",
                 "color": "#000009",
                 "": null
             },
@@ -500,7 +500,7 @@
             "page_width": "892",
             "class_style": {
                 "font-size": "22px",
-                "font-family": "DejaVuSans",
+                "font-family": "DejaVuSans, Bold",
                 "color": "#000009",
                 "": null
             },
@@ -541,7 +541,7 @@
             "page_width": "892",
             "class_style": {
                 "font-size": "16px",
-                "font-family": "DejaVuSans",
+                "font-family": "DejaVuSans, Bold",
                 "color": "#000009",
                 "": null
             },

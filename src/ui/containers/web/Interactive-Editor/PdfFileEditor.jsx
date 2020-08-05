@@ -54,7 +54,8 @@ class PdfFileEditor extends React.Component {
       overflowY: "scroll",
       height: this.state.sentences && this.state.sentences[0].page_height + "px",
       borderStyle: "groove",
-      backgroundColor: "white"
+      backgroundColor: "white",
+      overflowX: "hidden"
     };
 
    
@@ -67,15 +68,17 @@ class PdfFileEditor extends React.Component {
 
             let printPageNo = false
             let pageNo=sentence.page_no
+            let isFirstPage = false
 
             if (index === 0) {
-              printPageNo = false
+              printPageNo = true
+              isFirstPage = true
             } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
               printPageNo = true
             }
 
             return (
-              <SourceView key={index} printPageNo={printPageNo} leftPaddingValue={leftPaddingValue} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 300} />
+              <SourceView key={index} printPageNo={printPageNo} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 300} />
             );
           })}
       </div></div>
