@@ -1726,7 +1726,7 @@
             "_id": "5f226b3b9e1f886e3da59e7b",
             "y": "1086",
             "x": "596",
-            "width": 290,
+            "width": "auto",
             "y_end": "1100",            "text": "October 12 - 15, 2011, Rapid City, SD",
             "style": "position:absolute;top:1086px;left:596px;white-space:nowrap",
             "class": "ft01",

@@ -49,16 +49,23 @@ class PdfFileEditor extends React.Component {
 
   render() {
     let yAxis = 0;
-    let leftPaddingValue = 0;
-    this.state.sentences.map(sentence => {
-      if (leftPaddingValue < sentence.x || leftPaddingValue == 0) {
-        leftPaddingValue = sentence.x
-      }
-
+    let leftPaddingValue=0;
+    let rightPaddingValue=0;
+    this.state.sentences.map(sentence=>{
+        if(leftPaddingValue<sentence.x || leftPaddingValue==0){
+            leftPaddingValue = sentence.x
+        }
+        if((sentence.width && rightPaddingValue<sentence.width+parseInt(sentence.x) )|| (sentence.width &&rightPaddingValue==0)){
+            rightPaddingValue = sentence.width+parseInt(sentence.x)
+            console.log(sentence)
+            
+        }
+        
     })
+    console.log(leftPaddingValue,rightPaddingValue,this.state.sentences[0].page_width)
     let style = {
-      // marginLeft: "20%",
-      width: this.state.sentences && this.state.sentences[0].page_width + "px",
+      marginLeft: "20%",
+      width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
       maxHeight: this.state.collapseToken ? window.innerHeight - 100 : window.innerHeight - 100,
       position: "relative",
       overflowY: "scroll",
