@@ -18,16 +18,31 @@ class Preview extends React.Component {
             fontWeight: this.props.sentence.class_style["font-family"].includes("Bold") && 'bold',
             textAlign: "justify",
             lineHeight: this.props.sentence.class_style["lineHeight"] && this.props.sentence.class_style["lineHeight"],
-            textDecorationLine: this.props.sentence.underline ? "underline" : ""
+            textDecorationLine: this.props.sentence.underline ? "underline" : "",
+            height: sentence.height && sentence.height,
+            overflow: "hidden"
         };
 
+        console.log(sentence.image)
         return (
             <div key={key}>
                 {/* {printPageNo ? <div style={{ position: "absolute ", top: yAxis + 20, width: "100%" }}><hr style={{ color: "white" }} /></div> : <div></div>} */}
                 {printPageNo ? <div>{!isFirstPage && <hr style={{ position: "absolute ", top: yAxis - 70, color: "black", width: "100%" }} />}
                     <div style={{ position: "absolute ", top: yAxis - 50, fontSize: "13px", fontFamily: "Times", right: "25px", color: "#A5A5A5" }}>Page No. {pageNo}</div>
                 </div> : <div></div>}
-                <div style={a}>{sentence.text}</div>
+                <div>
+                    {sentence.is_image ? <div
+                        style={{
+                            position: "absolute ",
+                            top: yAxis,
+                            left: sentence.x + "px",
+                            overflow: "hidden"
+                        }}><img width={sentence.width} height={sentence.height} src={sentence.img}></img></div> : <div style={a}>{sentence.text}</div>}
+                    {/* {!sentence.is_image && <div style={a}>{sentence.text}</div> } */}
+
+                    {/* <div style={a}>{sentence.text}</div> */}
+                </div>
+
             </div>
         );
     }

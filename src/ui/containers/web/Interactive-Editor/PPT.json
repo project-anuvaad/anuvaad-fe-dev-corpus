@@ -1,5 +1,6 @@
 {
     "data": [
+        
         {
             "width": "145",
             "_id": "5f226b3b9e1f886e3da59e7b",
@@ -19,7 +20,8 @@
                 "font-family": "ABCDEE+10,Bold",
                 "color": "#181818",
                 "": null,
-                "line-height":"37px"            }
+                "line-height": "37px"
+            }
         },
         {
             "width": "1089",
@@ -36,7 +38,7 @@
             "page_height": "810",
             "page_width": "1440",
             "class_style": {
-                "line-height":"49px",
+                "line-height": "49px",
                 "font-size": "29px",
                 "font-family": "ABCDEE+2,Bold",
                 "color": "#000000",
@@ -58,13 +60,14 @@
             "page_height": "810",
             "page_width": "1440",
             "class_style": {
-                "line-height":"37px",
+                "line-height": "37px",
                 "font-size": "29px",
                 "font-family": "ABCDEE+2,Bold",
                 "color": "#000000",
                 "": null
             }
         },
+       
         {
             "width": "830",
             "_id": "5f226b3b9e1f886e3da59e7b",
@@ -80,7 +83,7 @@
             "page_height": "810",
             "page_width": "1440",
             "class_style": {
-                "line-height":"37px",
+                "line-height": "37px",
                 "font-size": "29px",
                 "font-family": "ABCDEE+2,Bold",
                 "color": "#000000",
@@ -103,7 +106,7 @@
             "page_width": "1440",
             "class_style": {
                 "font-size": "29px",
-                "line-height":"36px",
+                "line-height": "36px",
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
@@ -125,7 +128,7 @@
             "page_width": "1440",
             "class_style": {
                 "font-size": "29px",
-                "line-height":"36px",
+                "line-height": "36px",
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
@@ -147,7 +150,7 @@
             "page_width": "1440",
             "class_style": {
                 "font-size": "29px",
-                "line-height":"36px",
+                "line-height": "36px",
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
@@ -169,7 +172,7 @@
             "page_width": "1440",
             "class_style": {
                 "font-size": "29px",
-                "line-height":"36px",
+                "line-height": "36px",
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
@@ -191,7 +194,7 @@
             "page_width": "1440",
             "class_style": {
                 "font-size": "29px",
-                "line-height":"36px",
+                "line-height": "36px",
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
@@ -213,7 +216,7 @@
             "page_width": "1440",
             "class_style": {
                 "font-size": "29px",
-                "line-height":"36px",
+                "line-height": "36px",
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
@@ -235,10 +238,62 @@
             "page_width": "1440",
             "class_style": {
                 "font-size": "29px",
-                "line-height":"36px",
+                "line-height": "36px",
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
+            }
+        }
+        ,{
+            "width": "300",
+            "height": "200",
+            "img": "/favicon.png",
+            "img2": "https://lh3.googleusercontent.com/MOf9Kxxkj7GvyZlTZOnUzuYv0JAweEhlxJX6gslQvbvlhLK5_bSTK6duxY2xfbBsj43H=w300",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "is_image": true,
+            "y": "490",
+            "x": "125",
+            "y_end": "1120",
+            "text": "",
+            "style": "position:absolute;top:16px;left:75px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "font-size": "43px",
+                "font-family": "ABCDEE+10,Bold",
+                "color": "#181818",
+                "": null,
+                "line-height": "37px"
+            }
+        },
+        {
+            "width": "1440",
+            "height": "810",
+            "img1": "/Anuvaad.png",
+            "img": "/icon.jpg",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "is_bg_image": true,
+            "y": "0",
+            "x": "0",
+            "y_end": "1120",
+            "text": "",
+            "style": "position:absolute;top:16px;left:75px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "font-size": "43px",
+                "font-family": "ABCDEE+10,Bold",
+                "color": "#181818",
+                "": null,
+                "line-height": "37px"
             }
         }
     ]
