@@ -6,7 +6,10 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./SourceView";
-import Data from "./Data.json";
+// import Data from "./Data.json";
+// import Data from "./PPT.json";
+import Data from "./Judgement.json"
+
 class PdfFileEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -64,7 +67,7 @@ class PdfFileEditor extends React.Component {
 
    
     return (
-      <div style={{backgroundColor: '#F5F9FA'}}>
+      <div style={{backgroundColor: '#F5F9FA', display: "flex", flexDirection: "row", justifyContent: "center"}}>
       <div style={style}>
         {this.state.sentences &&
           this.state.sentences.map((sentence, index) => {
@@ -72,15 +75,17 @@ class PdfFileEditor extends React.Component {
 
             let printPageNo = false
             let pageNo=sentence.page_no
+            let isFirstPage = false
 
             if (index === 0) {
               printPageNo = true
+              isFirstPage = true
             } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
               printPageNo = true
             }
 
             return (
-              <SourceView key={index} printPageNo={printPageNo} leftPaddingValue={leftPaddingValue} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 300} />
+              <SourceView key={index} printPageNo={printPageNo} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 300} />
             );
           })}
       </div></div>

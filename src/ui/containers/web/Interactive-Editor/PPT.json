@@ -1,0 +1,245 @@
+{
+    "data": [
+        {
+            "width": "145",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "y": "16",
+            "x": "75",
+            "y_end": "1120",
+            "text": "Context",
+            "style": "position:absolute;top:16px;left:75px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "font-size": "43px",
+                "font-family": "ABCDEE+10,Bold",
+                "color": "#181818",
+                "": null,
+                "line-height":"37px"            }
+        },
+        {
+            "width": "1089",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "y": "110",
+            "x": "71",
+            "y_end": "1120",
+            "text": "1. We are doing a set of things to ensure we create an environment where consistent",
+            "style": "position:absolute;top:110px;left:71px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "line-height":"49px",
+                "font-size": "29px",
+                "font-family": "ABCDEE+2,Bold",
+                "color": "#000000",
+                "": null
+            }
+        },
+        {
+            "width": "550",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "y": "146",
+            "x": "113",
+            "y_end": "146",
+            "text": "predictable project success can be achieved.",
+            "style": "position:absolute;top:146px;left:113px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "line-height":"37px",
+                "font-size": "29px",
+                "font-family": "ABCDEE+2,Bold",
+                "color": "#000000",
+                "": null
+            }
+        },
+        {
+            "width": "830",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "y": "182",
+            "x": "71",
+            "y_end": "1120",
+            "text": "2. There are many factors that go to make a project success happen",
+            "style": "position:absolute;top:182px;left:71px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "line-height":"37px",
+                "font-size": "29px",
+                "font-family": "ABCDEE+2,Bold",
+                "color": "#000000",
+                "": null
+            }
+        },
+        {
+            "width": "380",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "y": "218",
+            "x": "125",
+            "y_end": "1120",
+            "text": "a. Reliable Estimation Process",
+            "style": "position:absolute;top:218px;left:125px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "font-size": "29px",
+                "line-height":"36px",
+                "font-family": "ABCDEE+1",
+                "color": "#000000",
+                "": null
+            }
+        },
+        {
+            "width": "640",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "y": "254",
+            "x": "125",
+            "y_end": "1120",
+            "text": "b. Clear Org structure with Roles and Responsibilities",
+            "style": "position:absolute;top:218px;left:125px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "font-size": "29px",
+                "line-height":"36px",
+                "font-family": "ABCDEE+1",
+                "color": "#000000",
+                "": null
+            }
+        },
+        {
+            "width": "770",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "y": "290",
+            "x": "125",
+            "y_end": "1120",
+            "text": "c. Mature Delivery Process and Model - with appropriate toolset.",
+            "style": "position:absolute;top:218px;left:125px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "font-size": "29px",
+                "line-height":"36px",
+                "font-family": "ABCDEE+1",
+                "color": "#000000",
+                "": null
+            }
+        },
+        {
+            "width": "970",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "y": "326",
+            "x": "125",
+            "y_end": "1120",
+            "text": "d. Good Performance Management system - starting with setting relevant Goals",
+            "style": "position:absolute;top:218px;left:125px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "font-size": "29px",
+                "line-height":"36px",
+                "font-family": "ABCDEE+1",
+                "color": "#000000",
+                "": null
+            }
+        },
+        {
+            "width": "533",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "y": "362",
+            "x": "125",
+            "y_end": "1120",
+            "text": "e. Diligent Governance - Cadence of Reviews",
+            "style": "position:absolute;top:218px;left:125px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "font-size": "29px",
+                "line-height":"36px",
+                "font-family": "ABCDEE+1",
+                "color": "#000000",
+                "": null
+            }
+        },
+        {
+            "width": "545",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "y": "398",
+            "x": "125",
+            "y_end": "1120",
+            "text": "f. Effective Training and competency building",
+            "style": "position:absolute;top:218px;left:125px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "font-size": "29px",
+                "line-height":"36px",
+                "font-family": "ABCDEE+1",
+                "color": "#000000",
+                "": null
+            }
+        },
+        {
+            "width": "70",
+            "_id": "5f226b3b9e1f886e3da59e7b",
+            "y": "434",
+            "x": "125",
+            "y_end": "1120",
+            "text": "g. etc",
+            "style": "position:absolute;top:218px;left:125px;white-space:nowrap",
+            "class": "ft01",
+            "page_no": 1,
+            "is_bold": true,
+            "page_no_end": 1,
+            "page_height": "810",
+            "page_width": "1440",
+            "class_style": {
+                "font-size": "29px",
+                "line-height":"36px",
+                "font-family": "ABCDEE+1",
+                "color": "#000000",
+                "": null
+            }
+        }
+    ]
+}
