@@ -10,8 +10,8 @@ class Preview extends React.Component {
         var a = {
             position: "absolute ",
             top: yAxis,
-            left: sentence.x-leftPaddingValue + "px",
-            
+            left: sentence.x-leftPaddingValue + 20+"px",
+            paddingRight:'-130px',
             width: widthValue + "px",
             fontSize: this.props.sentence.class_style["font-size"],
             fontFamily: this.props.sentence.class_style["font-family"],
