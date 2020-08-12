@@ -6,7 +6,7 @@ class Preview extends React.Component {
     }
 
     render() {
-        const { key, sentence, yAxis, widthValue, leftPaddingValue, printPageNo, pageNo, isFirstPage } = this.props;
+        const { key, sentence, yAxis, widthValue, leftPaddingValue, printPageNo, pageNo, isFirstPage, pageDividerHeight } = this.props;
         var a = {
             position: "absolute ",
             top: yAxis,
@@ -23,12 +23,11 @@ class Preview extends React.Component {
             overflow: "hidden"
         };
 
-        console.log(sentence.image)
         return (
             <div key={key}>
                 {/* {printPageNo ? <div style={{ position: "absolute ", top: yAxis + 20, width: "100%" }}><hr style={{ color: "white" }} /></div> : <div></div>} */}
-                {printPageNo ? <div>{!isFirstPage && <hr style={{ position: "absolute ", top: yAxis - 70, color: "black", width: "100%" }} />}
-                    <div style={{ position: "absolute ", top: yAxis - 50, fontSize: "13px", fontFamily: "Times", right: "25px", color: "#A5A5A5" }}>Page No. {pageNo}</div>
+                {printPageNo ? <div>
+                    <div style={{ position: "absolute ", top: pageDividerHeight - 50, fontSize: "13px", fontFamily: "Times", right: "25px", color: "#A5A5A5" }}>Page No. {pageNo}</div>
                 </div> : <div></div>}
                 <div>
                     {sentence.is_image ? <div

@@ -6,8 +6,9 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./SourceView";
-// import Data from "./Data.json";
-import Data from "./PPT.json";
+import Data from "./Data.json";
+// import { debug } from "webpack";
+// import Data from "./PPT.json";
 // import Data from "./Judgement.json"
 
 class PdfFileEditor extends React.Component {
@@ -19,7 +20,8 @@ class PdfFileEditor extends React.Component {
       targetSupScripts: "",
       header: "",
       sentences: Data.data,
-      backgroundImage: ""
+      backgroundImage: "",
+      pageArr: []
     };
   }
 
@@ -40,32 +42,44 @@ class PdfFileEditor extends React.Component {
   //   }
 
   componentDidMount() {
+    let minPageHeight = this.state.sentences[0].y
+    let pages = []
+
     this.state.sentences.map((sentence, index) => {
       if (sentence.is_bg_image) {
         this.setState({ backgroundImage: sentence.img, backgroundSize: sentence.width })
       }
+
+      if (parseInt(minPageHeight) > parseInt(sentence.y)) {
+        minPageHeight = sentence.y
+      }
+
+      if ((this.state.sentences[index + 1] && sentence.page_no != this.state.sentences[index + 1].page_no) || index === this.state.sentences.length-1) {
+        pages[sentence.page_no] = minPageHeight
+      }
+
+      this.setState({ pageArr: pages})
     })
   }
 
   render() {
     let yAxis = 0;
-    let leftPaddingValue=0;
-    let rightPaddingValue=0;
-    this.state.sentences.map(sentence=>{
-        if(leftPaddingValue<sentence.x || leftPaddingValue==0){
-            leftPaddingValue = sentence.x
-        }
-        if((sentence.width && rightPaddingValue<sentence.width+parseInt(sentence.x) )|| (sentence.width &&rightPaddingValue==0)){
-            rightPaddingValue = sentence.width+parseInt(sentence.x)
-            console.log(sentence)
-            
-        }
-        
+    let leftPaddingValue = 0;
+    let rightPaddingValue = 0;
+    this.state.sentences.map(sentence => {
+      if (leftPaddingValue < sentence.x || leftPaddingValue == 0) {
+        leftPaddingValue = sentence.x
+      }
+      if ((sentence.width && rightPaddingValue < sentence.width + parseInt(sentence.x)) || (sentence.width && rightPaddingValue == 0)) {
+        rightPaddingValue = sentence.width + parseInt(sentence.x)
+
+      }
+
     })
-    console.log(leftPaddingValue,rightPaddingValue,this.state.sentences[0].page_width)
+
     let style = {
       marginLeft: "20%",
-      width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
+      width: this.state.sentences && rightPaddingValue - leftPaddingValue + 20 + "px",
       maxHeight: this.state.collapseToken ? window.innerHeight - 100 : window.innerHeight - 100,
       position: "relative",
       overflowY: "scroll",
@@ -73,22 +87,24 @@ class PdfFileEditor extends React.Component {
       borderStyle: "groove",
       backgroundColor: "white",
       overflowX: "hidden",
-      backgroundImage: this.state.backgroundImage && "url("+this.state.backgroundImage+")" ,
+      backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
       backgroundRepeat: "no-repeat",
       backgroundSize: this.state.backgroundSize + "px"
     };
-    console.log(this.state.backgroundImage)
+
+    let pageDividerHeight = '0'
 
     return (
-      <div style={{ backgroundColor: '#F5F9FA', display: "flex", flexDirection: "row", justifyContent: "center"}}>
+      <div style={{ backgroundColor: '#F5F9FA', display: "flex", flexDirection: "row", justifyContent: "center" }}>
         <div style={style}>
           {this.state.sentences &&
             this.state.sentences.map((sentence, index) => {
               yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-
+              pageDividerHeight = (this.state.pageArr && this.state.pageArr.length>0 && parseInt(this.state.pageArr[sentence.page_no])) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
               let printPageNo = false
               let pageNo = sentence.page_no
               let isFirstPage = false
+
 
               if (index === 0) {
                 printPageNo = true
@@ -98,23 +114,23 @@ class PdfFileEditor extends React.Component {
               }
 
               return (
-                <SourceView key={index} printPageNo={printPageNo} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 300} />
+                <SourceView pageDividerHeight={pageDividerHeight} key={index} printPageNo={printPageNo} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 300} />
               );
             })}
         </div></ div>
-        );
-        }
-        }
+    );
+  }
+}
 
 const mapStateToProps = state => ({
-          fetchPdfSentence: state.fetchPdfSentence
+  fetchPdfSentence: state.fetchPdfSentence
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-        {
-          APITransport
-        },
+    {
+      APITransport
+    },
     dispatch
   );
 
