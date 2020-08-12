@@ -6,10 +6,9 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./SourceView";
-import Data from "./Data.json";
-// import { debug } from "webpack";
+// import Data from "./Data.json";
 // import Data from "./PPT.json";
-// import Data from "./Judgement.json"
+ import Data from "./Judgement.json"
 
 class PdfFileEditor extends React.Component {
   constructor(props) {
@@ -64,43 +63,46 @@ class PdfFileEditor extends React.Component {
 
   render() {
     let yAxis = 0;
-    let leftPaddingValue = 0;
-    let rightPaddingValue = 0;
-    this.state.sentences.map(sentence => {
-      if (leftPaddingValue < sentence.x || leftPaddingValue == 0) {
-        leftPaddingValue = sentence.x
-      }
-      if ((sentence.width && rightPaddingValue < sentence.width + parseInt(sentence.x)) || (sentence.width && rightPaddingValue == 0)) {
-        rightPaddingValue = sentence.width + parseInt(sentence.x)
-
-      }
-
+    let leftPaddingValue=0;
+    let rightPaddingValue=0;
+    this.state.sentences.map(sentence=>{
+        if(leftPaddingValue > parseInt(sentence.x) || leftPaddingValue==0){
+            leftPaddingValue = parseInt(sentence.x)
+            console.log(leftPaddingValue,sentence.x)
+        }
+        if((sentence.width && rightPaddingValue<parseInt(sentence.width)+parseInt(sentence.x) )|| (sentence.width &&rightPaddingValue==0)){
+            rightPaddingValue = parseInt(sentence.width)+parseInt(sentence.x)
+            
+            
+        }
+        
     })
 
     let style = {
-      marginLeft: "20%",
-      width: this.state.sentences && rightPaddingValue - leftPaddingValue + 20 + "px",
+      
+      // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
       maxHeight: this.state.collapseToken ? window.innerHeight - 100 : window.innerHeight - 100,
       position: "relative",
       overflowY: "scroll",
       height: this.state.sentences && this.state.sentences[0].page_height + "px",
-      borderStyle: "groove",
+            
+      
       backgroundColor: "white",
-      overflowX: "hidden",
-      backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
+      
+      
+      backgroundImage: this.state.backgroundImage && "url("+this.state.backgroundImage+")" ,
       backgroundRepeat: "no-repeat",
       backgroundSize: this.state.backgroundSize + "px"
     };
-
+    
     let pageDividerHeight = '0'
-
     return (
-      <div style={{ backgroundColor: '#F5F9FA', display: "flex", flexDirection: "row", justifyContent: "center" }}>
-        <div style={style}>
-          {this.state.sentences &&
-            this.state.sentences.map((sentence, index) => {
-              yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-              pageDividerHeight = (this.state.pageArr && this.state.pageArr.length>0 && parseInt(this.state.pageArr[sentence.page_no])) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
+      
+      <Paper style={style}>
+        {this.state.sentences &&
+          this.state.sentences.map((sentence, index) => {
+            yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
+            pageDividerHeight = (this.state.pageArr && this.state.pageArr.length>0 && parseInt(this.state.pageArr[sentence.page_no])) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
               let printPageNo = false
               let pageNo = sentence.page_no
               let isFirstPage = false
@@ -113,11 +115,11 @@ class PdfFileEditor extends React.Component {
                 printPageNo = true
               }
 
-              return (
-                <SourceView pageDividerHeight={pageDividerHeight} key={index} printPageNo={printPageNo} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={sentence.width ? sentence.width : 300} />
-              );
-            })}
-        </div></ div>
+            return (
+              <SourceView key={index} printPageNo={printPageNo} pageDividerHeight={pageDividerHeight} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={parseInt(sentence.width) ? parseInt(sentence.width) : 286} />
+            );
+          })}
+      </Paper>
     );
   }
 }
