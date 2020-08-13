@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./SourceView";
-// import Data from "./Data.json";
+import Data from "./Data.json";
 // import Data from "./PPT.json";
- import Data from "./Judgement.json"
+//  import Data from "./Judgement.json"
 
 class PdfFileEditor extends React.Component {
   constructor(props) {
@@ -77,6 +77,8 @@ class PdfFileEditor extends React.Component {
         }
         
     })
+      // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
+    let paperWidth=this.state.sentences && this.state.sentences[0].page_width-leftPaddingValue+20+ "px"
 
     let style = {
       
@@ -116,7 +118,7 @@ class PdfFileEditor extends React.Component {
               }
 
             return (
-              <SourceView key={index} printPageNo={printPageNo} pageDividerHeight={pageDividerHeight} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={parseInt(sentence.width) ? parseInt(sentence.width) : 286} />
+              <SourceView paperWidth={paperWidth} key={index} printPageNo={printPageNo} pageDividerHeight={pageDividerHeight} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={parseInt(sentence.width) ? parseInt(sentence.width) : 286} />
             );
           })}
       </Paper>
