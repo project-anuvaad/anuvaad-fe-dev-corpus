@@ -23,8 +23,8 @@ class Preview extends React.Component {
         return (
             <div key={key}>
                 {/* {printPageNo ? <div style={{ position: "absolute ", top: yAxis + 20, width: "100%" }}><hr style={{ color: "white" }} /></div> : <div></div>} */}
-                {printPageNo ? <div>
-                   { pageNo != "1" && <div style={{ position: "absolute ", top: pageDividerHeight - 65, width: paperWidth, color: "#A5A5A5" }}><hr/></div>}
+                {printPageNo&&pageNo != "1" ? <div>
+                   <div style={{ position: "absolute ", top: pageDividerHeight - 85, width: paperWidth, color: "#A5A5A5" }}><hr/></div>
                
                     <div style={{ position: "absolute ", top: pageDividerHeight - 50, fontSize: "13px", fontFamily: "Times", left: "25px", color: "#A5A5A5" }}>Page No. {pageNo}</div>
                 </div> : <div></div>
