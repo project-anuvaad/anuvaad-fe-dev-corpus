@@ -296,12 +296,40 @@ class PdfUpload extends Component {
                 
                 />
           </Grid>
-          <Grid container spacing={24} className={classes.grid}>
-         <Button variant="contained" color="primary" className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
-            {translate("common.page.button.upload")}
-          </Button>
-          </Grid>
+          
         </Grid>
+        <Grid container spacing={8}>
+
+<Grid item xs={12} sm={6} lg={6} xl={6} >
+<Button
+    variant="contained"
+    color="primary"
+    className={classes.button} size="large" 
+    onClick={() => {
+      history.push(`${process.env.PUBLIC_URL}/view-pdf`);
+    }}
+  >
+  {translate("common.page.button.cancel")}
+</Button>
+</Grid>
+
+<Grid item xs={12} sm={6} lg={6} xl={6}  >
+
+  <Grid container spacing={24} className={classes.grid}>
+   
+  <Grid item xs={12} sm={12} lg={12} xl={12}  >
+  <Button variant="contained" color="primary" className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
+{translate("common.page.button.upload")}
+</Button>
+  </Grid>
+  </Grid>
+  
+  </Grid>
+  
+ 
+
+
+</Grid>
         </Grid>
 
         {this.state.open && (
