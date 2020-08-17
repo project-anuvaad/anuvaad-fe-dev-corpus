@@ -17,7 +17,7 @@ class Preview extends React.Component {
 
     return (<div style={styles}>{block && block.tokenized_sentences && Array.isArray(block.tokenized_sentences) && block.tokenized_sentences.length >0 &&
         block.tokenized_sentences.map((tokenSentence, index) => {
-            return (<span>{tokenSentence.src}</span>)
+            return (<span>{tokenSentence.text}</span>)
         })
         }</div>)
 
