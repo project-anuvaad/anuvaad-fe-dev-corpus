@@ -5,6 +5,24 @@ class Preview extends React.Component {
         super(props);
     }
 
+    fetchTokenizedSenetence(tokenText) {
+        return (
+            <span>{tokenText}</span>
+        )
+    }
+
+    fetchSentence(block, styles) {
+
+        // return (<div style={styles}>{block.text}</div>)
+
+    return (<div style={styles}>{block && block.tokenized_sentences && Array.isArray(block.tokenized_sentences) && block.tokenized_sentences.length >0 &&
+        block.tokenized_sentences.map((tokenSentence, index) => {
+            return (<span>{tokenSentence.src}</span>)
+        })
+        }</div>)
+
+    }
+
     render() {
         const { key, sentence, yAxis, widthValue, leftPaddingValue, printPageNo, pageNo, isFirstPage, pageDividerHeight, paperWidth } = this.props;
         var a = {
@@ -22,14 +40,22 @@ class Preview extends React.Component {
         };
         return (
             <div key={key}>
-                {/* {printPageNo ? <div style={{ position: "absolute ", top: yAxis + 20, width: "100%" }}><hr style={{ color: "white" }} /></div> : <div></div>} */}
                 {printPageNo ? <div>
-                   { pageNo != "1" && <div style={{ position: "absolute ", top: pageDividerHeight - 65, width: paperWidth, color: "#A5A5A5" }}><hr/></div>}
-               
+                    {pageNo != "1" && <div style={{ position: "absolute ", top: pageDividerHeight - 65, width: paperWidth, color: "#A5A5A5" }}><hr /></div>}
+
                     <div style={{ position: "absolute ", top: pageDividerHeight - 50, fontSize: "13px", fontFamily: "Times", left: "25px", color: "#A5A5A5" }}>Page No. {pageNo}</div>
                 </div> : <div></div>
-    }
-                <div style={a}>{sentence.text}</div>
+                }
+                {/* <div> */}
+                    {sentence.is_image ? <div
+                        style={{
+                            position: "absolute ",
+                            top: yAxis,
+                            left: sentence.x + "px",
+                            overflow: "hidden"
+                        }}><img width={sentence.width} height={sentence.height} src={sentence.img}></img></div> : this.fetchSentence(sentence, a)}
+                   
+                {/* </div> */}
             </div >
         );
     }
