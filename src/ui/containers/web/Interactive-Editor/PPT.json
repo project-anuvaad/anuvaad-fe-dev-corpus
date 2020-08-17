@@ -1,9 +1,8 @@
 {
     "data": [
-        
         {
             "width": "145",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b1",
             "y": "16",
             "x": "75",
             "y_end": "1120",
@@ -21,11 +20,25 @@
                 "color": "#181818",
                 "": null,
                 "line-height": "37px"
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "text": "Context",
+                    "sentence_index": 0,
+                    "src": "Context",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         },
         {
             "width": "1089",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b2",
             "y": "110",
             "x": "71",
             "y_end": "1120",
@@ -43,11 +56,25 @@
                 "font-family": "ABCDEE+2,Bold",
                 "color": "#000000",
                 "": null
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "text": "1. We are doing a set of things to ensure we create an environment where consistent",
+                    "sentence_index": 1,
+                    "src": "1. We are doing a set of things to ensure we create an environment where consistent",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         },
         {
             "width": "550",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b3",
             "y": "146",
             "x": "113",
             "y_end": "146",
@@ -65,12 +92,25 @@
                 "font-family": "ABCDEE+2,Bold",
                 "color": "#000000",
                 "": null
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "text": "predictable project success can be achieved.",
+                    "sentence_index": 2,
+                    "src": "predictable project success can be achieved.",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         },
-       
         {
             "width": "830",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b4",
             "y": "182",
             "x": "71",
             "y_end": "1120",
@@ -88,11 +128,25 @@
                 "font-family": "ABCDEE+2,Bold",
                 "color": "#000000",
                 "": null
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "text": "2. There are many factors that go to make a project success happen",
+                    "sentence_index": 3,
+                    "src": "2. There are many factors that go to make a project success happen",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         },
         {
             "width": "380",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b5",
             "y": "218",
             "x": "125",
             "y_end": "1120",
@@ -110,11 +164,25 @@
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "text": "a. Reliable Estimation Process",
+                    "sentence_index": 4,
+                    "src": "a. Reliable Estimation Process",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         },
         {
             "width": "640",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b6",
             "y": "254",
             "x": "125",
             "y_end": "1120",
@@ -132,11 +200,25 @@
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "text": "b. Clear Org structure with Roles and Responsibilities",
+                    "sentence_index": 5,
+                    "src": "b. Clear Org structure with Roles and Responsibilities",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         },
         {
             "width": "770",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b7",
             "y": "290",
             "x": "125",
             "y_end": "1120",
@@ -154,11 +236,25 @@
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "text": "c. Mature Delivery Process and Model - with appropriate toolset.",
+                    "sentence_index": 6,
+                    "src": "c. Mature Delivery Process and Model - with appropriate toolset.",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         },
         {
             "width": "970",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b8",
             "y": "326",
             "x": "125",
             "y_end": "1120",
@@ -176,11 +272,25 @@
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "text": "d. Good Performance Management system - starting with setting relevant Goals",
+                    "sentence_index": 7,
+                    "src": "d. Good Performance Management system - starting with setting relevant Goals",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         },
         {
             "width": "533",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b9",
             "y": "362",
             "x": "125",
             "y_end": "1120",
@@ -198,11 +308,25 @@
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "text": "e. Diligent Governance - Cadence of Reviews",
+                    "sentence_index": 8,
+                    "src": "e. Diligent Governance - Cadence of Reviews",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         },
         {
             "width": "545",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b10",
             "y": "398",
             "x": "125",
             "y_end": "1120",
@@ -220,11 +344,25 @@
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "text": "f. Effective Training and competency building",
+                    "sentence_index": 9,
+                    "src": "f. Effective Training and competency building",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         },
         {
             "width": "70",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b11",
             "y": "434",
             "x": "125",
             "y_end": "1120",
@@ -242,14 +380,28 @@
                 "font-family": "ABCDEE+1",
                 "color": "#000000",
                 "": null
-            }
-        }
-        ,{
+            },
+            "tokenized_sentences": [
+                {
+                    "text": "g. etc",
+                    "sentence_index": 10,
+                    "src": "g. etc",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
+        },
+        {
             "width": "300",
             "height": "200",
             "img": "/favicon.png",
             "img2": "https://lh3.googleusercontent.com/MOf9Kxxkj7GvyZlTZOnUzuYv0JAweEhlxJX6gslQvbvlhLK5_bSTK6duxY2xfbBsj43H=w300",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b12",
             "is_image": true,
             "y": "490",
             "x": "125",
@@ -268,14 +420,26 @@
                 "color": "#181818",
                 "": null,
                 "line-height": "37px"
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "sentence_index": 11,
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         },
         {
             "width": "1440",
             "height": "810",
             "img1": "/Anuvaad.png",
             "img": "/icon.jpg",
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3da59e7b13",
             "is_bg_image": true,
             "y": "0",
             "x": "0",
@@ -294,7 +458,19 @@
                 "color": "#181818",
                 "": null,
                 "line-height": "37px"
-            }
+            },
+            "tokenized_sentences": [
+                {
+                    "sentence_index": 12,
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                }
+            ]
         }
     ]
 }
