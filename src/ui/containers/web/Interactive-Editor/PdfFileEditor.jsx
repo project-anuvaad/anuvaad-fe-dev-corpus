@@ -7,6 +7,12 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./SourceView";
 import Data from "./Data.json";
+import Typography from "@material-ui/core/Typography";
+import { blueGrey50, darkBlack } from "material-ui/styles/colors";
+
+import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
+
+import Toolbar from "@material-ui/core/Toolbar";
 // import Data from "./PPT.json";
 //  import Data from "./Judgement.json"
 
@@ -43,7 +49,7 @@ class PdfFileEditor extends React.Component {
   componentDidMount() {
     let minPageHeight = this.state.sentences[0].y
     let pages = []
-
+    console.log(this.props.match.path)
     this.state.sentences.map((sentence, index) => {
       if (sentence.is_bg_image) {
         this.setState({ backgroundImage: sentence.img, backgroundSize: sentence.width })
@@ -78,17 +84,17 @@ class PdfFileEditor extends React.Component {
         
     })
       // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
-    let paperWidth=this.state.sentences && this.state.sentences[0].page_width-leftPaddingValue+20+ "px"
+    let paperWidth=this.state.sentences && this.state.sentences[0].page_width-leftPaddingValue-78+ "px"
 
     let style = {
-      
+      maxWidth: this.state.sentences && rightPaddingValue-leftPaddingValue+20+'px',
       // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
       maxHeight: this.state.collapseToken ? window.innerHeight - 100 : window.innerHeight - 100,
       position: "relative",
       overflowY: "scroll",
       height: this.state.sentences && this.state.sentences[0].page_height + "px",
             
-      
+       overflowX:this.props.match.path=="/pdf-file-editor"&&"hidden",
       backgroundColor: "white",
       
       
@@ -101,6 +107,14 @@ class PdfFileEditor extends React.Component {
     return (
       
       <Paper style={style}>
+        <Toolbar
+                        
+                        style={{ color: darkBlack, background: blueGrey50,width:paperWidth }}
+                      >
+                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1 }}>
+                        {this.props.title}
+                      </Typography>
+                      </Toolbar>
         {this.state.sentences &&
           this.state.sentences.map((sentence, index) => {
             yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
