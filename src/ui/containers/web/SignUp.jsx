@@ -125,7 +125,7 @@ class SignUp extends React.Component {
                   margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('password')}
                 />                </FormControl>
               <FormControl align='center' fullWidth>
-              <TextField value={this.state.confirmPassword} id="confirmPassword" type="password" placeholder={translate('setPassword.page.placeholder.reEnterPassword')}
+                <TextField value={this.state.confirmPassword} id="confirmPassword" type="password" placeholder={translate('setPassword.page.placeholder.reEnterPassword')}
                   margin="dense" varient="outlined" style={{ width: '50%', marginBottom: '2%', backgroundColor: 'white' }} onChange={this.handleInputReceived('confirmPassword')}
                 />
               </FormControl>
@@ -140,7 +140,7 @@ class SignUp extends React.Component {
                     onChange={this.handleInputReceived('termsAndCondition')}
                     color="default"
                   />
-                 }
+                }
                 label={<div><span>{translate('signUp.page.label.iAgree')}</span>
                   <Link href="#" onClick={() => {
                     window.open('/Anuvaad-TnC.html', 'T&C', `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
@@ -149,17 +149,18 @@ class SignUp extends React.Component {
                 </div>}
               />
               <br />
-              <FormControl align='center' fullWidth>
-                <Button
-                  disabled={!this.state.termsAndCondition}
-                  variant="contained" aria-label="edit" style={{
-                    width: '50%', marginBottom: '2%', marginTop: '2%', borderRadius: '20px', height: '45px', textTransform: 'initial', fontWeight: '20px',
-                    backgroundColor: this.state.termsAndCondition ? '#1ca9c9' : 'gray', color: 'white',
-                  }} onClick={this.handleSubmit.bind(this)}>
-                  {translate('singUp.page.label.signUp')}
-                </Button>
-              </FormControl>
-
+              <div style={{textAlign: "center"}}>
+                {/* <FormControl align='center' fullWidth> */}
+                  <Button
+                    disabled={!this.state.termsAndCondition}
+                    variant="contained" aria-label="edit" style={{
+                      width: '50%', marginBottom: '2%', marginTop: '2%', borderRadius: '20px', height: '45px', textTransform: 'initial', fontWeight: '20px',
+                      backgroundColor: this.state.termsAndCondition ? '#1ca9c9' : 'gray', color: 'white',
+                    }} onClick={this.handleSubmit.bind(this)}>
+                    {translate('singUp.page.label.signUp')}
+                  </Button>
+                {/* </FormControl> */}
+              </div>
               <Typography className={classes.typography1}>{translate('signUp.page.label.allReadyHaveAccount')}
                 <Link style={{ cursor: 'pointer', color: '#0C8AA9' }} href="#" onClick={() => { history.push("/") }}> {translate('signUp.page.label.logIn')}</Link></Typography>
 
