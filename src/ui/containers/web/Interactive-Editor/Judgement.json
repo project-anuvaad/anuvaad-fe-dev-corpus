@@ -594,7 +594,21 @@
             "para_index": 12,
             "version": 0,
             "status": "TRANSLATED",
-            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483"
+            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+            "tokenized_sentences": [
+                {
+                    "text": "1.",
+                    "sentence_index": 0,
+                    "src": "HEMANT GUPTA, J.",
+                    "id": 56,
+                    "n_id": "15__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "HEMANT GUPTA, J.",
+                    "tagged_tgt": "हेमंत गुप्ता, जे.",
+                    "target": "हेमंत गुप्ता, जे."
+                }
+            ]
         },
         {
             "width": "431",
@@ -624,7 +638,21 @@
             "para_index": 12,
             "version": 0,
             "status": "TRANSLATED",
-            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483"
+            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+            "tokenized_sentences": [
+                {
+                    "text": "The candidates for direct recruitment to the posts of Administrative",
+                    "sentence_index": 0,
+                    "src": "HEMANT GUPTA, J.",
+                    "id": 56,
+                    "n_id": "15__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "HEMANT GUPTA, J.",
+                    "tagged_tgt": "हेमंत गुप्ता, जे.",
+                    "target": "हेमंत गुप्ता, जे."
+                }
+            ]
         },
         {
             "width": "260",
@@ -654,7 +682,21 @@
             "para_index": 12,
             "version": 0,
             "status": "TRANSLATED",
-            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483"
+            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+            "tokenized_sentences": [
+                {
+                    "text": "Officer/Assistant Assessor and Collector",
+                    "sentence_index": 0,
+                    "src": "HEMANT GUPTA, J.",
+                    "id": 56,
+                    "n_id": "15__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "HEMANT GUPTA, J.",
+                    "tagged_tgt": "हेमंत गुप्ता, जे.",
+                    "target": "हेमंत गुप्ता, जे."
+                }
+            ]
         },
         {
             "width": "164",
@@ -684,7 +726,21 @@
             "para_index": 12,
             "version": 0,
             "status": "TRANSLATED",
-            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483"
+            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+            "tokenized_sentences": [
+                {
+                    "text": " are in appeals before this",
+                    "sentence_index": 0,
+                    "src": "HEMANT GUPTA, J.",
+                    "id": 56,
+                    "n_id": "15__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "HEMANT GUPTA, J.",
+                    "tagged_tgt": "हेमंत गुप्ता, जे.",
+                    "target": "हेमंत गुप्ता, जे."
+                }
+            ]
         },
         {
             "width": "422",
@@ -714,7 +770,21 @@
             "para_index": 12,
             "version": 0,
             "status": "TRANSLATED",
-            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483"
+            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+            "tokenized_sentences": [
+                {
+                    "text": "Court directed against an order passed by the High Court of Delhi",
+                    "sentence_index": 0,
+                    "src": "HEMANT GUPTA, J.",
+                    "id": 56,
+                    "n_id": "15__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "HEMANT GUPTA, J.",
+                    "tagged_tgt": "हेमंत गुप्ता, जे.",
+                    "target": "हेमंत गुप्ता, जे."
+                }
+            ]
         },
         {
             "width": "28",
@@ -744,7 +814,21 @@
             "para_index": 12,
             "version": 0,
             "status": "TRANSLATED",
-            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483"
+            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+            "tokenized_sentences": [
+                {
+                    "text": "on 1",
+                    "sentence_index": 0,
+                    "src": "HEMANT GUPTA, J.",
+                    "id": 56,
+                    "n_id": "15__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "HEMANT GUPTA, J.",
+                    "tagged_tgt": "हेमंत गुप्ता, जे.",
+                    "target": "हेमंत गुप्ता, जे."
+                }
+            ]
         },
         {
             "width": "5",
@@ -774,7 +858,21 @@
             "para_index": 12,
             "version": 0,
             "status": "TRANSLATED",
-            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483"
+            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+            "tokenized_sentences": [
+                {
+                    "text": "st",
+                    "sentence_index": 0,
+                    "src": "HEMANT GUPTA, J.",
+                    "id": 56,
+                    "n_id": "15__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "HEMANT GUPTA, J.",
+                    "tagged_tgt": "हेमंत गुप्ता, जे.",
+                    "target": "हेमंत गुप्ता, जे."
+                }
+            ]
         },
         {
             "width": "116",
@@ -804,18 +902,24 @@
             "para_index": 12,
             "version": 0,
             "status": "TRANSLATED",
-            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483"
+            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+            "tokenized_sentences": [
+                {
+                    "text": " September, 2016.",
+                    "sentence_index": 0,
+                    "src": "HEMANT GUPTA, J.",
+                    "id": 56,
+                    "n_id": "15__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "HEMANT GUPTA, J.",
+                    "tagged_tgt": "हेमंत गुप्ता, जे.",
+                    "target": "हेमंत गुप्ता, जे."
+                }
+            ]
         },
-
-
-
-
-
-
-
-
         {
-            "width": "12",
+            "width": "533",
             "_id": "5f29589ec0e1d9fd0f985efb",
             "y": "939",
             "x": "152",
@@ -844,39 +948,81 @@
             "para_index": 13,
             "version": 0,
             "status": "TRANSLATED",
-            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483"
+            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+          "tokenized_sentences": [
+        {
+          "text": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. 3 of 2013 dated 12 th September, 2013 whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+          "sentence_index": 0,
+          "src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. 3 of 2013 dated 12 th September, 2013 whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+          "id": 56,
+          "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+          "s_id": 0,
+          "version": 0,
+          "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+          "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+          "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
         },
         {
-            "width": "470",
-            "_id": "5f29589ec0e1d9fd0f985efb",
-            "y": "939",
-            "x": "206",
-            "y_end": "990",
-            "text": "The candidates who were initially appointed as Lower Division",
-            "style": "position:absolute;top:939px;left:152px;white-space:nowrap",
-            "class": "ft01",
-            "page_no": 1,
-            "is_bold": false,
-            "page_no_end": 2,
-            "page_height": "1263",
-            "page_width": "892",
-            "class_style": {
-                "font-size": "16px",
-                "font-family": "DejaVuSans",
-                "color": "#000009",
-                "": null
-            },
-            "node_index": "66",
-            "visual_break": null,
-            "sup_array": [
-                "2",
-                "3",
-                "4"
-            ],
-            "para_index": 13,
-            "version": 0,
-            "status": "TRANSLATED",
-            "session_id": "2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483"
+          "text": "The argument was that the Recruitment Regulations for the post of Administrative Officer/Assistant Assessor and Collector in North, South and East Delhi Municipal Corporations, 2013 contemplate that the vacancies for the posts in question are to be filled up by promotion failing which by direct recruitment.",
+          "sentence_index": 1,
+          "src": "The argument was that the Recruitment Regulations for the post of Administrative Officer/Assistant Assessor and Collector in North, South and East Delhi Municipal Corporations, 2013 contemplate that the vacancies for the posts in question are to be filled up by promotion failing which by direct recruitment.",
+          "id": 56,
+          "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+          "s_id": 1,
+          "version": 0,
+          "tagged_src": "The argument was that the Recruitment Regulations for the post of Administrative Officer/Assistant Assessor and Collector in North, South and East Delhi Municipal Corporations, NnUuMm० contemplate that the vacancies for the posts in question are to be filled up by promotion failing which by direct recruitment.",
+          "tagged_tgt": "तर्क यह था कि उत्तर, दक्षिण और पूर्व दिल्ली नगर निगमों में प्रशासनिक अधिकारी/सहायक ठेकेदार और कलेक्टर के पद के लिए भर्ती विनियम, NnUuMm० इस बात पर विचार करते हैं कि विचाराधीन पदों के लिए रिक्तियों को पदोन्नति द्वारा भरा जाना है जो सीधी भर्ती द्वारा।",
+          "target": "तर्क यह था कि उत्तर, दक्षिण और पूर्व दिल्ली नगर निगमों में प्रशासनिक अधिकारी/सहायक ठेकेदार और कलेक्टर के पद के लिए भर्ती विनियम, 2013 इस बात पर विचार करते हैं कि विचाराधीन पदों के लिए रिक्तियों को पदोन्नति द्वारा भरा जाना है जो सीधी भर्ती द्वारा।"
+        },
+        {
+          "text": "It was thus alleged that without resorting to promotion by convening meeting of the Departmental Promotion Committee , the alternative process of direct recruitment cannot be resorted to.",
+          "sentence_index": 2,
+          "src": "It was thus alleged that without resorting to promotion by convening meeting of the Departmental Promotion Committee , the alternative process of direct recruitment cannot be resorted to.",
+          "id": 56,
+          "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+          "s_id": 2,
+          "version": 0,
+          "tagged_src": "It was thus alleged that without resorting to promotion by convening meeting of the Departmental Promotion Committee , the alternative process of direct recruitment cannot be resorted to.",
+          "tagged_tgt": "इस प्रकार यह आरोप लगाया गया कि विभागीय पदोन्नति समिति की बैठक बुलाकर पदोन्नति का सहारा लिए बिना, सीधी भर्ती की वैकल्पिक प्रक्रिया का सहारा नहीं लिया जा सकता है।",
+          "target": "इस प्रकार यह आरोप लगाया गया कि विभागीय पदोन्नति समिति की बैठक बुलाकर पदोन्नति का सहारा लिए बिना, सीधी भर्ती की वैकल्पिक प्रक्रिया का सहारा नहीं लिया जा सकता है।"
+        },
+        {
+          "text": "The said Original Application was dismissed by the Tribunal on 28 th May, 2015 by observing that the recruitment process is not against the constitutional provisions but the promotion must also not be tempered with.",
+          "sentence_index": 3,
+          "src": "The said Original Application was dismissed by the Tribunal on 28 th May, 2015 by observing that the recruitment process is not against the constitutional provisions but the promotion must also not be tempered with.",
+          "id": 56,
+          "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+          "s_id": 3,
+          "version": 0,
+          "tagged_src": "The said Original Application was dismissed by the Tribunal on NnUuMm१ th May, NnUuMm० by observing that the recruitment process is not against the constitutional provisions but the promotion must also not be tempered with.",
+          "tagged_tgt": "न्यायाधिकरण द्वारा NnUuMm१ मई, NnUuMm० को उक्त मूल आवेदन को खारिज कर दिया गया था, यह देखते हुए कि भर्ती प्रक्रिया संवैधानिक प्रावधानों के खिलाफ नहीं है, लेकिन पदोन्नति के साथ भी गुस्सा नहीं होना चाहिए।",
+          "target": "न्यायाधिकरण द्वारा 28 मई, 2015 को उक्त मूल आवेदन को खारिज कर दिया गया था, यह देखते हुए कि भर्ती प्रक्रिया संवैधानिक प्रावधानों के खिलाफ नहीं है, लेकिन पदोन्नति के साथ भी गुस्सा नहीं होना चाहिए।"
+        },
+        {
+          "text": "In the writ petition directed against such order, the High Court held that the respondents have failed to comply with the Recruitment Rules and that only after the respondents are unable to fill up the vacancies either by promotion or by transfer or by deputation, the Department would be entitled to publish the advertisement to fill up the vacancies.",
+          "sentence_index": 4,
+          "src": "In the writ petition directed against such order, the High Court held that the respondents have failed to comply with the Recruitment Rules and that only after the respondents are unable to fill up the vacancies either by promotion or by transfer or by deputation, the Department would be entitled to publish the advertisement to fill up the vacancies.",
+          "id": 56,
+          "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+          "s_id": 4,
+          "version": 0,
+          "tagged_src": "In the writ petition directed against such order, the High Court held that the respondents have failed to comply with the Recruitment Rules and that only after the respondents are unable to fill up the vacancies either by promotion or by transfer or by deputation, the Department would be entitled to publish the advertisement to fill up the vacancies.",
+          "tagged_tgt": "इस तरह के आदेश के खिलाफ निर्देशित रिट याचिका में, उच्च न्यायालय ने कहा कि उत्तरदाता भर्ती नियमों का पालन करने में विफल रहे हैं और केवल उत्तरदाताओं के पदोन्नति या स्थानांतरण या प्रतिनियुक्ति द्वारा रिक्तियों को भरने में असमर्थ होने के बाद, विभाग रिक्त पदों को भरने के लिए विज्ञापन प्रकाशित करने का हकदार होगा।",
+          "target": "इस तरह के आदेश के खिलाफ निर्देशित रिट याचिका में, उच्च न्यायालय ने कहा कि उत्तरदाता भर्ती नियमों का पालन करने में विफल रहे हैं और केवल उत्तरदाताओं के पदोन्नति या स्थानांतरण या प्रतिनियुक्ति द्वारा रिक्तियों को भरने में असमर्थ होने के बाद, विभाग रिक्त पदों को भरने के लिए विज्ञापन प्रकाशित करने का हकदार होगा।"
+        },
+        {
+          "text": "It was also found that no effort has been made to hold DPC to carry out promotions nor the respondents have explored the possibility to fill up the vacancies either by transfer or deputation.",
+          "sentence_index": 5,
+          "src": "It was also found that no effort has been made to hold DPC to carry out promotions nor the respondents have explored the possibility to fill up the vacancies either by transfer or deputation.",
+          "id": 56,
+          "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+          "s_id": 5,
+          "version": 0,
+          "tagged_src": "It was also found that no effort has been made to hold DPC to carry out promotions nor the respondents have explored the possibility to fill up the vacancies either by transfer or deputation.",
+          "tagged_tgt": "यह भी पाया गया कि पदोन्नति करने के लिए डीपीसी रखने का कोई प्रयास नहीं किया गया है और न ही उत्तरदाताओं ने स्थानांतरण या प्रतिनियुक्ति द्वारा रिक्तियों को भरने की संभावना का पता लगाया है।",
+          "target": "यह भी पाया गया कि पदोन्नति करने के लिए डीपीसी रखने का कोई प्रयास नहीं किया गया है और न ही उत्तरदाताओं ने स्थानांतरण या प्रतिनियुक्ति द्वारा रिक्तियों को भरने की संभावना का पता लगाया है।"
+        }
+      ]
         },
         {
             "width": "440",
