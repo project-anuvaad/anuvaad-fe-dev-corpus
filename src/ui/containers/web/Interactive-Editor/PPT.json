@@ -59,9 +59,21 @@
             },
             "tokenized_sentences": [
                 {
-                    "text": "1. We are doing a set of things to ensure we create an environment where consistent",
+                    "text": "1. We are doing a set of things to ensure ",
+                    "sentence_index": 0,
+                    "src": "1. We are doing a set of things to ensure ",
+                    "id": 56,
+                    "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
+                    "s_id": 0,
+                    "version": 0,
+                    "tagged_src": "2. The candidates who were initially appointed as Lower Division Clerks and promoted as Upper Division Clerks/Head Clerks invoked the jurisdiction of the Central Administrative Tribunal challenging Advertisement NO. NnUuMm३ of NnUuMm० dated NnUuMm२ th September, NnUuMm१ whereby, the respondents set in process to fill up the posts advertised by way of direct recruitment.",
+                    "tagged_tgt": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। NnUuMm० के NnUuMm३ दिनांक NnUuMm२ सितंबर, NnUuMm१ को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।",
+                    "target": "2. जिन उम्मीदवारों को शुरू में लोअर डिवीजन क्लर्क के रूप में नियुक्त किया गया था और अपर डिवीजन क्लर्क/हेड क्लर्क के रूप में पदोन्नत किया गया था, उन्होंने विज्ञापन सं। 2013 के 3 दिनांक 12 सितंबर, 2013 को, उत्तरदाताओं ने सीधी भर्ती के माध्यम से विज्ञापित पदों को भरने के लिए प्रक्रिया में सेट किया।"
+                },
+                {
+                    "text": "we create an environment where consistent",
                     "sentence_index": 1,
-                    "src": "1. We are doing a set of things to ensure we create an environment where consistent",
+                    "src": "we create an environment where consistent",
                     "id": 56,
                     "n_id": "66__2d2dafb2-cbf6-4c6c-a31e-6e983e6e9483",
                     "s_id": 0,
