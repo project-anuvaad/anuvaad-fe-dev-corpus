@@ -5,9 +5,27 @@ class Preview extends React.Component {
         super(props);
     }
 
-    fetchTokenizedSenetence(tokenText) {
+    hoverOn(e, pageNo) {
+        // if (!this.props.isPreview) {
+            this.props.handleOnMouseEnter(e, this.props.paperType, pageNo);
+        // }
+    }
+
+    hoverOff() {
+        // if (!this.props.isPreview) {
+            this.props.handleOnMouseEnter("");
+        // }
+    }
+
+    fetchTokenizedSenetence(tokenText, id) {
         return (
-            <span>{tokenText}</span>
+            <span
+                style={{ backgroundColor: this.props.hoveredSentence === id + "_" + tokenText.sentence_index ? "yellow" : "" }}
+                onMouseEnter={() => this.hoverOn(id + "_" + tokenText.sentence_index)}
+                onMouseLeave={() => this.hoverOff()}
+            >
+                {tokenText.src}
+            </span>
         )
     }
 
@@ -139,14 +157,14 @@ class Preview extends React.Component {
                 </div> : <div></div>
                 }
                 {/* <div> */}
-                    {sentence.is_image ? <div
-                        style={{
-                            position: "absolute ",
-                            top: yAxis,
-                            left: sentence.x + "px",
-                            overflow: "hidden"
-                        }}><img width={sentence.width} height={sentence.height} src={sentence.img}></img></div> : this.fetchSentence(sentence, a)}
-                   
+                {sentence.is_image ? <div
+                    style={{
+                        position: "absolute ",
+                        top: yAxis,
+                        left: sentence.x + "px",
+                        overflow: "hidden"
+                    }}><img width={sentence.width} height={sentence.height} src={sentence.img}></img></div> : this.fetchSentence(sentence, a)}
+
                 {/* </div> */}
             </div >
         );

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./SourceView";
-import Data from "./Data.json";
+ import Data from "./Data.json";
 import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 
@@ -26,7 +26,8 @@ class PdfFileEditor extends React.Component {
       header: "",
       sentences: Data.data,
       backgroundImage: "",
-      pageArr: []
+      pageArr: [],
+      hoveredSentence: "",
     };
   }
 
@@ -178,12 +179,20 @@ class PdfFileEditor extends React.Component {
         minPageHeight = sentence.y
       }
 
-      if ((this.state.sentences[index + 1] && sentence.page_no != this.state.sentences[index + 1].page_no) || index === this.state.sentences.length-1) {
+      if ((this.state.sentences[index + 1] && sentence.page_no != this.state.sentences[index + 1].page_no) || index === this.state.sentences.length - 1) {
         pages[sentence.page_no] = minPageHeight
       }
 
-      this.setState({ pageArr: pages})
+      this.setState({ pageArr: pages })
     })
+  }
+
+  handleOnMouseEnter(sentenceId, parent, pageNo) {
+    this.setState({ hoveredSentence: sentenceId });
+  }
+
+  handleOnMouseLeave() {
+    this.setState({ hoveredSentence: "" });
   }
 
   render() {
@@ -202,56 +211,71 @@ class PdfFileEditor extends React.Component {
         }
         
     })
-      // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
-    let paperWidth=this.state.sentences && this.state.sentences[0].page_width-leftPaddingValue-78+ "px"
+    // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
+    let paperWidth = this.state.sentences && this.state.sentences[0].page_width - leftPaddingValue - 78 + "px"
 
     let style = {
-      maxWidth: this.state.sentences && rightPaddingValue-leftPaddingValue+20+'px',
+      maxWidth: this.state.sentences && rightPaddingValue - leftPaddingValue + 20 + 'px',
       // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
       maxHeight: this.state.collapseToken ? window.innerHeight - 100 : window.innerHeight - 100,
       position: "relative",
       overflowY: "scroll",
       height: this.state.sentences && this.state.sentences[0].page_height + "px",
-            
-       overflowX:this.props.match.path=="/pdf-file-editor"&&"hidden",
+
+      overflowX: this.props.match.path == "/pdf-file-editor" && "hidden",
       backgroundColor: "white",
-      
-      
-      backgroundImage: this.state.backgroundImage && "url("+this.state.backgroundImage+")" ,
+
+
+      backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
       backgroundRepeat: "no-repeat",
       backgroundSize: this.state.backgroundSize + "px"
     };
-    
+
     let pageDividerHeight = '0'
     return (
-      
+
       <Paper style={style}>
         <Toolbar
-                        
-                        style={{ color: darkBlack, background: blueGrey50,width:paperWidth }}
-                      >
-                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1 }}>
-                        {this.props.title}
-                      </Typography>
-                      </Toolbar>
+
+          style={{ color: darkBlack, background: blueGrey50, width: paperWidth }}
+        >
+          <Typography value="" variant="h6" gutterBottom style={{ flex: 1 }}>
+            {this.props.title}
+          </Typography>
+        </Toolbar>
         {this.state.sentences &&
           this.state.sentences.map((sentence, index) => {
             yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-            pageDividerHeight = (this.state.pageArr && this.state.pageArr.length>0 && parseInt(this.state.pageArr[sentence.page_no])) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-              let printPageNo = false
-              let pageNo = sentence.page_no
-              let isFirstPage = false
+            pageDividerHeight = (this.state.pageArr && this.state.pageArr.length > 0 && parseInt(this.state.pageArr[sentence.page_no])) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
+            let printPageNo = false
+            let pageNo = sentence.page_no
+            let isFirstPage = false
 
 
-              if (index === 0) {
-                printPageNo = true
-                isFirstPage = true
-              } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
-                printPageNo = true
-              }
+            if (index === 0) {
+              printPageNo = true
+              isFirstPage = true
+            } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
+              printPageNo = true
+            }
 
             return (
-              <SourceView getSelectionText={this.getSelectionText.bind(this)} paperWidth={paperWidth} key={index} printPageNo={printPageNo} pageDividerHeight={pageDividerHeight} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={parseInt(sentence.width) ? parseInt(sentence.width) : 286} />
+              // <SourceView getSelectionText={this.getSelectionText.bind(this)} paperWidth={paperWidth} key={index} printPageNo={printPageNo} pageDividerHeight={pageDividerHeight} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={parseInt(sentence.width) ? parseInt(sentence.width) : 286} />
+              <SourceView
+                paperWidth={paperWidth}
+                getSelectionText={this.getSelectionText.bind(this)}
+                key={index}
+                printPageNo={printPageNo}
+                pageDividerHeight={pageDividerHeight}
+                leftPaddingValue={leftPaddingValue}
+                isFirstPage={isFirstPage}
+                pageNo={pageNo}
+                sentence={sentence}
+                yAxis={yAxis}
+                widthValue={parseInt(sentence.width) ? parseInt(sentence.width) : 286}
+                hoveredSentence={this.state.hoveredSentence}
+                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+              />
             );
           })}
       </Paper>
