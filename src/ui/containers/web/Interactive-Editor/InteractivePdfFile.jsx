@@ -8,6 +8,8 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Editor from "./PdfEditor";
 import Data from "./Data.json";
+import MenuItems from "./PopUp";
+import Dialog from "../../../components/web/common/SimpleDialog";
 class Preview extends React.Component {
     constructor(props) {
         super(props);
@@ -35,7 +37,8 @@ class Preview extends React.Component {
             tablePosition: "",
             hoveredTable: "",
             zoom: false,
-            popOver: true
+            popOver: true,
+            sentences:Data
           };
     }
 
@@ -64,6 +67,19 @@ class Preview extends React.Component {
     
         this.handleDone(false, temp);
       }
+
+
+      handleDialogSave() {
+
+        if (this.state.title === "Merge" || this.state.title === "Split") {
+          console.log("details",this.state.sentenceDetails)
+        }
+        
+    
+    
+        this.setState({ openDialog: false });
+      }
+      
     
       handleCellOnClick(sentenceId, tableId, clickedCell, value, parent, pageNo, next_previous) {
 
@@ -116,8 +132,28 @@ class Preview extends React.Component {
         this.setState({
           openDialog: false,
           
+        operation_type: "",
+       
+        endSentence: "",
+        startSentence: "",
+        addSentence: false,
+        selectedMergeSentence: [],
+        openEl:false
+          
         });
       };
+
+      handleDialog(title, dialogMessage) {
+        this.setState({ openDialog: true, title, dialogMessage,openEl:false });
+      }
+
+      popUp=(operation_type,event, sentenceDetails, selectedText)=>{
+
+        console.log(sentenceDetails,selectedText)
+        this.setState({operation_type,openEl:true,topValue: event.clientY - 4, sentenceDetails,
+          leftValue: event.clientX - 2,})
+
+      }
     
 
       handleDone(token, value) {
@@ -131,10 +167,11 @@ class Preview extends React.Component {
     render() {
        
         return (
+          <div>
             <Grid container spacing={8} style={{ padding: "0 24px 0px 24px" }}>
                 <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
                
-                <SourceView title={"Source"}/>
+                <SourceView sentences={this.state.sentences} title={"Source"} popUp = {this.popUp.bind(this)}/>
                 
                 </Grid>
                 <Grid item xs={12} sm={6} lg={4} xl={4} className="GridFileDetails">
@@ -170,6 +207,28 @@ class Preview extends React.Component {
                  
                 </Grid>
                </Grid>
+               {this.state.openDialog && (
+              <Dialog
+                message={this.state.dialogMessage}
+                handleSubmit={this.handleDialogSave.bind(this)}
+                handleClose={this.handleClose.bind(this)}
+                open
+                title={this.state.title}
+              />
+            )}
+                {this.state.operation_type &&this.state.openEl&&
+                   (
+                    <MenuItems
+                      isOpen={this.state.openEl}
+                      topValue={this.state.topValue}
+                      leftValue={this.state.leftValue}
+                      anchorEl={this.state.anchorEl}
+                      operation_type={this.state.operation_type}
+                      handleClose={this.handleClose.bind(this)}
+                      handleDialog={this.handleDialog.bind(this)}
+                    />
+                  )}
+                  </div>
               
             
         );

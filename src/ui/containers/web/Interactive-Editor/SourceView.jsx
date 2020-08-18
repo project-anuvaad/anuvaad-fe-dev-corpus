@@ -29,15 +29,106 @@ class Preview extends React.Component {
         )
     }
 
+    getSelectionText(event) {
+        this.props.getSelectionText(event)
+    }
+
+    handleSelection(selectedSentence, event) {
+        this.setState({ sText: window.getSelection().toString() })
+        if (
+          selectedSentence &&
+          selectedSentence.startNode &&
+          selectedSentence.endNode &&
+          selectedSentence.pageNo &&
+          window.getSelection().toString() &&
+          selectedSentence.startParagraph &&
+          selectedSentence.endParagraph
+        ) {
+          let initialIndex;
+          let startSentence;
+          let endIndex;
+          let endSentence;
+          let operation_type;
+          let selectedSplitValue;
+          const { pageNo } = selectedSentence;
+    
+          const startValue = selectedSentence.startNode.split("_");
+          const endValue = selectedSentence.endNode.split("_");
+    
+          this.state.sentences.map((sentence, index) => {
+            if (sentence._id === startValue[0]) {
+              initialIndex = index;
+              sentence.tokenized_sentences.map((value, index) => {
+                if (value.sentence_index === Number(startValue[1])) {
+                  startSentence = value;
+                }
+                return true;
+              });
+            }
+            if (sentence._id === endValue[0]) {
+              endIndex = index;
+    
+              sentence.tokenized_sentences.map((value, index) => {
+                if (value.sentence_index === Number(endValue[1])) {
+                  endSentence = value;
+                }
+                return true;
+              });
+            }
+            return true;
+          });
+    
+          const mergeSentence = this.state.sentences.slice(initialIndex, endIndex + 1);
+          if (startValue[0] === endValue[0] && startValue[1] === endValue[1]) {
+            const selectedSplitEndIndex = window.getSelection() && window.getSelection().getRangeAt(0).endOffset;
+            operation_type = "split";
+            selectedSplitValue = startSentence.src.substring(0, selectedSplitEndIndex);
+          } else {
+            operation_type = "merge";
+            selectedSplitValue = window.getSelection().toString();
+          }
+    
+          this.state.addSentence
+            ? this.setState({
+              mergeSentence: [...this.state.mergeSentence, ...mergeSentence],
+              selectedMergeSentence: [...this.state.selectedMergeSentence, selectedSentence],
+              endSentence,
+              openEl: true,
+              contextToken: true,
+              addSentence: true,
+              pageNo,
+              topValue: event.clientY - 4,
+              leftValue: event.clientX - 2,
+              startParagraph: selectedSentence.startParagraph,
+              endParagraph: selectedSentence.endParagraph
+            })
+            : this.setState({
+              mergeSentence,
+              selectedMergeSentence: [selectedSentence],
+              startSentence,
+              endSentence,
+              operation_type,
+              openEl: true,
+              splitSentence: selectedSplitValue,
+              contextToken: true,
+              topValue: event.clientY - 2,
+              leftValue: event.clientX - 2,
+              pageNo,
+              startParagraph: selectedSentence.startParagraph,
+              endParagraph: selectedSentence.endParagraph
+            });
+        }
+      }
+
     fetchSentence(block, styles) {
 
         // return (<div style={styles}>{block.text}</div>)
 
-        return (<div style={styles}>{block && block.tokenized_sentences && Array.isArray(block.tokenized_sentences) && block.tokenized_sentences.length > 0 &&
-            block.tokenized_sentences.map((tokenSentence, index) => {
-                // return (<span>{tokenSentence.text}</span>)
-                return this.fetchTokenizedSenetence(tokenSentence, block._id)
-            })
+    return (<div onMouseUp={this.getSelectionText.bind(this)}
+    onKeyUp={this.getSelectionText.bind(this)} style={styles}>{block && block.tokenized_sentences && Array.isArray(block.tokenized_sentences) && block.tokenized_sentences.length >0 &&
+        block.tokenized_sentences.map((tokenSentence, index) => {
+            return (<span key ={index}>{tokenSentence.text}</span>)
+        })
         }</div>)
 
     }

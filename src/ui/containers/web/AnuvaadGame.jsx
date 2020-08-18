@@ -498,7 +498,6 @@ class AnuvaadGame extends React.Component {
                           </Tooltip>
                         ))
                         : []}
-                    >
                   </SelectModel>
                     <br />
                   </Grid>
