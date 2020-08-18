@@ -39,17 +39,136 @@ class PdfFileEditor extends React.Component {
   //   componentDidUpdate(prevProps) {
   //     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
   //       const temp = this.props.fetchPdfSentence.data;
-  //       console.log(temp);
+
   //       this.setState({
   //         sentences: temp
   //       });
   //     }
   //   }
 
+  getSelectionText(event) {
+       
+    var text = "";
+    let selection = {};
+    var activeEl = document.activeElement;
+    var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+
+    if (
+      activeElTagName === "textarea" ||
+      (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type) && typeof activeEl.selectionStart === "number")
+    ) {
+      text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
+    } else if (window.getSelection) {
+      text = window.getSelection().toString();
+    }
+
+    let sentences = "";
+    let startNode = "";
+    let endNode = "";
+
+    if (window.getSelection()) {
+      sentences = window.getSelection();
+    }
+    if (
+      sentences 
+    ) {
+       
+      startNode = window.getSelection().anchorNode.wholeText;
+      endNode = window.getSelection().focusNode.wholeText;
+      this.state.sentences.map(paragraph => {
+        paragraph.tokenized_sentences.map(sentence=>{
+          if (sentence.text === startNode && !paragraph.is_table) {
+            selection.startNode = startNode;
+            selection.pageNo = paragraph.page_no;
+            selection.startParagraph = paragraph;
+            selection.startId = sentence.s_id
+          }
+          if (sentence.text === endNode && !paragraph.is_table) {
+            selection.endNode = endNode;
+            selection.pageNo = paragraph.page_no;
+            selection.endParagraph = paragraph;
+            selection.endId = sentence.s_id
+          }
+
+        })
+        
+        return true;
+      });
+    }
+
+   
+    if (selection && selection.startNode && selection.endNode) {
+      this.handleSelection(selection, event);
+    }
+
+    
+  }
+
+  handleSelection(selectedSentence, event) {
+    this.setState({ sText: window.getSelection().toString() })
+    if (
+      selectedSentence &&
+      selectedSentence.startNode &&
+      selectedSentence.endNode &&
+      selectedSentence.pageNo &&
+      window.getSelection().toString() &&
+      selectedSentence.startParagraph &&
+      selectedSentence.endParagraph
+    ) {
+      let initialIndex;
+      let startSentence;
+      let endIndex;
+      let endSentence;
+      let operation_type;
+      let selectedSplitValue;
+      const { pageNo } = selectedSentence;
+
+      const startValue = selectedSentence.startId;
+      const endValue = selectedSentence.endId;
+
+      this.state.sentences.map((sentence, index) => {
+        if (sentence._id === selectedSentence.startParagraph._id) {
+          initialIndex = index;
+          sentence.tokenized_sentences.map((value, index) => {
+           
+            if (value.sentence_index === Number(startValue)) {
+              startSentence = value;
+            }
+            return true;
+          });
+        }
+        if (sentence._id === endValue) {
+          endIndex = index;
+
+          sentence.tokenized_sentences.map((value, index) => {
+            if (value.sentence_index === Number(endValue)) {
+              endSentence = value;
+            }
+            return true;
+          });
+        }
+        return true;
+      });
+
+      const mergeSentence = this.state.sentences.slice(initialIndex, endIndex + 1);
+     
+      if (startValue === endValue && selectedSentence.startParagraph._id=== selectedSentence.endParagraph._id) {
+        const selectedSplitEndIndex = window.getSelection() && window.getSelection();
+        operation_type = "split";
+        selectedSplitValue = startSentence.src.substring(0, selectedSplitEndIndex);
+      } else {
+        operation_type = "merge";
+        selectedSplitValue = window.getSelection().toString();
+      }
+
+      this.props.popUp(operation_type,event,selectedSentence,selectedSplitValue)
+    }
+  }
+
   componentDidMount() {
     let minPageHeight = this.state.sentences[0].y
     let pages = []
-    console.log(this.props.match.path)
+  
     this.state.sentences.map((sentence, index) => {
       if (sentence.is_bg_image) {
         this.setState({ backgroundImage: sentence.img, backgroundSize: sentence.width })
@@ -74,7 +193,7 @@ class PdfFileEditor extends React.Component {
     this.state.sentences.map(sentence=>{
         if(leftPaddingValue > parseInt(sentence.x) || leftPaddingValue==0){
             leftPaddingValue = parseInt(sentence.x)
-            console.log(leftPaddingValue,sentence.x)
+            
         }
         if((sentence.width && rightPaddingValue<parseInt(sentence.width)+parseInt(sentence.x) )|| (sentence.width &&rightPaddingValue==0)){
             rightPaddingValue = parseInt(sentence.width)+parseInt(sentence.x)
@@ -132,7 +251,7 @@ class PdfFileEditor extends React.Component {
               }
 
             return (
-              <SourceView paperWidth={paperWidth} key={index} printPageNo={printPageNo} pageDividerHeight={pageDividerHeight} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={parseInt(sentence.width) ? parseInt(sentence.width) : 286} />
+              <SourceView getSelectionText={this.getSelectionText.bind(this)} paperWidth={paperWidth} key={index} printPageNo={printPageNo} pageDividerHeight={pageDividerHeight} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={parseInt(sentence.width) ? parseInt(sentence.width) : 286} />
             );
           })}
       </Paper>

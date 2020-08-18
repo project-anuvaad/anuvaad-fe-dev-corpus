@@ -28,7 +28,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": "October 12 - 15, 2011, Rapid City, SD 41 st ASEE/IEEE Frontiers in Education Conference T1A - 2",
+                    "text": "October 12 - 15, 2011, Rapid City, SD",
                     "sentence_index": 0,
                     "src": "October 12 - 15, 2011, Rapid City, SD 41 st ASEE/IEEE Frontiers in Education Conference T1A - 2",
                     "id": 56,
@@ -69,7 +69,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": "October 12 - 15, 2011, Rapid City, SD ",
+                    "text": "41 st ASEE/IEEE Frontiers in Education Conference T1A - 1 ",
                     "sentence_index": 0,
                     "src": "October 12 - 15, 2011, Rapid City, SD 41 st ASEE/IEEE Frontiers in Education Conference T1A - 2",
                     "id": 56,
@@ -111,9 +111,9 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": "Preparation of Papers in Two Column Format for the FIE 2011 Conference",
+                    "text": "Preparation of Papers in Two Column Format for",
                     "sentence_index": 0,
-                    "src": "Preparation of Papers in Two Column Format for the FIE 2011 Conference",
+                    "src": "Preparation of Papers in Two Column Format for",
                     "id": 56,
                     "n_id": "14__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -153,9 +153,9 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": "Preparation of Papers in Two Column Format for the FIE 2011 Conference",
+                    "text": "the FIE 2011 Conference",
                     "sentence_index": 0,
-                    "src": "Preparation of Papers in Two Column Format for the FIE 2011 Conference",
+                    "src": "the FIE 2011 Conference",
                     "id": 56,
                     "n_id": "14__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -274,7 +274,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": "If multiple authors from the same university Dan Budny, Author 2, and Author 3",
+                    "text": "If multiple authors from the same university",
                     "sentence_index": 0,
                     "src": "If multiple authors from the same university Dan Budny, Author 2, and Author 3",
                     "id": 56,
@@ -316,7 +316,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": "If multiple authors from the same university Dan Budny, Author 2, and Author 3",
+                    "text": " Dan Budny, Author 2, and Author 3",
                     "sentence_index": 0,
                     "src": "If multiple authors from the same university Dan Budny, Author 2, and Author 3",
                     "id": 56,
@@ -395,7 +395,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": "or multiple authors from multiple institutions Jennifer Karlin, Stuart Kellogg, Jim Morgan, Arnold Pears, and Susan Burkett",
+                    "text": "or multiple authors from multiple institutions",
                     "sentence_index": 0,
                     "src": "or multiple authors from multiple institutions Jennifer Karlin, Stuart Kellogg, Jim Morgan, Arnold Pears, and Susan Burkett",
                     "id": 56,
@@ -435,7 +435,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": "or multiple authors from multiple institutions Jennifer Karlin, Stuart Kellogg, Jim Morgan, Arnold Pears, and Susan Burkett",
+                    "text": "Jennifer Karlin, Stuart Kellogg, Jim Morgan, Arnold Pears, and Susan Burkett",
                     "sentence_index": 0,
                     "src": "or multiple authors from multiple institutions Jennifer Karlin, Stuart Kellogg, Jim Morgan, Arnold Pears, and Susan Burkett",
                     "id": 56,
@@ -475,7 +475,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": "Jennifer.Karlin@sdsmt.edu, Stuart.Kellogg@sdsmt.edu, jim-morgan@tamu.edu, Arnold.Pears@it.uu.se, Sburkett@eng.ua.edu",
+                    "text": "Jennifer.Karlin@sdsmt.edu, Stuart.Kellogg@sdsmt.edu, jim-morgan@tamu.edu",
                     "sentence_index": 0,
                     "src": "Jennifer.Karlin@sdsmt.edu, Stuart.Kellogg@sdsmt.edu, jim-morgan@tamu.edu, Arnold.Pears@it.uu.se, Sburkett@eng.ua.edu",
                     "id": 56,
@@ -516,7 +516,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": "Jennifer.Karlin@sdsmt.edu, Stuart.Kellogg@sdsmt.edu, jim-morgan@tamu.edu, Arnold.Pears@it.uu.se, Sburkett@eng.ua.edu",
+                    "text": "Arnold.Pears@it.uu.se, Sburkett@eng.ua.edu",
                     "sentence_index": 0,
                     "src": "Jennifer.Karlin@sdsmt.edu, Stuart.Kellogg@sdsmt.edu, jim-morgan@tamu.edu, Arnold.Pears@it.uu.se, Sburkett@eng.ua.edu",
                     "id": 56,
@@ -953,18 +953,6 @@
                     "tagged_src": "Please do not use LATEX.",
                     "tagged_tgt": "कृपया लेटएक्स का उपयोग नहीं करें।",
                     "target": "कृपया लेटएक्स का उपयोग नहीं करें।"
-                },
-                {
-                    "text": "If you wish to use Word Perfect, please save the file as an rtf file not a wpd file.",
-                    "sentence_index": 4,
-                    "src": "If you wish to use Word Perfect, please save the file as an rtf file not a wpd file.",
-                    "id": 56,
-                    "n_id": "46__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-                    "s_id": 4,
-                    "version": 0,
-                    "tagged_src": "If you wish to use Word Perfect, please save the file as an rtf file not a wpd file.",
-                    "tagged_tgt": "यदि आप वर्ड पेरीफेक्ट का उपयोग करना चाहते हैं, तो कृपया फाइल को rtf फ़ाइल के रूप में सहेजें, wpd फ़ाइल नहीं।",
-                    "target": "यदि आप वर्ड पेरीफेक्ट का उपयोग करना चाहते हैं, तो कृपया फाइल को rtf फ़ाइल के रूप में सहेजें, wpd फ़ाइल नहीं।"
                 }
             ]
         },
@@ -1042,127 +1030,10 @@
                     "tagged_src": "Please do not use LATEX.",
                     "tagged_tgt": "कृपया लेटएक्स का उपयोग नहीं करें।",
                     "target": "कृपया लेटएक्स का उपयोग नहीं करें।"
-                },
-                {
-                    "text": "If you wish to use Word Perfect, please save the file as an rtf file not a wpd file.",
-                    "sentence_index": 4,
-                    "src": "If you wish to use Word Perfect, please save the file as an rtf file not a wpd file.",
-                    "id": 56,
-                    "n_id": "46__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-                    "s_id": 4,
-                    "version": 0,
-                    "tagged_src": "If you wish to use Word Perfect, please save the file as an rtf file not a wpd file.",
-                    "tagged_tgt": "यदि आप वर्ड पेरीफेक्ट का उपयोग करना चाहते हैं, तो कृपया फाइल को rtf फ़ाइल के रूप में सहेजें, wpd फ़ाइल नहीं।",
-                    "target": "यदि आप वर्ड पेरीफेक्ट का उपयोग करना चाहते हैं, तो कृपया फाइल को rtf फ़ाइल के रूप में सहेजें, wpd फ़ाइल नहीं।"
                 }
             ]
         },
-        {
-            "_id": "5f226b3b9e1f886c22a59e71",
-            "y": "493",
-            "x": "497",
-            "width": 290,
-            "y_end": "493",
-            "text": "When you open these guidelines, select \"Print Layout\"",
-            "style": "position:absolute;top:493px;left:497px;white-space:nowrap",
-            "class": "ft03",
-            "page_no": 1,
-            "is_bold": false,
-            "page_no_end": 1,
-            "page_height": "1188",
-            "page_width": "918",
-            "class_style": {
-                "font-size": "12px",
-                "font-family": "Times New Roman",
-                "color": "#000000",
-                "": null
-            },
-            "node_index": "47",
-            "para_index": 16,
-            "version": 0,
-            "status": "TRANSLATED",
-            "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-            "tokenized_sentences": [
-                {
-                    "text": "When you open these guidelines, select \"Print Layout\"",
-                    "sentence_index": 0,
-                    "src": "When you open these guidelines, select \"Print Layout\"",
-                    "id": 56,
-                    "n_id": "47__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-                    "s_id": 0,
-                    "version": 0,
-                    "tagged_src": "When you open these guidelines, select \"Print Layout\"",
-                    "tagged_tgt": "जब आप इन दिशानिर्देशों को खोलें, \"प्रिंट लेआउट\" का चयन करें।",
-                    "target": "जब आप इन दिशानिर्देशों को खोलें, \"प्रिंट लेआउट\" का चयन करें।"
-                }
-            ]
-        },
-        {
-            "_id": "5f226b3b9e1f8859e3a59e72",
-            "y": "510",
-            "x": "470",
-            "width": 290,
-            "y_end": "579",
-            "text": "from the \"View\" menu (View | Print Layout), which will allow you to see the two-column format. You may then type over sections by using the cut and paste commands listed under the Edit menu (Edit | Paste) into this document and/or by using the markup styles.We suggest you just use ",
-            "style": "position:absolute;top:510px;left:470px;white-space:nowrap",
-            "class": "ft013",
-            "page_no": 1,
-            "is_bold": false,
-            "page_no_end": 1,
-            "page_height": "1188",
-            "page_width": "918",
-            "class_style": {
-                "font-size": "12px",
-                "line-height": "17px",
-                "font-family": "Times New Roman",
-                "color": "#000000",
-                "": null
-            },
-            "node_index": "49",
-            "visual_break": null,
-            "para_index": 17,
-            "version": 0,
-            "status": "TRANSLATED",
-            "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-            "tokenized_sentences": [
-                {
-                    "text": "from the \"View\" menu (View | Print Layout), which will allow you to see the two-column format.",
-                    "sentence_index": 0,
-                    "src": "from the \"View\" menu (View | Print Layout), which will allow you to see the two-column format.",
-                    "id": 56,
-                    "n_id": "49__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-                    "s_id": 0,
-                    "version": 0,
-                    "tagged_src": "from the \"View\" menu (View | Print Layout), which will allow you to see the two-column format.",
-                    "tagged_tgt": "दृश्य मेनू (देखें। प्रिंट लेआउट) से, जो आपको दो रंगीन प्रारूप देखने की अनुमति देगा।",
-                    "target": "दृश्य मेनू (देखें। प्रिंट लेआउट) से, जो आपको दो रंगीन प्रारूप देखने की अनुमति देगा।"
-                },
-                {
-                    "text": "You may then type over sections by using the cut and paste commands listed under the Edit menu (Edit | Paste) into this document and/or by using the markup styles.",
-                    "sentence_index": 1,
-                    "src": "You may then type over sections by using the cut and paste commands listed under the Edit menu (Edit | Paste) into this document and/or by using the markup styles.",
-                    "id": 56,
-                    "n_id": "49__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-                    "s_id": 1,
-                    "version": 0,
-                    "tagged_src": "You may then type over sections by using the cut and paste commands listed under the Edit menu (Edit | Paste) into this document and/or by using the markup styles.",
-                    "tagged_tgt": "फिर आप संपादन मेनू (संपादित करें। Past) के तहत इस दस्तावेज़ में और/या मार्कअप शैली का उपयोग करके सूचीबद्ध कट और पेस्ट कमांड का उपयोग करके वर्गों पर टाइप कर सकते हैं.",
-                    "target": "फिर आप संपादन मेनू (संपादित करें। Past) के तहत इस दस्तावेज़ में और/या मार्कअप शैली का उपयोग करके सूचीबद्ध कट और पेस्ट कमांड का उपयोग करके वर्गों पर टाइप कर सकते हैं।"
-                },
-                {
-                    "text": "We suggest you just use this",
-                    "sentence_index": 2,
-                    "src": "We suggest you just use this",
-                    "id": 56,
-                    "n_id": "49__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-                    "s_id": 2,
-                    "version": 0,
-                    "tagged_src": "We suggest you just use this",
-                    "tagged_tgt": "हम सुझाव है कि आप सिर्फ इस का उपयोग करें",
-                    "target": "हम सुझाव है कि आप सिर्फ इस का उपयोग करें"
-                }
-            ]
-        },
+        
         {
             "_id": "5f226b3b9e1f8858dfa59e73",
             "y": "597",
@@ -1494,7 +1365,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": " 8 1/2\" x 11\" paper size  Portrait Orientation  Two-column format for the body of the document  Top margin:",
+                    "text": " 8 1/2\" x 11\" paper size ",
                     "sentence_index": 0,
                     "src": " 8 1/2\" x 11\" paper size  Portrait Orientation  Two-column format for the body of the document  Top margin:",
                     "id": 56,
@@ -1548,7 +1419,7 @@
                 {
                     "text": " Portrait Orientation ",
                     "sentence_index": 0,
-                    "src": " 8 1/2\" x 11\" paper size  Portrait Orientation  Two-column format for the body of the document  Top margin:",
+                    "src": "  Portrait Orientation",
                     "id": 56,
                     "n_id": "77__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -1597,7 +1468,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": " 8 1/2\" x 11\" paper size  Portrait Orientation  Two-column format for the body of the document  Top margin:",
+                    "text": "  Two-column format for the body of the document",
                     "sentence_index": 0,
                     "src": " 8 1/2\" x 11\" paper size  Portrait Orientation  Two-column format for the body of the document  Top margin:",
                     "id": 56,
@@ -1649,7 +1520,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": " 8 1/2\" x 11\" paper size  Portrait Orientation  Two-column format for the body of the document  Top margin:",
+                    "text": " Top margin:",
                     "sentence_index": 0,
                     "src": " 8 1/2\" x 11\" paper size  Portrait Orientation  Two-column format for the body of the document  Top margin:",
                     "id": 56,
@@ -1728,46 +1599,6 @@
         },
         {
             "_id": "5f226b3b9e1f886e3da59e7b",
-            "y": "1086",
-            "x": "456",
-            "width": 200,
-            "y_end": "1100",            "text": "October 12 - 15, 2011, Rapid City, SD",
-            "style": "position:absolute;top:1086px;left:596px;white-space:nowrap",
-            "class": "ft01",
-            "page_no": 2,
-            "is_bold": true,
-            "page_no_end": 2,
-            "page_height": "1188",
-            "page_width": "918",
-            "class_style": {
-                "font-size": "12px",
-                "font-family": "Times New Roman,Bold",
-                "color": "#000000",
-                "": null
-            },
-            "node_index": "92",
-            "visual_break": null,
-            "para_index": 26,
-            "version": 0,
-            "status": "TRANSLATED",
-            "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-            "tokenized_sentences": [
-                {
-                    "text": "October 12 - 15, 2011, Rapid City, SD ",
-                    "sentence_index": 0,
-                    "src": "October 12 - 15, 2011, Rapid City, SD",
-                    "id": 56,
-                    "n_id": "92__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
-                    "s_id": 0,
-                    "version": 0,
-                    "tagged_src": "October NnUuMm३ - NnUuMm२, NnUuMm०, Rapid City, SD NnUuMm१ st ASEE/IEEE Frontiers in Education Conference TNnUuMm५A - NnUuMm४",
-                    "tagged_tgt": "अक्टूबर NnUuMm३-NnUuMm२,NnUuMm०, रैपिड सिटी, एसडी NnUuMm१ सेंट एएसईईई/आइईई आयाम शिक्षा सम्मेलन में टी NnUuMm५ ए-NnUuMm४",
-                    "target": "अक्टूबर 12-15,2011, रैपिड सिटी, एसडी 41 सेंट एएसईईई/आइईई आयाम शिक्षा सम्मेलन में टी 1 ए-2"
-                }
-            ]
-        },
-        {
-            "_id": "5f226b3b9e1f886e3da59e7b",
             "y": "1098",
             "x": "306",
             "width": 400,
@@ -1793,7 +1624,7 @@
             "session_id": "7d49e475-47a6-4ee9-95c1-0b673e6a55df",
             "tokenized_sentences": [
                 {
-                    "text": "October 12 - 15, 2011, Rapid City, SD 41 st ASEE/IEEE Frontiers in Education Conference T1A - 2",
+                    "text": "41 st ASEE/IEEE Frontiers in Education Conference T1A - 2",
                     "sentence_index": 0,
                     "src": "October 12 - 15, 2011, Rapid City, SD 41 st ASEE/IEEE Frontiers in Education Conference T1A - 2",
                     "id": 56,
