@@ -5,21 +5,20 @@ class Preview extends React.Component {
         super(props);
     }
 
-    
-
     render() {
-        const { sentence, yAxis } = this.props;
+        const { sentence } = this.props;
 
-        var a = {
+        var styles = {
             position: "absolute ",
-            top: sentence.text_top+"px",
+            top: sentence.text_top + "px",
             left: sentence.text_left + "px",
-            fontSize: sentence.font_size+"px",
-            
-            width: sentence.text_width + "px"}
-       console.log(yAxis)
+            fontSize: sentence.font_size + "px",
+            width: sentence.text_width + "px",
+            fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && 'bold',
+            textAlign: "justify"
+        }
         return (
-            <div style={a}>
+            <div style={styles} key={sentence.block_id}>
                 {sentence.text}
             </div >
         );

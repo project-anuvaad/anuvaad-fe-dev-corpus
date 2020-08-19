@@ -86,7 +86,6 @@ class PdfFileEditor extends React.Component {
         <div>
         {this.state.sentences &&
           this.state.sentences.map((sentence, index) => {
-              console.log(sentence)
             yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
             pageDividerHeight =
               (this.state.pageArr && this.state.pageArr.length > 0 && parseInt(this.state.pageArr[sentence.page_no])) +
@@ -103,9 +102,8 @@ class PdfFileEditor extends React.Component {
             }
 
             return (
-              // <SourceView getSelectionText={this.getSelectionText.bind(this)} paperWidth={paperWidth} key={index} printPageNo={printPageNo} pageDividerHeight={pageDividerHeight} leftPaddingValue={leftPaddingValue} isFirstPage={isFirstPage} pageNo={pageNo} sentence={sentence} yAxis={yAxis} widthValue={parseInt(sentence.width) ? parseInt(sentence.width) : 286} />
-              <SourceView
-                
+              <SourceView 
+                key={sentence.page_no + "_" + index}
                 sourceSentence={sentence}
                 
               />
