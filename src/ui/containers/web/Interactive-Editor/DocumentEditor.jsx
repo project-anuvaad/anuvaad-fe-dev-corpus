@@ -9,9 +9,9 @@ import SourceView from "./DocumentSource";
 import Data from "./JudgementNew.json";
 import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
-
+import fileUpload from "material-ui/svg-icons/file/file-upload";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
-
+import FileUpload from "../../../../flux/actions/apis/fileupload";
 import Toolbar from "@material-ui/core/Toolbar";
 // import Data from "./PPT.json";
 //  import Data from "./Judgement.json"
@@ -27,33 +27,36 @@ class PdfFileEditor extends React.Component {
       sentences: Data.data,
       backgroundImage: "",
       pageArr: [],
-      hoveredSentence: "",
-      sentences: Data.result
+      hoveredSentence: ""
     };
   }
 
-  //   componentDidMount() {
-  //     const { APITransport } = this.props;
-  //     const apiObj = new FetchDoc("d72923e7-5a92-4e9e-93bc-3d1d89e73b5d");
-  //     APITransport(apiObj);
-  //   }
+    componentDidMount() {
 
-  //   componentDidUpdate(prevProps) {
-  //     if (prevProps.fetchPdfSentence !== this.props.fetchPdfSentence) {
-  //       const temp = this.props.fetchPdfSentence.data;
+      console.log("sajish---",this.props.match)
 
-  //       this.setState({
-  //         sentences: temp
-  //       });
-  //     }
-  //   }
+      console.log(this.props.match.params.fileid)
+      const apiObj = new FileUpload(this.props.match.params.fileid);
+      this.props.APITransport(apiObj);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.fileUpload !== this.props.fileUpload) {
+            console.log(this.props.fileUpload)
+        const temp = this.props.fileUpload.result;
+
+        this.setState({
+          sentences: temp
+        });
+      }
+    }
 
 
   render() {
     let yAxis = 0;
     let leftPaddingValue = 0;
     let rightPaddingValue = 0;
-    this.state.sentences.map(sentence => {
+    this.state.sentences && this.state.sentences.map(sentence => {
       if (leftPaddingValue > parseInt(sentence.x) || leftPaddingValue == 0) {
         leftPaddingValue = parseInt(sentence.x);
       }
@@ -117,7 +120,8 @@ class PdfFileEditor extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  fetchPdfSentence: state.fetchPdfSentence
+  fetchPdfSentence: state.fetchPdfSentence,
+  fileUpload: state.fileUpload,
 });
 
 const mapDispatchToProps = dispatch =>

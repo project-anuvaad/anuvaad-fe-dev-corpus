@@ -43,7 +43,7 @@ class Preview extends React.Component {
         return (
             <Paper  style={style}>
         
-          {sourceSentence.blocks.map((sentence, index) => {
+          {sourceSentence.text_blocks.map((sentence, index) => {
              
             yAxis = sentence.text_top + (sourceSentence.page_no * sourceSentence.page_height);
             // pageDividerHeight =
@@ -66,7 +66,7 @@ class Preview extends React.Component {
                 
                 sentence={sentence}
                 yAxis = {yAxis}
-                page_no = {sourceSentence.blocks.page_no}
+                
                
               />
             );

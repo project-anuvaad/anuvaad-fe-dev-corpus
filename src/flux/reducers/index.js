@@ -66,6 +66,7 @@ import updateSource from './interactivesourceupdate';
 import deleteSentence from './deleteSentence';
 import deleteTable from './deleteTable';
 import insertSentence from './insertSentence';
+import fileUpload from "./fileupload";
 
 export default {
     login,
@@ -136,4 +137,5 @@ export default {
     deleteSentence,
     deleteTable,
     insertSentence,
+    fileUpload
 };
