@@ -30,7 +30,7 @@
                 {
                     "text": "October 12 - 15, 2011, Rapid City, SD",
                     "sentence_index": 0,
-                    "src": "October 12 - 15, 2011, Rapid City, SD 41 st ASEE/IEEE Frontiers in Education Conference T1A - 2",
+                    "src": "October 12 - 15, 2011, Rapid City, SD",
                     "id": 56,
                     "n_id": "92__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -42,7 +42,7 @@
             ]
         },
         {
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3d59e7b",
             "y": "1116",
             "x": "265",
             "width":320,
@@ -71,7 +71,7 @@
                 {
                     "text": "41 st ASEE/IEEE Frontiers in Education Conference T1A - 1 ",
                     "sentence_index": 0,
-                    "src": "October 12 - 15, 2011, Rapid City, SD 41 st ASEE/IEEE Frontiers in Education Conference T1A - 2",
+                    "src": "41 st ASEE/IEEE Frontiers in Education Conference T1A - 1",
                     "id": 56,
                     "n_id": "92__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -276,7 +276,7 @@
                 {
                     "text": "If multiple authors from the same university",
                     "sentence_index": 0,
-                    "src": "If multiple authors from the same university Dan Budny, Author 2, and Author 3",
+                    "src": "If multiple authors from the same university",
                     "id": 56,
                     "n_id": "21__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -318,7 +318,7 @@
                 {
                     "text": " Dan Budny, Author 2, and Author 3",
                     "sentence_index": 0,
-                    "src": "If multiple authors from the same university Dan Budny, Author 2, and Author 3",
+                    "src": "Dan Budny, Author 2, and Author 3",
                     "id": 56,
                     "n_id": "21__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -397,7 +397,7 @@
                 {
                     "text": "or multiple authors from multiple institutions",
                     "sentence_index": 0,
-                    "src": "or multiple authors from multiple institutions Jennifer Karlin, Stuart Kellogg, Jim Morgan, Arnold Pears, and Susan Burkett",
+                    "src": "or multiple authors from multiple institutions",
                     "id": 56,
                     "n_id": "26__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -437,7 +437,7 @@
                 {
                     "text": "Jennifer Karlin, Stuart Kellogg, Jim Morgan, Arnold Pears, and Susan Burkett",
                     "sentence_index": 0,
-                    "src": "or multiple authors from multiple institutions Jennifer Karlin, Stuart Kellogg, Jim Morgan, Arnold Pears, and Susan Burkett",
+                    "src": "Jennifer Karlin, Stuart Kellogg, Jim Morgan, Arnold Pears, and Susan Burkett",
                     "id": 56,
                     "n_id": "26__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -477,7 +477,7 @@
                 {
                     "text": "Jennifer.Karlin@sdsmt.edu, Stuart.Kellogg@sdsmt.edu, jim-morgan@tamu.edu",
                     "sentence_index": 0,
-                    "src": "Jennifer.Karlin@sdsmt.edu, Stuart.Kellogg@sdsmt.edu, jim-morgan@tamu.edu, Arnold.Pears@it.uu.se, Sburkett@eng.ua.edu",
+                    "src": "Jennifer.Karlin@sdsmt.edu, Stuart.Kellogg@sdsmt.edu, jim-morgan@tamu.edu",
                     "id": 56,
                     "n_id": "28__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -518,7 +518,7 @@
                 {
                     "text": "Arnold.Pears@it.uu.se, Sburkett@eng.ua.edu",
                     "sentence_index": 0,
-                    "src": "Jennifer.Karlin@sdsmt.edu, Stuart.Kellogg@sdsmt.edu, jim-morgan@tamu.edu, Arnold.Pears@it.uu.se, Sburkett@eng.ua.edu",
+                    "src": "Arnold.Pears@it.uu.se, Sburkett@eng.ua.edu",
                     "id": 56,
                     "n_id": "28__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -1367,7 +1367,7 @@
                 {
                     "text": " 8 1/2\" x 11\" paper size ",
                     "sentence_index": 0,
-                    "src": " 8 1/2\" x 11\" paper size  Portrait Orientation  Two-column format for the body of the document  Top margin:",
+                    "src": " 8 1/2\" x 11\" paper size",
                     "id": 56,
                     "n_id": "77__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -1470,7 +1470,7 @@
                 {
                     "text": "  Two-column format for the body of the document",
                     "sentence_index": 0,
-                    "src": " 8 1/2\" x 11\" paper size  Portrait Orientation  Two-column format for the body of the document  Top margin:",
+                    "src": " Two-column format for the body of the document",
                     "id": 56,
                     "n_id": "77__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -1522,7 +1522,7 @@
                 {
                     "text": " Top margin:",
                     "sentence_index": 0,
-                    "src": " 8 1/2\" x 11\" paper size  Portrait Orientation  Two-column format for the body of the document  Top margin:",
+                    "src": " Top margin:",
                     "id": 56,
                     "n_id": "77__7d49e475-47a6-4ee9-95c1-0b673e6a55df",
                     "s_id": 0,
@@ -1598,7 +1598,7 @@
             ]
         },
         {
-            "_id": "5f226b3b9e1f886e3da59e7b",
+            "_id": "5f226b3b9e1f886e3d59e7b",
             "y": "1098",
             "x": "306",
             "width": 400,

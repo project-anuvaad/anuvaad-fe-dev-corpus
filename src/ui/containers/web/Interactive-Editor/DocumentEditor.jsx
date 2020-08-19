@@ -5,8 +5,8 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
-import SourceView from "./SourceView";
-import Data from "./Data.json";
+import SourceView from "./DocumentSource";
+import Data from "./JudgementNew.json";
 import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 
@@ -27,7 +27,8 @@ class PdfFileEditor extends React.Component {
       sentences: Data.data,
       backgroundImage: "",
       pageArr: [],
-      hoveredSentence: ""
+      hoveredSentence: "",
+      sentences: Data.result
     };
   }
 
@@ -233,6 +234,7 @@ class PdfFileEditor extends React.Component {
             {this.props.title}
           </Typography>
         </Toolbar>
+        {console.log(this.state.sentences)}
         {this.state.sentences &&
           this.state.sentences.map((sentence, index) => {
             yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);

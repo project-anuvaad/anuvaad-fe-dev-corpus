@@ -19,8 +19,8 @@ class Preview extends React.Component {
 
 
 
-    getSelectionText(event) {
-        this.props.getSelectionText(event)
+    getSelectionText(event,id) {
+        this.props.getSelectionText(event,id)
     }
 
     handleSelection(selectedSentence, event) {
@@ -113,9 +113,11 @@ class Preview extends React.Component {
     fetchTokenizedSenetence(tokenText, id) {
         return (
             <span
+            id={id + "_" + tokenText.sentence_index}
                 style={{ backgroundColor: this.props.hoveredSentence === id + "_" + tokenText.sentence_index ? "yellow" : "" }}
                 onMouseEnter={() => this.hoverOn(id + "_" + tokenText.sentence_index)}
                 onMouseLeave={() => this.hoverOff()}
+                
             >
                 {tokenText.src}
             </span>
@@ -125,7 +127,7 @@ class Preview extends React.Component {
     fetchSentence(block, styles) {
 
         return (<div onMouseUp={this.getSelectionText.bind(this)}
-            onKeyUp={this.getSelectionText.bind(this)} style={styles}>{block && block.tokenized_sentences && Array.isArray(block.tokenized_sentences) && block.tokenized_sentences.length > 0 &&
+        onKeyUp={this.getSelectionText.bind(this)} style={styles}>{block && block.tokenized_sentences && Array.isArray(block.tokenized_sentences) && block.tokenized_sentences.length > 0 &&
                 block.tokenized_sentences.map((tokenSentence, index) => {
                     return this.fetchTokenizedSenetence(tokenSentence, block._id)
                 })

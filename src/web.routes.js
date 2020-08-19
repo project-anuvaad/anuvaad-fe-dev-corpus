@@ -84,6 +84,9 @@ import UpdatePassword from './ui/containers/web/UpdatePassword';
 import SetPassword from './ui/containers/web/SetPassword';
 import pdfFileEditor from './ui/containers/web/Interactive-Editor/PdfFileEditor';
 import InteractivePdfFile from './ui/containers/web/Interactive-Editor/InteractivePdfFile';
+import DocumentEditor from './ui/containers/web/Interactive-Editor/DocumentEditor';
+
+
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, dontShowHeader, currentMenu, authenticate, ...rest }) => (
   <Route
     {...rest}
@@ -294,6 +297,15 @@ class AppRoutes extends React.Component {
               path={`${process.env.PUBLIC_URL}/interactive-pdf`}
               userRoles={["editor", "dev", "grader", "interactive-editor"]}
               component={InteractivePdfFile}
+              title={translate('dashboard.page.heading.title')}
+              authenticate={this.authenticateUser}
+              currentMenu="texttranslate"
+            />
+
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/interactive-document`}
+              userRoles={["editor", "dev", "grader", "interactive-editor"]}
+              component={DocumentEditor}
               title={translate('dashboard.page.heading.title')}
               authenticate={this.authenticateUser}
               currentMenu="texttranslate"
