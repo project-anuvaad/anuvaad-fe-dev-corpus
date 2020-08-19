@@ -29,9 +29,9 @@ class Preview extends React.Component {
         let style = {
             maxWidth:sourceSentence.page_width + "px",
             // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
-            maxHeight:  window.innerHeight - 100,
+            
             position: "relative",
-            overflowY: "scroll",
+            
             height: sourceSentence.page_height + "px",
             backgroundColor: "white",
       
@@ -42,11 +42,7 @@ class Preview extends React.Component {
         
         return (
             <Paper  style={style}>
-        <Toolbar style={{ color: darkBlack, background: blueGrey50}}>
-          <Typography value="" variant="h6" gutterBottom style={{ flex: 1 }}>
-            {this.props.title}
-          </Typography>
-        </Toolbar>
+        
           {sourceSentence.blocks.map((sentence, index) => {
              
             yAxis = sentence.text_top + (sourceSentence.page_no * sourceSentence.page_height);

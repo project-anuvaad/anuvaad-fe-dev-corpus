@@ -14,7 +14,8 @@ class Preview extends React.Component {
             position: "absolute ",
             top: sentence.text_top+"px",
             left: sentence.text_left + "px",
-
+            fontSize: sentence.font_size+"px",
+            
             width: sentence.text_width + "px"}
        console.log(yAxis)
         return (
