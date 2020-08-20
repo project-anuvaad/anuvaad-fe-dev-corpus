@@ -15,7 +15,8 @@ class Preview extends React.Component {
             color: sentence.font_color,
             width: sentence.text_width + "px",
             fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && 'bold',
-            textAlign: "justify"
+            textAlign: "justify",
+            zIndex: 1
         }
         return (
             <div style={styles} key={sentence.block_id}>
