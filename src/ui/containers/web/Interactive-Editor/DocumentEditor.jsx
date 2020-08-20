@@ -6,57 +6,58 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./DocumentSource";
-import Data from "./JudgementNew.json";
+
 import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import fileUpload from "material-ui/svg-icons/file/file-upload";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 import FileUpload from "../../../../flux/actions/apis/fileupload";
 import Toolbar from "@material-ui/core/Toolbar";
-// import Data from "./PPT.json";
-//  import Data from "./Judgement.json"
+// import Data from "./json/File1506.json";
+// import Data from "./json/File30.02.json";
+import Data from "./json/Judgement.json";
+// import Data from "./JudgementNew.json";
 
 class PdfFileEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sentences: "",
+      sentences: Data.result,
       sourceSupScripts: "",
       targetSupScripts: "",
       header: "",
-      sentences: Data.data,
+      
       backgroundImage: "",
       pageArr: [],
-      hoveredSentence: ""
+      hoveredSentence: "",
+      
     };
   }
 
-    componentDidMount() {
+    // componentDidMount() {
 
-      console.log("sajish---",this.props.match)
+    //   console.log
+    //   const apiObj = new FileUpload(this.props.match.params.fileid);
+    //   this.props.APITransport(apiObj);
+    // }
 
-      console.log(this.props.match.params.fileid)
-      const apiObj = new FileUpload(this.props.match.params.fileid);
-      this.props.APITransport(apiObj);
-    }
+    // componentDidUpdate(prevProps) {
+    //     if (prevProps.fileUpload !== this.props.fileUpload) {
+    //         console.log(this.props.fileUpload)
+    //     const temp = this.props.fileUpload.result;
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.fileUpload !== this.props.fileUpload) {
-            console.log(this.props.fileUpload)
-        const temp = this.props.fileUpload.result;
-
-        this.setState({
-          sentences: temp
-        });
-      }
-    }
+    //     this.setState({
+    //       sentences: temp
+    //     });
+    //   }
+    // }
 
 
   render() {
     let yAxis = 0;
     let leftPaddingValue = 0;
     let rightPaddingValue = 0;
-    this.state.sentences && this.state.sentences.map(sentence => {
+    this.state.sentences&& this.state.sentences.map(sentence => {
       if (leftPaddingValue > parseInt(sentence.x) || leftPaddingValue == 0) {
         leftPaddingValue = parseInt(sentence.x);
       }
