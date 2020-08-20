@@ -13,9 +13,10 @@ import fileUpload from "material-ui/svg-icons/file/file-upload";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 import FileUpload from "../../../../flux/actions/apis/fileupload";
 import Toolbar from "@material-ui/core/Toolbar";
-import Data from "./json/File1506.json";
+// import Data from "./json/File1506.json";
 // import Data from "./json/File30.02.json";
 // import Data from "./json/Judgement.json";
+import Data from "./json/DelhiHC.json";
 // import Data from "./JudgementNew.json";
 
 class PdfFileEditor extends React.Component {
