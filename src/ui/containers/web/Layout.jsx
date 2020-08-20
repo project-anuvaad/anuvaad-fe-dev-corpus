@@ -55,7 +55,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { classes, theme, title, drawer, showLogo, forDemo, dontShowLoader, dontShowHeader } = this.props;
+    const { classes, theme, title, drawer, showLogo, forDemo, dontShowLoader, dontShowHeader, currentMenu } = this.props;
     const Component = this.props.component; // eslint-disable-line
     return (
       <MuiThemeProvider theme={Theme}>
@@ -64,7 +64,7 @@ class App extends React.Component {
             this.renderSpinner()
           }
           {!dontShowHeader &&
-            <Header dontShowHeader={dontShowHeader} forDemo={forDemo || showLogo} classes={classes} theme={theme} title={title} drawer={drawer} tocken={this.state.tocken} handleTockenChange={this.handleTockenChange.bind(this)} />
+            <Header dontShowHeader={dontShowHeader} currentMenu={currentMenu} forDemo={forDemo || showLogo} classes={classes} theme={theme} title={title} drawer={drawer} tocken={this.state.tocken} handleTockenChange={this.handleTockenChange.bind(this)} />
           }
           <div style={dontShowHeader ? { width: '100%' } : {}} className={dontShowHeader ? '' : (forDemo ? classes.containerDemo : classes.container)} onClick={this.handlDrawerTocken.bind(this)}>
             {/* {forDemo &&

@@ -1,6 +1,6 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class UpdatePassword extends API {
     
     constructor(id,new_password, courtId, timeout = 2000) {
@@ -11,6 +11,7 @@ export default class UpdatePassword extends API {
         
         this.new_password = new_password;
         this.updatePassword=""   
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
     }
 
     toString() {

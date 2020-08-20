@@ -3,11 +3,9 @@ import { withRouter } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import SelectModel from "@material-ui/core/Select";
@@ -25,7 +23,7 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import NewOrders from "../../components/web/dashboard/NewOrders";
 import { translate } from "../../../assets/localisation";
 import { withStyles } from "@material-ui/core/styles";
-import DashboardStyles from "../../styles/web/LoginStyles";
+import DashboardStyles from "../../styles/web/DashboardStyles";
 
 
 class Dashboard extends React.Component {
@@ -203,184 +201,228 @@ class Dashboard extends React.Component {
 
   render() {
     const role = JSON.parse(localStorage.getItem("roles"));
-    const { user, classes, location } = this.props;
-    return (
-      <div>
-        <Paper style={{
-          marginLeft: "23%",
-          width: "50%",
-          marginTop: "5%"
-        }}>
-          <Typography variant="h5" style={{ color: '#233466', background: blueGrey50, paddingLeft: "40%", paddingBottom: "12px", paddingTop: "8px",font: 'Source Sans Pro',fontWeight:'540' }}>
-            {translate("dashboard.page.heading.title")}
-          </Typography>
-          <Grid container spacing={8}>
-            <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                {translate("common.page.label.sourceLang")}{" "}
-              </Typography>
-            </Grid>
+    const { classes } = this.props;
+    let gridSizeLarge = role.includes("dev") ? 4 : 12
+    let gridSizeSmall = role.includes("dev") ? 6 : 12
 
-            <Grid item xs={3} sm={3} lg={3} xl={3}>
-              <br />
-              <br />
-              <Select
-                id="outlined-age-simple"
-                selectValue="language_code"
-                MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
-                handleChange={this.handleSelectChange}
-                value={this.state.source}
-                name="source"
-                style={{ marginBottom: "5%", marginTop: "4%",width:"100%" }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container spacing={8}>
-            <Grid item xs={8} sm={8} lg={8} xl={8}>
-              <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                {translate("common.page.label.targetLang")}&nbsp;
-              </Typography>
-            </Grid>
-            <Grid item xs={3} sm={3} lg={3} xl={3}>
-              <br />
-              <br />
-              <Select
-                id="outlined-age-simple"
-                selectValue="language_code"
-                MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
-                handleChange={this.handleSelectChange}
-                value={this.state.target}
-                name="target"
-                style={{ marginBottom: "5%", marginTop: "4%", width:"100%" }}
-              />
-            </Grid>
-          </Grid>
-          {role.includes("dev") && (
-            <Grid container spacing={8}>
-              <Grid item xs={8} sm={8} lg={8} xl={8}>
-                <Typography value="" variant="title" gutterBottom style={{ marginLeft: "12%", paddingTop: "9.5%" }}>
-                  {translate("common.page.label.pleaseSelectModel")}{" "}
+    return (
+      <div className={classes.root}>
+        <Typography variant="h4" className={classes.typographyHeader}>
+          {translate("dashboard.page.heading.title")}
+        </Typography>
+        <Paper className={classes.paper}>
+          <Grid container spacing={24}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.rowData} style={{ marginTop: "0%" }}>
+              <Grid item xs={6} sm={6} lg={8} xl={8} className={classes.label}>
+                <Typography value="" variant="title">
+                  {translate("common.page.label.sourceLang")}{" "}
                 </Typography>
               </Grid>
-              <Grid item xs={3} sm={3} lg={3} xl={3}>
-                <br />
-                <br />
 
-                <SelectModel
-                  id="select-multiple-chip"
-                  multiple
-                  style={{ width:"93%"  }}
-                  value={this.state.model}
-                  onChange={this.handleSelectModelChange}
-                  renderValue={selected => selected.join(", ")}
-                  input={<OutlinedInput name={this.state.model} id="select-multiple-checkbox" />}
-                >
-                  {this.state.source && this.state.target
-                    ? this.handleModel(this.state.modelLanguage, this.state.source, this.state.target).map(item => (
-                      <Tooltip
-                        placement="right"
-                        enterDelay={200}
-                        key={item.model_id}
-                        value={item.model_name}
-                        title={item.description ? item.description : "NA"}
-                      >
-                        <MenuItem key={item.model_id} value={item.model_name}>
-                          {item.model_name}
-                        </MenuItem>
-                      </Tooltip>
-                    ))
-                    : []}
-                  >
-                </SelectModel>
-                <br />
-              </Grid>
-              {role.includes("dev") && (
-                <div style={{ marginLeft: "8%", paddingTop: "10px" }}>
-                  {this.state.model.map(value => (
-                    <Chip key={value} label={value} onDelete={this.handleDelete(value)} style={{ marginLeft: "5px", marginTop: "8px" }} />
-                  ))}
-                </div>
-              )}
-            </Grid>
-          )}
-          <div style={{ marginLeft: "40px" }}>
-            <Grid container spacing={24} style={{ padding: 24 }}>
-              <Grid item xs={12} sm={12} lg={12} xl={12}>
-                <TextField
-                  value={this.state.text}
-                  id="standard-multiline-static"
-                  placeholder={translate("dashboard.page.alternatetext.enterTextHere")}
-                  style={{ width: "96%" }}
-                  multiline
-                  onChange={event => {
-                    this.handleTextChange("text", event);
+              <Grid item xs={6} sm={6} lg={4} xl={4} >
+                <Select
+                  className={classes.select}
+                  id="outlined-age-simple"
+                  selectValue="language_code"
+                  MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
+                  handleChange={this.handleSelectChange}
+                  value={this.state.source}
+                  name="source"
+                  style={{
+                    width: '92%',
+                    fullWidth: true,
+                    display: "flex",
+                    wrap: "nowrap",
+                    // height: '40px',
+                    magin: 'dense',
+                    float: 'right'
                   }}
                 />
               </Grid>
+            </Grid>
 
-              <FormControlLabel
-                style={{ marginLeft: "0%", width: role.includes("dev") ? "26%" : "60%", marginRight: "5%" }}
-                control={
-                  <Checkbox
-                    color="default"
-                    checked={this.state.checkedMachine}
-                    value="checkedMachine"
-                    onChange={this.handleChange("checkedMachine")}
-                  />
-                }
-                label={translate("dashboard.page.checkbox.mt")}
-              />
-              {role.includes("dev") && (
-                <FormControlLabel
-                  style={{ marginLeft: "0%", width: "23%", marginRight: "5%" }}
-                  control={
-                    <Checkbox color="default" checked={this.state.showSplitted} value="showSplitted" onChange={this.handleChange("showSplitted")} />
-                  }
-                  label={translate("dashboard.page.checkbox.splitted")}
+            {/* </Grid> */}
+            <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.rowData}>
+              <Grid item xs={6} sm={6} lg={8} xl={8} className={classes.label}>
+                <Typography value="" variant="title">
+                  {translate("common.page.label.targetLang")}&nbsp;
+              </Typography>
+              </Grid>
+              <Grid item xs={6} sm={6} lg={4} xl={4}>
+                <Select
+                  id="outlined-age-simple"
+                  selectValue="language_code"
+                  MenuItemValues={this.state.source ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source) : []}
+                  handleChange={this.handleSelectChange}
+                  value={this.state.target}
+                  name="target"
+                  style={{
+                    width: '92%',
+                    fullWidth: true,
+                    display: "flex",
+                    wrap: "nowrap",
+                    // height: '40px',
+                    magin: 'dense',
+                    float: 'right'
+                  }}
                 />
-              )}
-              {role.includes("dev") && (
+              </Grid>
+            </Grid>
+
+            {role.includes("dev") && (
+              <Grid item xs={12} sm={12} lg={12} xl={12}>
+                <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.rowData}>
+                  <Grid item xs={6} sm={6} lg={8} xl={8} className={classes.label}>
+                    <Typography value="" variant="title">
+                      {translate("common.page.label.pleaseSelectModel")}{" "}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={6} lg={4} xl={4}>
+                    <SelectModel
+                      id="select-multiple-chip"
+                      multiple
+                      style={{
+                        width: '92%',
+                        fullWidth: true,
+                        display: "flex",
+                        wrap: "nowrap",
+                        // height: '40px',
+                        magin: 'dense',
+                        float: 'right'
+                      }}
+                      value={this.state.model}
+                      onChange={this.handleSelectModelChange}
+                      renderValue={selected => selected.join(", ")}
+                      input={<OutlinedInput name={this.state.model} id="select-multiple-checkbox" />}
+                    >
+                      {this.state.source && this.state.target
+                        ? this.handleModel(this.state.modelLanguage, this.state.source, this.state.target).map(item => (
+                          <Tooltip
+                            placement="right"
+                            enterDelay={200}
+                            key={item.model_id}
+                            value={item.model_name}
+                            title={item.description ? item.description : "NA"}
+                          >
+                            <MenuItem key={item.model_id} value={item.model_name}>
+                              {item.model_name}
+                            </MenuItem>
+                          </Tooltip>
+                        ))
+                        : []}
+
+                    </SelectModel>
+                  </Grid>
+                </Grid>
+
+                {role.includes("dev") && (
+                  <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.dataChip}>
+                    {this.state.model.map(value => (
+                      value ? <div className={classes.divChip}><Chip key={value} label={value} onDelete={this.handleDelete(value)} style={{ marginLeft: "5px", marginTop: "8px" }} /> </div> : <div></div>
+                    ))}
+                  </Grid>
+                )}
+              </Grid>
+            )}
+            {/* <div> */}
+            {/* <Grid container spacing={24} > */}
+            <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.grid}>
+              <textarea
+                id="standard-multiline-static"
+                style={{ padding: "1%", height: '100px', fontFamily: '"Source Sans Pro", "Arial", sans-serif', fontSize: "21px", width: '97.8%', borderRadius: '4px' }}
+                className="noter-text-area"
+                rows="3"
+                value={this.state.text}
+                disabled={this.state.update || this.state.edit}
+                placeholder={translate("dashboard.page.alternatetext.enterTextHere")}
+                // cols="50"
+                onChange={event => {
+                  this.handleTextChange("text", event);
+                }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ display: 'flex', flexDirection: 'row' }}>
+              <Grid item xs={gridSizeSmall} sm={gridSizeSmall} lg={gridSizeLarge} xl={gridSizeLarge} style={{ textAlign: 'left', paddingLeft: '0px' }}>
                 <FormControlLabel
+                  style={{ marginLeft: "0%", textAlign: 'left' }}
                   control={
                     <Checkbox
                       color="default"
-                      checked={this.state.checkedSubwords}
-                      value="checkedSubwords"
-                      onChange={this.handleChange("checkedSubwords")}
+                      checked={this.state.checkedMachine}
+                      value="checkedMachine"
+                      onChange={this.handleChange("checkedMachine")}
                     />
                   }
-                  label={translate("dashboard.page.checkbox.ioSubwords")}
+                  label={translate("dashboard.page.checkbox.mt")}
                 />
+              </Grid>
+              {role.includes("dev") && (
+                <Grid item xs={gridSizeSmall} sm={gridSizeSmall} lg={gridSizeLarge} xl={gridSizeLarge} style={{ textAlign: 'left', paddingLeft: '0px' }}>
+                  <FormControlLabel
+                    style={{ marginLeft: "0%" }}
+                    control={
+                      <Checkbox color="default" checked={this.state.showSplitted} value="showSplitted" onChange={this.handleChange("showSplitted")} />
+                    }
+                    label={translate("dashboard.page.checkbox.splitted")}
+                  />
+                </Grid>
               )}
-
+              {role.includes("dev") && (
+                <Grid item xs={gridSizeSmall} sm={gridSizeSmall} lg={gridSizeLarge} xl={gridSizeLarge} style={{ textAlign: 'left', paddingLeft: '0px' }}>
+                  <FormControlLabel
+                    style={{ margin: '0%' }}
+                    control={
+                      <Checkbox
+                        color="default"
+                        checked={this.state.checkedSubwords}
+                        value="checkedSubwords"
+                        onChange={this.handleChange("checkedSubwords")}
+                        style={{ paddingLeft: '0px !important' }}
+                      />
+                    }
+                    label={translate("dashboard.page.checkbox.ioSubwords")}
+                  />
+                </Grid>
+              )}
+              {/* </Grid> */}
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
               <Button
                 variant="contained"
+                color="primary"
                 onClick={this.handleClear.bind(this)}
                 aria-label="edit"
-                style={{ marginLeft: "1.3%", width: "44%", marginBottom: "4%", marginTop: "4%", marginRight: "5%", backgroundColor: "#1C9AB7", color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '45px' }}
+                className={classes.button1}
               >
                 {translate("common.page.button.clear")}
               </Button>
+            </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
               <Button
+                color="primary"
                 variant="contained"
                 onClick={this.handleSubmit.bind(this, role)}
                 aria-label="edit"
-                style={{ width: "44%", marginBottom: "4%", marginTop: "4%", backgroundColor: "#1C9AB7", color: "#FFFFFF", borderRadius: "20px 20px 20px 20px", height: '45px' }}
+                className={classes.button1}
               >
                 {translate("common.page.button.submit")}
               </Button>
             </Grid>
-          </div>
-          {this.state.nmtText[0] && (
-            <div>
-              <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} status={this.state.checkedSubwords} />
-            </div>
-          )}
-          {this.state.checkedMachine && this.state.autoMlText && this.state.nmtText && (
-            <TranslateSentence title={translate("dashboard.page.checkbox.mt")} data={this.state.autoMlText} />
-          )}
+            {/* </div> */}
+            {this.state.nmtText[0] && (
+              <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.grid}>
+                <NewOrders title={translate("dashbord.page.title.anuvaadModel")} data={this.state.nmtText} status={this.state.checkedSubwords} isSubWordsNotRequired={!this.state.checkedSubwords} />
+              </Grid>
+            )}
+            {this.state.checkedMachine && this.state.autoMlText && this.state.nmtText && (
+              <Grid item xs={12} sm={12} lg={12} xl={12} className={classes.grid}>
+                <TranslateSentence title={translate("dashboard.page.checkbox.mt")} data={this.state.autoMlText} />
+              </Grid>
+            )}
+          </Grid>
         </Paper>
-      </div>
+      </div >
     );
   }
 }
@@ -408,5 +450,4 @@ const mapDispatchToProps = dispatch =>
 
 export default withRouter(
   withStyles(DashboardStyles)(
-    connect(mapStateToProps, mapDispatchToProps)
-      (Dashboard)));
+    connect(mapStateToProps, mapDispatchToProps)(Dashboard)));

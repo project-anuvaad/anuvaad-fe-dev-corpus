@@ -1,4 +1,7 @@
+// @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
 import { grey500, white } from 'material-ui/styles/colors';
+
+
 
 const LoginStyles = theme => ({
   root: {
@@ -104,7 +107,9 @@ const LoginStyles = theme => ({
     marginTop: '10%',
     marginBottom: '5%',
     fontSize: '33px',
-    color: '#003366'
+    color: '#003366',
+    fontWeight: '549',
+    fontfamily: '"Source Sans Pro", sans-serif',
   },
   textArea: {
     width: '50%',
@@ -124,13 +129,15 @@ const LoginStyles = theme => ({
     marginLeft: '25%'
   },
   typography1: {
-    marginLeft: '26%',
-    marginBottom: '4%'
+    marginLeft: '27%',
+    marginBottom: '4%',
+    fontfamily: '"Source Sans Pro", sans-serif',
   },
   typographyFooter: {
     marginTop: '3%',
     fontSize: "100%",
-    marginBottom: "8%"
+    marginBottom: "5%",
+    fontfamily: '"Source Sans Pro", sans-serif',
   }
 
 });

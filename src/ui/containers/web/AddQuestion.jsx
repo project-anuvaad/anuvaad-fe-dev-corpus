@@ -168,7 +168,7 @@ class AddQuestion extends React.Component {
   render() {
     return (
       <div>
-        <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "1%", paddingTop: "5px", paddingBottom: "3%" }} elevation={4}>
+        <Paper style={{ margin: "1% 3%", paddingTop: "5px", paddingBottom: "1%" }} elevation={4}>
           <Typography
             gutterBottom
             variant="title"
@@ -199,7 +199,7 @@ class AddQuestion extends React.Component {
               <Button
                 variant="contained"
                 color="primary"
-                style={{ width: "80%", marginTop: "6%", height: "56px" }}
+                style={{ width: "80%", marginTop: "6%", height: "46px", borderRadius: "20px" }}
                 onClick={this.addClick.bind(this)}
               >
                 {translate("common.page.button.add")}
@@ -210,7 +210,7 @@ class AddQuestion extends React.Component {
                 <Button
                   variant="contained"
                   color="primary"
-                  style={{ width: "81%", marginTop: "6%", height: "56px" }}
+                  style={{ width: "81%", marginTop: "6%", height: "46px", borderRadius: "20px"  }}
                   onClick={this.handleSubmit.bind(this)}
                 >
                   {translate("common.page.button.submit")}

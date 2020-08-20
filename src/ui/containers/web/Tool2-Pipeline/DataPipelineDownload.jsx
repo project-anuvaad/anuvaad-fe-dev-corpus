@@ -47,7 +47,7 @@ class DataPipelineDownload extends React.Component {
   render() {
     return (
       <div>
-        <Toolbar style={{ marginRight: "8%", marginTop: "20px" }}>
+        <Toolbar style={{ marginTop: "20px", marginRight: "3%", marginLeft: "3%", padding: "0px" }}>
           <Typography variant="title" color="inherit" style={{ flex: 1 }} />
 
           <Button
@@ -61,7 +61,7 @@ class DataPipelineDownload extends React.Component {
           </Button>
         </Toolbar>
 
-        <Paper style={{ marginLeft: "3%", marginRight: "10%", marginTop: "2%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
+        <Paper style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", paddingTop: "10px", paddingBottom: "3%" }} elevation={4}>
           <Grid container spacing={24} style={{ marginTop: "3%", marginLeft: "12%" }}>
             <Grid item xs={4} sm={4} lg={4} xl={4}>
               <Typography gutterBottom variant="title" component="h2" style={{ width: "65%", paddingTop: "30px" }}>

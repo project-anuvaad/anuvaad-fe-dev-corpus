@@ -4,27 +4,34 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const themeAnuvaad = createMuiTheme({
 
   typography: {
+    h4:{
+      fontWeight: '549',
+      fontfamily: '"Source Sans Pro", sans-serif',
+      color: '#003366',
+      textAlign:'center'
+
+    },
     fontFamily: '"Source Sans Pro","Regular","Arial", sans-serif',
-    fontSize: 15,
-    color:"#000000"
+    fontSize: 16,
+    color: "#000000",
   },
   palette: {
     primary: {
-      light: '#09d6a1',
-      main: '#FFFFFF',
-      dark: '#FFFFFF',
-      contrastText: '#000000',
-      color:'inherit'
+      light: 'rgb(28, 154, 183)',
+      main: 'rgb(28, 154, 183)',
+      dark: 'rgb(7, 80, 97)',
+      contrastText: '#FFFFFF',
+      color: 'inherit',
 
     },
     secondary: {
-      light: '#09d6a1',
-      main: '#09d6a1',
-      dark: '09d6a1',
-      contrastText: '#FFFFFF'
+      light: '#FFFFFF',
+      main: '#FFFFFF',
+      dark: '#FFFFFF',
+      contrastText: '#233466'
     },
     background: {
-      default: '#FFFFFF',
+      default: '#F5F9FA',
       color:"inherit"
     }
   },
@@ -33,22 +40,24 @@ const themeAnuvaad = createMuiTheme({
   },
 
   drawer: {
+
     default: '#1976d2',
-    color:'nherit'
+    color:'inherit'
   },
 
   Link:
   {
     fontFamily: '"Source Sans Pro", "Arial", sans-serif',
     fontSize: 16,
-    color:"#1C9AB7"
+    color: "#1C9AB7"
   },
- Button:{
-   borderRadius:'20px',
-   backgroundColor:'#1C9AB7'
- } ,
-
-  
+  overrides: {
+    MuiButton: {
+      label: {
+        textTransform: 'capitalize',
+      },
+    },
+  },
 
 });
 

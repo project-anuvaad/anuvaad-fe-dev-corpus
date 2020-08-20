@@ -15,10 +15,9 @@ import history from "../../../web.history";
 import Snackbar from "../../components/web/common/Snackbar";
 import { translate } from "../../../assets/localisation";
 import Select from "../../components/web/common/Select";
+import SimpleSelect from "../../components/web/common/SimpleSelect";
 import FetchModel from "../../../flux/actions/apis/fetchmodel";
 import FetchLanguage from "../../../flux/actions/apis/fetchlanguage";
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import PdfUploadStyles from "../../styles/web/PdfUploadStyles";
 
 class PdfUpload extends Component {
@@ -59,13 +58,14 @@ class PdfUpload extends Component {
       })
       e.preventDefault();
       const { APITransport } = this.props;
-      if (this.state.files.length > 0 && this.state.workspaceName) {
+      if (this.state.files.length > 0 && this.state.workspaceName &&source_lang_name&&target_lang_name&& this.state.strategy) {
         const apiObj = new PdfFileUpload(
           this.state.workspaceName,
           this.state.files[0],
           source_lang_name,
           target_lang_name,
-          model
+          model,
+          this.state.strategy
         );
         APITransport(apiObj);
       } else {
@@ -176,20 +176,27 @@ class PdfUpload extends Component {
         files,
         workspaceName: this.state.workspaceName ? this.state.workspaceName : files[0].name.slice(0, -4)
       });
+      
+    }
+    else{
+      this.setState({
+        files,
+        workspaceName: ""
+      });
     }
   };
 
   render() {
-    const { user, classes, location } = this.props;
+    const { classes } = this.props;
     return (
-     <div >
+     <div className={classes.div}>
       
-        <Typography value=""  variant="h4" className={this.props.classes.typographyHeader}>
+        <Typography value=""  variant="h4" className={classes.typographyHeader}>
               {translate("common.page.label.uploadFile")}
         </Typography>
         <br/>
         <Typography className={classes.typographySubHeader}>
-              Upload file that you want to translate.
+            {translate("pdf_upload.page.label.uploadMessage")}
         </Typography >
         <br />
         <Paper className={classes.paper}>
@@ -199,6 +206,7 @@ class PdfUpload extends Component {
               <DropzoneArea className={classes.DropZoneArea}
                 showPreviewsInDropzone
                 acceptedFiles={[".pdf"]}
+                dropZoneClass={classes.dropZoneArea}
                 onChange={this.handleChange.bind(this)}
                 filesLimit={1}
                 maxFileSize={20000000}
@@ -211,7 +219,7 @@ class PdfUpload extends Component {
          
               <Grid container spacing={24} className={classes.grid}>
                 <Typography gutterBottom variant="title" className={classes.typography}>
-                  {translate('common.page.label.sourceLang')+ ' *' }
+                  {translate('common.page.label.sourceLang')}<span className={classes.span}>*</span>
                 </Typography>
               <Grid item xs={12} sm={12} lg={12} xl={12}  >
                   <Select
@@ -227,7 +235,7 @@ class PdfUpload extends Component {
                 />
               </Grid>
               </Grid>
-              <br />
+              <br /><br/>
             <Grid container spacing={24} className={classes.grid}>
             
               <Typography 
@@ -236,7 +244,7 @@ class PdfUpload extends Component {
                 gutterBottom="true"
                 className={classes.typography}
               >
-                {translate('common.page.label.targetLang') + ' *'}
+                {translate('common.page.label.targetLang')}<span className={classes.span}>*</span>
               </Typography>
               <br />
               <Grid item xs={12} sm={12} lg={12} xl={12}  >
@@ -252,6 +260,26 @@ class PdfUpload extends Component {
               />
               </Grid>
           </Grid>
+          <br/><br/>
+          <Grid container spacing={24} className={classes.grid}>
+                <Typography gutterBottom variant="title" className={classes.typography}>
+                 Strategy<span className={classes.span}>*</span>
+                </Typography>
+              <Grid item xs={12} sm={12} lg={12} xl={12}  >
+                  <SimpleSelect
+                  id="outlined-age-simple"
+                  selectValue="language_code"
+                  fullWidth
+                  
+                  MenuItemValues={["NER","LOK SABHA","OCR"]}
+                  handleChange={this.handleSelectChange}
+                  value={this.state.strategy}
+                  name="strategy"
+                  className={classes.Select}
+                />
+              </Grid>
+              </Grid>
+              <br /><br/>
           <Grid container spacing={24} className={classes.grid}>
               <Typography gutterBottom variant="title"  className={classes.typography}>
                 {translate("common.page.label.filename")}
@@ -268,7 +296,7 @@ class PdfUpload extends Component {
                 
                 />
           </Grid>
-          <Grid container spacing={24} style={{ marginLeft: "4%",width:"98%" }}>
+          <Grid container spacing={24} className={classes.grid}>
          <Button variant="contained" color="primary" className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
             {translate("common.page.button.upload")}
           </Button>
@@ -309,5 +337,4 @@ const mapDispatchToProps = dispatch =>
 
 export default withRouter(
   withStyles(PdfUploadStyles)(
-    connect(mapStateToProps, mapDispatchToProps)
-    (PdfUpload)));
+    connect(mapStateToProps, mapDispatchToProps)(PdfUpload)));

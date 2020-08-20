@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class RunExperiment extends API {
     constructor(workspaceName, configFilepath, csvFilepath, timeout = 2000) {
 
@@ -13,6 +13,7 @@ export default class RunExperiment extends API {
         this.title = workspaceName
         this.config_file_location = configFilepath
         this.csv_file_location = csvFilepath
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.runexperiment}`
     }
 
 

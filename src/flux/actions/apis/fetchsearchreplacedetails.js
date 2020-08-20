@@ -1,13 +1,15 @@
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchWorkspaceDetails extends API {
   constructor(session, timeout = 200000) {
     super("GET", timeout, false);
     this.session_id = session;
-    
+
     this.workspace = null;
     this.type = C.FETCH_WORKSPACE_DETAILS;
+    this.endpoint = ENDPOINTS.fetchsearchreplacedetails;
   }
 
   toString() {
@@ -22,7 +24,7 @@ export default class FetchWorkspaceDetails extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/fetch-search-replace-workspace-detail?session_id=${this.session_id}`;
+    return `${super.apiEndPointAuto()}${this.endpoint}?session_id=${this.session_id}`;
   }
 
   getBody() {

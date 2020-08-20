@@ -1,6 +1,6 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
   constructor(sentences,startSentence,operation_type, endSentence,selected_text, timeout = 2000) {
@@ -13,7 +13,7 @@ export default class RunExperiment extends API {
     this.selected_text = selected_text;
     this.operation_type = operation_type;
     
-    
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.InteractiveMerge}`
     
   }
 
@@ -29,7 +29,7 @@ export default class RunExperiment extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/merge-split-sentence`;
+    return this.endpoint;
   }
 
   getBody() {

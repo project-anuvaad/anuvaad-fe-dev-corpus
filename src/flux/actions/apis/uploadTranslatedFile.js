@@ -3,7 +3,7 @@
  */
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 export default class UploadTranslatedFile extends API {
     constructor(basename, files, timeout = 2000) {
         super('POST', timeout, false, 'MULTIPART');
@@ -11,6 +11,7 @@ export default class UploadTranslatedFile extends API {
         this.files = files
         this.basename = basename
         this.res = {}
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactivesourceupdate}`
     }
 
     toString() {

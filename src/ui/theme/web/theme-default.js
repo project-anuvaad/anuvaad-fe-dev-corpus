@@ -34,7 +34,7 @@ const themeDefault = createMuiTheme({
 
   drawer: {
     default: '#1976d2',
-    color:'nherit'
+    color:'inherit'
   },
 
   Link:

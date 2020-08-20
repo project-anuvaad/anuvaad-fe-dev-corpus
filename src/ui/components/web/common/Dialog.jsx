@@ -23,10 +23,6 @@ export default class AlertDialog extends React.Component {
         }
     }
 
-    componentDidMount(){
-        
-    }
-
     componentDidUpdate(prevProps){
         if(prevProps.node !== this.props.node){
             this.setState({

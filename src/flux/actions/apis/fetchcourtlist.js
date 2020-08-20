@@ -1,5 +1,6 @@
 import C from "../constants";
 import API from "./api";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class CourtList extends API {
     constructor( timeout = 2000) {
@@ -8,7 +9,7 @@ export default class CourtList extends API {
         
 
         this.courtList = []
-
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.fetchcourtlist}`;
     }
 
     toString() {
@@ -24,7 +25,7 @@ export default class CourtList extends API {
 
     apiEndPoint() {
 
-        return `${super.apiEndPointAuto()}/fetch-high-courts`;
+        return this.endpoint;
     }
 
     getBody() {

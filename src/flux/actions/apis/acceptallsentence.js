@@ -3,12 +3,14 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class AcceptAllSentence extends API {
   constructor(workspace, timeout = 2000) {
     super("POST", timeout, false);
     this.type = C.SENTENCEREPLACE;
     this.workspace = workspace;
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.acceptallsentence}`;
   }
 
   toString() {
@@ -23,7 +25,7 @@ export default class AcceptAllSentence extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/accept-all-search-replace-sentence`;
+    return this.endpoint;
   }
 
   getBody() {

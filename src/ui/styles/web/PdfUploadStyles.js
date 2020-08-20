@@ -1,4 +1,4 @@
-import { grey500, white } from 'material-ui/styles/colors';
+
 
 const PdfUploadStyles = theme => ({
   root: {
@@ -12,57 +12,80 @@ const PdfUploadStyles = theme => ({
   withoutLabel: {
     marginTop: theme.spacing.unit * 3
   },
+  div:{
+    display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center'
+  },
   typographyHeader:{
-    marginTop:'6%',
+    paddingTop:'3%',
     minWidth: "5%",
-    align:'center',
-    marginLeft:"40%",
-    fontfamily: 'Trebuchet MS, sans-serif	',
-     color: '#003366' 
+   
     
 
   },
   typographySubHeader:{
-    marginLeft:'38%'
+  textAlign:'center',
+    fontWeight:'450',
+    color:'#000000'
   },
 
   typography: {
-    marginLeft:"3%",
-    marginTop:'4%',
-    height:"18px",
-    fontSize:"18px" 
+    marginLeft:"2%",
+    marginTop:'2%',
+    height:"18px"
     
   },
   select:{
-    marginRight: "30%",
+    // marginRight: "30%",
     width:"100%" ,
+    height:'40px',
     
   },
  paper: {
     width: "60%",
     minWidth: "200px",
-    marginTop: "3%",
-    padding: "2% 2% 4% 2%",
-    marginLeft: "15%",
+    marginTop: "2%",
+    marginBottom:'4%',
+    padding: "3% 3% 3% 3%",
+    // marginLeft: "15%",
+    
+    minHeight:'400px'
   },
   grid:{
-    marginLeft: "4%" 
+    marginLeft: "5.5%" 
   },
   textfield:{
-    width: '87%',
-    marginLeft:"3%"
+    width: '87.9%',
+    marginLeft:"2.3%"
+  },
+  span:{
+    
   },
   button: {
-    marginTop: "4%",
-    marginLeft: "5%",
-    width: "90%",
+    marginTop: "6%",
+    marginLeft: "2.7%",
+    width: "87.6%",
     backgroundColor:'#1C9AB7',
     borderRadius:"20px 20px 20px 20px",
     color:"#FFFFFF"
   },
   dropZoneArea:{
-    minHeight:'385px',
-    height: "304px"
+    paddingTop: '18%',
+    minHeight:'363px',
+    height: "447px",
+    borderColor:'#1C9AB7',
+    backgroundColor: '#F5F9FA',
+    border: '1px dashed #1C9AB7',
+    fontColor:'#1C9AB7',
+    "& svg":{color:'#1C9AB7',},
+    "& p": {
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      fontSize: "19px",
+      color:'#1C9AB7',
+      
+    },
+
 
   }
   

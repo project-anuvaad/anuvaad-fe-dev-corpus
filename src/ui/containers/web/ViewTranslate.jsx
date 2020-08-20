@@ -282,15 +282,15 @@ class ViewTranslate extends React.Component {
         };
 
         return (
-            <div style={{backgroundColor:"#F5F9FA"}}>
-                <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px" }}>
+            <div >
+                <Toolbar style={{ marginLeft: "-5.4%", marginRight: "1.5%", marginTop: "20px",marginBottom:'2%' }}>
                     <Typography variant="title" color="inherit" style={{ flex: 1 }}></Typography>
-                    <Fab variant="extended"  aria-label="Add" style={{ marginLeft: '-4%', marginTop: '1%',backgroundColor:'#1C9AB7',color:'#FFFFFF' }} onClick={() => { history.push("/doctranslate") }}>
+                    <Fab variant="extended"  aria-label="Add" color='primary' style={{ marginLeft: '-4%', marginTop: '1%' }} onClick={() => { history.push("/doctranslate") }}>
                         <AddIcon />&nbsp;{translate('dashboard.page.heading.title')}
                     </Fab>
                 </Toolbar>
 
-                <div style={{ marginLeft: '-4%', marginRight: '3%', marginTop: '40px' }}>
+                <div style={{ marginLeft: '3%', marginRight: '3%', marginTop: '1%',marginBottom:'2%' }}>
                     <MUIDataTable title={translate('common.page.title.document')} data={this.state.fetchtranslation} columns={columns} options={options} />
                 </div>
 

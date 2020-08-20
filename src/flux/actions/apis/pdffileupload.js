@@ -1,9 +1,9 @@
 import API from "./api";
 import C from "../constants";
-
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
-  constructor(name, file, source, target, model, timeout = 2000) {
+  constructor(name, file, source, target, model,strategy, timeout = 2000) {
     super("POST", timeout, false, "MULTIPART");
     this.type = C.UPLOADPDF;
     this.name = name;
@@ -11,7 +11,10 @@ export default class RunExperiment extends API {
     this.workspace = [];
     this.source = source;
     this.target = target;
+    this.ner = strategy ==="LOK SABHA"? 1: 0;
     this.model = JSON.stringify(model);
+    this.endpoint = strategy === "OCR" ? `${super.apiEndPointAuto()}${ENDPOINTS.ocrpdffileupload}`:`${super.apiEndPointAuto()}${ENDPOINTS.pdffileupload}`
+   
 
 
   }
@@ -28,7 +31,7 @@ export default class RunExperiment extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/translate-pdf`;
+    return this.endpoint;
   }
 
   getFormData() {
@@ -38,6 +41,7 @@ export default class RunExperiment extends API {
     formData.append('source_lang',this.source);
     formData.append('target_lang',this.target);
     formData.append('model',this.model);
+    formData.append('dont_use_ner',this.ner);
     return formData;
   }
 

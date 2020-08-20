@@ -14,11 +14,13 @@ class SimpleSelect extends React.Component {
 
     return (
       <form>
-        <FormControl style={{
+        <FormControl style={ this.props.style ? this.props.style : {
           width:'92%',
           fullWidth: true,
           display: "flex",
-          wrap: "nowrap"
+          wrap: "nowrap",
+          height:'40px',
+          magin:'dense',
         }}>
           <Select
             disabled={disabled}
@@ -38,6 +40,7 @@ class SimpleSelect extends React.Component {
     );
   }
 }
+
 
 export default (SimpleSelect);
 

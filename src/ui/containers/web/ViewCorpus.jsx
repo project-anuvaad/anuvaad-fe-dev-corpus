@@ -131,7 +131,7 @@ class Corp extends React.Component {
               return (
                 <div style={{ width: "90px" }}>
                   {(tableMeta.rowData[6] === "COMPLETED" || tableMeta.rowData[6] === "IN-PROGRESS") && this.state.role.includes("editor") && (
-                    <Tooltip title={translate("viewCorpus.title.viewSentence")}>
+                    <Tooltip title={translate("viewCorpus.title.editSentence")}>
                       <EditIcon
                         style={{ width: "24", height: "24", cursor: "pointer", marginLeft: "10%", marginRight: "8%",color:'#233466' }}
                         onClick={() => {
@@ -203,7 +203,7 @@ class Corp extends React.Component {
             <Button
               variant="extendedFab"
               color="primary"
-              style={{ marginRight: 0,backgroundColor:'#1C9AB7',color:'#FFFFFF' }}
+              style={{ marginRight: 0}}
               aria-label="Add"
               onClick={() => {
                 history.push(`${process.env.PUBLIC_URL}/newcorpus`);
@@ -215,7 +215,7 @@ class Corp extends React.Component {
             ""
           )}
         </Toolbar>
-        <div style={{ marginLeft: "-4%", marginRight: "3%", marginTop: "40px" }}>
+        <div style={{ margin: "3%" }}>
           <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />
         </div>
       </div>

@@ -79,14 +79,14 @@ class GarderTranslate extends React.Component {
     // const { base } = this.props;
     return (
       <div>
-        <Grid container spacing={4}>
-          <Grid item xs={3} sm={3} lg={3} xl={3} style={{ marginLeft: "-130px" }}>
+        <Grid container spacing={24}>
+          <Grid item xs={3} sm={3} lg={3} xl={3} style={{paddingTop: '0px'}}>
             <div>
               <div
                 style={{
-                  marginBottom: "68px",
+                  // marginBottom: "68px",
                   width: "90%",
-                  marginTop: "-20px",
+                  // marginTop: "-20px",
                   minWidth: "100px",
                   minHeight: "84vh",
                   paddingBottom: "40px",
@@ -107,7 +107,7 @@ class GarderTranslate extends React.Component {
                           color: this.state.value === i.name && index === this.state.index ? "#CB1E60" : "black",
                           marginLeft: "20px",
                           paddingLeft: "50px",
-                          paddingTop: "30px",
+                          // paddingTop: "30px",
                           paddingBottom: "10px",
                           cursor: "pointer",
                           fontWeight: this.state.value === i.name && index === this.state.index ? "bold" : "normal"
@@ -137,8 +137,8 @@ class GarderTranslate extends React.Component {
                   onClick={this.handleSubmit}
                   variant="contained"
                   style={{
-                    width: "21.2%",
-                    marginLeft: "-53px",
+                    width: "21.6%",
+                    // marginLeft: "-53px",
                     height: 96,
                     backgroundColor: "#CB1E60",
 
@@ -170,7 +170,7 @@ class GarderTranslate extends React.Component {
               <Typography
                 variant="h6"
                 color="inherit"
-                style={{ paddingTop: "50%", marginLeft: "56%", textAlign: "center", color: "#ACACAC", marginRight: "-26%" }}
+                style={{ paddingTop: "50%", marginLeft: "70%", textAlign: "center", color: "#ACACAC", marginRight: "-26%" }}
               >
                 {this.state.renderPageMessage}
                 <br />

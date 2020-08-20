@@ -1,5 +1,6 @@
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class GraderReport extends API {
   constructor(from_date, to_date, timeout = 200000) {
@@ -8,6 +9,7 @@ export default class GraderReport extends API {
     this.to_date = to_date;
     this.report = null;
     this.type = C.FETCH_GRADER_REPORT;
+    this.endpoint = ENDPOINTS.graderreport
   }
 
   toString() {
@@ -22,7 +24,7 @@ export default class GraderReport extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/fetch-benchmark-reports?from_date=${this.from_date}&to_date=${this.to_date}`;
+    return `${super.apiEndPointAuto()}${this.endpoint}?from_date=${this.from_date}&to_date=${this.to_date}`;
   }
 
   getBody() {

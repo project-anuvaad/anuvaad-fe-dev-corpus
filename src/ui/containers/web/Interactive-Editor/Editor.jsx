@@ -17,6 +17,20 @@ import Dialog from "../../../components/web/common/SimpleDialog";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Fab from '@material-ui/core/Fab';
 import SaveIcon from '@material-ui/icons/Check';
+import { withStyles } from "@material-ui/core/styles";
+import SaveFileIcon from "@material-ui/icons/Save";
+
+const styles = {
+  divs: {
+    borderTopStyle: 'solid', 
+    borderTop: "1px solid #D6D6D6", 
+    padding: "2%",
+    "&:hover": {
+      backgroundColor: "#00000014"
+    }
+  }
+};
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -95,7 +109,7 @@ class Editor extends React.Component {
 
     }
     this.setState({
-      targetDialog: this.state.checkedB ? this.state.target : this.state.translateText,value: 0,  apiToken: false
+      targetDialog: this.state.checkedB ? this.state.target : this.state.translateText, value: 0, apiToken: false
     })
   }
 
@@ -143,7 +157,6 @@ class Editor extends React.Component {
 
 
   handleDialog(value) {
-
     if ((this.state.targetDialog !== this.state.target || (this.state.target !== this.state.translateText && !this.state.checkedB && this.state.translateText)) && value !== 0 && this.state.target) {
       this.setState({ open: true, value })
     }
@@ -178,7 +191,7 @@ class Editor extends React.Component {
             }
             const val = `${this.props.sentences[index + value]._id}_${this.props.sentences[index + value].tokenized_sentences[0].sentence_index}`;
 
-            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value === 0 ? null : true);
+            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, null, value === 0 ? null : true);
 
             if (this.props.sentences[index + value].is_table && value !== 0) {
               const blockId = `${this.props.sentences[index + value]._id}_${this.props.sentences[index + value].table_items[0][0].sentence_index}`;
@@ -187,6 +200,7 @@ class Editor extends React.Component {
                 blockId,
                 this.props.sentences[index + value].table_items[0][0],
                 "true",
+                null,
                 null,
                 value === 0 ? null : true
               );
@@ -208,13 +222,13 @@ class Editor extends React.Component {
           } else if (sentence.tokenized_sentences.length >= sentenceIndex && sentenceIndex >= 0) {
             const ind = sentenceIndex + value;
             const val = `${this.props.sentences[index]._id}_${this.props.sentences[index].tokenized_sentences[ind].sentence_index}`;
-            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, value === 0 ? null : true);
+            !this.state.clickedSentence && this.props.handleSenetenceOnClick(val, false, null, null,value === 0 ? null : true);
             if (sentence.is_table) {
               for (const key in sentence.table_items) {
                 for (const cell in sentence.table_items[key]) {
-                  if (sentence.table_items[key][cell].sentence_index === ind) {
+                  if (sentence.table_items[key][cell].sentence_index === sentence.tokenized_sentences[ind].sentence_index) {
                     const blockId = `${sentence._id}_${sentence.table_items[key][cell].sentence_index}`;
-                    this.props.handleCellOnClick(sentence._id, blockId, sentence.table_items[key][cell], "true", null, value === 0 ? null : true);
+                    this.props.handleCellOnClick(sentence._id, blockId, sentence.table_items[key][cell], "true", null, null,value === 0 ? null : true);
                     this.setState({ keyValue: key, cellValue: cell, checkedB: true });
                   }
                 }
@@ -251,10 +265,10 @@ class Editor extends React.Component {
     if (this.state.translateText) {
       res = this.handleCalc(this.state.translateText);
     }
-    const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails, true );
-    if (this.state.source && res &&  !this.state.apiCall) {
+    const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails, true);
+    if (this.state.source && res && !this.state.apiCall) {
       APITransport(apiObj);
-      this.setState({apiCall:true})
+      this.setState({ apiCall: true })
     }
   }
 
@@ -341,7 +355,6 @@ class Editor extends React.Component {
     const tgt = this.state.target && this.state.target.split(" ");
     const src = this.state.source && this.state.source.split(" ");
     const resultArray = [];
-    console.log(tagged_tgt,temp,tgt)
     let index;
     temp.map(item => {
       if (item !== " ") {
@@ -383,7 +396,7 @@ class Editor extends React.Component {
       if (this.state.disable && this.state.translateText) {
         const apiObj = new IntractiveApi(this.state.source, this.handleCalc(event.target.value), this.props.modelDetails, true);
         !this.state.apiCall && this.props.APITransport(apiObj);
-        this.setState({ disable: false,apiCall: true });
+        this.setState({ disable: false, apiCall: true });
       } else {
         let temp;
         const prefix = this.state.target && this.state.target.split(" ");
@@ -403,7 +416,6 @@ class Editor extends React.Component {
           temp = prefix[0];
           event.preventDefault();
         }
-        console.log("temp",temp)
         this.setState({
           translateText: temp,
           disable: false
@@ -433,14 +445,13 @@ class Editor extends React.Component {
 
   handleTextChange(key, event) {
     const space = event.target.value.endsWith(" ");
-    console.log("event",event.target.value,this.handleCalc(event.target.value))
     if (this.state.target && space) {
       if (this.state.target.startsWith(event.target.value) && this.state.target.includes(event.target.value, 0)) {
-      } else if(!this.state.apiCall){
+      } else if (!this.state.apiCall) {
         const res = this.handleCalc(event.target.value);
         const apiObj = new IntractiveApi(this.state.source, res, this.props.modelDetails, true);
         this.props.APITransport(apiObj);
-        
+
         // this.focusDiv("blur");
         this.setState({
           disable: true,
@@ -460,8 +471,9 @@ class Editor extends React.Component {
   }
 
   render() {
+    const { classes } = this.props
     return (
-      <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
+      <Paper elevation={2} style={{ height: '98%', padding: "4.7px 0px", borderColor: "#D6D6D6" }}>
         <Toolbar>
           <Typography value="" variant="h6" gutterBottom style={{ flex: 1, paddingTop: "10px" }}>
             {this.state.checkedB ? translate('dashbord.page.title.anuvaadModel') : "Recommended Sentence"}
@@ -477,13 +489,15 @@ class Editor extends React.Component {
           >
             Tab disabled
           </Button>
-          <CircularProgress size={24} style={{color: '#238427',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,}}/>
-        </div>: this.state.translateText&&<Fab size="small" style={{background:'#238427',color:'white'}}>
+            <CircularProgress size={24} style={{
+              color: '#238427',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              marginTop: -12,
+              marginLeft: -12,
+            }} />
+          </div> : this.state.translateText && <Fab size="small" style={{ background: '#238427', color: 'white' }}>
             <SaveIcon />
           </Fab> :
 
@@ -506,9 +520,13 @@ class Editor extends React.Component {
               resize: "none",
               margin: "10px 10px 10px 4%",
               padding: "15px",
-              height: "25vh",
+              height: "23vh",
               fontFamily: '"Source Sans Pro", "Arial", sans-serif',
-              fontSize: "18px"
+              fontSize: "18px",
+              borderRadius: "4px",
+              backgroundColor: "#F4FDFF",
+              borderColor: "#1C9AB7",
+              color: "#000000"
             }}
             className="noter-text-area"
             rows="10"
@@ -541,11 +559,12 @@ class Editor extends React.Component {
             style={{
               width: "87%",
               resize: "none",
-              margin: "10px 10px 10px 4%",
+              margin: "10px 10px 4% 4%",
               padding: "15px",
-              height: "25vh",
+              height: "23vh",
               fontFamily: '"Source Sans Pro", "Arial", sans-serif',
-              fontSize: "18px"
+              fontSize: "18px",
+              borderRadius: "4px"
             }}
             className="noter-text-area"
             rows="10"
@@ -565,47 +584,76 @@ class Editor extends React.Component {
             onKeyDown={this.keyPress.bind(this)}
           />
         </div>
-        <Grid container spacing={8} style={{ marginLeft: "5%" }}>
-          <Grid item xs={4} sm={4} lg={4} xl={4}>
-            <Button
-              style={{ fontWeight: "bold", width: "100%" }}
-              color="primary"
-              disabled={this.props.sentences[0]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken}
-              onClick={event => {
-                this.handleDialog(-1);
-              }}
-            >
-              {" "}
-              <ChevronLeftIcon size="large" />
+
+        {/* <div style={{display: 'flex', flexDirection: 'row', borderStyle: 'solid', border: "1px solid #D6D6D6"}}>
+          <div style={{color: 'blue', width: '50%', borderColor: 'red'}}>
+            <Button color="primary" style={{width:"100%"}}>Test1</Button>
+          </div>
+          <div style={{color: 'red', width: '50%'}}>
+            Test
+          </div>
+        </div> */}
+
+        <Grid container style={{ border: "1px solid #D6D6D6", borderColor: "#D6D6D6" }}>
+          <Grid item xs={4} sm={4} lg={4} xl={4} className={classes.divs} style={{ cursor: this.props.sentences[0]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken ? "not-allowed" : "pointer" }}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ textAlign: 'center', color: "#233466" }} onClick={event => {
+              this.handleDialog(-1);
+            }}>
+              <ChevronLeftIcon size="large" style={{ color: "#233466" }} />
+            </Grid>
+            <Grid item xs={12} sm={12} lg={12} xl={12}>
+              <Typography
+                style={{ width: "100%", color: "#233466", textAlign: "center" }}
+                color="primary"
+                disabled={this.props.sentences[0]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken}
+              >
+                {" "}
+
               &nbsp;{translate('common.page.label.previousLine')}
-            </Button>
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={3} sm={3} lg={3} xl={3}>
-            <Button
-              style={{ fontWeight: "bold", width: "100%" }}
-              color="primary"
-              onClick={event => {
-                this.handleApiCall();
-              }}
-            >
-              {" "}
+          <Grid item xs={4} sm={4} lg={4} xl={4} className={classes.divs} style={{ borderLeftStyle: 'solid', borderLeft: "1px solid #D6D6D6" }}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ textAlign: 'center', color: "#1C9AB7" }} onClick={event => {
+              this.handleApiCall();
+            }}>
+              <SaveFileIcon size="small" style={{ color: "#1C9AB7" }} />
+            </Grid>
+
+            <Grid item xs={12} sm={12} lg={12} xl={12}>
+              <Typography
+                style={{ width: "100%", color: "#1C9AB7", textAlign: "center" }}
+                color="primary"
+                onClick={event => {
+                  this.handleApiCall();
+                }}
+              >
+                {" "}
               &nbsp;{translate('common.page.button.save')}
-            </Button>
+              </Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={3} sm={3} lg={4} xl={4}>
-            <Button
-              color="primary"
-              disabled={
-                this.props.sentences[this.props.sentences.length - 1]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken
-              }
-              onClick={event => {
-                this.handleDialog(1);
-              }}
-              style={{ fontWeight: "bold", width: "100%" }}
-            >
-              {translate('common.page.label.nextLine')}&nbsp;
-              <ChevronRightIcon size="large" />{" "}
-            </Button>
+          <Grid item xs={4} sm={4} lg={4} xl={4} className={classes.divs} style={{ borderLeftStyle: 'solid', borderLeft: "1px solid #D6D6D6", cursor: this.props.sentences[this.props.sentences.length - 1]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken ? "not-allowed" : "pointer"  }}>
+            <Grid item xs={12} sm={12} lg={12} xl={12} style={{ textAlign: 'center', color: "#1C9AB7" }} onClick={event => {
+              this.handleDialog(1);
+            }}>
+              <ChevronRightIcon size="large" style={{ color: "#233466" }}/>{" "}
+            </Grid>
+
+            <Grid item xs={12} sm={12} lg={12} xl={12}>
+              <Typography
+                color="primary"
+                disabled={
+                  this.props.sentences[this.props.sentences.length - 1]._id === this.state.submittedId.split("_")[0] || this.props.superScriptToken
+                }
+                onClick={event => {
+                  this.handleDialog(1);
+                }}
+                style={{ width: "100%", color: "#233466", textAlign: "center"  }}
+              >
+                {translate('common.page.label.nextLine')}&nbsp;
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
         {this.state.open && <Dialog message="Do you want to save the changes ? " handleSubmit={this.handleDialogSave.bind(this)} handleClose={this.handleClose.bind(this)} open={true} title="Save" status={this.state.value} />}
@@ -631,4 +679,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Editor));
+export default withRouter(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Editor)));

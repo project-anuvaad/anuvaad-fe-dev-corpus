@@ -3,12 +3,14 @@
  */
 import API from "./api";
 import C from "../constants";
+import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class FetchCorpus extends API {
     constructor(timeout = 2000) {
         super('GET', timeout, false);
         this.type = C.FETCH_CORP;
-        this.fetch_corpus_data = {}
+        this.fetch_corpus_data = {};
+        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.corp}`;
     }
 
     toString() {
@@ -23,7 +25,7 @@ export default class FetchCorpus extends API {
     }
 
     apiEndPoint() {
-        return `${super.apiEndPointAuto()}/fetch-corpus`
+        return this.endpoint;
     }
 
     getHeaders() {

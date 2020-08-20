@@ -9,15 +9,14 @@ import FetchFeedbackPending from "../../../flux/actions/apis/fetchfeedbackpendin
 import APITransport from '../../../flux/actions/apitransport/apitransport';
 import history from "../../../web.history";
 import Button from "../../components/web/common/Button";
-import DropZone from '../../components/web/common/DropZone';
+import { DropzoneArea } from "material-ui-dropzone";
 import Paper from '../../components/web/common/Paper';
-import Select from '../../components/web/common/SimpleSelect';
+import Select from "../../components/web/common/Select1";
 import Typography from '../../components/web/common/Typography';
-import { blueGrey50 } from "material-ui/styles/colors";
 import { withStyles } from "@material-ui/core/styles";
-import PdfUploadStyles from "../../styles/web/PdfUploadStyles";
+import PdfTranslateStyles from "../../styles/web/PdfTranslateStyles";
 import { withRouter } from 'react-router';
-
+import { translate } from "../../../assets/localisation";
 
 class doctranslate extends React.Component {
   state = {
@@ -84,7 +83,7 @@ class doctranslate extends React.Component {
 
   handleChange = (files) => {
     this.setState({
-      files: files
+      files: files[0]
     });
   }
 
@@ -135,90 +134,87 @@ class doctranslate extends React.Component {
 
   }
   render() {
-    const { user, classes, location } = this.props;
+    const { classes } = this.props;
     return (
 
       <div>
 
-        <Typography value="Document Translator" variant="h4" style={{
+        <Typography value={translate("doc_translate.page.documentTranslator")} variant="h4" style={{
           marginTop: '6%',
-          minWidth: "5%",
-          align: 'center',
-          marginLeft: "40%",
-          fontfamily: 'Trebuchet MS, sans-serif	',
-          color: '#003366'
+          
         }} />
 
-        <br />
-        <Paper styles={{
-          width: "60%",
-          minWidth: "200px",
-          marginTop: "3%",
-          padding: "2% 2% 4% 2%",
-          marginLeft: "15%",
-        }} value={
+
+        <Paper value={
           <div>
             <Grid container spacing={4} >
 
               <Grid item xs={12} sm={6} lg={6} xl={6} >
-                <DropZone handleChange={this.handleChange} supportFile={['.docx']} />
+                <DropzoneArea onChange={this.handleChange} showPreviewsInDropzone
+                  acceptedFiles={[".docx"]} dropZoneClass={classes.dropZoneArea}
+                  dropzoneText={translate("common.page.label.addAndDropFile")}
+                />
               </Grid>
 
               <Grid item xs={12} sm={6} lg={6} xl={6}  >
-                <Grid container spacing={24} style={{ marginLeft: "6%", marginTop: '1%' }}>
-                  <Typography value='Select Source Language' variant="title" gutterBottom="true" styles={{
+                <Grid container spacing={24} style={{ marginLeft: "7%", marginTop: '-1.5%' }}>
+                  <Typography value={translate("doc_translate.page.selectSourceLang")} variant="h6" gutterBottom="true"
+                    styles={{
 
-                    marginTop: '4%',
-                    height: "18px",
-                    fontSize: "18px"
-                  }} />
+                      fontfamily: '"Source Sans Pro", sans-serif',
+                      height: "18px",
+                      fontSize: "18px",
 
-                  <Grid item xs={12} sm={12} lg={12} xl={12}  >
+                    }} />
+
+                  <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: '-1.7%' }}>
                     <Select id="outlined-age-simple"
                       MenuItemValues={this.handleSource(this.state.modelLanguage, this.state.language)}
                       handleChange={this.handleSelectChange} value={this.state.source}
                       name="source"
                       style={{
+
                         width: "100%",
                       }} />
                   </Grid>
                 </Grid>
                 <br /><br /><br />
-                <Grid container spacing={24} style={{ marginLeft: "6%" }}>
-                  <Typography value='Select Target Language' variant="title" gutterBottom="true" styles={{
-
-                    marginTop: '4%',
+                <Grid container spacing={24} style={{ marginLeft: "7%" }}>
+                  <Typography value={translate("doc_translate.page.selectTargetLang")} variant="h6" gutterBottom="true" styles={{
+                    fontfamily: '"Source Sans Pro", sans-serif',
+                    marginTop: '6%',
                     height: "18px",
                     fontSize: '18px',
                   }} />
 
-                  <Grid item xs={12} sm={12} lg={12} xl={12}  >
-                    <Select id="outlined-age-simple" 
-                    MenuItemValues={this.state.source.language_code ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source.language_code) : []} 
-                    handleChange={this.handleSelectChange} value={this.state.target} name="target"
+                  <Grid item xs={12} sm={12} lg={12} xl={12} style={{ marginLeft: '-1.7%' }} >
+                    <Select id="outlined-age-simple"
+                      MenuItemValues={this.state.source.language_code ? this.handleTarget(this.state.modelLanguage, this.state.language, this.state.source.language_code) : []}
+                      handleChange={this.handleSelectChange} value={this.state.target} name="target"
                       style={{
-                        marginRight: "30%",
+
                         width: "100%",
                       }} />
                   </Grid>
                 </Grid>
                 <br />
-                <Grid container spacing={24} >
+                {/* <Grid container spacing={24} > */}
+                <Grid container spacing={24} style={{ marginLeft: "5.5%" }}>
+                      
                   <Grid item xs={12} sm={12} lg={12} xl={12}  ><br />
-                    <Button value={"Submit"} variant={"contained"} style={{
-                      marginTop: "4%",
-                      marginLeft: "11%",
-                      width: "80%",
-                      backgroundColor: '#1C9AB7',
+                    <Button color='primary'value={translate("common.page.label.submit")} variant={"contained"} style={{
+                      marginTop: "2.8%",
+                      width: "91.9%",
+                     
                       borderRadius: "20px 20px 20px 20px",
-                      color: "#FFFFFF",
-                      height: '46px'
+                     
+                      height: '45px'
                     }} dis={this.state.target.language_code && this.state.source.language_code && this.state.files.name ? false : true} onClick={this.handleSubmit} />
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
-          </div>} style={{ width: '60%', marginLeft: "15%", marginTop: '5%', padding: "2% 2% 4% 2%", minWidth: "200px", }}
+          </div>} style={{ width: '55%', marginLeft: "20%", marginTop: '5%', marginBottom: '9%', padding: "2.5% 2.5% 3% 2.5%", minWidth: "200px", }}
         />
       </div>
 
@@ -240,4 +236,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   PdfTranslation: APITransport,
 }, dispatch);
 export default withRouter(
-  withStyles(PdfUploadStyles)(connect(mapStateToProps, mapDispatchToProps)(doctranslate)));
+  withStyles(PdfTranslateStyles)(connect(mapStateToProps, mapDispatchToProps)(doctranslate)));

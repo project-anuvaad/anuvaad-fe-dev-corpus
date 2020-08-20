@@ -36,7 +36,7 @@ class Preview extends React.Component {
     componentDidUpdate(prevProps) {
 
         if (prevProps.downloaddoc !== this.props.downloaddoc) {
-            let url = `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "http://auth.anuvaad.org"}/download/${
+            let url = `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/download/${
                 this.props.downloaddoc.data ? this.props.downloaddoc.data : ""
                 }`
             window.open(url, "_self")
@@ -106,7 +106,7 @@ class Preview extends React.Component {
                 }
                 return true;
             })
-            this.setState({ sentences: sentenceArray, sourceSupScripts: supScripts, targetSupScripts: targetSupScript })
+            this.setState({ sentences: sentenceArray, sourceSupScripts: supScripts, targetSupScripts: targetSupScript, fileDetails: this.props.fetchPdfSentence.pdf_process,})
         }
     }
 
@@ -122,14 +122,14 @@ class Preview extends React.Component {
 
     render() {
         return (
-            <div style={{ marginLeft: "-100px" }}>
+            <div>
                 {this.state.sentences &&
                 <Grid container spacing={16} style={{ padding: "0 24px 12px 24px" }}>
                     <Grid item sm={2} lg={3} xl={3} className='GridFileDetails'>
                     </Grid>
                     <Grid item xs={12} sm={8} lg={6} xl={6} className='GridFileDetails'>
                         <Paper elevation={2} style={{ padding: '10%', overflowX: 'hidden' }}>
-                            <EditorPaper header={this.state.header} paperType="target" isPreview={true} sentences={this.state.sentences}
+                            <EditorPaper header={this.state.header} paperType="target" isPreview={true} sentences={this.state.sentences} fileDetails={this.state.fileDetails}
                                 supScripts={this.state.targetSupScripts}
                             ></EditorPaper>
                         </Paper>
