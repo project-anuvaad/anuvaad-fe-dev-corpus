@@ -6,11 +6,10 @@ class Image extends React.Component {
       }
 
       render() {
-          const {image, width, height, styles} = this.props;
-
+          const { imgObj} = this.props;
           return(
-            <div style={styles}>
-                <img width={width} height={height} src={image}></img>
+            <div style={{position: "absolute", left: imgObj.text_left + "px", top: imgObj.text_top + "px", width: imgObj.text_width + "px"}}>
+                <img width={imgObj.text_width + "px"} height={imgObj.text_height + "px"} src={`data:image/png;base64,${imgObj.base64}`}></img>
             </div>
           )
       }

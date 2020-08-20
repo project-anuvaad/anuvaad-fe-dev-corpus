@@ -14,6 +14,7 @@ import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 
 import Toolbar from "@material-ui/core/Toolbar";
 import EditorTable from "./EditorTable"
+import Image from "./Image"
 
 class Preview extends React.Component {
   constructor(props) {
@@ -97,6 +98,7 @@ class Preview extends React.Component {
 
   render() {
     const { sourceSentence } = this.props;
+
     let yAxis = 0;
 
     let style = {
@@ -123,7 +125,7 @@ class Preview extends React.Component {
           })
         }
 
-        {sourceSentence.blocks && sourceSentence.blocks.map((sentence, index) => {
+        {sourceSentence.text_blocks && sourceSentence.text_blocks.map((sentence, index) => {
           yAxis = sentence.text_top + (sourceSentence.page_no * sourceSentence.page_height);
 
           return (
@@ -131,10 +133,16 @@ class Preview extends React.Component {
             <BlockView key={index+ "_" +sentence.block_id}
               sentence={sentence}
               yAxis={yAxis}
-              page_no={sourceSentence.blocks.page_no}
+              page_no={sourceSentence.text_blocks.page_no}
             />
           )
         })
+        }
+
+        {
+          sourceSentence.images && Array.isArray(sourceSentence.images) && sourceSentence.images.length>0 && sourceSentence.images.map((images, imgIndex) => {
+            return (<Image imgObj={images}></Image>)
+          })
         }
       </Paper >
     );
