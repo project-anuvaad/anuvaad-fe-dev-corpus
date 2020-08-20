@@ -1,0 +1,1586 @@
+{
+        "result": [
+            {
+                "page_no": 0,
+                "page_width": 893,
+                "page_height": 1262,
+                "tables": null,
+                "images": null,
+                "text_blocks": [
+                    {
+                        "text_top": 102,
+                        "text_left": 285,
+                        "text_width": 337,
+                        "text_height": 67,
+                        "text": "LOK SABHA ",
+                        "font_size": 55,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": "",
+                        "children": null,
+                        "block_id": 0
+                    },
+                    {
+                        "text_top": 169,
+                        "text_left": 433,
+                        "text_width": 30,
+                        "text_height": 16,
+                        "text": "___ ",
+                        "font_size": 13,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": "",
+                        "children": null,
+                        "block_id": 1
+                    },
+                    {
+                        "text_top": 203,
+                        "text_left": 321,
+                        "text_width": 256,
+                        "text_height": 31,
+                        "text": "BULLETIN \u2013 PART I ",
+                        "font_size": 25,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": "",
+                        "children": null,
+                        "block_id": 2
+                    },
+                    {
+                        "text_top": 249,
+                        "text_left": 323,
+                        "text_width": 245,
+                        "text_height": 40,
+                        "text": " (Brief Record of Proceedings) ___ ",
+                        "font_size": 16,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 249,
+                                "text_left": 323,
+                                "text_width": 245,
+                                "text_height": 20,
+                                "text": "(Brief Record of Proceedings)",
+                                "font_size": 16,
+                                "font_family": "ABCDEE+Tahoma,Bold",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 269,
+                                "text_left": 430,
+                                "text_width": 36,
+                                "text_height": 20,
+                                "text": "___ ",
+                                "font_size": 16,
+                                "font_family": "ABCDEE+Tahoma,Bold",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 3
+                    },
+                    {
+                        "text_top": 302,
+                        "text_left": 226,
+                        "text_width": 440,
+                        "text_height": 22,
+                        "text": "Friday, January 31, 2020/Magha 11, 1941(Saka)",
+                        "font_size": 18,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 4
+                    },
+                    {
+                        "text_top": 329,
+                        "text_left": 428,
+                        "text_width": 40,
+                        "text_height": 22,
+                        "text": "___ ",
+                        "font_size": 18,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 5
+                    },
+                    {
+                        "text_top": 358,
+                        "text_left": 414,
+                        "text_width": 69,
+                        "text_height": 23,
+                        "text": "No. 58 ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 6
+                    },
+                    {
+                        "text_top": 405,
+                        "text_left": 108,
+                        "text_width": 115,
+                        "text_height": 23,
+                        "text": "12.45 P.M.  ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 7
+                    },
+                    {
+                        "text_top": 441,
+                        "text_left": 108,
+                        "text_width": 231,
+                        "text_height": 23,
+                        "text": "1.  National Anthem  ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 8
+                    },
+                    {
+                        "text_top": 475,
+                        "text_left": 162,
+                        "text_width": 302,
+                        "text_height": 23,
+                        "text": "The National Anthem was played.  ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": "",
+                        "children": null,
+                        "block_id": 9
+                    },
+                    {
+                        "text_top": 546,
+                        "text_left": 108,
+                        "text_width": 177,
+                        "text_height": 23,
+                        "text": "2.  Affirmation  ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 10
+                    },
+                    {
+                        "text_top": 581,
+                        "text_left": 108,
+                        "text_width": 681,
+                        "text_height": 94,
+                        "text": " Shri  Atul  Kumar  Singh  alias  Atul  Rai,  member  representing  Ghosi  Parliamentary Constituency of Uttar Pradesh made affirmation in Hindi, signed  the Roll of Members and took his seat in the House.  ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 581,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 23,
+                                "text": "Shri  Atul  Kumar  Singh  alias  Atul  Rai,  member  representing  Ghosi ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 617,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 23,
+                                "text": "Parliamentary Constituency of Uttar Pradesh made affirmation in Hindi, signed ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 652,
+                                "text_left": 108,
+                                "text_width": 459,
+                                "text_height": 23,
+                                "text": "the Roll of Members and took his seat in the House.  ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 11
+                    },
+                    {
+                        "text_top": 758,
+                        "text_left": 108,
+                        "text_width": 115,
+                        "text_height": 23,
+                        "text": "12.48 P.M.  ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 12
+                    },
+                    {
+                        "text_top": 793,
+                        "text_left": 108,
+                        "text_width": 444,
+                        "text_height": 23,
+                        "text": "3.  President\u2019s Address \u2013 Laid on the Table ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 13
+                    },
+                    {
+                        "text_top": 830,
+                        "text_left": 108,
+                        "text_width": 681,
+                        "text_height": 94,
+                        "text": " Secretary-General  laid  on  the  Table  a  copy  of  the  President\u2019s  Address  (Hindi  and  English  versions)  to  both  the  Houses  of  Parliament  assembled  together on the 31  January, 2020.  ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 830,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 23,
+                                "text": "Secretary-General  laid  on  the  Table  a  copy  of  the  President\u2019s  Address ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 866,
+                                "text_left": 108,
+                                "text_width": 680,
+                                "text_height": 23,
+                                "text": "(Hindi  and  English  versions)  to  both  the  Houses  of  Parliament  assembled ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 899,
+                                "text_left": 108,
+                                "text_width": 317,
+                                "text_height": 25,
+                                "text": "together on the 31 st  January, 2020.  ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": null,
+                                "children": [
+                                    {
+                                        "text_top": 901,
+                                        "text_left": 108,
+                                        "text_width": 161,
+                                        "text_height": 23,
+                                        "text": "together on the 31",
+                                        "font_size": 19,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    },
+                                    {
+                                        "text_top": 899,
+                                        "text_left": 269,
+                                        "text_width": 10,
+                                        "text_height": 15,
+                                        "text": "st",
+                                        "font_size": 12,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": "SUPERSCRIPT"
+                                    },
+                                    {
+                                        "text_top": 901,
+                                        "text_left": 279,
+                                        "text_width": 146,
+                                        "text_height": 23,
+                                        "text": " January, 2020.  ",
+                                        "font_size": 19,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    }
+                                ]
+                            }
+                        ],
+                        "block_id": 14
+                    },
+                    {
+                        "text_top": 971,
+                        "text_left": 108,
+                        "text_width": 295,
+                        "text_height": 23,
+                        "text": "4. Papers laid on the Table ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 15
+                    },
+                    {
+                        "text_top": 1007,
+                        "text_left": 108,
+                        "text_width": 681,
+                        "text_height": 58,
+                        "text": " The Minister of Finance and Minister of Corporate Affairs (Smt. Nirmala  Sitharaman) laid on the Table:- ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 1007,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 23,
+                                "text": "The Minister of Finance and Minister of Corporate Affairs (Smt. Nirmala ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 1042,
+                                "text_left": 108,
+                                "text_width": 276,
+                                "text_height": 23,
+                                "text": "Sitharaman) laid on the Table:- ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 16
+                    },
+                    {
+                        "text_top": 1078,
+                        "text_left": 108,
+                        "text_width": 681,
+                        "text_height": 58,
+                        "text": " (1)   A  copy  (Hindi  and  English  versions)  of  the  Economic  Survey  2019-20  (Volume I and Volume II). ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 1078,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 23,
+                                "text": "(1)   A  copy  (Hindi  and  English  versions)  of  the  Economic  Survey  2019-20 ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 1113,
+                                "text_left": 108,
+                                "text_width": 233,
+                                "text_height": 23,
+                                "text": "(Volume I and Volume II). ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 17
+                    }
+                ]
+            },
+            {
+                "page_no": 1,
+                "page_width": 893,
+                "page_height": 1262,
+                "tables": null,
+                "images": null,
+                "text_blocks": [
+                    {
+                        "text_top": 58,
+                        "text_left": 441,
+                        "text_width": 14,
+                        "text_height": 16,
+                        "text": "2 ",
+                        "font_size": 18,
+                        "font_family": "Times New Roman",
+                        "font_color": "#000000",
+                        "attrib": "",
+                        "children": null,
+                        "block_id": 0
+                    },
+                    {
+                        "text_top": 102,
+                        "text_left": 108,
+                        "text_width": 681,
+                        "text_height": 129,
+                        "text": " (2)  A copy of explanatory Statement (Hindi and English versions) showing  reasons  for  immediate  legislation  by  promulgation  of  the  Insolvency  and  Bankruptcy Code (Amendment) Ordinance, 2019 (No. 16 of 2019) under Rule  71(2) of Rules of Procedure and Conduct of Business in Lok Sabha. ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 102,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 23,
+                                "text": "(2)  A copy of explanatory Statement (Hindi and English versions) showing ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 138,
+                                "text_left": 108,
+                                "text_width": 680,
+                                "text_height": 23,
+                                "text": "reasons  for  immediate  legislation  by  promulgation  of  the  Insolvency  and ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 173,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 23,
+                                "text": "Bankruptcy Code (Amendment) Ordinance, 2019 (No. 16 of 2019) under Rule ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 208,
+                                "text_left": 108,
+                                "text_width": 584,
+                                "text_height": 23,
+                                "text": "71(2) of Rules of Procedure and Conduct of Business in Lok Sabha. ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 1
+                    },
+                    {
+                        "text_top": 260,
+                        "text_left": 108,
+                        "text_width": 681,
+                        "text_height": 164,
+                        "text": " The  Minister  of  State  in  the  Ministry  of  Parliamentary  Affairs  and  Minster  of  State  in  the  Ministry  of  Heavy  Industries  and  Public  Enterprises  (Shri  Arjun  Ram  Meghwal)  laid  on  the  Table  a  copy  each  of  the  following  Ordinances  (Hindi  and  English  versions)  under  article  123  (2)  (a)  of  the  Constitution:- ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 260,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 23,
+                                "text": "The  Minister  of  State  in  the  Ministry  of  Parliamentary  Affairs  and ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 295,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 23,
+                                "text": "Minster  of  State  in  the  Ministry  of  Heavy  Industries  and  Public  Enterprises ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 330,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 23,
+                                "text": "(Shri  Arjun  Ram  Meghwal)  laid  on  the  Table  a  copy  each  of  the  following ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 366,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 23,
+                                "text": "Ordinances  (Hindi  and  English  versions)  under  article  123  (2)  (a)  of  the ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 401,
+                                "text_left": 108,
+                                "text_width": 123,
+                                "text_height": 23,
+                                "text": "Constitution:- ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 2
+                    },
+                    {
+                        "text_top": 436,
+                        "text_left": 100,
+                        "text_width": 697,
+                        "text_height": 59,
+                        "text": " (1)  The Insolvency and Bankruptcy Code (Amendment) Ordinance, 2019 (No.  16 of 2019) promulgated by the President on 28  December, 2019. ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 436,
+                                "text_left": 100,
+                                "text_width": 697,
+                                "text_height": 23,
+                                "text": "(1)  The Insolvency and Bankruptcy Code (Amendment) Ordinance, 2019 (No. ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 469,
+                                "text_left": 142,
+                                "text_width": 587,
+                                "text_height": 26,
+                                "text": "16 of 2019) promulgated by the President on 28 th  December, 2019. ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": null,
+                                "children": [
+                                    {
+                                        "text_top": 472,
+                                        "text_left": 142,
+                                        "text_width": 416,
+                                        "text_height": 23,
+                                        "text": "16 of 2019) promulgated by the President on 28",
+                                        "font_size": 19,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    },
+                                    {
+                                        "text_top": 469,
+                                        "text_left": 558,
+                                        "text_width": 11,
+                                        "text_height": 15,
+                                        "text": "th",
+                                        "font_size": 12,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": "SUPERSCRIPT"
+                                    },
+                                    {
+                                        "text_top": 472,
+                                        "text_left": 569,
+                                        "text_width": 160,
+                                        "text_height": 23,
+                                        "text": " December, 2019. ",
+                                        "font_size": 19,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    }
+                                ]
+                            }
+                        ],
+                        "block_id": 3
+                    },
+                    {
+                        "text_top": 507,
+                        "text_left": 100,
+                        "text_width": 697,
+                        "text_height": 58,
+                        "text": " (2)  The  Mineral  Laws  (Amendment)  Ordinance,  2020  (No.  1  of  2020)  promulgated by the President on 10  January, 2020. ",
+                        "font_size": 19,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 507,
+                                "text_left": 100,
+                                "text_width": 697,
+                                "text_height": 23,
+                                "text": "(2)  The  Mineral  Laws  (Amendment)  Ordinance,  2020  (No.  1  of  2020) ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 540,
+                                "text_left": 142,
+                                "text_width": 461,
+                                "text_height": 25,
+                                "text": "promulgated by the President on 10 th  January, 2020. ",
+                                "font_size": 19,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": null,
+                                "children": [
+                                    {
+                                        "text_top": 542,
+                                        "text_left": 142,
+                                        "text_width": 310,
+                                        "text_height": 23,
+                                        "text": "promulgated by the President on 10",
+                                        "font_size": 19,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    },
+                                    {
+                                        "text_top": 540,
+                                        "text_left": 451,
+                                        "text_width": 11,
+                                        "text_height": 15,
+                                        "text": "th",
+                                        "font_size": 12,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": "SUPERSCRIPT"
+                                    },
+                                    {
+                                        "text_top": 542,
+                                        "text_left": 463,
+                                        "text_width": 140,
+                                        "text_height": 23,
+                                        "text": " January, 2020. ",
+                                        "font_size": 19,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    }
+                                ]
+                            }
+                        ],
+                        "block_id": 4
+                    },
+                    {
+                        "text_top": 628,
+                        "text_left": 108,
+                        "text_width": 345,
+                        "text_height": 25,
+                        "text": "5.  Message from Rajya Sabha ",
+                        "font_size": 21,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 5
+                    },
+                    {
+                        "text_top": 675,
+                        "text_left": 108,
+                        "text_width": 681,
+                        "text_height": 101,
+                        "text": " Secretary  General reported a  message  from  Rajya  Sabha  that  at  its  sitting  held  on  the  12   December,  2019,  Rajya  Sabha  passed  the  Constitution (Scheduled Tribes) Order (Amendment) Bill, 2019. ",
+                        "font_size": 21,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 675,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 25,
+                                "text": "Secretary  General reported a  message  from  Rajya  Sabha  that  at ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": null,
+                                "children": [
+                                    {
+                                        "text_top": 675,
+                                        "text_left": 162,
+                                        "text_width": 168,
+                                        "text_height": 25,
+                                        "text": "Secretary  General",
+                                        "font_size": 21,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    },
+                                    {
+                                        "text_top": 675,
+                                        "text_left": 339,
+                                        "text_width": 79,
+                                        "text_height": 25,
+                                        "text": "reported",
+                                        "font_size": 21,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    },
+                                    {
+                                        "text_top": 675,
+                                        "text_left": 427,
+                                        "text_width": 362,
+                                        "text_height": 25,
+                                        "text": "a  message  from  Rajya  Sabha  that  at ",
+                                        "font_size": 21,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "text_top": 711,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 27,
+                                "text": "its  sitting  held  on  the  12 th   December,  2019,  Rajya  Sabha  passed  the ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": null,
+                                "children": [
+                                    {
+                                        "text_top": 713,
+                                        "text_left": 108,
+                                        "text_width": 245,
+                                        "text_height": 25,
+                                        "text": "its  sitting  held  on  the  12",
+                                        "font_size": 21,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    },
+                                    {
+                                        "text_top": 711,
+                                        "text_left": 353,
+                                        "text_width": 12,
+                                        "text_height": 16,
+                                        "text": "th",
+                                        "font_size": 13,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": "SUPERSCRIPT"
+                                    },
+                                    {
+                                        "text_top": 713,
+                                        "text_left": 365,
+                                        "text_width": 424,
+                                        "text_height": 25,
+                                        "text": "  December,  2019,  Rajya  Sabha  passed  the ",
+                                        "font_size": 21,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "text_top": 751,
+                                "text_left": 108,
+                                "text_width": 590,
+                                "text_height": 25,
+                                "text": "Constitution (Scheduled Tribes) Order (Amendment) Bill, 2019. ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 6
+                    },
+                    {
+                        "text_top": 939,
+                        "text_left": 108,
+                        "text_width": 578,
+                        "text_height": 25,
+                        "text": "6.  Bill as passed by Rajya Sabha \u2013 Laid on the Table ",
+                        "font_size": 21,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 7
+                    },
+                    {
+                        "text_top": 985,
+                        "text_left": 162,
+                        "text_width": 619,
+                        "text_height": 27,
+                        "text": "The Constitution (Scheduled Tribes) Order (Amendment) Bill, 2019",
+                        "font_size": 22,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": "",
+                        "children": null,
+                        "block_id": 8
+                    }
+                ]
+            },
+            {
+                "page_no": 2,
+                "page_width": 893,
+                "page_height": 1262,
+                "tables": null,
+                "images": null,
+                "text_blocks": [
+                    {
+                        "text_top": 58,
+                        "text_left": 441,
+                        "text_width": 14,
+                        "text_height": 16,
+                        "text": "3 ",
+                        "font_size": 18,
+                        "font_family": "Times New Roman",
+                        "font_color": "#000000",
+                        "attrib": "",
+                        "children": null,
+                        "block_id": 0
+                    },
+                    {
+                        "text_top": 102,
+                        "text_left": 108,
+                        "text_width": 517,
+                        "text_height": 25,
+                        "text": "7.  Reports of Standing Committee on Defence ",
+                        "font_size": 21,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 1
+                    },
+                    {
+                        "text_top": 145,
+                        "text_left": 108,
+                        "text_width": 681,
+                        "text_height": 63,
+                        "text": " Shri  Brijendra  Singh  presented  the  following  Reports  (Hindi  and  English Versions) of the Standing Committee on Defence:-  ",
+                        "font_size": 21,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 145,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 25,
+                                "text": "Shri  Brijendra  Singh  presented  the  following  Reports  (Hindi  and ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 183,
+                                "text_left": 108,
+                                "text_width": 554,
+                                "text_height": 25,
+                                "text": "English Versions) of the Standing Committee on Defence:-  ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 2
+                    },
+                    {
+                        "text_top": 221,
+                        "text_left": 108,
+                        "text_width": 682,
+                        "text_height": 291,
+                        "text": " *(1)  First  Report  of  the  Standing  Committee  on  Defence  (17th  Lok  Sabha)  on  'Demands  for  Grants  of  the  Ministry  of  Defence  for  the  year  2019-20  on  General  Defence  Budget,  Border  Roads  Organisation,  Indian  Coast  Guard,  Military  Engineer  Services,  Directorate  General  Defence  Estates,  Defence  Public  Sector  Undertakings,  Canteen  Stores  Department,  Welfare  of                   Ex-Servicemen,  Ex-Servicemen  Contributory  Health  Scheme,  Defence Pensions and Sainik Schools(Demand No. 18 and 21)'.",
+                        "font_size": 21,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 221,
+                                "text_left": 108,
+                                "text_width": 682,
+                                "text_height": 25,
+                                "text": "*(1)  First  Report  of  the  Standing  Committee  on  Defence  (17th  Lok ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 259,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 25,
+                                "text": "Sabha)  on  'Demands  for  Grants  of  the  Ministry  of  Defence  for ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 297,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 25,
+                                "text": "the  year  2019-20  on  General  Defence  Budget,  Border  Roads ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 335,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 25,
+                                "text": "Organisation,  Indian  Coast  Guard,  Military  Engineer  Services, ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 373,
+                                "text_left": 162,
+                                "text_width": 628,
+                                "text_height": 25,
+                                "text": "Directorate  General  Defence  Estates,  Defence  Public  Sector ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 411,
+                                "text_left": 162,
+                                "text_width": 628,
+                                "text_height": 25,
+                                "text": "Undertakings,  Canteen  Stores  Department,  Welfare  of                  ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 449,
+                                "text_left": 162,
+                                "text_width": 628,
+                                "text_height": 25,
+                                "text": "Ex-Servicemen,  Ex-Servicemen  Contributory  Health  Scheme, ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 487,
+                                "text_left": 162,
+                                "text_width": 584,
+                                "text_height": 25,
+                                "text": "Defence Pensions and Sainik Schools(Demand No. 18 and 21)'.",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 3
+                    },
+                    {
+                        "text_top": 525,
+                        "text_left": 108,
+                        "text_width": 682,
+                        "text_height": 139,
+                        "text": " *(2)  Second    Report  of  the  Standing  Committee  on  Defence  (17th  Lok Sabha) on 'Demands for Grants of the Ministry of Defence   for  the  year  2019-20  on  Army,  Navy,    Air  Force  and    Joint  Staff  (Demand No.19 & 20)'. ",
+                        "font_size": 21,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 525,
+                                "text_left": 108,
+                                "text_width": 682,
+                                "text_height": 25,
+                                "text": "*(2)  Second    Report  of  the  Standing  Committee  on  Defence  (17th ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 563,
+                                "text_left": 162,
+                                "text_width": 626,
+                                "text_height": 25,
+                                "text": "Lok Sabha) on 'Demands for Grants of the Ministry of Defence   for ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 601,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 25,
+                                "text": "the  year  2019-20  on  Army,  Navy,    Air  Force  and    Joint  Staff ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 639,
+                                "text_left": 162,
+                                "text_width": 222,
+                                "text_height": 25,
+                                "text": "(Demand No.19 & 20)'. ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 4
+                    },
+                    {
+                        "text_top": 715,
+                        "text_left": 108,
+                        "text_width": 682,
+                        "text_height": 139,
+                        "text": " *(3)  Third      Report  of  the  Standing  Committee  on  Defence(17th  Lok  Sabha)    on  \u2018Capital  Outlay  on  Defence  Services,  Procurement  Policy,  Defence  Planning  and  Married  Accommodation  Project  (Demand No. 20)\u2019. ",
+                        "font_size": 21,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 715,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 25,
+                                "text": "*(3)  Third      Report  of  the  Standing  Committee  on  Defence(17th  Lok ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 753,
+                                "text_left": 162,
+                                "text_width": 628,
+                                "text_height": 25,
+                                "text": "Sabha)    on  \u2018Capital  Outlay  on  Defence  Services,  Procurement ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 791,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 25,
+                                "text": "Policy,  Defence  Planning  and  Married  Accommodation  Project ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 829,
+                                "text_left": 162,
+                                "text_width": 179,
+                                "text_height": 25,
+                                "text": "(Demand No. 20)\u2019. ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 5
+                    },
+                    {
+                        "text_top": 867,
+                        "text_left": 108,
+                        "text_width": 682,
+                        "text_height": 177,
+                        "text": " *(4)  Fourth    Report  of  the  Standing  Committee  on  Defence(17th  Lok  Sabha)  on  'Demands  for  Grants  of  the  Ministry  of  Defence  for  the  year  2019-20  on  Ordnance  Factories,  Defence  Research  and  Development  Organisation,  Directorate  General  of  Quality  Assurance and National Cadet Corps.(Demand No. 19 and 20)'. ",
+                        "font_size": 21,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 867,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 25,
+                                "text": "*(4)  Fourth    Report  of  the  Standing  Committee  on  Defence(17th  Lok ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 905,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 25,
+                                "text": "Sabha)  on  'Demands  for  Grants  of  the  Ministry  of  Defence  for ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 943,
+                                "text_left": 162,
+                                "text_width": 628,
+                                "text_height": 25,
+                                "text": "the  year  2019-20  on  Ordnance  Factories,  Defence  Research ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 981,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 25,
+                                "text": "and  Development  Organisation,  Directorate  General  of  Quality ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 1019,
+                                "text_left": 162,
+                                "text_width": 592,
+                                "text_height": 25,
+                                "text": "Assurance and National Cadet Corps.(Demand No. 19 and 20)'. ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 6
+                    },
+                    {
+                        "text_top": 1086,
+                        "text_left": 108,
+                        "text_width": 680,
+                        "text_height": 59,
+                        "text": " _________________________________________________________________     *  20.12.2019 and Laid in Rajya Sabha on 13.12.2019. ",
+                        "font_size": 18,
+                        "font_family": "Arial",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 1086,
+                                "text_left": 108,
+                                "text_width": 671,
+                                "text_height": 17,
+                                "text": "_________________________________________________________________    ",
+                                "font_size": 18,
+                                "font_family": "Arial",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 1104,
+                                "text_left": 108,
+                                "text_width": 680,
+                                "text_height": 20,
+                                "text": "*  These  reports  were  presented  to  Hon\u2019ble  Speaker,  Lok  Sabha  on ",
+                                "font_size": 18,
+                                "font_family": "Arial",
+                                "font_color": "#000000",
+                                "attrib": null,
+                                "children": [
+                                    {
+                                        "text_top": 1107,
+                                        "text_left": 108,
+                                        "text_width": 12,
+                                        "text_height": 17,
+                                        "text": "* ",
+                                        "font_size": 18,
+                                        "font_family": "Arial,Bold",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    },
+                                    {
+                                        "text_top": 1104,
+                                        "text_left": 162,
+                                        "text_width": 626,
+                                        "text_height": 20,
+                                        "text": "These  reports  were  presented  to  Hon\u2019ble  Speaker,  Lok  Sabha  on ",
+                                        "font_size": 18,
+                                        "font_family": "Arial",
+                                        "font_color": "#000000",
+                                        "attrib": "SUPERSCRIPT"
+                                    }
+                                ]
+                            },
+                            {
+                                "text_top": 1128,
+                                "text_left": 162,
+                                "text_width": 422,
+                                "text_height": 17,
+                                "text": "20.12.2019 and Laid in Rajya Sabha on 13.12.2019. ",
+                                "font_size": 18,
+                                "font_family": "Arial",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 7
+                    }
+                ]
+            },
+            {
+                "page_no": 3,
+                "page_width": 893,
+                "page_height": 1262,
+                "tables": null,
+                "images": null,
+                "text_blocks": [
+                    {
+                        "text_top": 58,
+                        "text_left": 441,
+                        "text_width": 14,
+                        "text_height": 16,
+                        "text": "4 ",
+                        "font_size": 18,
+                        "font_family": "Times New Roman",
+                        "font_color": "#000000",
+                        "attrib": "",
+                        "children": null,
+                        "block_id": 0
+                    },
+                    {
+                        "text_top": 102,
+                        "text_left": 108,
+                        "text_width": 681,
+                        "text_height": 50,
+                        "text": " 8.  Report  of  Standing  Committee  on  Health  and  Family  Welfare ",
+                        "font_size": 21,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 102,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 25,
+                                "text": "8.  Report  of  Standing  Committee  on  Health  and  Family ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma,Bold",
+                                "font_color": "#000000",
+                                "attrib": null,
+                                "children": [
+                                    {
+                                        "text_top": 102,
+                                        "text_left": 108,
+                                        "text_width": 26,
+                                        "text_height": 25,
+                                        "text": "8. ",
+                                        "font_size": 21,
+                                        "font_family": "ABCDEE+Tahoma,Bold",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    },
+                                    {
+                                        "text_top": 102,
+                                        "text_left": 161,
+                                        "text_width": 628,
+                                        "text_height": 25,
+                                        "text": "Report  of  Standing  Committee  on  Health  and  Family ",
+                                        "font_size": 21,
+                                        "font_family": "ABCDEE+Tahoma,Bold",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "text_top": 127,
+                                "text_left": 161,
+                                "text_width": 89,
+                                "text_height": 25,
+                                "text": "Welfare ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma,Bold",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 1
+                    },
+                    {
+                        "text_top": 164,
+                        "text_left": 108,
+                        "text_width": 681,
+                        "text_height": 103,
+                        "text": " Shri  D.  N.  V.  Senthilkumar  S. laid  on  the  Table  the  117 Report  (Hindi  and  English  versions)  on  the  Allied  and  Healthcare  Professions  Bill, 2018 of the Standing Committee on Health and Family Welfare.  ",
+                        "font_size": 21,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 164,
+                                "text_left": 162,
+                                "text_width": 627,
+                                "text_height": 27,
+                                "text": "Shri  D.  N.  V.  Senthilkumar  S. laid  on  the  Table  the  117 th  Report ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": null,
+                                "children": [
+                                    {
+                                        "text_top": 166,
+                                        "text_left": 162,
+                                        "text_width": 283,
+                                        "text_height": 25,
+                                        "text": "Shri  D.  N.  V.  Senthilkumar  S.",
+                                        "font_size": 21,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    },
+                                    {
+                                        "text_top": 166,
+                                        "text_left": 454,
+                                        "text_width": 248,
+                                        "text_height": 25,
+                                        "text": "laid  on  the  Table  the  117",
+                                        "font_size": 21,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    },
+                                    {
+                                        "text_top": 164,
+                                        "text_left": 702,
+                                        "text_width": 16,
+                                        "text_height": 16,
+                                        "text": "th ",
+                                        "font_size": 13,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": "SUPERSCRIPT"
+                                    },
+                                    {
+                                        "text_top": 166,
+                                        "text_left": 721,
+                                        "text_width": 68,
+                                        "text_height": 25,
+                                        "text": "Report ",
+                                        "font_size": 21,
+                                        "font_family": "ABCDEE+Tahoma",
+                                        "font_color": "#000000",
+                                        "attrib": ""
+                                    }
+                                ]
+                            },
+                            {
+                                "text_top": 204,
+                                "text_left": 108,
+                                "text_width": 681,
+                                "text_height": 25,
+                                "text": "(Hindi  and  English  versions)  on  the  Allied  and  Healthcare  Professions ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 242,
+                                "text_left": 108,
+                                "text_width": 642,
+                                "text_height": 25,
+                                "text": "Bill, 2018 of the Standing Committee on Health and Family Welfare.  ",
+                                "font_size": 21,
+                                "font_family": "ABCDEE+Tahoma",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 2
+                    },
+                    {
+                        "text_top": 331,
+                        "text_left": 108,
+                        "text_width": 101,
+                        "text_height": 22,
+                        "text": "12.52 P.M. ",
+                        "font_size": 18,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": "",
+                        "children": null,
+                        "block_id": 3
+                    },
+                    {
+                        "text_top": 372,
+                        "text_left": 160,
+                        "text_width": 577,
+                        "text_height": 25,
+                        "text": "(Lok Sabha adjourned till 11.00 A.M., Saturday, the 1 st  February, 2020.) ",
+                        "font_size": 18,
+                        "font_family": "ABCDEE+Tahoma",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": null,
+                        "block_id": 4
+                    },
+                    {
+                        "text_top": 440,
+                        "text_left": 480,
+                        "text_width": 280,
+                        "text_height": 44,
+                        "text": "         SNEHLATA SHRIVASTAVA                 Secretary General ",
+                        "font_size": 18,
+                        "font_family": "ABCDEE+Tahoma,Bold",
+                        "font_color": "#000000",
+                        "attrib": null,
+                        "children": [
+                            {
+                                "text_top": 440,
+                                "text_left": 480,
+                                "text_width": 280,
+                                "text_height": 22,
+                                "text": "        SNEHLATA SHRIVASTAVA ",
+                                "font_size": 18,
+                                "font_family": "ABCDEE+Tahoma,Bold",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            },
+                            {
+                                "text_top": 462,
+                                "text_left": 486,
+                                "text_width": 247,
+                                "text_height": 22,
+                                "text": "               Secretary General ",
+                                "font_size": 18,
+                                "font_family": "ABCDEE+Tahoma,Bold",
+                                "font_color": "#000000",
+                                "attrib": "",
+                                "children": null
+                            }
+                        ],
+                        "block_id": 5
+                    }
+                ]
+            }
+        ]
+    }
+
