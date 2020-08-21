@@ -48,6 +48,7 @@ class Preview extends React.Component {
                   top: data.text_top+ "px",
                   border: "1px solid black",
                   borderCollapse: "collapse",
+                  lineHeight: parseInt(sentences.text_height / sentences.children.length) +'px',
                   fontWeight: data.font_family && data.font_family.includes("Bold") && 'bold',
                 }}
               >{data.text}</td>

@@ -16,7 +16,8 @@ class Preview extends React.Component {
             width: sentence.text_width + "px",
             fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && 'bold',
             textAlign: "justify",
-            zIndex: 1
+            zIndex: 1,
+            lineHeight: sentence.children && parseInt(sentence.text_height / sentence.children.length) +'px',
         }
         return (
             <div style={styles} key={sentence.block_id}>
