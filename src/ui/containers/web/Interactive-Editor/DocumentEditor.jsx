@@ -53,6 +53,13 @@ class PdfFileEditor extends React.Component {
     //   }
     // }
 
+    handleOnMouseEnter(sentenceId, parent, pageNo) {
+      this.setState({ hoveredSentence: sentenceId });
+    }
+  
+    handleOnMouseLeave() {
+      this.setState({ hoveredSentence: "" });
+    }
 
   render() {
     let yAxis = 0;
@@ -110,7 +117,9 @@ class PdfFileEditor extends React.Component {
               <SourceView 
                 key={sentence.page_no + "_" + index}
                 sourceSentence={sentence}
-                
+                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                hoveredSentence={this.state.hoveredSentence}
+                pageNo={sentence.page_no}
               />
             );
           })}

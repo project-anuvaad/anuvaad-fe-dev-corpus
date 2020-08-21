@@ -7,6 +7,7 @@ class Preview extends React.Component {
 
     render() {
         const { sentence } = this.props;
+
         var styles = {
             position: "absolute ",
             top: sentence.text_top + "px",
@@ -17,10 +18,14 @@ class Preview extends React.Component {
             fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && 'bold',
             textAlign: "justify",
             zIndex: 1,
-            lineHeight: sentence.children && parseInt(sentence.text_height / sentence.children.length) +'px',
+            lineHeight: sentence.children && parseInt(sentence.text_height / sentence.children.length) + 'px',
+            backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no ? "yellow" : ""
         }
         return (
-            <div style={styles} key={sentence.block_id}>
+            <div style={styles} key={sentence.block_id}
+                onMouseEnter={() => this.props.handleOnMouseEnter(sentence.block_id+ "_" + this.props.page_no)}
+                onMouseLeave={() => this.props.handleOnMouseEnter()}
+            >
                 {sentence.text}
             </div >
         );

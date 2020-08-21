@@ -90,7 +90,7 @@ class Preview extends React.Component {
 
           sentence={sentence}
           yAxis={yAxis}
-          page_no={sourceSentence.blocks.page_no}
+          page_no={this.props.pageNo}
 
         />
       )
@@ -134,7 +134,9 @@ class Preview extends React.Component {
             <BlockView key={index+ "_" +sentence.block_id}
               sentence={sentence}
               yAxis={yAxis}
-              page_no={sourceSentence.text_blocks.page_no}
+              page_no={sourceSentence.page_no}
+              handleOnMouseEnter={this.props.handleOnMouseEnter}
+              hoveredSentence={this.props.hoveredSentence}
             />
           )
         })
