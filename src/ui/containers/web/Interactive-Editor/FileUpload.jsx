@@ -118,12 +118,12 @@ class PdfUpload extends Component {
             </Grid>
 
             <Grid item xs={12} sm={12} lg={12} xl={12}>
-              <Grid container spacing={24} className={classes.grid}>
+              {/* <Grid container spacing={24} className={classes.grid}> */}
                 <Button variant="contained" color="primary" className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
                   {translate("common.page.button.upload")}
                 </Button>
               </Grid>
-            </Grid>
+            {/* </Grid> */}
           </Grid>
 
           {this.state.open && (
