@@ -9,7 +9,7 @@ import SourceView from "./DocumentSource";
 import Data from "./JudgementNew.json";
 import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
-
+import MenuItems from "./PopUp";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 
 import Toolbar from "@material-ui/core/Toolbar";
@@ -19,6 +19,8 @@ import Image from "./Image"
 class Preview extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      openEl:false}
   }
 
   fetchTableContent(sentences) {
@@ -31,7 +33,7 @@ class Preview extends React.Component {
 
     if (sentences && sentences.children && Array.isArray(sentences.children) && sentences.children.length > 0) {
       sentences.children.map((tableData, i) => {
-        console.log(tableData)
+       
         if (tableData.text && Array.isArray(tableData.text) && tableData.text.length > 0) {
           tableData.text.map((data, index) => {
             // console.log(data)
@@ -69,6 +71,8 @@ class Preview extends React.Component {
 
   }
 
+
+
   fetchTable(table, i) {
     return (
       <div>
@@ -96,6 +100,81 @@ class Preview extends React.Component {
       )
     })
   }
+
+  getSelectionText(event, id) {
+    console.log(event,id);
+
+    var text = "";
+    let selection = {};
+    var activeEl = document.activeElement;
+    var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+
+    if (
+      activeElTagName === "textarea" ||
+      (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type) && typeof activeEl.selectionStart === "number")
+    ) {
+      text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
+    } else if (window.getSelection) {
+      text = window.getSelection().toString();
+    }
+
+    let sentences = "";
+    let startNode = "";
+    let endNode = "";
+
+    if (window.getSelection()) {
+      sentences = window.getSelection();
+    }
+    console.log(window.getSelection())
+    if (sentences) {
+      console.log("sel---",window.getSelection().anchorNode);
+      startNode = window.getSelection().anchorNode.parentElement.id;
+      endNode = window.getSelection().focusNode.parentElement.id;
+      console.log("node---",startNode, endNode, this.props.sourceSentence.text_blocks);
+      
+        if (startNode===endNode) {
+          this.setState({operation_type:"split"})
+          this.popUp("split", event);
+        }
+        else if(parseInt(startNode)+1===parseInt(endNode)){
+          
+          this.setState({operation_type:"merge"})
+          this.popUp("merge", event);
+        }
+
+       
+
+        return true;
+      
+    }
+
+    if (selection && selection.startNode && selection.endNode) {
+      this.handleSelection(selection, event);
+    }
+  }
+
+  handleDialog(title, dialogMessage) {
+    this.setState({ openDialog: true, title, dialogMessage, openEl: false });
+  }
+
+  popUp = (operation_type, event, sentenceDetails, selectedText, balanceText) => {
+    this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2 });
+  };
+
+  
+  handleClose = () => {
+    this.setState({
+      openDialog: false,
+
+      operation_type: "",
+
+      endSentence: "",
+      startSentence: "",
+      addSentence: false,
+      selectedMergeSentence: [],
+      openEl: false
+    });
+  };
 
   render() {
     const { sourceSentence } = this.props;
@@ -130,7 +209,10 @@ class Preview extends React.Component {
           yAxis = sentence.text_top + (sourceSentence.page_no * sourceSentence.page_height);
 
           return (
+            <div onMouseUp={this.getSelectionText.bind(this)}
+            onKeyUp={this.getSelectionText.bind(this)}>
 
+            
             <BlockView key={index+ "_" +sentence.block_id}
               sentence={sentence}
               yAxis={yAxis}
@@ -138,15 +220,30 @@ class Preview extends React.Component {
               handleOnMouseEnter={this.props.handleOnMouseEnter}
               hoveredSentence={this.props.hoveredSentence}
             />
+            </div>
           )
         })
         }
+
+{this.state.openEl && (
+                <MenuItems
+                  isOpen={this.state.openEl}
+                  topValue={this.state.topValue}
+                  leftValue={this.state.leftValue}
+                  anchorEl={this.state.anchorEl}
+                  operation_type={this.state.operation_type}
+                  handleClose={this.handleClose.bind(this)}
+                  handleDialog={this.handleDialog.bind(this)}
+                />
+              )}
 
         {
           sourceSentence.images && Array.isArray(sourceSentence.images) && sourceSentence.images.length>0 && sourceSentence.images.map((images, imgIndex) => {
             return (<Image imgObj={images}></Image>)
           })
         }
+
+
       </Paper >
     );
   }
