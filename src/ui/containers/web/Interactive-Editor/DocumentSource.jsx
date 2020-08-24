@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import MenuItems from "./PopUp";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
-
+import Dialog from "../../../components/web/common/SimpleDialog";
 import Toolbar from "@material-ui/core/Toolbar";
 import EditorTable from "./EditorTable"
 import Image from "./Image"
@@ -71,8 +71,13 @@ class Preview extends React.Component {
 
   }
 
-
-
+  handleDialogSave() {
+    if (this.state.title === "Merge" ) {
+      console.log(this.state.title)
+    this.setState({ openDialog: false });
+  }
+  console.log(this.state.title)
+  }
   fetchTable(table, i) {
     return (
       <div>
@@ -224,6 +229,16 @@ class Preview extends React.Component {
           )
         })
         }
+
+{this.state.openDialog && (
+          <Dialog
+            message={this.state.dialogMessage}
+            handleSubmit={this.handleDialogSave.bind(this)}
+            handleClose={this.handleClose.bind(this)}
+            open
+            title={this.state.title}
+          />
+        )}
 
 {this.state.openEl && (
                 <MenuItems
