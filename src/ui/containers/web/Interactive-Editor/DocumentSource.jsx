@@ -79,6 +79,9 @@ class Preview extends React.Component {
     } else if(this.state.title === "duplicate") {
       this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
+    } else if(this.state.title === "create") {
+      this.props.handleCreateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
+      this.setState({ openDialog: false });
     }
   }
   fetchTable(table, i) {
