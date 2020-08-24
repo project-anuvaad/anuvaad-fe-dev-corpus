@@ -52,7 +52,7 @@ class MenuClass extends React.Component {
            Duplicate Block
          </Button>
          <br />
-         <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Delete", "Do you want to delete the sentence ?")}>
+         <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDeleteBlock(startNode, blockText, this.props.pageData)}>
            {" "}
            Delete Block
          </Button>
