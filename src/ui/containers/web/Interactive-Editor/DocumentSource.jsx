@@ -70,8 +70,16 @@ class Preview extends React.Component {
   }
 
   handleDialog() {
-    this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
-    this.setState({ openDialog: false });
+    if(this.state.title === "merge") {
+      this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
+      this.setState({ openDialog: false });
+    } else if(this.state.title === "delete") {
+      this.props.handleDeleteBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
+      this.setState({ openDialog: false });
+    } else if(this.state.title === "duplicate") {
+      this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
+      this.setState({ openDialog: false });
+    }
   }
   fetchTable(table, i) {
     return (
