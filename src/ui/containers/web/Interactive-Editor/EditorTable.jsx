@@ -49,7 +49,6 @@ class EditorTable extends React.Component {
               }}
             >
               {tableData.text.map((textObj, i) => {
-                  console.log(textObj.text_left,tableData.text_left );
                 return (
                     
                   <div

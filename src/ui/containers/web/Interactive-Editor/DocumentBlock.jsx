@@ -22,7 +22,7 @@ class Preview extends React.Component {
             backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no ? "yellow" : ""
         }
         return (
-            <div style={styles} key={sentence.block_id}
+            <div id={sentence.block_id} style={styles} key={sentence.block_id}
                 onMouseEnter={() => this.props.handleOnMouseEnter(sentence.block_id+ "_" + this.props.page_no)}
                 onMouseLeave={() => this.props.handleOnMouseEnter()}
             >

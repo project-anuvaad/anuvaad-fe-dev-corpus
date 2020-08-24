@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./DocumentSource";
-
+import MenuItems from "./PopUp";
 import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import fileUpload from "material-ui/svg-icons/file/file-upload";
@@ -16,8 +16,8 @@ import Toolbar from "@material-ui/core/Toolbar";
   // import Data from "./json/File1506.json";
 // import Data from "./json/File3002.json";
 // import Data from "./json/Judgement.json";
-import Data from "./json/DelhiHC.json";
-// import Data from "./JudgementNew.json";
+// import Data from "./json/DelhiHC.json";
+import Data from "./JudgementNew.json";
 
 class PdfFileEditor extends React.Component {
   constructor(props) {
@@ -60,6 +60,14 @@ class PdfFileEditor extends React.Component {
     handleOnMouseLeave() {
       this.setState({ hoveredSentence: "" });
     }
+
+
+  
+
+  handleDialog(title, dialogMessage) {
+    this.setState({ openDialog: true, title, dialogMessage, openEl: false });
+  }
+ 
 
   render() {
     let yAxis = 0;
@@ -114,13 +122,17 @@ class PdfFileEditor extends React.Component {
             }
 
             return (
+              <div>
               <SourceView 
                 key={sentence.page_no + "_" + index}
                 sourceSentence={sentence}
                 handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                 hoveredSentence={this.state.hoveredSentence}
                 pageNo={sentence.page_no}
+                
               />
+             
+              </div>
             );
           })}
       </div>

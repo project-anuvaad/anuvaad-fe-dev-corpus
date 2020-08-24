@@ -25,6 +25,7 @@ class MenuClass extends React.Component {
         }}
       >
         <div>
+        { this.props.operation_type === "merge" && (
           <Button
             style={{ textTransform: "none", width: "100%", justifyContent: "left" }}
             onClick={() =>
@@ -34,8 +35,28 @@ class MenuClass extends React.Component {
             {" "}
             {this.props.operation_type === "merge" || this.props.operation_type === "merge-individual" ? "Merge" : "Split"}
           </Button>
-          <br />
-        
+          
+        )}
+          { this.props.operation_type === "split" && (
+          <div>
+            <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddSentence()}>
+              {" "}
+              Create Block
+            </Button>
+            <br />
+          
+           <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddSentence()}>
+           {" "}
+           Duplicate Block
+         </Button>
+         <br />
+         <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddSentence()}>
+           {" "}
+           Delete Block
+         </Button>
+         <br />
+       </div>
+        )}
 
         </div>
       </Popover>
