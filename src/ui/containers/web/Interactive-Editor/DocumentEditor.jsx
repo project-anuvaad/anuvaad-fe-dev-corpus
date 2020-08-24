@@ -30,8 +30,7 @@ class PdfFileEditor extends React.Component {
 
       backgroundImage: "",
       pageArr: [],
-      hoveredSentence: "",
-
+      hoveredSentence: ""
     };
   }
 
@@ -65,27 +64,39 @@ class PdfFileEditor extends React.Component {
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
   }
 
-  handleDuplicateBlock(block, blockText, pageData) {
-    console.log(pageData)
-    pageData && pageData.text_blocks && pageData.text_blocks.map((blockData, i) => {
-      console.log(block,'==================', blockData.block_id)
-      if(parseInt(block) === blockData.block_id) {
-        pageData.text_blocks.splice(i+1, 0, blockData);
+  handleDuplicateBlock(block, blockText, page) {
+    var sen = this.state.sentences;
+    var pageData = page;
+    var value;
+    pageData &&
+      pageData.text_blocks &&
+      pageData.text_blocks.map((blockData, i) => {
+        if (parseInt(block) === blockData.block_id) {
+          value = i;
+        }
+      });
+    var a = JSON.parse(JSON.stringify(pageData.text_blocks[value]));
 
-        let height = blockData.text_height
+    pageData.text_blocks.splice(value + 1, 0, a);
 
-        pageData.text_blocks[i+1].text_top = pageData.text_blocks[i].text_top + height
-        
-        console.log('---------------', blockData)
-        console.log('===========', pageData)
+    let arr = [];
+    pageData &&
+      pageData.text_blocks &&
+      pageData.text_blocks.map((blockData, i) => {
+        if (i > value) {
+          blockData.text_top = blockData.text_top + pageData.text_blocks[value].text_height;
+        }
+      });
 
-      }
-    })
+    pageData &&
+      sen.map(sentence => {
+        if (sentence.page_no === pageData.text_blocks.page_no) {
+          sentence = pageData;
+        }
+      });
 
-
-
-
-
+    this.setState({ sentences: sen });
+    this.indexCorrection();
 
     // block = parseInt(block)
     // let blocks = []
@@ -98,7 +109,6 @@ class PdfFileEditor extends React.Component {
     //     parentBlock = data
     //   }
     // })
-    
 
     // pageData && pageData.text_blocks && pageData.text_blocks.map((blockData, i) => {
     //   let addedBlock = blockData
@@ -138,130 +148,116 @@ class PdfFileEditor extends React.Component {
     //       res.push(sentence)
     //     }
     //   })
-    
+
     // }
     // this.setState({sentences: res})
-  
-
+    console.log(this.state.sentences);
   }
 
   handleDeleteBlock(block, blockText, pageData) {
-    let blocks = []
-    let height
-   
-    pageData && pageData.text_blocks && pageData.text_blocks.map(data => {
-      if (data.block_id == block) {
-        height = data.text_height
-      }
-    })
+    let blocks = [];
+    let height;
 
-    pageData && pageData.text_blocks && pageData.text_blocks.map((blockData, i) => {
-      if (blockData.block_id == block) {
-        // blockData.status = "deleted"
-        // blocks.push(blockData)
-        delete pageData.text_blocks[i]
-
-
-      } else {
-        if (blockData.block_id < block) {
-          blocks.push(blockData)
-
-        } else {
-          let blockId = blockData.block_id - 1
-          let blockTop = blockData.text_top - height
-
-          blockData.block_id = blockId
-          blockData.text_top = blockTop
-
-          blocks.push(blockData)
+    pageData &&
+      pageData.text_blocks &&
+      pageData.text_blocks.map(data => {
+        if (data.block_id == block) {
+          height = data.text_height;
         }
-      }
-    })
+      });
 
-    this.indexCorrection()
+    pageData &&
+      pageData.text_blocks &&
+      pageData.text_blocks.map((blockData, i) => {
+        if (blockData.block_id == block) {
+          // blockData.status = "deleted"
+          // blocks.push(blockData)
+          delete pageData.text_blocks[i];
+        } else {
+          if (blockData.block_id < block) {
+            blocks.push(blockData);
+          } else {
+            let blockId = blockData.block_id - 1;
+            let blockTop = blockData.text_top - height;
 
-    let res = []
-    if(this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.length >0 ){
+            blockData.block_id = blockId;
+            blockData.text_top = blockTop;
+
+            blocks.push(blockData);
+          }
+        }
+      });
+
+    this.indexCorrection();
+
+    let res = [];
+    if (this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.length > 0) {
       this.state.sentences.map((sentence, index) => {
-        if(sentence.page_no === pageData.page_no) {
-          sentence.text_blocks = blocks
-          res.push(sentence)
+        if (sentence.page_no === pageData.page_no) {
+          sentence.text_blocks = blocks;
+          res.push(sentence);
         } else {
-          res.push(sentence)
+          res.push(sentence);
         }
-      })
-    
+      });
     }
-    this.setState({sentences: res})
+    this.setState({ sentences: res });
   }
 
-  
-    handleDialogSave(selection, operation_type, pageDetails) {
-
-      if (operation_type === "merge" ) {
-        
-        var sentenceObj = pageDetails.text_blocks;
-        sentenceObj.map((sentence, i)=>{
-          
-          if(sentence.block_id==selection.startNode){
-            
-            if(sentence.text_width<sentenceObj[i+1].text_width){
-              sentenceObj[i+1].text_top=  sentence.text_top
-              sentenceObj[i+1].text = sentence.text+(sentenceObj[i+1].block_id==selection.endNode && sentenceObj[i+1].text)
-              delete sentenceObj[i]
-            }
-            else{
-              sentence.text = sentence.text+(sentenceObj[i+1].block_id==selection.endNode && sentenceObj[i+1].text)
-              delete sentenceObj[i+1]
-            }
-            
-            
-            
+  handleDialogSave(selection, operation_type, pageDetails) {
+    if (operation_type === "merge") {
+      var sentenceObj = pageDetails.text_blocks;
+      sentenceObj.map((sentence, i) => {
+        if (sentence.block_id == selection.startNode) {
+          if (sentence.text_width < sentenceObj[i + 1].text_width) {
+            sentenceObj[i + 1].text_top = sentence.text_top;
+            sentenceObj[i + 1].text = sentence.text + (sentenceObj[i + 1].block_id == selection.endNode && sentenceObj[i + 1].text);
+            delete sentenceObj[i];
+          } else {
+            sentence.text = sentence.text + (sentenceObj[i + 1].block_id == selection.endNode && sentenceObj[i + 1].text);
+            delete sentenceObj[i + 1];
           }
-        })
-      
-      
+        }
+      });
     }
-    var sen = this.state.sentences
-    
-    pageDetails && sen.map(sentence =>{
-      
-      if(sentence.page_no === pageDetails.page_no){
-        sentence.text_blocks = sentenceObj;
-      }
-    })
-    
-    this.setState({sentences:sen})
-    this.indexCorrection()
-    }
-  
+    var sen = this.state.sentences;
 
- indexCorrection=()=>{
-   var sentenceObj = this.state.sentences;
-   sentenceObj.map(sentence=>{
-     
-     sentence.text_blocks.map((value,index)=>{
-      sentence.text_blocks[index].block_id = index
-     })
-   })
-   console.log(sentenceObj)
-   this.setState({sentences:sentenceObj})
- }
- 
+    pageDetails &&
+      sen.map(sentence => {
+        if (sentence.page_no === pageDetails.page_no) {
+          sentence.text_blocks = sentenceObj;
+        }
+      });
+
+    this.setState({ sentences: sen });
+    this.indexCorrection();
+  }
+
+  indexCorrection = () => {
+    var sentenceObj = this.state.sentences;
+    sentenceObj.map(sentence => {
+      sentence.text_blocks.map((value, index) => {
+        sentence.text_blocks[index].block_id = index;
+      });
+    });
+    console.log(sentenceObj);
+    this.setState({ sentences: sentenceObj });
+  };
 
   render() {
     let yAxis = 0;
     let leftPaddingValue = 0;
     let rightPaddingValue = 0;
-    
-    this.state.sentences && this.state.sentences.map(sentence => {
-      if (leftPaddingValue > parseInt(sentence.x) || leftPaddingValue == 0) {
-        leftPaddingValue = parseInt(sentence.x);
-      }
-      if ((sentence.width && rightPaddingValue < parseInt(sentence.width) + parseInt(sentence.x)) || (sentence.width && rightPaddingValue == 0)) {
-        rightPaddingValue = parseInt(sentence.width) + parseInt(sentence.x);
-      }
-    });
+
+    this.state.sentences &&
+      this.state.sentences.map(sentence => {
+        if (leftPaddingValue > parseInt(sentence.x) || leftPaddingValue == 0) {
+          leftPaddingValue = parseInt(sentence.x);
+        }
+        if ((sentence.width && rightPaddingValue < parseInt(sentence.width) + parseInt(sentence.x)) || (sentence.width && rightPaddingValue == 0)) {
+          rightPaddingValue = parseInt(sentence.width) + parseInt(sentence.x);
+        }
+      });
     // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
     let paperWidth = this.state.sentences && this.state.sentences[0].page_width - leftPaddingValue - 78 + "px";
 
@@ -283,7 +279,6 @@ class PdfFileEditor extends React.Component {
 
     let pageDividerHeight = "0";
     return (
-
       <div>
         {this.state.sentences &&
           this.state.sentences.map((sentence, index) => {
@@ -304,17 +299,16 @@ class PdfFileEditor extends React.Component {
 
             return (
               <div>
-              <SourceView 
-                key={sentence.page_no + "_" + index}
-                sourceSentence={sentence}
-                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                hoveredSentence={this.state.hoveredSentence}
-                pageNo={sentence.page_no}
-                handleDialogSave = {this.handleDialogSave.bind(this)}
-                handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
-                handleDeleteBlock={this.handleDeleteBlock.bind(this)}
-              />
-             
+                <SourceView
+                  key={sentence.page_no + "_" + index}
+                  sourceSentence={sentence}
+                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                  hoveredSentence={this.state.hoveredSentence}
+                  pageNo={sentence.page_no}
+                  handleDialogSave={this.handleDialogSave.bind(this)}
+                  handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
+                  handleDeleteBlock={this.handleDeleteBlock.bind(this)}
+                />
               </div>
             );
           })}
@@ -325,7 +319,7 @@ class PdfFileEditor extends React.Component {
 
 const mapStateToProps = state => ({
   fetchPdfSentence: state.fetchPdfSentence,
-  fileUpload: state.fileUpload,
+  fileUpload: state.fileUpload
 });
 
 const mapDispatchToProps = dispatch =>

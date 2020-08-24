@@ -70,6 +70,7 @@ class Preview extends React.Component {
   }
 
   handleDialog() {
+    
     this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
     this.setState({ openDialog: false });
   }
