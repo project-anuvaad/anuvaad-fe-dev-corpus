@@ -66,58 +66,81 @@ class PdfFileEditor extends React.Component {
   }
 
   handleDuplicateBlock(block, blockText, pageData) {
-    block = parseInt(block)
-    let blocks = []
-
-    let top
-    let parentBlock = {}
-    pageData && pageData.text_blocks && pageData.text_blocks.map(data => {
-      if (data.block_id == block) {
-        top = data.text_height
-        parentBlock = data
-      }
-    })
-    
-
+    console.log(pageData)
     pageData && pageData.text_blocks && pageData.text_blocks.map((blockData, i) => {
-      let addedBlock = blockData
-      let blockId = blockData.block_id + 1
-      let blockTop = blockData.text_top + top
+      console.log(block,'==================', blockData.block_id)
+      if(parseInt(block) === blockData.block_id) {
+        pageData.text_blocks.splice(i+1, 0, blockData);
 
-      if (blockData.block_id == block) {
-        addedBlock.block_id = blockId
-        addedBlock.text_top = blockTop
+        let height = blockData.text_height
 
-        blocks.push(parentBlock)
-        blocks.push(addedBlock)
-      } else {
-        if (blockData.block_id < block) {
-          blocks.push(blockData)
-        } else {
-          console.log(blockData)
+        pageData.text_blocks[i+1].text_top = pageData.text_blocks[i].text_top + height
+        
+        console.log('---------------', blockData)
+        console.log('===========', pageData)
 
-          blockData.block_id = blockId
-          blockData.text_top = blockTop
-
-          blocks.push(blockData)
-        }
       }
     })
-    let doc = []
 
-    let res = []
-    if(this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.length >0 ){
-      this.state.sentences.map((sentence, index) => {
-        if(sentence.page_no === pageData.page_no) {
-          sentence.text_blocks = blocks
-          res.push(sentence)
-        } else {
-          res.push(sentence)
-        }
-      })
+
+
+
+
+
+    // block = parseInt(block)
+    // let blocks = []
+
+    // let top
+    // let parentBlock = {}
+    // pageData && pageData.text_blocks && pageData.text_blocks.map(data => {
+    //   if (data.block_id == block) {
+    //     top = data.text_height
+    //     parentBlock = data
+    //   }
+    // })
     
-    }
-    this.setState({sentences: res})
+
+    // pageData && pageData.text_blocks && pageData.text_blocks.map((blockData, i) => {
+    //   let addedBlock = blockData
+    //   let blockId = blockData.block_id + 1
+    //   let blockTop = blockData.text_top + top
+
+    //   if (blockData.block_id == block) {
+    //     addedBlock.block_id = blockId
+    //     addedBlock.text_top = blockTop
+
+    //     blocks.push(parentBlock)
+    //     blocks.push(addedBlock)
+
+    //     debugger
+    //   } else {
+    //     if (blockData.block_id < block) {
+    //       blocks.push(blockData)
+    //     } else {
+    //       console.log(blockData)
+
+    //       blockData.block_id = blockId
+    //       blockData.text_top = blockTop
+
+    //       blocks.push(blockData)
+    //     }
+    //   }
+    // })
+    // let doc = []
+
+    // let res = []
+    // if(this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.length >0 ){
+    //   this.state.sentences.map((sentence, index) => {
+    //     if(sentence.page_no === pageData.page_no) {
+    //       sentence.text_blocks = blocks
+    //       res.push(sentence)
+    //     } else {
+    //       res.push(sentence)
+    //     }
+    //   })
+    
+    // }
+    // this.setState({sentences: res})
   
 
   }
@@ -138,12 +161,12 @@ class PdfFileEditor extends React.Component {
         // blocks.push(blockData)
         delete pageData.text_blocks[i]
 
+
       } else {
         if (blockData.block_id < block) {
           blocks.push(blockData)
 
         } else {
-          console.log(blockData)
           let blockId = blockData.block_id - 1
           let blockTop = blockData.text_top - height
 
@@ -154,6 +177,8 @@ class PdfFileEditor extends React.Component {
         }
       }
     })
+
+    this.indexCorrection()
 
     let res = []
     if(this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.length >0 ){

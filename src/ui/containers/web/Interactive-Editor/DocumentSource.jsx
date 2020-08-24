@@ -211,8 +211,7 @@ class Preview extends React.Component {
                   page_no={sourceSentence.page_no}
                   handleOnMouseEnter={this.props.handleOnMouseEnter}
                   hoveredSentence={this.props.hoveredSentence}
-                  handleDuplicateBlock={this.props.handleDuplicateBlock}
-                  handleDeleteBlock={this.props.handleDeleteBlock}
+                 
                 />
               </div>
             );
@@ -237,6 +236,9 @@ class Preview extends React.Component {
             operation_type={this.state.operation_type}
             handleClose={this.handleClose.bind(this)}
             handleDialog={this.handleDialogMessage.bind(this)}
+            handleDuplicateBlock={this.props.handleDuplicateBlock}
+            handleDeleteBlock={this.props.handleDeleteBlock}
+            pageData={this.props.sourceSentence}
           />
         )}
 
