@@ -170,6 +170,60 @@ class PdfFileEditor extends React.Component {
     this.setState({sentences: res})
   }
 
+  
+    handleDialogSave(selection, operation_type, pageDetails) {
+
+      if (operation_type === "merge" ) {
+        
+        var sentenceObj = pageDetails.text_blocks;
+        sentenceObj.map((sentence, i)=>{
+          
+          if(sentence.block_id==selection.startNode){
+            
+            if(sentence.text_width<sentenceObj[i+1].text_width){
+              sentenceObj[i+1].text_top=  sentence.text_top
+              sentenceObj[i+1].text = sentence.text+(sentenceObj[i+1].block_id==selection.endNode && sentenceObj[i+1].text)
+              delete sentenceObj[i]
+            }
+            else{
+              sentence.text = sentence.text+(sentenceObj[i+1].block_id==selection.endNode && sentenceObj[i+1].text)
+              delete sentenceObj[i+1]
+            }
+            
+            
+            
+          }
+        })
+      
+      
+    }
+    var sen = this.state.sentences
+    
+    pageDetails && sen.map(sentence =>{
+      
+      if(sentence.page_no === pageDetails.page_no){
+        sentence.text_blocks = sentenceObj;
+      }
+    })
+    
+    this.setState({sentences:sen})
+    this.indexCorrection()
+    }
+  
+
+ indexCorrection=()=>{
+   var sentenceObj = this.state.sentences;
+   sentenceObj.map(sentence=>{
+     
+     sentence.text_blocks.map((value,index)=>{
+      sentence.text_blocks[index].block_id = index
+     })
+   })
+   console.log(sentenceObj)
+   this.setState({sentences:sentenceObj})
+ }
+ 
+
   render() {
     let yAxis = 0;
     let leftPaddingValue = 0;
@@ -225,16 +279,17 @@ class PdfFileEditor extends React.Component {
 
             return (
               <div>
-                <SourceView
-                  key={sentence.page_no + "_" + index}
-                  sourceSentence={sentence}
-                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                  hoveredSentence={this.state.hoveredSentence}
-                  pageNo={sentence.page_no}
-                  handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
-                  handleDeleteBlock={this.handleDeleteBlock.bind(this)}
-                />
-
+              <SourceView 
+                key={sentence.page_no + "_" + index}
+                sourceSentence={sentence}
+                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                hoveredSentence={this.state.hoveredSentence}
+                pageNo={sentence.page_no}
+                handleDialogSave = {this.handleDialogSave.bind(this)}
+                handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
+                handleDeleteBlock={this.handleDeleteBlock.bind(this)}
+              />
+             
               </div>
             );
           })}
