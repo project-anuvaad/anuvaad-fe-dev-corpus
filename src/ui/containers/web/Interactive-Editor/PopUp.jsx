@@ -7,8 +7,6 @@ class MenuClass extends React.Component {
   render() {
 
     const { topValue, leftValue, isOpen } = this.props;
-      let startNode = window.getSelection().anchorNode.parentElement.id;
-      let blockText = window.getSelection().anchorNode.parentElement.textContent
     return (
       <Popover
         id="menu-appbar"
@@ -41,18 +39,18 @@ class MenuClass extends React.Component {
         )}
           { this.props.operation_type === "split" && (
           <div>
-            <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleAddSentence()}>
+            <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "addBlock", "Do you want to add the sentence ?")}>
               {" "}
               Create Block
             </Button>
             <br />
           
-           <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDuplicateBlock(startNode, blockText, this.props.pageData)}>
+           <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "duplicate", "Do you want to duplicate the sentence ?")}>
            {" "}
            Duplicate Block
          </Button>
          <br />
-         <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDeleteBlock(startNode, blockText, this.props.pageData)}>
+         <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "delete", "Do you want to delete the sentence ?")}>
            {" "}
            Delete Block
          </Button>
