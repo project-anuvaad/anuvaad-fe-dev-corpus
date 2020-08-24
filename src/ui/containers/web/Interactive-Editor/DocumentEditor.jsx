@@ -64,6 +64,47 @@ class PdfFileEditor extends React.Component {
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
   }
 
+
+  handleCreateBlock(block, blockText, page) {
+    var sen = this.state.sentences;
+    var pageData = page;
+    var value;
+    pageData &&
+      pageData.text_blocks &&
+      pageData.text_blocks.map((blockData, i) => {
+        if (parseInt(block) === blockData.block_id) {
+          value = i;
+        }
+      });
+    var a = JSON.parse(JSON.stringify(pageData.text_blocks[value]));
+
+    pageData.text_blocks.splice(value + 1, 0, a);
+
+    let arr = [];
+    pageData &&
+      pageData.text_blocks &&
+      pageData.text_blocks.map((blockData, i) => {
+        if (i > value) {
+          blockData.text_top = blockData.text_top + pageData.text_blocks[value].text_height;
+        }
+        if(i==value){
+          blockData.page_width = page.page_width;
+          blockData.text = "";
+        }
+      });
+
+    pageData &&
+      sen.map(sentence => {
+        if (sentence.page_no === pageData.text_blocks.page_no) {
+          sentence = pageData;
+        }
+      });
+
+    this.setState({ sentences: sen });
+    this.indexCorrection();
+    console.log(this.state.sentences);
+  }
+
   handleDuplicateBlock(block, blockText, page) {
     var sen = this.state.sentences;
     var pageData = page;
