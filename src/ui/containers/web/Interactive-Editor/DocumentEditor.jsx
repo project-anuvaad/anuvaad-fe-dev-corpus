@@ -13,7 +13,7 @@ import fileUpload from "material-ui/svg-icons/file/file-upload";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 import FileUpload from "../../../../flux/actions/apis/fileupload";
 import Toolbar from "@material-ui/core/Toolbar";
-  // import Data from "./json/File1506.json";
+// import Data from "./json/File1506.json";
 // import Data from "./json/File3002.json";
 // import Data from "./json/Judgement.json";
 // import Data from "./json/DelhiHC.json";
@@ -27,53 +27,155 @@ class PdfFileEditor extends React.Component {
       sourceSupScripts: "",
       targetSupScripts: "",
       header: "",
-      
+
       backgroundImage: "",
       pageArr: [],
       hoveredSentence: "",
-      
+
     };
   }
 
-    // componentDidMount() {
+  // componentDidMount() {
 
-    //   console.log
-    //   const apiObj = new FileUpload(this.props.match.params.fileid);
-    //   this.props.APITransport(apiObj);
-    // }
+  //   console.log
+  //   const apiObj = new FileUpload(this.props.match.params.fileid);
+  //   this.props.APITransport(apiObj);
+  // }
 
-    // componentDidUpdate(prevProps) {
-    //     if (prevProps.fileUpload !== this.props.fileUpload) {
-    //         console.log(this.props.fileUpload)
-    //     const temp = this.props.fileUpload.result;
+  // componentDidUpdate(prevProps) {
+  //     if (prevProps.fileUpload !== this.props.fileUpload) {
+  //         console.log(this.props.fileUpload)
+  //     const temp = this.props.fileUpload.result;
 
-    //     this.setState({
-    //       sentences: temp
-    //     });
-    //   }
-    // }
+  //     this.setState({
+  //       sentences: temp
+  //     });
+  //   }
+  // }
 
-    handleOnMouseEnter(sentenceId, parent, pageNo) {
-      this.setState({ hoveredSentence: sentenceId });
-    }
-  
-    handleOnMouseLeave() {
-      this.setState({ hoveredSentence: "" });
-    }
+  handleOnMouseEnter(sentenceId, parent, pageNo) {
+    this.setState({ hoveredSentence: sentenceId });
+  }
 
-
-  
+  handleOnMouseLeave() {
+    this.setState({ hoveredSentence: "" });
+  }
 
   handleDialog(title, dialogMessage) {
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
   }
- 
+
+  handleDuplicateBlock(block, blockText, pageData) {
+    block = parseInt(block)
+    let blocks = []
+
+    let top
+    let parentBlock = {}
+    pageData && pageData.text_blocks && pageData.text_blocks.map(data => {
+      if (data.block_id == block) {
+        top = data.text_height
+        parentBlock = data
+      }
+    })
+    
+
+    pageData && pageData.text_blocks && pageData.text_blocks.map((blockData, i) => {
+      let addedBlock = blockData
+      let blockId = blockData.block_id + 1
+      let blockTop = blockData.text_top + top
+
+      if (blockData.block_id == block) {
+        addedBlock.block_id = blockId
+        addedBlock.text_top = blockTop
+
+        blocks.push(parentBlock)
+        blocks.push(addedBlock)
+      } else {
+        if (blockData.block_id < block) {
+          blocks.push(blockData)
+        } else {
+          console.log(blockData)
+
+          blockData.block_id = blockId
+          blockData.text_top = blockTop
+
+          blocks.push(blockData)
+        }
+      }
+    })
+    let doc = []
+
+    let res = []
+    if(this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.length >0 ){
+      this.state.sentences.map((sentence, index) => {
+        if(sentence.page_no === pageData.page_no) {
+          sentence.text_blocks = blocks
+          res.push(sentence)
+        } else {
+          res.push(sentence)
+        }
+      })
+    
+    }
+    this.setState({sentences: res})
+  
+
+  }
+
+  handleDeleteBlock(block, blockText, pageData) {
+    let blocks = []
+    let height
+   
+    pageData && pageData.text_blocks && pageData.text_blocks.map(data => {
+      if (data.block_id == block) {
+        height = data.text_height
+      }
+    })
+
+    pageData && pageData.text_blocks && pageData.text_blocks.map((blockData, i) => {
+      if (blockData.block_id == block) {
+        // blockData.status = "deleted"
+        // blocks.push(blockData)
+        delete pageData.text_blocks[i]
+
+      } else {
+        if (blockData.block_id < block) {
+          blocks.push(blockData)
+
+        } else {
+          console.log(blockData)
+          let blockId = blockData.block_id - 1
+          let blockTop = blockData.text_top - height
+
+          blockData.block_id = blockId
+          blockData.text_top = blockTop
+
+          blocks.push(blockData)
+        }
+      }
+    })
+
+    let res = []
+    if(this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.length >0 ){
+      this.state.sentences.map((sentence, index) => {
+        if(sentence.page_no === pageData.page_no) {
+          sentence.text_blocks = blocks
+          res.push(sentence)
+        } else {
+          res.push(sentence)
+        }
+      })
+    
+    }
+    this.setState({sentences: res})
+  }
 
   render() {
     let yAxis = 0;
     let leftPaddingValue = 0;
     let rightPaddingValue = 0;
-    this.state.sentences&& this.state.sentences.map(sentence => {
+    
+    this.state.sentences && this.state.sentences.map(sentence => {
       if (leftPaddingValue > parseInt(sentence.x) || leftPaddingValue == 0) {
         leftPaddingValue = parseInt(sentence.x);
       }
@@ -102,8 +204,8 @@ class PdfFileEditor extends React.Component {
 
     let pageDividerHeight = "0";
     return (
-      
-        <div>
+
+      <div>
         {this.state.sentences &&
           this.state.sentences.map((sentence, index) => {
             yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
@@ -123,15 +225,16 @@ class PdfFileEditor extends React.Component {
 
             return (
               <div>
-              <SourceView 
-                key={sentence.page_no + "_" + index}
-                sourceSentence={sentence}
-                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                hoveredSentence={this.state.hoveredSentence}
-                pageNo={sentence.page_no}
-                
-              />
-             
+                <SourceView
+                  key={sentence.page_no + "_" + index}
+                  sourceSentence={sentence}
+                  handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                  hoveredSentence={this.state.hoveredSentence}
+                  pageNo={sentence.page_no}
+                  handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
+                  handleDeleteBlock={this.handleDeleteBlock.bind(this)}
+                />
+
               </div>
             );
           })}

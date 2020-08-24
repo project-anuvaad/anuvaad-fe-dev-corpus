@@ -20,7 +20,8 @@ class Preview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openEl:false}
+      openEl: false
+    }
   }
 
   fetchTableContent(sentences) {
@@ -33,7 +34,7 @@ class Preview extends React.Component {
 
     if (sentences && sentences.children && Array.isArray(sentences.children) && sentences.children.length > 0) {
       sentences.children.map((tableData, i) => {
-       
+
         if (tableData.text && Array.isArray(tableData.text) && tableData.text.length > 0) {
           tableData.text.map((data, index) => {
             // console.log(data)
@@ -47,10 +48,10 @@ class Preview extends React.Component {
                   width: tableData.text_width + "px",
                   // width: data.text_width + "px",
                   left: data.text_left + "px",
-                  top: data.text_top+ "px",
+                  top: data.text_top + "px",
                   border: "1px solid black",
                   borderCollapse: "collapse",
-                  lineHeight: parseInt(sentences.text_height / sentences.children.length) +'px',
+                  lineHeight: parseInt(sentences.text_height / sentences.children.length) + 'px',
                   fontWeight: data.font_family && data.font_family.includes("Bold") && 'bold',
                 }}
               >{data.text}</td>
@@ -102,8 +103,6 @@ class Preview extends React.Component {
   }
 
   getSelectionText(event, id) {
-    console.log(event,id);
-
     var text = "";
     let selection = {};
     var activeEl = document.activeElement;
@@ -127,25 +126,23 @@ class Preview extends React.Component {
     }
     console.log(window.getSelection())
     if (sentences) {
-      console.log("sel---",window.getSelection().anchorNode);
       startNode = window.getSelection().anchorNode.parentElement.id;
       endNode = window.getSelection().focusNode.parentElement.id;
-      console.log("node---",startNode, endNode, this.props.sourceSentence.text_blocks);
-      
-        if (startNode===endNode) {
-          this.setState({operation_type:"split"})
-          this.popUp("split", event);
-        }
-        else if(parseInt(startNode)+1===parseInt(endNode)){
-          
-          this.setState({operation_type:"merge"})
-          this.popUp("merge", event);
-        }
 
-       
+      if (startNode === endNode) {
+        this.setState({ operation_type: "split" })
+        this.popUp("split", event);
+      }
+      else if (parseInt(startNode) + 1 === parseInt(endNode)) {
 
-        return true;
-      
+        this.setState({ operation_type: "merge" })
+        this.popUp("merge", event);
+      }
+
+
+
+      return true;
+
     }
 
     if (selection && selection.startNode && selection.endNode) {
@@ -161,7 +158,7 @@ class Preview extends React.Component {
     this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2 });
   };
 
-  
+
   handleClose = () => {
     this.setState({
       openDialog: false,
@@ -210,35 +207,37 @@ class Preview extends React.Component {
 
           return (
             <div onMouseUp={this.getSelectionText.bind(this)}
-            onKeyUp={this.getSelectionText.bind(this)}>
+              onKeyUp={this.getSelectionText.bind(this)}>
 
-            
-            <BlockView key={index+ "_" +sentence.block_id}
-              sentence={sentence}
-              yAxis={yAxis}
-              page_no={sourceSentence.page_no}
-              handleOnMouseEnter={this.props.handleOnMouseEnter}
-              hoveredSentence={this.props.hoveredSentence}
-            />
+              <BlockView key={index + "_" + sentence.block_id}
+                sentence={sentence}
+                yAxis={yAxis}
+                page_no={sourceSentence.page_no}
+                handleOnMouseEnter={this.props.handleOnMouseEnter}
+                hoveredSentence={this.props.hoveredSentence}
+              />
             </div>
           )
         })
         }
 
-{this.state.openEl && (
-                <MenuItems
-                  isOpen={this.state.openEl}
-                  topValue={this.state.topValue}
-                  leftValue={this.state.leftValue}
-                  anchorEl={this.state.anchorEl}
-                  operation_type={this.state.operation_type}
-                  handleClose={this.handleClose.bind(this)}
-                  handleDialog={this.handleDialog.bind(this)}
-                />
-              )}
+        {this.state.openEl && (
+          <MenuItems
+            isOpen={this.state.openEl}
+            topValue={this.state.topValue}
+            leftValue={this.state.leftValue}
+            anchorEl={this.state.anchorEl}
+            operation_type={this.state.operation_type}
+            pageData={this.props.sourceSentence}
+            handleClose={this.handleClose.bind(this)}
+            handleDialog={this.handleDialog.bind(this)}
+            handleDuplicateBlock={this.props.handleDuplicateBlock}
+            handleDeleteBlock={this.props.handleDeleteBlock}
+          />
+        )}
 
         {
-          sourceSentence.images && Array.isArray(sourceSentence.images) && sourceSentence.images.length>0 && sourceSentence.images.map((images, imgIndex) => {
+          sourceSentence.images && Array.isArray(sourceSentence.images) && sourceSentence.images.length > 0 && sourceSentence.images.map((images, imgIndex) => {
             return (<Image imgObj={images}></Image>)
           })
         }
