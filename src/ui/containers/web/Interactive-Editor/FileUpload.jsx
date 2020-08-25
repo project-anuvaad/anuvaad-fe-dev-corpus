@@ -44,6 +44,13 @@ class PdfUpload extends Component {
       alert("Field should not be empty!");
     }
   }
+  handleBack = () => {
+  
+      history.push(`${process.env.PUBLIC_URL}/view-document`)
+    
+
+
+  }
 
   componentDidUpdate(prevProps) {
     if (prevProps.configUplaod !== this.props.configUplaod) {
@@ -112,19 +119,24 @@ class PdfUpload extends Component {
                 onChange={this.handleChange.bind(this)}
                 filesLimit={1}
                 maxFileSize={20000000}
-                dropzoneText={translate("common.page.label.addDropFile")}
+                dropzoneText={translate("common.page.label.addDropDocument")}
                 onDelete={this.handleDelete.bind(this)}
               />
             </Grid>
 
-            <Grid item xs={12} sm={12} lg={12} xl={12}>
-              <Grid container spacing={24} className={classes.grid}>
-                <Button variant="contained" color="primary" className={classes.button} size="large" onClick={this.handleSubmit.bind(this)}>
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+              
+                <Button variant="contained" color="primary" className={classes.button1} size="large" onClick={this.handleSubmit.bind(this)}>
                   {translate("common.page.button.upload")}
+                </Button>
+                </Grid>
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+                <Button variant="contained" color="primary" className={classes.button2} size="large" onClick={this.handleBack.bind(this)}>
+                  {translate("common.page.button.back")}
                 </Button>
               </Grid>
             </Grid>
-          </Grid>
+          
 
           {this.state.open && (
             <Snackbar

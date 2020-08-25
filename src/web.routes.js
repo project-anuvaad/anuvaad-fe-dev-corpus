@@ -86,6 +86,7 @@ import pdfFileEditor from './ui/containers/web/Interactive-Editor/PdfFileEditor'
 import InteractivePdfFile from './ui/containers/web/Interactive-Editor/InteractivePdfFile';
 import DocumentEditor from './ui/containers/web/Interactive-Editor/DocumentEditor';
 import FileUpload from './ui/containers/web/Interactive-Editor/FileUpload';
+import ViewDocument from './ui/containers/web/ViewDocument';
 
 
 
@@ -314,7 +315,7 @@ class AppRoutes extends React.Component {
             />
 
 <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/pdf-file-upload`}
+              path={`${process.env.PUBLIC_URL}/document-upload`}
               userRoles={["editor", "dev", "grader", "interactive-editor"]}
               component={FileUpload}
               title={translate('dashboard.page.heading.title')}
@@ -824,6 +825,14 @@ class AppRoutes extends React.Component {
               component={pdfFileEditor}
               authenticate={this.authenticateUser}
               currentMenu="view-pdf"
+            />
+            <PrivateRoute
+              path={`${process.env.PUBLIC_URL}/view-document`}
+              title={translate('webroutes.page.title.anuvaadEditor')}
+              userRoles={["editor", "dev", "grader", "interactive-editor"]}
+              component={ViewDocument}
+              authenticate={this.authenticateUser}
+              currentMenu="view-document"
             />
             <PrivateRoute path={`${process.env.PUBLIC_URL}/*`} component={NotFound} authenticate={this.authenticateUser} />
           </Switch>

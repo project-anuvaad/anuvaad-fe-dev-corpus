@@ -63,15 +63,31 @@ const PdfUploadStyles = theme => ({
   button: {
     marginTop: "6%",
     marginLeft: "2.7%",
-    width: "87.6%",
+    width: "50%",
+    backgroundColor:'#1C9AB7',
+    borderRadius:"20px 20px 20px 20px",
+    color:"#FFFFFF"
+  },
+  button1: {
+    marginTop: "6%",
+    
+    width: "90%",
+    backgroundColor:'#1C9AB7',
+    borderRadius:"20px 20px 20px 20px",
+    color:"#FFFFFF"
+  },
+  button2: {
+    marginTop: "6%",
+    marginLeft: "6.2%",
+    width: "90%",
     backgroundColor:'#1C9AB7',
     borderRadius:"20px 20px 20px 20px",
     color:"#FFFFFF"
   },
   dropZoneArea:{
-    paddingTop: '18%',
+    paddingTop: '15%',
     minHeight:'363px',
-    height: "447px",
+    height: "400px",
     borderColor:'#1C9AB7',
     backgroundColor: '#F5F9FA',
     border: '1px dashed #1C9AB7',

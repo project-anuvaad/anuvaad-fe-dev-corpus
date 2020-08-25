@@ -62,7 +62,8 @@ const endpoints = {
   savesearchreplaceworkspace: "/save-search-replace-workspace",
   savetool2datasource: "/save-paragraph-workspace-data",
   sentencereplace: "/update-search-replace-sentence",
-  setpassword: "/set-user-password"
+  setpassword: "/set-user-password",
+  viewdocument:"/view-document",
 };
 
 export default endpoints;
