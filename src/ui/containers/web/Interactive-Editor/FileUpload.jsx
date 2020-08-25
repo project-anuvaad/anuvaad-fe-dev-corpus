@@ -45,16 +45,16 @@ class PdfUpload extends Component {
     }
   }
   handleBack = () => {
-  
-      history.push(`${process.env.PUBLIC_URL}/view-document`)
-    
+
+    history.push(`${process.env.PUBLIC_URL}/view-document`)
+
 
 
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.configUplaod !== this.props.configUplaod) {
-      
+
       history.push(`${process.env.PUBLIC_URL}/interactive-document/${this.props.configUplaod.configUplaod}`);
     }
     if (prevProps.fileUpload !== this.props.fileUpload) {
@@ -123,20 +123,20 @@ class PdfUpload extends Component {
                 onDelete={this.handleDelete.bind(this)}
               />
             </Grid>
-
             <Grid item xs={6} sm={6} lg={6} xl={6}>
-              
-                <Button variant="contained" color="primary" className={classes.button1} size="large" onClick={this.handleSubmit.bind(this)}>
-                  {translate("common.page.button.upload")}
-                </Button>
-                </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <Button variant="contained" color="primary" className={classes.button2} size="large" onClick={this.handleBack.bind(this)}>
-                  {translate("common.page.button.back")}
-                </Button>
-              </Grid>
+              <Button variant="contained" color="primary" className={classes.button1} size="large" onClick={this.handleBack.bind(this)}>
+                {translate("common.page.button.back")}
+              </Button>
             </Grid>
-          
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+
+              <Button variant="contained" color="primary" className={classes.button2} size="large" onClick={this.handleSubmit.bind(this)}>
+                {translate("common.page.button.upload")}
+              </Button>
+            </Grid>
+
+          </Grid>
+
 
           {this.state.open && (
             <Snackbar
