@@ -16,7 +16,7 @@ const PdfUploadStyles = theme => ({
     display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center'
   },
   typographyHeader:{
-    paddingTop:'3%',
+    paddingTop:'1%',
     minWidth: "5%",
    
     

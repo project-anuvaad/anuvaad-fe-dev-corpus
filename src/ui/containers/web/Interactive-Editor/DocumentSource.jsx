@@ -9,20 +9,22 @@ import SourceView from "./DocumentSource";
 import Data from "./JudgementNew.json";
 import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
-
+import MenuItems from "./PopUp";
 import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
-
+import Dialog from "../../../components/web/common/SimpleDialog";
 import Toolbar from "@material-ui/core/Toolbar";
-import EditorTable from "./EditorTable"
-import Image from "./Image"
+import EditorTable from "./EditorTable";
+import Image from "./Image";
 
 class Preview extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      openEl: false
+    };
   }
 
   fetchTableContent(sentences) {
-
     let tableRow = [];
     let index = 0;
 
@@ -31,7 +33,6 @@ class Preview extends React.Component {
 
     if (sentences && sentences.children && Array.isArray(sentences.children) && sentences.children.length > 0) {
       sentences.children.map((tableData, i) => {
-        console.log(tableData)
         if (tableData.text && Array.isArray(tableData.text) && tableData.text.length > 0) {
           tableData.text.map((data, index) => {
             // console.log(data)
@@ -45,57 +46,141 @@ class Preview extends React.Component {
                   width: tableData.text_width + "px",
                   // width: data.text_width + "px",
                   left: data.text_left + "px",
-                  top: data.text_top+ "px",
+                  top: data.text_top + "px",
                   border: "1px solid black",
                   borderCollapse: "collapse",
-                  lineHeight: parseInt(sentences.text_height / sentences.children.length) +'px',
+                  lineHeight: parseInt(sentences.text_height / sentences.children.length) + 'px',
                   fontWeight: data.font_family && data.font_family.includes("Bold") && 'bold',
                 }}
-              >{data.text}</td>
-            )
-
-          })
+              >
+                {data.text}
+              </td>
+            );
+          });
         }
-
-      })
+      });
     }
 
     if (col && col.length > 0) {
-      tableRow.push(<tr>{col}</tr>)
+      tableRow.push(<tr>{col}</tr>);
     }
     index++;
 
-    return tableRow
-
+    return tableRow;
   }
 
+  handleDialog() {
+
+    if(this.state.title === "Merge") {
+     
+      this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
+      this.setState({ openDialog: false });
+    } else if(this.state.title === "Delete") {
+      this.props.handleDeleteBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
+      this.setState({ openDialog: false });
+    } else if(this.state.title === "Duplicate") {
+      this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
+      this.setState({ openDialog: false });
+    } else if(this.state.title === "Create") {
+      this.props.handleCreateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
+      this.setState({ openDialog: false });
+    }
+  }
   fetchTable(table, i) {
     return (
       <div>
-        <table style={{ border: "1px solid black", borderCollapse: "collapse", position: "absolute", top: table.text_top + "px", left: table.text_left + "px", width: table.text_width + "px" }}>
+        <table
+          style={{
+            border: "1px solid black",
+            borderCollapse: "collapse",
+            position: "absolute",
+            top: table.text_top + "px",
+            left: table.text_left + "px",
+            width: table.text_width + "px"
+          }}
+        >
           <tbody>{this.fetchTableContent(table)}</tbody>
         </table>
       </div>
-    )
+    );
   }
 
   fetchSentence(sourceSentence) {
     let yAxis = 0;
 
     sourceSentence.blocks.map((sentence, index) => {
-      yAxis = sentence.text_top + (sourceSentence.page_no * sourceSentence.page_height);
+      yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
 
-      return (
-        <BlockView
-
-          sentence={sentence}
-          yAxis={yAxis}
-          page_no={this.props.pageNo}
-
-        />
-      )
-    })
+      return sentence.status !== "Deleted" && <BlockView sentence={sentence} yAxis={yAxis} page_no={this.props.pageNo} />;
+    });
   }
+
+  getSelectionText(event, id) {
+    var text = "";
+    let selection = {};
+    var activeEl = document.activeElement;
+    var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+
+    if (
+      activeElTagName === "textarea" ||
+      (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type) && typeof activeEl.selectionStart === "number")
+    ) {
+      text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
+    } else if (window.getSelection) {
+      text = window.getSelection().toString();
+    }
+
+    let sentences = "";
+    let startNode = "";
+    let endNode = "";
+
+    if (window.getSelection()) {
+      sentences = window.getSelection();
+    }
+
+    if (sentences) {
+
+      startNode = window.getSelection().anchorNode.parentElement.id;
+      endNode = window.getSelection().focusNode.parentElement.id;
+      console.log("node---", startNode, endNode, this.props.sourceSentence.text_blocks);
+      selection.startNode = startNode;
+      selection.endNode = endNode;
+      console.log(startNode, endNode)
+      if (startNode === endNode) {
+        this.setState({ operation_type: "split" });
+        window.getSelection().toString() && this.popUp("split", event);
+        selection.startNode = startNode;
+      } else if (parseInt(startNode) + 1 === parseInt(endNode)) {
+        this.setState({ operation_type: "merge" });
+        window.getSelection().toString() && this.popUp("merge", event);
+      }
+
+      this.setState({ selection });
+      return true;
+    }
+  }
+
+  handleDialogMessage(title, dialogMessage) {
+    this.setState({ openDialog: true, title, dialogMessage, openEl: false });
+  }
+
+  popUp = (operation_type, event) => {
+    this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2 });
+  };
+
+  handleClose = () => {
+    this.setState({
+      openDialog: false,
+
+      operation_type: "",
+
+      endSentence: "",
+      startSentence: "",
+      addSentence: false,
+      selectedMergeSentence: [],
+      openEl: false
+    });
+  };
 
   render() {
     const { sourceSentence } = this.props;
@@ -109,45 +194,72 @@ class Preview extends React.Component {
       position: "relative",
 
       height: sourceSentence.page_height + "px",
-      backgroundColor: "white",
+      backgroundColor: "white"
 
       // backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
       // backgroundRepeat: "no-repeat",
       // backgroundSize: this.state.backgroundSize + "px"
     };
 
-
     return (
       <Paper style={style}>
+        {sourceSentence.tables &&
+          Array.isArray(sourceSentence.tables) &&
+          sourceSentence.tables.map((table, i) => {
+            return <EditorTable key={i} table={table}></EditorTable>;
+          })}
 
-        {
-          sourceSentence.tables && Array.isArray(sourceSentence.tables) && sourceSentence.tables.map((table, i) => {
-            return (<EditorTable key={i} table={table}></EditorTable>)
-          })
-        }
+        {sourceSentence.text_blocks &&
+          sourceSentence.text_blocks.map((sentence, index) => {
+            yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
 
-        {sourceSentence.text_blocks && sourceSentence.text_blocks.map((sentence, index) => {
-          yAxis = sentence.text_top + (sourceSentence.page_no * sourceSentence.page_height);
+            return (
+              <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
+                <BlockView
+                  key={index + "_" + sentence.block_id}
+                  sentence={sentence}
+                  yAxis={yAxis}
+                  page_no={sourceSentence.page_no}
+                  handleOnMouseEnter={this.props.handleOnMouseEnter}
+                  hoveredSentence={this.props.hoveredSentence}
+                 
+                />
+              </div>
+            );
+          })}
 
-          return (
+        {this.state.openDialog && (
+          <Dialog
+            message={this.state.dialogMessage}
+            handleSubmit={this.handleDialog.bind(this)}
+            handleClose={this.handleClose.bind(this)}
+            open
+            title={this.state.title}
+          />
+        )}
 
-            <BlockView key={index+ "_" +sentence.block_id}
-              sentence={sentence}
-              yAxis={yAxis}
-              page_no={sourceSentence.page_no}
-              handleOnMouseEnter={this.props.handleOnMouseEnter}
-              hoveredSentence={this.props.hoveredSentence}
-            />
-          )
-        })
-        }
+        {this.state.openEl && (
+          <MenuItems
+            isOpen={this.state.openEl}
+            topValue={this.state.topValue}
+            leftValue={this.state.leftValue}
+            anchorEl={this.state.anchorEl}
+            operation_type={this.state.operation_type}
+            handleClose={this.handleClose.bind(this)}
+            handleDialog={this.handleDialogMessage.bind(this)}
+            handleDuplicateBlock={this.props.handleDuplicateBlock}
+            handleDeleteBlock={this.props.handleDeleteBlock}
+            pageData={this.props.sourceSentence}
+          />
+        )}
 
-        {
-          sourceSentence.images && Array.isArray(sourceSentence.images) && sourceSentence.images.length>0 && sourceSentence.images.map((images, imgIndex) => {
-            return (<Image imgObj={images}></Image>)
-          })
-        }
-      </Paper >
+        {sourceSentence.images &&
+          Array.isArray(sourceSentence.images) &&
+          sourceSentence.images.length > 0 &&
+          sourceSentence.images.map((images, imgIndex) => {
+            return <Image imgObj={images}></Image>;
+          })}
+      </Paper>
     );
   }
 }
