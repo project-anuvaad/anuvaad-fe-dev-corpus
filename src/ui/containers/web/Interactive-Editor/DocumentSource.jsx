@@ -70,16 +70,18 @@ class Preview extends React.Component {
   }
 
   handleDialog() {
-    if(this.state.title === "merge") {
+
+    if(this.state.title === "Merge") {
+     
       this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
       this.setState({ openDialog: false });
-    } else if(this.state.title === "delete") {
+    } else if(this.state.title === "Delete") {
       this.props.handleDeleteBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
-    } else if(this.state.title === "duplicate") {
+    } else if(this.state.title === "Duplicate") {
       this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
-    } else if(this.state.title === "create") {
+    } else if(this.state.title === "Create") {
       this.props.handleCreateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
     }
@@ -135,9 +137,9 @@ class Preview extends React.Component {
     if (window.getSelection()) {
       sentences = window.getSelection();
     }
-    console.log(window.getSelection());
+
     if (sentences) {
-      console.log("sel---", window.getSelection().anchorNode);
+
       startNode = window.getSelection().anchorNode.parentElement.id;
       endNode = window.getSelection().focusNode.parentElement.id;
       console.log("node---", startNode, endNode, this.props.sourceSentence.text_blocks);
@@ -146,11 +148,11 @@ class Preview extends React.Component {
       console.log(startNode, endNode)
       if (startNode === endNode) {
         this.setState({ operation_type: "split" });
-        window.getSelection().anchorNode && this.popUp("split", event);
+        window.getSelection().toString() && this.popUp("split", event);
         selection.startNode = startNode;
       } else if (parseInt(startNode) + 1 === parseInt(endNode)) {
         this.setState({ operation_type: "merge" });
-        window.getSelection().anchorNode && this.popUp("merge", event);
+        window.getSelection().toString() && this.popUp("merge", event);
       }
 
       this.setState({ selection });
@@ -159,12 +161,10 @@ class Preview extends React.Component {
   }
 
   handleDialogMessage(title, dialogMessage) {
-    console.log("sajish");
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
   }
 
   popUp = (operation_type, event) => {
-    console.log("operation", this.state.selection)
     this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2 });
   };
 

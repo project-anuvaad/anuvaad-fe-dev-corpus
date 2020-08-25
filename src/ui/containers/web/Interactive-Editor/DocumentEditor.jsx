@@ -6,18 +6,12 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./DocumentSource";
-import MenuItems from "./PopUp";
-import Typography from "@material-ui/core/Typography";
-import { blueGrey50, darkBlack } from "material-ui/styles/colors";
-import fileUpload from "material-ui/svg-icons/file/file-upload";
-import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
-import FileUpload from "../../../../flux/actions/apis/fileupload";
-import Toolbar from "@material-ui/core/Toolbar";
-// import Data from "./json/File1506.json";
+
+//  import Data from "./json/File1506.json";
 // import Data from "./json/File3002.json";
 // import Data from "./json/Judgement.json";
 // import Data from "./json/DelhiHC.json";
-import Data from "./JudgementNew.json";
+ import Data from "./JudgementNew.json";
 
 class PdfFileEditor extends React.Component {
   constructor(props) {
@@ -77,7 +71,6 @@ class PdfFileEditor extends React.Component {
         }
       });
     var a = JSON.parse(JSON.stringify(pageData.text_blocks[value]));
-
     pageData.text_blocks.splice(value + 1, 0, a);
 
     let arr = [];
@@ -121,14 +114,16 @@ class PdfFileEditor extends React.Component {
     pageData.text_blocks.splice(value + 1, 0, a);
 
     let arr = [];
+    var extraHeight = 0;
     pageData &&
       pageData.text_blocks &&
       pageData.text_blocks.map((blockData, i) => {
         if (i > value) {
-          blockData.text_top = blockData.text_top + pageData.text_blocks[value].text_height;
+          extraHeight = pageData.text_blocks[value].text_height;
+          blockData.text_top = blockData.text_top + extraHeight;
         }
       });
-
+      pageData.page_height = pageData.page_height + extraHeight;
     pageData &&
       sen.map(sentence => {
         if (sentence.page_no === pageData.text_blocks.page_no) {
@@ -138,61 +133,6 @@ class PdfFileEditor extends React.Component {
 
     this.setState({ sentences: sen });
     this.indexCorrection();
-
-    // block = parseInt(block)
-    // let blocks = []
-
-    // let top
-    // let parentBlock = {}
-    // pageData && pageData.text_blocks && pageData.text_blocks.map(data => {
-    //   if (data.block_id == block) {
-    //     top = data.text_height
-    //     parentBlock = data
-    //   }
-    // })
-
-    // pageData && pageData.text_blocks && pageData.text_blocks.map((blockData, i) => {
-    //   let addedBlock = blockData
-    //   let blockId = blockData.block_id + 1
-    //   let blockTop = blockData.text_top + top
-
-    //   if (blockData.block_id == block) {
-    //     addedBlock.block_id = blockId
-    //     addedBlock.text_top = blockTop
-
-    //     blocks.push(parentBlock)
-    //     blocks.push(addedBlock)
-
-    //     debugger
-    //   } else {
-    //     if (blockData.block_id < block) {
-    //       blocks.push(blockData)
-    //     } else {
-    //       console.log(blockData)
-
-    //       blockData.block_id = blockId
-    //       blockData.text_top = blockTop
-
-    //       blocks.push(blockData)
-    //     }
-    //   }
-    // })
-    // let doc = []
-
-    // let res = []
-    // if(this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.length >0 ){
-    //   this.state.sentences.map((sentence, index) => {
-    //     if(sentence.page_no === pageData.page_no) {
-    //       sentence.text_blocks = blocks
-    //       res.push(sentence)
-    //     } else {
-    //       res.push(sentence)
-    //     }
-    //   })
-
-    // }
-    // this.setState({sentences: res})
-    console.log(this.state.sentences);
   }
 
   handleDeleteBlock(block, blockText, pageData) {
@@ -252,10 +192,12 @@ class PdfFileEditor extends React.Component {
         if (sentence.block_id == selection.startNode) {
           if (sentence.text_width < sentenceObj[i + 1].text_width) {
             sentenceObj[i + 1].text_top = sentence.text_top;
+            // sentenceObj[i + 1].text_height = sentenceObj[i + 1].text_height + sentence.text_height;
             sentenceObj[i + 1].text = sentence.text + (sentenceObj[i + 1].block_id == selection.endNode && sentenceObj[i + 1].text);
             delete sentenceObj[i];
           } else {
             sentence.text = sentence.text + (sentenceObj[i + 1].block_id == selection.endNode && sentenceObj[i + 1].text);
+            // sentence.text_height = sentence.text_height + sentenceObj[i + 1].text_height;
             delete sentenceObj[i + 1];
           }
         }
@@ -349,6 +291,7 @@ class PdfFileEditor extends React.Component {
                   handleDialogSave={this.handleDialogSave.bind(this)}
                   handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
                   handleDeleteBlock={this.handleDeleteBlock.bind(this)}
+                  handleCreateBlock = {this.handleCreateBlock.bind(this)}
                 />
               </div>
             );

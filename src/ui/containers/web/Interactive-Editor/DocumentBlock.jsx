@@ -25,6 +25,7 @@ class Preview extends React.Component {
             <div id={sentence.block_id} style={styles} key={sentence.block_id}
                 onMouseEnter={() => this.props.handleOnMouseEnter(sentence.block_id+ "_" + this.props.page_no)}
                 onMouseLeave={() => this.props.handleOnMouseEnter()}
+                contentEditable = {true}
             >
                 {sentence.text}
             </div >

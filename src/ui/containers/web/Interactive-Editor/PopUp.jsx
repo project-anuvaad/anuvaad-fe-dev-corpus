@@ -39,18 +39,18 @@ class MenuClass extends React.Component {
         )}
           { this.props.operation_type === "split" && (
           <div>
-            <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "addBlock", "Do you want to add the sentence ?")}>
+            <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Create", "Do you want to add the sentence ?")}>
               {" "}
               Create Block
             </Button>
             <br />
           
-           <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "duplicate", "Do you want to duplicate the sentence ?")}>
+           <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Duplicate", "Do you want to duplicate the sentence ?")}>
            {" "}
            Duplicate Block
          </Button>
          <br />
-         <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "delete", "Do you want to delete the sentence ?")}>
+         <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Delete", "Do you want to delete the sentence ?")}>
            {" "}
            Delete Block
          </Button>
