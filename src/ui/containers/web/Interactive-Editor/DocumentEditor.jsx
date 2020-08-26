@@ -338,10 +338,11 @@ class PdfFileEditor extends React.Component {
                       handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
                       handleDeleteBlock={this.handleDeleteBlock.bind(this)}
                       handleCreateBlock={this.handleCreateBlock.bind(this)}
-                      selectedSourceText={this.state.selectedSourceText}
-                      selectedBlockId={this.state.selectedBlockId}
-                      isEditable={this.state.isEditable}
-                      handleTextEditorChange={this.handleTextEditorChange.bind(this)}
+                      // selectedSourceText={this.state.selectedSourceText}
+                      // selectedSourceText={this.state.selectedSourceText}
+                      // selectedBlockId={this.state.selectedBlockId}
+                      // isEditable={this.state.isEditable}
+                      // handleTextEditorChange={this.handleTextEditorChange.bind(this)}
                     />
                   </div>
                 );
