@@ -14,8 +14,8 @@ import history from "../../../../web.history";
 import Snackbar from "../../../components/web/common/Snackbar";
 import { translate } from "../../../../assets/localisation";
 import PdfUploadStyles from "../../../styles/web/PdfUploadStyles";
-
-import ConfigUpload from "../../../../flux/actions/apis/configupload";
+import FileUpload from "../../../../flux/actions/apis/fileupload";
+import DocumentUpload from "../../../../flux/actions/apis/document_upload";
 
 class PdfUpload extends Component {
   constructor() {
@@ -38,7 +38,7 @@ class PdfUpload extends Component {
     if (this.state.files.length > 0) {
       const { APITransport } = this.props;
 
-      const apiObj = new ConfigUpload(this.state.files[0], "configUplaod");
+      const apiObj = new DocumentUpload(this.state.files, "docUplaod");
       APITransport(apiObj);
     } else {
       alert("Field should not be empty!");
@@ -53,9 +53,13 @@ class PdfUpload extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.configUplaod !== this.props.configUplaod) {
-      
-      history.push(`${process.env.PUBLIC_URL}/interactive-document/${this.props.configUplaod.configUplaod}`);
+    if (prevProps.documentUplaod !== this.props.documentUplaod) {
+      console.log(this.props.documentUplaod)
+      const { APITransport } = this.props;
+
+      const apiObj = new FileUpload(this.props.documentUplaod.data);
+      APITransport(apiObj);
+      // history.push(`${process.env.PUBLIC_URL}/interactive-document/${this.props.configUplaod.configUplaod}`);
     }
     if (prevProps.fileUpload !== this.props.fileUpload) {
       //   history.push(`${process.env.PUBLIC_URL}/interactive-editor`);
@@ -114,7 +118,7 @@ class PdfUpload extends Component {
               <DropzoneArea
                 className={classes.DropZoneArea}
                 showPreviewsInDropzone
-                acceptedFiles={[".pdf"]}
+                
                 dropZoneClass={classes.dropZoneArea}
                 onChange={this.handleChange.bind(this)}
                 filesLimit={1}
@@ -156,7 +160,8 @@ class PdfUpload extends Component {
 
 const mapStateToProps = state => ({
   fileUpload: state.fileUpload,
-  configUplaod: state.configUplaod
+  configUplaod: state.configUplaod,
+  documentUplaod : state.documentUplaod
 });
 
 const mapDispatchToProps = dispatch =>

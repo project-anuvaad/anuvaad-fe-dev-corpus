@@ -28,7 +28,7 @@ export default class RunExperiment extends API {
 
   getBody() {
     return {
-      pdf_file_id: this.file
+      filename: this.file
     };
   }
 

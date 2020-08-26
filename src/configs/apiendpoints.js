@@ -47,7 +47,7 @@ const endpoints = {
   fetchcompositionworkspacedetails: "/fetch-composition-workspace-detail",
   fetchenchmarkmodel: "/fetch-benchmark-sentences",
   pdffileupload: "/v1/interactive-editor/translate-pdf",
-  fileupload:"/api/v0/pdf-extractor",
+  fileupload:"/api/v0/convert-pdf",
   signup: "/v1/user/signup-user",
   updatePdfTable: "/v1/interactive-editor/update-pdf-source-table",
   login: "/sysuser/login",
@@ -63,7 +63,7 @@ const endpoints = {
   savetool2datasource: "/save-paragraph-workspace-data",
   sentencereplace: "/update-search-replace-sentence",
   setpassword: "/set-user-password",
-  viewdocument:"/view-document",
+  documentupload:"/api/v0/upload-file"
 };
 
 export default endpoints;

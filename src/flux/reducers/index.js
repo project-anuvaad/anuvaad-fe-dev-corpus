@@ -67,7 +67,7 @@ import deleteSentence from './deleteSentence';
 import deleteTable from './deleteTable';
 import insertSentence from './insertSentence';
 import fileUpload from "./fileupload";
-
+import documentUplaod from "./documentUpload";
 export default {
     login,
     automl,
@@ -137,5 +137,6 @@ export default {
     deleteSentence,
     deleteTable,
     insertSentence,
-    fileUpload
+    fileUpload,
+    documentUplaod
 };

@@ -5,13 +5,14 @@ import API from "./api";
 import C from "../constants";
 import ENDPOINTS from "../../../configs/apiendpoints";
 
-export default class ConfigUpload extends API {
+export default class DocumentUpload extends API {
   constructor(configFile, name, timeout = 2000) {
     super("POST", timeout, false, "MULTIPART");
-    this.type = C.CONFIGUPLOAD;
+    this.type = C.DOCUMENTUPLOAD;
     this.file = configFile;
     this.name = name;
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.configupload}`;
+    console.log()
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.documentupload}`;
   }
 
   toString() {
@@ -30,12 +31,17 @@ export default class ConfigUpload extends API {
   }
 
   getFormData() {
-    return this.file;
+
+    const formData = new FormData();
+        formData.append('file', this.file[0]);
+        return formData;
+    
   }
 
   getHeaders() {
     return {
       headers: {
+        'Authorization': 'Bearer ' + decodeURI(localStorage.getItem('token')),
         "Content-Type": "multipart/form-data"
       }
     };

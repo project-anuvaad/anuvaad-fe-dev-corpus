@@ -1,8 +1,11 @@
 import C from '../actions/constants';
 
 export default function (state = {}, action) {
+    console.log(action.type)
     switch (action.type) {
-        case C.VIEW_DOCUMENT:
+        
+        case C.DOCUMENTUPLOAD:
+            console.log(action.payload)
             return action.payload;
 
         default:
