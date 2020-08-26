@@ -12,8 +12,10 @@ import Typography from '@material-ui/core/Typography';
 import { array } from "prop-types";
 import Popover from 'react-text-selection-popover';
 import placeBelow from './placeBelow'
+import placeRight from './placeRight'
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = {
   paperHeader: {
@@ -74,6 +76,7 @@ class EditorPaper extends React.Component {
     } else if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       this.setState({
         open: true,
+        showLoader: false,
         autoCompleteText: this.props.intractiveTrans[0].tgt.substring(this.state.caretPos),
       })
     }
@@ -178,7 +181,6 @@ class EditorPaper extends React.Component {
   }
 
   newFetchSentence(sentence, prevSentence, index, noOfPage, sArray) {
-    console.log(noOfPage)
     let padding = Number(sArray[0].x) * 100 / Number(sArray[0].page_width);
     if (this.state.columns > 1 && padding > 40) {
       padding = 10
@@ -319,6 +321,7 @@ class EditorPaper extends React.Component {
         caretPos: caretPos,
         targetVal: targetVal,
         tokenIndex,
+        showLoader: true,
         senIndex
       })
     } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
@@ -342,6 +345,7 @@ class EditorPaper extends React.Component {
     else {
       this.setState({
         open: false,
+        showLoader: false
       })
     }
     this.setState({
@@ -352,6 +356,7 @@ class EditorPaper extends React.Component {
   handleUpdateSentenceWithPrediction() {
     this.setState({
       open: false,
+      showLoader: false
     })
     var self = this
     setTimeout(() => {
@@ -495,12 +500,13 @@ class EditorPaper extends React.Component {
         sentence.tokenized_sentences.map((tokenText, tokenIndex) => {
           if (tokenText.status !== "DELETED") {
             sentenceArray.push(
-              <span>
+              <div style={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? { border: '1px dashed rgb(170, 170, 170)', padding: '1%' } : {}}>
                 <span
                   ref={sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType}
                   style={{
                     fontWeight: sentence.is_bold ? "bold" : "normal",
                     textDecorationLine: sentence.underline ? "underline" : "",
+                    outline: 'none',
                     backgroundColor:
                       this.props.hoveredSentence === sentence._id + "_" + tokenText.sentence_index
                         ? "yellow"
@@ -512,16 +518,14 @@ class EditorPaper extends React.Component {
                   onKeyDown={(event) => this.handleTargetChange(sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType, event, sentence, tokenText, tokenIndex, senIndex)}
                   // onBlur={this.handleTargetChange.bind(this)}
                   onClick={() => {
-                    this.handleOnClick(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)
-                    this.setState({
-                      contentEditableId: sentence._id + "_" + tokenText.sentence_index,
-                      open: false
-                    })
+                    this.handleOnClickTarget(sentence._id + "_" + tokenText.sentence_index, sentence.page_no, sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType)
                   }}
                   key={sentence._id + "_" + tokenText.sentence_index}
                   // onClick={() => this.handleOnClick(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
                   onMouseEnter={() => this.hoverOn(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
-                  onDoubleClick={event => this.props.handleonDoubleClick(sentence._id + "_" + tokenText.sentence_index, tokenText.target, event, null, 'target')}
+                  onDoubleClick={event => {
+                    this.props.handleonDoubleClick(sentence._id + "_" + tokenText.sentence_index, tokenText.target, event, null, 'target')
+                  }}
                   onMouseLeave={() => this.hoverOff()}
                 >
                   {/* {this.props.selectedTargetId === sentence._id + "_" + tokenText.sentence_index ? (
@@ -540,7 +544,7 @@ class EditorPaper extends React.Component {
                   {/* )} */}
                 </span>
                 {isSpaceRequired ? <span>&nbsp;</span> : <span></span>}
-              </span>
+              </div>
             );
           }
           return true;
@@ -775,6 +779,25 @@ class EditorPaper extends React.Component {
         this.props.handleSentenceClick(id, true, this.props.paperType, pageNo);
       }
     }
+    this.setState({
+      contentEditableId: id,
+      open: false,
+      showLoader: false
+    })
+  }
+
+  handleOnClickTarget(id, pageNo, ref) {
+    if (!this.props.isPreview) {
+      if (id) {
+        this.props.handleSentenceClick(id, true, this.props.paperType, pageNo);
+      }
+    }
+    this.setState({
+      contentEditableId: id,
+      open: false,
+      showLoader: false
+    })
+    this.refs[ref].focus()
   }
 
   handleTableOnCLick(id, blockId, clisckedCell, value, parent, pageNo, next_previous) {
@@ -789,10 +812,14 @@ class EditorPaper extends React.Component {
     let sArray = []
     let elems = []
     return (
-      <div onClick={() => this.setState({ open: false })} style={{
-        maxHeight: window.innerHeight - 300,
-        overflowY: this.state.open ? 'hidden' : 'scroll',
-      }}>
+      <div onClick={() => this.setState({
+        open: false,
+        showLoader: false
+      })}
+        style={{
+          maxHeight: window.innerHeight - 300,
+          overflowY: this.state.open ? 'hidden' : 'scroll',
+        }}>
         {header ? (
           <div style={{ color: "grey", fontSize: "small" }}>
             <Grid container>
@@ -849,6 +876,13 @@ class EditorPaper extends React.Component {
                 maxWidth: '450px',
                 wordWrap: 'break-word', cursor: 'not-allowed', fontSize: '15px', zIndex: 999, backgroundColor: this.state.selectedIndex == 0 ? blueGrey50 : 'white'
               }} selected={true}>{this.state.autoCompleteText}</Typography>
+          </Popover>
+          <Popover isOpen={this.state.showLoader} containerNode={this.state.anchorEl} placementStrategy={placeRight}>
+            <CircularProgress
+              disableShrink
+              size={18}
+              thickness={8}
+            />
           </Popover>
         </div>
         {footer ? (
