@@ -214,7 +214,8 @@ class Preview extends React.Component {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
 
             return (
-              <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
+              // <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
+              <div>
                 <BlockView
                   key={index + "_" + sentence.block_id}
                   sentence={sentence}
@@ -228,7 +229,7 @@ class Preview extends React.Component {
             );
           })}
 
-        {this.state.openDialog && (
+        {/* {this.state.openDialog && (
           <Dialog
             message={this.state.dialogMessage}
             handleSubmit={this.handleDialog.bind(this)}
@@ -251,7 +252,7 @@ class Preview extends React.Component {
             handleDeleteBlock={this.props.handleDeleteBlock}
             pageData={this.props.sourceSentence}
           />
-        )}
+        )} */}
 
         {sourceSentence.images &&
           Array.isArray(sourceSentence.images) &&

@@ -14,7 +14,7 @@ import history from "../../../../web.history";
 import Snackbar from "../../../components/web/common/Snackbar";
 import { translate } from "../../../../assets/localisation";
 import PdfUploadStyles from "../../../styles/web/PdfUploadStyles";
-import FileUpload from "../../../../flux/actions/apis/fileupload";
+import WorkFlow from "../../../../flux/actions/apis/fileupload";
 import DocumentUpload from "../../../../flux/actions/apis/document_upload";
 
 class PdfUpload extends Component {
@@ -57,12 +57,13 @@ class PdfUpload extends Component {
       console.log(this.props.documentUplaod)
       const { APITransport } = this.props;
 
-      const apiObj = new FileUpload(this.props.documentUplaod.data);
+      const apiObj = new WorkFlow(this.props.documentUplaod.data,this.state.fileName);
       APITransport(apiObj);
       // history.push(`${process.env.PUBLIC_URL}/interactive-document/${this.props.configUplaod.configUplaod}`);
     }
-    if (prevProps.fileUpload !== this.props.fileUpload) {
-      //   history.push(`${process.env.PUBLIC_URL}/interactive-editor`);
+    if (prevProps.workflowStatus !== this.props.workflowStatus) {
+      console.log("workflow",this.props.workflowStatus.status==="STARTED")
+      history.push(`${process.env.PUBLIC_URL}/view-document`);
     }
   }
 
@@ -89,9 +90,11 @@ class PdfUpload extends Component {
   };
 
   handleChange = files => {
+    console.log(files[0])
     if (files.length > 0) {
       this.setState({
         files,
+        fileName:files[0].name,
         workspaceName: this.state.workspaceName ? this.state.workspaceName : files[0].name.slice(0, -4)
       });
     } else {
@@ -160,6 +163,7 @@ class PdfUpload extends Component {
 const mapStateToProps = state => ({
   fileUpload: state.fileUpload,
   configUplaod: state.configUplaod,
+  workflowStatus: state.workflowStatus,
   documentUplaod : state.documentUplaod
 });
 

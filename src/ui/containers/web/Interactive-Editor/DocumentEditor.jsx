@@ -9,7 +9,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Fab";
 import { translate } from "../../../../assets/localisation";
 import history from "../../../../web.history";
-
+import FileDetails from "../../../../flux/actions/apis/fetch_filedetails";
 import Data from "./json/File1506.json";
 // import Data from "./json/File3002.json";
 // import Data from "./json/Judgement.json";
@@ -20,34 +20,33 @@ class PdfFileEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sentences: Data.result,
+      // sentences: Data.result,
       sourceSupScripts: "",
       targetSupScripts: "",
       header: "",
 
       backgroundImage: "",
       pageArr: [],
-      hoveredSentence: ""
+      hoveredSentence: "",
+      sentences:''
     };
   }
 
-  // componentDidMount() {
+  componentDidMount() {
+    const apiObj = new FileDetails(this.props.match.params.fileid);
+    this.props.APITransport(apiObj);
+  }
 
-  //   console.log
-  //   const apiObj = new FileUpload(this.props.match.params.fileid);
-  //   this.props.APITransport(apiObj);
-  // }
+  componentDidUpdate(prevProps) {
+      if (prevProps.documentDetails !== this.props.documentDetails) {
+          
+      const temp = this.props.documentDetails.result;
 
-  // componentDidUpdate(prevProps) {
-  //     if (prevProps.fileUpload !== this.props.fileUpload) {
-  //         console.log(this.props.fileUpload)
-  //     const temp = this.props.fileUpload.result;
-
-  //     this.setState({
-  //       sentences: temp
-  //     });
-  //   }
-  // }
+      this.setState({
+        sentences: temp
+      });
+    }
+  }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
     this.setState({ hoveredSentence: sentenceId });
@@ -360,7 +359,8 @@ class PdfFileEditor extends React.Component {
 
 const mapStateToProps = state => ({
   fetchPdfSentence: state.fetchPdfSentence,
-  fileUpload: state.fileUpload
+  fileUpload: state.fileUpload,
+  documentDetails: state.documentDetails
 });
 
 const mapDispatchToProps = dispatch =>

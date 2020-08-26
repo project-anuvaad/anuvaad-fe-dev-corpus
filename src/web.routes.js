@@ -306,7 +306,7 @@ class AppRoutes extends React.Component {
             />
 
             <PrivateRoute
-              path={`${process.env.PUBLIC_URL}/interactive-document`}
+              path={`${process.env.PUBLIC_URL}/interactive-document/:fileid`}
               userRoles={["editor", "dev", "grader", "interactive-editor"]}
               component={DocumentEditor}
               title={translate('dashboard.page.heading.title')}
@@ -795,7 +795,7 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/interactive-editor/:fileid`}
-              title={translate('webroutes.page.title.anuvaadEditor')}
+              title={"Document Translate"}
               userRoles={["editor", "dev", "grader", "interactive-editor"]}
               component={InteractiveEditor}
               authenticate={this.authenticateUser}
@@ -828,7 +828,8 @@ class AppRoutes extends React.Component {
             />
             <PrivateRoute
               path={`${process.env.PUBLIC_URL}/view-document`}
-              title={translate('webroutes.page.title.anuvaadEditor')}
+              dontShowLoader
+              title={"Document Translate"}
               userRoles={["editor", "dev", "grader", "interactive-editor"]}
               component={ViewDocument}
               authenticate={this.authenticateUser}
