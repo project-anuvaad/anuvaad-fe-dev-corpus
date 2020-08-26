@@ -45,9 +45,9 @@ class PdfUpload extends Component {
     }
   }
   handleBack = () => {
-  
-      history.push(`${process.env.PUBLIC_URL}/view-document`)
-    
+
+    history.push(`${process.env.PUBLIC_URL}/view-document`)
+
 
 
   }
@@ -118,7 +118,6 @@ class PdfUpload extends Component {
               <DropzoneArea
                 className={classes.DropZoneArea}
                 showPreviewsInDropzone
-                
                 dropZoneClass={classes.dropZoneArea}
                 onChange={this.handleChange.bind(this)}
                 filesLimit={1}
@@ -127,20 +126,20 @@ class PdfUpload extends Component {
                 onDelete={this.handleDelete.bind(this)}
               />
             </Grid>
-
             <Grid item xs={6} sm={6} lg={6} xl={6}>
-              
-                <Button variant="contained" color="primary" className={classes.button1} size="large" onClick={this.handleSubmit.bind(this)}>
-                  {translate("common.page.button.upload")}
-                </Button>
-                </Grid>
-            <Grid item xs={6} sm={6} lg={6} xl={6}>
-                <Button variant="contained" color="primary" className={classes.button2} size="large" onClick={this.handleBack.bind(this)}>
-                  {translate("common.page.button.back")}
-                </Button>
-              </Grid>
+              <Button variant="contained" color="primary" className={classes.button1} size="large" onClick={this.handleBack.bind(this)}>
+                {translate("common.page.button.back")}
+              </Button>
             </Grid>
-          
+            <Grid item xs={6} sm={6} lg={6} xl={6}>
+
+              <Button variant="contained" color="primary" className={classes.button2} size="large" onClick={this.handleSubmit.bind(this)}>
+                {translate("common.page.button.upload")}
+              </Button>
+            </Grid>
+
+          </Grid>
+
 
           {this.state.open && (
             <Snackbar

@@ -3,6 +3,9 @@ import React from "react";
 class Preview extends React.Component {
     constructor(props) {
         super(props);
+        this.state={
+            isEditable:false
+        }
     }
 
     render() {
@@ -25,7 +28,8 @@ class Preview extends React.Component {
             <div id={sentence.block_id} style={styles} key={sentence.block_id}
                 onMouseEnter={() => this.props.handleOnMouseEnter(sentence.block_id+ "_" + this.props.page_no)}
                 onMouseLeave={() => this.props.handleOnMouseEnter()}
-                contentEditable = {true}
+                onDoubleClick = {()=>this.setState({isEditable:true})}
+                contentEditable = {this.state.isEditable}
             >
                 {sentence.text}
             </div >

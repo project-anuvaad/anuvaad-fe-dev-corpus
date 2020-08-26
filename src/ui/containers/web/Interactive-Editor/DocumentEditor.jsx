@@ -1,17 +1,15 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
-import Paper from "@material-ui/core/Paper";
 import SourceView from "./DocumentSource";
 
-//  import Data from "./json/File1506.json";
+import Data from "./json/File1506.json";
 // import Data from "./json/File3002.json";
 // import Data from "./json/Judgement.json";
 // import Data from "./json/DelhiHC.json";
- import Data from "./JudgementNew.json";
+//  import Data from "./JudgementNew.json";
 
 class PdfFileEditor extends React.Component {
   constructor(props) {
