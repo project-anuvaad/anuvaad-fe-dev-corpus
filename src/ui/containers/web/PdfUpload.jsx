@@ -271,7 +271,7 @@ class PdfUpload extends Component {
                   selectValue="language_code"
                   fullWidth
                   
-                  MenuItemValues={["NER","Without NER","OCR"]}
+                  MenuItemValues={["NER","LOK SABHA","OCR"]}
                   handleChange={this.handleSelectChange}
                   value={this.state.strategy}
                   name="strategy"

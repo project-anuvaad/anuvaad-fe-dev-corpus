@@ -136,7 +136,6 @@ class UserDirectory extends React.Component {
           sort: true
         }
       },
-      
       {
         name: "roles",
 
@@ -172,6 +171,14 @@ class UserDirectory extends React.Component {
           filter: true,
           sortDirection: "asc"
           
+        }
+      },
+      {
+        name: "document_count",
+        label: translate("common.page.label.document_count"),
+        options: {
+          filter: true,
+          sort: true
         }
       },
 
