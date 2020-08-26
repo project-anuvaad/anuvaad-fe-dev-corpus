@@ -10,6 +10,8 @@ import Grid from "@material-ui/core/Grid";
 import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Fab";
 import { translate } from "../../../../assets/localisation";
+import history from "../../../../web.history";
+
 //  import Data from "./json/File1506.json";
 // import Data from "./json/File3002.json";
 // import Data from "./json/Judgement.json";
@@ -269,6 +271,10 @@ class PdfFileEditor extends React.Component {
     this.setState({ sentences: sentenceObj });
   };
 
+  handleOnClose() {
+    history.push(`${process.env.PUBLIC_URL}/view-document`);
+}
+
   render() {
     let yAxis = 0;
     let leftPaddingValue = 0;
@@ -306,7 +312,7 @@ class PdfFileEditor extends React.Component {
     return (
       <div style={{ dislay: "flex", flexDirection: "row" }}>
         <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
-          <Button variant="extended" color="primary" style={{ fontSize: '90%', fontWeight: 'bold', height: "40px" }}>
+          <Button variant="extended" color="primary" style={{ fontSize: '90%', fontWeight: 'bold', height: "40px" }} onClick={() => this.handleOnClose()}>
             <CloseIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
           </Button>
         </div>
@@ -343,7 +349,6 @@ class PdfFileEditor extends React.Component {
                     selectedSourceText={this.state.selectedSourceText}
                     selectedBlockId={this.state.selectedBlockId}
                     isEditable={this.state.isEditable}
-                    handleTextEditorChange={this.handleTextEditorChange.bind(this)}
                   />
                 </div>
               );
