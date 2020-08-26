@@ -63,7 +63,7 @@ const PdfUploadStyles = theme => ({
   button: {
     marginTop: "6%",
     marginLeft: "2%",
-    width: "50%",
+    width: "100%",
     backgroundColor:'#1C9AB7',
     borderRadius:"20px 20px 20px 20px",
     color:"#FFFFFF"
@@ -86,8 +86,9 @@ const PdfUploadStyles = theme => ({
   },
   dropZoneArea:{
     paddingTop: '15%',
+    top: "auto",
     minHeight:'363px',
-    height: "400px",
+    height: "100%",
     borderColor:'#1C9AB7',
     backgroundColor: '#F5F9FA',
     border: '1px dashed #1C9AB7',
@@ -101,8 +102,25 @@ const PdfUploadStyles = theme => ({
       color:'#1C9AB7',
       
     },
-
-
+  },
+  dropZoneArea1:{
+    paddingTop: '12%',
+    top: "auto",
+    minHeight:'363px',
+    height: "100%",
+    borderColor:'#1C9AB7',
+    backgroundColor: '#F5F9FA',
+    border: '1px dashed #1C9AB7',
+    fontColor:'#1C9AB7',
+    "& svg":{color:'#1C9AB7',},
+    "& p": {
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      fontSize: "19px",
+      color:'#1C9AB7',
+      
+    },
   }
   
  
