@@ -13,7 +13,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import history from "../../../../web.history";
 import Snackbar from "../../../components/web/common/Snackbar";
 import { translate } from "../../../../assets/localisation";
-import PdfUploadStyles from "../../../styles/web/PdfUploadStyles";
+import FileUploadStyles from "../../../styles/web/FileUpload";
 import WorkFlow from "../../../../flux/actions/apis/fileupload";
 import DocumentUpload from "../../../../flux/actions/apis/document_upload";
 
@@ -129,6 +129,7 @@ class PdfUpload extends Component {
                 onDelete={this.handleDelete.bind(this)}
               />
             </Grid>
+            
             <Grid item xs={6} sm={6} lg={6} xl={6}>
               <Button variant="contained" color="primary" className={classes.button1} size="large" onClick={this.handleBack.bind(this)}>
                 {translate("common.page.button.back")}
@@ -136,7 +137,7 @@ class PdfUpload extends Component {
             </Grid>
             <Grid item xs={6} sm={6} lg={6} xl={6}>
 
-              <Button variant="contained" color="primary" className={classes.button2} size="large" onClick={this.handleSubmit.bind(this)}>
+              <Button variant="contained" color="primary" className={classes.button1} size="large" onClick={this.handleSubmit.bind(this)}>
                 {translate("common.page.button.upload")}
               </Button>
             </Grid>
@@ -176,4 +177,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(withStyles(PdfUploadStyles)(connect(mapStateToProps, mapDispatchToProps)(PdfUpload)));
+export default withRouter(withStyles(FileUploadStyles)(connect(mapStateToProps, mapDispatchToProps)(PdfUpload)));
