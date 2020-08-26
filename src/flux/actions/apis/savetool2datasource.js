@@ -2,13 +2,13 @@ import API from "./api";
 import C from "../constants";
 import ENDPOINTS from "../../../configs/apiendpoints";
 export default class RunExperiment extends API {
-  constructor(workspaceName,filepath, timeout = 2000) {
+  constructor(workspaceName, filepath, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
     this.type = C.CREATEWORKSPACE;
     this.title = workspaceName;
     this.filepath = filepath;
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.savetool2datasource}`
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.savetool2datasource}`;
   }
 
   toString() {
@@ -23,12 +23,12 @@ export default class RunExperiment extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/save-paragraph-workspace-data`;
+    return this.endpoint;
   }
 
   getBody() {
     return {
-        paragraph_workspace: {
+      paragraph_workspace: {
         title: this.title,
         sentence_file: this.filepath
       }
@@ -38,7 +38,7 @@ export default class RunExperiment extends API {
   getHeaders() {
     this.headers = {
       headers: {
-        Authorization: `Bearer ${  decodeURI(localStorage.getItem("token"))}`,
+        Authorization: `Bearer ${decodeURI(localStorage.getItem("token"))}`,
         "Content-Type": "application/json"
       }
     };

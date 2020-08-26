@@ -5,7 +5,7 @@ import API from "./api";
 import C from "../constants";
 import ENDPOINTS from "../../../configs/apiendpoints";
 export default class NMT extends API {
-  constructor(par, model, reverse, target, showSplitted,type, timeout = 200000) {
+  constructor(par, model, reverse, target, showSplitted, type, timeout = 200000) {
     super("POST", timeout, false);
     this.par = par;
     this.model = model;
@@ -15,7 +15,7 @@ export default class NMT extends API {
     this.showSplitted = showSplitted;
     this.url_end_point = model[0] ? model[0].url_end_point : model.url_end_point;
     this.type = type ? type : C.NMT;
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.nmt}`
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.nmt}`;
   }
 
   toString() {
@@ -30,7 +30,7 @@ export default class NMT extends API {
   }
 
   apiEndPoint() {
-    return this.url_end_point ? `${super.apiEndPointAuto()}/${this.url_end_point}` : `${super.apiEndPointAuto()}/translation_en`;
+    return this.url_end_point ? `${super.apiEndPointAuto()}/${this.url_end_point}` : this.endpoint;
   }
 
   getBody() {
@@ -38,7 +38,7 @@ export default class NMT extends API {
     this.model.map(item => {
       modelArray.push({
         src: this.par,
-        id: parseInt(item.model_id,10),
+        id: parseInt(item.model_id, 10),
         s_id: item.model_name,
         n_id: item.model_name
       });
@@ -47,7 +47,7 @@ export default class NMT extends API {
         spilttedText.map(s => {
           modelArray.push({
             src: s.trim(),
-            id: parseInt(item.model_id,10),
+            id: parseInt(item.model_id, 10),
             s_id: item.model_name + "_Comma Split",
             n_id: item.model_name
           });
