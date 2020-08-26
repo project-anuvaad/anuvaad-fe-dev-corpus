@@ -504,7 +504,7 @@ class Header extends React.Component {
                           disableTypography
                           primary={
                             <Typography type="body2" style={{ color: currentMenu === "view-document" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
-                            Document Translate
+                            Document Translate V2
                             </Typography>
                           }
                         />
