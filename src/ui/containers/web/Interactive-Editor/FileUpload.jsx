@@ -126,6 +126,7 @@ class PdfUpload extends Component {
                 onDelete={this.handleDelete.bind(this)}
               />
             </Grid>
+            
             <Grid item xs={6} sm={6} lg={6} xl={6}>
               <Button variant="contained" color="primary" className={classes.button1} size="large" onClick={this.handleBack.bind(this)}>
                 {translate("common.page.button.back")}

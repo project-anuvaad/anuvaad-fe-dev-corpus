@@ -53,13 +53,6 @@ const FileUploadStyles = theme => ({
     grid:{
       marginLeft: "5.5%" 
     },
-    textfield:{
-      width: '87.9%',
-      marginLeft:"2.3%"
-    },
-    span:{
-      
-    },
     button: {
       marginTop: "6%",
       marginLeft: "2%",
@@ -69,17 +62,9 @@ const FileUploadStyles = theme => ({
       color:"#FFFFFF"
     },
     button1: {
-      marginTop: "6%",
+      marginTop: "10%",
       
       width: "100%",
-      backgroundColor:'#1C9AB7',
-      borderRadius:"20px 20px 20px 20px",
-      color:"#FFFFFF"
-    },
-    button2: {
-      marginTop: "6%",
-      marginLeft: "3%",
-      width: "90%",
       backgroundColor:'#1C9AB7',
       borderRadius:"20px 20px 20px 20px",
       color:"#FFFFFF"
@@ -87,8 +72,8 @@ const FileUploadStyles = theme => ({
     dropZoneArea:{
       paddingTop: '12%',
       top: "auto",
-      minHeight:'363px',
-      height: "100%",
+      minHeight:'310px',
+      // height: "100%",
       borderColor:'#1C9AB7',
       backgroundColor: '#F5F9FA',
       border: '1px dashed #1C9AB7',
