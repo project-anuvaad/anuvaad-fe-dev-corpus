@@ -82,7 +82,7 @@ console.log(arr)
         name: "status",
         label: translate("viewCorpus.page.label.fileName"),
         options: {
-          sort: true,
+          
           display: "excluded"
         }
       },
@@ -90,7 +90,10 @@ console.log(arr)
         name: "job",
         label: "Job ID",
         options: {
-          filter: true
+          filter: true,
+          sort: true,
+          sortDirection: "desc"
+          
         }
       },
 
@@ -128,7 +131,7 @@ console.log(arr)
 
                 <div style={{ width: '120px' }}>
 
-                  {(tableMeta.rowData[1] !== 'COMPLETED' && tableMeta.rowData[1] !== 'FAILED') ? <ProgressBar token={true} val={1000} eta={3000 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> : tableMeta.rowData[1]}
+                  {(tableMeta.rowData[1] !== 'COMPLETED' && tableMeta.rowData[1] !== 'FAILED') ? <ProgressBar token={true} val={1000} eta={2000 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> : tableMeta.rowData[1]}
 
                 </div>
               );

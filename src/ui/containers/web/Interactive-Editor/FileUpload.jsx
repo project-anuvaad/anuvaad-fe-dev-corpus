@@ -124,7 +124,7 @@ class PdfUpload extends Component {
                 dropZoneClass={classes.dropZoneArea}
                 onChange={this.handleChange.bind(this)}
                 filesLimit={1}
-                maxFileSize={20000000}
+                maxFileSize={200000000000}
                 dropzoneText={translate("common.page.label.addDropDocument")}
                 onDelete={this.handleDelete.bind(this)}
               />
