@@ -1,6 +1,6 @@
 'use strict';
 
-var placeBelow = (function (_ref) {
+var placeRight = (function (_ref) {
     var gap = _ref.gap,
         frameHeight = _ref.frameHeight,
         frameWidth = _ref.frameWidth,
@@ -12,11 +12,8 @@ var placeBelow = (function (_ref) {
         selectionHeight = _ref.selectionHeight;
 
     var style = { position: "fixed" };
-    style.left = selectionLeft;
-    if (selectionLeft + 450 > window.innerWidth - 50) {
-        style.left = window.innerWidth - 500;
-    }
-    style.top = selectionTop + selectionHeight + gap;
+    style.left = selectionLeft - 7;
+    style.top = selectionTop + gap - 3;
     // if the popover is placed too far to the right, align with right edge
     if (style.right > frameWidth) {
         delete style.left;
@@ -32,4 +29,4 @@ var placeBelow = (function (_ref) {
     return style;
 });
 
-module.exports = placeBelow;
+module.exports = placeRight;
