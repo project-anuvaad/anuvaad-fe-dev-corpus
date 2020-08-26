@@ -304,57 +304,52 @@ class PdfFileEditor extends React.Component {
 
     let pageDividerHeight = "0";
     return (
-      <div>
-        <Grid container spacing={16} style={{ padding: "0 24px 12px 24px" }}>
-          <Grid item sm={2} lg={2} xl={2} className='GridFileDetails'>
-          </Grid>
-          <Grid item xs={12} sm={8} lg={8} xl={8} className='GridFileDetails' style={{textAlign: "center"}}>
-            {this.state.sentences &&
-              this.state.sentences.map((sentence, index) => {
-                yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-                pageDividerHeight =
-                  (this.state.pageArr && this.state.pageArr.length > 0 && parseInt(this.state.pageArr[sentence.page_no])) +
-                  (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-                let printPageNo = false;
-                let pageNo = sentence.page_no;
-                let isFirstPage = false;
+      <div style={{ dislay: "flex", flexDirection: "row" }}>
+        <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
+          <Button variant="extended" color="primary" style={{ fontSize: '90%', fontWeight: 'bold', height: "40px" }}>
+            <CloseIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
+          </Button>
+        </div>
+        <div style={{textAlign: "-webkit-center"}}>
+          {this.state.sentences &&
+            this.state.sentences.map((sentence, index) => {
+              yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
+              pageDividerHeight =
+                (this.state.pageArr && this.state.pageArr.length > 0 && parseInt(this.state.pageArr[sentence.page_no])) +
+                (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
+              let printPageNo = false;
+              let pageNo = sentence.page_no;
+              let isFirstPage = false;
 
-                if (index === 0) {
-                  printPageNo = true;
-                  isFirstPage = true;
-                } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
-                  printPageNo = true;
-                }
+              if (index === 0) {
+                printPageNo = true;
+                isFirstPage = true;
+              } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
+                printPageNo = true;
+              }
 
-                return (
-                  <div>
-                    <SourceView
-                      key={sentence.page_no + "_" + index}
-                      sourceSentence={sentence}
-                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                      hoveredSentence={this.state.hoveredSentence}
-                      pageNo={sentence.page_no}
-                      handleDialogSave={this.handleDialogSave.bind(this)}
-                      handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
-                      handleDeleteBlock={this.handleDeleteBlock.bind(this)}
-                      handleCreateBlock={this.handleCreateBlock.bind(this)}
-                      // selectedSourceText={this.state.selectedSourceText}
-                      // selectedSourceText={this.state.selectedSourceText}
-                      // selectedBlockId={this.state.selectedBlockId}
-                      // isEditable={this.state.isEditable}
-                      // handleTextEditorChange={this.handleTextEditorChange.bind(this)}
-                    />
-                  </div>
-                );
+              return (
+                <div>
+                  <SourceView
+                    key={sentence.page_no + "_" + index}
+                    sourceSentence={sentence}
+                    handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                    hoveredSentence={this.state.hoveredSentence}
+                    pageNo={sentence.page_no}
+                    handleDialogSave={this.handleDialogSave.bind(this)}
+                    handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
+                    handleDeleteBlock={this.handleDeleteBlock.bind(this)}
+                    handleCreateBlock={this.handleCreateBlock.bind(this)}
+                    selectedSourceText={this.state.selectedSourceText}
+                    selectedBlockId={this.state.selectedBlockId}
+                    isEditable={this.state.isEditable}
+                    handleTextEditorChange={this.handleTextEditorChange.bind(this)}
+                  />
+                </div>
+              );
 
-              })}
-          </Grid>
-          <Grid item xs={12} sm={2} lg={2} xl={2} className='GridFileDetails' style={{ textAlign: 'right' }}>
-            <Button variant="extended" size="large" color="primary" style={{ fontSize: '90%', fontWeight: 'bold'}} onClick={() => this.handleOnClose()}>
-              <CloseIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
-            </Button>
-          </Grid>
-        </Grid>
+            })}
+        </div>
       </div>
     );
   }
