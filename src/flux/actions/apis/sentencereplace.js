@@ -5,13 +5,12 @@ import API from "./api";
 import C from "../constants";
 import ENDPOINTS from "../../../configs/apiendpoints";
 export default class RunExperiment extends API {
-  constructor( workspace, timeout = 2000) {
+  constructor(workspace, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
     this.type = C.SENTENCEREPLACE;
     this.workspace = workspace;
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.sentencereplace}`
-    
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.sentencereplace}`;
   }
 
   toString() {
@@ -26,11 +25,10 @@ export default class RunExperiment extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/update-search-replace-sentence`;
+    return this.endpoint;
   }
 
   getBody() {
-    
     return {
       sentence_pair: this.workspace
     };
@@ -39,7 +37,7 @@ export default class RunExperiment extends API {
   getHeaders() {
     this.headers = {
       headers: {
-        Authorization: `Bearer ${  decodeURI(localStorage.getItem("token"))}`,
+        Authorization: `Bearer ${decodeURI(localStorage.getItem("token"))}`,
         "Content-Type": "application/json"
       }
     };

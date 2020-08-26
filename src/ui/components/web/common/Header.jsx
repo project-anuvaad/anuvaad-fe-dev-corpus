@@ -144,7 +144,7 @@ class Header extends React.Component {
             <Typography variant="title" color="inherit" className={forDemo ? classes.felxDemo : classes.flex}>
               {title}
             </Typography>
-            
+
             <img src={anuvaadLogo}
               style={{
                 position: 'absolute',
@@ -152,22 +152,22 @@ class Header extends React.Component {
                 height: '27px'
               }}
               alt="" />
-            <div style={{position: 'absolute' , right: '20px', display: 'flex', flexDirection: 'row'}}>
+            <div style={{ position: 'absolute', right: '20px', display: 'flex', flexDirection: 'row' }}>
               {!dontShowHeader &&
-              <div style={{display: 'flex', flexDirection: 'row',cursor: "pointer"}} onClick={this.handleMenu.bind(this)}>
-                
-                <PeopleIcon style={{marginRight: '10px'}}></PeopleIcon>
-               <Typography
-                  variant="title"
-                  color="inherit"
-                  style={{
-                    // position: "absolute",
-                    textTransform: "capitalize",
-                    // right: "60px"
-                  }}
-                >
-                  {this.state.name}
-                </Typography>
+                <div style={{ display: 'flex', flexDirection: 'row', cursor: "pointer" }} onClick={this.handleMenu.bind(this)}>
+
+                  <PeopleIcon style={{ marginRight: '10px' }}></PeopleIcon>
+                  <Typography
+                    variant="title"
+                    color="inherit"
+                    style={{
+                      // position: "absolute",
+                      textTransform: "capitalize",
+                      // right: "60px"
+                    }}
+                  >
+                    {this.state.name}
+                  </Typography>
                 </div>
               }
               {this.state.drawerClose}
@@ -182,7 +182,7 @@ class Header extends React.Component {
                 >
                   {/* <Fab aria-owns={openEl ? "menu-appbar" : null} aria-haspopup="true" onClick={this.handleMenu} color="primary" size="medium">
                 </Fab> */}
-                  <DownIcon onClick={this.handleMenu.bind(this)} style={{cursor: "pointer"}}></DownIcon>
+                  <DownIcon onClick={this.handleMenu.bind(this)} style={{ cursor: "pointer" }}></DownIcon>
                   <Menu
                     id="menu-appbar"
                     anchorEl={anchorEl}
@@ -311,8 +311,8 @@ class Header extends React.Component {
                   {role && Array.isArray(role) && !role.includes("analyzer") && !role.includes("admin") && !role.includes("user") && (
                     <div>
                       <Divider className={classes.divider} />
-                      
-                      <ListItem 
+
+                      <ListItem
                         style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "dashboard" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={() => {
@@ -486,10 +486,36 @@ class Header extends React.Component {
                       </ListItem>
                     </div>
                   )}
+
+
+                  {role && Array.isArray(role) && (role.includes("dev") || role.includes("grader") || role.includes("interactive-editor")) && (
+                    <div>
+                      <Divider className={classes.divider} />
+                      <ListItem
+                        style={{ paddingTop: "8%", paddingBottom: "8%", backgroundColor: currentMenu === "view-document" && themeAnuvaad.palette.primary.main }}
+                        button
+                        onClick={() => {
+                          this.handleDrawerClose();
+                          history.push(`${process.env.PUBLIC_URL}/view-document`);
+                        }}
+                      >
+
+                        <ListItemText
+                          disableTypography
+                          primary={
+                            <Typography type="body2" style={{ color: currentMenu === "view-document" ? "#FFFFFF" : "#000000", marginLeft: '6%' }}>
+                            Document Translate V2
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
+                    </div>
+                  )}
+
                   {role && Array.isArray(role) && role.includes('admin') &&
                     <div>
                       <Divider className={classes.divider} />
-                    <ListItem style={{ paddingTop: '8%', paddingBottom: '8%', backgroundColor: currentMenu === "graderreport" && themeAnuvaad.palette.primary.main }}
+                      <ListItem style={{ paddingTop: '8%', paddingBottom: '8%', backgroundColor: currentMenu === "graderreport" && themeAnuvaad.palette.primary.main }}
                         button
                         onClick={(event) => {
                           this.handleDrawerClose();

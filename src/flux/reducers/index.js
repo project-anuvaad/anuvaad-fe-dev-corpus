@@ -66,7 +66,10 @@ import updateSource from './interactivesourceupdate';
 import deleteSentence from './deleteSentence';
 import deleteTable from './deleteTable';
 import insertSentence from './insertSentence';
-
+import workflowStatus from "./fileupload";
+import documentUplaod from "./documentUpload";
+import fetchDocument from "./fetch_document";
+import documentDetails from "./fetch_fileDetails";
 export default {
     login,
     automl,
@@ -136,4 +139,8 @@ export default {
     deleteSentence,
     deleteTable,
     insertSentence,
+    workflowStatus,
+    documentUplaod,
+    fetchDocument,
+    documentDetails
 };
