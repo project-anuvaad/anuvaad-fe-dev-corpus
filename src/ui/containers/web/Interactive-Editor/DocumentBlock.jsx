@@ -26,10 +26,10 @@ class Preview extends React.Component {
         }
         return (
             <div id={sentence.block_id} style={styles} key={sentence.block_id}
-                onMouseEnter={() => this.props.handleOnMouseEnter(sentence.block_id+ "_" + this.props.page_no)}
-                onMouseLeave={() => this.props.handleOnMouseEnter()}
-                onDoubleClick = {()=>this.setState({isEditable:true})}
-                contentEditable = {this.state.isEditable}
+                // onMouseEnter={() => this.props.handleOnMouseEnter(sentence.block_id+ "_" + this.props.page_no)}
+                // onMouseLeave={() => this.props.handleOnMouseEnter()}
+                // onDoubleClick = {()=>this.setState({isEditable:true})}
+                // contentEditable = {this.state.isEditable}
             >
                 {sentence.text}
             </div >

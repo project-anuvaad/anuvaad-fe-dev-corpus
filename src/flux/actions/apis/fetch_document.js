@@ -6,9 +6,9 @@ export default class RunExperiment extends API {
   constructor(file, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
-    this.type = C.FILEUPLOAD;
+    this.type = C.FETCHDOCUMENT;
     this.file = file;
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.fileupload}`
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.fetchducuments}`
   }
 
   toString() {
@@ -18,7 +18,8 @@ export default class RunExperiment extends API {
   processResponse(res) {
     super.processResponse(res);
     if (res) {
-      this.sentences = res.response;
+      this.sentences = res;
+      
     }
   }
 
@@ -28,8 +29,17 @@ export default class RunExperiment extends API {
 
   getBody() {
     return {
-      filename: this.file
-    };
+      
+        
+            "jobIDs": [
+              ""
+            ],
+            "taskDetails": true,
+            "workflowCodes": [
+              "DP_WFLOW_FB"
+            ]
+          }
+    
   }
 
   getHeaders() {

@@ -9,7 +9,7 @@ import MUIDataTable from "mui-datatables";
 import Toolbar from "@material-ui/core/Toolbar";
 import NewCorpusStyle from "../../styles/web/Newcorpus";
 import history from "../../../web.history";
-import FetchPdf from "../../../flux/actions/apis/fetchpdf";
+import FetchDocument from "../../../flux/actions/apis/fetch_document";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import { translate } from "../../../assets/localisation";
 import Timer from "../../components/web/common/CountDown";
@@ -38,104 +38,82 @@ class ViewDocument extends React.Component {
   }
 
   handleClick = rowData => {
-    history.push(`${process.env.PUBLIC_URL}/interactive-document`);
+    history.push(`${process.env.PUBLIC_URL}/interactive-document/${rowData[4]}`);
   };
 
 
   handleRefresh() {
     const { APITransport } = this.props;
-    const apiObj = new FetchPdf();
+    const apiObj = new FetchDocument();
     APITransport(apiObj);
     this.setState({ showLoader: true });
   }
 
 
   componentDidUpdate(prevProps) {
-    if (prevProps.corp !== this.props.corp) {
-      this.setState({ name: this.props.corp });
+    if (prevProps.fetchDocument !== this.props.fetchDocument) {
+      console.log("print------",this.props.fetchDocument)
+      var arr=[]
+      this.props.fetchDocument.map(value=>{
+        var b = {}
+        b["status"] = value.status;
+          b["job"] = value.jobID;
+          b["name"] = value.input.files[0].name
+          b["id"] = value.output && value.output[0].outputFilePath
+        
+        arr.push(b)
+console.log(arr)
+      })
+      console.log(arr)
+     this.setState({ name: arr });
     }
   }
 
   render() {
     const columns = [
       {
-        name: "session_id",
+        name: "jobID",
         label: translate("common.page.label.basename"),
         options: {
           display: "excluded"
         }
       },
       {
-        name: "process_name",
+        name: "status",
         label: translate("viewCorpus.page.label.fileName"),
         options: {
-          filter: true,
-          sort: true
+          sort: true,
+          display: "excluded"
         }
       },
+      {
+        name: "job",
+        label: "Job ID",
+        options: {
+          filter: true
+        }
+      },
+
+      {
+        name: "name",
+        label: "Filename",
+        options: {
+          filter: true
+        }
+      },
+
+      {
+        name: "id",
+        label: "id",
+        options: {
+          display: "excluded"
+        }
+      },
+
+
+    
       {
         name: "status",
-        options: {
-          display: 'excluded',
-        }
-      },
-
-      {
-        name: "eta",
-        label: translate('viewTranslate.page.label.eta'),
-        options: {
-          display: 'excluded',
-        }
-      },
-
-      {
-        name: "source_lang",
-        label: translate('common.page.label.source'),
-        options: {
-          filter: true,
-          sort: true
-        }
-      },
-
-      {
-        name: "target_lang",
-        label: translate('common.page.label.target'),
-        options: {
-          filter: true,
-          sort: true
-        }
-      },{
-        name: "api_version",
-        options: {
-          display: 'excluded',
-        }
-      },{
-        name: "api_version",
-        label:"Strategy",
-        options: {
-          filter: true,
-          sort: true,
-          customBodyRender: (value, tableMeta, updateValue) => {
-            if (tableMeta.rowData) {
-
-              
-              return (
-
-                <div style={{ width: '120px' }}>
-
-                  {(tableMeta.rowData[6] === 3 ?"Without NER": tableMeta.rowData[6] === 2 ? "OCR" : "NER")}
-
-                </div>
-              );
-            }
-
-          }
-        }
-      },
-
-
-      {
-        name: "Status",
         label: translate('common.page.table.status'),
         options: {
           filter: true,
@@ -145,12 +123,12 @@ class ViewDocument extends React.Component {
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
 
-              const result = tableMeta.rowData[3] * 1000 - (Date.now() - new Date(tableMeta.rowData[9]));
+              
               return (
 
                 <div style={{ width: '120px' }}>
 
-                  {(tableMeta.rowData[2] === 'TRANSLATING' && tableMeta.rowData[3]) ? (result > 0 ? <div> <ProgressBar val={result} eta={tableMeta.rowData[3] * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> <Timer val={result} handleRefresh={this.handleRefresh.bind(this)} /> </div> : tableMeta.rowData[2]) : tableMeta.rowData[2] === 'PROCESSING' ? <ProgressBar token={true} val={result} eta={300 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> : tableMeta.rowData[2]}
+                  {(tableMeta.rowData[1] !== 'COMPLETED' && tableMeta.rowData[1] !== 'FAILED') ? <ProgressBar token={true} val={1000} eta={3000 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> : tableMeta.rowData[1]}
 
                 </div>
               );
@@ -158,17 +136,9 @@ class ViewDocument extends React.Component {
 
           }
         }
-      },
-      
-      {
-        name: "created_on",
-        label: translate("common.page.label.timeStamp"),
-        options: {
-          filter: true,
-          sort: true,
-          sortDirection: "desc"
-        }
       }
+      
+      
     ];
 
     const options = {
@@ -185,7 +155,7 @@ class ViewDocument extends React.Component {
         }
       },
       filterType: "checkbox",
-      onRowClick: rowData => (rowData[2] === "COMPLETED" || rowData[2] === "TRANSLATING") && this.handleClick(rowData),
+      onRowClick: rowData => (rowData[1] === "COMPLETED" ) && this.handleClick(rowData),
       download: false,
       expandableRowsOnClick: true,
       print: false,
@@ -235,7 +205,8 @@ class ViewDocument extends React.Component {
 const mapStateToProps = state => ({
   user: state.login,
   apistatus: state.apistatus,
-  corp: state.corp
+  corp: state.corp,
+  fetchDocument: state.fetchDocument
 });
 
 const mapDispatchToProps = dispatch =>
