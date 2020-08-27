@@ -101,6 +101,8 @@ class PdfFileEditor extends React.Component {
   }
 
   handleDuplicateBlock(block, blockText, page) {
+    block = block.split("_")[0]
+
     var sen = this.state.sentences;
     var pageData = page;
     var value;
@@ -189,6 +191,8 @@ class PdfFileEditor extends React.Component {
   }
 
   handleCreateBlock(block, page) {
+    block = block.split("_")[0]
+
     var sen = this.state.sentences;
     var pageData = page;
     var value;
