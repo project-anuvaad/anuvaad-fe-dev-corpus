@@ -233,17 +233,20 @@ class PdfFileEditor extends React.Component {
   }
 
   handleDialogSave(selection, operation_type, pageDetails) {
+    let startNodeId = selection.startNode.split("_")[0]
+    let endNodeId = selection.endNode.split("_")[0]
+
     if (operation_type === "merge") {
       var sentenceObj = pageDetails.text_blocks;
       sentenceObj.map((sentence, i) => {
-        if (sentence.block_id == selection.startNode) {
+        if (sentence.block_id == startNodeId) {
           if (sentence.text_width < sentenceObj[i + 1].text_width) {
             sentenceObj[i + 1].text_top = sentence.text_top;
             // sentenceObj[i + 1].text_height = sentenceObj[i + 1].text_height + sentence.text_height;
-            sentenceObj[i + 1].text = sentence.text + (sentenceObj[i + 1].block_id == selection.endNode && sentenceObj[i + 1].text);
+            sentenceObj[i + 1].text = sentence.text + (sentenceObj[i + 1].block_id == endNodeId && sentenceObj[i + 1].text);
             delete sentenceObj[i];
           } else {
-            sentence.text = sentence.text + (sentenceObj[i + 1].block_id == selection.endNode && sentenceObj[i + 1].text);
+            sentence.text = sentence.text + (sentenceObj[i + 1].block_id == endNodeId && sentenceObj[i + 1].text);
             // sentence.text_height = sentence.text_height + sentenceObj[i + 1].text_height;
             delete sentenceObj[i + 1];
           }
