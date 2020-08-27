@@ -138,6 +138,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleDeleteBlock(block, blockText, pageData) {
+    block = block.split("_")[0]
     let blocks = [];
     let height;
 
