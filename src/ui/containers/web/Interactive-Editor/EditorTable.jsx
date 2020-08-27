@@ -54,7 +54,7 @@ class EditorTable extends React.Component {
                   <div
                     key={i}
                     
-                    style={{paddingLeft:textObj.text_left-tableData.text_left +"px", fontWeight: textObj.font_family && textObj.font_family.includes("Bold") && 'bold',}}
+                    style={{paddingLeft:textObj.text_left-tableData.text_left +"px",fontSize:textObj.font_size + "px", fontWeight: textObj.font_family && textObj.font_family.includes("Bold") && 'bold',}}
                   >
                     {textObj.text}
                   </div>
