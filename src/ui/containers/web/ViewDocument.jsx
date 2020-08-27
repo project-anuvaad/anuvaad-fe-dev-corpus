@@ -14,6 +14,7 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import { translate } from "../../../assets/localisation";
 import Timer from "../../components/web/common/CountDown";
 import ProgressBar from "../../components/web/common/ProgressBar";
+import Spinner from "../../components/web/common/Spinner";
 
 class ViewDocument extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class ViewDocument extends React.Component {
   }
 
   componentDidMount() {
-    this.handleRefresh()
+    this.handleRefresh(true)
   }
 
   handleClick = rowData => {
@@ -42,11 +43,11 @@ class ViewDocument extends React.Component {
   };
 
 
-  handleRefresh() {
+  handleRefresh(value) {
     const { APITransport } = this.props;
     const apiObj = new FetchDocument();
     APITransport(apiObj);
-    this.setState({ showLoader: true });
+    value && this.setState({ showLoader: true });
   }
 
 
@@ -58,14 +59,14 @@ class ViewDocument extends React.Component {
         var b = {}
         b["status"] = value.status;
           b["job"] = value.jobID;
-          b["name"] = value.input.files[0].name
-          b["id"] = value.output && value.output[0].outputFilePath
+          b["name"] = value.input.jobName? value.input.jobName: value.input.files[0].name;
+          b["id"] = value.output && value.output[0].outputFilePath;
         
         arr.push(b)
 console.log(arr)
       })
       console.log(arr)
-     this.setState({ name: arr });
+     this.setState({ name: arr , showLoader: false});
     }
   }
 
@@ -198,11 +199,15 @@ console.log(arr)
             )}
         </Toolbar>
         <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
-          <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />
+        {!this.state.showLoader && <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />}
         </div>
+        {this.state.showLoader && < Spinner/>}
       </div>
+      
     );
+    
   }
+  
 }
 
 const mapStateToProps = state => ({

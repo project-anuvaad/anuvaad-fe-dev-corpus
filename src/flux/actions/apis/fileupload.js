@@ -33,10 +33,10 @@ export default class RunExperiment extends API {
     return {
       
         "workflowCode":"DP_WFLOW_FB",
+        "jobName": this.fileName,
         "files": [
           {
             "path":this.file ,
-            "name": this.fileName,
             "type":"docx",
             "locale":"en"
           }
