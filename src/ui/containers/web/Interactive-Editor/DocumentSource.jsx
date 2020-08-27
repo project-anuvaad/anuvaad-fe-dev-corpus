@@ -21,10 +21,9 @@ class Preview extends React.Component {
     super(props);
     this.state = {
       openEl: false,
-      isEditable: false
     };
   }
-  
+
 
   fetchTableContent(sentences) {
     let tableRow = [];
@@ -73,17 +72,17 @@ class Preview extends React.Component {
 
   handleDialog() {
 
-    if(this.state.title === "Merge") {
-     
+    if (this.state.title === "Merge") {
+
       this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
       this.setState({ openDialog: false });
-    } else if(this.state.title === "Delete") {
+    } else if (this.state.title === "Delete") {
       this.props.handleDeleteBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
-    } else if(this.state.title === "Duplicate") {
+    } else if (this.state.title === "Duplicate") {
       this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
-    } else if(this.state.title === "Create") {
+    } else if (this.state.title === "Create") {
       this.props.handleCreateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
     }
@@ -118,45 +117,47 @@ class Preview extends React.Component {
   }
 
   getSelectionText(event, id) {
-    var text = "";
-    let selection = {};
-    var activeEl = document.activeElement;
-    var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+    if (!this.state.selectedBlock) {
+      var text = "";
+      let selection = {};
+      var activeEl = document.activeElement;
+      var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
 
-    if (
-      activeElTagName === "textarea" ||
-      (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type) && typeof activeEl.selectionStart === "number")
-    ) {
-      text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
-    } else if (window.getSelection) {
-      text = window.getSelection().toString();
-    }
-
-    let sentences = "";
-    let startNode = "";
-    let endNode = "";
-
-    if (window.getSelection()) {
-      sentences = window.getSelection();
-    }
-
-    if (sentences) {
-
-      startNode = window.getSelection().anchorNode.parentElement.id;
-      endNode = window.getSelection().focusNode.parentElement.id;
-      selection.startNode = startNode;
-      selection.endNode = endNode;
-      if (startNode === endNode) {
-        this.setState({ operation_type: "split" });
-        window.getSelection().toString() && this.popUp("split", event);
-        selection.startNode = startNode;
-      } else if (parseInt(startNode) + 1 === parseInt(endNode)) {
-        this.setState({ operation_type: "merge" });
-        window.getSelection().toString() && this.popUp("merge", event);
+      if (
+        activeElTagName === "textarea" ||
+        (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type) && typeof activeEl.selectionStart === "number")
+      ) {
+        text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
+      } else if (window.getSelection) {
+        text = window.getSelection().toString();
       }
 
-      this.setState({ selection });
-      return true;
+      let sentences = "";
+      let startNode = "";
+      let endNode = "";
+
+      if (window.getSelection()) {
+        sentences = window.getSelection();
+      }
+
+      if (sentences) {
+
+        startNode = window.getSelection().anchorNode.parentElement.id;
+        endNode = window.getSelection().focusNode.parentElement.id;
+        selection.startNode = startNode;
+        selection.endNode = endNode;
+        if (startNode === endNode) {
+          this.setState({ operation_type: "split" });
+          window.getSelection().toString() && this.popUp("split", event);
+          selection.startNode = startNode;
+        } else if (parseInt(startNode) + 1 === parseInt(endNode)) {
+          this.setState({ operation_type: "merge" });
+          window.getSelection().toString() && this.popUp("merge", event);
+        }
+
+        this.setState({ selection });
+        return true;
+      }
     }
   }
 
@@ -183,11 +184,11 @@ class Preview extends React.Component {
   };
 
   handleDoubleClick(selectedBlock, event) {
-    this.setState({ selectedBlock: selectedBlock, openEl: false, isEditable: true})
+    this.setState({ selectedBlock: selectedBlock, openEl: false })
   }
 
   handleBlockClick() {
-    this.setState({selectedBlock: null})
+    this.setState({ selectedBlock: null })
   }
 
   render() {

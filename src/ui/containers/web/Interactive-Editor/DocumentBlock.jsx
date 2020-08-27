@@ -29,13 +29,14 @@ class Preview extends React.Component {
             textAlign: "justify",
             zIndex: 1,
             lineHeight: sentence.children && parseInt(sentence.text_height / sentence.children.length) + 'px',
-            backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no ? "yellow" : ""
+            // backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no ? "yellow" : ""
+            backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? "yellow" : ""
+        
         }
         return (
             <div id={sentence.block_id + "_" + this.props.page_no} style={styles} key={sentence.block_id}
                 // onMouseEnter={() => this.props.handleOnMouseEnter(sentence.block_id+ "_" + this.props.page_no)}
                 onMouseEnter={() => this.handleMouseHover(sentence.block_id+ "_" + this.props.page_no)}
-
                 onMouseLeave={() => this.props.handleOnMouseEnter()}
                 onDoubleClick = {event => this.props.handleDoubleClick(sentence.block_id + "_" + this.props.page_no, event)}
                 // contentEditable = {this.props.selectedBlock === sentence.block_id + "_" + this.props.page_no ? true : false}
