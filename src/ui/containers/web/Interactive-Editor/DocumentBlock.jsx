@@ -1,10 +1,17 @@
 import React from "react";
+import ContentEditable from "react-contenteditable";
 
 class Preview extends React.Component {
     constructor(props) {
         super(props);
         this.state={
             isEditable:false
+        }
+    }
+
+    handleMouseHover(id) {
+        if(!this.props.selectedBlock) {
+            this.props.handleOnMouseEnter(id)
         }
     }
 
@@ -25,13 +32,33 @@ class Preview extends React.Component {
             backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no ? "yellow" : ""
         }
         return (
-            <div id={sentence.block_id} style={styles} key={sentence.block_id}
+            <div id={sentence.block_id + "_" + this.props.page_no} style={styles} key={sentence.block_id}
                 // onMouseEnter={() => this.props.handleOnMouseEnter(sentence.block_id+ "_" + this.props.page_no)}
-                // onMouseLeave={() => this.props.handleOnMouseEnter()}
-                // onDoubleClick = {()=>this.setState({isEditable:true})}
-                // contentEditable = {this.state.isEditable}
+                onMouseEnter={() => this.handleMouseHover(sentence.block_id+ "_" + this.props.page_no)}
+
+                onMouseLeave={() => this.props.handleOnMouseEnter()}
+                onDoubleClick = {event => this.props.handleDoubleClick(sentence.block_id + "_" + this.props.page_no, event)}
+                // contentEditable = {this.props.selectedBlock === sentence.block_id + "_" + this.props.page_no ? true : false}
+                onClick={()=>{
+                    if(sentence.block_id + "_" + this.props.page_no !== this.props.selectedBlock) {
+                        this.props.handleBlockClick()
+                    }
+                }}
             >
-                {sentence.text}
+               {this.props.selectedBlock === sentence.block_id + "_" + this.props.page_no ? (
+                    <ContentEditable
+                      html={sentence.text}
+                      disabled={false}
+                    //   onBlur={this.props.handleCheck}
+                    //   onChange={this.props.handleSourceChange}
+                      style={{
+                        border: "1px dashed #aaa",
+                        padding: "5px"
+                      }}
+                    />
+                  ) : (
+                     sentence.text
+                    )}
             </div >
         );
     }

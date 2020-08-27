@@ -165,7 +165,7 @@ class Preview extends React.Component {
   }
 
   popUp = (operation_type, event) => {
-    this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2 });
+    this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2, selectedBlock: null });
   };
 
   handleClose = () => {
@@ -181,6 +181,14 @@ class Preview extends React.Component {
       openEl: false
     });
   };
+
+  handleDoubleClick(selectedBlock, event) {
+    this.setState({ selectedBlock: selectedBlock, openEl: false})
+  }
+
+  handleBlockClick() {
+    this.setState({selectedBlock: null})
+  }
 
   render() {
     const { sourceSentence } = this.props;
@@ -214,8 +222,7 @@ class Preview extends React.Component {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
 
             return (
-              // <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
-              <div>
+              <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                 <BlockView
                   key={index + "_" + sentence.block_id}
                   sentence={sentence}
@@ -223,13 +230,15 @@ class Preview extends React.Component {
                   page_no={sourceSentence.page_no}
                   handleOnMouseEnter={this.props.handleOnMouseEnter}
                   hoveredSentence={this.props.hoveredSentence}
-                 
+                  handleDoubleClick={this.handleDoubleClick.bind(this)}
+                  selectedBlock={this.state.selectedBlock}
+                  handleBlockClick={this.handleBlockClick.bind(this)}
                 />
               </div>
             );
           })}
 
-        {/* {this.state.openDialog && (
+        {this.state.openDialog && (
           <Dialog
             message={this.state.dialogMessage}
             handleSubmit={this.handleDialog.bind(this)}
@@ -239,7 +248,7 @@ class Preview extends React.Component {
           />
         )}
 
-        {this.state.openEl && (
+        {this.state.openEl && !this.state.selectedBlock && (
           <MenuItems
             isOpen={this.state.openEl}
             topValue={this.state.topValue}
@@ -252,7 +261,7 @@ class Preview extends React.Component {
             handleDeleteBlock={this.props.handleDeleteBlock}
             pageData={this.props.sourceSentence}
           />
-        )} */}
+        )}
 
         {sourceSentence.images &&
           Array.isArray(sourceSentence.images) &&
