@@ -20,9 +20,11 @@ class Preview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openEl: false
+      openEl: false,
+      isEditable: false
     };
   }
+  
 
   fetchTableContent(sentences) {
     let tableRow = [];
@@ -142,10 +144,8 @@ class Preview extends React.Component {
 
       startNode = window.getSelection().anchorNode.parentElement.id;
       endNode = window.getSelection().focusNode.parentElement.id;
-      console.log("node---", startNode, endNode, this.props.sourceSentence.text_blocks);
       selection.startNode = startNode;
       selection.endNode = endNode;
-      console.log(startNode, endNode)
       if (startNode === endNode) {
         this.setState({ operation_type: "split" });
         window.getSelection().toString() && this.popUp("split", event);
@@ -183,7 +183,7 @@ class Preview extends React.Component {
   };
 
   handleDoubleClick(selectedBlock, event) {
-    this.setState({ selectedBlock: selectedBlock, openEl: false})
+    this.setState({ selectedBlock: selectedBlock, openEl: false, isEditable: true})
   }
 
   handleBlockClick() {
@@ -233,6 +233,7 @@ class Preview extends React.Component {
                   handleDoubleClick={this.handleDoubleClick.bind(this)}
                   selectedBlock={this.state.selectedBlock}
                   handleBlockClick={this.handleBlockClick.bind(this)}
+                  handleSourceChange={this.props.handleSourceChange}
                 />
               </div>
             );

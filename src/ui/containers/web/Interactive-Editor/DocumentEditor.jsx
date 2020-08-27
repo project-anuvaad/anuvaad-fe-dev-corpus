@@ -28,7 +28,8 @@ class PdfFileEditor extends React.Component {
       backgroundImage: "",
       pageArr: [],
       hoveredSentence: "",
-      sentences:''
+      sentences: '',
+      selectedText: ""
     };
   }
 
@@ -38,8 +39,8 @@ class PdfFileEditor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-      if (prevProps.documentDetails !== this.props.documentDetails) {
-          
+    if (prevProps.documentDetails !== this.props.documentDetails) {
+
       const temp = this.props.documentDetails.result;
 
       this.setState({
@@ -275,7 +276,45 @@ class PdfFileEditor extends React.Component {
 
   handleOnClose() {
     history.push(`${process.env.PUBLIC_URL}/view-document`);
-}
+  }
+
+  handleSourceChange(block, evt) {
+    this.setState({ selectedText: evt.target.value });
+
+    let blockId = block.split("_")[0]
+    let pageNo = block.split("_")[1]
+
+    let docPage = []
+    if (this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.length > 0) {
+      this.state.sentences.map((page, index) => {
+        if (page.page_no == pageNo) {
+          if (page.text_blocks && Array.isArray(page.text_blocks) && page.text_blocks.length > 0) {
+            let sentences = []
+
+            page.text_blocks.map((block, i) => {
+            sentences.push(block)
+            let paragraph = {}
+              if (block.block_id == blockId) {
+                paragraph = block
+                paragraph.text = evt.target.value
+                sentences.text_blocks = []
+                sentences.push(paragraph)
+
+              } else {
+                sentences.push(block)
+              }
+              // docPage.push(sentences)
+            })
+            docPage.text_blocks = sentences
+
+          }
+        } else {
+          docPage.push(page)
+        }
+      })
+    }
+
+  };
 
   render() {
     let yAxis = 0;
@@ -318,7 +357,7 @@ class PdfFileEditor extends React.Component {
             <CloseIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
           </Button>
         </div>
-        <div style={{textAlign: "-webkit-center"}}>
+        <div style={{ textAlign: "-webkit-center" }}>
           {this.state.sentences &&
             this.state.sentences.map((sentence, index) => {
               yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
@@ -351,6 +390,7 @@ class PdfFileEditor extends React.Component {
                     selectedSourceText={this.state.selectedSourceText}
                     selectedBlockId={this.state.selectedBlockId}
                     isEditable={this.state.isEditable}
+                    handleSourceChange={this.handleSourceChange.bind(this)}
                   />
                 </div>
               );

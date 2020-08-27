@@ -50,7 +50,7 @@ class Preview extends React.Component {
                       html={sentence.text}
                       disabled={false}
                     //   onBlur={this.props.handleCheck}
-                    //   onChange={this.props.handleSourceChange}
+                      onChange={event => this.props.handleSourceChange(sentence.block_id + "_" + this.props.page_no, event)}
                       style={{
                         border: "1px dashed #aaa",
                         padding: "5px"
