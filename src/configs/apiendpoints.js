@@ -1,5 +1,6 @@
 const endpoints = {
   interactive_translate: "/interactive-translation",
+  interactive_translate_v1: "/v1/interactive-translation",
   interactivesourceupdate: "/v1/interactive-editor/update-pdf-source-sentences",
   fetchfeedbackpending: "/check-feedback-pending",
   fetchlanguage: "/fetch-languages",
