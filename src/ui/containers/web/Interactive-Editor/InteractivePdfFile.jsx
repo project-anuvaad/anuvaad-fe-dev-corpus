@@ -60,7 +60,6 @@ class Preview extends React.Component {
           paragraph.tokenized_sentences.map((sentence, index) => {
             
             if (this.state.value !==1 && sentence.sentence_index === parseInt(this.state.sentenceDetails.startNode.split("_")[1])) {
-              debugger
               sentence.src = this.state.selectedText;
               sentence.target = this.props.intractiveTrans.tgt;
               sentence.tagged_tgt = this.props.intractiveTrans.tagged_tgt;

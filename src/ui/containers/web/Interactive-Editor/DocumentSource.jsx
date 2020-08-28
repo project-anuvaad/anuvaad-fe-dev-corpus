@@ -83,7 +83,7 @@ class Preview extends React.Component {
       this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
     } else if (this.state.title === "Create") {
-      this.props.handleCreateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
+      this.props.handleCreateBlock(window.getSelection().anchorNode.parentElement.id, this.props.sourceSentence)
       this.setState({ openDialog: false });
     }
   }
@@ -203,8 +203,9 @@ class Preview extends React.Component {
       position: "relative",
 
       height: sourceSentence.page_height + "px",
-      backgroundColor: "white"
-
+      backgroundColor: "white",
+      marginLeft: "auto",
+      marginRight: "auto"
       // backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
       // backgroundRepeat: "no-repeat",
       // backgroundSize: this.state.backgroundSize + "px"
@@ -235,6 +236,9 @@ class Preview extends React.Component {
                   selectedBlock={this.state.selectedBlock}
                   handleBlockClick={this.handleBlockClick.bind(this)}
                   handleSourceChange={this.props.handleSourceChange}
+                  createBlockId={this.props.createBlockId}
+                  isEditable={this.props.isEditable}
+                  handleEditor={this.props.handleEditor}
                 />
               </div>
             );
@@ -250,7 +254,7 @@ class Preview extends React.Component {
           />
         )}
 
-        {this.state.openEl && !this.state.selectedBlock && (
+        {this.state.openEl && !this.state.selectedBlock && !this.props.createBlockId && (
           <MenuItems
             isOpen={this.state.openEl}
             topValue={this.state.topValue}
