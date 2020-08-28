@@ -309,7 +309,7 @@ class PdfFileEditor extends React.Component {
     return (
       <div style={{ dislay: "flex", flexDirection: "row" }}>
         <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
-          <Button variant="extended" color="primary" style={{ fontSize: '90%', fontWeight: 'bold', height: "40px" }} onClick={() => this.handleOnClose()}>
+          <Button variant="extended" color="primary" style={{ position :"fixed",fontSize: '90%', fontWeight: 'bold', height: "40px" }} onClick={() => this.handleOnClose()}>
             <CloseIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
           </Button>
         </div>
