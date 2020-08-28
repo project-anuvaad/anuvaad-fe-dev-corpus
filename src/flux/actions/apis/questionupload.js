@@ -7,9 +7,7 @@ export default class RunExperiment extends API {
     super("POST", timeout, false);
     this.type = C.CREATEWORKSPACE;
     this.feedback_questions = questionList;
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.questionupload}`
-    
-    
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.questionupload}`;
   }
 
   toString() {
@@ -24,19 +22,19 @@ export default class RunExperiment extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/save-feedback-questions`;
+    return this.endpoint;
   }
 
   getBody() {
     return {
-        feedback_questions: this.feedback_questions
+      feedback_questions: this.feedback_questions
     };
   }
 
   getHeaders() {
     this.headers = {
       headers: {
-        Authorization: `Bearer ${  decodeURI(localStorage.getItem("token"))}`,
+        Authorization: `Bearer ${decodeURI(localStorage.getItem("token"))}`,
         "Content-Type": "application/json"
       }
     };

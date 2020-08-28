@@ -14,7 +14,7 @@ export default class FetchSentences extends API {
     this.pageno = pageno;
     this.status = status;
     this.accuracy = accuracy;
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.sentences}`
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.sentences}`;
   }
 
   toString() {
@@ -32,9 +32,9 @@ export default class FetchSentences extends API {
     if (this.status.item === "ALL" || this.status === "" || this.status === "ALL")
       return `${super.apiEndPointAuto()}/fetch-corpus-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}`;
     else {
-      return `${super.apiEndPointAuto()}/fetch-corpus-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${
-        this.pageno
-      }&status=${this.status.item}`;
+      return `${super.apiEndPointAuto()}/fetch-corpus-sentences?basename=${this.basename}&pagesize=${this.pagesize}&pageno=${this.pageno}&status=${
+        this.status.item
+      }`;
     }
   }
 

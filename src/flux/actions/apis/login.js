@@ -16,7 +16,7 @@ export default class LoginAPI extends API {
     this.userid = null;
     this.name = null;
     this.type = C.LOGIN;
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.login}`
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.login}`;
   }
 
   toString() {
@@ -36,7 +36,7 @@ export default class LoginAPI extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPoint()}/sysuser/login`;
+    return this.endpoint;
   }
 
   getBody() {
@@ -52,7 +52,7 @@ export default class LoginAPI extends API {
   getHeaders() {
     this.headers = {
       headers: {
-        "Content-Type" : "application/json"
+        "Content-Type": "application/json"
       }
     };
     return this.headers;

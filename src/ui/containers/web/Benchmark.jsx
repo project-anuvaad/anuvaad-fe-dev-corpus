@@ -204,7 +204,7 @@ class Benchmark extends React.Component {
                       </MenuItem>
                     ))
                     : []}
-                  >
+                  
                 </SelectModel>
               );
             }

@@ -7,8 +7,8 @@ export default class PdfToDoc extends API {
     super("POST", timeout, false, "MULTIPART");
     this.type = C.PDF_TO_DOC;
     this.file = file;
-    this.filePath = ''
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.pdftodoc}`
+    this.filePath = "";
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.pdftodoc}`;
   }
 
   toString() {
@@ -23,12 +23,12 @@ export default class PdfToDoc extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/convert-pdf-to-doc`;
+    return this.endpoint;
   }
 
   getFormData() {
     const formData = new FormData();
-    formData.append('pdf_data', this.file);
+    formData.append("pdf_data", this.file);
     return formData;
   }
 

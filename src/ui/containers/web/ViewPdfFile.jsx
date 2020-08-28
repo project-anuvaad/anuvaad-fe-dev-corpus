@@ -14,6 +14,7 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import { translate } from "../../../assets/localisation";
 import Timer from "../../components/web/common/CountDown";
 import ProgressBar from "../../components/web/common/ProgressBar";
+import Spinner from "../../components/web/common/Spinner";
 
 class PdfUpload extends React.Component {
   constructor(props) {
@@ -34,7 +35,7 @@ class PdfUpload extends React.Component {
   }
 
   componentDidMount() {
-    this.handleRefresh()
+    this.handleRefresh(true)
   }
 
   handleClick = rowData => {
@@ -42,17 +43,17 @@ class PdfUpload extends React.Component {
   };
 
 
-  handleRefresh() {
+  handleRefresh(value) {
     const { APITransport } = this.props;
     const apiObj = new FetchPdf();
     APITransport(apiObj);
-    this.setState({ showLoader: true });
+    value && this.setState({ showLoader: true });
   }
 
 
   componentDidUpdate(prevProps) {
     if (prevProps.corp !== this.props.corp) {
-      this.setState({ name: this.props.corp });
+      this.setState({ name: this.props.corp,showLoader:false });
     }
   }
 
@@ -225,8 +226,10 @@ class PdfUpload extends React.Component {
             )}
         </Toolbar>
         <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
-          <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />
+        {!this.state.showLoader && <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />}
         </div>
+
+        {this.state.showLoader && < Spinner/>}
       </div>
     );
   }
