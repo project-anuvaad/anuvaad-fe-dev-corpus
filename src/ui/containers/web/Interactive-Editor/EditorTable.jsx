@@ -6,9 +6,6 @@ class EditorTable extends React.Component {
   }
 
   fetchTableContent(sentences) {
-   
-   
-
     let col = [];
 
     if (sentences && sentences.children && Array.isArray(sentences.children) && sentences.children.length > 0) {
@@ -31,7 +28,7 @@ class EditorTable extends React.Component {
             >
               {tableData.text.map((textObj, i) => {
                 return (
-                    
+
                   <div
                     key={i}
                     
@@ -45,7 +42,7 @@ class EditorTable extends React.Component {
           );
         }
       });
-      
+
       return col;
     }
   }
