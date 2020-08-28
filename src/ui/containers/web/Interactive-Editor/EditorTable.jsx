@@ -26,9 +26,6 @@ class EditorTable extends React.Component {
   }
 
   fetchTableContent(sentences) {
-   
-   
-
     let col = [];
 
     if (sentences && sentences.children && Array.isArray(sentences.children) && sentences.children.length > 0) {
@@ -38,7 +35,7 @@ class EditorTable extends React.Component {
             <div
               key={i}
               style={{
-                 
+
                 border: "1px solid black",
                 borderCollapse: "collapse",
                 position: 'absolute',
@@ -50,11 +47,16 @@ class EditorTable extends React.Component {
             >
               {tableData.text.map((textObj, i) => {
                 return (
-                    
+
                   <div
                     key={i}
-                    
-                    style={{paddingLeft:textObj.text_left-tableData.text_left +"px",fontSize:textObj.font_size + "px", fontWeight: textObj.font_family && textObj.font_family.includes("Bold") && 'bold',}}
+
+                    style={{
+                      paddingLeft: textObj.text_left - tableData.text_left + "px",
+                      fontSize: textObj.font_size + "px",
+                      fontWeight: textObj.font_family && textObj.font_family.includes("Bold") && 'bold',
+                      lineHeight: tableData.text && parseInt(tableData.text_height / tableData.text.length) + "px"
+                    }}
                   >
                     {textObj.text}
                   </div>
@@ -64,7 +66,7 @@ class EditorTable extends React.Component {
           );
         }
       });
-      
+
       return col;
     }
   }
