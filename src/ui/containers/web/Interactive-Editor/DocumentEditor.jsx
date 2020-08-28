@@ -107,11 +107,13 @@ class PdfFileEditor extends React.Component {
     var sen = this.state.sentences;
     var pageData = page;
     var value;
+    var height ;
     pageData &&
       pageData.text_blocks &&
       pageData.text_blocks.map((blockData, i) => {
         if (parseInt(block) === blockData.block_id) {
           value = i;
+          height = blockData.text_top;
         }
       });
     var a = JSON.parse(JSON.stringify(pageData.text_blocks[value]));
@@ -123,7 +125,7 @@ class PdfFileEditor extends React.Component {
     pageData &&
       pageData.text_blocks &&
       pageData.text_blocks.map((blockData, i) => {
-        if (i > value) {
+        if (i > value || blockData.text_top>height) {
           extraHeight = pageData.text_blocks[value].text_height;
           blockData.text_top = blockData.text_top + extraHeight;
         }
@@ -143,13 +145,14 @@ class PdfFileEditor extends React.Component {
   handleDeleteBlock(block, blockText, pageData) {
     block = block.split("_")[0]
     let blocks = [];
-    let height;
+    let height,top;
 
     pageData &&
       pageData.text_blocks &&
       pageData.text_blocks.map(data => {
         if (data.block_id == block) {
           height = data.text_height;
+          top = data.text_top;
         }
       });
 
@@ -159,22 +162,27 @@ class PdfFileEditor extends React.Component {
         if (blockData.block_id == block) {
           // blockData.status = "deleted"
           // blocks.push(blockData)
+         
           delete pageData.text_blocks[i];
         } else {
-          if (blockData.block_id < block) {
-            blocks.push(blockData);
-          } else {
-            let blockId = blockData.block_id - 1;
+          
+          if (blockData.block_id > block || blockData.text_top>top) {
             let blockTop = blockData.text_top - height;
 
-            blockData.block_id = blockId;
+            
             blockData.text_top = blockTop;
 
             blocks.push(blockData);
+            
+          } else {
+            blocks.push(blockData);
+            
+            
           }
         }
       });
-
+      
+      pageData.page_height = pageData.page_height - height;
     this.indexCorrection();
 
     let res = [];
@@ -356,7 +364,7 @@ class PdfFileEditor extends React.Component {
     return (
       <div style={{ dislay: "flex", flexDirection: "row" }}>
         <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
-          <Button variant="extended" color="primary" style={{ fontSize: '90%', fontWeight: 'bold', height: "40px" }} onClick={() => this.handleOnClose()}>
+          <Button variant="extended" color="primary" style={{position:'fixed', fontSize: '90%', fontWeight: 'bold', height: "40px" }} onClick={() => this.handleOnClose()}>
             <CloseIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
           </Button>
         </div>

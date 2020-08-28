@@ -14,7 +14,7 @@ class EditorTable extends React.Component {
               //
               <div
                 key={i}
-                style={{ position: "absolute", top: textObj.text_top + "px", left: textObj.text_left + "px", width: textObj.text_width + "px" }}
+                style={{  top: textObj.text_top + "px", left: textObj.text_left + "px", width: textObj.text_width + "px" }}
               >
                 {textObj.text}
               </div>
@@ -42,6 +42,7 @@ class EditorTable extends React.Component {
                 border: "1px solid black",
                 borderCollapse: "collapse",
                 position: 'absolute',
+                zIndex: 1,
                 top: tableData.text_top + "px",
                 left: tableData.text_left + "px",
                 width: tableData.text_width + "px",
