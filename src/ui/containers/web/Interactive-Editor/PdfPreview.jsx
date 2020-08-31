@@ -47,6 +47,7 @@ class PdfPreview extends React.Component {
       `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
       fileDetails.download_source_path ? fileDetails.download_source_path : ""
       }`;
+     
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
@@ -136,7 +137,7 @@ class PdfPreview extends React.Component {
             </div>
           </Grid>
         </Toolbar>
-        <div style={{ marginLeft: !this.props.zoom && '10%', marginBottom: "0px", maxHeight: window.innerHeight - 180, overflowY: "auto" }} id="pdfDocument">
+        <div style={{ marginLeft: !this.props.zoom && '10%', marginBottom: "0px", maxHeight: window.innerHeight - 180, overflowY: "hidden" }} id="pdfDocument">
           <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess} style={{ align: "center" }}>
             <Page scale={!this.props.zoom ? this.state.scale : this.state.pageScaleWidth} pageNumber={Number(pageNo) } onLoadSuccess={this.onPageLoad} />
           </Document>
