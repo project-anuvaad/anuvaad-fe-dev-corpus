@@ -26,8 +26,8 @@ class Preview extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.scrollToPage !== this.props.scrollToPage) {
-      if (this.refs[this.props.scrollToPage -1]) {
-        this.refs[this.props.scrollToPage-1].scrollIntoView({
+      if (this.refs[this.props.scrollToPage - 1]) {
+        this.refs[this.props.scrollToPage - 1].scrollIntoView({
           behavior: "smooth"
 
         })
@@ -193,33 +193,16 @@ class Preview extends React.Component {
     });
   };
 
-  render() {
-    const { sourceSentence } = this.props;
-
+  getContent() {
     let yAxis = 0;
+    let sourceSentence = this.props.sourceSentence
 
-    let style = {
-      maxWidth: sourceSentence.page_width + "px",
-      // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
-
-      position: "relative",
-
-      height: sourceSentence.page_height + "px",
-      backgroundColor: "white"
-
-      // backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
-      // backgroundRepeat: "no-repeat",
-      // backgroundSize: this.state.backgroundSize + "px"
-    };
     return (
-      <Paper style={style} 
-        onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
-      >
-        {sourceSentence.tables &&
-          Array.isArray(sourceSentence.tables) &&
-          sourceSentence.tables.map((table, i) => {
-            return <EditorTable key={i} table={table}></EditorTable>;
-          })}
+      <div>  {sourceSentence.tables &&
+        Array.isArray(sourceSentence.tables) &&
+        sourceSentence.tables.map((table, i) => {
+          return <EditorTable key={i} table={table}></EditorTable>;
+        })}
 
         {sourceSentence.text_blocks &&
           sourceSentence.text_blocks.map((sentence, index) => {
@@ -241,37 +224,64 @@ class Preview extends React.Component {
           })}
 
         {/* {this.state.openDialog && (
-          <Dialog
-            message={this.state.dialogMessage}
-            handleSubmit={this.handleDialog.bind(this)}
-            handleClose={this.handleClose.bind(this)}
-            open
-            title={this.state.title}
-          />
-        )}
+        <Dialog
+          message={this.state.dialogMessage}
+          handleSubmit={this.handleDialog.bind(this)}
+          handleClose={this.handleClose.bind(this)}
+          open
+          title={this.state.title}
+        />
+      )}
 
-        {this.state.openEl && (
-          <MenuItems
-            isOpen={this.state.openEl}
-            topValue={this.state.topValue}
-            leftValue={this.state.leftValue}
-            anchorEl={this.state.anchorEl}
-            operation_type={this.state.operation_type}
-            handleClose={this.handleClose.bind(this)}
-            handleDialog={this.handleDialogMessage.bind(this)}
-            handleDuplicateBlock={this.props.handleDuplicateBlock}
-            handleDeleteBlock={this.props.handleDeleteBlock}
-            pageData={this.props.sourceSentence}
-          />
-        )} */}
+      {this.state.openEl && (
+        <MenuItems
+          isOpen={this.state.openEl}
+          topValue={this.state.topValue}
+          leftValue={this.state.leftValue}
+          anchorEl={this.state.anchorEl}
+          operation_type={this.state.operation_type}
+          handleClose={this.handleClose.bind(this)}
+          handleDialog={this.handleDialogMessage.bind(this)}
+          handleDuplicateBlock={this.props.handleDuplicateBlock}
+          handleDeleteBlock={this.props.handleDeleteBlock}
+          pageData={this.props.sourceSentence}
+        />
+      )} */}
 
         {sourceSentence.images &&
           Array.isArray(sourceSentence.images) &&
           sourceSentence.images.length > 0 &&
           sourceSentence.images.map((images, imgIndex) => {
             return <Image imgObj={images}></Image>;
-          })}
-      </Paper>
+          })}</div>
+    )
+  }
+
+  render() {
+    const { sourceSentence } = this.props;
+
+    let style = {
+      maxWidth: sourceSentence.page_width + "px",
+      // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
+
+      position: "relative",
+      height: sourceSentence.page_height + "px",
+      backgroundColor: "white"
+    };
+
+    return (
+      <div>
+        {
+          !this.props.isPreview ?
+            <Paper style={style}
+              onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
+            >{this.getContent()}</Paper> :
+            <div style={style}
+              onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
+            >{this.getContent()}</div>
+        }
+      </div>
+
     );
   }
 }
