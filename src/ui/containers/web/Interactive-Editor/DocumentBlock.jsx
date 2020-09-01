@@ -4,13 +4,13 @@ import ContentEditable from "react-contenteditable";
 class Preview extends React.Component {
     constructor(props) {
         super(props);
-        this.state={
-            isEditable:false
+        this.state = {
+            isEditable: false
         }
     }
 
     handleMouseHover(id) {
-        if(!this.props.selectedBlock) {
+        if (!this.props.selectedBlock && !this.props.createBlockId) {
             this.props.handleOnMouseEnter(id)
         }
     }
@@ -31,34 +31,36 @@ class Preview extends React.Component {
             lineHeight: sentence.children && parseInt(sentence.text_height / sentence.children.length) + 'px',
             // backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no ? "yellow" : ""
             backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? "yellow" : ""
-        
         }
+      
         return (
             <div id={sentence.block_id + "_" + this.props.page_no} style={styles} key={sentence.block_id}
-                // onMouseEnter={() => this.props.handleOnMouseEnter(sentence.block_id+ "_" + this.props.page_no)}
-                onMouseEnter={() => this.handleMouseHover(sentence.block_id+ "_" + this.props.page_no)}
+                onMouseEnter={() => this.handleMouseHover(sentence.block_id + "_" + this.props.page_no)}
                 onMouseLeave={() => this.props.handleOnMouseEnter()}
-                onDoubleClick = {event => this.props.handleDoubleClick(sentence.block_id + "_" + this.props.page_no, event)}
-                // contentEditable = {this.props.selectedBlock === sentence.block_id + "_" + this.props.page_no ? true : false}
-                onClick={()=>{
-                    if(sentence.block_id + "_" + this.props.page_no !== this.props.selectedBlock) {
+                onDoubleClick={event => this.props.handleDoubleClick(sentence.block_id + "_" + this.props.page_no, event)}
+                // contentEditable = {this.props.createBlockId === sentence.block_id + "_" + this.props.page_no ? true : false}
+                onClick={() => {
+                    if (sentence.block_id + "_" + this.props.page_no !== this.props.selectedBlock) {
                         this.props.handleBlockClick()
+                    } else if(sentence.block_id + "_" + this.props.page_no !== this.props.createBlockId) {
+                        this.props.handleEditor()
                     }
                 }}
             >
-               {this.props.selectedBlock === sentence.block_id + "_" + this.props.page_no ? (
+                {(this.props.selectedBlock === sentence.block_id + "_" + this.props.page_no || this.props.createBlockId === sentence.block_id + "_" + this.props.page_no) ? (
                     <ContentEditable
-                      html={sentence.text}
-                      disabled={false}
-                    //   onBlur={this.props.handleCheck}
-                      onChange={event => this.props.handleSourceChange(sentence.block_id + "_" + this.props.page_no, event)}
-                      style={{
-                        border: "1px dashed #aaa",
-                        padding: "5px"
-                      }}
+                        html={sentence.text}
+                        disabled={false}
+                        //   onBlur={this.props.handleCheck}
+                        onChange={event => this.props.handleSourceChange(sentence.block_id + "_" + this.props.page_no, event)}
+                        style={{
+                            border: "1px dashed #aaa",
+                            padding: "5px",
+                            // height: !sentence.children && parseInt(sentence.text_height) + "px"
+                        }}
                     />
-                  ) : (
-                     sentence.text
+                ) : (
+                        sentence.text
                     )}
             </div >
         );

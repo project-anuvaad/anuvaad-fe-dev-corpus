@@ -98,7 +98,6 @@ class PdfFileEditor extends React.Component {
 
     this.setState({ sentences: sen });
     this.indexCorrection();
-    console.log(this.state.sentences);
   }
 
   handleDuplicateBlock(block, blockText, page) {
@@ -200,18 +199,19 @@ class PdfFileEditor extends React.Component {
   }
 
   handleCreateBlock(block, page) {
-    block = block.split("_")[0]
+    let blockId = block.split("_")[0]
+    let pageNO = block.split("_")[1]
 
     var sen = this.state.sentences;
     var pageData = page;
     var value;
     let selectedSourceText = ""
-    let id = parseInt(block) + 1
+    let id = parseInt(blockId) + 1
     pageData &&
       pageData.text_blocks &&
       pageData.text_blocks.map((blockData, i) => {
         selectedSourceText = blockData.text
-        if (parseInt(block) === blockData.block_id) {
+        if (parseInt(blockId) === blockData.block_id) {
           value = i;
         }
       });
@@ -235,9 +235,12 @@ class PdfFileEditor extends React.Component {
           sentence = pageData;
         }
       });
-
-    this.setState({ sentences: sen, selectedSourceText: "", selectedBlockId: id, isEditable: true });
+    this.setState({ sentences: sen, selectedSourceText: "", selectedBlockId: id + "_" + pageNO, isEditable: true });
     this.indexCorrection();
+  }
+
+  handleEditor() {
+    this.setState({selectedBlockId: null})
   }
 
   handleDialogSave(selection, operation_type, pageDetails) {
@@ -281,7 +284,6 @@ class PdfFileEditor extends React.Component {
         sentence.text_blocks[index].block_id = index;
       });
     });
-    console.log(sentenceObj);
     this.setState({ sentences: sentenceObj });
   };
 
@@ -303,8 +305,8 @@ class PdfFileEditor extends React.Component {
             let sentences = []
 
             page.text_blocks.map((block, i) => {
-            sentences.push(block)
-            let paragraph = {}
+              sentences.push(block)
+              let paragraph = {}
               if (block.block_id == blockId) {
                 paragraph = block
                 paragraph.text = evt.target.value
@@ -314,7 +316,6 @@ class PdfFileEditor extends React.Component {
               } else {
                 sentences.push(block)
               }
-              // docPage.push(sentences)
             })
             docPage.text_blocks = sentences
 
@@ -361,6 +362,7 @@ class PdfFileEditor extends React.Component {
     };
 
     let pageDividerHeight = "0";
+
     return (
       <div style={{ dislay: "flex", flexDirection: "row" }}>
         <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
@@ -368,7 +370,8 @@ class PdfFileEditor extends React.Component {
             <CloseIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
           </Button>
         </div>
-        <div style={{ textAlign: "-webkit-center" }}>
+
+        <div style={{ marginLeft: "auto", marginRight: "auto" }}>
           {this.state.sentences &&
             this.state.sentences.map((sentence, index) => {
               yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
@@ -399,9 +402,10 @@ class PdfFileEditor extends React.Component {
                     handleDeleteBlock={this.handleDeleteBlock.bind(this)}
                     handleCreateBlock={this.handleCreateBlock.bind(this)}
                     selectedSourceText={this.state.selectedSourceText}
-                    selectedBlockId={this.state.selectedBlockId}
+                    createBlockId={this.state.selectedBlockId}
                     isEditable={this.state.isEditable}
                     handleSourceChange={this.handleSourceChange.bind(this)}
+                    handleEditor={this.handleEditor.bind(this)}
                   />
                 </div>
               );
