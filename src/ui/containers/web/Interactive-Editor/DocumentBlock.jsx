@@ -15,9 +15,13 @@ class Preview extends React.Component {
         }
     }
 
+    handleChangeEvent = event => {
+        event => this.props.handleSourceChange(this.props.sentence.block_id + "_" + this.props.page_no, event)
+    }
+
     render() {
         const { sentence } = this.props;
-
+        console.log("editable---",this.state.isEditable)
         var styles = {
             position: "absolute ",
             top: sentence.text_top + "px",
@@ -28,6 +32,7 @@ class Preview extends React.Component {
             fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && 'bold',
             textAlign: "justify",
             zIndex: 1,
+            cursor: !this.state.isEditable &&'pointer',
             lineHeight: sentence.children && parseInt(sentence.text_height / sentence.children.length) + 'px',
             // backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no ? "yellow" : ""
             backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? "yellow" : ""
@@ -52,10 +57,11 @@ class Preview extends React.Component {
                         html={sentence.text}
                         disabled={false}
                         //   onBlur={this.props.handleCheck}
-                        onChange={event => this.props.handleSourceChange(sentence.block_id + "_" + this.props.page_no, event)}
+                        onChange={this.handleChangeEvent}
                         style={{
                             border: "1px dashed #aaa",
                             padding: "5px",
+                            cursor: 'auto'
                             // height: !sentence.children && parseInt(sentence.text_height) + "px"
                         }}
                     />

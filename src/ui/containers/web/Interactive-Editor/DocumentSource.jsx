@@ -69,6 +69,7 @@ class Preview extends React.Component {
 
     return tableRow;
   }
+  
 
   handleDialog() {
 
@@ -189,6 +190,17 @@ class Preview extends React.Component {
 
   handleBlockClick() {
     this.setState({ selectedBlock: null })
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.submittedId !== nextProps.submittedId) {
+      return {
+       
+        sentences: nextProps.sentences
+      };
+    }
+    
+    return null;
   }
 
   render() {
