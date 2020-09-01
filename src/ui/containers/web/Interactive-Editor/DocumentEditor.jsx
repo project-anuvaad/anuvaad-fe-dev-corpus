@@ -29,7 +29,8 @@ class PdfFileEditor extends React.Component {
       pageArr: [],
       hoveredSentence: "",
       sentences: '',
-      selectedText: ""
+      selectedText: "",
+      clear: false
     };
   }
 
@@ -63,6 +64,7 @@ class PdfFileEditor extends React.Component {
 
 
   handleCreateBlock(block, blockText, page) {
+    console.log("Sajish----")
     var sen = this.state.sentences;
     var pageData = page;
     var value;
@@ -204,7 +206,7 @@ class PdfFileEditor extends React.Component {
 
     var sen = this.state.sentences;
     var pageData = page;
-    var value;
+    var value, height;
     let selectedSourceText = ""
     let id = parseInt(blockId) + 1
     pageData &&
@@ -213,6 +215,7 @@ class PdfFileEditor extends React.Component {
         selectedSourceText = blockData.text
         if (parseInt(blockId) === blockData.block_id) {
           value = i;
+          height = blockData.text_top;
         }
       });
     var a = JSON.parse(JSON.stringify(pageData.text_blocks[value]));
@@ -223,7 +226,7 @@ class PdfFileEditor extends React.Component {
     pageData &&
       pageData.text_blocks &&
       pageData.text_blocks.map((blockData, i) => {
-        if (i > value) {
+        if (i > value || blockData.text_top>height) {
           extraHeight = pageData.text_blocks[value].text_height;
           blockData.text_top = blockData.text_top + extraHeight;
         }
@@ -237,10 +240,12 @@ class PdfFileEditor extends React.Component {
       });
     this.setState({ sentences: sen, selectedSourceText: "", selectedBlockId: id + "_" + pageNO, isEditable: true });
     this.indexCorrection();
+    
   }
 
   handleEditor() {
-    this.setState({selectedBlockId: null})
+    console.log("-------")
+    this.state.clear && this.setState({selectedBlockId: null, clear: false})
   }
 
   handleDialogSave(selection, operation_type, pageDetails) {
@@ -275,14 +280,19 @@ class PdfFileEditor extends React.Component {
 
     this.setState({ sentences: sen });
     this.indexCorrection();
+    this.handleEditor()
   }
 
   indexCorrection = () => {
-    var sentenceObj = this.state.sentences;
+    var sentenceObj = [...this.state.sentences];
     sentenceObj.map(sentence => {
-      sentence.text_blocks.map((value, index) => {
-        sentence.text_blocks[index].block_id = index;
+      var sen = sentence.text_blocks.filter(val => val)
+      sen.map((value, index) => {
+        
+        sen[index].block_id = index;
+        
       });
+      sentence.text_blocks= sen;
     });
     this.setState({ sentences: sentenceObj });
   };
@@ -292,7 +302,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleSourceChange(block, evt) {
-    this.setState({ selectedText: evt.target.value });
+    this.setState({ selectedText: evt.target.value, clear: true });
 
     let blockId = block.split("_")[0]
     let pageNo = block.split("_")[1]
@@ -371,7 +381,7 @@ class PdfFileEditor extends React.Component {
           </Button>
         </div>
 
-        <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+        <div style={{ marginLeft: "auto", marginRight: "auto" }}  onClick={() => this.handleEditor()}>
           {this.state.sentences &&
             this.state.sentences.map((sentence, index) => {
               yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);

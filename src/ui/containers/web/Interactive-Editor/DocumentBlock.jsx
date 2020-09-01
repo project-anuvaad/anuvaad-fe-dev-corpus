@@ -16,7 +16,7 @@ class Preview extends React.Component {
     }
 
     handleChangeEvent = event => {
-        event => this.props.handleSourceChange(this.props.sentence.block_id + "_" + this.props.page_no, event)
+        this.props.handleSourceChange(this.props.sentence.block_id + "_" + this.props.page_no, event)
     }
 
     render() {

@@ -33,7 +33,7 @@ class MenuClass extends React.Component {
             }
           >
             {" "}
-            {this.props.operation_type === "merge" || this.props.operation_type === "merge-individual" ? "Merge" : "Split"}
+            {this.props.operation_type === "merge" || this.props.operation_type === "merge-individual" ? "Merge Block" : "Split"}
           </Button>
           
         )}
