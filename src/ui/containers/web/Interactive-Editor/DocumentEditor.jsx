@@ -63,7 +63,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
-    this.setState({ hoveredSentence: sentenceId });
+    this.setState({ hoveredSentence: sentenceId});
   }
 
   handleOnMouseLeave() {
@@ -74,6 +74,9 @@ class PdfFileEditor extends React.Component {
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
   }
 
+  handlePreviewPageChange(pageNo) {
+    this.setState({ pageNo: parseInt(pageNo) + 1})
+  }
 
   handleCreateBlock(block, blockText, page) {
     var sen = this.state.sentences;
@@ -387,6 +390,7 @@ class PdfFileEditor extends React.Component {
                       selectedSourceText={this.state.selectedSourceText}
                       selectedBlockId={this.state.selectedBlockId}
                       isEditable={this.state.isEditable}
+                      isPreview={false}
                     />
                   </div>
                 );
@@ -468,6 +472,8 @@ class PdfFileEditor extends React.Component {
                             selectedSourceText={this.state.selectedSourceText}
                             selectedBlockId={this.state.selectedBlockId}
                             isEditable={this.state.isEditable}
+                            isPreview={true}
+                            handlePreviewPageChange = {this.handlePreviewPageChange.bind(this)}
                           />
                         </div>
                       );

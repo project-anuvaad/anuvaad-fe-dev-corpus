@@ -71,17 +71,17 @@ class Preview extends React.Component {
 
   handleDialog() {
 
-    if(this.state.title === "Merge") {
-     
+    if (this.state.title === "Merge") {
+
       this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
       this.setState({ openDialog: false });
-    } else if(this.state.title === "Delete") {
+    } else if (this.state.title === "Delete") {
       this.props.handleDeleteBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
-    } else if(this.state.title === "Duplicate") {
+    } else if (this.state.title === "Duplicate") {
       this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
-    } else if(this.state.title === "Create") {
+    } else if (this.state.title === "Create") {
       this.props.handleCreateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
     }
@@ -202,7 +202,9 @@ class Preview extends React.Component {
     };
 
     return (
-      <Paper style={style}>
+      <Paper style={style}
+        onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no)}}
+      >
         {sourceSentence.tables &&
           Array.isArray(sourceSentence.tables) &&
           sourceSentence.tables.map((table, i) => {
@@ -223,7 +225,6 @@ class Preview extends React.Component {
                   page_no={sourceSentence.page_no}
                   handleOnMouseEnter={this.props.handleOnMouseEnter}
                   hoveredSentence={this.props.hoveredSentence}
-                 
                 />
               </div>
             );
