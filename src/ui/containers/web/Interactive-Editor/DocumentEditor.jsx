@@ -39,7 +39,8 @@ class PdfFileEditor extends React.Component {
       fileId: "",
       pageNo: 1,
       fileDetails: {},
-      zoom: false
+      zoom: false,
+      scrollToPage: ""
     };
   }
 
@@ -74,8 +75,8 @@ class PdfFileEditor extends React.Component {
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
   }
 
-  handlePreviewPageChange(pageNo) {
-    this.setState({ pageNo: parseInt(pageNo) + 1})
+  handlePreviewPageChange(pageNo, value) {
+    this.setState({ pageNo: parseInt(pageNo) + value, scrollToPage: pageNo + value})
   }
 
   handleCreateBlock(block, blockText, page) {
@@ -303,7 +304,7 @@ class PdfFileEditor extends React.Component {
   };
 
   handlePageChange(value) {
-    this.setState({ pageNo: Number(this.state.pageNo) + Number(value) });
+    this.setState({ pageNo: Number(this.state.pageNo) + Number(value), scrollToPage: Number(this.state.pageNo) + Number(value) });
   }
 
   handleZoomChange = value => {
@@ -406,22 +407,6 @@ class PdfFileEditor extends React.Component {
 
             <Grid item xs={12} sm={6} lg={6} xl={6} style={{ padding: "8px" }}>
               <Paper>
-
-                {/* <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                  <Grid item xs={6} sm={6} lg={6} xl={6}>
-
-                    <Typography value="" variant="subtitle2" style={{ cursor: "pointer", color: '#233466', paddingLeft: '7px' }}>
-                      Original Document
-                </Typography>
-                  </Grid>
-                  <Grid item xs={6} sm={6} lg={6} xl={6} style={{ textAlign: "right" }}>
-
-                    <Typography value="" variant="subtitle6" color="primary" style={{ cursor: "pointer", color: '#233466', marginRight: '5px' }} onClick={() => this.handleCompareDocClose()}>
-                      {translate("common.page.label.close")}
-                    </Typography>
-                  </Grid>
-                </Toolbar> */}
-                {/* <div style={{ backgroundColor: "yellow" }}>text</div> */}
                 <PdfPreview data={this.state.fileId}
                   pageNo={this.state.pageNo}
                   numPages={this.state.numPages}
@@ -460,8 +445,13 @@ class PdfFileEditor extends React.Component {
                       return (
                         <div>
                           <SourceView
+                            isPreview={true}
                             key={sentence.page_no + "_" + index}
                             sourceSentence={sentence}
+                            scrollToPage={this.state.scrollToPage}
+                            selectedSourceText={this.state.selectedSourceText}
+                            selectedBlockId={this.state.selectedBlockId}
+                            isEditable={this.state.isEditable}
                             handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                             hoveredSentence={this.state.hoveredSentence}
                             pageNo={sentence.page_no}
@@ -469,10 +459,7 @@ class PdfFileEditor extends React.Component {
                             handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
                             handleDeleteBlock={this.handleDeleteBlock.bind(this)}
                             handleCreateBlock={this.handleCreateBlock.bind(this)}
-                            selectedSourceText={this.state.selectedSourceText}
-                            selectedBlockId={this.state.selectedBlockId}
-                            isEditable={this.state.isEditable}
-                            isPreview={true}
+                           
                             handlePreviewPageChange = {this.handlePreviewPageChange.bind(this)}
                           />
                         </div>

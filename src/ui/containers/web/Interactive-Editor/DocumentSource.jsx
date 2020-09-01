@@ -24,6 +24,17 @@ class Preview extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.scrollToPage !== this.props.scrollToPage) {
+      if (this.refs[this.props.scrollToPage -1]) {
+        this.refs[this.props.scrollToPage-1].scrollIntoView({
+          behavior: "smooth"
+
+        })
+      }
+    }
+  }
+
   fetchTableContent(sentences) {
     let tableRow = [];
     let index = 0;
@@ -200,10 +211,9 @@ class Preview extends React.Component {
       // backgroundRepeat: "no-repeat",
       // backgroundSize: this.state.backgroundSize + "px"
     };
-
     return (
-      <Paper style={style}
-        onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no)}}
+      <Paper style={style} 
+        onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
       >
         {sourceSentence.tables &&
           Array.isArray(sourceSentence.tables) &&
@@ -217,7 +227,7 @@ class Preview extends React.Component {
 
             return (
               // <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
-              <div>
+              <div ref={sourceSentence.page_no}>
                 <BlockView
                   key={index + "_" + sentence.block_id}
                   sentence={sentence}
