@@ -11,7 +11,6 @@ export default class DocumentUpload extends API {
     this.type = C.DOCUMENTUPLOAD;
     this.file = configFile;
     this.name = name;
-    console.log()
     this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.documentupload}`;
   }
 
