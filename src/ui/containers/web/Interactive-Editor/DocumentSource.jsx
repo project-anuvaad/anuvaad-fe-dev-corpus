@@ -168,12 +168,12 @@ class Preview extends React.Component {
           sourceSentence.tables.map((table, i) => {
             return <EditorTable
               key={i} table={table}
-              // tableId={i}
-              // pageNo={sourceSentence.page_no}
-              // hoveredTableId={this.props.hoveredTableId}
-              // popOver={this.props.popOver}
-              // handleTableHover={this.props.handleTableHover}
-              // handlePopUp={this.props.handlePopUp}
+              tableId={i}
+              pageNo={sourceSentence.page_no}
+              hoveredTableId={this.props.hoveredTableId}
+              popOver={this.props.popOver}
+              handleTableHover={this.props.handleTableHover}
+              handlePopUp={this.props.handlePopUp}
             ></EditorTable>;
           })}
 

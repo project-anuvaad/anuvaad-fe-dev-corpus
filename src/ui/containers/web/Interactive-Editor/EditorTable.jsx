@@ -46,8 +46,11 @@ class EditorTable extends React.Component {
                 top: tableData.text_top + "px",
                 left: tableData.text_left + "px",
                 width: tableData.text_width + "px",
-                height: tableData.text_height + "px"
+                height: tableData.text_height + "px",
+                backgroundColor: this.props.hoveredTableId === this.props.tableId + "_" + tableData.index[0] + "_" + tableData.index[1] + this.props.pageNo ? "yellow" : ""
               }}
+              onMouseEnter={()=> this.props.handleTableHover(this.props.tableId + "_" + tableData.index[0] + "_" + tableData.index[1] + this.props.pageNo)}
+              onMouseLeave={()=> this.props.handleTableHover("")}
             >
               {tableData.text.map((textObj, i) => {
                 return (

@@ -42,19 +42,19 @@ class PdfFileEditor extends React.Component {
       showCompareDocs: false,
       pageNo: 1,
       zoom: false,
-      scrollToPage: ""
-        // popOver: false,
-      // hoveredTableId: "",
+      scrollToPage: "",
+      popOver: false,
+      hoveredTableId: "",
     };
   }
 
   componentDidMount() {
     const apiObj = new FileDetails(this.props.match.params.fileid);
     this.props.APITransport(apiObj);
-    
+
     let obj = {}
     obj.download_source_path = this.props.match.params.inputfileid
-   this.setState({ fileDetails: obj })
+    this.setState({ fileDetails: obj })
   }
 
   componentDidUpdate(prevProps) {
@@ -364,16 +364,16 @@ class PdfFileEditor extends React.Component {
   }
 
   handlePreviewPageChange(pageNo, value) {
-    this.setState({ pageNo: parseInt(pageNo) + value, scrollToPage: pageNo + value})
+    this.setState({ pageNo: parseInt(pageNo) + value, scrollToPage: pageNo + value })
   }
 
-  // handleTableHover(id) {
-  //   this.setState({ hoveredTableId: id, hoveredSentence: "" })
-  // }
+  handleTableHover(id) {
+    this.setState({ hoveredTableId: id, hoveredSentence: "" })
+  }
 
-  // handlePopUp() {
-  //   this.setState({ popOver: true })
-  // }
+  handlePopUp() {
+    this.setState({ popOver: true })
+  }
 
   render() {
     let yAxis = 0;
@@ -411,71 +411,71 @@ class PdfFileEditor extends React.Component {
     let pageDividerHeight = "0";
 
     if (!this.state.showCompareDocs) {
-    return (
-      <div style={{ dislay: "flex", flexDirection: "row" }}>
-        <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
-          <div style={{ position: "fixed" }}>
-            <Button variant="extended" color="primary" style={{ fontSize: '90%', fontWeight: 'bold' }} onClick={() => this.handleCompareDocs()}>
-              Compare with Original
+      return (
+        <div style={{ dislay: "flex", flexDirection: "row" }}>
+          <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
+            <div style={{ position: "fixed" }}>
+              <Button variant="extended" color="primary" style={{ fontSize: '90%', fontWeight: 'bold' }} onClick={() => this.handleCompareDocs()}>
+                Compare with Original
             </Button>
-            <Button variant="extended" color="primary" style={{ fontSize: '90%', fontWeight: 'bold', marginLeft: "10px" }} onClick={() => this.handleOnClose()}>
-              <CloseIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
-            </Button>
+              <Button variant="extended" color="primary" style={{ fontSize: '90%', fontWeight: 'bold', marginLeft: "10px" }} onClick={() => this.handleOnClose()}>
+                <CloseIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
+              </Button>
+            </div>
+          </div>
+
+          <div style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => this.handleEditor()}>
+            {this.state.sentences &&
+              this.state.sentences.map((sentence, index) => {
+                yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
+                pageDividerHeight =
+                  (this.state.pageArr && this.state.pageArr.length > 0 && parseInt(this.state.pageArr[sentence.page_no])) +
+                  (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
+                let printPageNo = false;
+                let pageNo = sentence.page_no;
+                let isFirstPage = false;
+
+                if (index === 0) {
+                  printPageNo = true;
+                  isFirstPage = true;
+                } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
+                  printPageNo = true;
+                }
+
+                return (
+                  <div>
+                    <SourceView
+                      key={sentence.page_no + "_" + index}
+                      sourceSentence={sentence}
+                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                      hoveredSentence={this.state.hoveredSentence}
+                      pageNo={sentence.page_no}
+                      handleDialogSave={this.handleDialogSave.bind(this)}
+                      handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
+                      handleDeleteBlock={this.handleDeleteBlock.bind(this)}
+                      handleCreateBlock={this.handleCreateBlock.bind(this)}
+                      selectedSourceText={this.state.selectedSourceText}
+                      createBlockId={this.state.selectedBlockId}
+                      isEditable={this.state.isEditable}
+                      handleSourceChange={this.handleSourceChange.bind(this)}
+                      handleEditor={this.handleEditor.bind(this)}
+                      clear={this.state.clear}
+                      handleCheck={this.handleCheck.bind(this)}
+                      handleSource={this.handleSource.bind(this)}
+                      heightValue={this.state.height}
+                      hoveredTableId={this.state.hoveredTableId}
+                      popOver={this.state.popOver}
+                      handleTableHover={this.handleTableHover.bind(this)}
+                      handlePopUp={this.handlePopUp.bind(this)}
+                    />
+                  </div>
+                );
+
+              })}
           </div>
         </div>
-
-        <div style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => this.handleEditor()}>
-          {this.state.sentences &&
-            this.state.sentences.map((sentence, index) => {
-              yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-              pageDividerHeight =
-                (this.state.pageArr && this.state.pageArr.length > 0 && parseInt(this.state.pageArr[sentence.page_no])) +
-                (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-              let printPageNo = false;
-              let pageNo = sentence.page_no;
-              let isFirstPage = false;
-
-              if (index === 0) {
-                printPageNo = true;
-                isFirstPage = true;
-              } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
-                printPageNo = true;
-              }
-
-              return (
-                <div>
-                  <SourceView
-                    key={sentence.page_no + "_" + index}
-                    sourceSentence={sentence}
-                    handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                    hoveredSentence={this.state.hoveredSentence}
-                    pageNo={sentence.page_no}
-                    handleDialogSave={this.handleDialogSave.bind(this)}
-                    handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
-                    handleDeleteBlock={this.handleDeleteBlock.bind(this)}
-                    handleCreateBlock={this.handleCreateBlock.bind(this)}
-                    selectedSourceText={this.state.selectedSourceText}
-                    createBlockId={this.state.selectedBlockId}
-                    isEditable={this.state.isEditable}
-                    handleSourceChange={this.handleSourceChange.bind(this)}
-                    handleEditor={this.handleEditor.bind(this)}
-                    clear={this.state.clear}
-                    handleCheck={this.handleCheck.bind(this)}
-                    handleSource={this.handleSource.bind(this)}
-                    heightValue={this.state.height}
-                  // hoveredTableId={this.state.hoveredTableId}
-                  // popOver={this.state.popOver}
-                  // handleTableHover={this.handleTableHover.bind(this)}
-                  // handlePopUp={this.handlePopUp.bind(this)}
-                  />
-                </div>
-              );
-
-            })}
-        </div>
-      </div>
-    );
- } else {
+      );
+    } else {
       return (
         <div>
           <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
@@ -496,7 +496,7 @@ class PdfFileEditor extends React.Component {
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} lg={6} xl={6} style={{ padding: "8px" }}>
-              <Paper style={{overflow: "scroll",  maxHeight: window.innerHeight - 100}}>
+              <Paper style={{ overflow: "scroll", maxHeight: window.innerHeight - 100 }}>
                 <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
                 </Toolbar>
                 <div style={{ textAlign: "-webkit-center" }}>
@@ -534,8 +534,8 @@ class PdfFileEditor extends React.Component {
                             handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
                             handleDeleteBlock={this.handleDeleteBlock.bind(this)}
                             handleCreateBlock={this.handleCreateBlock.bind(this)}
-                           
-                            handlePreviewPageChange = {this.handlePreviewPageChange.bind(this)}
+
+                            handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
                           />
                         </div>
                       );
