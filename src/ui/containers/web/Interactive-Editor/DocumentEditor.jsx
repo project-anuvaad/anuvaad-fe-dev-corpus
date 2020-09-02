@@ -335,8 +335,10 @@ class PdfFileEditor extends React.Component {
                 // }
               }
             })
+            if(this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight){
             page.page_height = page.page_height + valueH;
             valueH=0; 
+            }
 
           }
         } 
