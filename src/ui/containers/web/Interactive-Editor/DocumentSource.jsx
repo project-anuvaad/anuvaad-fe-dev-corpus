@@ -125,6 +125,7 @@ class Preview extends React.Component {
   }
 
   handleCheck(block, evt, val){
+   
     this.props.handleCheck(block, evt, val)
     this.setState({ selectedBlock:  null })
   }
@@ -193,7 +194,7 @@ class Preview extends React.Component {
                   createBlockId={this.props.createBlockId}
                   isEditable={this.props.isEditable}
                   handleEditor={this.props.handleEditor}
-                  handleCheck = {this.props.handleCheck}
+                  handleCheck = {this.handleCheck.bind(this)}
                   selectedSourceText = {this.props.selectedSourceText}
                   heightValue  = {this.props.heightValue}
                 />
