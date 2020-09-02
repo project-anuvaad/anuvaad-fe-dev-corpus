@@ -20,7 +20,7 @@ class Preview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openEl: false,
+      openEl: false
     };
   }
 
@@ -119,12 +119,22 @@ class Preview extends React.Component {
     });
   };
 
-  handleDoubleClick(selectedBlock, event) {
+  handleDoubleClick(selectedBlock, event, sentence) {
+    this.props.handleSource(sentence)
     this.setState({ selectedBlock: selectedBlock, openEl: false })
   }
 
-  handleBlockClick() {
-    this.setState({ selectedBlock: null })
+  handleCheck(block, evt, val){
+    debugger
+    this.props.handleCheck(block, evt, val)
+    this.setState({ selectedBlock:  null })
+  }
+
+  handleBlockClick(clear,selectedSentence) {
+
+    console.log("cliecke",selectedSentence, clear, this.state.selectedBlock);
+
+    ((selectedSentence && this.state.selectedBlock !== selectedSentence) || clear) && this.setState({ selectedBlock:  null, clear: false })
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -159,6 +169,7 @@ class Preview extends React.Component {
     };
 
     return (
+      <div onClick={() => this.handleBlockClick(this.props.clear)}>
       <Paper style={style}>
         {sourceSentence.tables &&
           Array.isArray(sourceSentence.tables) &&
@@ -194,6 +205,9 @@ class Preview extends React.Component {
                   createBlockId={this.props.createBlockId}
                   isEditable={this.props.isEditable}
                   handleEditor={this.props.handleEditor}
+                  handleCheck = {this.props.handleCheck}
+                  selectedSourceText = {this.props.selectedSourceText}
+                  heightValue  = {this.props.heightValue}
                 />
               </div>
             );
@@ -221,6 +235,7 @@ class Preview extends React.Component {
             handleDuplicateBlock={this.props.handleDuplicateBlock}
             handleDeleteBlock={this.props.handleDeleteBlock}
             pageData={this.props.sourceSentence}
+            handleCheck = {this.handleCheck.bind(this)}
           />
         )}
 
@@ -231,6 +246,7 @@ class Preview extends React.Component {
             return <Image imgObj={images}></Image>;
           })}
       </Paper>
+      </div>
     );
   }
 }
