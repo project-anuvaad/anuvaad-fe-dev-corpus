@@ -24,6 +24,17 @@ class Preview extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.scrollToPage !== this.props.scrollToPage) {
+      if (this.refs[this.props.scrollToPage -1]) {
+        this.refs[this.props.scrollToPage-1].scrollIntoView({
+          behavior: "smooth"
+
+        })
+      }
+    }
+  }
+
   handleDialog() {
 
     if (this.state.title === "Merge") {
@@ -136,40 +147,22 @@ class Preview extends React.Component {
     this.props.handleEditor(selectedSentence)
   }
 
-  render() {
-    const { sourceSentence } = this.props;
-
+  getContent() {
     let yAxis = 0;
-
-    let style = {
-      maxWidth: sourceSentence.page_width + "px",
-      // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
-
-      position: "relative",
-
-      height: sourceSentence.page_height + "px",
-      backgroundColor: "white",
-      marginLeft: "auto",
-      marginRight: "auto"
-      // backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
-      // backgroundRepeat: "no-repeat",
-      // backgroundSize: this.state.backgroundSize + "px"
-    };
-
+    let sourceSentence = this.props.sourceSentence
     return (
-      <div onClick={() => this.handleBlockClick(this.props.clear)}>
-      <Paper style={style}>
-        {sourceSentence.tables &&
+      <div>
+ {sourceSentence.tables &&
           Array.isArray(sourceSentence.tables) &&
           sourceSentence.tables.map((table, i) => {
             return <EditorTable
               key={i} table={table}
-              // tableId={i}
-              // pageNo={sourceSentence.page_no}
-              // hoveredTableId={this.props.hoveredTableId}
-              // popOver={this.props.popOver}
-              // handleTableHover={this.props.handleTableHover}
-              // handlePopUp={this.props.handlePopUp}
+              tableId={i}
+              pageNo={sourceSentence.page_no}
+              hoveredTableId={this.props.hoveredTableId}
+              popOver={this.props.popOver}
+              handleTableHover={this.props.handleTableHover}
+              handlePopUp={this.props.handlePopUp}
             ></EditorTable>;
           })}
 
@@ -178,7 +171,7 @@ class Preview extends React.Component {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
 
             return (
-              <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
+              <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)} ref={sourceSentence.page_no}>
                 <BlockView
                   key={index + "_" + sentence.block_id}
                   sentence={sentence}
@@ -233,7 +226,40 @@ class Preview extends React.Component {
           sourceSentence.images.map((images, imgIndex) => {
             return <Image imgObj={images}></Image>;
           })}
-      </Paper>
+      </div>
+    )
+  }
+
+  render() {
+    const { sourceSentence } = this.props;
+
+
+    let style = {
+      maxWidth: sourceSentence.page_width + "px",
+      // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
+
+      position: "relative",
+
+      height: sourceSentence.page_height + "px",
+      backgroundColor: "white",
+      marginLeft: "auto",
+      marginRight: "auto"
+      // backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
+      // backgroundRepeat: "no-repeat",
+      // backgroundSize: this.state.backgroundSize + "px"
+    };
+
+    return (
+      <div>
+        {
+          !this.props.isPreview ?
+            <Paper style={style}
+              onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
+            >{this.getContent()}</Paper> :
+            <div style={style}
+              onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
+            >{this.getContent()}</div>
+        }
       </div>
     );
   }

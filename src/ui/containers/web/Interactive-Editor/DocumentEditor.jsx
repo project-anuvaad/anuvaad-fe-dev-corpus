@@ -542,8 +542,9 @@ class PdfFileEditor extends React.Component {
                             handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
                             handleDeleteBlock={this.handleDeleteBlock.bind(this)}
                             handleCreateBlock={this.handleCreateBlock.bind(this)}
-
                             handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
+                            hoveredTableId={this.state.hoveredTableId}
+                            handleTableHover={this.handleTableHover.bind(this)}
                           />
                         </div>
                       );
