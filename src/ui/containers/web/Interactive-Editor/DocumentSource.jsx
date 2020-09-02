@@ -26,58 +26,13 @@ class Preview extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.scrollToPage !== this.props.scrollToPage) {
-      if (this.refs[this.props.scrollToPage - 1]) {
-        this.refs[this.props.scrollToPage - 1].scrollIntoView({
+      if (this.refs[this.props.scrollToPage -1]) {
+        this.refs[this.props.scrollToPage-1].scrollIntoView({
           behavior: "smooth"
 
         })
       }
     }
-  }
-
-  fetchTableContent(sentences) {
-    let tableRow = [];
-    let index = 0;
-
-    // for (let row in sentences) {
-    let col = [];
-
-    if (sentences && sentences.children && Array.isArray(sentences.children) && sentences.children.length > 0) {
-      sentences.children.map((tableData, i) => {
-        if (tableData.text && Array.isArray(tableData.text) && tableData.text.length > 0) {
-          tableData.text.map((data, index) => {
-            // console.log(data)
-            // console.log(tableData.font_family )
-
-            col.push(
-              <td
-                style={{
-                  fontSize: data.font_size + "px",
-                  color: data.font_color,
-                  width: tableData.text_width + "px",
-                  // width: data.text_width + "px",
-                  left: data.text_left + "px",
-                  top: data.text_top + "px",
-                  border: "1px solid black",
-                  borderCollapse: "collapse",
-                  lineHeight: parseInt(sentences.text_height / sentences.children.length) + 'px',
-                  fontWeight: data.font_family && data.font_family.includes("Bold") && 'bold',
-                }}
-              >
-                {data.text}
-              </td>
-            );
-          });
-        }
-      });
-    }
-
-    if (col && col.length > 0) {
-      tableRow.push(<tr>{col}</tr>);
-    }
-    index++;
-
-    return tableRow;
   }
 
   handleDialog() {
@@ -93,27 +48,9 @@ class Preview extends React.Component {
       this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
     } else if (this.state.title === "Create") {
-      this.props.handleCreateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
+      this.props.handleCreateBlock(window.getSelection().anchorNode.parentElement.id, this.props.sourceSentence)
       this.setState({ openDialog: false });
     }
-  }
-  fetchTable(table, i) {
-    return (
-      <div>
-        <table
-          style={{
-            border: "1px solid black",
-            borderCollapse: "collapse",
-            position: "absolute",
-            top: table.text_top + "px",
-            left: table.text_left + "px",
-            width: table.text_width + "px"
-          }}
-        >
-          <tbody>{this.fetchTableContent(table)}</tbody>
-        </table>
-      </div>
-    );
   }
 
   fetchSentence(sourceSentence) {
@@ -127,47 +64,47 @@ class Preview extends React.Component {
   }
 
   getSelectionText(event, id) {
-    var text = "";
-    let selection = {};
-    var activeEl = document.activeElement;
-    var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
+    if (!this.state.selectedBlock) {
+      var text = "";
+      let selection = {};
+      var activeEl = document.activeElement;
+      var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
 
-    if (
-      activeElTagName === "textarea" ||
-      (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type) && typeof activeEl.selectionStart === "number")
-    ) {
-      text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
-    } else if (window.getSelection) {
-      text = window.getSelection().toString();
-    }
-
-    let sentences = "";
-    let startNode = "";
-    let endNode = "";
-
-    if (window.getSelection()) {
-      sentences = window.getSelection();
-    }
-
-    if (sentences) {
-
-      startNode = window.getSelection().anchorNode.parentElement.id;
-      endNode = window.getSelection().focusNode.parentElement.id;
-      console.log("node---", startNode, endNode, this.props.sourceSentence.text_blocks);
-      selection.startNode = startNode;
-      selection.endNode = endNode;
-      console.log(startNode, endNode)
-      if (startNode === endNode) {
-        this.setState({ operation_type: "split" });
-        window.getSelection().toString() && this.popUp("split", event);
-        selection.startNode = startNode;
-      } else if (parseInt(startNode) + 1 === parseInt(endNode)) {
-        this.setState({ operation_type: "merge" });
-        window.getSelection().toString() && this.popUp("merge", event);
+      if (
+        activeElTagName === "textarea" ||
+        (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type) && typeof activeEl.selectionStart === "number")
+      ) {
+        text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
+      } else if (window.getSelection) {
+        text = window.getSelection().toString();
       }
 
-      this.setState({ selection });
-      return true;
+      let sentences = "";
+      let startNode = "";
+      let endNode = "";
+
+      if (window.getSelection()) {
+        sentences = window.getSelection();
+      }
+
+      if (sentences) {
+
+        startNode = window.getSelection().anchorNode.parentElement.id;
+        endNode = window.getSelection().focusNode.parentElement.id;
+        selection.startNode = startNode;
+        selection.endNode = endNode;
+        if (startNode === endNode) {
+          this.setState({ operation_type: "split" });
+          window.getSelection().toString() && this.popUp("split", event);
+          selection.startNode = startNode;
+        } else if (parseInt(startNode) + 1 === parseInt(endNode)) {
+          this.setState({ operation_type: "merge" });
+          window.getSelection().toString() && this.popUp("merge", event);
+        }
+
+        this.setState({ selection });
+        return true;
+      }
     }
   }
 
@@ -176,7 +113,7 @@ class Preview extends React.Component {
   }
 
   popUp = (operation_type, event) => {
-    this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2 });
+    this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2, selectedBlock: null });
   };
 
   handleClose = () => {
@@ -193,24 +130,48 @@ class Preview extends React.Component {
     });
   };
 
+  handleDoubleClick(selectedBlock, event, sentence) {
+    this.props.handleSource(sentence)
+    this.setState({ selectedBlock: selectedBlock, openEl: false })
+  }
+
+  handleCheck(block, evt, val){
+    this.props.handleCheck(block, evt, val)
+    this.setState({ selectedBlock:  null })
+  }
+
+  handleBlockClick(clear,selectedSentence) {
+
+    
+    ((selectedSentence && this.state.selectedBlock !== selectedSentence) || clear) && this.setState({ selectedBlock:  null, clear: false })
+    this.props.handleEditor(selectedSentence)
+  }
+
   getContent() {
     let yAxis = 0;
     let sourceSentence = this.props.sourceSentence
-
     return (
-      <div>  {sourceSentence.tables &&
-        Array.isArray(sourceSentence.tables) &&
-        sourceSentence.tables.map((table, i) => {
-          return <EditorTable key={i} table={table}></EditorTable>;
-        })}
+      <div>
+ {sourceSentence.tables &&
+          Array.isArray(sourceSentence.tables) &&
+          sourceSentence.tables.map((table, i) => {
+            return <EditorTable
+              key={i} table={table}
+              tableId={i}
+              pageNo={sourceSentence.page_no}
+              hoveredTableId={this.props.hoveredTableId}
+              popOver={this.props.popOver}
+              handleTableHover={this.props.handleTableHover}
+              handlePopUp={this.props.handlePopUp}
+            ></EditorTable>;
+          })}
 
         {sourceSentence.text_blocks &&
           sourceSentence.text_blocks.map((sentence, index) => {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
 
             return (
-              // <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
-              <div ref={sourceSentence.page_no}>
+              <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)} ref={sourceSentence.page_no}>
                 <BlockView
                   key={index + "_" + sentence.block_id}
                   sentence={sentence}
@@ -218,42 +179,54 @@ class Preview extends React.Component {
                   page_no={sourceSentence.page_no}
                   handleOnMouseEnter={this.props.handleOnMouseEnter}
                   hoveredSentence={this.props.hoveredSentence}
+                  handleDoubleClick={this.handleDoubleClick.bind(this)}
+                  selectedBlock={this.state.selectedBlock}
+                  handleBlockClick={this.handleBlockClick.bind(this)}
+                  handleSourceChange={this.props.handleSourceChange}
+                  createBlockId={this.props.createBlockId}
+                  isEditable={this.props.isEditable}
+                  handleEditor={this.props.handleEditor}
+                  handleCheck = {this.props.handleCheck}
+                  selectedSourceText = {this.props.selectedSourceText}
+                  heightValue  = {this.props.heightValue}
                 />
               </div>
             );
           })}
 
-        {/* {this.state.openDialog && (
-        <Dialog
-          message={this.state.dialogMessage}
-          handleSubmit={this.handleDialog.bind(this)}
-          handleClose={this.handleClose.bind(this)}
-          open
-          title={this.state.title}
-        />
-      )}
+        {this.state.openDialog && (
+          <Dialog
+            message={this.state.dialogMessage}
+            handleSubmit={this.handleDialog.bind(this)}
+            handleClose={this.handleClose.bind(this)}
+            open
+            title={this.state.title}
+          />
+        )}
 
-      {this.state.openEl && (
-        <MenuItems
-          isOpen={this.state.openEl}
-          topValue={this.state.topValue}
-          leftValue={this.state.leftValue}
-          anchorEl={this.state.anchorEl}
-          operation_type={this.state.operation_type}
-          handleClose={this.handleClose.bind(this)}
-          handleDialog={this.handleDialogMessage.bind(this)}
-          handleDuplicateBlock={this.props.handleDuplicateBlock}
-          handleDeleteBlock={this.props.handleDeleteBlock}
-          pageData={this.props.sourceSentence}
-        />
-      )} */}
+        {this.state.openEl && !this.state.selectedBlock && !this.props.createBlockId && (
+          <MenuItems
+            isOpen={this.state.openEl}
+            topValue={this.state.topValue}
+            leftValue={this.state.leftValue}
+            anchorEl={this.state.anchorEl}
+            operation_type={this.state.operation_type}
+            handleClose={this.handleClose.bind(this)}
+            handleDialog={this.handleDialogMessage.bind(this)}
+            handleDuplicateBlock={this.props.handleDuplicateBlock}
+            handleDeleteBlock={this.props.handleDeleteBlock}
+            pageData={this.props.sourceSentence}
+            handleCheck = {this.handleCheck.bind(this)}
+          />
+        )}
 
         {sourceSentence.images &&
           Array.isArray(sourceSentence.images) &&
           sourceSentence.images.length > 0 &&
           sourceSentence.images.map((images, imgIndex) => {
             return <Image imgObj={images}></Image>;
-          })}</div>
+          })}
+      </div>
     )
   }
 
@@ -263,10 +236,14 @@ class Preview extends React.Component {
     let style = {
       maxWidth: sourceSentence.page_width + "px",
       // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
-
       position: "relative",
       height: sourceSentence.page_height + "px",
-      backgroundColor: "white"
+      backgroundColor: "white",
+      marginLeft: "auto",
+      marginRight: "auto"
+      // backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
+      // backgroundRepeat: "no-repeat",
+      // backgroundSize: this.state.backgroundSize + "px"
     };
 
     return (

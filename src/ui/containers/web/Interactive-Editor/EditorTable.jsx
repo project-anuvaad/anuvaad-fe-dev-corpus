@@ -5,6 +5,26 @@ class EditorTable extends React.Component {
     super(props);
   }
 
+  fetchBlockData(data) {
+    if (data && data.length > 0) {
+      return (
+        <div>
+          {data.map((textObj, i) => {
+            return (
+              //
+              <div
+                key={i}
+                style={{  top: textObj.text_top + "px", left: textObj.text_left + "px", width: textObj.text_width + "px" }}
+              >
+                {textObj.text}
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+  }
+
   fetchTableContent(sentences) {
     let col = [];
 
@@ -19,12 +39,16 @@ class EditorTable extends React.Component {
                 
                 borderCollapse: "collapse",
                 position: 'absolute',
+                zIndex: 1,
                 top: tableData.text_top + "px",
                 left: tableData.text_left + "px",
                 width: tableData.text_width + "px",
                 height: tableData.text_height + "px",
                 // lineHeight: tableData.children && parseInt(tableData.text_height / tableData.children.length) + 'px',
+                backgroundColor: this.props.hoveredTableId === this.props.tableId + "_" + tableData.index[0] + "_" + tableData.index[1] + this.props.pageNo ? "yellow" : ""
               }}
+              onMouseEnter={()=> this.props.handleTableHover(this.props.tableId + "_" + tableData.index[0] + "_" + tableData.index[1] + this.props.pageNo)}
+              onMouseLeave={()=> this.props.handleTableHover("")}
             >
               {tableData.text.map((textObj, i) => {
                 return (
