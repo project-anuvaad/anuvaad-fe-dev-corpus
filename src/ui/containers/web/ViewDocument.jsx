@@ -39,7 +39,7 @@ class ViewDocument extends React.Component {
   }
 
   handleClick = rowData => {
-    history.push(`${process.env.PUBLIC_URL}/interactive-document/${rowData[4]}`);
+    history.push(`${process.env.PUBLIC_URL}/interactive-document/${rowData[4]}/${rowData[5]}`);
   };
 
 
@@ -53,7 +53,6 @@ class ViewDocument extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchDocument !== this.props.fetchDocument) {
-      console.log("print------",this.props.fetchDocument)
       var arr=[]
       this.props.fetchDocument.map(value=>{
         var b = {}
@@ -61,6 +60,7 @@ class ViewDocument extends React.Component {
           b["job"] = value.jobID;
           b["name"] = value.input.jobName? value.input.jobName: value.input.files[0].name;
           b["id"] = value.output && value.output[0].outputFilePath;
+          b["inputFile"] = value.output && value.output[0].inputFile;
         
         arr.push(b)
 console.log(arr)
@@ -113,7 +113,13 @@ console.log(arr)
           display: "excluded"
         }
       },
-
+      {
+        name: "inputFile",
+        label: "inputFile",
+        options: {
+          display: "excluded"
+        }
+      },
 
     
       {
