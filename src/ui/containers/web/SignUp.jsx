@@ -149,7 +149,7 @@ class SignUp extends React.Component {
                 <Button
                   disabled={!this.state.termsAndCondition}
                   variant="contained" aria-label="edit" style={{
-                    width: '50%', marginBottom: '2%', marginTop: '2%',borderRadius:'20px',height:'45px',textTransform:'initial',fontWeight:'20px',
+                    width: '50%', marginBottom: '2%', marginTop: '2%',borderRadius:'20px',height:'45px',textTransform:'initial',fontWeight:'20px', marginLeft: "25%", 
                     backgroundColor: this.state.termsAndCondition ? '#1ca9c9' : 'gray', color: 'white',
                   }} onClick={this.handleSubmit.bind(this)}>
                   {translate('singUp.page.label.signUp')}

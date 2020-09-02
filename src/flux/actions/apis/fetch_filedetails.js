@@ -6,7 +6,6 @@ export default class FetchBenchmarkCompareModel extends API {
   constructor(basename, timeout = 200000) {
     super("GET", timeout, false);
     this.basename = basename;
-    console.log(basename)
     this.type = C.FETCHFILEDETAILS;
     this.endpoint =ENDPOINTS.fetch_filedeatils;
   }
