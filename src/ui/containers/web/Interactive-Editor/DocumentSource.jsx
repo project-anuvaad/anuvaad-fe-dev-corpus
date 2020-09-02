@@ -24,53 +24,6 @@ class Preview extends React.Component {
     };
   }
 
-
-  fetchTableContent(sentences) {
-    let tableRow = [];
-    let index = 0;
-
-    // for (let row in sentences) {
-    let col = [];
-
-    if (sentences && sentences.children && Array.isArray(sentences.children) && sentences.children.length > 0) {
-      sentences.children.map((tableData, i) => {
-        if (tableData.text && Array.isArray(tableData.text) && tableData.text.length > 0) {
-          tableData.text.map((data, index) => {
-            // console.log(data)
-            // console.log(tableData.font_family )
-
-            col.push(
-              <td
-                style={{
-                  fontSize: data.font_size + "px",
-                  color: data.font_color,
-                  width: tableData.text_width + "px",
-                  // width: data.text_width + "px",
-                  left: data.text_left + "px",
-                  top: data.text_top + "px",
-                  border: "1px solid black",
-                  borderCollapse: "collapse",
-                  lineHeight: parseInt(sentences.text_height / sentences.children.length) + 'px',
-                  fontWeight: data.font_family && data.font_family.includes("Bold") && 'bold',
-                }}
-              >
-                {data.text}
-              </td>
-            );
-          });
-        }
-      });
-    }
-
-    if (col && col.length > 0) {
-      tableRow.push(<tr>{col}</tr>);
-    }
-    index++;
-
-    return tableRow;
-  }
-  
-
   handleDialog() {
 
     if (this.state.title === "Merge") {
@@ -87,24 +40,6 @@ class Preview extends React.Component {
       this.props.handleCreateBlock(window.getSelection().anchorNode.parentElement.id, this.props.sourceSentence)
       this.setState({ openDialog: false });
     }
-  }
-  fetchTable(table, i) {
-    return (
-      <div>
-        <table
-          style={{
-            border: "1px solid black",
-            borderCollapse: "collapse",
-            position: "absolute",
-            top: table.text_top + "px",
-            left: table.text_left + "px",
-            width: table.text_width + "px"
-          }}
-        >
-          <tbody>{this.fetchTableContent(table)}</tbody>
-        </table>
-      </div>
-    );
   }
 
   fetchSentence(sourceSentence) {
@@ -195,11 +130,11 @@ class Preview extends React.Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.submittedId !== nextProps.submittedId) {
       return {
-       
+
         sentences: nextProps.sentences
       };
     }
-    
+
     return null;
   }
 
@@ -228,7 +163,15 @@ class Preview extends React.Component {
         {sourceSentence.tables &&
           Array.isArray(sourceSentence.tables) &&
           sourceSentence.tables.map((table, i) => {
-            return <EditorTable key={i} table={table}></EditorTable>;
+            return <EditorTable
+              key={i} table={table}
+              // tableId={i}
+              // pageNo={sourceSentence.page_no}
+              // hoveredTableId={this.props.hoveredTableId}
+              // popOver={this.props.popOver}
+              // handleTableHover={this.props.handleTableHover}
+              // handlePopUp={this.props.handlePopUp}
+            ></EditorTable>;
           })}
 
         {sourceSentence.text_blocks &&

@@ -31,6 +31,8 @@ class PdfFileEditor extends React.Component {
       sentences: '',
       selectedText: "",
       clear: false
+      // popOver: false,
+      // hoveredTableId: "",
     };
   }
 
@@ -52,6 +54,7 @@ class PdfFileEditor extends React.Component {
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
     this.setState({ hoveredSentence: sentenceId });
+    // this.setState({ hoveredSentence: sentenceId, hoveredTableId: ""});
   }
 
   handleOnMouseLeave() {
@@ -61,7 +64,6 @@ class PdfFileEditor extends React.Component {
   handleDialog(title, dialogMessage) {
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
   }
-
 
   handleCreateBlock(block, blockText, page) {
     console.log("Sajish----")
@@ -338,6 +340,14 @@ class PdfFileEditor extends React.Component {
 
   };
 
+  // handleTableHover(id) {
+  //   this.setState({ hoveredTableId: id, hoveredSentence: "" })
+  // }
+
+  // handlePopUp() {
+  //   this.setState({ popOver: true })
+  // }
+
   render() {
     let yAxis = 0;
     let leftPaddingValue = 0;
@@ -416,6 +426,10 @@ class PdfFileEditor extends React.Component {
                     isEditable={this.state.isEditable}
                     handleSourceChange={this.handleSourceChange.bind(this)}
                     handleEditor={this.handleEditor.bind(this)}
+                    // hoveredTableId={this.state.hoveredTableId}
+                    // popOver={this.state.popOver}
+                    // handleTableHover={this.handleTableHover.bind(this)}
+                    // handlePopUp={this.handlePopUp.bind(this)}
                   />
                 </div>
               );
