@@ -186,32 +186,37 @@ class PdfFileEditor extends React.Component {
       });
     var a = JSON.parse(JSON.stringify(pageData.text_blocks[value]));
     a.text = null
-    // a.text_top = a.text_top + pageData.text_blocks[value].text_height
+    a.text_top = a.text_top + pageData.text_blocks[value].text_height
+    a.text_height = 30;
+    a.children = null;
     pageData.text_blocks.splice(value + 1, 0, a);
+    console.log(a, pageData.text_blocks[value])
     let arr = [];
+
     var extraHeight = 0;
     pageData &&
       pageData.text_blocks &&
       pageData.text_blocks.map((blockData, i) => {
-        if (i > value || blockData.text_top>height) {
+        if ((i > value || blockData.text_top>height )&& blockData.text) {
           extraHeight = pageData.text_blocks[value].text_height;
-          blockData.text_top = blockData.text_top + extraHeight;
+          blockData.text_top = blockData.text_top + 30;
         }
       });
-    pageData.page_height = pageData.page_height + extraHeight;
+    pageData.page_height = pageData.page_height + 30;
     pageData &&
       sen.map(sentence => {
         if (sentence.page_no === pageData.text_blocks.page_no) {
           sentence = pageData;
         }
       });
-    this.setState({ sentences: sen, selectedSourceText: "", selectedBlockId: id + "_" + pageNO, isEditable: true, height: extraHeight });
+    this.setState({ sentences: sen, selectedSourceText: "", selectedBlockId: id + "_" + pageNO, isEditable: true, height: 30 });
     this.indexCorrection();
     
   }
 
-  handleEditor() {
-    this.state.clear && this.setState({selectedBlockId: null, clear: false})
+  handleEditor(value) {
+    console.log("editor----",this.state.selectedBlockId, value);
+    ((this.state.selectedBlockId && value && this.state.selectedBlockId !== value)|| this.state.clear) && this.setState({selectedBlockId: null, clear: false})
   }
 
   handleDialogSave(selection, operation_type, pageDetails) {
@@ -271,6 +276,9 @@ class PdfFileEditor extends React.Component {
   }
 
   handleSourceChange = (block, evt) => {
+
+
+    console.log(block, this.state.height, evt.currentTarget.offsetHeight)
     this.setState({ selectedSourceText: evt.target.value,height:evt.currentTarget.offsetHeight  });
     console.log(this.state.height)
     if(this.state.height !== 0 &&  this.state.height !== evt.currentTarget.offsetHeight){
@@ -380,7 +388,7 @@ class PdfFileEditor extends React.Component {
           </Button>
         </div>
 
-        <div style={{ marginLeft: "auto", marginRight: "auto" }}  onClick={() => this.handleEditor()}>
+        <div style={{ marginLeft: "auto", marginRight: "auto" }}>
           {this.state.sentences &&
             this.state.sentences.map((sentence, index) => {
               yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);

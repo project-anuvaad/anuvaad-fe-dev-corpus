@@ -52,7 +52,7 @@ class Preview extends React.Component {
                     if (sentence.block_id + "_" + this.props.page_no !== this.props.selectedBlock) {
                         this.props.handleBlockClick(false, sentence.block_id + "_" + this.props.page_no)
                     } else if(sentence.block_id + "_" + this.props.page_no !== this.props.createBlockId) {
-                        this.props.handleEditor()
+                        this.props.handleEditor(sentence.block_id + "_" + this.props.page_no)
                     }
                 }}
             >
