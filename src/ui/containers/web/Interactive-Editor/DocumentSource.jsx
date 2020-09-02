@@ -24,6 +24,17 @@ class Preview extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.scrollToPage !== this.props.scrollToPage) {
+      if (this.refs[this.props.scrollToPage -1]) {
+        this.refs[this.props.scrollToPage-1].scrollIntoView({
+          behavior: "smooth"
+
+        })
+      }
+    }
+  }
+
   handleDialog() {
 
     if (this.state.title === "Merge") {
@@ -171,7 +182,7 @@ class Preview extends React.Component {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
 
             return (
-              <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
+              <div ref={sourceSentence.page_no} onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)}>
                 <BlockView
                   key={index + "_" + sentence.block_id}
                   sentence={sentence}
