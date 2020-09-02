@@ -210,7 +210,7 @@ class PdfFileEditor extends React.Component {
     pageData &&
       pageData.text_blocks &&
       pageData.text_blocks.map((blockData, i) => {
-        if ((i > value || blockData.text_top>height )&& blockData.text) {
+        if ((i > value || blockData.text_top > height) && blockData.text) {
           extraHeight = pageData.text_blocks[value].text_height;
           blockData.text_top = blockData.text_top + 30;
         }
@@ -224,12 +224,11 @@ class PdfFileEditor extends React.Component {
       });
     this.setState({ sentences: sen, selectedSourceText: "", selectedBlockId: id + "_" + pageNO, isEditable: true, height: 30 });
     this.indexCorrection();
-    
+
   }
 
   handleEditor(value) {
-    console.log("editor----",this.state.selectedBlockId, value);
-    ((this.state.selectedBlockId && value && this.state.selectedBlockId !== value)|| this.state.clear) && this.setState({selectedBlockId: null, clear: false})
+    ((this.state.selectedBlockId && value && this.state.selectedBlockId !== value) || this.state.clear) && this.setState({ selectedBlockId: null, clear: false })
   }
 
   handleDialogSave(selection, operation_type, pageDetails) {
@@ -284,25 +283,21 @@ class PdfFileEditor extends React.Component {
   handleOnClose() {
     history.push(`${process.env.PUBLIC_URL}/view-document`);
   }
-  handleSource(selectedBlock){
-    this.setState({selectedSourceText: selectedBlock.text})
+  handleSource(selectedBlock) {
+    this.setState({ selectedSourceText: selectedBlock.text })
   }
 
   handleSourceChange = (block, evt) => {
-
-
-    console.log(block, this.state.height, evt.currentTarget.offsetHeight)
-    this.setState({ selectedSourceText: evt.target.value,height:evt.currentTarget.offsetHeight  });
-    console.log(this.state.height)
-    if(this.state.height !== 0 &&  this.state.height !== evt.currentTarget.offsetHeight){
+    this.setState({ selectedSourceText: evt.target.value, height: evt.currentTarget.offsetHeight });
+    if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
       this.handleCheck(block, evt, true)
     }
   };
   handleCheck(block, evt, checkValue) {
-    
+
     let blockId = block.split("_")[0]
     let pageNo = block.split("_")[1]
-    let blockTop,blockHeight, valueH = 0;
+    let blockTop, blockHeight, valueH = 0;
     let docPage = this.state.sentences;
     let strText = htmlToText.fromString(this.state.selectedSourceText);
 
@@ -310,46 +305,46 @@ class PdfFileEditor extends React.Component {
       docPage.map((page, index) => {
         if (page.page_no == pageNo) {
           if (page.text_blocks && Array.isArray(page.text_blocks) && page.text_blocks.length > 0) {
-            
+
 
             page.text_blocks.map((block, i) => {
-              
-              
-              
+
+
+
               if (block.block_id == blockId) {
                 blockTop = block.text_top;
                 blockHeight = block.text_height;
-                block.text =  strText;
-              } 
+                block.text = strText;
+              }
             })
 
             page.text_blocks.map((block, i) => {
               valueH = - this.state.height + evt.currentTarget.offsetHeight;
-              if(block.text_top>blockTop){
-                if(this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight){
+              if (block.text_top > blockTop) {
+                if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
                   block.text_top = block.text_top - this.state.height + evt.currentTarget.offsetHeight
                 }
                 // if(this.state.height ===0 && evt.currentTarget.offsetHeight - block.text_height> 5){
                 //   block.text_height=  block.text_height + evt.currentTarget.offsetHeight - block.text_height - 3
-                  
+
                 // }
               }
             })
-            if(this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight){
-            page.page_height = page.page_height + valueH;
-            valueH=0; 
+            if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
+              page.page_height = page.page_height + valueH;
+              valueH = 0;
             }
 
           }
-        } 
+        }
       })
     }
     console.log(checkValue, this.state.height)
-    !checkValue && this.setState({selectedBlockId: null, clear: false})
+    !checkValue && this.setState({ selectedBlockId: null, clear: false })
 
-    this.setState({sentences:docPage,height: checkValue ? evt.currentTarget.offsetHeight: 0,clear: true})
+    this.setState({ sentences: docPage, height: checkValue ? evt.currentTarget.offsetHeight : 0, clear: true })
 
-    
+
 
   };
 
@@ -455,26 +450,27 @@ class PdfFileEditor extends React.Component {
                 return (
                   <div>
                     <SourceView
+                      isPreview={false}
                       key={sentence.page_no + "_" + index}
-                      sourceSentence={sentence}
-                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                      hoveredSentence={this.state.hoveredSentence}
                       pageNo={sentence.page_no}
+                      sourceSentence={sentence}
+                      selectedSourceText={this.state.selectedSourceText}
+                      createBlockId={this.state.selectedBlockId}
+                      isEditable={this.state.isEditable}
+                      hoveredSentence={this.state.hoveredSentence}
+                      hoveredTableId={this.state.hoveredTableId}
+                      clear={this.state.clear}
+                      heightValue={this.state.height}
+                      popOver={this.state.popOver}
+                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                       handleDialogSave={this.handleDialogSave.bind(this)}
                       handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
                       handleDeleteBlock={this.handleDeleteBlock.bind(this)}
                       handleCreateBlock={this.handleCreateBlock.bind(this)}
-                      selectedSourceText={this.state.selectedSourceText}
-                      createBlockId={this.state.selectedBlockId}
-                      isEditable={this.state.isEditable}
                       handleSourceChange={this.handleSourceChange.bind(this)}
                       handleEditor={this.handleEditor.bind(this)}
-                      clear={this.state.clear}
                       handleCheck={this.handleCheck.bind(this)}
                       handleSource={this.handleSource.bind(this)}
-                      heightValue={this.state.height}
-                      hoveredTableId={this.state.hoveredTableId}
-                      popOver={this.state.popOver}
                       handleTableHover={this.handleTableHover.bind(this)}
                       handlePopUp={this.handlePopUp.bind(this)}
                     />
@@ -530,23 +526,32 @@ class PdfFileEditor extends React.Component {
                       return (
                         <div>
                           <SourceView
-                            isPreview={true}
-                            key={sentence.page_no + "_" + index}
-                            sourceSentence={sentence}
-                            scrollToPage={this.state.scrollToPage}
-                            selectedSourceText={this.state.selectedSourceText}
-                            selectedBlockId={this.state.selectedBlockId}
-                            isEditable={this.state.isEditable}
-                            handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                            hoveredSentence={this.state.hoveredSentence}
-                            pageNo={sentence.page_no}
-                            handleDialogSave={this.handleDialogSave.bind(this)}
-                            handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
-                            handleDeleteBlock={this.handleDeleteBlock.bind(this)}
-                            handleCreateBlock={this.handleCreateBlock.bind(this)}
-
-                            handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
-                          />
+                                isPreview={true}
+                                key={sentence.page_no + "_" + index}
+                                pageNo={sentence.page_no}
+                                sourceSentence={sentence}
+                                selectedSourceText={this.state.selectedSourceText}
+                                createBlockId={this.state.selectedBlockId}
+                                isEditable={this.state.isEditable}
+                                hoveredSentence={this.state.hoveredSentence}
+                                hoveredTableId={this.state.hoveredTableId}
+                                clear={this.state.clear}
+                                heightValue={this.state.height}
+                                popOver={this.state.popOver}
+                                scrollToPage={this.state.scrollToPage}
+                                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                                handleDialogSave={this.handleDialogSave.bind(this)}
+                                handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
+                                handleDeleteBlock={this.handleDeleteBlock.bind(this)}
+                                handleCreateBlock={this.handleCreateBlock.bind(this)}
+                                handleSourceChange={this.handleSourceChange.bind(this)}
+                                handleEditor={this.handleEditor.bind(this)}
+                                handleCheck={this.handleCheck.bind(this)}
+                                handleSource={this.handleSource.bind(this)}
+                                handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
+                                handleTableHover={this.handleTableHover.bind(this)}
+                                handlePopUp={this.handlePopUp.bind(this)}
+                             />
                         </div>
                       );
 
