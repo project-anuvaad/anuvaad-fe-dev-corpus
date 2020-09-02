@@ -11,6 +11,7 @@ import { translate } from "../../../../assets/localisation";
 import history from "../../../../web.history";
 import FileDetails from "../../../../flux/actions/apis/fetch_filedetails";
 import Data from "./json/File1506.json";
+import htmlToText from "html-to-text";
 // import Data from "./json/File3002.json";
 // import Data from "./json/Judgement.json";
 // import Data from "./json/DelhiHC.json";
@@ -30,7 +31,8 @@ class PdfFileEditor extends React.Component {
       hoveredSentence: "",
       sentences: '',
       selectedText: "",
-      clear: false
+      clear: false,
+      height: 0
     };
   }
 
@@ -63,45 +65,6 @@ class PdfFileEditor extends React.Component {
   }
 
 
-  handleCreateBlock(block, blockText, page) {
-    console.log("Sajish----")
-    var sen = this.state.sentences;
-    var pageData = page;
-    var value;
-    pageData &&
-      pageData.text_blocks &&
-      pageData.text_blocks.map((blockData, i) => {
-        if (parseInt(block) === blockData.block_id) {
-          value = i;
-        }
-      });
-    var a = JSON.parse(JSON.stringify(pageData.text_blocks[value]));
-    pageData.text_blocks.splice(value + 1, 0, a);
-
-    let arr = [];
-    pageData &&
-      pageData.text_blocks &&
-      pageData.text_blocks.map((blockData, i) => {
-        if (i > value) {
-          blockData.text_top = blockData.text_top + pageData.text_blocks[value].text_height;
-        }
-        if (i == value) {
-          blockData.page_width = page.page_width;
-          blockData.text = "";
-        }
-      });
-
-    pageData &&
-      sen.map(sentence => {
-        if (sentence.page_no === pageData.text_blocks.page_no) {
-          sentence = pageData;
-        }
-      });
-
-    this.setState({ sentences: sen });
-    this.indexCorrection();
-  }
-
   handleDuplicateBlock(block, blockText, page) {
     block = block.split("_")[0]
 
@@ -118,7 +81,7 @@ class PdfFileEditor extends React.Component {
         }
       });
     var a = JSON.parse(JSON.stringify(pageData.text_blocks[value]));
-
+      
     pageData.text_blocks.splice(value + 1, 0, a);
 
     let arr = [];
@@ -220,6 +183,7 @@ class PdfFileEditor extends React.Component {
       });
     var a = JSON.parse(JSON.stringify(pageData.text_blocks[value]));
     a.text = null
+    // a.text_top = a.text_top + pageData.text_blocks[value].text_height
     pageData.text_blocks.splice(value + 1, 0, a);
     let arr = [];
     var extraHeight = 0;
@@ -238,13 +202,12 @@ class PdfFileEditor extends React.Component {
           sentence = pageData;
         }
       });
-    this.setState({ sentences: sen, selectedSourceText: "", selectedBlockId: id + "_" + pageNO, isEditable: true });
+    this.setState({ sentences: sen, selectedSourceText: "", selectedBlockId: id + "_" + pageNO, isEditable: true, height: extraHeight });
     this.indexCorrection();
     
   }
 
   handleEditor() {
-    console.log("-------")
     this.state.clear && this.setState({selectedBlockId: null, clear: false})
   }
 
@@ -300,41 +263,66 @@ class PdfFileEditor extends React.Component {
   handleOnClose() {
     history.push(`${process.env.PUBLIC_URL}/view-document`);
   }
+  handleSource(selectedBlock){
+    this.setState({selectedSourceText: selectedBlock.text})
+  }
 
-  handleSourceChange(block, evt) {
-    this.setState({ selectedText: evt.target.value, clear: true });
-
+  handleSourceChange = (block, evt) => {
+    console.log("ssssssssss---",evt.target.value)
+    this.setState({ selectedSourceText: evt.target.value,height:evt.currentTarget.offsetHeight  });
+    if(this.state.height !== 0 &&  this.state.height !== evt.currentTarget.offsetHeight){
+      this.handleCheck(block, evt, true)
+    }
+  };
+  handleCheck(block, evt, checkValue) {
+    
     let blockId = block.split("_")[0]
     let pageNo = block.split("_")[1]
+    let blockTop,blockHeight;
+    let docPage = this.state.sentences;
+    let strText = htmlToText.fromString(this.state.selectedSourceText);
 
-    let docPage = []
-    if (this.state.sentences && Array.isArray(this.state.sentences) && this.state.sentences.length > 0) {
-      this.state.sentences.map((page, index) => {
+    if (docPage && Array.isArray(docPage) && docPage.length > 0) {
+      docPage.map((page, index) => {
         if (page.page_no == pageNo) {
           if (page.text_blocks && Array.isArray(page.text_blocks) && page.text_blocks.length > 0) {
-            let sentences = []
+            
 
             page.text_blocks.map((block, i) => {
-              sentences.push(block)
-              let paragraph = {}
+              
+              
+              
               if (block.block_id == blockId) {
-                paragraph = block
-                paragraph.text = evt.target.value
-                sentences.text_blocks = []
-                sentences.push(paragraph)
+                blockTop = block.text_top;
+                blockHeight = block.text_height;
+                block.text =  strText;
+              } 
+            })
 
-              } else {
-                sentences.push(block)
+            page.text_blocks.map((block, i) => {
+              
+              if(block.text_top>blockTop){
+                if(this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight){
+                  block.text_top = block.text_top - this.state.height + evt.currentTarget.offsetHeight
+                }
+                if(this.state.height ===0 && evt.currentTarget.offsetHeight - block.text_height> 5){
+                  block.text_height=  block.text_height + evt.currentTarget.offsetHeight - block.text_height - 3
+                  
+                }
               }
             })
-            docPage.text_blocks = sentences
+            
 
           }
-        } else {
-          docPage.push(page)
-        }
+        } 
       })
     }
+
+    !checkValue && this.setState({selectedBlockId: null, clear: false})
+
+    this.setState({sentences:docPage,height:evt.currentTarget.offsetHeight,clear: true})
+
+    
 
   };
 
@@ -416,6 +404,11 @@ class PdfFileEditor extends React.Component {
                     isEditable={this.state.isEditable}
                     handleSourceChange={this.handleSourceChange.bind(this)}
                     handleEditor={this.handleEditor.bind(this)}
+                    clear = {this.state.clear}
+                    handleCheck = {this.handleCheck.bind(this)}
+                    handleSource = {this.handleSource.bind(this)}
+                    heightValue = {this.state.height}
+                    
                   />
                 </div>
               );

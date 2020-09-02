@@ -15,13 +15,17 @@ class Preview extends React.Component {
         }
     }
 
+    handleCheck = event =>{
+        this.props.handleCheck(this.props.sentence.block_id + "_" + this.props.page_no, event, false)
+    }
+
     handleChangeEvent = event => {
+       
         this.props.handleSourceChange(this.props.sentence.block_id + "_" + this.props.page_no, event)
     }
 
     render() {
         const { sentence } = this.props;
-        console.log("editable---",this.state.isEditable)
         var styles = {
             position: "absolute ",
             top: sentence.text_top + "px",
@@ -42,7 +46,7 @@ class Preview extends React.Component {
             <div id={sentence.block_id + "_" + this.props.page_no} style={styles} key={sentence.block_id}
                 onMouseEnter={() => this.handleMouseHover(sentence.block_id + "_" + this.props.page_no)}
                 onMouseLeave={() => this.props.handleOnMouseEnter()}
-                onDoubleClick={event => this.props.handleDoubleClick(sentence.block_id + "_" + this.props.page_no, event)}
+                onDoubleClick={event => this.props.handleDoubleClick(sentence.block_id + "_" + this.props.page_no, event, sentence)}
                 // contentEditable = {this.props.createBlockId === sentence.block_id + "_" + this.props.page_no ? true : false}
                 onClick={() => {
                     if (sentence.block_id + "_" + this.props.page_no !== this.props.selectedBlock) {
@@ -54,14 +58,14 @@ class Preview extends React.Component {
             >
                 {(this.props.selectedBlock === sentence.block_id + "_" + this.props.page_no || this.props.createBlockId === sentence.block_id + "_" + this.props.page_no) ? (
                     <ContentEditable
-                        html={sentence.text}
+                    html={this.props.selectedSourceText}
                         disabled={false}
-                        //   onBlur={this.props.handleCheck}
+                        onBlur={this.handleCheck}
                         onChange={this.handleChangeEvent}
                         style={{
                             border: "1px dashed #aaa",
                             padding: "5px",
-                            cursor: 'auto'
+                            cursor: 'auto',
                             // height: !sentence.children && parseInt(sentence.text_height) + "px"
                         }}
                     />
