@@ -195,9 +195,11 @@ class Preview extends React.Component {
     this.setState({ selectedBlock:  null })
   }
 
-  handleBlockClick(clear) {
+  handleBlockClick(clear,selectedSentence) {
 
-    clear && this.setState({ selectedBlock:  null, clear: false })
+    console.log("cliecke",selectedSentence, clear, this.state.selectedBlock);
+
+    ((selectedSentence && this.state.selectedBlock !== selectedSentence) || clear) && this.setState({ selectedBlock:  null, clear: false })
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {

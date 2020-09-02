@@ -50,7 +50,7 @@ class Preview extends React.Component {
                 // contentEditable = {this.props.createBlockId === sentence.block_id + "_" + this.props.page_no ? true : false}
                 onClick={() => {
                     if (sentence.block_id + "_" + this.props.page_no !== this.props.selectedBlock) {
-                        this.props.handleBlockClick()
+                        this.props.handleBlockClick(false, sentence.block_id + "_" + this.props.page_no)
                     } else if(sentence.block_id + "_" + this.props.page_no !== this.props.createBlockId) {
                         this.props.handleEditor()
                     }
@@ -58,6 +58,7 @@ class Preview extends React.Component {
             >
                 {(this.props.selectedBlock === sentence.block_id + "_" + this.props.page_no || this.props.createBlockId === sentence.block_id + "_" + this.props.page_no) ? (
                     <ContentEditable
+                    
                     html={this.props.selectedSourceText}
                         disabled={false}
                         onBlur={this.handleCheck}
