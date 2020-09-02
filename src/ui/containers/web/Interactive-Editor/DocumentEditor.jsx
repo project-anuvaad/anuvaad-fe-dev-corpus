@@ -51,6 +51,10 @@ class PdfFileEditor extends React.Component {
   componentDidMount() {
     const apiObj = new FileDetails(this.props.match.params.fileid);
     this.props.APITransport(apiObj);
+    
+    let obj = {}
+    obj.download_source_path = this.props.match.params.inputfileid
+   this.setState({ fileDetails: obj })
   }
 
   componentDidUpdate(prevProps) {
