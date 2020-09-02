@@ -268,8 +268,8 @@ class PdfFileEditor extends React.Component {
   }
 
   handleSourceChange = (block, evt) => {
-    console.log("ssssssssss---",evt.target.value)
     this.setState({ selectedSourceText: evt.target.value,height:evt.currentTarget.offsetHeight  });
+    console.log(this.state.height)
     if(this.state.height !== 0 &&  this.state.height !== evt.currentTarget.offsetHeight){
       this.handleCheck(block, evt, true)
     }
@@ -317,10 +317,10 @@ class PdfFileEditor extends React.Component {
         } 
       })
     }
-
+    console.log(checkValue, this.state.height)
     !checkValue && this.setState({selectedBlockId: null, clear: false})
 
-    this.setState({sentences:docPage,height:evt.currentTarget.offsetHeight,clear: true})
+    this.setState({sentences:docPage,height: checkValue ? evt.currentTarget.offsetHeight: 0,clear: true})
 
     
 
