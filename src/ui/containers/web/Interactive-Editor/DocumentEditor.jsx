@@ -316,13 +316,14 @@ class PdfFileEditor extends React.Component {
                 if(this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight){
                   block.text_top = block.text_top - this.state.height + evt.currentTarget.offsetHeight
                 }
-                if(this.state.height ===0 && evt.currentTarget.offsetHeight - block.text_height> 5){
-                  block.text_height=  block.text_height + evt.currentTarget.offsetHeight - block.text_height - 3
+                // if(this.state.height ===0 && evt.currentTarget.offsetHeight - block.text_height> 5){
+                //   block.text_height=  block.text_height + evt.currentTarget.offsetHeight - block.text_height - 3
                   
-                }
+                // }
               }
             })
             page.page_height = page.page_height + valueH;
+            valueH=0; 
 
           }
         } 
