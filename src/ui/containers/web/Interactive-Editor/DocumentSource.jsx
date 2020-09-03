@@ -234,13 +234,10 @@ class Preview extends React.Component {
   render() {
     const { sourceSentence } = this.props;
 
-
     let style = {
       maxWidth: sourceSentence.page_width + "px",
       // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
-
       position: "relative",
-
       height: sourceSentence.page_height + "px",
       backgroundColor: "white",
       marginLeft: "auto",
@@ -262,6 +259,7 @@ class Preview extends React.Component {
             >{this.getContent()}</div>
         }
       </div>
+
     );
   }
 }

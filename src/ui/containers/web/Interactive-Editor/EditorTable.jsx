@@ -26,9 +26,6 @@ class EditorTable extends React.Component {
   }
 
   fetchTableContent(sentences) {
-   
-   
-
     let col = [];
 
     if (sentences && sentences.children && Array.isArray(sentences.children) && sentences.children.length > 0) {
@@ -38,8 +35,8 @@ class EditorTable extends React.Component {
             <div
               key={i}
               style={{
-                 
-                border: "1px solid black",
+                 zIndex: 1,
+                
                 borderCollapse: "collapse",
                 position: 'absolute',
                 zIndex: 1,
@@ -47,6 +44,7 @@ class EditorTable extends React.Component {
                 left: tableData.text_left + "px",
                 width: tableData.text_width + "px",
                 height: tableData.text_height + "px",
+                // lineHeight: tableData.children && parseInt(tableData.text_height / tableData.children.length) + 'px',
                 backgroundColor: this.props.hoveredTableId === this.props.tableId + "_" + tableData.index[0] + "_" + tableData.index[1] + this.props.pageNo ? "yellow" : ""
               }}
               onMouseEnter={()=> this.props.handleTableHover(this.props.tableId + "_" + tableData.index[0] + "_" + tableData.index[1] + this.props.pageNo)}
@@ -54,11 +52,11 @@ class EditorTable extends React.Component {
             >
               {tableData.text.map((textObj, i) => {
                 return (
-                    
+
                   <div
                     key={i}
                     
-                    style={{paddingLeft:textObj.text_left-tableData.text_left +"px",fontSize:textObj.font_size + "px", fontWeight: textObj.font_family && textObj.font_family.includes("Bold") && 'bold',}}
+                    style={{fontSize:textObj.font_size + "px", fontWeight: textObj.font_family && textObj.font_family.includes("Bold") && 'bold'}}
                   >
                     {textObj.text}
                   </div>
@@ -68,7 +66,7 @@ class EditorTable extends React.Component {
           );
         }
       });
-      
+
       return col;
     }
   }
@@ -77,19 +75,7 @@ class EditorTable extends React.Component {
     const { table } = this.props;
     return (
       <div>
-        <div
-          style={{
-            // border: "1px solid black",
-            // borderCollapse: "collapse",
-            // // position: "relative",
-            // top: table.text_top + "px",
-            // left: table.text_left + "px",
-            // width: table.text_width + "px",
-            // height: table.text_height + "px"
-          }}
-        >
-          {/* <td style={{left: "100px", top: "50px", border: "1px solid black"}}>Test1</td>
-                        <td>Test2</td> */}
+        <div>
           {this.fetchTableContent(table)}
         </div>
       </div>

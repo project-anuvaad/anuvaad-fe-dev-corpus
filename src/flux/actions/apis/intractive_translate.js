@@ -5,7 +5,7 @@ import API from "./api";
 import C from "../constants";
 import ENDPOINTS from "../../../configs/apiendpoints";
 export default class NMTSP extends API {
-    constructor(source,target, model,dontshowloader, timeout = 200000) {
+    constructor(source, target, model, dontshowloader, v1, timeout = 200000) {
         super("POST", timeout, false);
         this.src = source;
         this.target = target;
@@ -13,7 +13,7 @@ export default class NMTSP extends API {
         this.dontshowloader = dontshowloader;
         this.answers = null;
         this.type = C.INTRACTIVE_TRANSLATE;
-        this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.interactive_translate}`
+        this.endpoint = v1 ? `${super.apiEndPointAuto()}${ENDPOINTS.interactive_translate_v1}` : `${super.apiEndPointAuto()}${ENDPOINTS.interactive_translate}`
     }
 
     toString() {
@@ -29,23 +29,23 @@ export default class NMTSP extends API {
         return this.endpoint;
     }
 
-    dontShowApiLoader(){
+    dontShowApiLoader() {
         return this.dontshowloader
     }
 
     getBody() {
 
         var modelArray = [];
-   
-      modelArray.push({
-        src: this.src,
-        target_prefix: this.target,
-        id: parseInt(this.model,10),
-       
-    });
+
+        modelArray.push({
+            src: this.src,
+            target_prefix: this.target,
+            id: parseInt(this.model, 10),
+
+        });
 
         return modelArray;
-        
+
     }
 
     getHeaders() {

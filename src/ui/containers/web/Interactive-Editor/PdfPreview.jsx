@@ -47,6 +47,7 @@ class PdfPreview extends React.Component {
       `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
       fileDetails.download_source_path ? fileDetails.download_source_path : ""
       }`;
+     
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>

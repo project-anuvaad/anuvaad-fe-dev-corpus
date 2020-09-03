@@ -10,18 +10,13 @@ import Button from "@material-ui/core/Fab";
 import { translate } from "../../../../assets/localisation";
 import history from "../../../../web.history";
 import FileDetails from "../../../../flux/actions/apis/fetch_filedetails";
-import Data from "./json/File1506.json";
-import htmlToText from "html-to-text";
 import Paper from "@material-ui/core/Paper";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import PdfPreview from './PdfPreview'
 
-// import Data from "./json/File3002.json";
-// import Data from "./json/Judgement.json";
-// import Data from "./json/DelhiHC.json";
-//  import Data from "./JudgementNew.json";
+import htmlToText from "html-to-text";
+import PdfPreview from './PdfPreview'
 
 class PdfFileEditor extends React.Component {
   constructor(props) {
@@ -45,6 +40,7 @@ class PdfFileEditor extends React.Component {
       scrollToPage: "",
       popOver: false,
       hoveredTableId: "",
+      fileDetails: {},
     };
   }
 
@@ -69,8 +65,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
-    this.setState({ hoveredSentence: sentenceId });
-    // this.setState({ hoveredSentence: sentenceId, hoveredTableId: ""});
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: ""});
   }
 
   handleOnMouseLeave() {
@@ -81,6 +76,9 @@ class PdfFileEditor extends React.Component {
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
   }
 
+  handlePreviewPageChange(pageNo, value) {
+    this.setState({ pageNo: parseInt(pageNo) + value, scrollToPage: pageNo + value})
+  }
 
   handleDuplicateBlock(block, blockText, page) {
     block = block.split("_")[0]
@@ -283,6 +281,7 @@ class PdfFileEditor extends React.Component {
   handleOnClose() {
     history.push(`${process.env.PUBLIC_URL}/view-document`);
   }
+
   handleSource(selectedBlock) {
     this.setState({ selectedSourceText: selectedBlock.text })
   }
@@ -352,6 +351,11 @@ class PdfFileEditor extends React.Component {
     this.setState({ showCompareDocs: true })
   }
 
+
+  handleCompareDocClose() {
+    this.setState({ showCompareDocs: false })
+  }
+
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState({ numPages });
   };
@@ -363,10 +367,6 @@ class PdfFileEditor extends React.Component {
   handleZoomChange = value => {
     this.setState({ zoom: !this.state.zoom });
   };
-
-  handleCompareDocClose() {
-    this.setState({ showCompareDocs: false })
-  }
 
   handlePreviewPageChange(pageNo, value) {
     this.setState({ pageNo: parseInt(pageNo) + value, scrollToPage: pageNo + value })

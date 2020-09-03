@@ -77,7 +77,7 @@ class EditorPaper extends React.Component {
       this.setState({
         open: true,
         showLoader: false,
-        autoCompleteText: this.props.intractiveTrans[0].tgt.substring(this.state.caretPos),
+        autoCompleteText: this.props.intractiveTrans[0].tgt,
       })
     }
   }
@@ -287,10 +287,16 @@ class EditorPaper extends React.Component {
   }
 
   handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex) {
-    if (event.key == 'Tab') {
+    if (event.key === 'Escape') {
+      this.setState({
+        contentEditableId: null,
+        selectedIndex: 0
+      })
+    }
+    else if (event.key === 'Tab') {
       event.preventDefault()
     }
-    if (((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed == 'Shift')) {
+    if (((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed === 'Shift')) {
       let editableDiv = this.refs[refId]
       var caretPos = 0,
         sel, range;
@@ -314,7 +320,7 @@ class EditorPaper extends React.Component {
         }
       }
       let targetVal = this.handleCalc(editableDiv.textContent.substring(0, caretPos), tokenText)
-      const apiObj = new IntractiveApi(tokenText.src, targetVal, this.props.modelDetails, true);
+      const apiObj = new IntractiveApi(tokenText.src, targetVal, this.props.modelDetails, true, true);
       this.props.APITransport(apiObj);
       this.setState({
         anchorEl: event.currentTarget,
@@ -326,14 +332,17 @@ class EditorPaper extends React.Component {
       })
     } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
       if (event.key === 'ArrowUp') {
-        this.setState({
-          selectedIndex: 0
-        })
+        if (this.state.selectedIndex !== 0) {
+          this.setState({
+            selectedIndex: this.state.selectedIndex - 1
+          })
+        }
       }
       else if (event.key === 'ArrowDown') {
-        // this.setState({
-        //   selectedIndex: 1
-        // })
+        if (this.state.selectedIndex !== this.state.autoCompleteText.length - 1)
+          this.setState({
+            selectedIndex: this.state.selectedIndex + 1
+          })
       }
       else {
         if (this.state.open) {
@@ -361,9 +370,10 @@ class EditorPaper extends React.Component {
     var self = this
     setTimeout(() => {
       var sentences = Object.assign([], this.state.sentences ? this.state.sentences : this.props.sentences)
-      sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText
+      sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText[this.state.selectedIndex].substring(this.state.caretPos)
       self.setState({
-        sentences: sentences
+        sentences: sentences,
+        selectedIndex: 0
       })
     }, 100)
   }
@@ -867,15 +877,20 @@ class EditorPaper extends React.Component {
               return this.fetchSentence(sentence, sentences[index - 1], index, sentences[sentences.length - 1].page_no);
             })}
           <Popover isOpen={this.state.open} containerNode={this.state.anchorEl} placementStrategy={placeBelow}>
-            <Typography
-              title={"Press enter to select the text"}
-              onClick={() => alert("test")}
-              style={{
-                padding: '2%',
-                display: 'block',
-                maxWidth: '450px',
-                wordWrap: 'break-word', cursor: 'not-allowed', fontSize: '15px', zIndex: 999, backgroundColor: this.state.selectedIndex == 0 ? blueGrey50 : 'white'
-              }} selected={true}>{this.state.autoCompleteText}</Typography>
+            {this.state.autoCompleteText ? this.state.autoCompleteText.map((at, index) => {
+              return <Typography
+                title={"Press enter to select the text"}
+
+                style={{
+                  padding: '2%',
+                  display: 'block',
+                  maxWidth: '450px',
+                  wordWrap: 'break-word', cursor: 'not-allowed', fontSize: '15px', zIndex: 999, backgroundColor: this.state.selectedIndex == index ? blueGrey50 : 'white'
+                }} selected={true}>{at.substring(this.state.caretPos)}</Typography>
+            })
+              : <div></div>
+            }
+
           </Popover>
           <Popover isOpen={this.state.showLoader} containerNode={this.state.anchorEl} placementStrategy={placeRight}>
             <CircularProgress
