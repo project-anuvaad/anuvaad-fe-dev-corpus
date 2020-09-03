@@ -123,7 +123,93 @@ class PdfFileEditor extends React.Component {
     this.indexCorrection();
   }
 
-  handleDeleteBlock(block, blockText, pageData) {
+  handleDeleteTable(table, pageData) {
+    let tableId = table.split("_")[0]
+    let page = table.split("_")[3]
+    let sourceSentence = this.state.sentences
+    let targetSentence = this.state.sentences
+
+    let height, top;
+    let tableData = []
+    let blockData = []
+
+    if (pageData && Array.isArray(pageData.tables) && pageData.tables.length > 0) {
+      pageData.tables.map((tab, tabInxed) => {
+        if (tabInxed == tableId) {
+          height = tab.text_height
+          top = tab.text_top
+        }
+      })
+    }
+    let parentTable = {}
+    if (sourceSentence && Array.isArray(sourceSentence) && sourceSentence.length > 0) {
+      sourceSentence.map((pages, i) => {
+        if (page == pages.page_no) {
+          if (pages && pages.tables && Array.isArray(pages.tables) && pages.tables.length > 0) {
+            pages.tables.map((tables, tabIndex) => {
+              if (tableId != tabIndex) {
+                if (tables.text_top < top) {
+                  tableData.push(tables)
+                } else if (tables.text_top == top) {
+
+                } else {
+                  if (tables && tables.children && Array.isArray(tables.children) && tables.children.length > 0) {
+                    let singleTable = tables
+                    tables.children.map((children, i) => {
+
+                      children.text_top = parseInt(children.text_top) - parseInt(height)
+                      return children
+                    })
+                    tableData.push(tables)
+                  }
+                }
+              } else {
+                return false
+              }
+            })
+            parentTable = tableData
+          }
+
+          if (pages && pages.text_blocks && Array.isArray(pages.text_blocks) && pages.text_blocks.length > 0) {
+            pages.text_blocks.map((blocks, tabIndex) => {
+              if (blocks.text_top > top) {
+                blocks.text_top = blocks.text_top - height
+                blockData.push(blocks)
+              } else {
+                blockData.push(blocks)
+              }
+            })
+          }
+        }
+      })
+
+      if (targetSentence && Array.isArray(targetSentence) && targetSentence.length > 0) {
+        targetSentence.map(sen => {
+          if (sen.page_no == page) {
+
+            if (parentTable && parentTable.length > 0) {
+              sen.tables = parentTable
+            } else {
+              sen.tables = null
+            }
+
+            if (blockData && blockData.length > 0) {
+              sen.text_blocks = blockData
+            } else {
+              sen.text_blocks = null
+            }
+          }
+        })
+      }
+      this.setState({ sentences: targetSentence })
+    }
+  }
+
+  handleDuplicateTable(table, pageData) {
+
+  }
+
+  handleDeleteBlock(block, blockText, pageData, type) {
     block = block.split("_")[0]
     let blocks = [];
     let height, top;
@@ -308,9 +394,6 @@ class PdfFileEditor extends React.Component {
 
 
             page.text_blocks.map((block, i) => {
-
-
-
               if (block.block_id == blockId) {
                 blockTop = block.text_top;
                 blockHeight = block.text_height;
@@ -343,8 +426,6 @@ class PdfFileEditor extends React.Component {
     !checkValue && this.setState({ selectedBlockId: null, clear: false })
 
     this.setState({ sentences: docPage, height: checkValue ? evt.currentTarget.offsetHeight : 0, clear: true })
-
-
 
   };
 
@@ -473,6 +554,8 @@ class PdfFileEditor extends React.Component {
                       handleSource={this.handleSource.bind(this)}
                       handleTableHover={this.handleTableHover.bind(this)}
                       handlePopUp={this.handlePopUp.bind(this)}
+                      handleDeleteTable={this.handleDeleteTable.bind(this)}
+                      handleDuplicateTable={this.handleDuplicateTable.bind(this)}
                     />
                   </div>
                 );
@@ -526,32 +609,34 @@ class PdfFileEditor extends React.Component {
                       return (
                         <div>
                           <SourceView
-                                isPreview={true}
-                                key={sentence.page_no + "_" + index}
-                                pageNo={sentence.page_no}
-                                sourceSentence={sentence}
-                                selectedSourceText={this.state.selectedSourceText}
-                                createBlockId={this.state.selectedBlockId}
-                                isEditable={this.state.isEditable}
-                                hoveredSentence={this.state.hoveredSentence}
-                                hoveredTableId={this.state.hoveredTableId}
-                                clear={this.state.clear}
-                                heightValue={this.state.height}
-                                popOver={this.state.popOver}
-                                scrollToPage={this.state.scrollToPage}
-                                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                                handleDialogSave={this.handleDialogSave.bind(this)}
-                                handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
-                                handleDeleteBlock={this.handleDeleteBlock.bind(this)}
-                                handleCreateBlock={this.handleCreateBlock.bind(this)}
-                                handleSourceChange={this.handleSourceChange.bind(this)}
-                                handleEditor={this.handleEditor.bind(this)}
-                                handleCheck={this.handleCheck.bind(this)}
-                                handleSource={this.handleSource.bind(this)}
-                                handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
-                                handleTableHover={this.handleTableHover.bind(this)}
-                                handlePopUp={this.handlePopUp.bind(this)}
-                             />
+                            isPreview={true}
+                            key={sentence.page_no + "_" + index}
+                            pageNo={sentence.page_no}
+                            sourceSentence={sentence}
+                            selectedSourceText={this.state.selectedSourceText}
+                            createBlockId={this.state.selectedBlockId}
+                            isEditable={this.state.isEditable}
+                            hoveredSentence={this.state.hoveredSentence}
+                            hoveredTableId={this.state.hoveredTableId}
+                            clear={this.state.clear}
+                            heightValue={this.state.height}
+                            popOver={this.state.popOver}
+                            scrollToPage={this.state.scrollToPage}
+                            handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                            handleDialogSave={this.handleDialogSave.bind(this)}
+                            handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
+                            handleDeleteBlock={this.handleDeleteBlock.bind(this)}
+                            handleCreateBlock={this.handleCreateBlock.bind(this)}
+                            handleSourceChange={this.handleSourceChange.bind(this)}
+                            handleEditor={this.handleEditor.bind(this)}
+                            handleCheck={this.handleCheck.bind(this)}
+                            handleSource={this.handleSource.bind(this)}
+                            handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
+                            handleTableHover={this.handleTableHover.bind(this)}
+                            handlePopUp={this.handlePopUp.bind(this)}
+                            handleDeleteTable={this.handleDeleteTable.bind(this)}
+                            handleDuplicateTable={this.handleDuplicateTable.bind(this)}
+                          />
                         </div>
                       );
 
