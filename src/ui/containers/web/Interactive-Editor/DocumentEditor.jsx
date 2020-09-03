@@ -45,6 +45,7 @@ class PdfFileEditor extends React.Component {
       scrollToPage: "",
       popOver: false,
       hoveredTableId: "",
+      // selectedCell: ""
     };
   }
 
@@ -227,27 +228,43 @@ class PdfFileEditor extends React.Component {
       pageData.text_blocks &&
       pageData.text_blocks.map((blockData, i) => {
         if (blockData.block_id == block) {
-          // blockData.status = "deleted"
-          // blocks.push(blockData)
-
           delete pageData.text_blocks[i];
         } else {
 
           if (blockData.block_id > block || blockData.text_top > top) {
             let blockTop = blockData.text_top - height;
-
-
+            
             blockData.text_top = blockTop;
-
             blocks.push(blockData);
 
           } else {
             blocks.push(blockData);
-
-
           }
         }
       });
+
+    let parentTable = {}
+    let tableData = []
+
+      pageData &&
+      pageData.tables &&
+      pageData.tables.map((tables, i) => {
+        // debugger
+        if(tables && tables.children && Array.isArray(tables.children) && tables.children.length >0) {
+          if(tables.children[0].text_top < top && pageData.text_top < top) {
+            tableData.push(tables)
+          } else {
+            tables.children.map((children, i) => {
+              children.text_top = parseInt(children.text_top) - parseInt(height)
+              return children
+
+            })
+            tableData.push(tables)
+          }
+        }
+      });
+      parentTable = tableData
+
 
     pageData.page_height = pageData.page_height - height;
     this.indexCorrection();
@@ -257,6 +274,7 @@ class PdfFileEditor extends React.Component {
       this.state.sentences.map((sentence, index) => {
         if (sentence.page_no === pageData.page_no) {
           sentence.text_blocks = blocks;
+          sentence.tables = parentTable
           res.push(sentence);
         } else {
           res.push(sentence);
@@ -369,8 +387,12 @@ class PdfFileEditor extends React.Component {
   handleOnClose() {
     history.push(`${process.env.PUBLIC_URL}/view-document`);
   }
-  handleSource(selectedBlock) {
-    this.setState({ selectedSourceText: selectedBlock.text })
+  handleSource(selectedBlock, type) {
+    if (type === "table") {
+      this.setState({ selectedCell: selectedBlock })
+    } else {
+      this.setState({ selectedSourceText: selectedBlock.text })
+    }
   }
 
   handleSourceChange = (block, evt) => {
@@ -543,6 +565,7 @@ class PdfFileEditor extends React.Component {
                       clear={this.state.clear}
                       heightValue={this.state.height}
                       popOver={this.state.popOver}
+                      selectedCell={this.state.selectedCell}
                       handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                       handleDialogSave={this.handleDialogSave.bind(this)}
                       handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
@@ -622,6 +645,7 @@ class PdfFileEditor extends React.Component {
                             heightValue={this.state.height}
                             popOver={this.state.popOver}
                             scrollToPage={this.state.scrollToPage}
+                            selectedCell={this.state.selectedCell}
                             handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                             handleDialogSave={this.handleDialogSave.bind(this)}
                             handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
