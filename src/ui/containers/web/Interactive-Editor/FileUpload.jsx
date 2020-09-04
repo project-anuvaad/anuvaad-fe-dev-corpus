@@ -56,8 +56,8 @@ class PdfUpload extends Component {
     if (prevProps.documentUplaod !== this.props.documentUplaod) {
       console.log(this.props.documentUplaod)
       const { APITransport } = this.props;
-
-      const apiObj = new WorkFlow(this.props.documentUplaod.data,this.state.fileName);
+      let path = this.state.fileName.split('.')
+      const apiObj = new WorkFlow(this.props.documentUplaod.data,this.state.fileName, path[path.length-1] );
       APITransport(apiObj);
       // history.push(`${process.env.PUBLIC_URL}/interactive-document/${this.props.configUplaod.configUplaod}`);
     }
