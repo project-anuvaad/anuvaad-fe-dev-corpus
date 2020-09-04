@@ -59,7 +59,7 @@ class ViewDocument extends React.Component {
         b["status"] = value.status;
           b["job"] = value.jobID;
           b["name"] = value.input.jobName? value.input.jobName: value.input.files[0].name;
-          b["id"] = value.output && value.output[0].outputFilePath;
+          b["id"] = value.output && (value.output[0].outputFilePath?value.output[0].outputFilePath : value.output[0].outputFile);
           b["inputFile"] = value.output && value.output[0].inputFile;
         
         arr.push(b)
