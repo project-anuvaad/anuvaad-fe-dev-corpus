@@ -3,13 +3,16 @@ import C from "../constants";
 import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
-  constructor(file,fileName, timeout = 2000) {
+  constructor(file,fileName,source,target, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
     this.type = C.WORKFLOW;
     this.file = file;
     this.fileName = fileName;
     this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.workflow}`
+    this.source=source;
+    this.target=target;
+   
   }
 
   toString() {
@@ -38,7 +41,7 @@ export default class RunExperiment extends API {
           {
             "path":this.file ,
             "type":"docx",
-            "locale":"en"
+            "locale":this.source
           }
         ]
       

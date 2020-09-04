@@ -58,7 +58,7 @@ const PdfUploadStyles = theme => ({
     marginLeft:"2.3%"
   },
   span:{
-    
+    color:'red'
   },
   button: {
     marginTop: "6%",

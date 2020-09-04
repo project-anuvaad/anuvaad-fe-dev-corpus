@@ -30,7 +30,8 @@ const FileUploadStyles = theme => ({
   
     typography: {
       marginLeft:"2%",
-      marginTop:'2%',
+      marginTop:'1.7%',
+      marginBottom:'2%',
       height:"18px"
       
     },
@@ -41,7 +42,7 @@ const FileUploadStyles = theme => ({
       
     },
    paper: {
-      width: "40%",
+      width: "60%",
       minWidth: "200px",
       marginTop: "2%",
       marginBottom:'4%',
@@ -53,7 +54,15 @@ const FileUploadStyles = theme => ({
     grid:{
       marginLeft: "5.5%" 
     },
-    button: {
+    textfield:{
+      width: '87.9%',
+      marginLeft:"2.3%"
+    },
+    span:{
+      color:'red'
+    },
+    button
+    : {
       marginTop: "6%",
       marginLeft: "2%",
       width: "100%",
@@ -62,18 +71,27 @@ const FileUploadStyles = theme => ({
       color:"#FFFFFF"
     },
     button1: {
-      marginTop: "10%",
-      
-      width: "100%",
+      marginTop: "9%",
+      marginLeft: "-7.4%",
+      width: "90.5%",
+      backgroundColor:'#1C9AB7',
+      borderRadius:"20px 20px 20px 20px",
+      color:"#FFFFFF"
+    },
+    button2: {
+      marginTop: "9%",
+      marginLeft: "7%",
+      width: "91.4%",
       backgroundColor:'#1C9AB7',
       borderRadius:"20px 20px 20px 20px",
       color:"#FFFFFF"
     },
     dropZoneArea:{
-      paddingTop: '12%',
+      paddingTop: '13%',
       top: "auto",
-      minHeight:'310px',
-      // height: "100%",
+      width:'91%',
+      minHeight:'340px',
+      height: "100%",
       borderColor:'#1C9AB7',
       backgroundColor: '#F5F9FA',
       border: '1px dashed #1C9AB7',
