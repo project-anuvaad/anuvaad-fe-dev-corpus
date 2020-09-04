@@ -71,7 +71,7 @@ class Preview extends React.Component {
                         }}
                     />
                 ) : (
-                        sentence.text
+                        sentence.hasOwnProperty('tokenised_text') ? sentence.tokenised_text.map(text=>text) : sentence.text
                     )}
             </div >
         );

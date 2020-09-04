@@ -57,7 +57,6 @@ class PdfFileEditor extends React.Component {
     if (prevProps.documentDetails !== this.props.documentDetails) {
 
       const temp = this.props.documentDetails.result;
-
       this.setState({
         sentences: temp
       });

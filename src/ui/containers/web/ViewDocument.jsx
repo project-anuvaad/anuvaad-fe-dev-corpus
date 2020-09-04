@@ -54,16 +54,16 @@ class ViewDocument extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.fetchDocument !== this.props.fetchDocument) {
       var arr=[]
+
       this.props.fetchDocument.map(value=>{
         var b = {}
         b["status"] = value.status;
           b["job"] = value.jobID;
           b["name"] = value.input.jobName? value.input.jobName: value.input.files[0].name;
-          b["id"] = value.output && value.output[0].outputFilePath;
+          b["id"] = value.output && (value.output[0].hasOwnProperty('outputFilePath') ? value.output[0].outputFilePath : value.output[0].outputFile);
           b["inputFile"] = value.output && value.output[0].inputFile;
         
         arr.push(b)
-console.log(arr)
       })
       console.log(arr)
      this.setState({ name: arr , showLoader: false});
