@@ -56,6 +56,7 @@ class PdfUpload extends Component {
         return true
       })
       e.preventDefault();
+      this.setState({model})
       const { APITransport } = this.props;
       if (this.state.files.length > 0  && source_lang_name && target_lang_name ) {
         const { APITransport } = this.props;
@@ -136,16 +137,14 @@ class PdfUpload extends Component {
       });
     }
     if (prevProps.documentUplaod !== this.props.documentUplaod) {
-      console.log(this.props.documentUplaod)
+      
       const { APITransport } = this.props;
-
       const apiObj = new WorkFlow(this.props.documentUplaod.data, this.state.fileName,this.state.source,
-        this.state.target);
+        this.state.target,this.state.path, this.state.model);
       APITransport(apiObj);
       // history.push(`${process.env.PUBLIC_URL}/interactive-document/${this.props.configUplaod.configUplaod}`);
     }
     if (prevProps.workflowStatus !== this.props.workflowStatus) {
-      console.log("workflow", this.props.workflowStatus.status === "STARTED")
       history.push(`${process.env.PUBLIC_URL}/view-document`);
     }
   }
@@ -178,12 +177,16 @@ class PdfUpload extends Component {
   }
 
   handleChange = files => {
-    console.log(files[0])
+    
     if (files.length > 0) {
+      let path = files[0].name.split('.')
+      let fileType = path[path.length-1] 
+      let fileName = path.splice(0,path.length-1).join('.')
       this.setState({
         files,
         fileName: files[0].name,
-        workspaceName: this.state.workspaceName ? this.state.workspaceName : files[0].name.slice(0, -4)
+        workspaceName: this.state.workspaceName ? this.state.workspaceName : fileName,
+        path : fileType
       });
     } else {
       this.setState({
@@ -195,7 +198,6 @@ class PdfUpload extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log("tttttttt",this.state.source)
     return (
       <div className={classes.div}>
         <Typography value="" variant="h4" className={classes.typographyHeader}>

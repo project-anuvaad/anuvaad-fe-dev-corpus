@@ -13,7 +13,7 @@ const FileUploadStyles = theme => ({
       marginTop: theme.spacing.unit * 3
     },
     div:{
-      display: 'flex', flexDirection: 'column', flex: 1, textAlign: 'center', alignItems: 'center'
+      display: 'flex', flexDirection: 'column', flex: 1, alignItems: 'center'
     },
     typographyHeader:{
       paddingTop:'1%',
@@ -72,7 +72,7 @@ const FileUploadStyles = theme => ({
     },
     button1: {
       marginTop: "9%",
-      marginLeft: "-7.4%",
+     
       width: "90.5%",
       backgroundColor:'#1C9AB7',
       borderRadius:"20px 20px 20px 20px",
