@@ -3,11 +3,12 @@ import C from "../constants";
 import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
-  constructor(file,fileName, timeout = 2000) {
+  constructor(file,fileName,fileExt, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
     this.type = C.WORKFLOW;
     this.file = file;
+    this.path = fileExt;
     this.fileName = fileName;
     this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.workflow}`
   }
@@ -32,12 +33,12 @@ export default class RunExperiment extends API {
   getBody() {
     return {
       
-        "workflowCode":"DP_WFLOW_FB",
+        "workflowCode":"DP_WFLOW_FBT",
         "jobName": this.fileName,
         "files": [
           {
             "path":this.file ,
-            "type":"docx",
+            "type":this.path,
             "locale":"en"
           }
         ]

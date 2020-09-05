@@ -135,7 +135,8 @@ class Preview extends React.Component {
     this.setState({ selectedBlock: selectedBlock, openEl: false })
   }
 
-  handleCheck(block, evt, val) {
+  handleCheck(block, evt, val){
+   
     this.props.handleCheck(block, evt, val)
     this.setState({ selectedBlock: null })
   }
@@ -189,9 +190,9 @@ class Preview extends React.Component {
                   createBlockId={this.props.createBlockId}
                   isEditable={this.props.isEditable}
                   handleEditor={this.props.handleEditor}
-                  handleCheck={this.props.handleCheck}
-                  selectedSourceText={this.props.selectedSourceText}
-                  heightValue={this.props.heightValue}
+                  handleCheck = {this.handleCheck.bind(this)}
+                  selectedSourceText = {this.props.selectedSourceText}
+                  heightValue  = {this.props.heightValue}
                 />
               </div>
             );
@@ -236,13 +237,10 @@ class Preview extends React.Component {
   render() {
     const { sourceSentence } = this.props;
 
-
     let style = {
       maxWidth: sourceSentence.page_width + "px",
       // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
-
       position: "relative",
-
       height: sourceSentence.page_height + "px",
       backgroundColor: "white",
       marginLeft: "auto",
@@ -264,6 +262,7 @@ class Preview extends React.Component {
             >{this.getContent()}</div>
         }
       </div>
+
     );
   }
 }

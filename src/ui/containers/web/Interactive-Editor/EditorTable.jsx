@@ -46,8 +46,8 @@ class EditorTable extends React.Component {
               key={i}
               id={this.props.tableId + "_" + tableData.index[0] + "_" + tableData.index[1] + this.props.pageNo}
               style={{
-                zIndex: 1,
-                border: "1px solid #aaa",
+                 zIndex: 1,
+                
                 borderCollapse: "collapse",
                 position: 'absolute',
                 zIndex: 1,
@@ -72,8 +72,8 @@ class EditorTable extends React.Component {
 
                   <div
                     key={i}
-
-                    style={{ fontSize: textObj.font_size + "px", fontWeight: textObj.font_family && textObj.font_family.includes("Bold") && 'bold' }}
+                    
+                    style={{fontSize:textObj.font_size + "px", fontWeight: textObj.font_family && textObj.font_family.includes("Bold") && 'bold'}}
                   >
                     {textObj.text}
                   </div>

@@ -48,7 +48,8 @@ class PdfFileEditor extends React.Component {
       pageCount: 0,
       hasMoreItems: true,
       currentPage: 0,
-      pagesToBeLoaded: 2
+      pagesToBeLoaded: 2,
+      fileDetails: {},
     };
   }
 
@@ -94,8 +95,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
-    this.setState({ hoveredSentence: sentenceId });
-    // this.setState({ hoveredSentence: sentenceId, hoveredTableId: ""});
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: ""});
   }
 
   handleOnMouseLeave() {
@@ -106,6 +106,9 @@ class PdfFileEditor extends React.Component {
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
   }
 
+  handlePreviewPageChange(pageNo, value) {
+    this.setState({ pageNo: parseInt(pageNo) + value, scrollToPage: pageNo + value})
+  }
 
   handleDuplicateBlock(block, blockText, page) {
     block = block.split("_")[0]
@@ -578,6 +581,11 @@ class PdfFileEditor extends React.Component {
     this.setState({ showCompareDocs: true })
   }
 
+
+  handleCompareDocClose() {
+    this.setState({ showCompareDocs: false })
+  }
+
   onDocumentLoadSuccess = ({ numPages }) => {
     this.setState({ numPages });
   };
@@ -589,10 +597,6 @@ class PdfFileEditor extends React.Component {
   handleZoomChange = value => {
     this.setState({ zoom: !this.state.zoom });
   };
-
-  handleCompareDocClose() {
-    this.setState({ showCompareDocs: false })
-  }
 
   handlePreviewPageChange(pageNo, value) {
     this.setState({ pageNo: parseInt(pageNo) + value, scrollToPage: pageNo + value })
