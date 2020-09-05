@@ -10,14 +10,14 @@ import Button from "@material-ui/core/Fab";
 import { translate } from "../../../../assets/localisation";
 import history from "../../../../web.history";
 import FileDetails from "../../../../flux/actions/apis/fetch_filedetails";
-import Data from "./json/File1506.json";
+import FileContent from "../../../../flux/actions/apis/fetchcontent";
+
 import htmlToText from "html-to-text";
 import Paper from "@material-ui/core/Paper";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import PdfPreview from './PdfPreview'
-
+import InfiniteScroll from 'react-infinite-scroll-component';
 // import Data from "./json/File3002.json";
 // import Data from "./json/Judgement.json";
 // import Data from "./json/DelhiHC.json";
@@ -27,7 +27,6 @@ class PdfFileEditor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // sentences: Data.result,
       sourceSupScripts: "",
       targetSupScripts: "",
       header: "",
@@ -45,28 +44,55 @@ class PdfFileEditor extends React.Component {
       scrollToPage: "",
       popOver: false,
       hoveredTableId: "",
-      // selectedCell: ""
+      // selectedCell: "",
+      pageCount: 0,
+      hasMoreItems: true,
+      currentPage: 0,
+      pagesToBeLoaded: 2
     };
   }
 
   componentDidMount() {
-    const apiObj = new FileDetails(this.props.match.params.fileid);
-    this.props.APITransport(apiObj);
+    // const apiObj1 = new FileDetails(this.props.match.params.fileid);
+    // this.props.APITransport(apiObj1);
 
+    /* Pagination api */
+    const apiObj = new FileContent(123, 1, this.state.pagesToBeLoaded);
+    this.props.APITransport(apiObj);
+    console.log(this.props.m)
     let obj = {}
     obj.download_source_path = this.props.match.params.inputfileid
     this.setState({ fileDetails: obj })
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.documentDetails !== this.props.documentDetails) {
+    // if (prevProps.documentDetails !== this.props.documentDetails) {
 
-      const temp = this.props.documentDetails.result;
+    //   const temp = this.props.documentDetails.result;
+
+    //   this.setState({
+    //     sentences: temp
+    //   });
+    // }
+
+    /* Pagination api */
+    if (prevProps.fetchContent !== this.props.fetchContent) {
+      const temp = this.props.fetchContent.result.data;
 
       this.setState({
-        sentences: temp
+        sentences: temp,
+        pageCount: this.props.fetchContent.result.count,
+        currentPage: this.state.currentPage + this.state.pagesToBeLoaded,
+        hasMoreItems: this.props.fetchContent.result.count > this.state.currentPage+this.state.pagesToBeLoaded ? true : false
       });
     }
+  }
+
+  fetchData() {
+    let processIdentifier = this.props.match.params.jobid
+    console.log(processIdentifier)
+      const apiObj = new FileContent(123, this.state.currentPage+1, this.state.currentPage+this.state.pagesToBeLoaded);
+      this.props.APITransport(apiObj);
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
@@ -155,7 +181,6 @@ class PdfFileEditor extends React.Component {
 
                 } else {
                   if (tables && tables.children && Array.isArray(tables.children) && tables.children.length > 0) {
-                    let singleTable = tables
                     tables.children.map((children, i) => {
 
                       children.text_top = parseInt(children.text_top) - parseInt(height)
@@ -207,7 +232,105 @@ class PdfFileEditor extends React.Component {
   }
 
   handleDuplicateTable(table, pageData) {
+    let tableId = table.split("_")[0]
+    let page = table.split("_")[3]
+    let sourceSentence = this.state.sentences
+    let targetSentence = this.state.sentences
 
+    let height, top;
+    let tableData = []
+    let blockData = []
+    let newTable
+
+    if (pageData && Array.isArray(pageData.tables) && pageData.tables.length > 0) {
+      pageData.tables.map((tab, tabInxed) => {
+        if (tabInxed == tableId) {
+          height = tab.text_height
+          top = tab.text_top
+        }
+      })
+    }
+    let parentTable = {}
+    if (sourceSentence && Array.isArray(sourceSentence) && sourceSentence.length > 0) {
+      sourceSentence.map((pages, i) => {
+        if (page == pages.page_no) {
+          if (pages && pages.tables && Array.isArray(pages.tables) && pages.tables.length > 0) {
+            pages.tables.map((tables, tabIndex) => {
+              if (tables.text_top < top || tables.text_top == top) {
+                tableData.push(tables)
+                console.log(tables)
+                if (tables.text_top == top) {
+                  // newTable.text_top = top + height
+
+                  // tables && tables.children && Array.isArray(tables.children) && tables.children.length > 0 && tables.children.map((cell, cellIndex) => {
+                  //   cell.text_top = cell.text_top + height
+                  //   return cell
+                  // })
+                  // tableData.push(tables)
+                  let cell = []
+                  let table = pageData.tables[tableId]
+                  console.log(table)
+                  debugger
+                  for (i = 0; i < pageData.tables[tableId].children.length; i++) {
+                    let cellData = pageData.tables[tableId].children[i]
+                    cellData.text_top = cellData.text_top + height
+
+                    cell.push(cellData)
+                  }
+                  table.children = cell
+                  console.log(table)
+                  tableData.push(table)
+                }
+
+              } else {
+                if (tables && tables.children && Array.isArray(tables.children) && tables.children.length > 0) {
+                  tables.children.map((children, i) => {
+
+                    children.text_top = parseInt(children.text_top) + parseInt(height)
+                    return children
+                  })
+                  tableData.push(tables)
+                }
+              }
+
+            })
+            parentTable = tableData
+          }
+
+          if (pages && pages.text_blocks && Array.isArray(pages.text_blocks) && pages.text_blocks.length > 0) {
+            pages.text_blocks.map((blocks, tabIndex) => {
+              if (blocks.text_top > top) {
+                blocks.text_top = blocks.text_top + height
+                blockData.push(blocks)
+              } else {
+                blockData.push(blocks)
+              }
+            })
+          }
+        }
+      })
+
+      if (targetSentence && Array.isArray(targetSentence) && targetSentence.length > 0) {
+        targetSentence.map(sen => {
+          if (sen.page_no == page) {
+            let pageHeight = sen.page_height
+            sen.page_height = pageHeight + height
+            if (parentTable && parentTable.length > 0) {
+              sen.tables = parentTable
+            } else {
+              sen.tables = null
+            }
+
+            if (blockData && blockData.length > 0) {
+              sen.text_blocks = blockData
+            } else {
+              sen.text_blocks = null
+            }
+          }
+        })
+      }
+      this.setState({ sentences: targetSentence })
+    }
   }
 
   handleDeleteBlock(block, blockText, pageData, type) {
@@ -233,7 +356,7 @@ class PdfFileEditor extends React.Component {
 
           if (blockData.block_id > block || blockData.text_top > top) {
             let blockTop = blockData.text_top - height;
-            
+
             blockData.text_top = blockTop;
             blocks.push(blockData);
 
@@ -246,12 +369,11 @@ class PdfFileEditor extends React.Component {
     let parentTable = {}
     let tableData = []
 
-      pageData &&
+    pageData &&
       pageData.tables &&
       pageData.tables.map((tables, i) => {
-        // debugger
-        if(tables && tables.children && Array.isArray(tables.children) && tables.children.length >0) {
-          if(tables.children[0].text_top < top && pageData.text_top < top) {
+        if (tables && tables.children && Array.isArray(tables.children) && tables.children.length > 0) {
+          if (tables.children[0].text_top < top && pageData.text_top < top) {
             tableData.push(tables)
           } else {
             tables.children.map((children, i) => {
@@ -263,7 +385,7 @@ class PdfFileEditor extends React.Component {
           }
         }
       });
-      parentTable = tableData
+    parentTable = tableData
 
 
     pageData.page_height = pageData.page_height - height;
@@ -319,6 +441,15 @@ class PdfFileEditor extends React.Component {
           blockData.text_top = blockData.text_top + 30;
         }
       });
+
+    // pageData &&
+    //   pageData.tables &&
+    //   pageData.tables.map((tables, i) => {
+    //     if ((i > value || tables.text_top > height) && tables.text) {
+    //       extraHeight = pageData.text_blocks[value].text_height;
+    //       tables.text_top = tables.text_top + 30;
+    //     }
+    //   });
     pageData.page_height = pageData.page_height + 30;
     pageData &&
       sen.map(sentence => {
@@ -533,6 +664,16 @@ class PdfFileEditor extends React.Component {
           </div>
 
           <div style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => this.handleEditor()}>
+          <InfiniteScroll
+                      next={this.fetchData.bind(this)}
+                      hasMore={this.state.hasMoreItems}
+                      dataLength={this.state.sentences ? this.state.sentences.length : 0}
+                      endMessage={
+                        <p style={{textAlign: 'center'}}>
+                          <b>Yay! You have seen it all</b>
+                        </p>
+                      }
+                      >
             {this.state.sentences &&
               this.state.sentences.map((sentence, index) => {
                 yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
@@ -584,6 +725,7 @@ class PdfFileEditor extends React.Component {
                 );
 
               })}
+                    </InfiniteScroll>
           </div>
         </div>
       );
@@ -678,7 +820,8 @@ class PdfFileEditor extends React.Component {
 const mapStateToProps = state => ({
   fetchPdfSentence: state.fetchPdfSentence,
   fileUpload: state.fileUpload,
-  documentDetails: state.documentDetails
+  documentDetails: state.documentDetails,
+  fetchContent: state.fetchContent
 });
 
 const mapDispatchToProps = dispatch =>
