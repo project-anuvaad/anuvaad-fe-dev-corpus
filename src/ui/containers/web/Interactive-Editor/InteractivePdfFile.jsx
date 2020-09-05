@@ -227,7 +227,6 @@ class Preview extends React.Component {
               hadleSentenceSave={this.handleDone.bind(this)}
               handleSave={this.handleSave.bind(this)}
               handleCellOnClick={this.handleCellOnClick.bind(this)}
-              handleSenetenceOnClick={this.handleSenetenceOnClick.bind(this)}
               sentences={Data}
               handleSelectionClose={this.handleClose.bind(this)}
             />

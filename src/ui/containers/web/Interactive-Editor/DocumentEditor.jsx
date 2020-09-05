@@ -59,7 +59,6 @@ class PdfFileEditor extends React.Component {
     /* Pagination api */
     const apiObj = new FileContent(123, 1, this.state.pagesToBeLoaded);
     this.props.APITransport(apiObj);
-    console.log(this.props.m)
     let obj = {}
     obj.download_source_path = this.props.match.params.inputfileid
     this.setState({ fileDetails: obj })
@@ -90,7 +89,6 @@ class PdfFileEditor extends React.Component {
 
   fetchData() {
     let processIdentifier = this.props.match.params.jobid
-    console.log(processIdentifier)
       const apiObj = new FileContent(123, this.state.currentPage+1, this.state.currentPage+this.state.pagesToBeLoaded);
       this.props.APITransport(apiObj);
   }
@@ -258,7 +256,6 @@ class PdfFileEditor extends React.Component {
             pages.tables.map((tables, tabIndex) => {
               if (tables.text_top < top || tables.text_top == top) {
                 tableData.push(tables)
-                console.log(tables)
                 if (tables.text_top == top) {
                   // newTable.text_top = top + height
 
@@ -269,8 +266,6 @@ class PdfFileEditor extends React.Component {
                   // tableData.push(tables)
                   let cell = []
                   let table = pageData.tables[tableId]
-                  console.log(table)
-                  debugger
                   for (i = 0; i < pageData.tables[tableId].children.length; i++) {
                     let cellData = pageData.tables[tableId].children[i]
                     cellData.text_top = cellData.text_top + height
@@ -278,7 +273,6 @@ class PdfFileEditor extends React.Component {
                     cell.push(cellData)
                   }
                   table.children = cell
-                  console.log(table)
                   tableData.push(table)
                 }
 
@@ -429,7 +423,6 @@ class PdfFileEditor extends React.Component {
     a.text_height = 30;
     a.children = null;
     pageData.text_blocks.splice(value + 1, 0, a);
-    console.log(a, pageData.text_blocks[value])
     let arr = [];
 
     var extraHeight = 0;
@@ -575,7 +568,6 @@ class PdfFileEditor extends React.Component {
         }
       })
     }
-    console.log(checkValue, this.state.height)
     !checkValue && this.setState({ selectedBlockId: null, clear: false })
 
     this.setState({ sentences: docPage, height: checkValue ? evt.currentTarget.offsetHeight : 0, clear: true })
