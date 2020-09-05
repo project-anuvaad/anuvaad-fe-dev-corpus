@@ -70,6 +70,8 @@ import workflowStatus from "./fileupload";
 import documentUplaod from "./documentUpload";
 import fetchDocument from "./fetch_document";
 import documentDetails from "./fetch_fileDetails";
+import fetchContent from "./fetchcontent"
+
 export default {
     login,
     automl,
@@ -142,5 +144,6 @@ export default {
     workflowStatus,
     documentUplaod,
     fetchDocument,
-    documentDetails
+    documentDetails,
+    fetchContent
 };

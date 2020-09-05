@@ -5,7 +5,6 @@ export default function (state = {}, action) {
     switch (action.type) {
         
         case C.DOCUMENTUPLOAD:
-            console.log(action.payload)
             return action.payload;
 
         default:
