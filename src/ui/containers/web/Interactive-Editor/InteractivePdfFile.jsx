@@ -5,7 +5,6 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import { withRouter } from "react-router-dom";
 import SourceView from "./PdfFileEditor";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Editor from "./PdfEditor";
 import Data from "./Data.json";
 import MenuItems from "./PopUp";
@@ -191,12 +190,10 @@ class Preview extends React.Component {
   }
 
   popUp = (operation_type, event, sentenceDetails, selectedText, balanceText) => {
-    console.log("sentenceDetails,", operation_type, selectedText);
     this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, sentenceDetails,balanceText, selectedText, leftValue: event.clientX - 2 });
   };
 
   handleDone(token, value) {
-    const { APITransport } = this.props;
     const senArray = [];
     senArray.push(value);
     // const apiObj = new InteractiveApi(senArray);
