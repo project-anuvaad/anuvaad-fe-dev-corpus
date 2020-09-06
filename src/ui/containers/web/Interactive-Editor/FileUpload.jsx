@@ -54,7 +54,6 @@ class PdfUpload extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.documentUplaod !== this.props.documentUplaod) {
-      console.log(this.props.documentUplaod)
       const { APITransport } = this.props;
       let path = this.state.fileName.split('.')
       const apiObj = new WorkFlow(this.props.documentUplaod.data,this.state.fileName, path[path.length-1] );
@@ -62,7 +61,6 @@ class PdfUpload extends Component {
       // history.push(`${process.env.PUBLIC_URL}/interactive-document/${this.props.configUplaod.configUplaod}`);
     }
     if (prevProps.workflowStatus !== this.props.workflowStatus) {
-      console.log("workflow",this.props.workflowStatus.status==="STARTED")
       history.push(`${process.env.PUBLIC_URL}/view-document`);
     }
   }
