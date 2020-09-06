@@ -1,5 +1,6 @@
 import React from "react";
 import PopOver from "./EditorPopover";
+import Dialog from "../../../components/web/common/SimpleDialog";
 
 class EditorTable extends React.Component {
   constructor(props) {
@@ -11,7 +12,10 @@ class EditorTable extends React.Component {
       selectedColumn: "",
       topValue: "",
       leftValue: "",
-      selectedTable: ""
+      selectedTable: "",
+      openDialog: false,
+      dialogMessage: "",
+      operationType: ""
     };
   }
 
@@ -46,8 +50,8 @@ class EditorTable extends React.Component {
               key={i}
               id={this.props.tableId + "_" + tableData.index[0] + "_" + tableData.index[1] + this.props.pageNo}
               style={{
-                 zIndex: 1,
-                
+                zIndex: 1,
+                border: "1px solid black",
                 borderCollapse: "collapse",
                 position: 'absolute',
                 zIndex: 1,
@@ -72,8 +76,8 @@ class EditorTable extends React.Component {
 
                   <div
                     key={i}
-                    
-                    style={{fontSize:textObj.font_size + "px", fontWeight: textObj.font_family && textObj.font_family.includes("Bold") && 'bold'}}
+
+                    style={{ fontSize: textObj.font_size + "px", fontWeight: textObj.font_family && textObj.font_family.includes("Bold") && 'bold' }}
                   >
                     {textObj.text}
                   </div>
@@ -96,34 +100,33 @@ class EditorTable extends React.Component {
       selectedRow: index[0],
       selectedColumn: index[1],
       topValue: e.clientY - 4,
-      leftValue:e.clientX - 2
+      leftValue: e.clientX - 2
     });
   }
 
-  handleOnClick(sentence, operationType) {
-
-    if (this.state.openContextMenu && operationType === "delete-table") {
+  handleOnClick() {
+    if (this.state.operationType === "Delete Table") {
       this.props.handleDeleteTable(this.state.selectedTable, this.props.currentPage)
-      // this.props.handleDeleteBlock(this.state.selectedTable, "",this.props.currentPage, "table")
-    } else if (this.state.openContextMenu && (operationType === "add-column" || operationType === "add-row")) {
-      this.props.handleDialog(sentence, "", operationType);
-    } else if (
-      this.state.openContextMenu &&
-      (operationType === "delete-row" || operationType === "delete-column")
-    ) {
-      if (this.state.selectedRow && this.state.selectedColumn) {
-        let cellData = sentence.table_items[this.state.selectedRow][this.state.selectedColumn];
-        this.props.handleDialog(sentence, cellData, operationType);
-      }
     }
-    this.setState({ openContextMenu: false, anchorEl: null, leftValue: "", topValue: "" });
+    this.setState({ openContextMenu: false, anchorEl: null, leftValue: "", topValue: "", openDialog: false });
   }
 
   handlePopOverClose() {
     this.setState({ openContextMenu: false, anchorEl: null, leftValue: "", topValue: "" });
   }
 
+  handleClose = () => {
+    this.setState({
+      openDialog: false,
+      operation_type: "",
+      dialogMessage: "",
+      openContextMenu: false
+    });
+  };
 
+  handleDialog(sentence, operationType, message) {
+    this.setState({openContextMenu: false, openDialog: true, operationType: operationType, dialogMessage: message})
+  }
 
   render() {
     const { table } = this.props;
@@ -132,14 +135,14 @@ class EditorTable extends React.Component {
         <div>
           {this.fetchTableContent(table)}
         </div>
-        {this.props.popOver && (
+        {this.state.openContextMenu && (
           <PopOver
             id={this.props.tableId}
             isOpen={this.state.openContextMenu}
             topValue={this.state.topValue}
             leftValue={this.state.leftValue}
             anchorEl={this.state.anchorEl}
-            handleOnClick={this.handleOnClick.bind(this)}
+            handleOnClick={this.handleDialog.bind(this)}
             handlePopOverClose={this.handlePopOverClose.bind(this)}
             tableItems={this.state.tableItems}
             tableValues={this.state.tableTitles}
@@ -151,6 +154,15 @@ class EditorTable extends React.Component {
             handleDeleteBlock={this.props.handleDeleteBlock}
 
           ></PopOver>
+        )}
+         {this.state.openDialog && (
+          <Dialog
+            message={this.state.dialogMessage}
+            handleSubmit={this.handleOnClick.bind(this)}
+            handleClose={this.handleClose.bind(this)}
+            open
+            title={this.state.operationType}
+          />
         )}
       </div>
     );
