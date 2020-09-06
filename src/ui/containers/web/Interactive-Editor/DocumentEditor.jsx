@@ -54,38 +54,38 @@ class PdfFileEditor extends React.Component {
   }
 
   componentDidMount() {
-    // const apiObj1 = new FileDetails(this.props.match.params.fileid);
-    // this.props.APITransport(apiObj1);
+    const apiObj1 = new FileDetails(this.props.match.params.fileid);
+    this.props.APITransport(apiObj1);
 
     /* Pagination api */
-    const apiObj = new FileContent(123, 1, this.state.pagesToBeLoaded);
-    this.props.APITransport(apiObj);
-    let obj = {}
-    obj.download_source_path = this.props.match.params.inputfileid
-    this.setState({ fileDetails: obj })
+    // const apiObj = new FileContent(123, 1, this.state.pagesToBeLoaded);
+    // this.props.APITransport(apiObj);
+    // let obj = {}
+    // obj.download_source_path = this.props.match.params.inputfileid
+    // this.setState({ fileDetails: obj })
   }
 
   componentDidUpdate(prevProps) {
-    // if (prevProps.documentDetails !== this.props.documentDetails) {
+    if (prevProps.documentDetails !== this.props.documentDetails) {
 
-    //   const temp = this.props.documentDetails.result;
-
-    //   this.setState({
-    //     sentences: temp
-    //   });
-    // }
-
-    /* Pagination api */
-    if (prevProps.fetchContent !== this.props.fetchContent) {
-      const temp = this.props.fetchContent.result.data;
+      const temp = this.props.documentDetails.result;
 
       this.setState({
-        sentences: temp,
-        pageCount: this.props.fetchContent.result.count,
-        currentPage: this.state.currentPage + this.state.pagesToBeLoaded,
-        hasMoreItems: this.props.fetchContent.result.count > this.state.currentPage+this.state.pagesToBeLoaded ? true : false
+        sentences: temp
       });
     }
+
+    /* Pagination api */
+    // if (prevProps.fetchContent !== this.props.fetchContent) {
+    //   const temp = this.props.fetchContent.result.data;
+
+    //   this.setState({
+    //     sentences: temp,
+    //     pageCount: this.props.fetchContent.result.count,
+    //     currentPage: this.state.currentPage + this.state.pagesToBeLoaded,
+    //     hasMoreItems: this.props.fetchContent.result.count > this.state.currentPage+this.state.pagesToBeLoaded ? true : false
+    //   });
+    // }
   }
 
   fetchData() {
