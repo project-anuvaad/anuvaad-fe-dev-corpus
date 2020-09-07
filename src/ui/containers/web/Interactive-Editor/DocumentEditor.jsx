@@ -88,9 +88,9 @@ class PdfFileEditor extends React.Component {
   }
 
   fetchData() {
-    let processIdentifier = this.props.match.params.jobid
-      const apiObj = new FileContent(123, this.state.currentPage+1, this.state.currentPage+this.state.pagesToBeLoaded);
-      this.props.APITransport(apiObj);
+    // let processIdentifier = this.props.match.params.jobid
+    //   const apiObj = new FileContent(123, this.state.currentPage+1, this.state.currentPage+this.state.pagesToBeLoaded);
+    //   this.props.APITransport(apiObj);
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
@@ -668,6 +668,7 @@ class PdfFileEditor extends React.Component {
                           <b>Yay! You have seen it all</b>
                         </p>
                       }
+                      style={{overflow: "hidden"}}
                       >
             {this.state.sentences &&
               this.state.sentences.map((sentence, index) => {
