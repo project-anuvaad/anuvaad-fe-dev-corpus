@@ -55,7 +55,7 @@ class Corp extends React.Component {
       <div style={{ marginLeft: "3%", marginRight: "3%", paddingTop: "2%"}}>
 
         <Grid item xs={12} sm={12} lg={12} xl={12}>
-          <Typography variant="title" variant="h4">
+          <Typography variant="h4">
             {translate("translation.page.label.translationList")}
           </Typography>
           <div style={{textAlign: "right", paddingTop: "2%"}}>

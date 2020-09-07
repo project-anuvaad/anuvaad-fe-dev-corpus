@@ -48,8 +48,6 @@ class PdfFileEditor extends React.Component {
   //   }
 
   getSelectionText(event, id) {
-    console.log(id);
-
     var text = "";
     let selection = {};
     var activeEl = document.activeElement;

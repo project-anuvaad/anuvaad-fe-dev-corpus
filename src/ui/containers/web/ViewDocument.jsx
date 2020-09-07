@@ -39,6 +39,7 @@ class ViewDocument extends React.Component {
   }
 
   handleClick = rowData => {
+    // history.push(`${process.env.PUBLIC_URL}/interactive-document/${rowData[2]}/${rowData[5]}`);
     history.push(`${process.env.PUBLIC_URL}/interactive-document/${rowData[4]}/${rowData[5]}`);
   };
 
@@ -65,7 +66,6 @@ class ViewDocument extends React.Component {
         
         arr.push(b)
       })
-      console.log(arr)
      this.setState({ name: arr , showLoader: false});
     }
   }
