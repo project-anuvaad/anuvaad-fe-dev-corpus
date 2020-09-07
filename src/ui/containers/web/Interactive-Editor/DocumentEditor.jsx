@@ -60,9 +60,9 @@ class PdfFileEditor extends React.Component {
     /* Pagination api */
     // const apiObj = new FileContent(123, 1, this.state.pagesToBeLoaded);
     // this.props.APITransport(apiObj);
-    // let obj = {}
-    // obj.download_source_path = this.props.match.params.inputfileid
-    // this.setState({ fileDetails: obj })
+    let obj = {}
+    obj.download_source_path = this.props.match.params.inputfileid
+    this.setState({ fileDetails: obj })
   }
 
   componentDidUpdate(prevProps) {
