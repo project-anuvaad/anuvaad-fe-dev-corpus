@@ -19,6 +19,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import PdfPreview from './PdfPreview'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Arrow from "@material-ui/icons/ArrowUpward";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // import Data from "./json/File3002.json";
 // import Data from "./json/Judgement.json";
@@ -616,6 +617,10 @@ class PdfFileEditor extends React.Component {
     this.setState({ scrollToPage: 2, scrollToTop: true })
   }
 
+  handleScroll() {
+    this.setState({ scrollToTop: false })
+  }
+
   render() {
     let leftPaddingValue = 0;
     let rightPaddingValue = 0;
@@ -661,7 +666,11 @@ class PdfFileEditor extends React.Component {
               dataLength={this.state.sentences ? this.state.sentences.length : 0}
               loader={
                 <p style={{ textAlign: 'center' }}>
-                  <b>Loading...</b>
+                  {/* <b>Loading...</b> */}
+                  <CircularProgress size={20} style={{
+                    zIndex: 1000,
+                  }} />
+
                 </p>}
               endMessage={
                 <p style={{ textAlign: 'center' }}>
@@ -669,6 +678,7 @@ class PdfFileEditor extends React.Component {
                 </p>
               }
               style={{ overflow: "hidden" }}
+              onScroll={() => this.handleScroll()}
             >
               {this.state.sentences &&
                 this.state.sentences.map((sentence, index) => {
