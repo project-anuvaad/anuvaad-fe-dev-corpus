@@ -649,11 +649,11 @@ class PdfFileEditor extends React.Component {
         <div style={{ dislay: "flex", flexDirection: "row" }}>
           <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
             <div style={{ position: "fixed" }}>
-              <Button variant="extended" color="primary" style={{ fontSize: '90%', fontWeight: 'bold' }} onClick={() => this.handleCompareDocs()}>
+              <Button variant="extended" color="primary" style={{ textTransform: "capitalize",fontSize: '100%', fontWeight: 'bold' }} onClick={() => this.handleCompareDocs()}>
                 Compare with Original
             </Button>
-              <Button variant="extended" color="primary" style={{ fontSize: '90%', fontWeight: 'bold', marginLeft: "10px" }} onClick={() => this.handleOnClose()}>
-                <CloseIcon size="large" />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
+              <Button variant="extended" color="primary" style={{ textTransform: "capitalize", fontSize: '100%', fontWeight: 'bold', marginLeft: "10px" }} onClick={() => this.handleOnClose()}>
+                <CloseIcon  />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
               </Button>
             </div>
           </div>
