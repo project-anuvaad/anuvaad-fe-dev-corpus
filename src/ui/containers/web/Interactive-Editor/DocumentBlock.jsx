@@ -64,8 +64,10 @@ class Preview extends React.Component {
                         onBlur={this.handleCheck}
                         onChange={this.handleChangeEvent}
                         style={{
-                            border: "1px dashed #aaa",
+                            border: "1px solid #1C9AB7",
                             padding: "5px",
+                            backgroundColor: "#F4FDFF",
+              
                             cursor: 'auto',
                             // height: !sentence.children && parseInt(sentence.text_height) + "px"
                         }}
