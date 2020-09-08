@@ -18,6 +18,9 @@ import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import Toolbar from "@material-ui/core/Toolbar";
 import PdfPreview from './PdfPreview'
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Arrow from "@material-ui/icons/ArrowUpward";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 // import Data from "./json/File3002.json";
 // import Data from "./json/Judgement.json";
 // import Data from "./json/DelhiHC.json";
@@ -50,6 +53,7 @@ class PdfFileEditor extends React.Component {
       currentPage: 0,
       pagesToBeLoaded: 2,
       fileDetails: {},
+      scrollToTop: false
     };
   }
 
@@ -58,7 +62,9 @@ class PdfFileEditor extends React.Component {
     this.props.APITransport(apiObj1);
 
     /* Pagination api */
-    // const apiObj = new FileContent(123, 1, this.state.pagesToBeLoaded);
+    let jobId = this.props.match.params.jobid
+
+    // const apiObj = new FileContent(1234566, 1, this.state.pagesToBeLoaded);
     // this.props.APITransport(apiObj);
     let obj = {}
     obj.download_source_path = this.props.match.params.inputfileid
@@ -75,26 +81,26 @@ class PdfFileEditor extends React.Component {
     }
 
     /* Pagination api */
-    // if (prevProps.fetchContent !== this.props.fetchContent) {
-    //   const temp = this.props.fetchContent.result.data;
+    if (prevProps.fetchContent !== this.props.fetchContent) {
+      const temp = this.props.fetchContent.result.data;
 
-    //   this.setState({
-    //     sentences: temp,
-    //     pageCount: this.props.fetchContent.result.count,
-    //     currentPage: this.state.currentPage + this.state.pagesToBeLoaded,
-    //     hasMoreItems: this.props.fetchContent.result.count > this.state.currentPage+this.state.pagesToBeLoaded ? true : false
-    //   });
-    // }
+      this.setState({
+        sentences: temp,
+        pageCount: this.props.fetchContent.result.count,
+        currentPage: this.state.currentPage + this.state.pagesToBeLoaded,
+        hasMoreItems: this.props.fetchContent.result.count > this.state.currentPage + this.state.pagesToBeLoaded ? true : false
+      });
+    }
   }
 
   fetchData() {
-    // let processIdentifier = this.props.match.params.jobid
-    //   const apiObj = new FileContent(123, this.state.currentPage+1, this.state.currentPage+this.state.pagesToBeLoaded);
-    //   this.props.APITransport(apiObj);
+    // let jobId = this.props.match.params.jobid
+    // const apiObj = new FileContent(1234566, this.state.currentPage + 1, this.state.currentPage + this.state.pagesToBeLoaded);
+    // this.props.APITransport(apiObj);
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: ""});
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "" });
   }
 
   handleOnMouseLeave() {
@@ -103,10 +109,6 @@ class PdfFileEditor extends React.Component {
 
   handleDialog(title, dialogMessage) {
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
-  }
-
-  handlePreviewPageChange(pageNo, value) {
-    this.setState({ pageNo: parseInt(pageNo) + value, scrollToPage: pageNo + value})
   }
 
   handleDuplicateBlock(block, blockText, page) {
@@ -540,12 +542,12 @@ class PdfFileEditor extends React.Component {
   }
 
   handleSourceChange = (block, evt, blockValue) => {
-   
+
     this.setState({ selectedSourceText: evt.target.value, height: evt.currentTarget.offsetHeight });
     if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
       this.handleCheck(block, evt, true)
     }
-    else if(this.state.height === 0 && evt.currentTarget.offsetHeight - blockValue.text_height>0){
+    else if (this.state.height === 0 && evt.currentTarget.offsetHeight - blockValue.text_height > 0) {
       this.handleCheck(block, evt, true, evt.currentTarget.offsetHeight - blockValue.text_height)
     }
   };
@@ -573,14 +575,14 @@ class PdfFileEditor extends React.Component {
             })
 
             page.text_blocks.map((block, i) => {
-              console.log(blockTop,block.text_top )
+              console.log(blockTop, block.text_top)
               if (block.text_top > blockTop) {
                 if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
                   valueH = - this.state.height + evt.currentTarget.offsetHeight;
                   block.text_top = block.text_top - this.state.height + evt.currentTarget.offsetHeight
                 }
-                else if(diffValue){
-                  
+                else if (diffValue) {
+
                   block.text_top = block.text_top + diffValue;
                 }
                 // if(this.state.height ===0 && evt.currentTarget.offsetHeight - block.text_height> 5){
@@ -590,7 +592,7 @@ class PdfFileEditor extends React.Component {
               }
             })
             if ((this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) || diffValue) {
-              
+
               page.page_height = page.page_height + valueH;
               valueH = 0;
             }
@@ -627,7 +629,9 @@ class PdfFileEditor extends React.Component {
   };
 
   handlePreviewPageChange(pageNo, value) {
-    this.setState({ pageNo: parseInt(pageNo) + value, scrollToPage: pageNo + value })
+    if(this.state.pageNo !== pageNo) {
+      this.setState({ pageNo: parseInt(pageNo), scrollToPage: pageNo })
+    }
   }
 
   handleTableHover(id) {
@@ -638,8 +642,15 @@ class PdfFileEditor extends React.Component {
     this.setState({ popOver: true })
   }
 
+  handleBackToTop() {
+    this.setState({ scrollToPage: 2, scrollToTop: true })
+  }
+
+  handleScroll() {
+    this.setState({ scrollToTop: false })
+  }
+
   render() {
-    let yAxis = 0;
     let leftPaddingValue = 0;
     let rightPaddingValue = 0;
 
@@ -655,102 +666,88 @@ class PdfFileEditor extends React.Component {
     // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
     let paperWidth = this.state.sentences && this.state.sentences[0].page_width - leftPaddingValue - 78 + "px";
 
-    let style = {
-      maxWidth: this.state.sentences && rightPaddingValue - leftPaddingValue + 20 + "px",
-      // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
-      maxHeight: this.state.collapseToken ? window.innerHeight - 100 : window.innerHeight - 100,
-      position: "relative",
-      overflowY: "scroll",
-      height: this.state.sentences && this.state.sentences[0].page_height + "px",
-
-      overflowX: this.props.match.path == "/pdf-file-editor" && "hidden",
-      backgroundColor: "white",
-
-      backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: this.state.backgroundSize + "px"
-    };
-
-    let pageDividerHeight = "0";
-
     if (!this.state.showCompareDocs) {
       return (
         <div style={{ dislay: "flex", flexDirection: "row" }}>
           <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
             <div style={{ position: "fixed" }}>
-              <Button variant="extended" color="primary" style={{ textTransform: "capitalize",fontSize: '100%', fontWeight: 'bold' }} onClick={() => this.handleCompareDocs()}>
+              <Button variant="extended" color="primary" style={{ textTransform: "capitalize", fontSize: '100%', fontWeight: 'bold' }} onClick={() => this.handleCompareDocs()}>
                 Compare with Original
             </Button>
               <Button variant="extended" color="primary" style={{ textTransform: "capitalize", fontSize: '100%', fontWeight: 'bold', marginLeft: "10px" }} onClick={() => this.handleOnClose()}>
-                <CloseIcon  />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
+                <CloseIcon />{" "}&nbsp;&nbsp;{translate('common.page.label.close')}
               </Button>
             </div>
+            <Button
+              variant="extendedFab"
+              color="primary"
+              onClick={() => this.handleBackToTop()}
+              style={{ position: "fixed", bottom: "10px" }}
+            >
+              <Arrow />
+            </Button>
           </div>
 
           <div style={{ marginLeft: "auto", marginRight: "auto" }} onClick={() => this.handleEditor()}>
-          <InfiniteScroll
-                      next={this.fetchData.bind(this)}
-                      hasMore={this.state.hasMoreItems}
-                      dataLength={this.state.sentences ? this.state.sentences.length : 0}
-                      endMessage={
-                        <p style={{textAlign: 'center'}}>
-                          <b>Yay! You have seen it all</b>
-                        </p>
-                      }
-                      style={{overflow: "hidden"}}
-                      >
-            {this.state.sentences &&
-              this.state.sentences.map((sentence, index) => {
-                yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-                pageDividerHeight =
-                  (this.state.pageArr && this.state.pageArr.length > 0 && parseInt(this.state.pageArr[sentence.page_no])) +
-                  (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-                let printPageNo = false;
-                let pageNo = sentence.page_no;
-                let isFirstPage = false;
+            <InfiniteScroll
+              next={this.fetchData.bind(this)}
+              hasMore={this.state.hasMoreItems}
+              dataLength={this.state.sentences ? this.state.sentences.length : 0}
+              loader={
+                <p style={{ textAlign: 'center' }}>
+                  {/* <b>Loading...</b> */}
+                  <CircularProgress size={20} style={{
+                    zIndex: 1000,
+                  }} />
 
-                if (index === 0) {
-                  printPageNo = true;
-                  isFirstPage = true;
-                } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
-                  printPageNo = true;
-                }
+                </p>}
+              endMessage={
+                <p style={{ textAlign: 'center' }}>
+                  <b>You have seen it all</b>
+                </p>
+              }
+              style={{ overflow: "hidden" }}
+              onScroll={() => this.handleScroll()}
+            >
+              {this.state.sentences &&
+                this.state.sentences.map((sentence, index) => {
+                  return (
+                    <div id={sentence.page_no} key={sentence.page_no}>
+                      <SourceView
+                        isPreview={false}
+                        key={sentence.page_no + "_" + index}
+                        pageNo={sentence.page_no}
+                        sourceSentence={sentence}
+                        selectedSourceText={this.state.selectedSourceText}
+                        createBlockId={this.state.selectedBlockId}
+                        isEditable={this.state.isEditable}
+                        hoveredSentence={this.state.hoveredSentence}
+                        hoveredTableId={this.state.hoveredTableId}
+                        clear={this.state.clear}
+                        heightValue={this.state.height}
+                        popOver={this.state.popOver}
+                        selectedCell={this.state.selectedCell}
+                        scrollToPage={this.state.scrollToPage}
+                        scrollToTop={this.state.scrollToTop}
+                        handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                        handleDialogSave={this.handleDialogSave.bind(this)}
+                        handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
+                        handleDeleteBlock={this.handleDeleteBlock.bind(this)}
+                        handleCreateBlock={this.handleCreateBlock.bind(this)}
+                        handleSourceChange={this.handleSourceChange.bind(this)}
+                        handleEditor={this.handleEditor.bind(this)}
+                        handleCheck={this.handleCheck.bind(this)}
+                        handleSource={this.handleSource.bind(this)}
+                        handleTableHover={this.handleTableHover.bind(this)}
+                        handlePopUp={this.handlePopUp.bind(this)}
+                        handleDeleteTable={this.handleDeleteTable.bind(this)}
+                        handleDuplicateTable={this.handleDuplicateTable.bind(this)}
+                      />
+                    </div>
+                  );
 
-                return (
-                  <div>
-                    <SourceView
-                      isPreview={false}
-                      key={sentence.page_no + "_" + index}
-                      pageNo={sentence.page_no}
-                      sourceSentence={sentence}
-                      selectedSourceText={this.state.selectedSourceText}
-                      createBlockId={this.state.selectedBlockId}
-                      isEditable={this.state.isEditable}
-                      hoveredSentence={this.state.hoveredSentence}
-                      hoveredTableId={this.state.hoveredTableId}
-                      clear={this.state.clear}
-                      heightValue={this.state.height}
-                      popOver={this.state.popOver}
-                      selectedCell={this.state.selectedCell}
-                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                      handleDialogSave={this.handleDialogSave.bind(this)}
-                      handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
-                      handleDeleteBlock={this.handleDeleteBlock.bind(this)}
-                      handleCreateBlock={this.handleCreateBlock.bind(this)}
-                      handleSourceChange={this.handleSourceChange.bind(this)}
-                      handleEditor={this.handleEditor.bind(this)}
-                      handleCheck={this.handleCheck.bind(this)}
-                      handleSource={this.handleSource.bind(this)}
-                      handleTableHover={this.handleTableHover.bind(this)}
-                      handlePopUp={this.handlePopUp.bind(this)}
-                      handleDeleteTable={this.handleDeleteTable.bind(this)}
-                      handleDuplicateTable={this.handleDuplicateTable.bind(this)}
-                    />
-                  </div>
-                );
-
-              })}
-                    </InfiniteScroll>
+                })}
+            </InfiniteScroll>
           </div>
         </div>
       );
@@ -775,63 +772,72 @@ class PdfFileEditor extends React.Component {
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} lg={6} xl={6} style={{ padding: "8px" }}>
-              <Paper style={{ overflow: "scroll", maxHeight: window.innerHeight - 100 }}>
+              <Paper id="scrollableDiv" style={{ overflow: "scroll", maxHeight: window.innerHeight - 100 }}>
                 <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+                  Source
                 </Toolbar>
-                <div style={{ textAlign: "-webkit-center" }}>
-                  {this.state.sentences &&
-                    this.state.sentences.map((sentence, index) => {
-                      yAxis = parseInt(sentence.y) + (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-                      pageDividerHeight =
-                        (this.state.pageArr && this.state.pageArr.length > 0 && parseInt(this.state.pageArr[sentence.page_no])) +
-                        (parseInt(sentence.page_no) - 1) * parseInt(sentence.page_height);
-                      let printPageNo = false;
-                      let pageNo = sentence.page_no;
-                      let isFirstPage = false;
+                <div>
+                  <InfiniteScroll
+                    next={this.fetchData.bind(this)}
+                    hasMore={this.state.hasMoreItems}
+                    dataLength={this.state.sentences ? this.state.sentences.length : 0}
+                    loader={
+                      <p style={{ textAlign: 'center' }}>
+                        {/* <b>Loading...</b> */}
+                        <CircularProgress size={20} style={{
+                          zIndex: 1000,
+                        }} />
 
-                      if (index === 0) {
-                        printPageNo = true;
-                        isFirstPage = true;
-                      } else if (this.state.sentences[index - 1] && sentence.page_no !== this.state.sentences[index - 1].page_no) {
-                        printPageNo = true;
-                      }
+                      </p>}
+                    endMessage={
+                      <p style={{ textAlign: 'center' }}>
+                        <b>You have seen it all</b>
+                      </p>
+                    }
+                    style={{ overflow: "hidden" }}
+                    scrollableTarget="scrollableDiv"
+                    onScroll={() => this.handleScroll()}
+                  >
+                    {this.state.sentences &&
+                      this.state.sentences.map((sentence, index) => {
 
-                      return (
-                        <div>
-                          <SourceView
-                            isPreview={true}
-                            key={sentence.page_no + "_" + index}
-                            pageNo={sentence.page_no}
-                            sourceSentence={sentence}
-                            selectedSourceText={this.state.selectedSourceText}
-                            createBlockId={this.state.selectedBlockId}
-                            isEditable={this.state.isEditable}
-                            hoveredSentence={this.state.hoveredSentence}
-                            hoveredTableId={this.state.hoveredTableId}
-                            clear={this.state.clear}
-                            heightValue={this.state.height}
-                            popOver={this.state.popOver}
-                            scrollToPage={this.state.scrollToPage}
-                            selectedCell={this.state.selectedCell}
-                            handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                            handleDialogSave={this.handleDialogSave.bind(this)}
-                            handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
-                            handleDeleteBlock={this.handleDeleteBlock.bind(this)}
-                            handleCreateBlock={this.handleCreateBlock.bind(this)}
-                            handleSourceChange={this.handleSourceChange.bind(this)}
-                            handleEditor={this.handleEditor.bind(this)}
-                            handleCheck={this.handleCheck.bind(this)}
-                            handleSource={this.handleSource.bind(this)}
-                            handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
-                            handleTableHover={this.handleTableHover.bind(this)}
-                            handlePopUp={this.handlePopUp.bind(this)}
-                            handleDeleteTable={this.handleDeleteTable.bind(this)}
-                            handleDuplicateTable={this.handleDuplicateTable.bind(this)}
-                          />
-                        </div>
-                      );
+                        return (
+                          <div>
+                            <SourceView
+                              isPreview={true}
+                              key={sentence.page_no + "_" + index}
+                              pageNo={sentence.page_no}
+                              sourceSentence={sentence}
+                              selectedSourceText={this.state.selectedSourceText}
+                              createBlockId={this.state.selectedBlockId}
+                              isEditable={this.state.isEditable}
+                              hoveredSentence={this.state.hoveredSentence}
+                              hoveredTableId={this.state.hoveredTableId}
+                              clear={this.state.clear}
+                              heightValue={this.state.height}
+                              popOver={this.state.popOver}
+                              scrollToPage={this.state.scrollToPage}
+                              selectedCell={this.state.selectedCell}
+                              handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                              handleDialogSave={this.handleDialogSave.bind(this)}
+                              handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
+                              handleDeleteBlock={this.handleDeleteBlock.bind(this)}
+                              handleCreateBlock={this.handleCreateBlock.bind(this)}
+                              handleSourceChange={this.handleSourceChange.bind(this)}
+                              handleEditor={this.handleEditor.bind(this)}
+                              handleCheck={this.handleCheck.bind(this)}
+                              handleSource={this.handleSource.bind(this)}
+                              handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
+                              handleTableHover={this.handleTableHover.bind(this)}
+                              handlePopUp={this.handlePopUp.bind(this)}
+                              handleDeleteTable={this.handleDeleteTable.bind(this)}
+                              handleDuplicateTable={this.handleDuplicateTable.bind(this)}
+                            />
+                          </div>
+                        );
 
-                    })}
+                      })}
+                  </InfiniteScroll>
                 </div>
               </Paper>
             </Grid>

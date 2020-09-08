@@ -25,9 +25,9 @@ class Preview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.scrollToPage !== this.props.scrollToPage) {
-      if (this.refs[this.props.scrollToPage - 1]) {
-        this.refs[this.props.scrollToPage - 1].scrollIntoView({
+    if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
+      if (this.refs[this.props.scrollToPage]) {
+        this.refs[this.props.scrollToPage].scrollIntoView({
           behavior: "smooth"
 
         })
