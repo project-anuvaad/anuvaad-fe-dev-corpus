@@ -129,7 +129,7 @@ class PdfPreview extends React.Component {
               >
                 
                 <CloseIcon style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }} color="primary" />
-                <Typography value="" variant="subtitle6" color="primary" style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }}>
+                <Typography value="" variant="h6" color="primary" style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }}>
                   {translate("common.page.label.close")}
                 </Typography>
               </Toolbar>
