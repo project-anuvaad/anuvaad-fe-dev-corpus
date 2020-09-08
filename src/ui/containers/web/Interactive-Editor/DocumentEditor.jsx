@@ -464,20 +464,38 @@ class PdfFileEditor extends React.Component {
   handleDialogSave(selection, operation_type, pageDetails) {
     let startNodeId = selection.startNode.split("_")[0]
     let endNodeId = selection.endNode.split("_")[0]
-
+    let index, width;
+    let text;
     if (operation_type === "merge") {
+
+      
       var sentenceObj = pageDetails.text_blocks;
       sentenceObj.map((sentence, i) => {
-        if (sentence.block_id == startNodeId) {
-          if (sentence.text_width < sentenceObj[i + 1].text_width) {
-            sentenceObj[i + 1].text_top = sentence.text_top;
+        
+        if(sentence.block_id == startNodeId){
+           index = i;
+           width = sentence.text_width;
+        }
+       
+        if (index && sentence.block_id >= startNodeId && sentence.block_id <= endNodeId ) {
+          if (width >= sentence.text_width && i!= index) {
+            // sentenceObj[index].text_top = sentence.text_top;
             // sentenceObj[i + 1].text_height = sentenceObj[i + 1].text_height + sentence.text_height;
-            sentenceObj[i + 1].text = sentence.text + (sentenceObj[i + 1].block_id == endNodeId && sentenceObj[i + 1].text);
-            delete sentenceObj[i];
-          } else {
-            sentence.text = sentence.text + (sentenceObj[i + 1].block_id == endNodeId && sentenceObj[i + 1].text);
-            // sentence.text_height = sentence.text_height + sentenceObj[i + 1].text_height;
-            delete sentenceObj[i + 1];
+            sentenceObj[index].text = sentenceObj[index].text+ sentence.text;
+            sentenceObj[index].text_height = sentenceObj[index].text_height + sentence.text_height;
+            sentence.children &&Array.prototype.push.apply(sentenceObj[index].children,sentence.children); 
+            
+            index !== i && delete sentenceObj[i];
+          } 
+          else if(i!= index){
+            sentence.text_top = sentenceObj[index].text_top
+            sentence.text = sentenceObj[index].text + sentence.text
+            sentence.children &&Array.prototype.push.apply(sentence.children, sentenceObj[index].children); 
+            sentence.text_height = sentenceObj[index].text_height + sentence.text_height
+            delete sentenceObj[index];
+            width = sentence.text_width;
+            index = i;
+            
           }
         }
       });

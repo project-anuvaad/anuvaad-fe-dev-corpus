@@ -97,7 +97,7 @@ class Preview extends React.Component {
           this.setState({ operation_type: "split" });
           window.getSelection().toString() && this.popUp("split", event);
           selection.startNode = startNode;
-        } else if (parseInt(startNode) + 1 === parseInt(endNode)) {
+        } else if (startNode && endNode && parseInt(startNode) !== parseInt(endNode)) {
           this.setState({ operation_type: "merge" });
           window.getSelection().toString() && this.popUp("merge", event);
         }
