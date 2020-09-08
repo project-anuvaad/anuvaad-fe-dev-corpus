@@ -131,8 +131,10 @@ class Preview extends React.Component {
   };
 
   handleDoubleClick(selectedBlock, event, sentence) {
+    console.log(event.currentTarget.offsetHeight,sentence)
     this.props.handleSource(sentence)
     this.setState({ selectedBlock: selectedBlock, openEl: false })
+    
   }
 
   handleCheck(block, evt, val){
