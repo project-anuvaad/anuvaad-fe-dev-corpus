@@ -525,13 +525,17 @@ class PdfFileEditor extends React.Component {
     }
   }
 
-  handleSourceChange = (block, evt) => {
+  handleSourceChange = (block, evt, blockValue) => {
+   
     this.setState({ selectedSourceText: evt.target.value, height: evt.currentTarget.offsetHeight });
     if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
       this.handleCheck(block, evt, true)
     }
+    else if(this.state.height === 0 && evt.currentTarget.offsetHeight - blockValue.text_height>0){
+      this.handleCheck(block, evt, true, evt.currentTarget.offsetHeight - blockValue.text_height)
+    }
   };
-  handleCheck(block, evt, checkValue) {
+  handleCheck(block, evt, checkValue, diffValue) {
 
     let blockId = block.split("_")[0]
     let pageNo = block.split("_")[1]
@@ -547,6 +551,7 @@ class PdfFileEditor extends React.Component {
 
             page.text_blocks.map((block, i) => {
               if (block.block_id == blockId) {
+                console.log(block)
                 blockTop = block.text_top;
                 blockHeight = block.text_height;
                 block.text = strText;
@@ -554,10 +559,15 @@ class PdfFileEditor extends React.Component {
             })
 
             page.text_blocks.map((block, i) => {
-              valueH = - this.state.height + evt.currentTarget.offsetHeight;
+              console.log(blockTop,block.text_top )
               if (block.text_top > blockTop) {
                 if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
+                  valueH = - this.state.height + evt.currentTarget.offsetHeight;
                   block.text_top = block.text_top - this.state.height + evt.currentTarget.offsetHeight
+                }
+                else if(diffValue){
+                  
+                  block.text_top = block.text_top + diffValue;
                 }
                 // if(this.state.height ===0 && evt.currentTarget.offsetHeight - block.text_height> 5){
                 //   block.text_height=  block.text_height + evt.currentTarget.offsetHeight - block.text_height - 3
@@ -565,7 +575,8 @@ class PdfFileEditor extends React.Component {
                 // }
               }
             })
-            if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
+            if ((this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) || diffValue) {
+              
               page.page_height = page.page_height + valueH;
               valueH = 0;
             }
