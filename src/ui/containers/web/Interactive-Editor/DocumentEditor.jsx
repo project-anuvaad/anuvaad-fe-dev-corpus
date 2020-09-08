@@ -62,6 +62,8 @@ class PdfFileEditor extends React.Component {
     this.props.APITransport(apiObj1);
 
     /* Pagination api */
+    let jobId = this.props.match.params.jobid
+
     // const apiObj = new FileContent(1234566, 1, this.state.pagesToBeLoaded);
     // this.props.APITransport(apiObj);
     let obj = {}
@@ -92,9 +94,9 @@ class PdfFileEditor extends React.Component {
   }
 
   fetchData() {
-    let processIdentifier = this.props.match.params.jobid
-    const apiObj = new FileContent(1234566, this.state.currentPage + 1, this.state.currentPage + this.state.pagesToBeLoaded);
-    this.props.APITransport(apiObj);
+    // let jobId = this.props.match.params.jobid
+    // const apiObj = new FileContent(1234566, this.state.currentPage + 1, this.state.currentPage + this.state.pagesToBeLoaded);
+    // this.props.APITransport(apiObj);
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
@@ -107,10 +109,6 @@ class PdfFileEditor extends React.Component {
 
   handleDialog(title, dialogMessage) {
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
-  }
-
-  handlePreviewPageChange(pageNo, value) {
-    this.setState({ pageNo: parseInt(pageNo) + value, scrollToPage: pageNo + value })
   }
 
   handleDuplicateBlock(block, blockText, page) {
@@ -526,12 +524,12 @@ class PdfFileEditor extends React.Component {
   }
 
   handleSourceChange = (block, evt, blockValue) => {
-   
+
     this.setState({ selectedSourceText: evt.target.value, height: evt.currentTarget.offsetHeight });
     if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
       this.handleCheck(block, evt, true)
     }
-    else if(this.state.height === 0 && evt.currentTarget.offsetHeight - blockValue.text_height>0){
+    else if (this.state.height === 0 && evt.currentTarget.offsetHeight - blockValue.text_height > 0) {
       this.handleCheck(block, evt, true, evt.currentTarget.offsetHeight - blockValue.text_height)
     }
   };
@@ -559,14 +557,14 @@ class PdfFileEditor extends React.Component {
             })
 
             page.text_blocks.map((block, i) => {
-              console.log(blockTop,block.text_top )
+              console.log(blockTop, block.text_top)
               if (block.text_top > blockTop) {
                 if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
                   valueH = - this.state.height + evt.currentTarget.offsetHeight;
                   block.text_top = block.text_top - this.state.height + evt.currentTarget.offsetHeight
                 }
-                else if(diffValue){
-                  
+                else if (diffValue) {
+
                   block.text_top = block.text_top + diffValue;
                 }
                 // if(this.state.height ===0 && evt.currentTarget.offsetHeight - block.text_height> 5){
@@ -576,7 +574,7 @@ class PdfFileEditor extends React.Component {
               }
             })
             if ((this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) || diffValue) {
-              
+
               page.page_height = page.page_height + valueH;
               valueH = 0;
             }
@@ -613,7 +611,9 @@ class PdfFileEditor extends React.Component {
   };
 
   handlePreviewPageChange(pageNo, value) {
-    this.setState({ pageNo: parseInt(pageNo) + value, scrollToPage: pageNo + value })
+    if(this.state.pageNo !== pageNo) {
+      this.setState({ pageNo: parseInt(pageNo), scrollToPage: pageNo })
+    }
   }
 
   handleTableHover(id) {
@@ -754,10 +754,32 @@ class PdfFileEditor extends React.Component {
               </Paper>
             </Grid>
             <Grid item xs={12} sm={6} lg={6} xl={6} style={{ padding: "8px" }}>
-              <Paper style={{ overflow: "scroll", maxHeight: window.innerHeight - 100 }}>
+              <Paper id="scrollableDiv" style={{ overflow: "scroll", maxHeight: window.innerHeight - 100 }}>
                 <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+                  Source
                 </Toolbar>
                 <div>
+                  <InfiniteScroll
+                    next={this.fetchData.bind(this)}
+                    hasMore={this.state.hasMoreItems}
+                    dataLength={this.state.sentences ? this.state.sentences.length : 0}
+                    loader={
+                      <p style={{ textAlign: 'center' }}>
+                        {/* <b>Loading...</b> */}
+                        <CircularProgress size={20} style={{
+                          zIndex: 1000,
+                        }} />
+
+                      </p>}
+                    endMessage={
+                      <p style={{ textAlign: 'center' }}>
+                        <b>You have seen it all</b>
+                      </p>
+                    }
+                    style={{ overflow: "hidden" }}
+                    scrollableTarget="scrollableDiv"
+                    onScroll={() => this.handleScroll()}
+                  >
                     {this.state.sentences &&
                       this.state.sentences.map((sentence, index) => {
 
@@ -797,6 +819,7 @@ class PdfFileEditor extends React.Component {
                         );
 
                       })}
+                  </InfiniteScroll>
                 </div>
               </Paper>
             </Grid>
