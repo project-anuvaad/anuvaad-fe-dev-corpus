@@ -16,6 +16,7 @@ import placeRight from './placeRight'
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Popover1 from "./Menu"
 
 const styles = {
   paperHeader: {
@@ -31,7 +32,8 @@ class EditorPaper extends React.Component {
     this.state = {
       html: "",
       columns: 1,
-      selectedIndex: 0
+      selectedIndex: 0,
+      openContextMenu: false
     };
     this.handleTargetChange = this.handleTargetChange.bind(this)
   }
@@ -75,9 +77,10 @@ class EditorPaper extends React.Component {
         });
     } else if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       this.setState({
-        open: true,
+        // open: true,
         showLoader: false,
         autoCompleteText: this.props.intractiveTrans[0].tgt,
+        openContextMenu: true
       })
     }
   }
@@ -362,15 +365,24 @@ class EditorPaper extends React.Component {
     })
   }
 
-  handleUpdateSentenceWithPrediction() {
+  handleDataSave(i) {
+    this.handleUpdateSentenceWithPrediction(i)
+  }
+
+  handlePopOverClose() {
+    this.setState({openContextMenu: false})
+  }
+
+  handleUpdateSentenceWithPrediction(index) {
     this.setState({
       open: false,
-      showLoader: false
+      showLoader: false,
+      openContextMenu: false
     })
     var self = this
     setTimeout(() => {
       var sentences = Object.assign([], this.state.sentences ? this.state.sentences : this.props.sentences)
-      sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText[this.state.selectedIndex].substring(this.state.caretPos)
+      sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText[index].substring(this.state.caretPos)
       self.setState({
         sentences: sentences,
         selectedIndex: 0
@@ -527,8 +539,8 @@ class EditorPaper extends React.Component {
                   contentEditable={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? true : false}
                   onKeyDown={(event) => this.handleTargetChange(sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType, event, sentence, tokenText, tokenIndex, senIndex)}
                   // onBlur={this.handleTargetChange.bind(this)}
-                  onClick={() => {
-                    this.handleOnClickTarget(sentence._id + "_" + tokenText.sentence_index, sentence.page_no, sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType)
+                  onClick={(e) => {
+                    this.handleOnClickTarget(e, sentence._id + "_" + tokenText.sentence_index, sentence.page_no, sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType)
                   }}
                   key={sentence._id + "_" + tokenText.sentence_index}
                   // onClick={() => this.handleOnClick(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
@@ -538,20 +550,7 @@ class EditorPaper extends React.Component {
                   }}
                   onMouseLeave={() => this.hoverOff()}
                 >
-                  {/* {this.props.selectedTargetId === sentence._id + "_" + tokenText.sentence_index ? (
-                    <ContentEditable
-                      html={this.props.selectedTargetText}
-                      disabled={false}
-                      // onBlur={this.props.handleCheck}
-                      onChange={this.handleTargetChange.bind(this)}
-                      style={{
-                        border: "1px dashed #aaa",
-                        padding: "5px"
-                      }}
-                    />
-                  ) : ( */}
                   {tokenText.target}
-                  {/* )} */}
                 </span>
                 {isSpaceRequired ? <span>&nbsp;</span> : <span></span>}
               </div>
@@ -796,7 +795,7 @@ class EditorPaper extends React.Component {
     })
   }
 
-  handleOnClickTarget(id, pageNo, ref) {
+  handleOnClickTarget(e, id, pageNo, ref) {
     if (!this.props.isPreview) {
       if (id) {
         this.props.handleSentenceClick(id, true, this.props.paperType, pageNo);
@@ -805,7 +804,9 @@ class EditorPaper extends React.Component {
     this.setState({
       contentEditableId: id,
       open: false,
-      showLoader: false
+      showLoader: false,
+      topValue: e.clientY,
+      leftValue: e.clientX
     })
     this.refs[ref].focus()
   }
@@ -892,6 +893,22 @@ class EditorPaper extends React.Component {
             }
 
           </Popover>
+         { this.state.openContextMenu && this.props.paperType === "target" &&<Popover1
+            isOpen={this.state.openContextMenu}
+            topValue={this.state.topValue}
+            leftValue={this.state.leftValue}
+            anchorEl={this.state.anchorEl}
+            handleOnClick={this.handleDataSave.bind(this)}
+            handlePopOverClose={this.handlePopOverClose.bind(this)}
+            tableItems={this.state.tableItems}
+            tableValues={this.state.tableTitles}
+            handlePopUp={this.props.handlePopUp}
+            caretPos={this.state.caretPos}
+            options={this.state.autoCompleteText}
+            paperType={this.props.paperType}
+          >
+
+          </Popover1>}
           <Popover isOpen={this.state.showLoader} containerNode={this.state.anchorEl} placementStrategy={placeRight}>
             <CircularProgress
               disableShrink
