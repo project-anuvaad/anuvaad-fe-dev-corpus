@@ -510,7 +510,7 @@ class EditorPaper extends React.Component {
         sentence.tokenized_sentences.map((tokenText, tokenIndex) => {
           if (tokenText.status !== "DELETED") {
             sentenceArray.push(
-              <div style={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? { border: '1px dashed rgb(170, 170, 170)', padding: '1%' } : {}}>
+              <div style={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? { border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF" } : {}}>
                 <span
                   ref={sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType}
                   style={{
@@ -518,9 +518,9 @@ class EditorPaper extends React.Component {
                     textDecorationLine: sentence.underline ? "underline" : "",
                     outline: 'none',
                     backgroundColor:
-                      this.props.hoveredSentence === sentence._id + "_" + tokenText.sentence_index
+                      (this.props.hoveredSentence === sentence._id + "_" + tokenText.sentence_index && this.state.contentEditableId !== sentence._id + "_" + tokenText.sentence_index)
                         ? "yellow"
-                        : this.props.selectedSentenceId === sentence._id + "_" + tokenText.sentence_index
+                        : (this.props.selectedSentenceId === sentence._id + "_" + tokenText.sentence_index && this.state.contentEditableId !== sentence._id + "_" + tokenText.sentence_index)
                           ? "#4dffcf"
                           : ""
                   }}
