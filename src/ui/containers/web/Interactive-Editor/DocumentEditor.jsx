@@ -11,7 +11,7 @@ import { translate } from "../../../../assets/localisation";
 import history from "../../../../web.history";
 import FileDetails from "../../../../flux/actions/apis/fetch_filedetails";
 import FileContent from "../../../../flux/actions/apis/fetchcontent";
-
+import Spinner from "../../../components/web/common/Spinner";
 import htmlToText from "html-to-text";
 import Paper from "@material-ui/core/Paper";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
@@ -60,7 +60,7 @@ class PdfFileEditor extends React.Component {
   componentDidMount() {
     const apiObj1 = new FileDetails(this.props.match.params.fileid);
     this.props.APITransport(apiObj1);
-
+    
     /* Pagination api */
     let jobId = this.props.match.params.jobid
 
@@ -68,7 +68,7 @@ class PdfFileEditor extends React.Component {
     // this.props.APITransport(apiObj);
     let obj = {}
     obj.download_source_path = this.props.match.params.inputfileid
-    this.setState({ fileDetails: obj })
+    this.setState({ fileDetails: obj , showLoader : true})
   }
 
   componentDidUpdate(prevProps) {
@@ -76,7 +76,8 @@ class PdfFileEditor extends React.Component {
 
       const temp = this.props.documentDetails.result;
       this.setState({
-        sentences: temp
+        sentences: temp,
+        showLoader :false,
       });
     }
 
@@ -86,6 +87,7 @@ class PdfFileEditor extends React.Component {
 
       this.setState({
         sentences: temp,
+        showLoader :false,
         pageCount: this.props.fetchContent.result.count,
         currentPage: this.state.currentPage + this.state.pagesToBeLoaded,
         hasMoreItems: this.props.fetchContent.result.count > this.state.currentPage + this.state.pagesToBeLoaded ? true : false
@@ -466,8 +468,13 @@ class PdfFileEditor extends React.Component {
   handleDialogSave(selection, operation_type, pageDetails) {
     let startNodeId = selection.startNode.split("_")[0]
     let endNodeId = selection.endNode.split("_")[0]
+    
+    if(parseInt(startNodeId) > parseInt(endNodeId)){
+      endNodeId = selection.startNode.split("_")[0]
+      startNodeId = selection.endNode.split("_")[0];
+    }
     let index, width;
-    let text;
+    
     if (operation_type === "merge") {
 
       
@@ -669,6 +676,7 @@ class PdfFileEditor extends React.Component {
     if (!this.state.showCompareDocs) {
       return (
         <div style={{ dislay: "flex", flexDirection: "row" }}>
+          {this.state.showLoader &&< Spinner/>}
           <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
             <div style={{ position: "fixed" }}>
               <Button variant="extended" color="primary" style={{ textTransform: "capitalize", fontSize: '100%', fontWeight: 'bold' }} onClick={() => this.handleCompareDocs()}>
@@ -693,14 +701,14 @@ class PdfFileEditor extends React.Component {
               next={this.fetchData.bind(this)}
               hasMore={this.state.hasMoreItems}
               dataLength={this.state.sentences ? this.state.sentences.length : 0}
-              loader={
-                <p style={{ textAlign: 'center' }}>
-                  {/* <b>Loading...</b> */}
-                  <CircularProgress size={20} style={{
-                    zIndex: 1000,
-                  }} />
+              // loader={
+              //   <p style={{ textAlign: 'center' }}>
+              //     {/* <b>Loading...</b> */}
+              //     <CircularProgress size={20} style={{
+              //       zIndex: 1000,
+              //     }} />
 
-                </p>}
+              //   </p>}
               endMessage={
                 <p style={{ textAlign: 'center' }}>
                   <b>You have seen it all</b>
@@ -754,6 +762,7 @@ class PdfFileEditor extends React.Component {
     } else {
       return (
         <div>
+          
           <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
 
             <Grid item xs={12} sm={6} lg={6} xl={6} style={{ padding: "8px" }}>
@@ -781,8 +790,8 @@ class PdfFileEditor extends React.Component {
                     next={this.fetchData.bind(this)}
                     hasMore={this.state.hasMoreItems}
                     dataLength={this.state.sentences ? this.state.sentences.length : 0}
-                    loader={
-                      <p style={{ textAlign: 'center' }}>
+                      loader={
+                        this.state.showLoader && <p style={{ textAlign: 'center' }}>
                         {/* <b>Loading...</b> */}
                         <CircularProgress size={20} style={{
                           zIndex: 1000,
@@ -839,12 +848,16 @@ class PdfFileEditor extends React.Component {
                       })}
                   </InfiniteScroll>
                 </div>
+               
               </Paper>
             </Grid>
           </Grid>
+          
         </div>
       )
+      
     }
+    
   }
 }
 
