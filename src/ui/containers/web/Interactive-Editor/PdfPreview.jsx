@@ -73,7 +73,6 @@ class PdfPreview extends React.Component {
                   </Button>
                 </Grid>
                 <Grid item xs={4} sm={4} lg={4} xl={4} style={{textAlign: 'center'}}>
-                  {console.log(pageNo)}
                   <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none" }} color="primary">
                     {`${pageNo} / ${numPages}`}
                   </Button>
@@ -130,7 +129,7 @@ class PdfPreview extends React.Component {
               >
                 
                 <CloseIcon style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }} color="primary" />
-                <Typography value="" variant="subtitle6" color="primary" style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }}>
+                <Typography value="" variant="h6" color="primary" style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }}>
                   {translate("common.page.label.close")}
                 </Typography>
               </Toolbar>

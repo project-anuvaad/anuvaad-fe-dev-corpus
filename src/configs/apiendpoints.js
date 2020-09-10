@@ -66,7 +66,8 @@ const endpoints = {
   savetool2datasource: "/save-paragraph-workspace-data",
   sentencereplace: "/update-search-replace-sentence",
   setpassword: "/set-user-password",
-  documentupload:"/api/v0/upload-file"
+  documentupload:"/api/v0/upload-file",
+  fecthcontent: "/api/v0/fetch-content"
 };
 
 export default endpoints;
