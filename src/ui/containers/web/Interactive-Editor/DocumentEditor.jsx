@@ -62,7 +62,7 @@ class PdfFileEditor extends React.Component {
     // const apiObj1 = new FileDetails(this.props.match.params.fileid);
     // this.props.APITransport(apiObj1);
     this.props.ClearContent(null)
-    
+    this.setState({showLoader: true})
     /* Pagination api */
     let jobId = this.props.match.params.jobid
 
