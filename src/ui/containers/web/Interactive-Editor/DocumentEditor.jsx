@@ -70,7 +70,7 @@ class PdfFileEditor extends React.Component {
     this.props.APITransport(apiObj);
     let obj = {}
     obj.download_source_path = this.props.match.params.inputfileid
-    this.setState({ fileDetails: obj , showLoader : true})
+    this.setState({ fileDetails: obj , showLoader : true, buttonDisable: true})
   }
 
   componentDidUpdate(prevProps) {
@@ -101,6 +101,7 @@ class PdfFileEditor extends React.Component {
     let jobId = this.props.match.params.jobid
     const apiObj = new FileContent(jobId, this.state.currentPage + 1, this.state.currentPage + this.state.pagesToBeLoaded);
     this.props.APITransport(apiObj);
+    this.setState({buttonDisable: false})
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
@@ -652,7 +653,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleBackToTop() {
-    this.setState({ scrollToPage: 2, scrollToTop: true })
+    this.setState({ scrollToPage: 1, scrollToTop: true })
   }
 
   handleScroll() {
@@ -693,6 +694,7 @@ class PdfFileEditor extends React.Component {
               color="primary"
               onClick={() => this.handleBackToTop()}
               style={{ position: "fixed", bottom: "10px" }}
+              disabled={this.state.buttonDisable}
             >
               <Arrow />
             </Button>
