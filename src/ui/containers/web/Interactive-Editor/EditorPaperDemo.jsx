@@ -830,6 +830,7 @@ class EditorPaper extends React.Component {
         style={{
           maxHeight: window.innerHeight - 300,
           overflowY: this.state.open ? 'hidden' : 'scroll',
+          paddingRight: "24px"
         }}>
         {header ? (
           <div style={{ color: "grey", fontSize: "small" }}>
@@ -893,7 +894,7 @@ class EditorPaper extends React.Component {
             }
 
           </Popover>
-         { this.state.openContextMenu && this.props.paperType === "target" &&<Popover1
+         { this.state.openContextMenu && this.props.paperType === "target" && <Popover1
             isOpen={this.state.openContextMenu}
             topValue={this.state.topValue}
             leftValue={this.state.leftValue}

@@ -42,7 +42,7 @@ export default class Popovers extends React.Component {
                     horizontal: 'left',
                 }}
             >
-                <div>
+                <div style={{maxWidth: "500px"}}>
                     {
                         this.fetchOptions(options)
                     }

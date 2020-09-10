@@ -744,7 +744,6 @@ class IntractiveTrans extends React.Component {
 
   render() {
     const { gridValue } = this.state;
-
     return (
       <div>
         {this.state.sentences && (
@@ -853,7 +852,7 @@ class IntractiveTrans extends React.Component {
                       id="popUp"
                       style={{
                         maxHeight: this.state.collapseToken ? window.innerHeight - 220 : window.innerHeight - 300,
-                        padding: "24px"
+                        padding: "0px 0px 0px 24px"
                       }}
                     >
                       <EditorPaper
@@ -923,7 +922,7 @@ class IntractiveTrans extends React.Component {
                       </Typography>
                     </Toolbar>
 
-                    <div style={{ maxHeight: window.innerHeight - 300, padding: "24px" }}>
+                    <div style={{ maxHeight: window.innerHeight - 300, padding: "0px 0px 0px 24px" }}>
                       <EditorPaper
                       fileDetails={this.state.fileDetails}
                         paperType="target"
