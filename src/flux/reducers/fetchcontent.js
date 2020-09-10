@@ -18,6 +18,8 @@ export default function(state = initialUserState, action) {
         ...state,
         result:result
    }
+   case C.CLEAR_CONTENT:
+     return initialUserState
     default:
       return state;
   }

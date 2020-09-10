@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Fab";
 import { translate } from "../../../../assets/localisation";
 import history from "../../../../web.history";
 import FileDetails from "../../../../flux/actions/apis/fetch_filedetails";
+import ClearContent from "../../../../flux/actions/apis/clearcontent";
 import FileContent from "../../../../flux/actions/apis/fetchcontent";
 import Spinner from "../../../components/web/common/Spinner";
 import htmlToText from "html-to-text";
@@ -60,6 +61,7 @@ class PdfFileEditor extends React.Component {
   componentDidMount() {
     // const apiObj1 = new FileDetails(this.props.match.params.fileid);
     // this.props.APITransport(apiObj1);
+    this.props.ClearContent(null)
     
     /* Pagination api */
     let jobId = this.props.match.params.jobid
@@ -68,7 +70,7 @@ class PdfFileEditor extends React.Component {
     this.props.APITransport(apiObj);
     let obj = {}
     obj.download_source_path = this.props.match.params.inputfileid
-    this.setState({ fileDetails: obj , showLoader : true})
+    this.setState({ fileDetails: obj , showLoader : true, buttonDisable: true})
   }
 
   componentDidUpdate(prevProps) {
@@ -99,6 +101,7 @@ class PdfFileEditor extends React.Component {
     let jobId = this.props.match.params.jobid
     const apiObj = new FileContent(jobId, this.state.currentPage + 1, this.state.currentPage + this.state.pagesToBeLoaded);
     this.props.APITransport(apiObj);
+    this.setState({buttonDisable: false})
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
@@ -691,6 +694,7 @@ class PdfFileEditor extends React.Component {
               color="primary"
               onClick={() => this.handleBackToTop()}
               style={{ position: "fixed", bottom: "10px" }}
+              disabled={this.state.buttonDisable}
             >
               <Arrow />
             </Button>
@@ -871,7 +875,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      APITransport
+      APITransport,
+      ClearContent: ClearContent
     },
     dispatch
   );
