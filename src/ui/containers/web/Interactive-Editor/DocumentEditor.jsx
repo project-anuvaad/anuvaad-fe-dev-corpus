@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Fab";
 import { translate } from "../../../../assets/localisation";
 import history from "../../../../web.history";
 import FileDetails from "../../../../flux/actions/apis/fetch_filedetails";
+import ClearContent from "../../../../flux/actions/apis/clearcontent";
 import FileContent from "../../../../flux/actions/apis/fetchcontent";
 import Spinner from "../../../components/web/common/Spinner";
 import htmlToText from "html-to-text";
@@ -60,6 +61,7 @@ class PdfFileEditor extends React.Component {
   componentDidMount() {
     // const apiObj1 = new FileDetails(this.props.match.params.fileid);
     // this.props.APITransport(apiObj1);
+    this.props.ClearContent(null)
     
     /* Pagination api */
     let jobId = this.props.match.params.jobid
@@ -871,7 +873,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      APITransport
+      APITransport,
+      ClearContent: ClearContent
     },
     dispatch
   );
