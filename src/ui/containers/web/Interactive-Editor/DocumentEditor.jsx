@@ -58,14 +58,14 @@ class PdfFileEditor extends React.Component {
   }
 
   componentDidMount() {
-    const apiObj1 = new FileDetails(this.props.match.params.fileid);
-    this.props.APITransport(apiObj1);
+    // const apiObj1 = new FileDetails(this.props.match.params.fileid);
+    // this.props.APITransport(apiObj1);
     
     /* Pagination api */
     let jobId = this.props.match.params.jobid
 
-    // const apiObj = new FileContent(1234566, 1, this.state.pagesToBeLoaded);
-    // this.props.APITransport(apiObj);
+    const apiObj = new FileContent(jobId, 1, this.state.pagesToBeLoaded);
+    this.props.APITransport(apiObj);
     let obj = {}
     obj.download_source_path = this.props.match.params.inputfileid
     this.setState({ fileDetails: obj , showLoader : true})
@@ -96,9 +96,9 @@ class PdfFileEditor extends React.Component {
   }
 
   fetchData() {
-    // let jobId = this.props.match.params.jobid
-    // const apiObj = new FileContent(1234566, this.state.currentPage + 1, this.state.currentPage + this.state.pagesToBeLoaded);
-    // this.props.APITransport(apiObj);
+    let jobId = this.props.match.params.jobid
+    const apiObj = new FileContent(jobId, this.state.currentPage + 1, this.state.currentPage + this.state.pagesToBeLoaded);
+    this.props.APITransport(apiObj);
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
