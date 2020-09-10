@@ -650,7 +650,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleBackToTop() {
-    this.setState({ scrollToPage: 2, scrollToTop: true })
+    this.setState({ scrollToPage: 1, scrollToTop: true })
   }
 
   handleScroll() {
