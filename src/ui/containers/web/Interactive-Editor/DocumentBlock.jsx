@@ -33,6 +33,7 @@ class Preview extends React.Component {
             fontSize: sentence.font_size + "px",
             color: sentence.font_color,
             width: sentence.text_width + "px",
+            fontFamily : sentence.font_family,
             fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && 'bold',
             textAlign: "justify",
             zIndex: 1,
