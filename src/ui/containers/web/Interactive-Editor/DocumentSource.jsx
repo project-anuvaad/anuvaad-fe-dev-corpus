@@ -20,7 +20,8 @@ class Preview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openEl: false
+      openEl: false,
+      value : false
     };
   }
 
@@ -32,9 +33,13 @@ class Preview extends React.Component {
 
         })
       }
+      
     }
+    if (prevProps.createBlockId !== this.props.createBlockId) {
+      this.setState({selectedSentence : this.props.createBlockId, value: true})
+    }
+    
   }
-
   handleDialog() {
 
     if (this.state.title === "Merge") {
@@ -42,13 +47,13 @@ class Preview extends React.Component {
       this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
       this.setState({ openDialog: false });
     } else if (this.state.title === "Delete") {
-      this.props.handleDeleteBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
+      this.props.handleDeleteBlock(window.getSelection().anchorNode.parentNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
     } else if (this.state.title === "Duplicate") {
-      this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentElement.id, '', this.props.sourceSentence)
+      this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentNode.parentElement.id, '', this.props.sourceSentence)
       this.setState({ openDialog: false });
     } else if (this.state.title === "Create") {
-      this.props.handleCreateBlock(window.getSelection().anchorNode.parentElement.id, this.props.sourceSentence)
+      this.props.handleCreateBlock(window.getSelection().anchorNode.parentNode.parentElement.id, this.props.sourceSentence)
       this.setState({ openDialog: false });
     }
   }
@@ -64,7 +69,7 @@ class Preview extends React.Component {
   }
 
   getSelectionText(event, id) {
-    if (!this.state.selectedBlock) {
+    if (!this.state.selectedSentence) {
       var text = "";
       let selection = {};
       var activeEl = document.activeElement;
@@ -84,16 +89,17 @@ class Preview extends React.Component {
       let endNode = "";
 
       if (window.getSelection()) {
-        sentences = window.getSelection();
+        sentences = window.getSelection().toString();
       }
-
       if (sentences) {
 
-        startNode = window.getSelection().anchorNode.parentElement.id;
-        endNode = window.getSelection().focusNode.parentElement.id;
+        startNode = window.getSelection().anchorNode.parentNode.parentElement.id;
+        endNode = window.getSelection().focusNode.parentNode.parentElement.id;
+
+        
         selection.startNode = startNode;
         selection.endNode = endNode;
-        if (startNode === endNode) {
+        if (startNode && endNode && startNode === endNode) {
           this.setState({ operation_type: "split" });
           window.getSelection().toString() && this.popUp("split", event);
           selection.startNode = startNode;
@@ -102,7 +108,7 @@ class Preview extends React.Component {
           window.getSelection().toString() && this.popUp("merge", event);
         }
 
-        this.setState({ selection });
+        this.setState({ selection, value: false });
         return true;
       }
     }
@@ -113,9 +119,14 @@ class Preview extends React.Component {
   }
 
   popUp = (operation_type, event) => {
+    
     this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2, selectedBlock: null });
   };
-
+  handleBlur = ()=>{
+    
+    this.setState({ value : false, selectedSentence : ''})
+    this.props.handleOnMouseEnter()
+}
   handleClose = () => {
     this.setState({
       openDialog: false,
@@ -130,10 +141,15 @@ class Preview extends React.Component {
     });
   };
 
+  handleEditClick(selectedBlock, event) {
+    
+    this.props.hoveredSentence && this.setState({ selectedSentence: selectedBlock, value : true })
+    
+  }
+
   handleDoubleClick(selectedBlock, event, sentence) {
-    console.log(event.currentTarget.offsetHeight,sentence)
     this.props.handleSource(sentence)
-    this.setState({ selectedBlock: selectedBlock, openEl: false })
+    this.setState({ selectedBlock: selectedBlock, openEl: false, value : true })
     
   }
 
@@ -189,12 +205,16 @@ class Preview extends React.Component {
                   selectedBlock={this.state.selectedBlock}
                   handleBlockClick={this.handleBlockClick.bind(this)}
                   handleSourceChange={this.props.handleSourceChange}
-                  createBlockId={this.props.createBlockId}
+                  
                   isEditable={this.props.isEditable}
                   handleEditor={this.props.handleEditor}
                   handleCheck = {this.handleCheck.bind(this)}
                   selectedSourceText = {this.props.selectedSourceText}
                   heightValue  = {this.props.heightValue}
+                  value = {this.state.value}
+                  handleBlur = {this.handleBlur.bind(this)}
+                  handleEditClick = {this.handleEditClick.bind(this)}
+                  selectedSentence = {this.state.selectedSentence}
                 />
               </div>
             );
@@ -210,7 +230,7 @@ class Preview extends React.Component {
           />
         )}
 
-        {this.state.openEl && !this.state.selectedBlock && !this.props.createBlockId && (
+        {this.state.openEl && !this.state.selectedSentence && (
           <MenuItems
             isOpen={this.state.openEl}
             topValue={this.state.topValue}
@@ -256,7 +276,7 @@ class Preview extends React.Component {
       <div>
         {
           !this.props.isPreview ?
-            <Paper style={style}
+            <Paper style={style} key = {sourceSentence.page_no}
               onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
             >{this.getContent()}</Paper> :
             <div style={style}

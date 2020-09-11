@@ -428,6 +428,7 @@ class PdfFileEditor extends React.Component {
       });
     var a = JSON.parse(JSON.stringify(pageData.text_blocks[value]));
     a.text = null
+    a.tokenized_sentences = []
     a.text_top = a.text_top + pageData.text_blocks[value].text_height
     a.text_height = 30;
     a.children = null;
@@ -490,24 +491,29 @@ class PdfFileEditor extends React.Component {
         }
        
         if (index && sentence.block_id >= startNodeId && sentence.block_id <= endNodeId ) {
+          console.log(width , sentence.text_width , i, index)
           if (width >= sentence.text_width && i!= index) {
             // sentenceObj[index].text_top = sentence.text_top;
             // sentenceObj[i + 1].text_height = sentenceObj[i + 1].text_height + sentence.text_height;
             sentenceObj[index].text = sentenceObj[index].text+ sentence.text;
             sentenceObj[index].text_height = sentenceObj[index].text_height + sentence.text_height;
             sentence.children &&Array.prototype.push.apply(sentenceObj[index].children,sentence.children); 
-            
+            sentence.tokenized_sentences &&Array.prototype.push.apply(sentenceObj[index].tokenized_sentences,sentence.tokenized_sentences); 
             index !== i && delete sentenceObj[i];
+
+            
           } 
           else if(i!= index){
+            console.log(sentence.tokenized_sentences, )
             sentence.text_top = sentenceObj[index].text_top
             sentence.text = sentenceObj[index].text + sentence.text
             sentence.children &&Array.prototype.push.apply(sentence.children, sentenceObj[index].children); 
+            sentence.tokenized_sentences &&Array.prototype.push.apply(sentence.tokenized_sentences, sentenceObj[index].tokenized_sentences); 
             sentence.text_height = sentenceObj[index].text_height + sentence.text_height
             delete sentenceObj[index];
             width = sentence.text_width;
             index = i;
-            
+            console.log("---aaa",sentence.tokenized_sentences)
           }
         }
       });
@@ -544,6 +550,7 @@ class PdfFileEditor extends React.Component {
     history.push(`${process.env.PUBLIC_URL}/view-document`);
   }
   handleSource(selectedBlock, type) {
+    
     if (type === "table") {
       this.setState({ selectedCell: selectedBlock })
     } else {
@@ -567,7 +574,7 @@ class PdfFileEditor extends React.Component {
     let pageNo = block.split("_")[1]
     let blockTop, blockHeight, valueH = 0;
     let docPage = this.state.sentences;
-    let strText = htmlToText.fromString(this.state.selectedSourceText);
+    let strText = this.state.selectedSourceText;
 
     if (docPage && Array.isArray(docPage) && docPage.length > 0) {
       docPage.map((page, index) => {
@@ -577,7 +584,7 @@ class PdfFileEditor extends React.Component {
 
             page.text_blocks.map((block, i) => {
               if (block.block_id == blockId) {
-                console.log(block)
+               
                 blockTop = block.text_top;
                 blockHeight = block.text_height;
                 block.text = strText;
@@ -585,7 +592,7 @@ class PdfFileEditor extends React.Component {
             })
 
             page.text_blocks.map((block, i) => {
-              console.log(blockTop, block.text_top)
+              
               if (block.text_top > blockTop) {
                 if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
                   valueH = - this.state.height + evt.currentTarget.offsetHeight;
