@@ -1,21 +1,32 @@
 import React from "react";
-import Popover from '@material-ui/core/Popover';
-import Button from "@material-ui/core/Button";
+// import Popover from '@material-ui/core/Popover';
+// import Button from "@material-ui/core/Button";
 import { translate } from "../../../../assets/localisation";
 import Typography from '@material-ui/core/Typography';
-
+import Popover from '@material-ui/core/Menu';
+import Button from '@material-ui/core/MenuItem';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 export default class Popovers extends React.Component {
     constructor(props) {
         super(props);
         this.setState = {
-            anchorEl: null
+            anchorEl: null,
         }
     }
 
+
     fetchOptions(options) {
-        if (options && Array.isArray(options) && options.length > 0) {
-            return (options.map((option, i) => {
-                return <Button style={{ textTransform: 'none', width: '100%', justifyContent: 'left' }} onClick={() => this.props.handleOnClick(i)}>{option.substring(this.props.caretPos)}</Button>
+        let dataArr = []
+        options && options.length>0 && options.map((option, i) => {
+            let data = option.substring(this.props.caretPos)
+            let arr = data.split(" ",3)
+            dataArr.push(arr.join(" "))
+        })
+        if (dataArr && Array.isArray(dataArr) && dataArr.length > 0) {
+            return (dataArr.map((option, i) => {
+                if(option && option.length>0) {
+                    return <Button style={{ textTransform: 'none', width: '100%', justifyContent: 'left' }} onClick={() => this.props.handleOnClick(option)}>{option}</Button>
+                }
             })
             )
         } else {
@@ -41,12 +52,14 @@ export default class Popovers extends React.Component {
                     vertical: 'top',
                     horizontal: 'left',
                 }}
+                keepMounted
+                autoFocusItem={isOpen}
             >
-                <div style={{maxWidth: "500px"}}>
+                {/* <div style={{maxWidth: "500px"}}> */}
                     {
                         this.fetchOptions(options)
                     }
-                </div>
+                {/* </div> */}
             </Popover>
         )
     }
