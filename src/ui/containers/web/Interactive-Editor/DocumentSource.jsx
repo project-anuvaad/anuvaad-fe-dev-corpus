@@ -93,14 +93,14 @@ class Preview extends React.Component {
         endNode = window.getSelection().focusNode.parentElement.id;
         selection.startNode = startNode;
         selection.endNode = endNode;
-        if (startNode === endNode) {
-          this.setState({ operation_type: "split" });
-          window.getSelection().toString() && this.popUp("split", event);
-          selection.startNode = startNode;
-        } else if (startNode && endNode && parseInt(startNode) !== parseInt(endNode)) {
-          this.setState({ operation_type: "merge" });
-          window.getSelection().toString() && this.popUp("merge", event);
-        }
+        // if (startNode === endNode) {
+        //   this.setState({ operation_type: "split" });
+        //   window.getSelection().toString() && this.popUp("split", event);
+        //   selection.startNode = startNode;
+        // } else if (startNode && endNode && parseInt(startNode) !== parseInt(endNode)) {
+        //   this.setState({ operation_type: "merge" });
+        //   window.getSelection().toString() && this.popUp("merge", event);
+        // }
 
         this.setState({ selection });
         return true;
