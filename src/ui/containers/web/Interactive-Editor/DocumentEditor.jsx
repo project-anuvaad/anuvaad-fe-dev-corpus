@@ -87,13 +87,22 @@ class PdfFileEditor extends React.Component {
     if (prevProps.fetchContent !== this.props.fetchContent) {
       const temp = this.props.fetchContent.result.data;
 
-      this.setState({
-        sentences: temp,
-        showLoader :false,
-        pageCount: this.props.fetchContent.result.count,
-        currentPage: this.state.currentPage + this.state.pagesToBeLoaded,
-        hasMoreItems: this.props.fetchContent.result.count > this.state.currentPage + this.state.pagesToBeLoaded ? true : false
-      });
+      if(!temp) {
+        this.setState({
+          hasMoreItems: true,
+          currentPage: 0,
+          pagesToBeLoaded: 2,
+        });
+      } else {
+        this.setState({
+          sentences: temp,
+          showLoader :false,
+          pageCount: this.props.fetchContent.result.count,
+          currentPage: this.state.currentPage + this.state.pagesToBeLoaded,
+          hasMoreItems: this.props.fetchContent.result.count > this.state.currentPage + this.state.pagesToBeLoaded ? true : false
+        });
+      }
+     
     }
   }
 
