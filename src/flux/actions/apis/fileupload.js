@@ -37,7 +37,7 @@ export default class RunExperiment extends API {
   getBody() {
     return {
       
-        "workflowCode":"DP_WFLOW_FB",
+        "workflowCode":"DP_WFLOW_FBT",
         "jobName": this.fileName,
         "files": [
           {

@@ -328,26 +328,7 @@ class IntractiveTrans extends React.Component {
     this.setState({ hoveredSentence: "", hoveredTableId: "" });
   }
 
-  handleSenetenceOnClick(sentenceId, value, parent, pageNo, next_previous) {
-    this.setState({
-      selectedSentenceId: sentenceId,
-      clickedSentence: value,
-      selectedTableId: "",
-      scrollToId: sentenceId,
-      pageNo: pageNo || this.state.pageNo,
-      parent,
 
-      superScript: false
-    });
-    if (next_previous) {
-      this.setState({ parent: "target" });
-      const self = this;
-      setTimeout(() => {
-        self.setState({ scrollToId: "" });
-        self.setState({ scrollToId: sentenceId, parent: "source" });
-      }, 350);
-    }
-  }
 
   handleAddSentence() {
     this.setState({ addSentence: true, operation_type: 'merge-individual', openEl: false });
@@ -505,10 +486,31 @@ class IntractiveTrans extends React.Component {
   }
 
   handleonDoubleClick(selectedSourceId, selectedSourceText, row, cell, type) {
-    if(type =='target'){
+    if (type == 'target') {
       this.setState({ selectedTargetId: selectedSourceId, selectedTargetText: selectedSourceText, selectedSourceCheckText: selectedSourceText, row, cell });
-    }else{
+    } else {
       this.setState({ selectedSourceId, selectedSourceText, selectedSourceCheckText: selectedSourceText, row, cell });
+    }
+  }
+
+  handleSenetenceOnClick(sentenceId, value, parent, pageNo, next_previous) {
+    this.setState({
+      selectedSentenceId: sentenceId,
+      clickedSentence: value,
+      selectedTableId: "",
+      scrollToId: sentenceId,
+      pageNo: pageNo || this.state.pageNo,
+      parent,
+
+      superScript: false
+    });
+    if (next_previous) {
+      this.setState({ parent: "target" });
+      const self = this;
+      setTimeout(() => {
+        self.setState({ scrollToId: "" });
+        self.setState({ scrollToId: sentenceId, parent: "source" });
+      }, 350);
     }
   }
 
@@ -636,9 +638,9 @@ class IntractiveTrans extends React.Component {
         });
     }
   }
-  handleCopy(){
-    copy( window.getSelection().toString())
-                    this.handleClose()
+  handleCopy() {
+    copy(window.getSelection().toString())
+    this.handleClose()
 
   }
   handleAddCell(sentence, operationType) {
@@ -647,7 +649,7 @@ class IntractiveTrans extends React.Component {
       const apiObj = new UpdatePdfTable(sentence, operationType);
       APITransport(apiObj);
     }
-    this.setState({ openEl: true, message: operationType === "add-row"? "New row added": "New column added." });
+    this.setState({ openEl: true, message: operationType === "add-row" ? "New row added" : "New column added." });
     this.handleClose();
   }
 
@@ -744,7 +746,6 @@ class IntractiveTrans extends React.Component {
 
   render() {
     const { gridValue } = this.state;
-
     return (
       <div>
         {this.state.sentences && (
@@ -759,7 +760,7 @@ class IntractiveTrans extends React.Component {
                     onClick={event => {
                       this.handleBack();
                     }}
-                    style={{ textTransform: "capitalize",width: "100%", minWidth: "150px", borderRadius: '30px', color: '#233466' }}
+                    style={{ textTransform: "capitalize", width: "100%", minWidth: "150px", borderRadius: '30px', color: '#233466' }}
                   >
                     <ChevronLeftIcon fontSize="large" />{translate("common.page.title.document")}
                   </Button>
@@ -769,7 +770,7 @@ class IntractiveTrans extends React.Component {
                     variant="outlined"
                     // size="large"
                     className="GridFileDetails"
-                    style={{ textTransform: "capitalize",justifyContent: 'left', height: '100%', width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", borderRadius: '30px'}}
+                    style={{ textTransform: "capitalize", justifyContent: 'left', height: '100%', width: "100%", overflow: "hidden", whiteSpace: "nowrap", pointerEvents: "none", borderRadius: '30px' }}
                   >
                     {/* <PlayArrowIcon fontSize="large" style={{ color: "grey" }} /> */}
                     {this.state.fileDetails && <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -810,7 +811,7 @@ class IntractiveTrans extends React.Component {
                     variant="outlined"
                     // size="large"
                     // color="primary"
-                    style={{ width: "100%", minWidth: "55px",  borderRadius: '30px', color: '#233466' }}
+                    style={{ width: "100%", minWidth: "55px", borderRadius: '30px', color: '#233466' }}
                   >
                     <DoneIcon fontSize="large" style={{ color: '#233466' }} />
                     &nbsp;&nbsp;{translate("common.page.label.done")}
@@ -853,11 +854,13 @@ class IntractiveTrans extends React.Component {
                       id="popUp"
                       style={{
                         maxHeight: this.state.collapseToken ? window.innerHeight - 220 : window.innerHeight - 300,
-                        padding: "24px"
+                        padding: "0px 0px 0px 24px",
+
+                        overflowX: "hidden"
                       }}
                     >
                       <EditorPaper
-                      fileDetails={this.state.fileDetails}
+                        fileDetails={this.state.fileDetails}
                         paperType="source"
                         sentences={this.state.sentences}
                         hoveredSentence={this.state.hoveredSentence}
@@ -894,6 +897,9 @@ class IntractiveTrans extends React.Component {
                         handlePopUp={this.handlePopUp.bind(this)}
                       />
                     </div>
+                    <Toolbar style={{ color: darkBlack, background: blueGrey50, display: "flex", flexDirection: "row-reverse" }}>
+                     
+                    </Toolbar>
                   </Paper>
                 </Grid>
               ) : (
@@ -923,9 +929,9 @@ class IntractiveTrans extends React.Component {
                       </Typography>
                     </Toolbar>
 
-                    <div style={{ maxHeight: window.innerHeight - 300, padding: "24px" }}>
+                    <div style={{ maxHeight: window.innerHeight - 300, padding: "0px 0px 0px 24px" }}>
                       <EditorPaper
-                      fileDetails={this.state.fileDetails}
+                        fileDetails={this.state.fileDetails}
                         paperType="target"
                         sentences={this.state.sentences}
                         hoveredSentence={this.state.hoveredSentence}
@@ -944,7 +950,7 @@ class IntractiveTrans extends React.Component {
                         handleSuperScript={this.handleSuperScript.bind(this)}
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
-                        handleSelection={this.handleSelection.bind(this)}
+                        handleSelection={() => {}}
                         handleSourceChange={this.handleSourceChange}
                         selectedTargetText={this.state.selectedTargetText}
                         selectedTargetId={this.state.selectedTargetId}
@@ -960,6 +966,19 @@ class IntractiveTrans extends React.Component {
                         handlePopUp={this.handlePopUp.bind(this)}
                       />
                     </div>
+                    <Toolbar style={{ color: darkBlack, background: blueGrey50, display: "flex", flexDirection: "row-reverse" }}>
+                      <Button
+                        onClick={event => {
+                          this.handleDone(true, this.state.scriptSentence);
+                        }}
+                        color="primary"
+                        style={{ minWidth: "120px", borderRadius: '30px', color: '#233466', backgroundColor:"#D6D6D6", maxHeight: "45px" }}
+                      >
+                        <Typography value="" variant="h6" gutterBottom>
+                        {translate("common.page.button.save")}
+                      </Typography>
+                      </Button>
+                    </Toolbar>
                   </Paper>
                 </Grid>
               ) : (

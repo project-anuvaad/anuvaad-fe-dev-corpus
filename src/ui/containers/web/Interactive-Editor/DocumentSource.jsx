@@ -25,9 +25,9 @@ class Preview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.scrollToPage !== this.props.scrollToPage) {
-      if (this.refs[this.props.scrollToPage -1]) {
-        this.refs[this.props.scrollToPage-1].scrollIntoView({
+    if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
+      if (this.refs[this.props.scrollToPage]) {
+        this.refs[this.props.scrollToPage].scrollIntoView({
           behavior: "smooth"
 
         })
@@ -93,14 +93,14 @@ class Preview extends React.Component {
         endNode = window.getSelection().focusNode.parentElement.id;
         selection.startNode = startNode;
         selection.endNode = endNode;
-        if (startNode === endNode) {
-          this.setState({ operation_type: "split" });
-          window.getSelection().toString() && this.popUp("split", event);
-          selection.startNode = startNode;
-        } else if (parseInt(startNode) + 1 === parseInt(endNode)) {
-          this.setState({ operation_type: "merge" });
-          window.getSelection().toString() && this.popUp("merge", event);
-        }
+        // if (startNode === endNode) {
+        //   this.setState({ operation_type: "split" });
+        //   window.getSelection().toString() && this.popUp("split", event);
+        //   selection.startNode = startNode;
+        // } else if (startNode && endNode && parseInt(startNode) !== parseInt(endNode)) {
+        //   this.setState({ operation_type: "merge" });
+        //   window.getSelection().toString() && this.popUp("merge", event);
+        // }
 
         this.setState({ selection });
         return true;
@@ -131,19 +131,22 @@ class Preview extends React.Component {
   };
 
   handleDoubleClick(selectedBlock, event, sentence) {
+    console.log(event.currentTarget.offsetHeight,sentence)
     this.props.handleSource(sentence)
     this.setState({ selectedBlock: selectedBlock, openEl: false })
+    
   }
 
   handleCheck(block, evt, val){
+   
     this.props.handleCheck(block, evt, val)
-    this.setState({ selectedBlock:  null })
+    this.setState({ selectedBlock: null })
   }
 
-  handleBlockClick(clear,selectedSentence) {
+  handleBlockClick(clear, selectedSentence) {
 
-    
-    ((selectedSentence && this.state.selectedBlock !== selectedSentence) || clear) && this.setState({ selectedBlock:  null, clear: false })
+
+    ((selectedSentence && this.state.selectedBlock !== selectedSentence) || clear) && this.setState({ selectedBlock: null, clear: false })
     this.props.handleEditor(selectedSentence)
   }
 
@@ -152,7 +155,7 @@ class Preview extends React.Component {
     let sourceSentence = this.props.sourceSentence
     return (
       <div>
- {sourceSentence.tables &&
+        {sourceSentence.tables &&
           Array.isArray(sourceSentence.tables) &&
           sourceSentence.tables.map((table, i) => {
             return <EditorTable
@@ -161,8 +164,11 @@ class Preview extends React.Component {
               pageNo={sourceSentence.page_no}
               hoveredTableId={this.props.hoveredTableId}
               popOver={this.props.popOver}
+              currentPage = {this.props.sourceSentence}
               handleTableHover={this.props.handleTableHover}
               handlePopUp={this.props.handlePopUp}
+              handleDeleteTable={this.props.handleDeleteTable}
+              handleDeleteBlock={this.props.handleDeleteBlock}
             ></EditorTable>;
           })}
 
@@ -186,7 +192,7 @@ class Preview extends React.Component {
                   createBlockId={this.props.createBlockId}
                   isEditable={this.props.isEditable}
                   handleEditor={this.props.handleEditor}
-                  handleCheck = {this.props.handleCheck}
+                  handleCheck = {this.handleCheck.bind(this)}
                   selectedSourceText = {this.props.selectedSourceText}
                   heightValue  = {this.props.heightValue}
                 />
@@ -216,7 +222,7 @@ class Preview extends React.Component {
             handleDuplicateBlock={this.props.handleDuplicateBlock}
             handleDeleteBlock={this.props.handleDeleteBlock}
             pageData={this.props.sourceSentence}
-            handleCheck = {this.handleCheck.bind(this)}
+            handleCheck={this.handleCheck.bind(this)}
           />
         )}
 

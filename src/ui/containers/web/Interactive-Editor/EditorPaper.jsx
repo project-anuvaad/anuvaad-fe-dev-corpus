@@ -4,7 +4,6 @@ import { withStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import ContentEditable from "react-contenteditable";
 import CustomTable from "../../../components/web/common/CustomTable";
-import { array } from "prop-types";
 
 const styles = {
   paperHeader: {

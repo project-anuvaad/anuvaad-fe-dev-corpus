@@ -62,10 +62,7 @@ class PdfUpload extends Component {
         const { APITransport } = this.props;
 
         const apiObj = new DocumentUpload(
-          //this.state.workspaceName,
           this.state.files, "docUplaod",
-          //source_lang_name,
-          //target_lang_name,
           model,
           
         );
