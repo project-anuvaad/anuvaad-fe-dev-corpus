@@ -382,13 +382,61 @@ class EditorPaper extends React.Component {
     var self = this
     setTimeout(() => {
       var sentences = Object.assign([], this.state.sentences ? this.state.sentences : this.props.sentences)
-      sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText[index].substring(this.state.caretPos)
+      // sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText[index].substring(this.state.caretPos)
+      sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + index
       self.setState({
         sentences: sentences,
-        selectedIndex: 0
+        selectedIndex: 0,
+        // showLoader: true
       })
     }, 100)
+
+    setTimeout(() => {
+    this.setCaretPosition(index)
+
+    }, 200)
+
   }
+
+  setCaretPosition(data) {
+    // var elem = this.refs[this.state.contentEditableId + "_target"]
+    // let elem = document.getElementById()
+    // console.log(this.state.contentEditableId)
+    // caretPos = this.state.caretPos
+    // if(elem != null) {
+    //     if(elem.createTextRange) {
+    //         var range = elem.createTextRange();
+    //         debugger
+    //         range.move('character', caretPos);
+    //         range.select();
+    //     }
+    //     else {
+    //         if(elem.selectionStart) {
+    //             elem.focus();
+    //             debugger
+    //             elem.setSelectionRange(caretPos, caretPos);
+    //         }
+    //         else
+    //            { elem.focus();
+    //             elem.selectionStart = caretPos 
+    //             elem.selectionEnd = caretPos+1
+    //             debugger
+    //           }
+    //     }
+    // } else {
+    //   debugger
+    // }
+
+    var el = document.getElementById("editable")
+    var range = document.createRange()
+    var sel = window.getSelection()
+    
+    range.setStart(el.childNodes[0], this.state.caretPos + data.length)
+    range.collapse(true)
+    
+    sel.removeAllRanges()
+    sel.addRange(range)
+}
 
   handleCalc(value, tokenText) {
     const temp = value.split(" ");
@@ -521,9 +569,12 @@ class EditorPaper extends React.Component {
       if (this.props.paperType === "target") {
         sentence.tokenized_sentences.map((tokenText, tokenIndex) => {
           if (tokenText.status !== "DELETED") {
+            let id = sentence._id + "_" + tokenText.sentence_index + "_editable"
             sentenceArray.push(
               <div style={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? { border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF" } : {}}>
                 <span
+                  id={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? "editable" : sentence._id + "_" + tokenText.sentence_index}
+                  
                   ref={sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType}
                   style={{
                     fontWeight: sentence.is_bold ? "bold" : "normal",
@@ -542,11 +593,12 @@ class EditorPaper extends React.Component {
                   onClick={(e) => {
                     this.handleOnClickTarget(e, sentence._id + "_" + tokenText.sentence_index, sentence.page_no, sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType)
                   }}
-                  key={sentence._id + "_" + tokenText.sentence_index}
+                  key={this.state.contentEditableId ? id : sentence._id + "_" + tokenText.sentence_index}
                   // onClick={() => this.handleOnClick(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
                   onMouseEnter={() => this.hoverOn(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
-                  onDoubleClick={event => {
-                    this.props.handleonDoubleClick(sentence._id + "_" + tokenText.sentence_index, tokenText.target, event, null, 'target')
+                  onDoubleClick={event => {this.setState({contentEditableId: sentence._id + "_" + tokenText.sentence_index}),
+                  this.handleOnClickTarget(event, sentence._id + "_" + tokenText.sentence_index, sentence.page_no, sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType)
+                  // this.props.handleonDoubleClick(sentence._id + "_" + tokenText.sentence_index, tokenText.target, event, null, 'target')
                   }}
                   onMouseLeave={() => this.hoverOff()}
                 >
@@ -796,13 +848,13 @@ class EditorPaper extends React.Component {
   }
 
   handleOnClickTarget(e, id, pageNo, ref) {
-    if (!this.props.isPreview) {
-      if (id) {
-        this.props.handleSentenceClick(id, true, this.props.paperType, pageNo);
-      }
-    }
+    // if (!this.props.isPreview) {
+    //   if (id) {
+    //     this.props.handleSentenceClick(id, true, this.props.paperType, pageNo);
+    //   }
+    // }
     this.setState({
-      contentEditableId: id,
+      // contentEditableId: id,
       open: false,
       showLoader: false,
       topValue: e.clientY,

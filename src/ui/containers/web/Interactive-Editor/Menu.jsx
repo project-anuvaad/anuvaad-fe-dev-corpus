@@ -53,7 +53,7 @@ export default class Popovers extends React.Component {
                     horizontal: 'left',
                 }}
                 keepMounted
-                autoFocusItem={isOpen}
+                // autoFocusItem={isOpen}
             >
                 {/* <div style={{maxWidth: "500px"}}> */}
                     {

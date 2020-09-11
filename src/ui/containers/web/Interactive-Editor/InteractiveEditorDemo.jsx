@@ -950,7 +950,7 @@ class IntractiveTrans extends React.Component {
                         handleSuperScript={this.handleSuperScript.bind(this)}
                         handleSentenceClick={this.handleSenetenceOnClick.bind(this)}
                         handleTableCellClick={this.handleCellOnClick.bind(this)}
-                        handleSelection={this.handleSelection.bind(this)}
+                        handleSelection={() => {}}
                         handleSourceChange={this.handleSourceChange}
                         selectedTargetText={this.state.selectedTargetText}
                         selectedTargetId={this.state.selectedTargetId}
