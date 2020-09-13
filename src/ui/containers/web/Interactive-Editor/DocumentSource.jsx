@@ -35,7 +35,8 @@ class Preview extends React.Component {
       }
       
     }
-    if (prevProps.createBlockId !== this.props.createBlockId) {
+    if (this.props.createBlockId && prevProps.createBlockId !== this.props.createBlockId) {
+      console.log("sajish-----", this.props.createBlockId)
       this.setState({selectedSentence : this.props.createBlockId, value: true})
     }
     
@@ -99,7 +100,7 @@ class Preview extends React.Component {
         
         selection.startNode = startNode;
         selection.endNode = endNode;
-        if (startNode && endNode && startNode === endNode) {
+        if (startNode && endNode && window.getSelection().anchorNode.parentNode && startNode === endNode) {
           this.setState({ operation_type: "split" });
           window.getSelection().toString() && this.popUp("split", event);
           selection.startNode = startNode;
@@ -123,9 +124,9 @@ class Preview extends React.Component {
     this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2, selectedBlock: null });
   };
   handleBlur = ()=>{
-    
+    console.log("sajish---")
     this.setState({ value : false, selectedSentence : ''})
-    this.props.handleOnMouseEnter()
+    this.props.handleOnMouseLeave()
 }
   handleClose = () => {
     this.setState({
@@ -215,6 +216,7 @@ class Preview extends React.Component {
                   handleBlur = {this.handleBlur.bind(this)}
                   handleEditClick = {this.handleEditClick.bind(this)}
                   selectedSentence = {this.state.selectedSentence}
+                  handleOnMouseLeave = {this.props.handleOnMouseLeave}
                 />
               </div>
             );

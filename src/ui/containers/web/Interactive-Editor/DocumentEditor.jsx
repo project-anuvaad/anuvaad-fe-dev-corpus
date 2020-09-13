@@ -479,6 +479,7 @@ class PdfFileEditor extends React.Component {
     }
     let index, width;
     
+    console.log(startNodeId, endNodeId)
     if (operation_type === "merge") {
 
       
@@ -491,7 +492,6 @@ class PdfFileEditor extends React.Component {
         }
        
         if (index && sentence.block_id >= startNodeId && sentence.block_id <= endNodeId ) {
-          console.log(width , sentence.text_width , i, index)
           if (width >= sentence.text_width && i!= index) {
             // sentenceObj[index].text_top = sentence.text_top;
             // sentenceObj[i + 1].text_height = sentenceObj[i + 1].text_height + sentence.text_height;
@@ -513,7 +513,7 @@ class PdfFileEditor extends React.Component {
             delete sentenceObj[index];
             width = sentence.text_width;
             index = i;
-            console.log("---aaa",sentence.tokenized_sentences)
+            
           }
         }
       });
@@ -749,6 +749,7 @@ class PdfFileEditor extends React.Component {
                         scrollToPage={this.state.scrollToPage}
                         scrollToTop={this.state.scrollToTop}
                         handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                        handleOnMouseLeave = {this.handleOnMouseLeave.bind(this)}
                         handleDialogSave={this.handleDialogSave.bind(this)}
                         handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
                         handleDeleteBlock={this.handleDeleteBlock.bind(this)}

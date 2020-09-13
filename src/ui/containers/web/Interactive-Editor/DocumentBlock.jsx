@@ -41,12 +41,12 @@ class Preview extends React.Component {
     }
 
     handleChangeEvent = event => {
-
+        console.log("evente---",event)
         this.props.handleSourceChange(this.props.sentence.block_id + "_" + this.props.page_no, event, this.props.sentence)
     }
 
     render() {
-        
+
         const { sentence } = this.props;
         var styles = {
             position: "absolute ",
@@ -56,6 +56,7 @@ class Preview extends React.Component {
             color: sentence.font_color,
             width: sentence.text_width + "px",
             fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && 'bold',
+            fontFamily : sentence.font_family,
             textAlign: "justify",
             zIndex: 1,
             outline: "0px solid transparent",
@@ -72,7 +73,7 @@ class Preview extends React.Component {
                     
                   
                 onDoubleClick = {event => {this.handleDoubleClick(event, sentence.block_id + "_" + this.props.page_no)}}
-                onMouseLeave={() => {this.props.value !== true&& this.props.handleOnMouseEnter()}}
+                onMouseLeave={() => {this.props.value !== true && this.props.handleOnMouseLeave()}}
                              onMouseEnter={() => {this.props.value!== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no)}}
                 // contentEditable = {this.props.createBlockId === sentence.block_id + "_" + this.props.page_no ? true : false}
                 // onClick={() => {
