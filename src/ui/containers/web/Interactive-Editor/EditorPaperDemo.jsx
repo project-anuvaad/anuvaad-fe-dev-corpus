@@ -406,8 +406,7 @@ class EditorPaper extends React.Component {
         suggestionText: this.state.targetVal + selectedText,
         showLoader: true,
         callApi: true,
-        targetVal: this.state.targetVal + selectedText,
-        leftValue: this.state.leftValue + selectedText.length
+        targetVal: this.state.targetVal + selectedText
         // caretPos: this.state.caretPos + selectedText.length
       })
     }, 100)
@@ -876,13 +875,13 @@ class EditorPaper extends React.Component {
     //   }
     // }
     this.setState({
-      contentEditableId: id,
+      // contentEditableId: id,
       open: false,
       showLoader: false,
       topValue: e.clientY + 15,
       leftValue: e.clientX + 5
     })
-
+    this.refs[ref].focus()
   }
 
   handleTableOnCLick(id, blockId, clisckedCell, value, parent, pageNo, next_previous) {
