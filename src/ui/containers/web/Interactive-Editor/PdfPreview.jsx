@@ -47,6 +47,7 @@ class PdfPreview extends React.Component {
       `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
       fileDetails.download_source_path ? fileDetails.download_source_path : ""
       }`;
+     
     return (
       <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}>
         <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
@@ -72,7 +73,6 @@ class PdfPreview extends React.Component {
                   </Button>
                 </Grid>
                 <Grid item xs={4} sm={4} lg={4} xl={4} style={{textAlign: 'center'}}>
-                  {console.log(pageNo)}
                   <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none" }} color="primary">
                     {`${pageNo} / ${numPages}`}
                   </Button>
@@ -129,7 +129,7 @@ class PdfPreview extends React.Component {
               >
                 
                 <CloseIcon style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }} color="primary" />
-                <Typography value="" variant="subtitle6" color="primary" style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }}>
+                <Typography value="" variant="h6" color="primary" style={{ cursor: "pointer", color: '#233466', paddingLeft: '5px' }}>
                   {translate("common.page.label.close")}
                 </Typography>
               </Toolbar>
