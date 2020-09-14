@@ -33,7 +33,11 @@ class EditorPaper extends React.Component {
       html: "",
       columns: 1,
       selectedIndex: 0,
-      openContextMenu: false
+      openContextMenu: false,
+      suggestionText: "",
+      suggestionSrc:"",
+      suggestionId: "",
+      callApi: false
     };
     this.handleTargetChange = this.handleTargetChange.bind(this)
   }
@@ -82,6 +86,10 @@ class EditorPaper extends React.Component {
         autoCompleteText: this.props.intractiveTrans[0].tgt,
         openContextMenu: true
       })
+    }
+
+    if(this.state.callApi) {
+      this.fecthNextSuggestion()
     }
   }
 
@@ -331,7 +339,9 @@ class EditorPaper extends React.Component {
         targetVal: targetVal,
         tokenIndex,
         showLoader: true,
-        senIndex
+        senIndex,
+        suggestionSrc:tokenText.src,
+        suggestionId: this.props.modelDetails
       })
     } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
       if (event.key === 'ArrowUp') {
@@ -373,7 +383,13 @@ class EditorPaper extends React.Component {
     this.setState({openContextMenu: false})
   }
 
-  handleUpdateSentenceWithPrediction(index) {
+  fecthNextSuggestion() {
+    const apiObj = new IntractiveApi(this.state.suggestionSrc, this.state.suggestionText, this.state.suggestionId, true, true);
+    this.props.APITransport(apiObj);
+    this.setState({ callApi: false})
+  }
+
+  handleUpdateSentenceWithPrediction(selectedText) {
     this.setState({
       open: false,
       showLoader: false,
@@ -383,16 +399,20 @@ class EditorPaper extends React.Component {
     setTimeout(() => {
       var sentences = Object.assign([], this.state.sentences ? this.state.sentences : this.props.sentences)
       // sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText[index].substring(this.state.caretPos)
-      sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + index
+      sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + selectedText
       self.setState({
         sentences: sentences,
         selectedIndex: 0,
-        // showLoader: true
+        suggestionText: this.state.targetVal + selectedText,
+        showLoader: true,
+        callApi: true,
+        targetVal: this.state.targetVal + selectedText
+        // caretPos: this.state.caretPos + selectedText.length
       })
     }, 100)
 
     setTimeout(() => {
-    this.setCaretPosition(index)
+    this.setCaretPosition(selectedText)
 
     }, 200)
 
@@ -436,6 +456,7 @@ class EditorPaper extends React.Component {
     
     sel.removeAllRanges()
     sel.addRange(range)
+    this.setState({caretPos: this.state.caretPos + data.length})
 }
 
   handleCalc(value, tokenText) {
@@ -857,8 +878,8 @@ class EditorPaper extends React.Component {
       // contentEditableId: id,
       open: false,
       showLoader: false,
-      topValue: e.clientY,
-      leftValue: e.clientX
+      topValue: e.clientY + 15,
+      leftValue: e.clientX + 5
     })
     this.refs[ref].focus()
   }
