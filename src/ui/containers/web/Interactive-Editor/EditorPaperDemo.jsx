@@ -405,8 +405,11 @@ class EditorPaper extends React.Component {
       showLoader: false,
       openContextMenu: false
     })
+
+
+    
     var self = this
-    setTimeout(() => {
+    // setTimeout(() => {
       var sentences = Object.assign([], this.state.sentences ? this.state.sentences : this.props.sentences)
       // sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText[index].substring(this.state.caretPos)
       sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + selectedText
@@ -419,17 +422,21 @@ class EditorPaper extends React.Component {
         targetVal: this.state.targetVal + selectedText,
         // caretPos: this.state.caretPos + selectedText.length
       })
-    }, 100)
+
+      // this.refs[sentences[this.state.senIndex]._id + "_" + this.state.tokenIndex + "_" + this.props.paperType].blur()
+
+      // window.getSelection().removeAllRanges()
+    // }, 50)
 
     setTimeout(() => {
       this.setCaretPosition(selectedText)
 
-    }, 200)
+    }, 20)
 
     setTimeout(() => {
       this.fetchCursorPosition()
 
-    }, 250)
+    }, 40)
   }
 
     fetchCursorPosition() {
@@ -912,6 +919,7 @@ class EditorPaper extends React.Component {
       topValue: e.clientY + 15,
       leftValue: e.clientX + 5
     })
+
     this.refs[ref].focus()
   }
 
