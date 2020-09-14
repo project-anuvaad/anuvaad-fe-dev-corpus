@@ -7,6 +7,7 @@ class MenuClass extends React.Component {
   render() {
 
     const { topValue, leftValue, isOpen } = this.props;
+    console.log(this.props.sentenceOp)
     return (
       <Popover
         id="menu-appbar"
@@ -39,6 +40,15 @@ class MenuClass extends React.Component {
         )}
           { this.props.operation_type === "split" && (
           <div>
+            <Button
+            style={{ textTransform: "none", width: "100%", justifyContent: "left" }}
+            onClick={() =>
+               this.props.sentenceOp === "merge" ?this.props.handleDialog( "Merge sentence", "Do you want to merge the sentence ?"):this.props.handleDialog( "Split sentence", "Do you want to split the sentence ?")
+            }
+          >
+            {" "}
+            {this.props.sentenceOp === "merge" ? "Merge Sentence" : "Split sentence"}
+          </Button>
             <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Create", "Do you want to add the sentence ?")}>
               {" "}
               Create Block
