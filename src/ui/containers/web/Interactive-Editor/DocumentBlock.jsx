@@ -40,14 +40,17 @@ class Preview extends React.Component {
         this.props.handleCheck(this.props.sentence.block_id + "_" + this.props.page_no, event, false)
     }
 
-    handleChangeEvent = event => {
-        console.log("evente---",event)
+    handleChangeEvent = (event, id) => {
+        console.log()
         this.props.handleSourceChange(this.props.sentence.block_id + "_" + this.props.page_no, event, this.props.sentence)
     }
 
     render() {
 
         const { sentence } = this.props;
+        var textStyle = {
+            
+        }
         var styles = {
             position: "absolute ",
             top: sentence.text_top + "px",
@@ -61,6 +64,7 @@ class Preview extends React.Component {
             zIndex: 1,
             outline: "0px solid transparent",
             cursor: !this.state.isEditable && 'pointer',
+            padding: '0px 5px 0px 5px',
             lineHeight: sentence.children && parseInt(sentence.text_height / sentence.children.length) + 'px',
             // backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no ? "yellow" : ""
             backgroundColor:this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? "#F4FDFF" : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? "#EAEAEA" : "",
@@ -69,7 +73,7 @@ class Preview extends React.Component {
         return (
             <div id={sentence.block_id + "_" + this.props.page_no} style={styles} key={sentence.block_id}
                 onBlur = {event => this.props.handleBlur(event)}
-                onInput={event => this.handleChangeEvent(event)}
+                onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
                     
                   
                 onDoubleClick = {event => {this.handleDoubleClick(event, sentence.block_id + "_" + this.props.page_no)}}
@@ -109,9 +113,10 @@ class Preview extends React.Component {
                     //     }}
                     // />
                 ) : ( */}
+            {/* style={{ color:(this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock )? tokenIndex%2 ==0 ? '#D3E1EB': "#9F000F":'' }} */}
                         {sentence.hasOwnProperty('tokenized_sentences') ? sentence.tokenized_sentences.map((text, tokenIndex) => {
-                            return <span key = {text.sentence_id} style={{ color:(this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock )? tokenIndex%2 ==0 ? '#357EC7': "#9F000F":'' }}
-                                >{text.src?text.src:text.src_text}</span>
+                            return <span><span  id = {text.sentence_id} key = {text.sentence_id} style={{ borderRadius: '6px',background:(this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock )? tokenIndex%2 ==0 ? '#92a8d1': "coral":'' }}
+                                >{text.src?text.src:text.src_text}</span><span> </span></span>
                         }) : <div
                             
                             style={{ backgroundColor: this.props.hoveredSentence === sentence.block_id + "_" + this.props.page_no }}>{sentence.text}</div>

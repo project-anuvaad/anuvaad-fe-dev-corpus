@@ -36,7 +36,7 @@ class Preview extends React.Component {
       
     }
     if (this.props.createBlockId && prevProps.createBlockId !== this.props.createBlockId) {
-      console.log("sajish-----", this.props.createBlockId)
+      console.log("CDU-----", this.props.createBlockId)
       this.setState({selectedSentence : this.props.createBlockId, value: true})
     }
     
@@ -46,17 +46,19 @@ class Preview extends React.Component {
     if (this.state.title === "Merge") {
 
       this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
-      this.setState({ openDialog: false });
     } else if (this.state.title === "Delete") {
-      this.props.handleDeleteBlock(window.getSelection().anchorNode.parentNode.parentElement.id, '', this.props.sourceSentence)
-      this.setState({ openDialog: false });
+      this.props.handleDeleteBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, '', this.props.sourceSentence)
     } else if (this.state.title === "Duplicate") {
-      this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentNode.parentElement.id, '', this.props.sourceSentence)
-      this.setState({ openDialog: false });
+      this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, '', this.props.sourceSentence)
     } else if (this.state.title === "Create") {
-      this.props.handleCreateBlock(window.getSelection().anchorNode.parentNode.parentElement.id, this.props.sourceSentence)
+      this.props.handleCreateBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, this.props.sourceSentence)
       this.setState({ openDialog: false });
     }
+    else if(this.state.title === "Split sentence" ||this.state.title === "Merge sentence"){
+      this.props.handleSentenceOperation(window.getSelection().anchorNode.parentNode.id,window.getSelection().focusNode.parentNode.id, this.props.sourceSentence, this.state.title)
+      
+    }
+    this.setState({ openDialog: false });
   }
 
   fetchSentence(sourceSentence) {
@@ -70,6 +72,18 @@ class Preview extends React.Component {
   }
 
   getSelectionText(event, id) {
+    let sentenceStart = window.getSelection().anchorNode.parentNode.id.split('_');
+    let sentenceEnd = window.getSelection().focusNode.parentNode.id.split('_');
+    let senOp;
+    console.log(sentenceStart,sentenceEnd)
+    if(sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]){
+      if(sentenceStart[2] === sentenceEnd[2]){
+        senOp = "split";
+      }else{
+        senOp = "merge";
+      }
+    }
+     window.getSelection().focusNode.parentNode.id;
     if (!this.state.selectedSentence) {
       var text = "";
       let selection = {};
@@ -94,15 +108,15 @@ class Preview extends React.Component {
       }
       if (sentences) {
 
-        startNode = window.getSelection().anchorNode.parentNode.parentElement.id;
-        endNode = window.getSelection().focusNode.parentNode.parentElement.id;
+        startNode = window.getSelection().anchorNode.parentNode.parentNode.parentElement.id;
+        endNode = window.getSelection().focusNode.parentNode.parentNode.parentElement.id;
 
         
         selection.startNode = startNode;
         selection.endNode = endNode;
-        if (startNode && endNode && window.getSelection().anchorNode.parentNode && startNode === endNode) {
+        if (startNode && endNode && window.getSelection().anchorNode.parentNode.parentNode && startNode === endNode) {
           this.setState({ operation_type: "split" });
-          window.getSelection().toString() && this.popUp("split", event);
+          window.getSelection().toString() && this.popUp("split", event, senOp);
           selection.startNode = startNode;
         } else if (startNode && endNode && parseInt(startNode) !== parseInt(endNode)) {
           this.setState({ operation_type: "merge" });
@@ -119,12 +133,10 @@ class Preview extends React.Component {
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
   }
 
-  popUp = (operation_type, event) => {
-    
-    this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2, selectedBlock: null });
+  popUp = (operation_type, event, opType) => {
+    this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2, selectedBlock: null, sentenceOp: opType });
   };
   handleBlur = ()=>{
-    console.log("sajish---")
     this.setState({ value : false, selectedSentence : ''})
     this.props.handleOnMouseLeave()
 }
@@ -245,6 +257,7 @@ class Preview extends React.Component {
             handleDeleteBlock={this.props.handleDeleteBlock}
             pageData={this.props.sourceSentence}
             handleCheck={this.handleCheck.bind(this)}
+            sentenceOp = {this.state.sentenceOp}
           />
         )}
 
