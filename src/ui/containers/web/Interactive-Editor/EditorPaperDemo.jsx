@@ -17,6 +17,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Popover1 from "./Menu"
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const styles = {
   paperHeader: {
@@ -37,7 +38,9 @@ class EditorPaper extends React.Component {
       suggestionText: "",
       suggestionSrc: "",
       suggestionId: "",
-      callApi: false
+      callApi: false,
+      previousPressedKeyCode: "",
+      editable: false
     };
     this.handleTargetChange = this.handleTargetChange.bind(this)
   }
@@ -80,7 +83,6 @@ class EditorPaper extends React.Component {
           behavior: "smooth"
         });
     } else if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
-      
       this.setState({
         // open: true,
         showLoader: false,
@@ -311,13 +313,15 @@ class EditorPaper extends React.Component {
     if (event.key === 'Escape') {
       this.setState({
         contentEditableId: null,
-        selectedIndex: 0
+        selectedIndex: 0,
+        editable: false
       })
     }
     else if (event.key === 'Tab') {
       event.preventDefault()
     }
     if (((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed === 'Shift')) {
+    // if (((event.key === ' ' || event.key === 'Spacebar') && (this.state.previousKeyPressed === 'Control' || this.state.previousKeyPressed === "Command"))) {
       let editableDiv = this.refs[refId]
       var caretPos = 0,
         sel, range;
@@ -381,7 +385,8 @@ class EditorPaper extends React.Component {
       })
     }
     this.setState({
-      previousKeyPressed: event.key
+      previousKeyPressed: event.key,
+      previousPressedKeyCode: event.keyCode
     })
   }
 
@@ -417,7 +422,7 @@ class EditorPaper extends React.Component {
         sentences: sentences,
         selectedIndex: 0,
         suggestionText: this.state.targetVal + selectedText,
-        showLoader: true,
+        
         callApi: true,
         targetVal: this.state.targetVal + selectedText,
         // caretPos: this.state.caretPos + selectedText.length
@@ -428,12 +433,12 @@ class EditorPaper extends React.Component {
     setTimeout(() => {
       this.setCaretPosition(selectedText)
 
-    }, 70)
+    }, 100)
 
     setTimeout(() => {
+      this.setState({showLoader: true})
       this.fetchCursorPosition()
-
-    }, 90)
+    }, 250)
   }
 
     fetchCursorPosition() {
@@ -626,7 +631,8 @@ class EditorPaper extends React.Component {
           if (tokenText.status !== "DELETED") {
             let id = sentence._id + "_" + tokenText.sentence_index + "_editable"
             sentenceArray.push(
-              <div style={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? { border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF" } : {}}>
+              <div style={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index && this.state.editable ? { border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF" } : {}}>
+              {/* <ClickAwayListener onClickAway={() => this.handleClickAway()}> */}
                 <span
                   id={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? "editable" : sentence._id + "_" + tokenText.sentence_index}
 
@@ -642,7 +648,7 @@ class EditorPaper extends React.Component {
                           ? "#4dffcf"
                           : ""
                   }}
-                  contentEditable={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? true : false}
+                  contentEditable={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index && this.state.editable ? true : false}
                   onKeyDown={(event) => this.handleTargetChange(sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType, event, sentence, tokenText, tokenIndex, senIndex)}
                   // onBlur={this.handleTargetChange.bind(this)}
                   onClick={(e) => {
@@ -652,7 +658,7 @@ class EditorPaper extends React.Component {
                   // onClick={() => this.handleOnClick(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
                   onMouseEnter={() => this.hoverOn(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
                   onDoubleClick={event => {
-                    this.setState({ contentEditableId: sentence._id + "_" + tokenText.sentence_index }),
+                    this.setState({ contentEditableId: sentence._id + "_" + tokenText.sentence_index, editable: true }),
                       this.handleOnDoubleClickTarget(event, sentence._id + "_" + tokenText.sentence_index, sentence.page_no, sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType)
                     // this.props.handleonDoubleClick(sentence._id + "_" + tokenText.sentence_index, tokenText.target, event, null, 'target')
                   }}
@@ -660,8 +666,10 @@ class EditorPaper extends React.Component {
                 >
                   {tokenText.target}
                 </span>
+                {/* </ClickAwayListener> */}
                 {isSpaceRequired ? <span>&nbsp;</span> : <span></span>}
               </div>
+              
             );
           }
           return true;
@@ -669,6 +677,10 @@ class EditorPaper extends React.Component {
         return sentenceArray;
       }
     }
+  }
+
+  handleClickAway() {
+    this.setState({ editable: false})
   }
 
   fetchSentence(sentence, prevSentence, index, noOfPage) {
