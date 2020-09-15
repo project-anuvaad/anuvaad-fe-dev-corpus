@@ -53,9 +53,9 @@ class Preview extends React.Component {
             
         }
         var styles = {
-            position: "absolute ",
-            top: sentence.text_top + "px",
-            left: sentence.text_left + "px",
+            position: sentence.children ?"relative":"absolute",
+            top: !sentence.children && sentence.text_top + "px",
+            left:  !sentence.children && sentence.text_left + "px",
             fontSize: sentence.font_size + "px",
             color: sentence.font_color,
             width: sentence.text_width + "px",
@@ -63,6 +63,7 @@ class Preview extends React.Component {
             fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && 'bold',
             fontFamily : sentence.font_family,
             textAlign: "justify",
+            justifyContent: "space-between",
             zIndex: 1,
             outline: "0px solid transparent",
             cursor: !this.state.isEditable && 'pointer',
@@ -80,7 +81,7 @@ class Preview extends React.Component {
                   
                 onDoubleClick = {event => {this.handleDoubleClick(event, sentence.block_id + "_" + this.props.page_no)}}
                 onMouseLeave={() => {this.props.value !== true && this.props.handleOnMouseLeave()}}
-                             onMouseEnter={() => {console.log("value----",this.props.value);this.props.value!== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no)}}
+                             onMouseEnter={() => {this.props.value!== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no)}}
                 // contentEditable = {this.props.createBlockId === sentence.block_id + "_" + this.props.page_no ? true : false}
                 // onClick={() => {
                 //     if (sentence.block_id + "_" + this.props.page_no !== this.props.selectedBlock) {
@@ -96,35 +97,52 @@ class Preview extends React.Component {
                  ref={textarea => {
                     this.textInput = textarea;
                   }}
-            >
-                {/* {(this.props.selectedBlock === sentence.block_id + "_" + this.props.page_no || this.props.createBlockId === sentence.block_id + "_" + this.props.page_no) ? (
-                    console.log("sajish")
-                    // <ContentEditable
-                    //     autoComplete="off"
-                    //     html={this.props.selectedSourceText}
-                    //     disabled={false}
-                    //     onBlur={this.handleCheck}
-                    //     onChange={this.handleChangeEvent}
-                    //     style={{
-                    //         border: "1px solid #1C9AB7",
-
-                    //         cursor: 'auto',
-                    //         backgroundColor: "#F4FDFF",
-                    //         outline: "none !important"
-                    //         // height: !sentence.children && parseInt(sentence.text_height) + "px"
-                    //     }}
-                    // />
-                ) : ( */}
-            {/* style={{ color:(this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock )? tokenIndex%2 ==0 ? '#D3E1EB': "#9F000F":'' }} */}
-                        {sentence.hasOwnProperty('tokenized_sentences') ? sentence.tokenized_sentences.map((text, tokenIndex) => {
-                            return <span><span  id = {text.sentence_id} key = {text.sentence_id} style={{ borderRadius: '6px',background:(this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock )? tokenIndex%2 ==0 ? '#92a8d1': "coral":'' }}
-                                >{text.src?text.src:text.src_text}</span><span> </span></span>
-                        }) : <div
-                            
-                            style={{ backgroundColor: this.props.hoveredSentence === sentence.block_id + "_" + this.props.page_no }}>{sentence.text}</div>
-
-                    }
-            </div >
+            >  
+            {sentence.children ?  sentence.children.map((textValue, tokenIndex) => {
+                       return <span>{textValue.children ? textValue.children.map(value=>{
+                        return <span style={{
+                        top: value.text_top + "px",
+                        position: 'absolute',
+                        textAlign: "justify",
+                        fontSize: value.font_size + "px",
+                        textJustify: "inter-word",
+                        left: value.text_left + "px",
+                        justifyContent: "space-between",
+                        // lineHeight: sentence.text_height + 'px',
+                        width: value.text_width}}>{value.text}</span>
+                        })  : <span style={{
+                            top: textValue.text_top + "px",
+                            textAlign: "justify",
+                            position: 'absolute',
+                            justifyContent: "space-between",
+                            fontSize: textValue.font_size + "px",
+                            display: 'inline-block',
+                            textJustify: "inter-word",
+                            left: textValue.text_left + "px",
+                            // lineHeight: sentence.text_height + 'px',
+                            width: "100%"}}>{textValue.text}</span>    }</span>              }) 
+                            : sentence.hasOwnProperty('tokenized_sentences') && sentence.tokenized_sentences.map((text, tokenIndex) => {
+                                return <span><span  id = {text.sentence_id} key = {text.sentence_id} style={{ borderRadius: '6px',background:(this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock )? tokenIndex%2 ==0 ? '#92a8d1': "coral":'' }}
+                                    >{text.src?text.src:text.src_text}</span><span> </span></span>
+                            })
+                        
+                        }
+            {/* {console.log(this.props.hoveredSentence, this.props.sentence.block_id + "_" + this.props.page_no)} */}
+            {/* {sentence.children && this.props.hoveredSentence !== this.props.sentence.block_id + "_" + this.props.page_no ? sentence.children.map((textValue, tokenIndex) => {
+                        return <span style={{
+                        top: textValue.text_top + "px",
+                        textAlign: "justify",
+                        display: 'inline-block',
+                        textJustify: "inter-word",
+                        left: textValue.text_left + "px",
+                        // lineHeight: sentence.text_height + 'px',
+                        width: "100%"}}>{textValue.text}</span>
+                    }) : sentence.hasOwnProperty('tokenized_sentences') && sentence.tokenized_sentences.map((text, tokenIndex) => {
+                        return <span><span  id = {text.sentence_id} key = {text.sentence_id} style={{ borderRadius: '6px',background:(this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock )? tokenIndex%2 ==0 ? '#92a8d1': "coral":'' }}
+                            >{text.src?text.src:text.src_text}</span><span> </span></span>
+                    })} */}
+                     </div> 
+                       
         );
     }
 }

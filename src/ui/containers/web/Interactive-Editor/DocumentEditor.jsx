@@ -101,7 +101,7 @@ class PdfFileEditor extends React.Component {
           hasMoreItems: this.props.fetchContent.result.count > this.state.currentPage + this.state.pagesToBeLoaded ? true : false
         });
       }
-     
+      console.log("----",temp)
     }
   }
 
@@ -361,7 +361,6 @@ class PdfFileEditor extends React.Component {
           text.src_text = null;
         }
       });
-      console.log(index)
       selectedBlock.tokenized_sentences[index].src_text = textValue;
     } else if (sentenceObj[startSentence[0]] && type === "Split sentence") {
       const selectedSplitEndIndex = window.getSelection() && window.getSelection().getRangeAt(0).endOffset;
@@ -376,7 +375,6 @@ class PdfFileEditor extends React.Component {
           ind = i;
         }
       });
-      console.log("func----",copySentence)
       let id =  copySentence.sentence_id.split("_");
       id[2] = selectedBlock.tokenized_sentences.length;
       let newId = id.join("_");
@@ -569,11 +567,10 @@ class PdfFileEditor extends React.Component {
   }
 
   tokenizedIndex=(tokenizedArray, indexValue)=>{
-    console.log(tokenizedArray)
     let i = 0;
     let indexes = tokenizedArray[0].sentence_id.split("_");
     let values ;
-    console.log("----",indexValue)
+    
     tokenizedArray.map(sentence=>{
 
       values = sentence.sentence_id.split('_');
@@ -582,7 +579,6 @@ class PdfFileEditor extends React.Component {
       values[2] = i;
       sentence.sentence_id = values.join("_")
     })
-    console.log(tokenizedArray)
     return tokenizedArray;
   }
 
@@ -906,6 +902,7 @@ class PdfFileEditor extends React.Component {
                               handleDeleteTable={this.handleDeleteTable.bind(this)}
                               handleDuplicateTable={this.handleDuplicateTable.bind(this)}
                               handleSentenceOperation={this.handleSentenceOperation.bind(this)}
+                              handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
                             />
                           </div>
                         );
