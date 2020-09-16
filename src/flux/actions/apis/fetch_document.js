@@ -36,7 +36,7 @@ export default class RunExperiment extends API {
             ],
             "taskDetails": true,
             "workflowCodes": [
-              "DP_WFLOW_FB","DP_WFLOW_FBT"
+              "DP_WFLOW_FBT","DP_WFLOW_FBTTR"
             ]
           }
     

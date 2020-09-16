@@ -667,6 +667,10 @@ class PdfFileEditor extends React.Component {
     this.setState({ showCompareDocs: true });
   }
 
+  handleChangeView(){
+    this.setState({tokenized: !this.state.tokenized})
+  }
+
   handleCompareDocClose() {
     this.setState({ showCompareDocs: false });
   }
@@ -727,7 +731,7 @@ class PdfFileEditor extends React.Component {
           {this.state.showLoader && <Spinner />}
           <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
             <div style={{ position: "fixed" }}>
-              <Button
+            <Button
                 variant="extended"
                 color="primary"
                 style={{ textTransform: "capitalize", fontSize: "100%", fontWeight: "bold" }}
@@ -738,7 +742,15 @@ class PdfFileEditor extends React.Component {
               <Button
                 variant="extended"
                 color="primary"
-                style={{ textTransform: "capitalize", fontSize: "100%", fontWeight: "bold", marginLeft: "10px" }}
+                style={{ textTransform: "capitalize", fontSize: "100%", fontWeight: "bold",width:"140px", marginLeft: "5px"}}
+                onClick={() => this.handleChangeView()}
+              >
+                {this.state.tokenized ? "Tokenised View" : "Block view"}
+              </Button>
+              <Button
+                variant="extended"
+                color="primary"
+                style={{ textTransform: "capitalize", fontSize: "100%", fontWeight: "bold", marginLeft: "5px" }}
                 onClick={() => this.handleOnClose()}
               >
                 <CloseIcon /> &nbsp;&nbsp;{translate("common.page.label.close")}
@@ -811,6 +823,7 @@ class PdfFileEditor extends React.Component {
                         handleDeleteTable={this.handleDeleteTable.bind(this)}
                         handleDuplicateTable={this.handleDuplicateTable.bind(this)}
                         handleSentenceOperation={this.handleSentenceOperation.bind(this)}
+                        tokenized = {this.state.tokenized}
                       />
                     </div>
                   );
@@ -903,6 +916,7 @@ class PdfFileEditor extends React.Component {
                               handleDuplicateTable={this.handleDuplicateTable.bind(this)}
                               handleSentenceOperation={this.handleSentenceOperation.bind(this)}
                               handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
+                              tokenized = {this.state.tokenized}
                             />
                           </div>
                         );
