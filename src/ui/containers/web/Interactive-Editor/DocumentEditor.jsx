@@ -34,7 +34,7 @@ class PdfFileEditor extends React.Component {
       sourceSupScripts: "",
       targetSupScripts: "",
       header: "",
-
+      tokenized : true,
       backgroundImage: "",
       pageArr: [],
       hoveredSentence: "",
@@ -101,7 +101,7 @@ class PdfFileEditor extends React.Component {
           hasMoreItems: this.props.fetchContent.result.count > this.state.currentPage + this.state.pagesToBeLoaded ? true : false
         });
       }
-     
+      console.log("----",temp)
     }
   }
 
@@ -361,7 +361,6 @@ class PdfFileEditor extends React.Component {
           text.src_text = null;
         }
       });
-      console.log(index)
       selectedBlock.tokenized_sentences[index].src_text = textValue;
     } else if (sentenceObj[startSentence[0]] && type === "Split sentence") {
       const selectedSplitEndIndex = window.getSelection() && window.getSelection().getRangeAt(0).endOffset;
@@ -376,7 +375,6 @@ class PdfFileEditor extends React.Component {
           ind = i;
         }
       });
-      console.log("func----",copySentence)
       let id =  copySentence.sentence_id.split("_");
       id[2] = selectedBlock.tokenized_sentences.length;
       let newId = id.join("_");
@@ -569,11 +567,10 @@ class PdfFileEditor extends React.Component {
   }
 
   tokenizedIndex=(tokenizedArray, indexValue)=>{
-    console.log(tokenizedArray)
     let i = 0;
     let indexes = tokenizedArray[0].sentence_id.split("_");
     let values ;
-    console.log("----",indexValue)
+    
     tokenizedArray.map(sentence=>{
 
       values = sentence.sentence_id.split('_');
@@ -582,7 +579,6 @@ class PdfFileEditor extends React.Component {
       values[2] = i;
       sentence.sentence_id = values.join("_")
     })
-    console.log(tokenizedArray)
     return tokenizedArray;
   }
 
@@ -671,6 +667,10 @@ class PdfFileEditor extends React.Component {
     this.setState({ showCompareDocs: true });
   }
 
+  handleChangeView(){
+    this.setState({tokenized: !this.state.tokenized})
+  }
+
   handleCompareDocClose() {
     this.setState({ showCompareDocs: false });
   }
@@ -731,7 +731,7 @@ class PdfFileEditor extends React.Component {
           {this.state.showLoader && <Spinner />}
           <div style={{ display: "flex", flexDirection: "row-reverse", justifyContent: "right", marginRight: "25px", marginBottom: "15px" }}>
             <div style={{ position: "fixed" }}>
-              <Button
+            <Button
                 variant="extended"
                 color="primary"
                 style={{ textTransform: "capitalize", fontSize: "100%", fontWeight: "bold" }}
@@ -742,7 +742,15 @@ class PdfFileEditor extends React.Component {
               <Button
                 variant="extended"
                 color="primary"
-                style={{ textTransform: "capitalize", fontSize: "100%", fontWeight: "bold", marginLeft: "10px" }}
+                style={{ textTransform: "capitalize", fontSize: "100%", fontWeight: "bold",width:"140px", marginLeft: "5px"}}
+                onClick={() => this.handleChangeView()}
+              >
+                {this.state.tokenized ? "Tokenised View" : "Block view"}
+              </Button>
+              <Button
+                variant="extended"
+                color="primary"
+                style={{ textTransform: "capitalize", fontSize: "100%", fontWeight: "bold", marginLeft: "5px" }}
                 onClick={() => this.handleOnClose()}
               >
                 <CloseIcon /> &nbsp;&nbsp;{translate("common.page.label.close")}
@@ -815,6 +823,7 @@ class PdfFileEditor extends React.Component {
                         handleDeleteTable={this.handleDeleteTable.bind(this)}
                         handleDuplicateTable={this.handleDuplicateTable.bind(this)}
                         handleSentenceOperation={this.handleSentenceOperation.bind(this)}
+                        tokenized = {this.state.tokenized}
                       />
                     </div>
                   );
@@ -906,6 +915,8 @@ class PdfFileEditor extends React.Component {
                               handleDeleteTable={this.handleDeleteTable.bind(this)}
                               handleDuplicateTable={this.handleDuplicateTable.bind(this)}
                               handleSentenceOperation={this.handleSentenceOperation.bind(this)}
+                              handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
+                              tokenized = {this.state.tokenized}
                             />
                           </div>
                         );

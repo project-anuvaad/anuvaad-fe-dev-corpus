@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import ContentEditable from "react-contenteditable";
 
@@ -50,9 +52,9 @@ class Preview extends React.Component {
         const { sentence } = this.props;
         
         var styles = {
-            position: sentence.children ?"relative":"absolute",
-            top: !sentence.children && sentence.text_top + "px",
-            left:  !sentence.children && sentence.text_left + "px",
+            position: "absolute",
+            top:  sentence.text_top + "px",
+            left:   sentence.text_left + "px",
             fontSize: sentence.font_size + "px",
             color: sentence.font_color,
             width: sentence.text_width + "px",
@@ -71,14 +73,14 @@ class Preview extends React.Component {
         }
         return (
             <div id={sentence.block_id + "_" + this.props.page_no} style={styles} key={sentence.block_id}
-                // onBlur = {event => this.props.handleBlur(event)}
-                // onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
+                onBlur = {event => this.props.handleBlur(event)}
+                onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
                     
                   
-                // onDoubleClick = {event => {this.handleDoubleClick(event, sentence.block_id + "_" + this.props.page_no)}}
-                // onMouseLeave={() => {this.props.value !== true && this.props.handleOnMouseLeave()}}
-                //              onMouseEnter={() => {this.props.value!== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no)}}
-                // // contentEditable = {this.props.createBlockId === sentence.block_id + "_" + this.props.page_no ? true : false}
+                onDoubleClick = {event => {this.handleDoubleClick(event, sentence.block_id + "_" + this.props.page_no)}}
+                onMouseLeave={() => {this.props.value !== true && this.props.handleOnMouseLeave()}}
+                             onMouseEnter={() => {this.props.value!== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no)}}
+                // contentEditable = {this.props.createBlockId === sentence.block_id + "_" + this.props.page_no ? true : false}
                 // onClick={() => {
                 //     if (sentence.block_id + "_" + this.props.page_no !== this.props.selectedBlock) {
                 //         this.props.handleBlockClick(false, sentence.block_id + "_" + this.props.page_no)
@@ -88,13 +90,13 @@ class Preview extends React.Component {
                 //         this.props.handleEditor(sentence.block_id + "_" + this.props.page_no)
                 //     }
                 // }}
-                //  contentEditable={this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no ?  true: false}
+                 contentEditable={this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no ?  true: false}
                  
                  ref={textarea => {
                     this.textInput = textarea;
                   }}
             >  
-            {sentence.children ?  sentence.children.map((textValue, tokenIndex) => {
+            {/* {sentence.children ?  sentence.children.map((textValue, tokenIndex) => {
                        return <span>{textValue.children ? textValue.children.map(value=>{
                         return <div style={{
                         top: value.text_top + "px",
@@ -120,23 +122,19 @@ class Preview extends React.Component {
                             left: textValue.text_left + "px",
                             // lineHeight: sentence.text_height + 'px',
                             width: textValue.text_width +"px"}}>{textValue.text}</div>    }</span>              }) 
-                        : <span>{sentence.text}<span> </span></span>
+                            : <span> <span>{sentence.text}<span> </span></span></span>
+                            
                         
-                        }
+                        } */}
             {/* {console.log(this.props.hoveredSentence, this.props.sentence.block_id + "_" + this.props.page_no)} */}
-            {/* {sentence.children && this.props.hoveredSentence !== this.props.sentence.block_id + "_" + this.props.page_no ? sentence.children.map((textValue, tokenIndex) => {
-                        return <span style={{
-                        top: textValue.text_top + "px",
-                        textAlign: "justify",
-                        display: 'inline-block',
-                        textJustify: "inter-word",
-                        left: textValue.text_left + "px",
-                        // lineHeight: sentence.text_height + 'px',
-                        width: "100%"}}>{textValue.text}</span>
-                    }) : sentence.hasOwnProperty('tokenized_sentences') && sentence.tokenized_sentences.map((text, tokenIndex) => {
-                        return <span><span  id = {text.sentence_id} key = {text.sentence_id} style={{ borderRadius: '6px',background:(this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock )? tokenIndex%2 ==0 ? '#92a8d1': "coral":'' }}
-                            >{text.src?text.src:text.src_text}</span><span> </span></span>
-                    })} */}
+            {sentence.hasOwnProperty('tokenized_sentences') ? sentence.tokenized_sentences.map((text, tokenIndex) => {
+                            return <span><span  id = {text.sentence_id} key = {text.sentence_id} style={{ borderRadius: '6px',background:(this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock )? tokenIndex%2 ==0 ? '#92a8d1': "coral":'' }}
+                                >{text.src?text.src:text.src_text}</span><span> </span></span>
+                        }) : <div
+                            
+                            style={{ backgroundColor: this.props.hoveredSentence === sentence.block_id + "_" + this.props.page_no }}>{sentence.text}</div>
+
+                    }
                      </div> 
                        
         );
