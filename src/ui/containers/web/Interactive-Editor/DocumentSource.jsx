@@ -1,5 +1,6 @@
 import React from "react";
 import BlockView from "./DocumentBlock";
+import TokenizedView from "./DocumentTokenized";
 import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -204,10 +205,10 @@ class Preview extends React.Component {
         {sourceSentence.text_blocks &&
           sourceSentence.text_blocks.map((sentence, index) => {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
-
+            console.log()
             return (
               <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)} ref={sourceSentence.page_no}>
-                <BlockView
+               {this.props.tokenized ?  <BlockView
                   key={index + "_" + sentence.block_id}
                   sentence={sentence}
                   yAxis={yAxis}
@@ -229,7 +230,29 @@ class Preview extends React.Component {
                   handleEditClick = {this.handleEditClick.bind(this)}
                   selectedSentence = {this.state.selectedSentence}
                   handleOnMouseLeave = {this.props.handleOnMouseLeave}
-                />
+                /> : <TokenizedView
+                key={index + "_" + sentence.block_id}
+                sentence={sentence}
+                yAxis={yAxis}
+                page_no={sourceSentence.page_no}
+                handleOnMouseEnter={this.props.handleOnMouseEnter}
+                hoveredSentence={this.props.hoveredSentence}
+                handleDoubleClick={this.handleDoubleClick.bind(this)}
+                selectedBlock={this.state.selectedBlock}
+                handleBlockClick={this.handleBlockClick.bind(this)}
+                handleSourceChange={this.props.handleSourceChange}
+                
+                isEditable={this.props.isEditable}
+                handleEditor={this.props.handleEditor}
+                handleCheck = {this.handleCheck.bind(this)}
+                selectedSourceText = {this.props.selectedSourceText}
+                heightValue  = {this.props.heightValue}
+                value = {this.state.value}
+                handleBlur = {this.handleBlur.bind(this)}
+                handleEditClick = {this.handleEditClick.bind(this)}
+                selectedSentence = {this.state.selectedSentence}
+                handleOnMouseLeave = {this.props.handleOnMouseLeave}
+              />}
               </div>
             );
           })}
