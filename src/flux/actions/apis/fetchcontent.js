@@ -28,6 +28,9 @@ export default class Pagination extends API {
         if(this.start_page && this.end_page) {
             url += `&start_page=${this.start_page}&end_page=${this.end_page}`;
         }
+        else{
+            url+= `&all=true`;
+        }
         return url    
     }
 
