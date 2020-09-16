@@ -22,16 +22,20 @@ class CustomTable extends React.Component {
     if (prevProps.scrollToId !== this.props.scrollToId) {
       let sid = this.props.scrollToId.split("_")[0];
       if (this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+        if (!(this.props.contentEditableId && this.props.paperType === "target")) {
         this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
           behavior: "smooth",
           block: "center"
         });
+      }
       } else if (this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+        if (!(this.props.contentEditableId && this.props.paperType === "target")) {
         this.refs[sid + "_" + this.props.paperType].scrollIntoView({
           behavior: "smooth",
           block: "center"
         });
       }
+    }
     } else if (prevProps.scrollToPage !== this.props.scrollToPage) {
       if (this.refs[this.props.scrollToPage + "_" + this.props.paperType])
         this.refs[this.props.scrollToPage + "_" + this.props.paperType].scrollIntoView({
