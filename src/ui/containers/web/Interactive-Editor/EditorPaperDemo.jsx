@@ -395,6 +395,21 @@ class EditorPaper extends React.Component {
   }
 
   handlePopOverClose() {
+    var el = document.getElementById("editable")
+    var range = document.createRange()
+    var sel = window.getSelection()
+
+    if (el.childNodes[0].textContent.length < this.state.caretPos) {
+      range.setStart(el.childNodes[0], el.childNodes[0].textContent.length - 1)
+    } else {
+      range.setStart(el.childNodes[0], this.state.caretPos)
+    }
+    range.collapse(true)
+
+    sel.removeAllRanges()
+    sel.addRange(range)
+    this.setState({ caretPos: this.state.caretPos })
+
     this.setState({ openContextMenu: false })
   }
 
@@ -632,39 +647,39 @@ class EditorPaper extends React.Component {
             let id = sentence._id + "_" + tokenText.sentence_index + "_editable"
             sentenceArray.push(
               <div style={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index && this.state.editable ? { border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF" } : {}}>
-                  <span
-                    id={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? "editable" : sentence._id + "_" + tokenText.sentence_index}
+                <span
+                  id={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? "editable" : sentence._id + "_" + tokenText.sentence_index}
 
-                    ref={sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType}
-                    style={{
-                      fontWeight: sentence.is_bold ? "bold" : "normal",
-                      textDecorationLine: sentence.underline ? "underline" : "",
-                      outline: 'none',
-                      backgroundColor:
-                        (this.props.hoveredSentence === sentence._id + "_" + tokenText.sentence_index && this.state.contentEditableId !== sentence._id + "_" + tokenText.sentence_index)
-                          ? "yellow"
-                          : (this.props.selectedSentenceId === sentence._id + "_" + tokenText.sentence_index && this.state.contentEditableId !== sentence._id + "_" + tokenText.sentence_index)
-                            ? "#4dffcf"
-                            : ""
-                    }}
-                    contentEditable={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index && this.state.editable ? true : false}
-                    onKeyDown={(event) => this.handleTargetChange(sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType, event, sentence, tokenText, tokenIndex, senIndex)}
+                  ref={sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType}
+                  style={{
+                    fontWeight: sentence.is_bold ? "bold" : "normal",
+                    textDecorationLine: sentence.underline ? "underline" : "",
+                    outline: 'none',
+                    backgroundColor:
+                      (this.props.hoveredSentence === sentence._id + "_" + tokenText.sentence_index && this.state.contentEditableId !== sentence._id + "_" + tokenText.sentence_index)
+                        ? "yellow"
+                        : (this.props.selectedSentenceId === sentence._id + "_" + tokenText.sentence_index && this.state.contentEditableId !== sentence._id + "_" + tokenText.sentence_index)
+                          ? "#4dffcf"
+                          : ""
+                  }}
+                  contentEditable={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index && this.state.editable ? true : false}
+                  onKeyDown={(event) => this.handleTargetChange(sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType, event, sentence, tokenText, tokenIndex, senIndex)}
                     // onBlur={this.handleTargetChange.bind(this)}
                     onClick={(e) => {
                       this.handleOnClickTarget(e, sentence._id + "_" + tokenText.sentence_index, sentence.page_no, sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType)
                     }}
-                    key={this.state.contentEditableId ? id : sentence._id + "_" + tokenText.sentence_index}
-                    // onClick={() => this.handleOnClick(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
-                    onMouseEnter={() => this.hoverOn(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
-                    onDoubleClick={event => {
-                      this.setState({ contentEditableId: sentence._id + "_" + tokenText.sentence_index, editable: true }),
-                        this.handleOnDoubleClickTarget(event, sentence._id + "_" + tokenText.sentence_index, sentence.page_no, sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType)
-                      // this.props.handleonDoubleClick(sentence._id + "_" + tokenText.sentence_index, tokenText.target, event, null, 'target')
-                    }}
-                    onMouseLeave={() => this.hoverOff()}
-                  >
-                    {tokenText.target}
-                  </span>
+                  key={this.state.contentEditableId ? id : sentence._id + "_" + tokenText.sentence_index}
+                  // onClick={() => this.handleOnClick(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
+                  onMouseEnter={() => this.hoverOn(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
+                  onDoubleClick={event => {
+                    this.setState({ contentEditableId: sentence._id + "_" + tokenText.sentence_index, editable: true }),
+                      this.handleOnDoubleClickTarget(event, sentence._id + "_" + tokenText.sentence_index, sentence.page_no, sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType)
+                    // this.props.handleonDoubleClick(sentence._id + "_" + tokenText.sentence_index, tokenText.target, event, null, 'target')
+                  }}
+                  onMouseLeave={() => this.hoverOff()}
+                >
+                  {tokenText.target}
+                </span>
                 {isSpaceRequired ? <span>&nbsp;</span> : <span></span>}
               </div>
             );
