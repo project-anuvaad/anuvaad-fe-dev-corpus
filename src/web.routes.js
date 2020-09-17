@@ -89,6 +89,9 @@ import DocumentEditor from './ui/containers/web/Interactive-Editor/DocumentEdito
 import FileUpload from './ui/containers/web/Interactive-Editor/FileUpload';
 import ViewDocument from './ui/containers/web/ViewDocument';
 
+import { jQuery, $ }  from 'jquery'
+import $t from '@project-sunbird/telemetry-sdk/index.js'
+
 
 
 const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo, forDemo, dontShowLoader, dontShowHeader, currentMenu, authenticate, ...rest }) => (
@@ -119,6 +122,10 @@ const PrivateRoute = ({ component: Component, userRoles, title, drawer, showLogo
 // );
 
 class AppRoutes extends React.Component {
+  componentDidMount(){
+    this.initTelemetry()
+  }
+
   authenticateUser = allowedRoles => {
     let count = 0;
     const token = localStorage.getItem("token");
@@ -146,6 +153,36 @@ class AppRoutes extends React.Component {
     }
     alert(translate('webroutes.page.alert.somethingWentWrongTryAgain'));
   };
+
+  initTelemetry() {
+    $t.initialize({
+      "pdata": {
+        "id": "dev.anuvad",
+        "ver": "1.0",
+        "pid": "anuvad-web"
+      },
+      "env": "home",
+      "channel": "XXXX",
+      "did": "20d63257084c2dca33f31a8f14d8e94c0d939de4",
+      "uid": "anonymous",
+      "sid": "85e8a2c8-bb8e-4666-a21b-c29ec590d740",
+      "batchsize": 5,
+      "mode": "play",
+      "endpoint": "/v3/telemetry",
+      "dispatcher": {
+        dispatch: function (data) {
+          console.log(data);
+        }
+      }
+    });
+
+    console.log("is telemetry initialized: ", $t.isInitialized());
+    $t.start(null, "xyz", "1.0", { mode: "session", duration: 2 });
+  }
+
+  interact() {
+    $t.interact({ type: "CLICK", id: "btn_interact", pageid: "home" }, { context: { cdata: [{ type: "Doc", id: "123" }] } });
+  }
 
   render() {
     // const roles = localStorage.getItem("roles");
@@ -317,7 +354,7 @@ class AppRoutes extends React.Component {
               currentMenu="texttranslate"
             />
 
-<PrivateRoute
+            <PrivateRoute
               path={`${process.env.PUBLIC_URL}/document-upload`}
               userRoles={["editor", "dev", "grader", "interactive-editor"]}
               component={FileUpload}
