@@ -34,7 +34,7 @@ class PdfFileEditor extends React.Component {
       sourceSupScripts: "",
       targetSupScripts: "",
       header: "",
-
+      tokenized: true,
       backgroundImage: "",
       pageArr: [],
       hoveredSentence: "",

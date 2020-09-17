@@ -76,7 +76,7 @@ class Preview extends React.Component {
     let sentenceStart = window.getSelection().anchorNode.parentNode.id.split('_');
     let sentenceEnd = window.getSelection().focusNode.parentNode.id.split('_');
     let senOp;
-    console.log(sentenceStart,sentenceEnd)
+    
     if(sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]){
       if(sentenceStart[2] === sentenceEnd[2]){
         senOp = "split";
@@ -85,7 +85,7 @@ class Preview extends React.Component {
       }
     }
      window.getSelection().focusNode.parentNode.id;
-    if (!this.state.selectedSentence) {
+    if (!this.state.selectedSentence && !this.props.tokenized) {
       var text = "";
       let selection = {};
       var activeEl = document.activeElement;
@@ -162,6 +162,7 @@ class Preview extends React.Component {
   }
 
   handleDoubleClick(selectedBlock, event, sentence) {
+    console.log("-----",selectedBlock)
     this.props.handleSource(sentence)
     this.setState({ selectedBlock: selectedBlock, openEl: false, value : true })
     
