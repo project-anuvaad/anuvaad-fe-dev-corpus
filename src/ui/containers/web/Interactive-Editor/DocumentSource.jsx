@@ -304,7 +304,9 @@ class Preview extends React.Component {
       height: sourceSentence.page_height + "px",
       backgroundColor: "white",
       marginLeft: "auto",
-      marginRight: "auto"
+      marginRight: "auto",
+      borderTop: sourceSentence.page_no !== 1 ? "1px black solid" : "",
+      borderBottom: this.props.pageCount  !== sourceSentence ? "1px black solid" : ""
       // backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
       // backgroundRepeat: "no-repeat",
       // backgroundSize: this.state.backgroundSize + "px"
@@ -315,10 +317,10 @@ class Preview extends React.Component {
         {
           !this.props.isPreview ?
             <Paper style={style} key = {sourceSentence.page_no}
-              onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
+              onMouseEnter={() => { this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
             >{this.getContent()}</Paper> :
             <div style={style}
-              onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
+              onMouseEnter={() => { this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
             >{this.getContent()}</div>
         }
       </div>
