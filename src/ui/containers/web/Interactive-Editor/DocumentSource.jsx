@@ -248,6 +248,7 @@ class Preview extends React.Component {
                   handleOnMouseLeave = {this.props.handleOnMouseLeave}
                   handleRightClick = {this.handleRightClick.bind(this)}
                   checkbox = {this.state.checkbox}
+                  handleTextChange = {this.props.handleTextChange}
                 />: <TokenizedView
                 key={index + "_" + sentence.block_id}
                 sentence={sentence}

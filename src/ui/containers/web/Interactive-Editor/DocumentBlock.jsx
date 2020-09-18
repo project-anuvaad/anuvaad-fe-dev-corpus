@@ -41,9 +41,10 @@ class Preview extends React.Component {
     this.props.handleCheck(this.props.sentence.block_id + "_" + this.props.page_no, event, false);
   };
 
-  handleChangeEvent = (event, id) => {
-      console.log(event.target.scrollHeight, )
-      
+  handleChangeEvent = (event, id, h) => {
+    console.log("---keyyy---",event.target)
+      console.log("ypppp",event.target.scrollHeight,id, h )
+      this.props.handleTextChange(event, id)
     // this.props.handleSourceChange(this.props.sentence.block_id + "_" + this.props.page_no, event, this.props.sentence);
   };
 
@@ -101,7 +102,7 @@ class Preview extends React.Component {
             style={styles}
             key={sentence.block_id}
             onBlur={event => this.props.handleBlur(event)}
-            // onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
+            onInput={event => this.handleChangeEvent(event, sentence.block_id + "-" + this.props.page_no)}
             onDoubleClick={event => {
               !sentence.children && this.handleDoubleClick(event, sentence.block_id + "_" + this.props.page_no,3);
             }}
@@ -131,7 +132,7 @@ class Preview extends React.Component {
                   textValue.children.map(value => {
                     return (
                       <div
-                      onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
+                      onInput={event => this.handleChangeEvent(event, value.block_id + "-" + this.props.page_no, value.text_height)}
                       onContextMenu={event => !this.props.checkbox && this.props.handleRightClick(event)}
                       onBlur={event => this.props.handleBlur(event)}
                         id={value.block_id + "_" + this.props.page_no}
@@ -168,6 +169,7 @@ class Preview extends React.Component {
                           textAlignLast:"justify",
                           width: value.text_width + "px"
                         }}
+                        
                       >
                         {value.text}
                       </div>
@@ -175,7 +177,7 @@ class Preview extends React.Component {
                   })
                 ) : (
                   <div
-                  onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
+                  onInput={event => this.handleChangeEvent(event, textValue.block_id + "-" + this.props.page_no, textValue.text_height)}
                   onContextMenu={event => !this.props.checkbox && this.props.handleRightClick(event)}
                   onBlur={event => this.props.handleBlur(event)}
                     id={textValue.block_id + "_" + this.props.page_no}
