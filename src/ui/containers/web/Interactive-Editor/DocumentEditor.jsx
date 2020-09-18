@@ -782,9 +782,9 @@ class PdfFileEditor extends React.Component {
             <Paper
               elevation={2}
               style={{
-                maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 200,
+                // maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 200,
                 paddingBottom: "12px",
-                overflow: "scroll"
+                // overflow: "scroll"
               }}
             >
               <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
@@ -792,7 +792,10 @@ class PdfFileEditor extends React.Component {
                   Extracted Document
                 </Typography>
               </Toolbar>
-              <div>
+             <div id="scrollableDiv"  style={{
+                maxHeight: window.innerHeight - 240,
+                // paddingBottom: "12px",
+                overflow: "scroll"}}>
                 <InfiniteScroll
                   next={this.fetchData.bind(this)}
                   hasMore={this.state.hasMoreItems}
@@ -865,9 +868,9 @@ class PdfFileEditor extends React.Component {
           </Grid>
           <Grid item xs={12} sm={6} lg={6} xl={6} style={{ padding: "8px" }}>
             <Paper  style={{
-                maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 200,
+                // maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 200,
                 paddingBottom: "12px",
-                overflow: "scroll"
+                // overflow: "scroll"
               }}>
               <DocPreview
                 parent="document-editor"
