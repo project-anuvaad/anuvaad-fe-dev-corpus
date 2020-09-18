@@ -16,6 +16,10 @@ import Dialog from "../../../components/web/common/SimpleDialog";
 import Toolbar from "@material-ui/core/Toolbar";
 import EditorTable from "./EditorTable";
 import Image from "./Image";
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
 
 class Preview extends React.Component {
   constructor(props) {
@@ -41,6 +45,14 @@ class Preview extends React.Component {
       this.setState({selectedSentence : this.props.createBlockId, value: true})
     }
     
+  }
+  handleRightClick(event){
+    event.preventDefault();
+    this.popUp("merge", event);
+  }
+  handleCheckbox(){
+    console.log()
+    this.setState({checkbox:true, openDialog: false})
   }
   handleDialog() {
 
@@ -76,7 +88,7 @@ class Preview extends React.Component {
     let sentenceStart = window.getSelection().anchorNode.parentNode.id.split('_');
     let sentenceEnd = window.getSelection().focusNode.parentNode.id.split('_');
     let senOp;
-    console.log(sentenceStart,sentenceEnd)
+    
     if(sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]){
       if(sentenceStart[2] === sentenceEnd[2]){
         senOp = "split";
@@ -85,7 +97,7 @@ class Preview extends React.Component {
       }
     }
      window.getSelection().focusNode.parentNode.id;
-    if (!this.state.selectedSentence) {
+    if (!this.state.selectedSentence && !this.props.tokenized) {
       var text = "";
       let selection = {};
       var activeEl = document.activeElement;
@@ -157,13 +169,14 @@ class Preview extends React.Component {
 
   handleEditClick(selectedBlock, event) {
     
-    this.props.hoveredSentence && this.setState({ selectedSentence: selectedBlock, value : true })
+    this.props.hoveredSentence && this.setState({ hoveredSentence: null, selectedSentence: selectedBlock, value : true })
     
   }
 
   handleDoubleClick(selectedBlock, event, sentence) {
+    
     this.props.handleSource(sentence)
-    this.setState({ selectedBlock: selectedBlock, openEl: false, value : true })
+    this.setState({  selectedBlock: selectedBlock, openEl: false, value : true })
     
   }
 
@@ -205,10 +218,13 @@ class Preview extends React.Component {
         {sourceSentence.text_blocks &&
           sourceSentence.text_blocks.map((sentence, index) => {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
-            console.log()
+            
             return (
-              <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)} ref={sourceSentence.page_no}>
-               {this.props.tokenized ?  <BlockView
+              <div onMouseUp={ !this.props.tokenized&& this.getSelectionText.bind(this)} onKeyUp={ !this.props.tokenized && this.getSelectionText.bind(this)} ref={sourceSentence.page_no}>
+               {this.props.tokenized ? 
+               
+               
+               <BlockView
                   key={index + "_" + sentence.block_id}
                   sentence={sentence}
                   yAxis={yAxis}
@@ -230,7 +246,9 @@ class Preview extends React.Component {
                   handleEditClick = {this.handleEditClick.bind(this)}
                   selectedSentence = {this.state.selectedSentence}
                   handleOnMouseLeave = {this.props.handleOnMouseLeave}
-                /> : <TokenizedView
+                  handleRightClick = {this.handleRightClick.bind(this)}
+                  checkbox = {this.state.checkbox}
+                />: <TokenizedView
                 key={index + "_" + sentence.block_id}
                 sentence={sentence}
                 yAxis={yAxis}
@@ -257,15 +275,26 @@ class Preview extends React.Component {
             );
           })}
 
-        {this.state.openDialog && (
+        {/* {this.state.openDialog && (
           <Dialog
-            message={this.state.dialogMessage}
+            message={"Please select checkbox to merge blocks"}
             handleSubmit={this.handleDialog.bind(this)}
             handleClose={this.handleClose.bind(this)}
             open
             title={this.state.title}
           />
-        )}
+        )} */}
+{this.state.openDialog && (
+<Dialog
+            message={"Please select checkbox to merge blocks"}
+            handleSubmit={this.handleCheckbox.bind(this)}
+            handleClose={this.handleClose.bind(this)}
+            open
+            title={this.state.title}
+          />
+          )}
+
+
 
         {this.state.openEl && !this.state.selectedSentence && (
           <MenuItems

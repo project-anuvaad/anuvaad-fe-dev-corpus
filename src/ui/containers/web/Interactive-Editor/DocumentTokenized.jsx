@@ -90,7 +90,7 @@ class Preview extends React.Component {
                 //         this.props.handleEditor(sentence.block_id + "_" + this.props.page_no)
                 //     }
                 // }}
-                 contentEditable={this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no ?  true: false}
+                  contentEditable={this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no ?  true: false}
                  
                  ref={textarea => {
                     this.textInput = textarea;
