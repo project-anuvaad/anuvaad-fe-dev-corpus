@@ -304,7 +304,9 @@ class Preview extends React.Component {
       height: sourceSentence.page_height + "px",
       backgroundColor: "white",
       marginLeft: "auto",
-      marginRight: "auto"
+      marginRight: "auto",
+      borderTop: sourceSentence.page_no !== 1 ? "1px black solid" : "",
+      borderBottom: this.props.pageCount  !== sourceSentence ? "1px black solid" : ""
       // backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
       // backgroundRepeat: "no-repeat",
       // backgroundSize: this.state.backgroundSize + "px"
