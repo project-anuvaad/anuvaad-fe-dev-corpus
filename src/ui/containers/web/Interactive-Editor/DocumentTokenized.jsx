@@ -73,7 +73,7 @@ class Preview extends React.Component {
                 onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
 
 
-                onDoubleClick={event => { this.handleDoubleClick(event, sentence.block_id + "_" + this.props.page_no) }}
+                // onDoubleClick={event => { this.handleDoubleClick(event, sentence.block_id + "_" + this.props.page_no) }}
                 onMouseLeave={() => { this.props.value !== true && this.props.handleOnMouseLeave() }}
                 onMouseEnter={() => { this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no) }}
                 // contentEditable = {this.props.createBlockId === sentence.block_id + "_" + this.props.page_no ? true : false}
@@ -86,7 +86,7 @@ class Preview extends React.Component {
                 //         this.props.handleEditor(sentence.block_id + "_" + this.props.page_no)
                 //     }
                 // }}
-                contentEditable={this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no ? true : false}
+                // contentEditable={this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no ? true : false}
 
                 ref={textarea => {
                     this.textInput = textarea;

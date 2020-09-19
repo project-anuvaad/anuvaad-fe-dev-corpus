@@ -90,6 +90,9 @@ class Preview extends React.Component {
       cursor: !this.state.isEditable && "pointer",
       padding: "5px",
       lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
+        backgroundColor:
+      !sentence.children && (this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value
+          ? "#F4FDFF": ""),
       // backgroundColor: this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no ? "yellow" : ""
     //   backgroundColor:
     //   !sentence.children && (this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value
@@ -100,7 +103,7 @@ class Preview extends React.Component {
       border:
         this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value
           ? "1px solid #1C9AB7"
-            :this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock && this.props.value !== true ? "1px dashed grey":""    
+            :this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock && this.props.value !== true ? "2px dotted grey":""    
     };
     return (
       <div>
@@ -174,6 +177,9 @@ class Preview extends React.Component {
                           padding: "5px",
                            height:  value.text_height + "px",
                         //   maxHeight: value.text_height + "px",
+                        backgroundColor:
+      (this.props.selectedSentence === value.block_id + "_" + this.props.page_no && this.props.value
+          ? "#F4FDFF": ""),
                           border:
                             this.props.selectedSentence === value.block_id + "_" + this.props.page_no && this.props.value
                               ? "1px solid #1C9AB7"
@@ -219,6 +225,9 @@ class Preview extends React.Component {
                       outline: "0px solid transparent",
                       zIndex: 1,
                       height:  textValue.text_height + "px",
+                      backgroundColor:
+       (this.props.selectedSentence === textValue.block_id + "_" + this.props.page_no && this.props.value
+          ? "#F4FDFF": ""),
                     //   maxHeight: textValue.text_height + "px",
                       border:
                         !textValue.children && this.props.selectedSentence === textValue.block_id + "_" + this.props.page_no && this.props.value

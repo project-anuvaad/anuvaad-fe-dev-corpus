@@ -67,18 +67,20 @@ class Preview extends React.Component {
   }
   handleDialog() {
 
-    if (this.state.title === "Merge") {
+    console.log(this.state.title,"title")
 
-      this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
-    } else if (this.state.title === "Delete") {
-      this.props.handleDeleteBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, '', this.props.sourceSentence)
-    } else if (this.state.title === "Duplicate") {
-      this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, '', this.props.sourceSentence)
-    } else if (this.state.title === "Create") {
-      this.props.handleCreateBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, this.props.sourceSentence)
-      this.setState({ openDialog: false });
-    }
-    else if (this.state.title === "Split sentence" || this.state.title === "Merge sentence") {
+    // if (this.state.title === "Merge") {
+
+    //   this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
+    // } else if (this.state.title === "Delete") {
+    //   this.props.handleDeleteBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, '', this.props.sourceSentence)
+    // } else if (this.state.title === "Duplicate") {
+    //   this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, '', this.props.sourceSentence)
+    // } else if (this.state.title === "Create") {
+    //   this.props.handleCreateBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, this.props.sourceSentence)
+    //   this.setState({ openDialog: false });
+    // }
+     if (this.state.title === "Split sentence" || this.state.title === "Merge sentence") {
       this.props.handleSentenceOperation(window.getSelection().anchorNode.parentNode.id, window.getSelection().focusNode.parentNode.id, this.props.sourceSentence, this.state.title)
 
     }
@@ -179,7 +181,7 @@ class Preview extends React.Component {
   };
 
   handleEditClick(selectedBlock, event) {
-
+    this.props.handleSource()
     this.props.hoveredSentence && this.setState({ hoveredSentence: null, selectedSentence: selectedBlock, value: true })
 
   }
@@ -291,19 +293,10 @@ class Preview extends React.Component {
             );
           })}
 
-        {/* {this.state.openDialog && (
-          <Dialog
-            message={"Please select checkbox to merge blocks"}
-            handleSubmit={this.handleDialog.bind(this)}
-            handleClose={this.handleClose.bind(this)}
-            open
-            title={this.state.title}
-          />
-        )} */}
         {this.state.openDialog && (
           <Dialog
             message={"Please select checkbox to merge blocks"}
-            handleSubmit={this.handleCheckbox.bind(this)}
+            handleSubmit={this.handleDialog.bind(this)}
             handleClose={this.handleClose.bind(this)}
             open
             title={this.state.title}
