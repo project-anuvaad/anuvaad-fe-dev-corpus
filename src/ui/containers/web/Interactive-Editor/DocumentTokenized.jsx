@@ -13,7 +13,7 @@ class Preview extends React.Component {
 
     handleMouseHover(id) {
         if (!this.props.selectedSentence) {
-            this.props.handleOnMouseEnter(id, this.props.parent)
+            this.props.handleOnMouseEnter(id, this.props.paperType)
         }
     }
     handleBlur = () => {
@@ -132,7 +132,7 @@ class Preview extends React.Component {
                         {this.props.paperType === "source" ? (text.src ? text.src : text.src_text) : (text.tgt ? text.tgt : text.tagged_tgt) }
                     </span><span> </span></span>
                 }) : <div
-                        id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
+                        id={sentence.block_id + "_" + this.props.page_no}
                     style={{ backgroundColor: spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no ? '#92a8d1' : "" }}>{sentence.text}</div>
 
                 }
