@@ -249,6 +249,8 @@ class Preview extends React.Component {
                   handleRightClick = {this.handleRightClick.bind(this)}
                   checkbox = {this.state.checkbox}
                   handleTextChange = {this.props.handleTextChange}
+                  mergeButton = {this.props.mergeButton}
+                  updateContent = {this.props.updateContent}
                 />: <TokenizedView
                 key={index + "_" + sentence.block_id}
                 sentence={sentence}
@@ -271,6 +273,7 @@ class Preview extends React.Component {
                 handleEditClick = {this.handleEditClick.bind(this)}
                 selectedSentence = {this.state.selectedSentence}
                 handleOnMouseLeave = {this.props.handleOnMouseLeave}
+                
               />}
               </div>
             );

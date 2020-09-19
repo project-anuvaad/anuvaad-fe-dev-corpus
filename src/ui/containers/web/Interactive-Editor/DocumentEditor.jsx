@@ -27,6 +27,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import GetAppIcon from '@material-ui/icons/GetApp';
 import DoneIcon from "@material-ui/icons/Done";
 import Typography from "@material-ui/core/Typography";
+import Snackbar from "../../../components/web/common/Snackbar";
 
 class PdfFileEditor extends React.Component {
   constructor(props) {
@@ -741,6 +742,51 @@ class PdfFileEditor extends React.Component {
     this.setState({ scrollToTop: false });
   }
 
+  handleClick(value) {
+    this.setState({ mergeButton: value });
+  }
+
+  updateContent(val){
+    console.log("--------",val)
+    let ind,idV, text;
+    let value = val[0].split("_");
+    
+    let senteceObj = this.state.sentences;
+    
+    senteceObj.map(sentence=>{
+      
+      console.log(value[1], sentence.page_no);
+      parseInt(value[1]) == sentence.page_no &&
+      val.map(arrValue=>{
+        sentence.text_blocks.map((children, index)=>{
+          console.log(parseInt(arrValue.split("_")[0]), children.block_id)
+          if(parseInt(arrValue.split("_")[0])== children.block_id){
+            console.log("-----",children)
+            text = text +" " +children.text;
+            children.block_id = idV;
+           
+          }
+        
+          // if(children.block_id == value[0]){
+          //   children.text = children.text
+          //   ind= index
+          //   idV = children.block_id
+          // }
+        })
+        
+        
+      })
+
+
+      
+
+      
+
+      this.setState({sentences:senteceObj })
+
+    })
+  }
+
   handleTextChange(event, id){
     
 
@@ -764,7 +810,7 @@ class PdfFileEditor extends React.Component {
                   children.font_size = children.font_size -1;
                 
                 // children.font_size = children.font_size -1;
-                console.log("font---",children.font_size)
+                // console.log("font---",children.font_size)
               }
             })
             if(sentenceChildren.block_id == idValue[0]){
@@ -894,6 +940,17 @@ class PdfFileEditor extends React.Component {
                 <Typography value="" variant="h6" gutterBottom style={{ flex: 1 }}>
                   Extracted Document
                 </Typography>
+                <Toolbar
+                          onClick={event => {
+                            this.handleClick(this.state.mergeButton === "save" ? "Merge": "save");
+                          }}
+                          style={{ paddingRight: '0px' }}
+                        >
+                         
+                          <Typography value="" variant="subtitle2" style={{ cursor: "pointer", color: '#233466', paddingLeft: '7px' }}>
+                            {this.state.mergeButton =="save" ?"Save" : "Merge Blocks"}
+                          </Typography>
+                        </Toolbar>
               </Toolbar>
              <div id="scrollableDiv"  style={{
                 maxHeight: window.innerHeight - 240,
@@ -962,6 +1019,8 @@ class PdfFileEditor extends React.Component {
                             tokenized = {this.state.tokenized}
                             handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
                             handleTextChange = {this.handleTextChange.bind(this)}
+                            mergeButton = {this.state.mergeButton}
+                            updateContent = {this.updateContent.bind(this)}
                           />
                         </div>
                       );
@@ -991,6 +1050,19 @@ class PdfFileEditor extends React.Component {
             </Paper>
           </Grid>
         </Grid>
+        {this.state.open && (
+
+<Snackbar
+  anchorOrigin={{ vertical: "top", horizontal: "right" }}
+  open={this.state.open}
+  autoHideDuration={3000}
+  variant="success"
+  message={
+    this.state.message
+
+  }
+/>
+)}
       </div>
     )
 
