@@ -714,7 +714,7 @@ class PdfFileEditor extends React.Component {
 
   handlePreviewPageChange(pageNo, value) {
     if (this.state.pageNo !== pageNo) {
-      this.setState({ pageNo: parseInt(pageNo), scrollToPage: pageNo });
+      this.setState({ pageNo: parseInt(pageNo)});
     }
   }
 
@@ -980,7 +980,7 @@ class PdfFileEditor extends React.Component {
                       <b>You have seen it all</b>
                     </p>
                   }
-                  style={{ overflow: "hidden" }}
+                  style={{ overflowY: "hidden" }}
                   scrollableTarget="scrollableDiv"
                   onScroll={() => this.handleScroll()}
                 >
