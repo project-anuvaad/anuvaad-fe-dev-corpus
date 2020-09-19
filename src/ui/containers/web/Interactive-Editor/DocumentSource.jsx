@@ -231,59 +231,59 @@ class Preview extends React.Component {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
 
             return (
-              <div onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)} onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)} ref={sourceSentence.page_no}>
-                {this.props.tokenized ?
-
-
-                  <BlockView
-                    key={index + "_" + sentence.block_id}
-                    sentence={sentence}
-                    yAxis={yAxis}
-                    page_no={sourceSentence.page_no}
-                    handleOnMouseEnter={this.props.handleOnMouseEnter}
-                    hoveredSentence={this.props.hoveredSentence}
-                    handleDoubleClick={this.handleDoubleClick.bind(this)}
-                    selectedBlock={this.state.selectedBlock}
-                    handleBlockClick={this.handleBlockClick.bind(this)}
-                    handleSourceChange={this.props.handleSourceChange}
-
-                    isEditable={this.props.isEditable}
-                    handleEditor={this.props.handleEditor}
-                    handleCheck={this.handleCheck.bind(this)}
-                    selectedSourceText={this.props.selectedSourceText}
-                    heightValue={this.props.heightValue}
-                    value={this.state.value}
-                    handleBlur={this.handleBlur.bind(this)}
-                    handleEditClick={this.handleEditClick.bind(this)}
-                    selectedSentence={this.state.selectedSentence}
-                    handleOnMouseLeave={this.props.handleOnMouseLeave}
-                    handleRightClick={this.handleRightClick.bind(this)}
-                    checkbox={this.state.checkbox}
-                    paperType={this.props.paperType}
-                  /> : <TokenizedView
-                    key={index + "_" + sentence.block_id}
-                    sentence={sentence}
-                    yAxis={yAxis}
-                    page_no={sourceSentence.page_no}
-                    handleOnMouseEnter={this.props.handleOnMouseEnter}
-                    hoveredSentence={this.props.hoveredSentence}
-                    handleDoubleClick={this.handleDoubleClick.bind(this)}
-                    selectedBlock={this.state.selectedBlock}
-                    handleBlockClick={this.handleBlockClick.bind(this)}
-                    handleSourceChange={this.props.handleSourceChange}
-
-                    isEditable={this.props.isEditable}
-                    handleEditor={this.props.handleEditor}
-                    handleCheck={this.handleCheck.bind(this)}
-                    selectedSourceText={this.props.selectedSourceText}
-                    heightValue={this.props.heightValue}
-                    value={this.state.value}
-                    handleBlur={this.handleBlur.bind(this)}
-                    handleEditClick={this.handleEditClick.bind(this)}
-                    selectedSentence={this.state.selectedSentence}
-                    handleOnMouseLeave={this.props.handleOnMouseLeave}
-                    paperType={this.props.paperType}
-                  />}
+              <div onMouseUp={ !this.props.tokenized&& this.getSelectionText.bind(this)} onKeyUp={ !this.props.tokenized && this.getSelectionText.bind(this)} ref={sourceSentence.page_no}>
+               {this.props.tokenized ? 
+               
+               
+               <BlockView
+                  key={index + "_" + sentence.block_id}
+                  sentence={sentence}
+                  yAxis={yAxis}
+                  page_no={sourceSentence.page_no}
+                  handleOnMouseEnter={this.props.handleOnMouseEnter}
+                  hoveredSentence={this.props.hoveredSentence}
+                  handleDoubleClick={this.handleDoubleClick.bind(this)}
+                  selectedBlock={this.state.selectedBlock}
+                  handleBlockClick={this.handleBlockClick.bind(this)}
+                  handleSourceChange={this.props.handleSourceChange}
+                  
+                  isEditable={this.props.isEditable}
+                  handleEditor={this.props.handleEditor}
+                  handleCheck = {this.handleCheck.bind(this)}
+                  selectedSourceText = {this.props.selectedSourceText}
+                  heightValue  = {this.props.heightValue}
+                  value = {this.state.value}
+                  handleBlur = {this.handleBlur.bind(this)}
+                  handleEditClick = {this.handleEditClick.bind(this)}
+                  selectedSentence = {this.state.selectedSentence}
+                  handleOnMouseLeave = {this.props.handleOnMouseLeave}
+                  handleRightClick = {this.handleRightClick.bind(this)}
+                  checkbox = {this.state.checkbox}
+                  handleTextChange = {this.props.handleTextChange}
+                />: <TokenizedView
+                key={index + "_" + sentence.block_id}
+                sentence={sentence}
+                yAxis={yAxis}
+                page_no={sourceSentence.page_no}
+                handleOnMouseEnter={this.props.handleOnMouseEnter}
+                hoveredSentence={this.props.hoveredSentence}
+                handleDoubleClick={this.handleDoubleClick.bind(this)}
+                selectedBlock={this.state.selectedBlock}
+                handleBlockClick={this.handleBlockClick.bind(this)}
+                handleSourceChange={this.props.handleSourceChange}
+                
+                isEditable={this.props.isEditable}
+                handleEditor={this.props.handleEditor}
+                handleCheck = {this.handleCheck.bind(this)}
+                selectedSourceText = {this.props.selectedSourceText}
+                heightValue  = {this.props.heightValue}
+                value = {this.state.value}
+                handleBlur = {this.handleBlur.bind(this)}
+                handleEditClick = {this.handleEditClick.bind(this)}
+                selectedSentence = {this.state.selectedSentence}
+                handleOnMouseLeave = {this.props.handleOnMouseLeave}
+                paperType={this.props.paperType}
+              />}
               </div>
             );
           })}
