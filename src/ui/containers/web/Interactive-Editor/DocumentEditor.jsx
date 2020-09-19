@@ -56,7 +56,8 @@ class PdfFileEditor extends React.Component {
       currentPage: 0,
       pagesToBeLoaded: 2,
       fileDetails: {},
-      scrollToTop: false
+      scrollToTop: false,
+      scrollToId: ""
     };
   }
 
@@ -146,7 +147,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "" });
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent });
   }
 
   handleOnMouseLeave() {
@@ -897,7 +898,7 @@ class PdfFileEditor extends React.Component {
             >
               <div style={{ fontSize: "20px", fontWeight: "bold" }}>
                 {this.state.tokenized ? "You are in validation mode" : "You are in Translation mode"}
-                </div>
+              </div>
             </Button>
           </Grid>
           <Grid item xs={12} sm={6} lg={2} xl={2}>
@@ -905,7 +906,6 @@ class PdfFileEditor extends React.Component {
               variant="contained"
               // color="primary"
               style={{ color: '#233466', textTransform: "capitalize", width: "100%", minWidth: "110px", overflow: "hidden", whiteSpace: "nowrap", borderRadius: '30px' }}
-              onClick={() => this.handlePreview()}
               onClick={() => this.handleChangeView()}
             >
               {this.state.tokenized ? "Go to Translational mode" : "Go to Validation mode"}
@@ -931,9 +931,7 @@ class PdfFileEditor extends React.Component {
             <Paper
               elevation={2}
               style={{
-                // maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 200,
                 paddingBottom: "12px",
-                // overflow: "scroll"
               }}
             >
               <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
@@ -952,10 +950,10 @@ class PdfFileEditor extends React.Component {
                           </Typography>
                         </Toolbar>
               </Toolbar>
-             <div id="scrollableDiv"  style={{
+              <div id="scrollableDiv" style={{
                 maxHeight: window.innerHeight - 240,
-                // paddingBottom: "12px",
-                overflow: "scroll"}}>
+                overflow: "scroll"
+              }}>
                 <InfiniteScroll
                   next={this.fetchData.bind(this)}
                   hasMore={this.state.hasMoreItems}
@@ -986,6 +984,7 @@ class PdfFileEditor extends React.Component {
                       return (
                         <div>
                           <SourceView
+                            paperType="source"
                             isPreview={true}
                             key={sentence.page_no + "_" + index}
                             pageNo={sentence.page_no}
@@ -1001,6 +1000,7 @@ class PdfFileEditor extends React.Component {
                             selectedCell={this.state.selectedCell}
                             scrollToPage={this.state.scrollToPage}
                             scrollToTop={this.state.scrollToTop}
+                            scrollToId={this.state.scrollToId}
                             handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                             handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
                             handleDialogSave={this.handleDialogSave.bind(this)}
@@ -1016,7 +1016,7 @@ class PdfFileEditor extends React.Component {
                             handleDeleteTable={this.handleDeleteTable.bind(this)}
                             handleDuplicateTable={this.handleDuplicateTable.bind(this)}
                             handleSentenceOperation={this.handleSentenceOperation.bind(this)}
-                            tokenized = {this.state.tokenized}
+                            tokenized={this.state.tokenized}
                             handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
                             handleTextChange = {this.handleTextChange.bind(this)}
                             mergeButton = {this.state.mergeButton}
@@ -1030,12 +1030,10 @@ class PdfFileEditor extends React.Component {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={6} lg={6} xl={6} style={{ padding: "8px" }}>
-            <Paper  style={{
-                // maxHeight: this.state.collapseToken ? window.innerHeight - 120 : window.innerHeight - 200,
-                paddingBottom: "12px",
-                // overflow: "scroll"
-              }}>
-              <DocPreview
+            <Paper style={{
+              paddingBottom: "12px",
+            }}>
+              {this.state.tokenized ? <DocPreview
                 parent="document-editor"
                 data={this.state.fileId}
                 pageNo={this.state.pageNo}
@@ -1046,10 +1044,93 @@ class PdfFileEditor extends React.Component {
                 fileDetails={this.state.fileDetails}
                 handleChange={this.handleZoomChange.bind(this)}
                 handleClick={this.handleCompareDocClose.bind(this)}
-              ></DocPreview>
+              ></DocPreview> :
+                <div>
+                  <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+                    <Typography value="" variant="h6" gutterBottom style={{ flex: 1 }}>
+                      Translated document
+                    </Typography>
+                  </Toolbar>
+                  <div id="scrollableTargetDiv" style={{
+                    maxHeight: window.innerHeight - 240,
+                    overflow: "scroll"
+                  }}>
+                    <InfiniteScroll
+                      next={this.fetchData.bind(this)}
+                      hasMore={this.state.hasMoreItems}
+                      dataLength={this.state.sentences ? this.state.sentences.length : 0}
+                      loader={
+                        this.state.hasMoreItems.showLoader && (
+                          <p style={{ textAlign: "center" }}>
+                            <CircularProgress
+                              size={20}
+                              style={{
+                                zIndex: 1000
+                              }}
+                            />
+                          </p>
+                        )
+                      }
+                      endMessage={
+                        <p style={{ textAlign: "center" }}>
+                          <b>You have seen it all</b>
+                        </p>
+                      }
+                      style={{ overflow: "hidden" }}
+                      scrollableTarget="scrollableTargetDiv"
+                      onScroll={() => this.handleScroll()}
+                    >
+                      {this.state.sentences &&
+                        this.state.sentences.map((sentence, index) => {
+                          return (
+                            <div>
+                              <SourceView
+                                isPreview={true}
+                                paperType="target"
+                                key={sentence.page_no + "_" + index}
+                                pageNo={sentence.page_no}
+                                sourceSentence={sentence}
+                                selectedSourceText={this.state.selectedSourceText}
+                                createBlockId={this.state.selectedBlockId}
+                                isEditable={this.state.isEditable}
+                                hoveredSentence={this.state.hoveredSentence}
+                                hoveredTableId={this.state.hoveredTableId}
+                                clear={this.state.clear}
+                                heightValue={this.state.height}
+                                popOver={this.state.popOver}
+                                selectedCell={this.state.selectedCell}
+                                scrollToPage={this.state.scrollToPage}
+                                scrollToTop={this.state.scrollToTop}
+                                scrollToId={this.state.scrollToId}
+                                handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                                handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
+                                handleDialogSave={this.handleDialogSave.bind(this)}
+                                handleDuplicateBlock={this.handleDuplicateBlock.bind(this)}
+                                handleDeleteBlock={this.handleDeleteBlock.bind(this)}
+                                handleCreateBlock={this.handleCreateBlock.bind(this)}
+                                handleSourceChange={this.handleSourceChange.bind(this)}
+                                handleEditor={this.handleEditor.bind(this)}
+                                handleCheck={this.handleCheck.bind(this)}
+                                handleSource={this.handleSource.bind(this)}
+                                handleTableHover={this.handleTableHover.bind(this)}
+                                handlePopUp={this.handlePopUp.bind(this)}
+                                handleDeleteTable={this.handleDeleteTable.bind(this)}
+                                handleDuplicateTable={this.handleDuplicateTable.bind(this)}
+                                handleSentenceOperation={this.handleSentenceOperation.bind(this)}
+                                tokenized={this.state.tokenized}
+                                handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
+                              />
+                            </div>
+                          );
+                        })}
+                    </InfiniteScroll>
+                  </div>
+                </div>
+              }
             </Paper>
           </Grid>
         </Grid>
+<<<<<<< HEAD
         {this.state.open && (
 
 <Snackbar
@@ -1064,6 +1145,9 @@ class PdfFileEditor extends React.Component {
 />
 )}
       </div>
+=======
+      </div >
+>>>>>>> c6130728a322343606f85182a61eee352c48a344
     )
 
   }
