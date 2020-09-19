@@ -31,21 +31,22 @@ class Preview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // if (prevProps.scrollToId !== this.props.scrollToId) {
-    //   let sid = this.props.scrollToId.split("_")[0];
-    //   if (this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-    //     this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
-    //       behavior: "smooth",
-    //       block: "center"
-    //     });
-    //   } else if (this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-    //     this.refs[sid + "_" + this.props.paperType].scrollIntoView({
-    //       behavior: "smooth",
-    //       block: "center"
-    //     });
-    //   }
-    // } else 
-    if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
+
+    if (this.props.scrollToId && prevProps.scrollToId !== this.props.scrollToId) {
+
+      let sid = this.props.scrollToId && this.props.scrollToId.split("_")[0];
+      if (this.props.scrollToId && this.props.scrollToId.split("_")[1] && this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+        this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      } else if (this.props.scrollToId && this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+        this.refs[sid + "_" + this.props.paperType].scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }
+    } else if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
       if (this.refs[this.props.scrollToPage]) {
         this.refs[this.props.scrollToPage].scrollIntoView({
           behavior: "smooth", inline: "end"
@@ -263,6 +264,7 @@ class Preview extends React.Component {
                   handleRightClick = {this.handleRightClick.bind(this)}
                   checkbox = {this.state.checkbox}
                   handleTextChange = {this.props.handleTextChange}
+                  paperType={this.props.paperType}
                   mergeButton = {this.props.mergeButton}
                   updateContent = {this.props.updateContent}
                 />: <TokenizedView

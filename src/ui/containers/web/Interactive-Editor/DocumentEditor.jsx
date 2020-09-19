@@ -137,11 +137,11 @@ class PdfFileEditor extends React.Component {
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent });
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent, scrollToId: sentenceId });
   }
 
   handleOnMouseLeave() {
-    this.setState({ hoveredSentence: "", selectedBlockId: "", edited: false });
+    this.setState({ hoveredSentence: "", selectedBlockId: '', scrollToId: null, edited: false });
   }
 
   handleDialog(title, dialogMessage) {
@@ -835,10 +835,11 @@ class PdfFileEditor extends React.Component {
             }
           });
         }
-        this.setState({ sentences: sentenceObj, str: newVal });
-      });
-      // console.log("------",event.target.scrollHeight, id, event.currentTarget.offsetHeight)
+        this.setState({ sentences: sentenceObj, str: newVal })
+      })
     }
+
+
   }
 
   render() {
@@ -991,6 +992,7 @@ class PdfFileEditor extends React.Component {
                           <SourceView
                             paperType="source"
                             isPreview={true}
+                            parent={this.state.parent}
                             key={sentence.page_no + "_" + index}
                             pageNo={sentence.page_no}
                             sourceSentence={sentence}
@@ -1099,6 +1101,7 @@ class PdfFileEditor extends React.Component {
                               <SourceView
                                 isPreview={true}
                                 paperType="target"
+                                parent={this.state.parent}
                                 key={sentence.page_no + "_" + index}
                                 pageNo={sentence.page_no}
                                 sourceSentence={sentence}
