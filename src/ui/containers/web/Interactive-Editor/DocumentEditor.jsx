@@ -136,12 +136,12 @@ class PdfFileEditor extends React.Component {
     this.setState({ buttonDisable: false });
   }
 
-  handleOnMouseEnter(sentenceId, parent, pageNo) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent });
+  handleOnMouseEnter(sentenceId, parent,yOffset, pageNo) {
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent, scrollToId: sentenceId, yOffset:yOffset });
   }
 
   handleOnMouseLeave() {
-    this.setState({ hoveredSentence: "", selectedBlockId: "", edited: false });
+    this.setState({ hoveredSentence: "", selectedBlockId: '', scrollToId: null, edited: false });
   }
 
   handleDialog(title, dialogMessage) {
@@ -835,10 +835,11 @@ class PdfFileEditor extends React.Component {
             }
           });
         }
-        this.setState({ sentences: sentenceObj, str: newVal });
-      });
-      // console.log("------",event.target.scrollHeight, id, event.currentTarget.offsetHeight)
+        this.setState({ sentences: sentenceObj, str: newVal })
+      })
     }
+
+
   }
 
   render() {
@@ -991,6 +992,7 @@ class PdfFileEditor extends React.Component {
                           <SourceView
                             paperType="source"
                             isPreview={true}
+                            parent={this.state.parent}
                             key={sentence.page_no + "_" + index}
                             pageNo={sentence.page_no}
                             sourceSentence={sentence}
@@ -1006,6 +1008,7 @@ class PdfFileEditor extends React.Component {
                             scrollToPage={this.state.scrollToPage}
                             scrollToTop={this.state.scrollToTop}
                             scrollToId={this.state.scrollToId}
+                            yOffset={this.state.yOffset}
                             handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                             handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
                             handleDialogSave={this.handleDialogSave.bind(this)}
@@ -1088,7 +1091,7 @@ class PdfFileEditor extends React.Component {
                           <b>You have seen it all</b>
                         </p>
                       }
-                      style={{ overflow: "hidden" }}
+                      style={{ overflowY: "hidden" }}
                       scrollableTarget="scrollableTargetDiv"
                       onScroll={() => this.handleScroll()}
                     >
@@ -1099,6 +1102,7 @@ class PdfFileEditor extends React.Component {
                               <SourceView
                                 isPreview={true}
                                 paperType="target"
+                                parent={this.state.parent}
                                 key={sentence.page_no + "_" + index}
                                 pageNo={sentence.page_no}
                                 sourceSentence={sentence}
@@ -1114,6 +1118,7 @@ class PdfFileEditor extends React.Component {
                                 scrollToPage={this.state.scrollToPage}
                                 scrollToTop={this.state.scrollToTop}
                                 scrollToId={this.state.scrollToId}
+                                yOffset={this.state.yOffset}
                                 handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                                 handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
                                 handleDialogSave={this.handleDialogSave.bind(this)}

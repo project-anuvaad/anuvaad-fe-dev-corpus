@@ -31,21 +31,24 @@ class Preview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    // if (prevProps.scrollToId !== this.props.scrollToId) {
-    //   let sid = this.props.scrollToId.split("_")[0];
-    //   if (this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-    //     this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
-    //       behavior: "smooth",
-    //       block: "center"
-    //     });
-    //   } else if (this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-    //     this.refs[sid + "_" + this.props.paperType].scrollIntoView({
-    //       behavior: "smooth",
-    //       block: "center"
-    //     });
-    //   }
-    // } else 
-    if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
+
+    if (this.props.scrollToId && prevProps.scrollToId !== this.props.scrollToId && !this.props.tokenized) {
+      let sid = this.props.scrollToId && this.props.scrollToId.split("_")[0];
+      if (this.props.scrollToId && this.props.scrollToId.split("_")[1] && this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+        // console.log(this.props.yOffset)
+        // this.container.scrollTop = this.props.yOffset;
+        this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      } else if (this.props.scrollToId && this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+        this.refs[sid + "_" + this.props.paperType].scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }
+    }
+    else if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
       if (this.refs[this.props.scrollToPage]) {
         this.refs[this.props.scrollToPage].scrollIntoView({
           behavior: "smooth", inline: "end"
@@ -68,7 +71,7 @@ class Preview extends React.Component {
   }
   handleDialog() {
 
-    console.log(this.state.title,"title")
+    console.log(this.state.title, "title")
 
     // if (this.state.title === "Merge") {
 
@@ -81,7 +84,7 @@ class Preview extends React.Component {
     //   this.props.handleCreateBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, this.props.sourceSentence)
     //   this.setState({ openDialog: false });
     // }
-     if (this.state.title === "Split sentence" || this.state.title === "Merge sentence") {
+    if (this.state.title === "Split sentence" || this.state.title === "Merge sentence") {
       this.props.handleSentenceOperation(window.getSelection().anchorNode.parentNode.id, window.getSelection().focusNode.parentNode.id, this.props.sourceSentence, this.state.title)
 
     }
@@ -211,7 +214,7 @@ class Preview extends React.Component {
     let yAxis = 0;
     let sourceSentence = this.props.sourceSentence
     return (
-      <div>
+      <div ref={sourceSentence.page_no}>
         {sourceSentence.tables &&
           Array.isArray(sourceSentence.tables) &&
           sourceSentence.tables.map((table, i) => {
@@ -232,64 +235,65 @@ class Preview extends React.Component {
         {sourceSentence.text_blocks &&
           sourceSentence.text_blocks.map((sentence, index) => {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
-
+            const block_id = sentence.block_id
             return (
-              <div onMouseUp={ !this.props.tokenized&& this.getSelectionText.bind(this)} onKeyUp={ !this.props.tokenized && this.getSelectionText.bind(this)} ref={sourceSentence.page_no}>
-               {this.props.tokenized ? 
-               
-               
-               <BlockView
-                  key={index + "_" + sentence.block_id}
-                  sentence={sentence}
-                  yAxis={yAxis}
-                  page_no={sourceSentence.page_no}
-                  handleOnMouseEnter={this.props.handleOnMouseEnter}
-                  hoveredSentence={this.props.hoveredSentence}
-                  handleDoubleClick={this.handleDoubleClick.bind(this)}
-                  selectedBlock={this.state.selectedBlock}
-                  handleBlockClick={this.handleBlockClick.bind(this)}
-                  handleSourceChange={this.props.handleSourceChange}
-                  
-                  isEditable={this.props.isEditable}
-                  handleEditor={this.props.handleEditor}
-                  handleCheck = {this.handleCheck.bind(this)}
-                  selectedSourceText = {this.props.selectedSourceText}
-                  heightValue  = {this.props.heightValue}
-                  value = {this.state.value}
-                  handleBlur = {this.handleBlur.bind(this)}
-                  handleEditClick = {this.handleEditClick.bind(this)}
-                  selectedSentence = {this.state.selectedSentence}
-                  handleOnMouseLeave = {this.props.handleOnMouseLeave}
-                  handleRightClick = {this.handleRightClick.bind(this)}
-                  checkbox = {this.state.checkbox}
-                  handleTextChange = {this.props.handleTextChange}
-                  mergeButton = {this.props.mergeButton}
-                  updateContent = {this.props.updateContent}
-                />: <TokenizedView
-                key={index + "_" + sentence.block_id}
-                sentence={sentence}
-                yAxis={yAxis}
-                page_no={sourceSentence.page_no}
-                handleOnMouseEnter={this.props.handleOnMouseEnter}
-                hoveredSentence={this.props.hoveredSentence}
-                handleDoubleClick={this.handleDoubleClick.bind(this)}
-                selectedBlock={this.state.selectedBlock}
-                handleBlockClick={this.handleBlockClick.bind(this)}
-                handleSourceChange={this.props.handleSourceChange}
-                
-                isEditable={this.props.isEditable}
-                handleEditor={this.props.handleEditor}
-                handleCheck = {this.handleCheck.bind(this)}
-                selectedSourceText = {this.props.selectedSourceText}
-                heightValue  = {this.props.heightValue}
-                value = {this.state.value}
-                handleBlur = {this.handleBlur.bind(this)}
-                handleEditClick = {this.handleEditClick.bind(this)}
-                selectedSentence = {this.state.selectedSentence}
-                handleOnMouseLeave = {this.props.handleOnMouseLeave}
-                paperType={this.props.paperType}
-              />}
-              
+              <div onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)} onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)}>
+                {this.props.tokenized ?
+
+
+                  <BlockView
+                    key={index + "_" + sentence.block_id}
+                    sentence={sentence}
+                    yAxis={yAxis}
+                    page_no={sourceSentence.page_no}
+                    handleOnMouseEnter={this.props.handleOnMouseEnter}
+                    hoveredSentence={this.props.hoveredSentence}
+                    handleDoubleClick={this.handleDoubleClick.bind(this)}
+                    selectedBlock={this.state.selectedBlock}
+                    handleBlockClick={this.handleBlockClick.bind(this)}
+                    handleSourceChange={this.props.handleSourceChange}
+
+                    isEditable={this.props.isEditable}
+                    handleEditor={this.props.handleEditor}
+                    handleCheck={this.handleCheck.bind(this)}
+                    selectedSourceText={this.props.selectedSourceText}
+                    heightValue={this.props.heightValue}
+                    value={this.state.value}
+                    handleBlur={this.handleBlur.bind(this)}
+                    handleEditClick={this.handleEditClick.bind(this)}
+                    selectedSentence={this.state.selectedSentence}
+                    handleOnMouseLeave={this.props.handleOnMouseLeave}
+                    handleRightClick={this.handleRightClick.bind(this)}
+                    checkbox={this.state.checkbox}
+                    handleTextChange={this.props.handleTextChange}
+                    paperType={this.props.paperType}
+                    mergeButton={this.props.mergeButton}
+                    updateContent={this.props.updateContent}
+                  /> : <div ref={block_id + "_" + sourceSentence.page_no + "_" + this.props.paperType}><TokenizedView
+                    key={index + "_" + sentence.block_id}
+                    sentence={sentence}
+                    yAxis={yAxis}
+                    page_no={sourceSentence.page_no}
+                    handleOnMouseEnter={this.props.handleOnMouseEnter}
+                    hoveredSentence={this.props.hoveredSentence}
+                    handleDoubleClick={this.handleDoubleClick.bind(this)}
+                    selectedBlock={this.state.selectedBlock}
+                    handleBlockClick={this.handleBlockClick.bind(this)}
+                    handleSourceChange={this.props.handleSourceChange}
+                    scrollToId={this.props.scrollToId}
+                    isEditable={this.props.isEditable}
+                    handleEditor={this.props.handleEditor}
+                    handleCheck={this.handleCheck.bind(this)}
+                    selectedSourceText={this.props.selectedSourceText}
+                    heightValue={this.props.heightValue}
+                    value={this.state.value}
+                    handleBlur={this.handleBlur.bind(this)}
+                    handleEditClick={this.handleEditClick.bind(this)}
+                    selectedSentence={this.state.selectedSentence}
+                    handleOnMouseLeave={this.props.handleOnMouseLeave}
+                    paperType={this.props.paperType}
+                  /></div>}
+
               </div>
             );
           })}
@@ -352,7 +356,7 @@ class Preview extends React.Component {
     };
 
     return (
-      <div>
+      <div ref={(el) => (this.container = el)}>
         {
           !this.props.isPreview ?
             <Paper style={style} key={sourceSentence.page_no}

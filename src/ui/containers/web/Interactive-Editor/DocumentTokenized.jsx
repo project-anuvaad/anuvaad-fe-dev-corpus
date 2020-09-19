@@ -11,9 +11,10 @@ class Preview extends React.Component {
         }
     }
 
+
     handleMouseHover(id) {
         if (!this.props.selectedSentence) {
-            this.props.handleOnMouseEnter(id, this.props.parent)
+            this.props.handleOnMouseEnter(id, this.props.paperType, this.blockElem.offsetTop)
         }
     }
     handleBlur = () => {
@@ -27,10 +28,7 @@ class Preview extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.selectedSentence !== this.props.selectedSentence) {
-
             this.textInput.focus();
-
-
         }
     }
 
@@ -67,15 +65,20 @@ class Preview extends React.Component {
             backgroundColor: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? "#F4FDFF" : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? "#EAEAEA" : "",
             border: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? '1px solid #1C9AB7' : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? '1px dashed grey' : '',
         }
+        let spanId = null
+        if(this.props.hoveredSentence) {
+            spanId = this.props.hoveredSentence.split("_")[0] + "_" + this.props.hoveredSentence.split("_")[1]
+        }
         return (
-            <div id={sentence.block_id + "_" + this.props.page_no} style={styles} key={sentence.block_id}
+            <div id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType} style={styles} key={sentence.block_id}
+            ref={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
                 onBlur={event => this.props.handleBlur(event)}
                 onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
 
 
                 // onDoubleClick={event => { this.handleDoubleClick(event, sentence.block_id + "_" + this.props.page_no) }}
                 onMouseLeave={() => { this.props.value !== true && this.props.handleOnMouseLeave() }}
-                onMouseEnter={() => { this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no) }}
+                onMouseEnter={() => { this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType) }}
                 // contentEditable = {this.props.createBlockId === sentence.block_id + "_" + this.props.page_no ? true : false}
                 // onClick={() => {
                 //     if (sentence.block_id + "_" + this.props.page_no !== this.props.selectedBlock) {
@@ -88,8 +91,8 @@ class Preview extends React.Component {
                 // }}
                 // contentEditable={this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no ? true : false}
 
-                ref={textarea => {
-                    this.textInput = textarea;
+                ref={blockElem => {
+                    this.blockElem = blockElem;
                 }}
             >
                 {/* {sentence.children ?  sentence.children.map((textValue, tokenIndex) => {
@@ -124,13 +127,15 @@ class Preview extends React.Component {
                         } */}
                 {/* {console.log(this.props.hoveredSentence, this.props.sentence.block_id + "_" + this.props.page_no)} */}
                 {sentence.hasOwnProperty('tokenized_sentences') ? sentence.tokenized_sentences.map((text, tokenIndex) => {
-                    return <span><span id={text.sentence_id} key={text.sentence_id} style={{ borderRadius: '6px', background: (this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : '' }}
+                   
+                   
+                    return <span><span id={text.sentence_id} key={text.sentence_id} style={{ borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : '' }}
                     >
                         {this.props.paperType === "source" ? (text.src ? text.src : text.src_text) : (text.tgt ? text.tgt : text.tagged_tgt) }
                     </span><span> </span></span>
                 }) : <div
-
-                    style={{ backgroundColor: this.props.hoveredSentence === sentence.block_id + "_" + this.props.page_no }}>{sentence.text}</div>
+                        id={sentence.block_id + "_" + this.props.page_no}
+                    style={{ backgroundColor: spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no ? '#92a8d1' : "" }}>{sentence.text}</div>
 
                 }
             </div>
