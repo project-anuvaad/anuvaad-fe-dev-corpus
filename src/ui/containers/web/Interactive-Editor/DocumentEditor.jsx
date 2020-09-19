@@ -90,33 +90,33 @@ class PdfFileEditor extends React.Component {
       let sentenceObj = temp;
       console.log(temp)
       sentenceObj && sentenceObj.map(sentence => {
-        
-        sentence.text_blocks && sentence.text_blocks.map(sentenceChildren=>{
-            sentenceChildren.children ?
-            sentenceChildren.children.map(children=>{
-              
-              children.children ? children.children.map(value=>{
-                
-                    value.max_font = value.font_size;
-               
+
+        sentence.text_blocks && sentence.text_blocks.map(sentenceChildren => {
+          sentenceChildren.children ?
+            sentenceChildren.children.map(children => {
+
+              children.children ? children.children.map(value => {
+
+                value.max_font = value.font_size;
+
               })
-              :
-              
-               
-                  children.max_font  = children.font_size ;
-                
-                // children.font_size = children.font_size -1;
-                
-              
+                :
+
+
+                children.max_font = children.font_size;
+
+              // children.font_size = children.font_size -1;
+
+
             })
             :
-            
-              sentenceChildren.max_font  = sentenceChildren.font_size;
-              
-           
-          })
-        
-        
+
+            sentenceChildren.max_font = sentenceChildren.font_size;
+
+
+        })
+
+
       })
       temp = sentenceObj;
 
@@ -146,11 +146,11 @@ class PdfFileEditor extends React.Component {
   }
 
   handleOnMouseEnter(sentenceId, parent, pageNo) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent });
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent, scrollToId: sentenceId });
   }
 
   handleOnMouseLeave() {
-    this.setState({ hoveredSentence: "", selectedBlockId: '' });
+    this.setState({ hoveredSentence: "", selectedBlockId: '', scrollToId: null });
   }
 
   handleDialog(title, dialogMessage) {
@@ -742,74 +742,73 @@ class PdfFileEditor extends React.Component {
     this.setState({ scrollToTop: false });
   }
 
-  handleTextChange(event, id){
-    
+  handleTextChange(event, id) {
+
 
     let idValue = id.split("-")
     let newVal = event.currentTarget.innerText;
 
-      var sentenceObj = [...this.state.sentences];
-      if(event.target.scrollHeight > event.currentTarget.offsetHeight){
+    var sentenceObj = [...this.state.sentences];
+    if (event.target.scrollHeight > event.currentTarget.offsetHeight) {
       sentenceObj.map(sentence => {
-        if(idValue[1] == sentence.page_no){
-          sentence.text_blocks.map(sentenceChildren=>{
+        if (idValue[1] == sentence.page_no) {
+          sentence.text_blocks.map(sentenceChildren => {
             sentenceChildren.children &&
-            sentenceChildren.children.map(children=>{
-              children.children && children.children.map(value=>{
-                if(value.block_id == idValue[0]){
-                    value.font_size = value.font_size -1;
+              sentenceChildren.children.map(children => {
+                children.children && children.children.map(value => {
+                  if (value.block_id == idValue[0]) {
+                    value.font_size = value.font_size - 1;
+                  }
+                })
+                if (children.block_id == idValue[0]) {
+
+                  children.font_size = children.font_size - 1;
+
+                  // children.font_size = children.font_size -1;
+                  console.log("font---", children.font_size)
                 }
               })
-              if(children.block_id == idValue[0]){
-               
-                  children.font_size = children.font_size -1;
-                
-                // children.font_size = children.font_size -1;
-                console.log("font---",children.font_size)
-              }
-            })
-            if(sentenceChildren.block_id == idValue[0]){
-              sentenceChildren.font_size = sentenceChildren.font_size -1;
-              
+            if (sentenceChildren.block_id == idValue[0]) {
+              sentenceChildren.font_size = sentenceChildren.font_size - 1;
+
             }
           })
         }
-        
+
       })
-      
-      this.setState({sentences:sentenceObj})
+
+      this.setState({ sentences: sentenceObj })
     }
-    else{
+    else {
       sentenceObj.map(sentence => {
-        if(idValue[1] == sentence.page_no){
-          sentence.text_blocks.map(sentenceChildren=>{
+        if (idValue[1] == sentence.page_no) {
+          sentence.text_blocks.map(sentenceChildren => {
             sentenceChildren.children &&
-            sentenceChildren.children.map(children=>{
-              children.children && children.children.map(value=>{
-                
-                if(value.block_id == idValue[0] &&value.text.length> event.currentTarget.innerText.length && value.max_font >value.font_size ){
-                    value.font_size = value.font_size +1;
+              sentenceChildren.children.map(children => {
+                children.children && children.children.map(value => {
+
+                  if (value.block_id == idValue[0] && value.text.length > event.currentTarget.innerText.length && value.max_font > value.font_size) {
+                    value.font_size = value.font_size + 1;
+                  }
+                })
+                if (children.block_id == idValue[0] && children.text.length > event.currentTarget.innerText.length && children.max_font > children.font_size) {
+
+                  children.font_size = children.font_size + 1;
+
+                  // children.font_size = children.font_size -1;
+
                 }
               })
-              if(children.block_id == idValue[0]  &&children.text.length > event.currentTarget.innerText.length &&  children.max_font >children.font_size){
-               
-                  children.font_size = children.font_size +1;
-                
-                // children.font_size = children.font_size -1;
-                
-              }
-            })
-            if(sentenceChildren.block_id == idValue[0] &&sentenceChildren.text.length > event.currentTarget.innerText.length && sentenceChildren.max_font >sentenceChildren.font_size ){
-              sentenceChildren.font_size = sentenceChildren.font_size +1;
-              
+            if (sentenceChildren.block_id == idValue[0] && sentenceChildren.text.length > event.currentTarget.innerText.length && sentenceChildren.max_font > sentenceChildren.font_size) {
+              sentenceChildren.font_size = sentenceChildren.font_size + 1;
+
             }
           })
         }
-        this.setState({sentences:sentenceObj, str : newVal})
+        this.setState({ sentences: sentenceObj, str: newVal })
       })
-      // console.log("------",event.target.scrollHeight, id, event.currentTarget.offsetHeight)
     }
-    
+
 
   }
 
@@ -929,6 +928,7 @@ class PdfFileEditor extends React.Component {
                           <SourceView
                             paperType="source"
                             isPreview={true}
+                            parent={this.state.parent}
                             key={sentence.page_no + "_" + index}
                             pageNo={sentence.page_no}
                             sourceSentence={sentence}
@@ -961,7 +961,7 @@ class PdfFileEditor extends React.Component {
                             handleSentenceOperation={this.handleSentenceOperation.bind(this)}
                             tokenized={this.state.tokenized}
                             handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
-                            handleTextChange = {this.handleTextChange.bind(this)}
+                            handleTextChange={this.handleTextChange.bind(this)}
                           />
                         </div>
                       );
@@ -1028,6 +1028,7 @@ class PdfFileEditor extends React.Component {
                               <SourceView
                                 isPreview={true}
                                 paperType="target"
+                                parent={this.state.parent}
                                 key={sentence.page_no + "_" + index}
                                 pageNo={sentence.page_no}
                                 sourceSentence={sentence}

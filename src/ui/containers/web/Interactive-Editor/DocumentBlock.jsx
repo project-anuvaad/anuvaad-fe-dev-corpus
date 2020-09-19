@@ -42,8 +42,6 @@ class Preview extends React.Component {
   };
 
   handleChangeEvent = (event, id, h) => {
-    console.log("---keyyy---",event.target)
-      console.log("ypppp",event.target.scrollHeight,id, h )
       this.props.handleTextChange(event, id)
     // this.props.handleSourceChange(this.props.sentence.block_id + "_" + this.props.page_no, event, this.props.sentence);
   };
@@ -81,9 +79,6 @@ class Preview extends React.Component {
         this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value
           ? "1px solid #1C9AB7"
             :this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock && this.props.value !== true ? "1px dashed grey":""
-                              
-           
-          
     };
     return (
       <div>
@@ -97,7 +92,7 @@ class Preview extends React.Component {
           color="primary"
         />}
           <div
-            id={sentence.block_id + "_" + this.props.page_no}
+            id={ sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
             style={styles}
             key={sentence.block_id}
             onBlur={event => this.props.handleBlur(event)}
@@ -110,7 +105,7 @@ class Preview extends React.Component {
               this.props.value !== true && this.props.handleOnMouseLeave();
             }}
             onMouseEnter={() => {
-              this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no);
+              this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType);
             }}
             // contentEditable={ this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no ? true : false}
             contentEditable={this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no ?  true: false}
@@ -134,7 +129,7 @@ class Preview extends React.Component {
                       onInput={event => this.handleChangeEvent(event, value.block_id + "-" + this.props.page_no, value.text_height)}
                       onContextMenu={event => !this.props.checkbox && this.props.handleRightClick(event)}
                       onBlur={event => this.props.handleBlur(event)}
-                        id={value.block_id + "_" + this.props.page_no}
+                        id={value.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
                         ref={value.block_id + "_" + this.props.page_no}
                         onDoubleClick={event => {
                           this.handleDoubleClick(event, value.block_id + "_" + this.props.page_no,2);
@@ -143,7 +138,7 @@ class Preview extends React.Component {
                             this.props.value !== true && this.props.handleOnMouseLeave();
                           }}
                           onMouseEnter={() => {
-                            this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no);
+                            this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType);
                           }}
                         contentEditable={this.props.selectedSentence === value.block_id + "_" + this.props.page_no ? true : false}
                         style={{
@@ -179,7 +174,7 @@ class Preview extends React.Component {
                   onInput={event => this.handleChangeEvent(event, textValue.block_id + "-" + this.props.page_no, textValue.text_height)}
                   onContextMenu={event => !this.props.checkbox && this.props.handleRightClick(event)}
                   onBlur={event => this.props.handleBlur(event)}
-                    id={textValue.block_id + "_" + this.props.page_no}
+                    id={textValue.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
                     ref={textValue.block_id + "_" + this.props.page_no}
                     contentEditable={
                       !textValue.children && this.props.selectedSentence === textValue.block_id + "_" + this.props.page_no ? true : false
@@ -191,7 +186,7 @@ class Preview extends React.Component {
                         this.props.value !== true && this.props.handleOnMouseLeave();
                       }}
                       onMouseEnter={() => {
-                        this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no);
+                        this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType);
                       }}
                     style={{
                       top: textValue.text_top + "px",
