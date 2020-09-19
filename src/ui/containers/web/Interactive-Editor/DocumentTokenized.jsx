@@ -64,6 +64,10 @@ class Preview extends React.Component {
             backgroundColor: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? "#F4FDFF" : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? "#EAEAEA" : "",
             border: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? '1px solid #1C9AB7' : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? '1px dashed grey' : '',
         }
+        let spanId = null
+        if(this.props.hoveredSentence) {
+            spanId = this.props.hoveredSentence.split("_")[0] + "_" + this.props.hoveredSentence.split("_")[1]
+        }
         return (
             <div id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType} style={styles} key={sentence.block_id}
                 onBlur={event => this.props.handleBlur(event)}
@@ -121,17 +125,15 @@ class Preview extends React.Component {
                         } */}
                 {/* {console.log(this.props.hoveredSentence, this.props.sentence.block_id + "_" + this.props.page_no)} */}
                 {sentence.hasOwnProperty('tokenized_sentences') ? sentence.tokenized_sentences.map((text, tokenIndex) => {
-                    let spanId = null
-                    if(this.props.hoveredSentence) {
-                        spanId = this.props.hoveredSentence.split("_")[0] + "_" + this.props.hoveredSentence.split("_")[1]
-                    }
+                   
+                   
                     return <span><span id={text.sentence_id} key={text.sentence_id} style={{ borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : '' }}
                     >
                         {this.props.paperType === "source" ? (text.src ? text.src : text.src_text) : (text.tgt ? text.tgt : text.tagged_tgt) }
                     </span><span> </span></span>
                 }) : <div
                         id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
-                    style={{ backgroundColor: this.props.hoveredSentence === sentence.block_id + "_" + this.props.page_no }}>{sentence.text}</div>
+                    style={{ backgroundColor: spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no ? '#92a8d1' : "" }}>{sentence.text}</div>
 
                 }
             </div>
