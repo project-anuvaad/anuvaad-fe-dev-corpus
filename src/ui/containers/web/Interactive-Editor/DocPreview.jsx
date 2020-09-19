@@ -120,8 +120,8 @@ class PdfPreview extends React.Component {
               )}
           </Grid>
         </Toolbar>
-        <div style={{ marginLeft: !this.props.zoom && '10%', marginBottom: "0px", maxHeight: window.innerHeight - 240, overflowY: "auto" }} id="pdfDocument">
-          <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess} style={{ align: "center" }}>
+        <div style={{ maxHeight: window.innerHeight - 240, overflowY: "auto", display: "flex", flexDirection: "row", justifyContent: "center" }} id="pdfDocument">
+          <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess} style={{ align: "center",  display: "flex", flexDirection: "row", justifyContent: "center" }}>
             <Page scale={!this.props.zoom ? this.state.scale : this.state.pageScaleWidth} pageNumber={Number(pageNo) } onLoadSuccess={this.onPageLoad} />
           </Document>
         </div>

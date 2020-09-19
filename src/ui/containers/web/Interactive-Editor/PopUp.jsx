@@ -49,7 +49,7 @@ class MenuClass extends React.Component {
             {" "}
             {this.props.sentenceOp === "merge" ? "Merge Sentence" : "Split sentence"}
           </Button>
-            <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Create", "Do you want to add the sentence ?")}>
+            {/* <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Create", "Do you want to add the sentence ?")}>
               {" "}
               Create Block
             </Button>
@@ -63,7 +63,7 @@ class MenuClass extends React.Component {
          <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Delete", "Do you want to delete the sentence ?")}>
            {" "}
            Delete Block
-         </Button>
+         </Button> */}
          <br />
        </div>
         )}
