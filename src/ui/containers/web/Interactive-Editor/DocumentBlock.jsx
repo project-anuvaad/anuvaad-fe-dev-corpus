@@ -14,7 +14,7 @@ class Preview extends React.Component {
 
   handleMouseHover(id) {
     if (!this.props.selectedSentence) {
-      this.props.handleOnMouseEnter(id);
+      this.props.handleOnMouseEnter(id, this.props.parent);
     }
   }
 
@@ -84,7 +84,6 @@ class Preview extends React.Component {
            
           
     };
-    console.log("-----",this.props.hoveredSentence, this.props.value)
     return (
       <div>
           {this.props.checkbox &&

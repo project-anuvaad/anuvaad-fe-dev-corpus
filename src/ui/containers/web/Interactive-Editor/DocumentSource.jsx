@@ -26,33 +26,44 @@ class Preview extends React.Component {
     super(props);
     this.state = {
       openEl: false,
-      value : false
+      value: false
     };
   }
 
   componentDidUpdate(prevProps) {
+    // if (prevProps.scrollToId !== this.props.scrollToId) {
+    //   let sid = this.props.scrollToId.split("_")[0];
+    //   if (this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+    //     this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
+    //       behavior: "smooth",
+    //       block: "center"
+    //     });
+    //   } else if (this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+    //     this.refs[sid + "_" + this.props.paperType].scrollIntoView({
+    //       behavior: "smooth",
+    //       block: "center"
+    //     });
+    //   }
+    // } else 
     if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
       if (this.refs[this.props.scrollToPage]) {
         this.refs[this.props.scrollToPage].scrollIntoView({
           behavior: "smooth"
-
         })
       }
-      
+
     }
     if (this.props.createBlockId && prevProps.createBlockId !== this.props.createBlockId) {
-      console.log("CDU-----", this.props.createBlockId)
-      this.setState({selectedSentence : this.props.createBlockId, value: true})
+      this.setState({ selectedSentence: this.props.createBlockId, value: true })
     }
-    
+
   }
-  handleRightClick(event){
+  handleRightClick(event) {
     event.preventDefault();
     this.popUp("merge", event);
   }
-  handleCheckbox(){
-    console.log()
-    this.setState({checkbox:true, openDialog: false})
+  handleCheckbox() {
+    this.setState({ checkbox: true, openDialog: false })
   }
   handleDialog() {
 
@@ -67,9 +78,9 @@ class Preview extends React.Component {
       this.props.handleCreateBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, this.props.sourceSentence)
       this.setState({ openDialog: false });
     }
-    else if(this.state.title === "Split sentence" ||this.state.title === "Merge sentence"){
-      this.props.handleSentenceOperation(window.getSelection().anchorNode.parentNode.id,window.getSelection().focusNode.parentNode.id, this.props.sourceSentence, this.state.title)
-      
+    else if (this.state.title === "Split sentence" || this.state.title === "Merge sentence") {
+      this.props.handleSentenceOperation(window.getSelection().anchorNode.parentNode.id, window.getSelection().focusNode.parentNode.id, this.props.sourceSentence, this.state.title)
+
     }
     this.setState({ openDialog: false });
   }
@@ -88,15 +99,15 @@ class Preview extends React.Component {
     let sentenceStart = window.getSelection().anchorNode.parentNode.id.split('_');
     let sentenceEnd = window.getSelection().focusNode.parentNode.id.split('_');
     let senOp;
-    
-    if(sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]){
-      if(sentenceStart[2] === sentenceEnd[2]){
+
+    if (sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]) {
+      if (sentenceStart[2] === sentenceEnd[2]) {
         senOp = "split";
-      }else{
+      } else {
         senOp = "merge";
       }
     }
-     window.getSelection().focusNode.parentNode.id;
+    window.getSelection().focusNode.parentNode.id;
     if (!this.state.selectedSentence && !this.props.tokenized) {
       var text = "";
       let selection = {};
@@ -124,7 +135,7 @@ class Preview extends React.Component {
         startNode = window.getSelection().anchorNode.parentNode.parentNode.parentElement.id;
         endNode = window.getSelection().focusNode.parentNode.parentNode.parentElement.id;
 
-        
+
         selection.startNode = startNode;
         selection.endNode = endNode;
         if (startNode && endNode && window.getSelection().anchorNode.parentNode.parentNode && startNode === endNode) {
@@ -149,10 +160,10 @@ class Preview extends React.Component {
   popUp = (operation_type, event, opType) => {
     this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2, selectedBlock: null, sentenceOp: opType });
   };
-  handleBlur = ()=>{
-    this.setState({ value : false, selectedSentence : ''})
+  handleBlur = () => {
+    this.setState({ value: false, selectedSentence: '' })
     this.props.handleOnMouseLeave()
-}
+  }
   handleClose = () => {
     this.setState({
       openDialog: false,
@@ -168,20 +179,20 @@ class Preview extends React.Component {
   };
 
   handleEditClick(selectedBlock, event) {
-    
-    this.props.hoveredSentence && this.setState({ hoveredSentence: null, selectedSentence: selectedBlock, value : true })
-    
+
+    this.props.hoveredSentence && this.setState({ hoveredSentence: null, selectedSentence: selectedBlock, value: true })
+
   }
 
   handleDoubleClick(selectedBlock, event, sentence) {
-    
+
     this.props.handleSource(sentence)
-    this.setState({  selectedBlock: selectedBlock, openEl: false, value : true })
-    
+    this.setState({ selectedBlock: selectedBlock, openEl: false, value: true })
+
   }
 
-  handleCheck(block, evt, val){
-   
+  handleCheck(block, evt, val) {
+
     this.props.handleCheck(block, evt, val)
     this.setState({ selectedBlock: null })
   }
@@ -207,7 +218,7 @@ class Preview extends React.Component {
               pageNo={sourceSentence.page_no}
               hoveredTableId={this.props.hoveredTableId}
               popOver={this.props.popOver}
-              currentPage = {this.props.sourceSentence}
+              currentPage={this.props.sourceSentence}
               handleTableHover={this.props.handleTableHover}
               handlePopUp={this.props.handlePopUp}
               handleDeleteTable={this.props.handleDeleteTable}
@@ -218,59 +229,61 @@ class Preview extends React.Component {
         {sourceSentence.text_blocks &&
           sourceSentence.text_blocks.map((sentence, index) => {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
-            
+
             return (
-              <div onMouseUp={ !this.props.tokenized&& this.getSelectionText.bind(this)} onKeyUp={ !this.props.tokenized && this.getSelectionText.bind(this)} ref={sourceSentence.page_no}>
-               {this.props.tokenized ? 
-               
-               
-               <BlockView
-                  key={index + "_" + sentence.block_id}
-                  sentence={sentence}
-                  yAxis={yAxis}
-                  page_no={sourceSentence.page_no}
-                  handleOnMouseEnter={this.props.handleOnMouseEnter}
-                  hoveredSentence={this.props.hoveredSentence}
-                  handleDoubleClick={this.handleDoubleClick.bind(this)}
-                  selectedBlock={this.state.selectedBlock}
-                  handleBlockClick={this.handleBlockClick.bind(this)}
-                  handleSourceChange={this.props.handleSourceChange}
-                  
-                  isEditable={this.props.isEditable}
-                  handleEditor={this.props.handleEditor}
-                  handleCheck = {this.handleCheck.bind(this)}
-                  selectedSourceText = {this.props.selectedSourceText}
-                  heightValue  = {this.props.heightValue}
-                  value = {this.state.value}
-                  handleBlur = {this.handleBlur.bind(this)}
-                  handleEditClick = {this.handleEditClick.bind(this)}
-                  selectedSentence = {this.state.selectedSentence}
-                  handleOnMouseLeave = {this.props.handleOnMouseLeave}
-                  handleRightClick = {this.handleRightClick.bind(this)}
-                  checkbox = {this.state.checkbox}
-                />: <TokenizedView
-                key={index + "_" + sentence.block_id}
-                sentence={sentence}
-                yAxis={yAxis}
-                page_no={sourceSentence.page_no}
-                handleOnMouseEnter={this.props.handleOnMouseEnter}
-                hoveredSentence={this.props.hoveredSentence}
-                handleDoubleClick={this.handleDoubleClick.bind(this)}
-                selectedBlock={this.state.selectedBlock}
-                handleBlockClick={this.handleBlockClick.bind(this)}
-                handleSourceChange={this.props.handleSourceChange}
-                
-                isEditable={this.props.isEditable}
-                handleEditor={this.props.handleEditor}
-                handleCheck = {this.handleCheck.bind(this)}
-                selectedSourceText = {this.props.selectedSourceText}
-                heightValue  = {this.props.heightValue}
-                value = {this.state.value}
-                handleBlur = {this.handleBlur.bind(this)}
-                handleEditClick = {this.handleEditClick.bind(this)}
-                selectedSentence = {this.state.selectedSentence}
-                handleOnMouseLeave = {this.props.handleOnMouseLeave}
-              />}
+              <div onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)} onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)} ref={sourceSentence.page_no}>
+                {this.props.tokenized ?
+
+
+                  <BlockView
+                    key={index + "_" + sentence.block_id}
+                    sentence={sentence}
+                    yAxis={yAxis}
+                    page_no={sourceSentence.page_no}
+                    handleOnMouseEnter={this.props.handleOnMouseEnter}
+                    hoveredSentence={this.props.hoveredSentence}
+                    handleDoubleClick={this.handleDoubleClick.bind(this)}
+                    selectedBlock={this.state.selectedBlock}
+                    handleBlockClick={this.handleBlockClick.bind(this)}
+                    handleSourceChange={this.props.handleSourceChange}
+
+                    isEditable={this.props.isEditable}
+                    handleEditor={this.props.handleEditor}
+                    handleCheck={this.handleCheck.bind(this)}
+                    selectedSourceText={this.props.selectedSourceText}
+                    heightValue={this.props.heightValue}
+                    value={this.state.value}
+                    handleBlur={this.handleBlur.bind(this)}
+                    handleEditClick={this.handleEditClick.bind(this)}
+                    selectedSentence={this.state.selectedSentence}
+                    handleOnMouseLeave={this.props.handleOnMouseLeave}
+                    handleRightClick={this.handleRightClick.bind(this)}
+                    checkbox={this.state.checkbox}
+                    paperType={this.props.paperType}
+                  /> : <TokenizedView
+                    key={index + "_" + sentence.block_id}
+                    sentence={sentence}
+                    yAxis={yAxis}
+                    page_no={sourceSentence.page_no}
+                    handleOnMouseEnter={this.props.handleOnMouseEnter}
+                    hoveredSentence={this.props.hoveredSentence}
+                    handleDoubleClick={this.handleDoubleClick.bind(this)}
+                    selectedBlock={this.state.selectedBlock}
+                    handleBlockClick={this.handleBlockClick.bind(this)}
+                    handleSourceChange={this.props.handleSourceChange}
+
+                    isEditable={this.props.isEditable}
+                    handleEditor={this.props.handleEditor}
+                    handleCheck={this.handleCheck.bind(this)}
+                    selectedSourceText={this.props.selectedSourceText}
+                    heightValue={this.props.heightValue}
+                    value={this.state.value}
+                    handleBlur={this.handleBlur.bind(this)}
+                    handleEditClick={this.handleEditClick.bind(this)}
+                    selectedSentence={this.state.selectedSentence}
+                    handleOnMouseLeave={this.props.handleOnMouseLeave}
+                    paperType={this.props.paperType}
+                  />}
               </div>
             );
           })}
@@ -284,15 +297,15 @@ class Preview extends React.Component {
             title={this.state.title}
           />
         )} */}
-{this.state.openDialog && (
-<Dialog
+        {this.state.openDialog && (
+          <Dialog
             message={"Please select checkbox to merge blocks"}
             handleSubmit={this.handleCheckbox.bind(this)}
             handleClose={this.handleClose.bind(this)}
             open
             title={this.state.title}
           />
-          )}
+        )}
 
 
 
@@ -309,7 +322,7 @@ class Preview extends React.Component {
             handleDeleteBlock={this.props.handleDeleteBlock}
             pageData={this.props.sourceSentence}
             handleCheck={this.handleCheck.bind(this)}
-            sentenceOp = {this.state.sentenceOp}
+            sentenceOp={this.state.sentenceOp}
           />
         )}
 
@@ -335,7 +348,7 @@ class Preview extends React.Component {
       marginLeft: "auto",
       marginRight: "auto",
       borderTop: sourceSentence.page_no !== 1 ? "1px black solid" : "",
-      borderBottom: this.props.pageCount  !== sourceSentence ? "1px black solid" : ""
+      borderBottom: this.props.pageCount !== sourceSentence ? "1px black solid" : ""
       // backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
       // backgroundRepeat: "no-repeat",
       // backgroundSize: this.state.backgroundSize + "px"
@@ -345,7 +358,7 @@ class Preview extends React.Component {
       <div>
         {
           !this.props.isPreview ?
-            <Paper style={style} key = {sourceSentence.page_no}
+            <Paper style={style} key={sourceSentence.page_no}
               onMouseEnter={() => { this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
             >{this.getContent()}</Paper> :
             <div style={style}
