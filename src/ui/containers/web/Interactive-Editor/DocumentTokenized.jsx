@@ -11,9 +11,10 @@ class Preview extends React.Component {
         }
     }
 
+
     handleMouseHover(id) {
         if (!this.props.selectedSentence) {
-            this.props.handleOnMouseEnter(id, this.props.paperType)
+            this.props.handleOnMouseEnter(id, this.props.paperType, this.blockElem.offsetTop)
         }
     }
     handleBlur = () => {
@@ -70,6 +71,7 @@ class Preview extends React.Component {
         }
         return (
             <div id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType} style={styles} key={sentence.block_id}
+            ref={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
                 onBlur={event => this.props.handleBlur(event)}
                 onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
 
@@ -89,8 +91,8 @@ class Preview extends React.Component {
                 // }}
                 // contentEditable={this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no ? true : false}
 
-                ref={textarea => {
-                    this.textInput = textarea;
+                ref={blockElem => {
+                    this.blockElem = blockElem;
                 }}
             >
                 {/* {sentence.children ?  sentence.children.map((textValue, tokenIndex) => {
