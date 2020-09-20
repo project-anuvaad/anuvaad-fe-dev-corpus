@@ -215,7 +215,7 @@ class Preview extends React.Component {
   }
 
   fecthNextSuggestion() {
-    const apiObj = new IntractiveApi(this.state.suggestionSrc, this.state.suggestionText, this.state.suggestionId, true, true);
+    const apiObj = new IntractiveApi(this.state.suggestionSrc, this.state.suggestionText, { model_id: this.props.modelId }, true, true);
     this.props.APITransport(apiObj);
     this.setState({ callApi: false, showLoader: true })
   }
@@ -248,12 +248,12 @@ class Preview extends React.Component {
     this.setState({
       anchorEl: event.currentTarget,
       // caretPos: caretPos,
-      targetVal: tokenText.tgt,
+      targetVal: targetVal,
       // targetVal: editableDiv.textContent.substring(0, caretPos),
       // tokenIndex,
       showLoader: true,
       // senIndex,
-      // suggestionSrc: tokenText.src,
+      suggestionSrc: tokenText.src,
       // suggestionId: this.props.modelDetails
     })
     this.props.handleMenuPosition(topValue, leftValue)
@@ -277,13 +277,16 @@ class Preview extends React.Component {
     })
   }
 
-  handleOnDoubleClickTarget(e, id, pageNo, ref) {
+  handleOnDoubleClickTarget(e, id, pageNo, ref, sId, blockId) {
     this.props.handleEditor(id, this.props.paperType)
     this.setState({
       open: false,
       showLoader: false,
       editable: true,
-      contentEditableId: id
+      contentEditableId: id,
+      sId: sId,
+      workingPage: pageNo,
+      blockId: blockId
     })
     // setTimeout(() => { this.refs[ref].focus() }, 100)
   }
@@ -310,31 +313,38 @@ class Preview extends React.Component {
       openContextMenu: false
     })
 
+    let sentences = this.props.sourceSentence
+
     var self = this
     setTimeout(() => {
-      var sentences = Object.assign([], this.state.sentences ? this.state.sentences : this.props.sentences)
+      // var sentences = Object.assign([], this.state.sentences ? this.state.sentences : this.props.sentences)
+      let data = this.state.targetVal + selectedText
+      let block
+      let textBlocks = this.props.sourceSentence && this.props.sourceSentence.textBlocks
+
+      this.props.handleAutoCompleteText(this.state.contentEditableId, this.state.sId, textBlocks, this.state.workingPage, this.state.blockId, data)
       // sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText[index].substring(this.state.caretPos)
-      sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + selectedText
+    //   sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + selectedText
       self.setState({
         sentences: sentences,
         selectedIndex: 0,
-        suggestionText: this.state.targetVal + selectedText,
+        suggestionText: data,
 
         callApi: true,
-        targetVal: this.state.targetVal + selectedText,
+        targetVal: data,
         // caretPos: this.state.caretPos + selectedText.length
       })
-      document.activeElement.blur()
+      // document.activeElement.blur()
     }, 50)
 
-    setTimeout(() => {
-      this.setCaretPosition(selectedText)
+    // setTimeout(() => {
+    //   this.setCaretPosition(selectedText)
 
-    }, 100)
+    // }, 100)
 
     setTimeout(() => {
       this.setState({ showLoader: true })
-      this.fetchCursorPosition()
+      // this.fetchCursorPosition()
     }, 250)
   }
 

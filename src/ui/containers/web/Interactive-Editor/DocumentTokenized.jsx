@@ -27,8 +27,8 @@ class Preview extends React.Component {
         this.setState({ toc: false, value: false })
     }
 
-    handleDoubleClick (event, id, pageNo, ref) {
-        this.props.handleOnDoubleClickTarget(event, id, pageNo, ref)
+    handleDoubleClick (event, id, pageNo, ref, sId, blockId) {
+        this.props.handleOnDoubleClickTarget(event, id, pageNo, ref, sId, blockId)
         setTimeout(() => { this.refs[ref].focus() }, 100)
     
     }
@@ -155,7 +155,8 @@ class Preview extends React.Component {
 
             this.setState({
                 anchorEl: event.currentTarget,
-                showLoader: true
+                showLoader: true,
+                caretPos: caretPos
             })
             this.props.handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue)
             // this.props.fecthNextSuggestion()
@@ -271,7 +272,7 @@ class Preview extends React.Component {
                                         }}
                                         onDoubleClick={event => {
                                             this.setState({ contentEditableId: text.sentence_id + "_" + this.props.page_no, editable: true }),
-                                                this.handleDoubleClick(event, text.sentence_id + "_" + this.props.page_no, this.props.page_no, text.sentence_id + "_" + this.props.page_no)
+                                                this.handleDoubleClick(event, text.sentence_id + "_" + this.props.page_no, this.props.page_no, text.sentence_id + "_" + this.props.page_no, tokenIndex, sentence.block_id)
                                         }}
                                     >
                                         {text.tgt ? text.tgt : text.tagged_tgt}

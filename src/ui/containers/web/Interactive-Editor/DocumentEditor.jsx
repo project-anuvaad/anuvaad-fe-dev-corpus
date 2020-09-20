@@ -836,6 +836,32 @@ class PdfFileEditor extends React.Component {
 
   }
 
+  handleAutoCompleteText(id, sentennceIndex, sentences, pageNo, blockId, textData) {
+    let data = this.state.sentences
+    let blocks
+
+    data && Array.isArray(data) && data.length > 0 && data.map((sentence, i) => {
+      let textBlocks
+      if(pageNo === sentence.page_no) {
+        textBlocks = sentence.text_blocks
+        if(textBlocks && Array.isArray(textBlocks) && textBlocks.length>0) {
+          textBlocks.map((block, blockIndex) => {
+            if(blockId === block.block_id) {
+              blocks = block
+
+              blocks.tokenized_sentences && Array.isArray(blocks.tokenized_sentences) && blocks.tokenized_sentences.length > 0 &&  blocks.tokenized_sentences.map((token, tId) => {
+                if(sentennceIndex === tId) {
+                  token.tgt = textData
+                  token.tagged_tgt = textData
+                }
+              })
+            }
+          })
+        }
+      }
+    })
+  }
+
   render() {
     let leftPaddingValue = 0;
     let rightPaddingValue = 0;
@@ -1134,6 +1160,7 @@ class PdfFileEditor extends React.Component {
                                       menuTopValue={this.state.menuTopValue}
                                       menuLeftValue={this.state.menuLeftValue}
                                       handleMenuPosition={this.handleMenuPosition.bind(this)}
+                                      handleAutoCompleteText={this.handleAutoCompleteText.bind(this)}
                                     />
                                   </div>
                                 );
