@@ -104,7 +104,6 @@ class Preview extends React.Component {
 
 
     handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex) {
-        console.log('**********************************')
         var selObj = window.getSelection();
         var range = selObj.getRangeAt(0)
         var boundary = range.getBoundingClientRect();
@@ -128,8 +127,6 @@ class Preview extends React.Component {
 
         if (((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed === 'Shift')) {
             let editableDiv = this.refs[refId]
-            console.log(editableDiv)
-            debugger
             var caretPos = 0,
                 sel, range;
             if (window.getSelection) {
@@ -151,12 +148,12 @@ class Preview extends React.Component {
                     caretPos = tempRange.text.length;
                 }
             }
-            let targetVal = this.handleCalc(editableDiv.textContent.substring(0, 5), tokenText)
+            let targetVal = this.handleCalc(editableDiv.textContent.substring(0, caretPos), tokenText)
+
             this.setState({
                 anchorEl: event.currentTarget,
                 showLoader: true
             })
-            console.log("topValue", topValue)
             this.props.handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue)
             // this.props.fecthNextSuggestion()
 

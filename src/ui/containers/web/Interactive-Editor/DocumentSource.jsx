@@ -68,6 +68,8 @@ class Preview extends React.Component {
     if (this.state.callApi) {
       this.fecthNextSuggestion()
     }
+
+  console.log(this.state.targetVal,'===============================================')    
   }
   handleRightClick(event) {
     event.preventDefault();
@@ -221,7 +223,6 @@ class Preview extends React.Component {
   }
 
   handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue) {
-    // console.log('**********************************')
     // var selObj = window.getSelection();
     // var range = selObj.getRangeAt(0)
     // var boundary = range.getBoundingClientRect();
@@ -508,7 +509,7 @@ class Preview extends React.Component {
               onMouseEnter={() => { this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
             >{this.getContent()}</div>
         }
-        {this.state.openContextMenu && this.props.paperType === "target" && this.state.autoCompleteText &&
+        {this.state.openContextMenu && this.props.paperType === "target" && this.state.autoCompleteText && this.state.targetVal &&
           <Popover1
             isOpen={this.state.openContextMenu}
             topValue={this.props.menuTopValue}

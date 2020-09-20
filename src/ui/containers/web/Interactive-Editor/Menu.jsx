@@ -26,10 +26,8 @@ export default class Popovers extends React.Component {
     }
 
     render() {
-        const { id, isOpen, topValue, leftValue, options, caretPos, targetVal } = this.props;
+        const { id, isOpen, topValue, leftValue, options, targetVal } = this.props;
         let dataArr = []
-        console.log(topValue)
-        console.log(leftValue)
         this.props.options && this.props.options.length > 0 && this.props.options.map((option, i) => {
             if (option && option.length > 0) {
                 let data = option.substring(targetVal.length)
