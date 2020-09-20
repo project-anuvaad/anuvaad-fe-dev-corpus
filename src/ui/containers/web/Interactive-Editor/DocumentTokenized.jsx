@@ -27,9 +27,10 @@ class Preview extends React.Component {
         this.setState({ toc: false, value: false })
     }
 
-    handleDoubleClick = (eve, val) => {
-        this.props.handleEditClick(val)
-
+    handleDoubleClick (event, id, pageNo, ref) {
+        this.props.handleOnDoubleClickTarget(event, id, pageNo, ref)
+        setTimeout(() => { this.refs[ref].focus() }, 100)
+    
     }
 
     componentDidUpdate(prevProps) {
@@ -48,12 +49,14 @@ class Preview extends React.Component {
     }
 
     handleOnClickTarget(e, id, pageNo, ref) {
-        this.setState({
-            open: false,
-            showLoader: false,
-            topValue: e.clientY + 15,
-            leftValue: e.clientX + 5,
-        })
+        // this.setState({
+        //     open: false,
+        //     showLoader: false,
+        //     topValue: e.clientY + 15,
+        //     leftValue: e.clientX + 5,
+        // })
+
+
 
         // this.refs[ref].focus()
     }
@@ -268,7 +271,7 @@ class Preview extends React.Component {
                                         }}
                                         onDoubleClick={event => {
                                             this.setState({ contentEditableId: text.sentence_id + "_" + this.props.page_no, editable: true }),
-                                                this.props.handleOnDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, this.props.page_no, text.sentence_id + "_" + this.props.page_no + "_" + this.props.paperType)
+                                                this.handleDoubleClick(event, text.sentence_id + "_" + this.props.page_no, this.props.page_no, text.sentence_id + "_" + this.props.page_no)
                                         }}
                                     >
                                         {text.tgt ? text.tgt : text.tagged_tgt}

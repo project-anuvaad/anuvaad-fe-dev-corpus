@@ -57,7 +57,6 @@ class Preview extends React.Component {
     }
 
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
-      console.log(this.props.intractiveTrans[0].tgt)
       this.setState({
         showLoader: false,
         autoCompleteText: this.props.intractiveTrans[0].tgt,
@@ -69,7 +68,6 @@ class Preview extends React.Component {
       this.fecthNextSuggestion()
     }
 
-  console.log(this.state.targetVal,'===============================================')    
   }
   handleRightClick(event) {
     event.preventDefault();
