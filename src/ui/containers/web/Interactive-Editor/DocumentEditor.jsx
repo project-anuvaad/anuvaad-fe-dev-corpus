@@ -136,8 +136,8 @@ class PdfFileEditor extends React.Component {
     this.setState({ buttonDisable: false });
   }
 
-  handleOnMouseEnter(sentenceId, parent, pageNo) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent, scrollToId: sentenceId });
+  handleOnMouseEnter(sentenceId, parent,yOffset, pageNo) {
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent, scrollToId: sentenceId, yOffset:yOffset });
   }
 
   handleOnMouseLeave() {
@@ -956,8 +956,8 @@ class PdfFileEditor extends React.Component {
               <div
                 id="scrollableDiv"
                 style={{
-                  maxHeight: window.innerHeight - 240,
-                  overflow: this.state.edited ? "hidden" : "scroll"
+                  // maxHeight: window.innerHeight - 240,
+                  // overflow: this.state.edited ? "hidden" : "scroll"
                 }}
               >
                 <InfiniteScroll
@@ -981,8 +981,8 @@ class PdfFileEditor extends React.Component {
                       <b>You have seen it all</b>
                     </p>
                   }
-                  style={{ overflowY: "hidden" }}
-                  scrollableTarget="scrollableDiv"
+                  // style={{ overflowY: "hidden" }}
+                  // scrollableTarget="scrollableDiv"
                   onScroll={() => this.handleScroll()}
                 >
                   {this.state.sentences &&
@@ -1008,6 +1008,7 @@ class PdfFileEditor extends React.Component {
                             scrollToPage={this.state.scrollToPage}
                             scrollToTop={this.state.scrollToTop}
                             scrollToId={this.state.scrollToId}
+                            yOffset={this.state.yOffset}
                             handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                             handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
                             handleDialogSave={this.handleDialogSave.bind(this)}
@@ -1065,8 +1066,8 @@ class PdfFileEditor extends React.Component {
                   <div
                     id="scrollableTargetDiv"
                     style={{
-                      maxHeight: window.innerHeight - 240,
-                      overflow: this.state.edited ? "hidden" : "scroll"
+                      // maxHeight: window.innerHeight - 240,
+                      // overflow: this.state.edited ? "hidden" : "scroll"
                     }}
                   >
                     <InfiniteScroll
@@ -1090,8 +1091,8 @@ class PdfFileEditor extends React.Component {
                           <b>You have seen it all</b>
                         </p>
                       }
-                      style={{ overflowY: "hidden" }}
-                      scrollableTarget="scrollableTargetDiv"
+                      // style={{ overflowY: "hidden" }}
+                      // scrollableTarget="scrollableTargetDiv"
                       onScroll={() => this.handleScroll()}
                     >
                       {this.state.sentences &&
@@ -1117,6 +1118,7 @@ class PdfFileEditor extends React.Component {
                                 scrollToPage={this.state.scrollToPage}
                                 scrollToTop={this.state.scrollToTop}
                                 scrollToId={this.state.scrollToId}
+                                yOffset={this.state.yOffset}
                                 handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                                 handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
                                 handleDialogSave={this.handleDialogSave.bind(this)}

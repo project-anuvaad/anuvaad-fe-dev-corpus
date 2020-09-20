@@ -13,9 +13,10 @@ class Preview extends React.Component {
         }
     }
 
+
     handleMouseHover(id) {
         if (!this.props.selectedSentence) {
-            this.props.handleOnMouseEnter(id, this.props.paperType)
+            this.props.handleOnMouseEnter(id, this.props.paperType, this.blockElem.offsetTop)
         }
     }
     handleBlur = () => {

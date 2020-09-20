@@ -32,21 +32,23 @@ class Preview extends React.Component {
 
   componentDidUpdate(prevProps) {
 
-    if (this.props.scrollToId && prevProps.scrollToId !== this.props.scrollToId) {
-
+    if (this.props.scrollToId && prevProps.scrollToId !== this.props.scrollToId && !this.props.tokenized) {
       let sid = this.props.scrollToId && this.props.scrollToId.split("_")[0];
-      if (this.props.scrollToId && this.props.scrollToId.split("_")[1] && this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-        this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-      } else if (this.props.scrollToId && this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-        this.refs[sid + "_" + this.props.paperType].scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-      }
-    } else if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
+      // if (this.props.scrollToId && this.props.scrollToId.split("_")[1] && this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+      //   // console.log(this.props.yOffset)
+      //   // this.container.scrollTop = this.props.yOffset;
+      //   this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
+      //     behavior: "smooth",
+      //     block: "start"
+      //   });
+      // } else if (this.props.scrollToId && this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+      //   this.refs[sid + "_" + this.props.paperType].scrollIntoView({
+      //     behavior: "smooth",
+      //     block: "center"
+      //   });
+      // }
+    }
+    else if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
       if (this.refs[this.props.scrollToPage]) {
         this.refs[this.props.scrollToPage].scrollIntoView({
           behavior: "smooth", inline: "end"
@@ -232,8 +234,9 @@ class Preview extends React.Component {
         {sourceSentence.text_blocks &&
           sourceSentence.text_blocks.map((sentence, index) => {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
+            const block_id = sentence.block_id
             return (
-              <div ref={sentence.block_id + "_" + sourceSentence.page_no + "_" + this.props.paperType} onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)} onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)}>
+              <div onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)} onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)}>
                 {this.props.tokenized ?
 
 
@@ -265,7 +268,7 @@ class Preview extends React.Component {
                     paperType={this.props.paperType}
                     mergeButton={this.props.mergeButton}
                     updateContent={this.props.updateContent}
-                  /> : <TokenizedView
+                  /> : <div ref={block_id + "_" + sourceSentence.page_no + "_" + this.props.paperType}><TokenizedView
                     key={index + "_" + sentence.block_id}
                     sentence={sentence}
                     yAxis={yAxis}
@@ -276,7 +279,7 @@ class Preview extends React.Component {
                     selectedBlock={this.state.selectedBlock}
                     handleBlockClick={this.handleBlockClick.bind(this)}
                     handleSourceChange={this.props.handleSourceChange}
-
+                    scrollToId={this.props.scrollToId}
                     isEditable={this.props.isEditable}
                     handleEditor={this.props.handleEditor}
                     handleCheck={this.handleCheck.bind(this)}
@@ -288,7 +291,7 @@ class Preview extends React.Component {
                     selectedSentence={this.state.selectedSentence}
                     handleOnMouseLeave={this.props.handleOnMouseLeave}
                     paperType={this.props.paperType}
-                  />}
+                  /></div>}
 
               </div>
             );
@@ -338,9 +341,11 @@ class Preview extends React.Component {
 
     let style = {
       maxWidth: sourceSentence.page_width + "px",
+      overflowX:'scroll',
+      overflowY:'hidden',
       // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
       position: "relative",
-      height: sourceSentence.page_height + "px",
+      minHeight: sourceSentence.page_height + "px",
       backgroundColor: "white",
       marginLeft: "auto",
       marginRight: "auto",
@@ -352,7 +357,7 @@ class Preview extends React.Component {
     };
 
     return (
-      <div>
+      <div ref={(el) => (this.container = el)}>
         {
           !this.props.isPreview ?
             <Paper style={style} key={sourceSentence.page_no}
