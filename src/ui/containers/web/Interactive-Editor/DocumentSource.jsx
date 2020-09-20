@@ -181,8 +181,10 @@ class Preview extends React.Component {
     });
   };
 
-  handleEditClick(selectedBlock, event) {
-    this.props.handleSource()
+  handleEditClick(selectedBlock, value) {
+
+    // console.log("------",selectedBlock)
+    this.props.handleSource(selectedBlock, value)
     this.props.hoveredSentence && this.setState({ hoveredSentence: null, selectedSentence: selectedBlock, value: true })
 
   }
