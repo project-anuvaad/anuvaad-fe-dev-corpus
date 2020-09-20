@@ -57,7 +57,8 @@ class PdfFileEditor extends React.Component {
       pagesToBeLoaded: 2,
       fileDetails: {},
       scrollToTop: false,
-      scrollToId: ""
+      scrollToId: "",
+      editableId: ""
     };
   }
 
@@ -532,6 +533,10 @@ class PdfFileEditor extends React.Component {
   handleEditor(value) {
     ((this.state.selectedBlockId && value && this.state.selectedBlockId !== value) || this.state.clear) &&
       this.setState({ selectedBlockId: null, clear: false });
+  }
+
+  handleAutoCompleteEditor(id, paperType) {
+    this.setState({editableId: id})
   }
 
   handleDialogSave(selection, operation_type, pageDetails) {
@@ -1049,6 +1054,9 @@ class PdfFileEditor extends React.Component {
                                 handleTextChange={this.handleTextChange.bind(this)}
                                 mergeButton={this.state.mergeButton}
                                 updateContent={this.updateContent.bind(this)}
+                                editableId={this.state.editableId}
+                                handleAutoCompleteEditor={this.handleAutoCompleteEditor.bind(this)}
+
                               />
                             </div>
                           );
@@ -1161,6 +1169,8 @@ class PdfFileEditor extends React.Component {
                                       menuLeftValue={this.state.menuLeftValue}
                                       handleMenuPosition={this.handleMenuPosition.bind(this)}
                                       handleAutoCompleteText={this.handleAutoCompleteText.bind(this)}
+                                      editableId={this.state.editableId}
+                                      handleAutoCompleteEditor={this.handleAutoCompleteEditor.bind(this)}
                                     />
                                   </div>
                                 );

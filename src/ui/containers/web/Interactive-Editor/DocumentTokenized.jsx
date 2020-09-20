@@ -27,10 +27,10 @@ class Preview extends React.Component {
         this.setState({ toc: false, value: false })
     }
 
-    handleDoubleClick (event, id, pageNo, ref, sId, blockId) {
+    handleDoubleClick(event, id, pageNo, ref, sId, blockId) {
         this.props.handleOnDoubleClickTarget(event, id, pageNo, ref, sId, blockId)
         setTimeout(() => { this.refs[ref].focus() }, 100)
-    
+
     }
 
     componentDidUpdate(prevProps) {
@@ -117,7 +117,7 @@ class Preview extends React.Component {
             leftValue = boundary.x + 5
         }
         if (event.key === 'Escape') {
-            this.props.handleEditor(null, this.props.paperType)
+            this.props.handleAutoCompleteEditor(null, this.props.paperType)
             this.setState({
                 contentEditableId: null,
                 selectedIndex: 0,
@@ -184,7 +184,6 @@ class Preview extends React.Component {
     render() {
 
         const { sentence, paperType } = this.props;
-
         var styles = {
             position: "absolute",
             top: sentence.text_top + "px",
@@ -222,20 +221,25 @@ class Preview extends React.Component {
                 {sentence.hasOwnProperty('tokenized_sentences') ? sentence.tokenized_sentences.map((text, tokenIndex) => {
 
 
-                    return <span><span id={text.sentence_id} key={text.sentence_id} style={{ borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : '' }}
-                    >
-                        {this.props.paperType === "source" ? (text.src ? text.src : text.src_text) : (text.tgt ? text.tgt : text.tagged_tgt)}
-                    </span><span> </span></span>
+                    return (<div style={
+                        this.props.editableId === text.sentence_id + "_" + this.props.page_no ? {
+                            border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF",
+                        } : {}
+                    }>
+                        <span><span id={text.sentence_id} key={text.sentence_id} style={{ borderRadius: '6px', background: (!this.props.editableId && spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : '' }}
+                        >
+                            {text.src ? text.src : text.src_text}
+                        </span><span> </span></span> </div>)
                 }) : <div
-                    id={sentence.block_id + "_" + this.props.page_no}
-                    style={{ backgroundColor: spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no ? '#92a8d1' : "" }}>
-                        {sentence.text}
-                    </div>
+                            id={sentence.block_id + "_" + this.props.page_no}
+                            style={{ backgroundColor: spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no ? '#92a8d1' : "" }}>
+                            {sentence.text}
+                        </div>
 
                 }
-            </div>
-            )
-        } else {
+                    </div>
+                    )
+                } else {
             return (
                 <div id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType} style={styles} key={sentence.block_id}
                     // onBlur={event => this.props.handleBlur(event)}

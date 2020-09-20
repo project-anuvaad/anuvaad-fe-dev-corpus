@@ -278,7 +278,7 @@ class Preview extends React.Component {
   }
 
   handleOnDoubleClickTarget(e, id, pageNo, ref, sId, blockId) {
-    this.props.handleEditor(id, this.props.paperType)
+    this.props.handleAutoCompleteEditor(id, this.props.paperType)
     this.setState({
       open: false,
       showLoader: false,
@@ -324,7 +324,7 @@ class Preview extends React.Component {
 
       this.props.handleAutoCompleteText(this.state.contentEditableId, this.state.sId, textBlocks, this.state.workingPage, this.state.blockId, data)
       // sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText[index].substring(this.state.caretPos)
-    //   sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + selectedText
+      //   sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + selectedText
       self.setState({
         sentences: sentences,
         selectedIndex: 0,
@@ -439,6 +439,9 @@ class Preview extends React.Component {
                       contentEditableId={this.state.contentEditableId}
                       editable={this.state.editable}
                       showLoader={this.state.showLoader}
+                      editableId={this.props.editableId}
+                      handleAutoCompleteEditor={this.props.handleAutoCompleteEditor}
+
                     /></div>}
 
               </div>
