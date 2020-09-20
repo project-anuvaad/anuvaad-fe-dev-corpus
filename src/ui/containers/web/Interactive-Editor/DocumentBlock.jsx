@@ -103,8 +103,10 @@ class Preview extends React.Component {
       border:
         this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value
           ? "1px solid #1C9AB7"
-            :this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock && this.props.value !== true ? "2px dotted grey":""    
+            :this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no+"_source" && !this.props.selectedBlock && this.props.value !== true ? "2px dotted grey":""    
     };
+
+    console.log("--hover--",this.props.hoveredSentence, this.props.sentence.block_id + "_" + this.props.page_no)
     return (
       <div>
           {this.props.mergeButton=== "save" ?
@@ -178,10 +180,10 @@ class Preview extends React.Component {
                            height:  value.text_height + "px",
                         //   maxHeight: value.text_height + "px",
                         backgroundColor:
-      (this.props.selectedSentence === value.block_id + "_" + this.props.page_no && this.props.value
+      (this.props.selectedSentence === value.block_id + "_" + this.props.page_no+"_source" && this.props.value
           ? "#F4FDFF": ""),
                           border:
-                            this.props.selectedSentence === value.block_id + "_" + this.props.page_no && this.props.value
+                            this.props.selectedSentence === value.block_id + "_" + this.props.page_no+"_source" && this.props.value
                               ? "1px solid #1C9AB7"
                              : "",
                           // outline: "2px solid red",
@@ -226,11 +228,11 @@ class Preview extends React.Component {
                       zIndex: 1,
                       height:  textValue.text_height + "px",
                       backgroundColor:
-       (this.props.selectedSentence === textValue.block_id + "_" + this.props.page_no && this.props.value
+       (this.props.selectedSentence === textValue.block_id + "_" + this.props.page_no+"_source" && this.props.value
           ? "#F4FDFF": ""),
                     //   maxHeight: textValue.text_height + "px",
                       border:
-                        !textValue.children && this.props.selectedSentence === textValue.block_id + "_" + this.props.page_no && this.props.value
+                        !textValue.children && this.props.selectedSentence === textValue.block_id + "_" + this.props.page_no+"_source" && this.props.value
                           ? "1px solid #1C9AB7"
                          
                           : "",
