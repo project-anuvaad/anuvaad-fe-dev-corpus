@@ -34,19 +34,19 @@ class Preview extends React.Component {
 
     if (this.props.scrollToId && prevProps.scrollToId !== this.props.scrollToId && !this.props.tokenized) {
       let sid = this.props.scrollToId && this.props.scrollToId.split("_")[0];
-      if (this.props.scrollToId && this.props.scrollToId.split("_")[1] && this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-        // console.log(this.props.yOffset)
-        // this.container.scrollTop = this.props.yOffset;
-        this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-      } else if (this.props.scrollToId && this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-        this.refs[sid + "_" + this.props.paperType].scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
-      }
+      // if (this.props.scrollToId && this.props.scrollToId.split("_")[1] && this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+      //   // console.log(this.props.yOffset)
+      //   // this.container.scrollTop = this.props.yOffset;
+      //   this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
+      //     behavior: "smooth",
+      //     block: "start"
+      //   });
+      // } else if (this.props.scrollToId && this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
+      //   this.refs[sid + "_" + this.props.paperType].scrollIntoView({
+      //     behavior: "smooth",
+      //     block: "center"
+      //   });
+      // }
     }
     else if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
       if (this.refs[this.props.scrollToPage]) {
@@ -342,9 +342,11 @@ class Preview extends React.Component {
 
     let style = {
       maxWidth: sourceSentence.page_width + "px",
+      overflowX:'scroll',
+      overflowY:'hidden',
       // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
       position: "relative",
-      height: sourceSentence.page_height + "px",
+      minHeight: sourceSentence.page_height + "px",
       backgroundColor: "white",
       marginLeft: "auto",
       marginRight: "auto",
