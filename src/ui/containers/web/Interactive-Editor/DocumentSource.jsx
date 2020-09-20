@@ -220,83 +220,58 @@ class Preview extends React.Component {
     this.setState({ callApi: false, showLoader: true })
   }
 
-  handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex) {
-    console.log('**********************************')
-    var selObj = window.getSelection();
-    var range = selObj.getRangeAt(0)
-    var boundary = range.getBoundingClientRect();
-    if (boundary) {
-      this.setState({
-        topValue: boundary.y + 15,
-        leftValue: boundary.x + 5
-      })
-    }
-    if (event.key === 'Escape') {
-      this.props.handleEditor(null, this.props.paperType)
-      this.setState({
-        contentEditableId: null,
-        selectedIndex: 0,
-        editable: false
-      })
-    }
-    else if (event.key === 'Tab') {
-      event.preventDefault()
-    }
+  handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue) {
+    // console.log('**********************************')
+    // var selObj = window.getSelection();
+    // var range = selObj.getRangeAt(0)
+    // var boundary = range.getBoundingClientRect();
+    // if (boundary) {
+    //   this.setState({
+    //     topValue: boundary.y + 15,
+    //     leftValue: boundary.x + 5
+    //   })
+    // }
+    // if (event.key === 'Escape') {
+    //   this.props.handleEditor(null, this.props.paperType)
+    //   this.setState({
+    //     contentEditableId: null,
+    //     selectedIndex: 0,
+    //     editable: false
+    //   })
+    // }
+    // else if (event.key === 'Tab') {
+    //   event.preventDefault()
+    // }
 
-    if (((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed === 'Shift')) {
-      let editableDiv = this.refs[refId]
-      console.log(editableDiv)
-      debugger
-      var caretPos = 0,
-        sel, range;
-      if (window.getSelection) {
-        sel = window.getSelection();
-        if (sel.rangeCount) {
-          range = sel.getRangeAt(0);
-          if (range.commonAncestorContainer.parentNode == editableDiv) {
-            caretPos = range.endOffset;
-          }
-        }
-      } else if (document.selection && document.selection.createRange) {
-        range = document.selection.createRange();
-        if (range.parentElement() == editableDiv) {
-          var tempEl = document.createElement("span");
-          editableDiv.insertBefore(tempEl, editableDiv.firstChild);
-          var tempRange = range.duplicate();
-          tempRange.moveToElementText(tempEl);
-          tempRange.setEndPoint("EndToEnd", range);
-          caretPos = tempRange.text.length;
-        }
-      }
-      let targetVal = this.handleCalc(editableDiv.textContent.substring(0, 5), tokenText)
-      // this.props.fecthNextSuggestion()
-      const apiObj = new IntractiveApi(tokenText.src, tokenText.tgt, this.props.modelId, true, true);
-      this.props.APITransport(apiObj);
-      this.setState({
-        anchorEl: event.currentTarget,
-        // caretPos: caretPos,
-        targetVal: tokenText.tgt,
-        // targetVal: editableDiv.textContent.substring(0, caretPos),
-        // tokenIndex,
-        showLoader: true,
-        // senIndex,
-        // suggestionSrc: tokenText.src,
-        // suggestionId: this.props.modelDetails
-      })
-    } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
-      if (event.key === 'Enter') {
-        if (this.state.open) {
-          this.handleUpdateSentenceWithPrediction()
-        }
-      }
-      event.preventDefault()
-    }
-    else {
-      this.setState({
-        open: false,
-        // showLoader: false
-      })
-    }
+    // if (((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed === 'Shift')) {
+    const apiObj = new IntractiveApi(tokenText.src, targetVal, { model_id: this.props.modelId }, true, true);
+    this.props.APITransport(apiObj);
+    this.setState({
+      anchorEl: event.currentTarget,
+      // caretPos: caretPos,
+      targetVal: tokenText.tgt,
+      // targetVal: editableDiv.textContent.substring(0, caretPos),
+      // tokenIndex,
+      showLoader: true,
+      // senIndex,
+      // suggestionSrc: tokenText.src,
+      // suggestionId: this.props.modelDetails
+    })
+    this.props.handleMenuPosition(topValue, leftValue)
+    // } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
+    //   if (event.key === 'Enter') {
+    //     if (this.state.open) {
+    //       this.handleUpdateSentenceWithPrediction()
+    //     }
+    //   }
+    //   event.preventDefault()
+    // }
+    // else {
+    //   this.setState({
+    //     open: false,
+    //     // showLoader: false
+    //   })
+    // }
     this.setState({
       previousKeyPressed: event.key,
       previousPressedKeyCode: event.keyCode
@@ -306,24 +281,24 @@ class Preview extends React.Component {
   handleOnDoubleClickTarget(e, id, pageNo, ref) {
     this.props.handleEditor(id, this.props.paperType)
     this.setState({
-        open: false,
-        showLoader: false,
-        editable: true,
-        contentEditableId: id
+      open: false,
+      showLoader: false,
+      editable: true,
+      contentEditableId: id
     })
     // setTimeout(() => { this.refs[ref].focus() }, 100)
-}
+  }
 
-handleOnClickTarget(e, id, pageNo, ref) {
-  this.setState({
-    open: false,
-    showLoader: false,
-    topValue: e.clientY + 15,
-    leftValue: e.clientX + 5
-  })
+  handleOnClickTarget(e, id, pageNo, ref) {
+    this.setState({
+      open: false,
+      showLoader: false,
+      topValue: e.clientY + 15,
+      leftValue: e.clientX + 5
+    })
 
-  this.refs[ref].focus()
-}
+    // this.refs[ref].focus()
+  }
 
   handlePopOverClose() {
     this.setState({ openContextMenu: false })
@@ -452,21 +427,15 @@ handleOnClickTarget(e, id, pageNo, ref) {
                       handleTargetChange={this.handleTargetChange.bind(this)}
                       handleOnClickTarget={this.handleOnClickTarget.bind(this)}
                       handleOnDoubleClickTarget={this.handleOnDoubleClickTarget.bind(this)}
-                      contentEditableId= {this.state.contentEditableId}
+                      contentEditableId={this.state.contentEditableId}
                       editable={this.state.editable}
+                      showLoader={this.state.showLoader}
                     /></div>}
 
               </div>
             );
           })}
-        <Popover isOpen={this.state.showLoader} containerNode={this.state.anchorEl} placementStrategy={placeRight} >
-          <CircularProgress
-            // disableShrink
-            size={18}
-            thickness={8}
-            style={{ marginLeft: "15px" }}
-          />
-        </Popover>
+
         {this.state.openDialog && (
           <Dialog
             message={"Please select checkbox to merge blocks"}
@@ -495,24 +464,7 @@ handleOnClickTarget(e, id, pageNo, ref) {
             sentenceOp={this.state.sentenceOp}
           />
         )}
-        {this.state.openContextMenu && this.props.paperType === "target" && this.state.autoCompleteText &&
-          <Popover1
-            isOpen={this.state.openContextMenu}
-            topValue={this.state.topValue}
-            leftValue={this.state.leftValue}
-            anchorEl={this.state.anchorEl}
-            handleOnClick={this.handleUpdateSentenceWithPrediction.bind(this)}
-            handlePopOverClose={this.handlePopOverClose.bind(this)}
-            tableItems={this.state.tableItems}
-            tableValues={this.state.tableTitles}
-            handlePopUp={this.props.handlePopUp}
-            caretPos={this.state.caretPos}
-            options={this.state.autoCompleteText}
-            paperType={this.props.paperType}
-            targetVal={this.state.targetVal}
-          >
 
-          </Popover1>}
 
         {sourceSentence.images &&
           Array.isArray(sourceSentence.images) &&
@@ -556,6 +508,24 @@ handleOnClickTarget(e, id, pageNo, ref) {
               onMouseEnter={() => { this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
             >{this.getContent()}</div>
         }
+        {this.state.openContextMenu && this.props.paperType === "target" && this.state.autoCompleteText &&
+          <Popover1
+            isOpen={this.state.openContextMenu}
+            topValue={this.props.menuTopValue}
+            leftValue={this.props.menuLeftValue}
+            anchorEl={this.state.anchorEl}
+            handleOnClick={this.handleUpdateSentenceWithPrediction.bind(this)}
+            handlePopOverClose={this.handlePopOverClose.bind(this)}
+            tableItems={this.state.tableItems}
+            tableValues={this.state.tableTitles}
+            handlePopUp={this.props.handlePopUp}
+            caretPos={this.state.caretPos}
+            options={this.state.autoCompleteText}
+            paperType={this.props.paperType}
+            targetVal={this.state.targetVal}
+          >
+
+          </Popover1>}
       </div>
 
     );

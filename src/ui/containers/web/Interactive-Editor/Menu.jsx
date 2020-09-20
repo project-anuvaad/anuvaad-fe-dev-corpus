@@ -28,6 +28,8 @@ export default class Popovers extends React.Component {
     render() {
         const { id, isOpen, topValue, leftValue, options, caretPos, targetVal } = this.props;
         let dataArr = []
+        console.log(topValue)
+        console.log(leftValue)
         this.props.options && this.props.options.length > 0 && this.props.options.map((option, i) => {
             if (option && option.length > 0) {
                 let data = option.substring(targetVal.length)
@@ -39,14 +41,14 @@ export default class Popovers extends React.Component {
                 }
             }
         })
-        if(dataArr && Array.isArray(dataArr) && dataArr.length>0) {
+        if (dataArr && Array.isArray(dataArr) && dataArr.length > 0) {
             return (
                 <Popover
                     id={id}
-                    open={isOpen }
+                    open={isOpen}
                     anchorReference="anchorPosition"
                     anchorPosition={{ top: topValue, left: leftValue }}
-    
+
                     onClose={() => this.props.handlePopOverClose()}
                     anchorOrigin={{
                         vertical: 'top',
@@ -68,8 +70,8 @@ export default class Popovers extends React.Component {
             )
         } else {
             return (<div></div>)
-            
+
         }
-      
+
     }
 }
