@@ -57,26 +57,14 @@ class PdfPreview extends React.Component {
               {translate("intractive_translate.page.preview.originalPDF")}
             </Typography>
           </Grid>
-         
+          
         </Toolbar>
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }} id="pdfDocument">
           <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess} style={{ align: "center",  display: "flex", flexDirection: "row", justifyContent: "center" }}>
-          {
-                Array.from(
-                  new Array(numPages),
-                  (el, index) => (
-                    <Page
-                    scale={ this.state.pageScaleWidth}
-                      key={`page_${index + 1}`}
-                      pageNumber={index + 1}
-                      loading = {""}
-                      onLoadSuccess={this.onPageLoad}
-                    />
-                  ),
-                )
-              }
+                  
           
-           {/* <Page  pageNumber={Number(page) } /> */}
+           <Page scale={this.state.pageScaleWidth} pageNumber={Number(this.props.pageNo) } onLoadSuccess={this.onPageLoad} />
+           <Page scale={this.state.pageScaleWidth} pageNumber={Number(this.props.pageNo +1) } onLoadSuccess={this.onPageLoad} />
         
             
           </Document>
