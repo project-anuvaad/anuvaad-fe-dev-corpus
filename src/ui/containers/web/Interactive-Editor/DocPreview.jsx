@@ -57,72 +57,28 @@ class PdfPreview extends React.Component {
               {translate("intractive_translate.page.preview.originalPDF")}
             </Typography>
           </Grid>
-          <Grid item xs={6} sm={6} lg={6} xl={6}>
-            {numPages &&pageNo && (
-              <Grid container spacing={8}>
-                <Grid item xs={4} sm={4} lg={4} xl={4} style={{textAlign: 'right'}}>
-                  <Button
-                    style={{ fontWeight: "bold", width: "60%" }}
-                    color="primary"
-                    disabled={pageNo <= 1}
-                    onClick={event => {
-                      this.props.handlePageChange(-1);
-                    }}
-                  >
-                    {" "}
-                    <ChevronLeftIcon size="large" />
-                  </Button>
-                </Grid>
-                <Grid item xs={4} sm={4} lg={4} xl={4} style={{textAlign: 'center'}}>
-                  <Button style={{ fontWeight: "bold", width: "100%", pointerEvents: "none" }} color="primary">
-                    {`${pageNo} / ${numPages}`}
-                  </Button>
-                </Grid>
-
-                <Grid item xs={4} sm={4} lg={4} xl={4} style={{textAlign: 'left'}}>
-                  <Button
-                    color="primary"
-                    disabled={numPages <= pageNo}
-                    onClick={event => {
-                      this.props.handlePageChange(1);
-                    }}
-                    style={{ fontWeight: "bold", width: "60%" }}
-                  >
-                    <ChevronRightIcon size="large" />{" "}
-                  </Button>
-                </Grid>
-              </Grid>
-            )}
-          </Grid>
-          <Grid item xs={3} sm={3} lg={3} xl={3} style={{textAlign: "right", display: "flex", flexDirection: "row", justifyContent: "right"}}>
-            {this.props.zoom ? (
-              <Button
-                color="secondary"
-                disabled={numPages <= pageNo}
-                onClick={event => {
-                  this.props.handleChange();
-                }}
-                style={{ fontWeight: "bold"}}
-              >
-                <ZoomOutIcon size="Large" style={{color: '#233466'}}/>
-              </Button>
-            ) : (
-                <Button
-                  color="primary"
-                  disabled={numPages <= pageNo}
-                  onClick={event => {
-                    this.props.handleChange();
-                  }}
-                  style={{ fontWeight: "bold"}}
-                >
-                  <ZoomInIcon size="Large" style={{color: '#233466'}}/>
-                </Button>
-              )}
-          </Grid>
+         
         </Toolbar>
         <div style={{ maxHeight: window.innerHeight - 240, overflowY: "auto", display: "flex", flexDirection: "row", justifyContent: "center" }} id="pdfDocument">
           <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess} style={{ align: "center",  display: "flex", flexDirection: "row", justifyContent: "center" }}>
-            <Page scale={!this.props.zoom ? this.state.scale : this.state.pageScaleWidth} pageNumber={Number(pageNo) } onLoadSuccess={this.onPageLoad} />
+          {
+                Array.from(
+                  new Array(numPages),
+                  (el, index) => (
+                    <Page
+                    scale={ this.state.pageScaleWidth}
+                      key={`page_${index + 1}`}
+                      pageNumber={index + 1}
+                      loading = {""}
+                      onLoadSuccess={this.onPageLoad}
+                    />
+                  ),
+                )
+              }
+          
+           {/* <Page  pageNumber={Number(page) } /> */}
+        
+            
           </Document>
         </div>
       {/* </Paper> */}
