@@ -20,35 +20,30 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
+import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
+import { withRouter } from "react-router-dom";
+import Popover from 'react-text-selection-popover';
+import placeBelow from './placeBelow'
+import placeRight from './placeRight'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Popover1 from "./Menu"
 
 class Preview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       openEl: false,
-      value: false
+      value: false,
+      showLoader: false,
+      autoCompleteText: null,
+      openContextMenu: false,
+      targetVal: ""
     };
   }
 
   componentDidUpdate(prevProps) {
 
-    if (this.props.scrollToId && prevProps.scrollToId !== this.props.scrollToId && !this.props.tokenized) {
-      let sid = this.props.scrollToId && this.props.scrollToId.split("_")[0];
-      // if (this.props.scrollToId && this.props.scrollToId.split("_")[1] && this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-      //   // console.log(this.props.yOffset)
-      //   // this.container.scrollTop = this.props.yOffset;
-      //   this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
-      //     behavior: "smooth",
-      //     block: "start"
-      //   });
-      // } else if (this.props.scrollToId && this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-      //   this.refs[sid + "_" + this.props.paperType].scrollIntoView({
-      //     behavior: "smooth",
-      //     block: "center"
-      //   });
-      // }
-    }
-    else if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
+    if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
       if (this.refs[this.props.scrollToPage]) {
         this.refs[this.props.scrollToPage].scrollIntoView({
           behavior: "smooth", inline: "end"
@@ -61,6 +56,18 @@ class Preview extends React.Component {
       this.setState({ selectedSentence: this.props.createBlockId, value: true })
     }
 
+    if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
+      console.log(this.props.intractiveTrans[0].tgt)
+      this.setState({
+        showLoader: false,
+        autoCompleteText: this.props.intractiveTrans[0].tgt,
+        openContextMenu: true
+      })
+    }
+
+    if (this.state.callApi) {
+      this.fecthNextSuggestion()
+    }
   }
   handleRightClick(event) {
     event.preventDefault();
@@ -203,10 +210,158 @@ class Preview extends React.Component {
   }
 
   handleBlockClick(clear, selectedSentence) {
-
-
     ((selectedSentence && this.state.selectedBlock !== selectedSentence) || clear) && this.setState({ selectedBlock: null, clear: false })
     this.props.handleEditor(selectedSentence)
+  }
+
+  fecthNextSuggestion() {
+    const apiObj = new IntractiveApi(this.state.suggestionSrc, this.state.suggestionText, this.state.suggestionId, true, true);
+    this.props.APITransport(apiObj);
+    this.setState({ callApi: false, showLoader: true })
+  }
+
+  handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex) {
+    console.log('**********************************')
+    var selObj = window.getSelection();
+    var range = selObj.getRangeAt(0)
+    var boundary = range.getBoundingClientRect();
+    if (boundary) {
+      this.setState({
+        topValue: boundary.y + 15,
+        leftValue: boundary.x + 5
+      })
+    }
+    if (event.key === 'Escape') {
+      this.props.handleEditor(null, this.props.paperType)
+      this.setState({
+        contentEditableId: null,
+        selectedIndex: 0,
+        editable: false
+      })
+    }
+    else if (event.key === 'Tab') {
+      event.preventDefault()
+    }
+
+    if (((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed === 'Shift')) {
+      let editableDiv = this.refs[refId]
+      console.log(editableDiv)
+      debugger
+      var caretPos = 0,
+        sel, range;
+      if (window.getSelection) {
+        sel = window.getSelection();
+        if (sel.rangeCount) {
+          range = sel.getRangeAt(0);
+          if (range.commonAncestorContainer.parentNode == editableDiv) {
+            caretPos = range.endOffset;
+          }
+        }
+      } else if (document.selection && document.selection.createRange) {
+        range = document.selection.createRange();
+        if (range.parentElement() == editableDiv) {
+          var tempEl = document.createElement("span");
+          editableDiv.insertBefore(tempEl, editableDiv.firstChild);
+          var tempRange = range.duplicate();
+          tempRange.moveToElementText(tempEl);
+          tempRange.setEndPoint("EndToEnd", range);
+          caretPos = tempRange.text.length;
+        }
+      }
+      let targetVal = this.handleCalc(editableDiv.textContent.substring(0, 5), tokenText)
+      // this.props.fecthNextSuggestion()
+      const apiObj = new IntractiveApi(tokenText.src, tokenText.tgt, this.props.modelId, true, true);
+      this.props.APITransport(apiObj);
+      this.setState({
+        anchorEl: event.currentTarget,
+        // caretPos: caretPos,
+        targetVal: tokenText.tgt,
+        // targetVal: editableDiv.textContent.substring(0, caretPos),
+        // tokenIndex,
+        showLoader: true,
+        // senIndex,
+        // suggestionSrc: tokenText.src,
+        // suggestionId: this.props.modelDetails
+      })
+    } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
+      if (event.key === 'Enter') {
+        if (this.state.open) {
+          this.handleUpdateSentenceWithPrediction()
+        }
+      }
+      event.preventDefault()
+    }
+    else {
+      this.setState({
+        open: false,
+        // showLoader: false
+      })
+    }
+    this.setState({
+      previousKeyPressed: event.key,
+      previousPressedKeyCode: event.keyCode
+    })
+  }
+
+  handleOnDoubleClickTarget(e, id, pageNo, ref) {
+    this.props.handleEditor(id, this.props.paperType)
+    this.setState({
+        open: false,
+        showLoader: false,
+        editable: true,
+        contentEditableId: id
+    })
+    // setTimeout(() => { this.refs[ref].focus() }, 100)
+}
+
+handleOnClickTarget(e, id, pageNo, ref) {
+  this.setState({
+    open: false,
+    showLoader: false,
+    topValue: e.clientY + 15,
+    leftValue: e.clientX + 5
+  })
+
+  this.refs[ref].focus()
+}
+
+  handlePopOverClose() {
+    this.setState({ openContextMenu: false })
+  }
+
+  handleUpdateSentenceWithPrediction(selectedText) {
+    this.setState({
+      open: false,
+      showLoader: false,
+      openContextMenu: false
+    })
+
+    var self = this
+    setTimeout(() => {
+      var sentences = Object.assign([], this.state.sentences ? this.state.sentences : this.props.sentences)
+      // sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText[index].substring(this.state.caretPos)
+      sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + selectedText
+      self.setState({
+        sentences: sentences,
+        selectedIndex: 0,
+        suggestionText: this.state.targetVal + selectedText,
+
+        callApi: true,
+        targetVal: this.state.targetVal + selectedText,
+        // caretPos: this.state.caretPos + selectedText.length
+      })
+      document.activeElement.blur()
+    }, 50)
+
+    setTimeout(() => {
+      this.setCaretPosition(selectedText)
+
+    }, 100)
+
+    setTimeout(() => {
+      this.setState({ showLoader: true })
+      this.fetchCursorPosition()
+    }, 250)
   }
 
   getContent() {
@@ -268,35 +423,50 @@ class Preview extends React.Component {
                     paperType={this.props.paperType}
                     mergeButton={this.props.mergeButton}
                     updateContent={this.props.updateContent}
-                  /> : <div ref={block_id + "_" + sourceSentence.page_no + "_" + this.props.paperType}><TokenizedView
-                    key={index + "_" + sentence.block_id}
-                    sentence={sentence}
-                    yAxis={yAxis}
-                    page_no={sourceSentence.page_no}
-                    handleOnMouseEnter={this.props.handleOnMouseEnter}
-                    hoveredSentence={this.props.hoveredSentence}
-                    handleDoubleClick={this.handleDoubleClick.bind(this)}
-                    selectedBlock={this.state.selectedBlock}
-                    handleBlockClick={this.handleBlockClick.bind(this)}
-                    handleSourceChange={this.props.handleSourceChange}
-                    scrollToId={this.props.scrollToId}
-                    isEditable={this.props.isEditable}
-                    handleEditor={this.props.handleEditor}
-                    handleCheck={this.handleCheck.bind(this)}
-                    selectedSourceText={this.props.selectedSourceText}
-                    heightValue={this.props.heightValue}
-                    value={this.state.value}
-                    handleBlur={this.handleBlur.bind(this)}
-                    handleEditClick={this.handleEditClick.bind(this)}
-                    selectedSentence={this.state.selectedSentence}
-                    handleOnMouseLeave={this.props.handleOnMouseLeave}
-                    paperType={this.props.paperType}
-                  /></div>}
+                  /> :
+                  <div ref={block_id + "_" + sourceSentence.page_no + "_" + this.props.paperType}>
+                    <TokenizedView
+                      key={index + "_" + sentence.block_id}
+                      sentence={sentence}
+                      yAxis={yAxis}
+                      page_no={sourceSentence.page_no}
+                      handleOnMouseEnter={this.props.handleOnMouseEnter}
+                      hoveredSentence={this.props.hoveredSentence}
+                      handleDoubleClick={this.handleDoubleClick.bind(this)}
+                      selectedBlock={this.state.selectedBlock}
+                      handleBlockClick={this.handleBlockClick.bind(this)}
+                      handleSourceChange={this.props.handleSourceChange}
+                      scrollToId={this.props.scrollToId}
+                      isEditable={this.props.isEditable}
+                      handleEditor={this.props.handleEditor}
+                      handleCheck={this.handleCheck.bind(this)}
+                      selectedSourceText={this.props.selectedSourceText}
+                      heightValue={this.props.heightValue}
+                      value={this.state.value}
+                      handleBlur={this.handleBlur.bind(this)}
+                      handleEditClick={this.handleEditClick.bind(this)}
+                      selectedSentence={this.state.selectedSentence}
+                      handleOnMouseLeave={this.props.handleOnMouseLeave}
+                      paperType={this.props.paperType}
+                      fecthNextSuggestion={this.fecthNextSuggestion.bind(this)}
+                      handleTargetChange={this.handleTargetChange.bind(this)}
+                      handleOnClickTarget={this.handleOnClickTarget.bind(this)}
+                      handleOnDoubleClickTarget={this.handleOnDoubleClickTarget.bind(this)}
+                      contentEditableId= {this.state.contentEditableId}
+                      editable={this.state.editable}
+                    /></div>}
 
               </div>
             );
           })}
-
+        <Popover isOpen={this.state.showLoader} containerNode={this.state.anchorEl} placementStrategy={placeRight} >
+          <CircularProgress
+            // disableShrink
+            size={18}
+            thickness={8}
+            style={{ marginLeft: "15px" }}
+          />
+        </Popover>
         {this.state.openDialog && (
           <Dialog
             message={"Please select checkbox to merge blocks"}
@@ -325,6 +495,24 @@ class Preview extends React.Component {
             sentenceOp={this.state.sentenceOp}
           />
         )}
+        {this.state.openContextMenu && this.props.paperType === "target" && this.state.autoCompleteText &&
+          <Popover1
+            isOpen={this.state.openContextMenu}
+            topValue={this.state.topValue}
+            leftValue={this.state.leftValue}
+            anchorEl={this.state.anchorEl}
+            handleOnClick={this.handleUpdateSentenceWithPrediction.bind(this)}
+            handlePopOverClose={this.handlePopOverClose.bind(this)}
+            tableItems={this.state.tableItems}
+            tableValues={this.state.tableTitles}
+            handlePopUp={this.props.handlePopUp}
+            caretPos={this.state.caretPos}
+            options={this.state.autoCompleteText}
+            paperType={this.props.paperType}
+            targetVal={this.state.targetVal}
+          >
+
+          </Popover1>}
 
         {sourceSentence.images &&
           Array.isArray(sourceSentence.images) &&
@@ -332,6 +520,7 @@ class Preview extends React.Component {
           sourceSentence.images.map((images, imgIndex) => {
             return <Image imgObj={images}></Image>;
           })}
+
       </div>
     )
   }
@@ -341,8 +530,8 @@ class Preview extends React.Component {
 
     let style = {
       maxWidth: sourceSentence.page_width + "px",
-      overflowX:'scroll',
-      overflowY:'hidden',
+      overflowX: 'scroll',
+      overflowY: 'hidden',
       // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
       position: "relative",
       minHeight: sourceSentence.page_height + "px",
@@ -373,4 +562,21 @@ class Preview extends React.Component {
   }
 }
 
-export default Preview;
+const mapStateToProps = state => ({
+  apistatus: state.apistatus,
+  intractiveTrans: state.intractiveTrans
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      APITransport,
+      NMTApi: APITransport,
+      NMTSPApi: APITransport,
+      MODELApi: APITransport
+    },
+    dispatch
+  );
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Preview));
+

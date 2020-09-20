@@ -106,7 +106,6 @@ class Preview extends React.Component {
             :this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no+"_source" && !this.props.selectedBlock && this.props.value !== true ? "2px dotted grey":""    
     };
 
-    console.log("--hover--",this.props.hoveredSentence, this.props.sentence.block_id + "_" + this.props.page_no)
     return (
       <div>
           {this.props.mergeButton=== "save" ?

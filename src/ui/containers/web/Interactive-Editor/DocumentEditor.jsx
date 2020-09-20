@@ -64,7 +64,6 @@ class PdfFileEditor extends React.Component {
   componentDidMount() {
     // const apiObj1 = new FileDetails(this.props.match.params.fileid);
     // this.props.APITransport(apiObj1);
-    console.log("sentences", this.state.sentences);
     this.props.ClearContent(null);
     this.setState({ showLoader: true });
     /* Pagination api */
@@ -78,7 +77,6 @@ class PdfFileEditor extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log("sentences", this.state.sentences);
     if (prevProps.documentDetails !== this.props.documentDetails) {
       const temp = this.props.documentDetails.result;
       this.setState({
@@ -91,7 +89,6 @@ class PdfFileEditor extends React.Component {
     if (prevProps.fetchContent !== this.props.fetchContent) {
       let temp = this.props.fetchContent.result.data;
       let sentenceObj = temp;
-      console.log(temp);
       sentenceObj &&
         sentenceObj.map(sentence => {
           sentence.text_blocks &&
@@ -363,7 +360,6 @@ class PdfFileEditor extends React.Component {
   }
 
   handleSentenceOperation(start_id, end_id, sentence, type) {
-    console.log("split---", start_id, end_id);
     let startSentence = start_id.split("_");
     let endSentence = end_id.split("_");
     let sentenceObj = this.state.sentences;
@@ -391,7 +387,6 @@ class PdfFileEditor extends React.Component {
       const selectedSplitEndIndex = window.getSelection() && window.getSelection().getRangeAt(0).endOffset;
       let selectedSplitValue, nextSplitValue, copySentence, ind;
       selectedBlock.tokenized_sentences.map((text, i) => {
-        // console.log("id---",text, start_id)
         if (text.sentence_id == start_id) {
           selectedSplitValue = text.src.substring(0, selectedSplitEndIndex);
           nextSplitValue = text.src.substring(selectedSplitEndIndex, text.src.length);
@@ -508,7 +503,6 @@ class PdfFileEditor extends React.Component {
     a.text_top = a.text_top + pageData.text_blocks[value].text_height;
     a.text_height = 30;
     a.children = null;
-    console.log(a);
     pageData.text_blocks.splice(value + 1, 0, a);
     var extraHeight = 0;
     pageData &&
@@ -745,13 +739,10 @@ class PdfFileEditor extends React.Component {
     let senteceObj = this.state.sentences;
 
     senteceObj.map(sentence => {
-      console.log(value[1], sentence.page_no);
       parseInt(value[1]) == sentence.page_no &&
         val.map(arrValue => {
           sentence.text_blocks.map((children, index) => {
-            console.log(parseInt(arrValue.split("_")[0]), children.block_id);
             if (parseInt(arrValue.split("_")[0]) == children.block_id) {
-              console.log("-----", children);
               text = text + " " + children.text;
               children.block_id = idV;
             }
@@ -789,7 +780,6 @@ class PdfFileEditor extends React.Component {
                   children.font_size = children.font_size - 1;
 
                   // children.font_size = children.font_size -1;
-                  // console.log("font---",children.font_size)
                 }
               });
             if (sentenceChildren.block_id == idValue[0]) {
@@ -1119,6 +1109,7 @@ class PdfFileEditor extends React.Component {
                                 scrollToTop={this.state.scrollToTop}
                                 scrollToId={this.state.scrollToId}
                                 yOffset={this.state.yOffset}
+                                modelId={this.props.match.params.modelId}
                                 handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                                 handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
                                 handleDialogSave={this.handleDialogSave.bind(this)}
