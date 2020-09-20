@@ -69,8 +69,6 @@ class Preview extends React.Component {
   }
   handleDialog() {
 
-    console.log(this.state.title, "title")
-
     // if (this.state.title === "Merge") {
 
     //   this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
@@ -84,7 +82,6 @@ class Preview extends React.Component {
     // }
     if (this.state.title === "Split sentence" || this.state.title === "Merge sentence") {
       this.props.handleSentenceOperation(window.getSelection().anchorNode.parentNode.id, window.getSelection().focusNode.parentNode.id, this.props.sourceSentence, this.state.title)
-
     }
     this.setState({ openDialog: false });
   }
@@ -138,21 +135,23 @@ class Preview extends React.Component {
 
         startNode = window.getSelection().anchorNode.parentNode.parentNode.parentElement.id;
         endNode = window.getSelection().focusNode.parentNode.parentNode.parentElement.id;
+        let parent = startNode ? startNode.split("_")[2] : null
 
-
-        selection.startNode = startNode;
-        selection.endNode = endNode;
-        if (startNode && endNode && window.getSelection().anchorNode.parentNode.parentNode && startNode === endNode) {
-          this.setState({ operation_type: "split" });
-          window.getSelection().toString() && this.popUp("split", event, senOp);
+        if (parent === "source") {
           selection.startNode = startNode;
-        } else if (startNode && endNode && parseInt(startNode) !== parseInt(endNode)) {
-          this.setState({ operation_type: "merge" });
-          window.getSelection().toString() && this.popUp("merge", event);
-        }
+          selection.endNode = endNode;
+          if (startNode && endNode && window.getSelection().anchorNode.parentNode.parentNode && startNode === endNode) {
+            this.setState({ operation_type: "split" });
+            window.getSelection().toString() && this.popUp("split", event, senOp);
+            selection.startNode = startNode;
+          } else if (startNode && endNode && parseInt(startNode) !== parseInt(endNode)) {
+            this.setState({ operation_type: "merge" });
+            window.getSelection().toString() && this.popUp("merge", event);
+          }
 
-        this.setState({ selection, value: false });
-        return true;
+          this.setState({ selection, value: false });
+          return true;
+        }
       }
     }
   }
