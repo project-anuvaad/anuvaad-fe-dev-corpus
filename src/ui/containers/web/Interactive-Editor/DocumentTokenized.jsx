@@ -433,15 +433,15 @@ class Preview extends React.Component {
                     this.textInput = textarea;
                 }}
             >
-                {/* <Textfit
+                <Textfit
                 mode={!sentence.children ? "single" : "multiple"}
                 // onReady={this.handleCheck.bind(this)}
                 style={{ height: sentence.text_height + "px", width: parseInt(sentence.text_width) }}
                 forceSingleModeWidth={true}
                 min={1}
                 max={parseInt(sentence.font_size)}
-            > */}
-                {sentence.hasOwnProperty('tokenized_sentences') ? sentence.tokenized_sentences.map((text, tokenIndex) => {
+            >
+                {sentence.hasOwnProperty('tokenized_sentences') && sentence.tokenized_sentences.map((text, tokenIndex) => {
 
 
                     return (<span style={
@@ -453,14 +453,10 @@ class Preview extends React.Component {
                         >
                             {text.src}
                         </span><span> </span></span> </span>)
-                }) : <span
-                    id={sentence.block_id + "_" + this.props.page_no}
-                    style={{ backgroundColor: spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no ? '#92a8d1' : "" }}>
-                        {sentence.text}
-                    </span>
+                }) 
 
                 }
-                {/* </Textfit> */}
+                </Textfit>
             </span>
             )
         } else {

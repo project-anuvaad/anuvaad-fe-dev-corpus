@@ -77,7 +77,7 @@ class Preview extends React.Component {
     this.setState({ checkbox: true, openDialog: false })
   }
   handleDialog() {
-
+    debugger
     // if (this.state.title === "Merge") {
 
     //   this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
@@ -90,6 +90,7 @@ class Preview extends React.Component {
     //   this.setState({ openDialog: false });
     // }
     if (this.state.title === "Split sentence" || this.state.title === "Merge sentence") {
+
       this.props.handleSentenceOperation(window.getSelection().anchorNode.parentNode.id, window.getSelection().focusNode.parentNode.id, this.props.sourceSentence, this.state.title)
     }
     this.setState({ openDialog: false });
@@ -109,7 +110,7 @@ class Preview extends React.Component {
     let sentenceStart = window.getSelection().anchorNode.parentNode.id.split('_');
     let sentenceEnd = window.getSelection().focusNode.parentNode.id.split('_');
     let senOp;
-
+    console.log("----", sentenceStart, sentenceEnd)
     if (sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]) {
       if (sentenceStart[2] === sentenceEnd[2]) {
         senOp = "split";
@@ -117,6 +118,7 @@ class Preview extends React.Component {
         senOp = "merge";
       }
     }
+    debugger
     window.getSelection().focusNode.parentNode.id;
     if (!this.state.selectedSentence && !this.props.tokenized) {
       var text = "";
@@ -140,22 +142,22 @@ class Preview extends React.Component {
       if (window.getSelection()) {
         sentences = window.getSelection().toString();
       }
+      
       if (sentences) {
+        startNode = window.getSelection().anchorNode.parentNode.id;
+        endNode = window.getSelection().focusNode.parentNode.id;
+        // let parent = startNode ? startNode.split("_")[2] : null
 
-        startNode = window.getSelection().anchorNode.parentNode.parentNode.parentElement.id;
-        endNode = window.getSelection().focusNode.parentNode.parentNode.parentElement.id;
-        let parent = startNode ? startNode.split("_")[2] : null
-
-        if (parent === "source") {
+        if (this.props.paperType === "source") {
           selection.startNode = startNode;
           selection.endNode = endNode;
           if (startNode && endNode && window.getSelection().anchorNode.parentNode.parentNode && startNode === endNode) {
             this.setState({ operation_type: "split" });
             window.getSelection().toString() && this.popUp("split", event, senOp);
             selection.startNode = startNode;
-          } else if (startNode && endNode && parseInt(startNode) !== parseInt(endNode)) {
+          } else if (startNode && endNode && parseInt(startNode.split("_")[2]) !== parseInt(endNode.split("_")[2])) {
             this.setState({ operation_type: "merge" });
-            window.getSelection().toString() && this.popUp("merge", event);
+            window.getSelection().toString() && this.popUp("Merge Sentence", event);
           }
 
           this.setState({ selection, value: false });
@@ -194,7 +196,7 @@ class Preview extends React.Component {
 
     // console.log("------",selectedBlock)
     this.props.handleSource(selectedBlock, value)
-    this.props.hoveredSentence && this.setState({ hoveredSentence: null, selectedSentence: selectedBlock, value: true })
+    this.setState({ hoveredSentence: null, selectedSentence: selectedBlock, value: true })
 
   }
 
@@ -510,7 +512,7 @@ class Preview extends React.Component {
 
         {this.state.openDialog && (
           <Dialog
-            message={"Please select checkbox to merge blocks"}
+            message={this.state.dialogMessage}
             handleSubmit={this.handleDialog.bind(this)}
             handleClose={this.handleClose.bind(this)}
             open

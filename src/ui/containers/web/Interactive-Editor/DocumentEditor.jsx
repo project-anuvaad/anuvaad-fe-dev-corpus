@@ -368,9 +368,17 @@ class PdfFileEditor extends React.Component {
     this.setState({ menuTopValue: topValue, menuLeftValue: leftValue })
   }
 
-  handleSentenceOperation(start_id, end_id, sentence, type) {
-    let startSentence = start_id.split("_");
-    let endSentence = end_id.split("_");
+  handleSentenceOperation(start, end, sentence, type) {
+    let start_id = start;
+    let end_id = end;
+    let startSentence = start.split("_");
+    let endSentence = end.split("_");
+    if(parseInt(startSentence[0])=== parseInt(endSentence[0]) && parseInt(startSentence[1]) == parseInt(endSentence[1])){
+      if(parseInt(startSentence[2]) > parseInt(endSentence[2])){
+        start_id = end;
+        end_id = start;
+      }
+   
     let sentenceObj = this.state.sentences;
     let token,
       textValue = "",
@@ -382,7 +390,7 @@ class PdfFileEditor extends React.Component {
           token = true;
           index = i;
 
-          textValue = textValue + text.src;
+          textValue = textValue +" "+ text.src;
           text.src = null;
         }
 
@@ -416,6 +424,11 @@ class PdfFileEditor extends React.Component {
     }
 
     this.setState({ sentences: sentenceObj });
+  }else 
+  {
+    alert("something went wrong... please try again")
+  }
+  
   }
 
   handleDeleteBlock(block, blockText, pageData, type) {
@@ -895,7 +908,7 @@ class PdfFileEditor extends React.Component {
       <div>
         {this.state.sentences &&
           <div>
-            <Grid container spacing={8} style={{ padding: "0px 24px 12px 24px" , position: "fixed", zIndex:1000, background: "#F5F9FA"}}>
+            <Grid container spacing={8} style={{ marginTop:"-10px",padding: "10px 24px 12px 24px" , position: "fixed", zIndex:1000, background: "#F5F9FA"}}>
               <Grid item xs={12} sm={6} lg={2} xl={2} className="GridFileDetails">
                 <Button
                   variant="outlined"
