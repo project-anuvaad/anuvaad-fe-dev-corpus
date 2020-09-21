@@ -49,12 +49,12 @@ class Preview extends React.Component {
   handleDoubleClick = (event, val, text, u) => {
     event.preventDefault();
 
- 
+    
     this.props.handleEditClick(val, text);
-
     setTimeout(() => {
-      this.refs[val].focus()
-    }, 50);
+      console.log("focus");
+      this.textInput&&this.textInput.current.focus()
+    }, 500);
     
   };
 
@@ -164,7 +164,7 @@ class Preview extends React.Component {
             >
               {this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no ? (
                 <ContentEditable
-                  Ref={sentence.block_id + "_" + this.props.page_no}
+                  innerRef={this.textInput}
                   html={this.props.selectedSourceText.text}
                   disabled={false}
                   onBlur={this.handleCheck}
@@ -250,7 +250,7 @@ class Preview extends React.Component {
                         >
                           {this.props.selectedSentence === value.block_id + "_" + this.props.page_no ? (
                             <ContentEditable
-                              Ref={value.block_id + "_" + this.props.page_no}
+                              innerRef={this.textInput}
                               html={this.props.selectedSourceText.text}
                               disabled={false}
                               onBlur={this.handleCheck}
@@ -336,7 +336,7 @@ class Preview extends React.Component {
                     >
                       {this.props.selectedSentence === textValue.block_id + "_" + this.props.page_no ? (
                         <ContentEditable
-                          Ref={textValue.block_id + "_" + this.props.page_no}
+                        innerRef={this.textInput}
                           html={this.props.selectedSourceText.text}
                           disabled={false}
                           onBlur={this.handleCheck}

@@ -895,7 +895,7 @@ class PdfFileEditor extends React.Component {
       <div>
         {this.state.sentences &&
           <div>
-            <Grid container spacing={8} style={{ padding: "0 24px 12px 24px" }}>
+            <Grid container spacing={8} style={{ padding: "0px 24px 12px 24px" , position: "fixed", zIndex:1000, background: "#F5F9FA"}}>
               <Grid item xs={12} sm={6} lg={2} xl={2} className="GridFileDetails">
                 <Button
                   variant="outlined"
@@ -962,7 +962,7 @@ class PdfFileEditor extends React.Component {
               </Grid>
             </Grid>
 
-            <Grid container spacing={16} style={{ padding: "0 24px 12px 24px" }}>
+            <Grid container spacing={16} style={{ padding: "64px 24px 12px 24px" ,}}>
               <Grid item xs={12} sm={6} lg={6} xl={6}>
                 <Paper
                   elevation={this.state.edited ? 12 : 2}
