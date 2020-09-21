@@ -30,7 +30,6 @@ class Preview extends React.Component {
   }
 
   handleChange = name => event => {
-    console.log(this.state.selectedValueArray);
     //   let arr = this.state.selectedValueArray;
 
     if (this.state[name]) {
@@ -39,7 +38,6 @@ class Preview extends React.Component {
       arr.push(name);
     }
 
-    console.log(arr, this.state.selectedValueArray, this.state[name]);
     this.setState({ [name]: !this.state[name], selectedValueArray: arr });
   };
   handleBlur = () => {
@@ -52,7 +50,6 @@ class Preview extends React.Component {
     
     this.props.handleEditClick(val, text);
     setTimeout(() => {
-      console.log("focus");
       this.textInput&&this.textInput.current.focus()
     }, 500);
     
@@ -60,19 +57,16 @@ class Preview extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.selectedSentence !== this.props.selectedSentence) {
-      console.log("0000", this.props.selectedSentence);
 
       // this.refs[this.props.selectedSentence].focus();
     }
   }
 
   handleCheck = event => {
-    console.log("evvv-----", event.currentTarget, event.target);
     // this.props.handleCheck(this.props.sentence.block_id + "_" + this.props.page_no, event, false);
   };
 
   handleChangeEvent = event => {
-    console.log("----", event.target);
     // this.props.handleTextChange(event, id)
     this.props.handleSourceChange(event, this.props.sentence);
   };
@@ -238,7 +232,6 @@ class Preview extends React.Component {
                           width: value.text_width + "px"
                         }}
                       >
-                        {/* {console.log("======",this.props.selectedSentence, value.block_id + "_" + this.props.page_no+"_source")} */}
 
                         <Textfit
                           mode="single"

@@ -153,13 +153,12 @@ class Preview extends React.Component {
                 }
             }
             let targetVal = this.handleCalc(editableDiv.textContent.substring(0, caretPos), tokenText)
-
             this.setState({
                 anchorEl: event.currentTarget,
                 showLoader: true,
                 caretPos: caretPos
             })
-            this.props.handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue, caretPos)
+            this.props.handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue, caretPos, editableDiv.textContent.substring(0,caretPos))
             // this.props.fecthNextSuggestion()
 
         } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
