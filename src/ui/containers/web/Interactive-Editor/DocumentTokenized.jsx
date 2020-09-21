@@ -438,7 +438,7 @@ class Preview extends React.Component {
                 <Textfit
                 mode={!sentence.children ? "single" : "multiple"}
                 // onReady={this.handleCheck.bind(this)}
-                style={{ height: sentence.text_height + "px", width: parseInt(sentence.text_width) }}
+                style={{ height: parseInt(sentence.text_height), width: parseInt(sentence.text_width) }}
                 forceSingleModeWidth={true}
                 min={1}
                 max={parseInt(sentence.font_size)}
@@ -475,7 +475,7 @@ class Preview extends React.Component {
                     <Textfit
                     mode={!sentence.children ? "single" : "multiple"}
                     // onReady={this.handleCheck.bind(this)}
-                    style={{ height: sentence.text_height + "px", width: parseInt(sentence.text_width) }}
+                    style={{ height: parseInt(sentence.text_height) , width: parseInt(sentence.text_width) }}
                     forceSingleModeWidth={true}
                     min={1}
                     max={parseInt(sentence.font_size)}

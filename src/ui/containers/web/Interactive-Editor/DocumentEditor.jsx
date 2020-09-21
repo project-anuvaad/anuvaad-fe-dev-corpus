@@ -652,10 +652,8 @@ class PdfFileEditor extends React.Component {
   }
 
   handleSourceChange = ( evt, blockValue) => {
-    
-    console.log("evvv",evt, )
     let a = this.state.selectedSourceText;
-    a.text = evt.target.value;
+    a.text = evt.currentTarget.innerText;
     this.setState({ selectedSourceText: a, height: evt.currentTarget.offsetHeight });
 
     // if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
