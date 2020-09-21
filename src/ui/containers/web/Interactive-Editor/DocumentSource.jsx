@@ -502,7 +502,7 @@ class Preview extends React.Component {
                       showLoader={this.state.showLoader}
                       editableId={this.props.editableId}
                       handleAutoCompleteEditor={this.props.handleAutoCompleteEditor}
-                      handlePaperClick={this.handlePaperClick.bind(this)}
+                      handleClearData={this.handleClearData.bind(this)}
                     /></div>}
 
               </div>
@@ -550,13 +550,8 @@ class Preview extends React.Component {
     )
   }
 
-  handlePaperClick() {
-    if (this.state.contentEditableId) {
-      this.props.handleAutoCompleteEditor("", "")
-      this.setState({
-        contentEditableId: null,
-      })
-    }
+  handleClearData() {
+    this.setState({ contentEditableId: null })
   }
 
   render() {

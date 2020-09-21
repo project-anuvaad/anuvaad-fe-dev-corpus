@@ -119,6 +119,7 @@ class Preview extends React.Component {
         }
         if (event.key === 'Escape') {
             this.props.handleAutoCompleteEditor(null, this.props.paperType)
+            this.props.handleClearData()
             this.setState({
                 contentEditableId: null,
                 selectedIndex: 0,
@@ -398,7 +399,7 @@ class Preview extends React.Component {
     render() {
 
         const { sentence, paperType } = this.props;
-        console.log("hovered",this.props.hoveredSentence,)
+
         var styles = {
             position: "absolute",
             top: sentence.text_top + "px",
@@ -424,7 +425,7 @@ class Preview extends React.Component {
             spanId = this.props.hoveredSentence.split("_")[0] + "_" + this.props.hoveredSentence.split("_")[1]
         }
         let id = sentence.block_id + "_" + this.props.page_no + "_editable"
-        console.log("",this.props.contentEditableId, this.state.editable)
+
         if (this.props.paperType === "source") {
             return (<span id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType} style={styles} key={sentence.block_id}
                 onBlur={event => this.props.handleBlur(event)}
