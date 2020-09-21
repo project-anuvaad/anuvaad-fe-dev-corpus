@@ -398,7 +398,7 @@ class Preview extends React.Component {
     var sel = window.getSelection()
 
     if (el.childNodes[0].textContent.length < this.state.caretPos + data.length) {
-      range.setStart(el.childNodes[0], el.childNodes[0].textContent.length - 1)
+      range.setStart(el.childNodes[0], el.childNodes[0].textContent.length)
     } else {
       range.setStart(el.childNodes[0], this.state.caretPos + data.length)
     }
@@ -501,7 +501,7 @@ class Preview extends React.Component {
                       showLoader={this.state.showLoader}
                       editableId={this.props.editableId}
                       handleAutoCompleteEditor={this.props.handleAutoCompleteEditor}
-
+                      handlePaperClick={this.handlePaperClick.bind(this)}
                     /></div>}
 
               </div>
@@ -547,6 +547,15 @@ class Preview extends React.Component {
 
       </div>
     )
+  }
+
+  handlePaperClick() {
+    if (this.state.contentEditableId) {
+      this.props.handleAutoCompleteEditor("", "")
+      this.setState({
+        contentEditableId: null,
+      })
+    }
   }
 
   render() {
