@@ -77,7 +77,6 @@ class Preview extends React.Component {
     this.setState({ checkbox: true, openDialog: false })
   }
   handleDialog() {
-    debugger
     // if (this.state.title === "Merge") {
 
     //   this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
@@ -118,7 +117,7 @@ class Preview extends React.Component {
         senOp = "merge";
       }
     }
-    debugger
+
     window.getSelection().focusNode.parentNode.id;
     if (!this.state.selectedSentence && !this.props.tokenized) {
       var text = "";

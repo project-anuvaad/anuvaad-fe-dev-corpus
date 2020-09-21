@@ -405,6 +405,7 @@ class Preview extends React.Component {
             fontSize: sentence.font_size + "px",
             color: sentence.font_color,
             width: sentence.text_width + "px",
+            height : sentence.text_height + "px",
             fontFamily: sentence.font_family,
             fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && 'bold',
             fontFamily: sentence.font_family,
@@ -414,20 +415,21 @@ class Preview extends React.Component {
             cursor: !this.state.isEditable && 'pointer',
             padding: '5px 5px 5px 5px',
             lineHeight: sentence.children && parseInt(sentence.text_height / sentence.children.length) + 'px',
-            backgroundColor: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? "#F4FDFF" : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? "#EAEAEA" : "",
-            border: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? '1px solid #1C9AB7' : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no + "_source" && !this.props.selectedBlock ? '1px solid #1C9AB7' : '',
+            backgroundColor: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? "#F4FDFF" : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no+ "_source" &&!this.props.editableId && !this.props.selectedBlock ? "#EAEAEA" : "",
+            border: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? '1px solid #1C9AB7' : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no + "_source" &&!this.props.editableId && !this.props.selectedBlock ? '1px solid #1C9AB7' : '',
         }
         let spanId = null
         if (this.props.hoveredSentence) {
             spanId = this.props.hoveredSentence.split("_")[0] + "_" + this.props.hoveredSentence.split("_")[1]
         }
         let id = sentence.block_id + "_" + this.props.page_no + "_editable"
+        console.log("",this.props.contentEditableId, this.state.editable)
         if (this.props.paperType === "source") {
             return (<span id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType} style={styles} key={sentence.block_id}
                 onBlur={event => this.props.handleBlur(event)}
                 onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
-                onMouseLeave={() => { this.props.value !== true && this.props.handleOnMouseLeave() }}
-                onMouseEnter={() => { this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType) }}
+                onMouseLeave={() => { this.props.value !== true && !this.state.editable && this.props.handleOnMouseLeave() }}
+                onMouseEnter={() => { this.props.value !== true && !this.state.editable && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType) }}
                 ref={textarea => {
                     this.textInput = textarea;
                 }}
