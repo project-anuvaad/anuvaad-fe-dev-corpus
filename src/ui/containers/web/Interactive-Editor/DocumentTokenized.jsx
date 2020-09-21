@@ -4,6 +4,7 @@ import Popover from 'react-text-selection-popover';
 import placeRight from './placeRight'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Popover1 from "./Menu"
+import { Textfit } from "react-textfit";
 
 class Preview extends React.Component {
     constructor(props) {
@@ -415,7 +416,7 @@ class Preview extends React.Component {
             padding: '5px 5px 5px 5px',
             lineHeight: sentence.children && parseInt(sentence.text_height / sentence.children.length) + 'px',
             backgroundColor: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? "#F4FDFF" : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? "#EAEAEA" : "",
-            border: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? '1px solid #1C9AB7' : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no +"_source" && !this.props.selectedBlock ? '1px solid #1C9AB7' : '',
+            border: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? '1px solid #1C9AB7' : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no + "_source" && !this.props.selectedBlock ? '1px solid #1C9AB7' : '',
         }
         let spanId = null
         if (this.props.hoveredSentence) {
@@ -432,28 +433,37 @@ class Preview extends React.Component {
                     this.textInput = textarea;
                 }}
             >
-                {sentence.hasOwnProperty('tokenized_sentences') ? sentence.tokenized_sentences.map((text, tokenIndex) => {
+                <Textfit
+                mode={!sentence.children ? "single" : "multiple"}
+                // onReady={this.handleCheck.bind(this)}
+                style={{ height: sentence.text_height + "px", width: parseInt(sentence.text_width) }}
+                forceSingleModeWidth={true}
+                min={1}
+                max={parseInt(sentence.font_size)}
+            >
+                    {sentence.hasOwnProperty('tokenized_sentences') ? sentence.tokenized_sentences.map((text, tokenIndex) => {
 
 
-                    return (<div style={
-                        this.props.editableId === text.sentence_id + "_" + this.props.page_no ? {
-                            border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF",
-                        } : {}
-                    }>
-                        <span><span id={text.sentence_id} key={text.sentence_id} style={{ borderRadius: '6px', background: (!this.props.editableId && spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : '' }}
-                        >
-                            {text.src ? text.src : text.src_text}
-                        </span><span> </span></span> </div>)
-                }) : <div
-                            id={sentence.block_id + "_" + this.props.page_no}
-                            style={{ backgroundColor: spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no ? '#92a8d1' : "" }}>
+                        return (<div style={
+                            this.props.editableId === text.sentence_id + "_" + this.props.page_no ? {
+                                border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF",
+                            } : {}
+                        }>
+                            <span><span id={text.sentence_id} key={text.sentence_id} style={{ borderRadius: '6px', background: (!this.props.editableId && spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : '' }}
+                            >
+                                {text.src}
+                            </span><span> </span></span> </div>)
+                    }) : <div
+                        id={sentence.block_id + "_" + this.props.page_no}
+                        style={{ backgroundColor: spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no ? '#92a8d1' : "" }}>
                             {sentence.text}
                         </div>
 
-                }
-                    </div>
-                    )
-                } else {
+                    }
+                </Textfit>
+            </div>
+            )
+        } else {
             return (
                 <div id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType} style={styles} key={sentence.block_id}
                     // onBlur={event => this.props.handleBlur(event)}
@@ -463,43 +473,50 @@ class Preview extends React.Component {
                     ref={textarea => {
                         this.textInput = textarea;
                     }}
+                > <Textfit
+                    mode={!sentence.children ? "single" : "multiple"}
+                    // onReady={this.handleCheck.bind(this)}
+                    style={{ height: sentence.text_height + "px", width: parseInt(sentence.text_width) }}
+                    forceSingleModeWidth={true}
+                    min={1}
+                    max={parseInt(sentence.font_size)}
                 >
-                    {sentence.hasOwnProperty('tokenized_sentences') && sentence.tokenized_sentences.map((text, tokenIndex) => {
-                        return (
-                            <div style={
-                                this.props.contentEditableId === text.sentence_id + "_" + this.props.page_no && this.state.editable ? {
-                                    border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF",
-                                } : {}
-                            }>
-                                <span>
-                                    <span
-                                        // id={text.sentence_id} key={text.sentence_id}
-                                        id={this.props.contentEditableId === text.sentence_id + "_" + this.props.page_no ? "editable" : text.sentence_id + "_" + this.props.page_no}
-                                        key={this.props.contentEditableId ? id : text.sentence_id + "_" + this.props.page_no}
-                                        ref={text.sentence_id + "_" + this.props.page_no}
-                                        style={
-                                            {
-                                                outline: "none",
-                                                background: (!this.props.contentEditableId && spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+                        {sentence.hasOwnProperty('tokenized_sentences') && sentence.tokenized_sentences.map((text, tokenIndex) => {
+                            return (
+                                <div style={
+                                    this.props.contentEditableId === text.sentence_id + "_" + this.props.page_no && this.state.editable ? {
+                                        border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF",
+                                    } : {}
+                                }>
+                                    <span>
+                                        <span
+                                            // id={text.sentence_id} key={text.sentence_id}
+                                            id={this.props.contentEditableId === text.sentence_id + "_" + this.props.page_no ? "editable" : text.sentence_id + "_" + this.props.page_no}
+                                            key={this.props.contentEditableId ? id : text.sentence_id + "_" + this.props.page_no}
+                                            ref={text.sentence_id + "_" + this.props.page_no}
+                                            style={
+                                                {
+                                                    outline: "none",
+                                                    background: (!this.props.contentEditableId && spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+                                                }
                                             }
-                                        }
-                                        contentEditable={this.props.contentEditableId === text.sentence_id + "_" + this.props.page_no && this.state.editable ? true : false}
-                                        onKeyDown={(event) => this.handleTargetChange(text.sentence_id + "_" + this.props.page_no, event, "", text, tokenIndex, "senIndex")}
-                                        onClick={(e) => {
-                                            this.props.handleOnClickTarget(e, text.sentence_id + "_" + this.props.page_no, this.props.page_no, text.sentence_id + "_" + this.props.page_no + "_" + this.props.paperType)
-                                        }}
-                                        onDoubleClick={event => {
-                                            this.setState({ contentEditableId: text.sentence_id + "_" + this.props.page_no, editable: true }),
-                                                this.handleDoubleClick(event, text.sentence_id + "_" + this.props.page_no, this.props.page_no, text.sentence_id + "_" + this.props.page_no, tokenIndex, sentence.block_id)
-                                        }}
-                                    >
-                                        {text.tgt ? text.tgt : text.tagged_tgt}
+                                            contentEditable={this.props.contentEditableId === text.sentence_id + "_" + this.props.page_no && this.state.editable ? true : false}
+                                            onKeyDown={(event) => this.handleTargetChange(text.sentence_id + "_" + this.props.page_no, event, "", text, tokenIndex, "senIndex")}
+                                            onClick={(e) => {
+                                                this.props.handleOnClickTarget(e, text.sentence_id + "_" + this.props.page_no, this.props.page_no, text.sentence_id + "_" + this.props.page_no + "_" + this.props.paperType)
+                                            }}
+                                            onDoubleClick={event => {
+                                                this.setState({ contentEditableId: text.sentence_id + "_" + this.props.page_no, editable: true }),
+                                                    this.handleDoubleClick(event, text.sentence_id + "_" + this.props.page_no, this.props.page_no, text.sentence_id + "_" + this.props.page_no, tokenIndex, sentence.block_id)
+                                            }}
+                                        >
+                                            {text.tgt ? text.tgt : text.tagged_tgt}
+                                        </span>
+                                        <span> </span>
                                     </span>
-                                    <span> </span>
-                                </span>
-                            </div>
-                        )
-                    })}
+                                </div>
+                            )
+                        })}</Textfit>
                     <Popover isOpen={this.props.showLoader} containerNode={this.state.anchorEl} placementStrategy={placeRight} >
                         <CircularProgress
                             // disableShrink
