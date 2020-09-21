@@ -27,8 +27,9 @@ class Preview extends React.Component {
         this.setState({ toc: false, value: false })
     }
 
-    handleDoubleClick = (eve, val) => {
-        this.props.handleEditClick(val)
+    handleDoubleClick(event, id, pageNo, ref, sId, blockId) {
+        this.props.handleOnDoubleClickTarget(event, id, pageNo, ref, sId, blockId)
+        setTimeout(() => { this.refs[ref].focus() }, 100)
 
     }
 
@@ -48,12 +49,14 @@ class Preview extends React.Component {
     }
 
     handleOnClickTarget(e, id, pageNo, ref) {
-        this.setState({
-            open: false,
-            showLoader: false,
-            topValue: e.clientY + 15,
-            leftValue: e.clientX + 5,
-        })
+        // this.setState({
+        //     open: false,
+        //     showLoader: false,
+        //     topValue: e.clientY + 15,
+        //     leftValue: e.clientX + 5,
+        // })
+
+
 
         // this.refs[ref].focus()
     }
@@ -104,7 +107,6 @@ class Preview extends React.Component {
 
 
     handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex) {
-        console.log('**********************************')
         var selObj = window.getSelection();
         var range = selObj.getRangeAt(0)
         var boundary = range.getBoundingClientRect();
@@ -115,7 +117,7 @@ class Preview extends React.Component {
             leftValue = boundary.x + 5
         }
         if (event.key === 'Escape') {
-            this.props.handleEditor(null, this.props.paperType)
+            this.props.handleAutoCompleteEditor(null, this.props.paperType)
             this.setState({
                 contentEditableId: null,
                 selectedIndex: 0,
@@ -128,8 +130,6 @@ class Preview extends React.Component {
 
         if (((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed === 'Shift')) {
             let editableDiv = this.refs[refId]
-            console.log(editableDiv)
-            debugger
             var caretPos = 0,
                 sel, range;
             if (window.getSelection) {
@@ -151,12 +151,13 @@ class Preview extends React.Component {
                     caretPos = tempRange.text.length;
                 }
             }
-            let targetVal = this.handleCalc(editableDiv.textContent.substring(0, 5), tokenText)
+            let targetVal = this.handleCalc(editableDiv.textContent.substring(0, caretPos), tokenText)
+
             this.setState({
                 anchorEl: event.currentTarget,
-                showLoader: true
+                showLoader: true,
+                caretPos: caretPos
             })
-            console.log("topValue", topValue)
             this.props.handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue)
             // this.props.fecthNextSuggestion()
 
@@ -397,7 +398,6 @@ class Preview extends React.Component {
     render() {
 
         const { sentence, paperType } = this.props;
-
         var styles = {
             position: "absolute",
             top: sentence.text_top + "px",
@@ -412,10 +412,10 @@ class Preview extends React.Component {
             zIndex: 1,
             outline: "0px solid transparent",
             cursor: !this.state.isEditable && 'pointer',
-            padding: '0px 5px 0px 5px',
+            padding: '5px 5px 5px 5px',
             lineHeight: sentence.children && parseInt(sentence.text_height / sentence.children.length) + 'px',
             backgroundColor: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? "#F4FDFF" : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? "#EAEAEA" : "",
-            border: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? '1px solid #1C9AB7' : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock ? '1px dashed grey' : '',
+            border: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? '1px solid #1C9AB7' : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no +"_source" && !this.props.selectedBlock ? '1px solid #1C9AB7' : '',
         }
         let spanId = null
         if (this.props.hoveredSentence) {
@@ -432,16 +432,28 @@ class Preview extends React.Component {
                     this.textInput = textarea;
                 }}
             >
-                {sentence.hasOwnProperty('tokenized_sentences') ? this.renderLinesWithTokenizedData(sentence, spanId) : <div
-                    id={sentence.block_id + "_" + this.props.page_no}
-                    style={{ backgroundColor: spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no ? '#92a8d1' : "" }}>
-                    {sentence.text}
-                </div>
+                {sentence.hasOwnProperty('tokenized_sentences') ? sentence.tokenized_sentences.map((text, tokenIndex) => {
+
+
+                    return (<div style={
+                        this.props.editableId === text.sentence_id + "_" + this.props.page_no ? {
+                            border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF",
+                        } : {}
+                    }>
+                        <span><span id={text.sentence_id} key={text.sentence_id} style={{ borderRadius: '6px', background: (!this.props.editableId && spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : '' }}
+                        >
+                            {text.src ? text.src : text.src_text}
+                        </span><span> </span></span> </div>)
+                }) : <div
+                            id={sentence.block_id + "_" + this.props.page_no}
+                            style={{ backgroundColor: spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no ? '#92a8d1' : "" }}>
+                            {sentence.text}
+                        </div>
 
                 }
-            </div>
-            )
-        } else {
+                    </div>
+                    )
+                } else {
             return (
                 <div id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType} style={styles} key={sentence.block_id}
                     // onBlur={event => this.props.handleBlur(event)}
@@ -478,7 +490,7 @@ class Preview extends React.Component {
                                         }}
                                         onDoubleClick={event => {
                                             this.setState({ contentEditableId: text.sentence_id + "_" + this.props.page_no, editable: true }),
-                                                this.props.handleOnDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, this.props.page_no, text.sentence_id + "_" + this.props.page_no + "_" + this.props.paperType)
+                                                this.handleDoubleClick(event, text.sentence_id + "_" + this.props.page_no, this.props.page_no, text.sentence_id + "_" + this.props.page_no, tokenIndex, sentence.block_id)
                                         }}
                                     >
                                         {text.tgt ? text.tgt : text.tagged_tgt}

@@ -29,6 +29,7 @@ import DoneIcon from "@material-ui/icons/Done";
 import Typography from "@material-ui/core/Typography";
 import Snackbar from "../../../components/web/common/Snackbar";
 
+
 class PdfFileEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -57,7 +58,8 @@ class PdfFileEditor extends React.Component {
       pagesToBeLoaded: 2,
       fileDetails: {},
       scrollToTop: false,
-      scrollToId: ""
+      scrollToId: "",
+      editableId: ""
     };
   }
 
@@ -73,7 +75,7 @@ class PdfFileEditor extends React.Component {
     this.props.APITransport(apiObj);
     let obj = {};
     obj.download_source_path = this.props.match.params.inputfileid;
-    this.setState({ fileDetails: obj, showLoader: true, buttonDisable: true });
+    this.setState({ fileDetails: obj, showLoader: true, buttonDisable: true, pdfPage: 1 });
   }
 
   componentDidUpdate(prevProps) {
@@ -128,9 +130,12 @@ class PdfFileEditor extends React.Component {
 
   fetchData() {
     let jobId = this.props.match.params.jobid;
+    
     const apiObj = new FileContent(jobId, this.state.currentPage + 1, this.state.currentPage + this.state.pagesToBeLoaded);
     this.props.APITransport(apiObj);
-    this.setState({ buttonDisable: false });
+    
+    
+    this.setState({ buttonDisable: false, pdfPage : this.state.currentPage + 1 });
   }
 
   handleOnMouseEnter(sentenceId, parent, yOffset, pageNo) {
@@ -138,7 +143,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleOnMouseLeave() {
-    this.setState({ hoveredSentence: "", selectedBlockId: '', scrollToId: null, edited: false });
+    this.setState({ hoveredSentence: "", selectedBlockId: '',selectedSourceText:'', scrollToId: null, edited: false });
   }
 
   handleDialog(title, dialogMessage) {
@@ -534,6 +539,10 @@ class PdfFileEditor extends React.Component {
       this.setState({ selectedBlockId: null, clear: false });
   }
 
+  handleAutoCompleteEditor(id, paperType) {
+    this.setState({editableId: id})
+  }
+
   handleDialogSave(selection, operation_type, pageDetails) {
     let startNodeId = selection.startNode.split("_")[0];
     let endNodeId = selection.endNode.split("_")[0];
@@ -622,21 +631,25 @@ class PdfFileEditor extends React.Component {
     history.push(`${process.env.PUBLIC_URL}/view-document`);
   }
   handleSource(selectedBlock, type) {
-    debugger;
     if (type === "table") {
       this.setState({ selectedCell: selectedBlock });
     } else {
-      this.setState({ edited: true });
+      this.setState({ edited: true , selectedSourceText : type, selectedBlock : selectedBlock });
     }
   }
 
-  handleSourceChange = (block, evt, blockValue) => {
-    this.setState({ selectedSourceText: evt.target.value, height: evt.currentTarget.offsetHeight });
-    if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
-      this.handleCheck(block, evt, true);
-    } else if (this.state.height === 0 && evt.currentTarget.offsetHeight - blockValue.text_height > 0) {
-      this.handleCheck(block, evt, true, evt.currentTarget.offsetHeight - blockValue.text_height);
-    }
+  handleSourceChange = ( evt, blockValue) => {
+    
+    console.log("evvv",evt, )
+    let a = this.state.selectedSourceText;
+    a.text = evt.target.value;
+    this.setState({ selectedSourceText: a, height: evt.currentTarget.offsetHeight });
+
+    // if (this.state.height !== 0 && this.state.height !== evt.currentTarget.offsetHeight) {
+    //   this.handleCheck(block, evt, true);
+    // } else if (this.state.height === 0 && evt.currentTarget.offsetHeight - blockValue.text_height > 0) {
+    //   this.handleCheck(block, evt, true, evt.currentTarget.offsetHeight - blockValue.text_height);
+    // }
   };
   handleCheck(block, evt, checkValue, diffValue) {
     let blockId = block.split("_")[0];
@@ -763,6 +776,7 @@ class PdfFileEditor extends React.Component {
     });
   }
 
+
   handleTextChange(event, id) {
     let idValue = id.split("-");
     let newVal = event.currentTarget.innerText;
@@ -834,6 +848,32 @@ class PdfFileEditor extends React.Component {
     }
 
 
+  }
+
+  handleAutoCompleteText(id, sentennceIndex, sentences, pageNo, blockId, textData) {
+    let data = this.state.sentences
+    let blocks
+
+    data && Array.isArray(data) && data.length > 0 && data.map((sentence, i) => {
+      let textBlocks
+      if(pageNo === sentence.page_no) {
+        textBlocks = sentence.text_blocks
+        if(textBlocks && Array.isArray(textBlocks) && textBlocks.length>0) {
+          textBlocks.map((block, blockIndex) => {
+            if(blockId === block.block_id) {
+              blocks = block
+
+              blocks.tokenized_sentences && Array.isArray(blocks.tokenized_sentences) && blocks.tokenized_sentences.length > 0 &&  blocks.tokenized_sentences.map((token, tId) => {
+                if(sentennceIndex === tId) {
+                  token.tgt = textData
+                  token.tagged_tgt = textData
+                }
+              })
+            }
+          })
+        }
+      }
+    })
   }
 
   render() {
@@ -931,7 +971,7 @@ class PdfFileEditor extends React.Component {
                   }}
                 >
                   <Toolbar style={{ color: darkBlack, background: this.state.edited ? "#989E9C" : blueGrey50 }}>
-                    <Typography value="" variant="h6" gutterBottom style={{ flex: 1 }}>
+                    <Typography value="" variant="h6" gutterBottom style={{ flex: 1,  color: '#1C9AB7' }}>
                       Extracted Document
                 </Typography>
                     {this.state.tokenized && (
@@ -949,10 +989,11 @@ class PdfFileEditor extends React.Component {
                   </Toolbar>
                   <div
                     id="scrollableDiv"
-                    style={{
-                      // maxHeight: window.innerHeight - 240,
-                      // overflow: this.state.edited ? "hidden" : "scroll"
-                    }}
+
+                    style={this.state.tokenized ? {
+                      maxHeight: window.innerHeight - 240,
+                      overflow: this.state.edited ? "hidden" : "scroll"
+                    }:{}}
                   >
                     <InfiniteScroll
                       next={this.fetchData.bind(this)}
@@ -976,13 +1017,14 @@ class PdfFileEditor extends React.Component {
                         </p>
                       }
                       // style={{ overflowY: "hidden" }}
-                      // scrollableTarget="scrollableDiv"
+                      scrollableTarget={this.state.tokenized ? "scrollableDiv" : null}
                       onScroll={() => this.handleScroll()}
                     >
                       {this.state.sentences &&
                         this.state.sentences.map((sentence, index) => {
                           return (
                             <div>
+                              
                               <SourceView
                                 paperType="source"
                                 isPreview={true}
@@ -1023,7 +1065,11 @@ class PdfFileEditor extends React.Component {
                                 handleTextChange={this.handleTextChange.bind(this)}
                                 mergeButton={this.state.mergeButton}
                                 updateContent={this.updateContent.bind(this)}
+                                editableId={this.state.editableId}
+                                handleAutoCompleteEditor={this.handleAutoCompleteEditor.bind(this)}
+
                               />
+                              
                             </div>
                           );
                         })}
@@ -1053,7 +1099,7 @@ class PdfFileEditor extends React.Component {
                   ) : (
                       <div>
                         <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
-                          <Typography value="" variant="h6" gutterBottom style={{ flex: 1 }}>
+                          <Typography value="" variant="h6" gutterBottom style={{ flex: 1,  color: '#1C9AB7' }}>
                             Translated document
                     </Typography>
                         </Toolbar>
@@ -1134,6 +1180,9 @@ class PdfFileEditor extends React.Component {
                                       menuTopValue={this.state.menuTopValue}
                                       menuLeftValue={this.state.menuLeftValue}
                                       handleMenuPosition={this.handleMenuPosition.bind(this)}
+                                      handleAutoCompleteText={this.handleAutoCompleteText.bind(this)}
+                                      editableId={this.state.editableId}
+                                      handleAutoCompleteEditor={this.handleAutoCompleteEditor.bind(this)}
                                     />
                                   </div>
                                 );

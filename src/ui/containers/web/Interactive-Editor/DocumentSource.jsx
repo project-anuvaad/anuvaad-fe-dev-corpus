@@ -57,7 +57,6 @@ class Preview extends React.Component {
     }
 
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
-      console.log(this.props.intractiveTrans[0].tgt)
       this.setState({
         showLoader: false,
         autoCompleteText: this.props.intractiveTrans[0].tgt,
@@ -68,6 +67,7 @@ class Preview extends React.Component {
     if (this.state.callApi) {
       this.fecthNextSuggestion()
     }
+
   }
   handleRightClick(event) {
     event.preventDefault();
@@ -190,8 +190,10 @@ class Preview extends React.Component {
     });
   };
 
-  handleEditClick(selectedBlock, event) {
-    this.props.handleSource()
+  handleEditClick(selectedBlock, value) {
+
+    // console.log("------",selectedBlock)
+    this.props.handleSource(selectedBlock, value)
     this.props.hoveredSentence && this.setState({ hoveredSentence: null, selectedSentence: selectedBlock, value: true })
 
   }
@@ -215,13 +217,12 @@ class Preview extends React.Component {
   }
 
   fecthNextSuggestion() {
-    const apiObj = new IntractiveApi(this.state.suggestionSrc, this.state.suggestionText, this.state.suggestionId, true, true);
+    const apiObj = new IntractiveApi(this.state.suggestionSrc, this.state.suggestionText, { model_id: this.props.modelId }, true, true);
     this.props.APITransport(apiObj);
     this.setState({ callApi: false, showLoader: true })
   }
 
   handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue) {
-    // console.log('**********************************')
     // var selObj = window.getSelection();
     // var range = selObj.getRangeAt(0)
     // var boundary = range.getBoundingClientRect();
@@ -249,12 +250,12 @@ class Preview extends React.Component {
     this.setState({
       anchorEl: event.currentTarget,
       // caretPos: caretPos,
-      targetVal: tokenText.tgt,
+      targetVal: targetVal,
       // targetVal: editableDiv.textContent.substring(0, caretPos),
       // tokenIndex,
       showLoader: true,
       // senIndex,
-      // suggestionSrc: tokenText.src,
+      suggestionSrc: tokenText.src,
       // suggestionId: this.props.modelDetails
     })
     this.props.handleMenuPosition(topValue, leftValue)
@@ -278,13 +279,16 @@ class Preview extends React.Component {
     })
   }
 
-  handleOnDoubleClickTarget(e, id, pageNo, ref) {
-    this.props.handleEditor(id, this.props.paperType)
+  handleOnDoubleClickTarget(e, id, pageNo, ref, sId, blockId) {
+    this.props.handleAutoCompleteEditor(id, this.props.paperType)
     this.setState({
       open: false,
       showLoader: false,
       editable: true,
-      contentEditableId: id
+      contentEditableId: id,
+      sId: sId,
+      workingPage: pageNo,
+      blockId: blockId
     })
     // setTimeout(() => { this.refs[ref].focus() }, 100)
   }
@@ -311,31 +315,38 @@ class Preview extends React.Component {
       openContextMenu: false
     })
 
+    let sentences = this.props.sourceSentence
+
     var self = this
     setTimeout(() => {
-      var sentences = Object.assign([], this.state.sentences ? this.state.sentences : this.props.sentences)
+      // var sentences = Object.assign([], this.state.sentences ? this.state.sentences : this.props.sentences)
+      let data = this.state.targetVal + selectedText
+      let block
+      let textBlocks = this.props.sourceSentence && this.props.sourceSentence.textBlocks
+
+      this.props.handleAutoCompleteText(this.state.contentEditableId, this.state.sId, textBlocks, this.state.workingPage, this.state.blockId, data)
       // sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + this.state.autoCompleteText[index].substring(this.state.caretPos)
-      sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + selectedText
+      //   sentences[this.state.senIndex]['tokenized_sentences'][this.state.tokenIndex].target = this.state.targetVal + selectedText
       self.setState({
         sentences: sentences,
         selectedIndex: 0,
-        suggestionText: this.state.targetVal + selectedText,
+        suggestionText: data,
 
         callApi: true,
-        targetVal: this.state.targetVal + selectedText,
+        targetVal: data,
         // caretPos: this.state.caretPos + selectedText.length
       })
-      document.activeElement.blur()
+      // document.activeElement.blur()
     }, 50)
 
-    setTimeout(() => {
-      this.setCaretPosition(selectedText)
+    // setTimeout(() => {
+    //   this.setCaretPosition(selectedText)
 
-    }, 100)
+    // }, 100)
 
     setTimeout(() => {
       this.setState({ showLoader: true })
-      this.fetchCursorPosition()
+      // this.fetchCursorPosition()
     }, 250)
   }
 
@@ -368,7 +379,6 @@ class Preview extends React.Component {
             return (
               <div onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)} onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)}>
                 {this.props.tokenized ?
-
 
                   <BlockView
                     key={index + "_" + sentence.block_id}
@@ -430,6 +440,9 @@ class Preview extends React.Component {
                       contentEditableId={this.state.contentEditableId}
                       editable={this.state.editable}
                       showLoader={this.state.showLoader}
+                      editableId={this.props.editableId}
+                      handleAutoCompleteEditor={this.props.handleAutoCompleteEditor}
+
                     /></div>}
 
               </div>
@@ -508,7 +521,7 @@ class Preview extends React.Component {
               onMouseEnter={() => { this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
             >{this.getContent()}</div>
         }
-        {this.state.openContextMenu && this.props.paperType === "target" && this.state.autoCompleteText &&
+        {this.state.openContextMenu && this.props.paperType === "target" && this.state.autoCompleteText && this.state.targetVal &&
           <Popover1
             isOpen={this.state.openContextMenu}
             topValue={this.props.menuTopValue}
