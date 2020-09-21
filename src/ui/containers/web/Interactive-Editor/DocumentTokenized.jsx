@@ -398,6 +398,7 @@ class Preview extends React.Component {
     render() {
 
         const { sentence, paperType } = this.props;
+        console.log("hovered",this.props.hoveredSentence,)
         var styles = {
             position: "absolute",
             top: sentence.text_top + "px",
@@ -416,7 +417,7 @@ class Preview extends React.Component {
             padding: '5px 5px 5px 5px',
             lineHeight: sentence.children && parseInt(sentence.text_height / sentence.children.length) + 'px',
             backgroundColor: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? "#F4FDFF" : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no+ "_source" &&!this.props.editableId && !this.props.selectedBlock ? "#EAEAEA" : "",
-            border: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? '1px solid #1C9AB7' : this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no + "_source" &&!this.props.editableId && !this.props.selectedBlock ? '1px solid #1C9AB7' : '',
+            border: this.props.selectedSentence === sentence.block_id + "_" + this.props.page_no && this.props.value ? '1px solid #1C9AB7' :(this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no + "_target" || this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no + "_source") &&!this.props.editableId && !this.props.selectedBlock ? '1px solid #1C9AB7' : '',
         }
         let spanId = null
         if (this.props.hoveredSentence) {
