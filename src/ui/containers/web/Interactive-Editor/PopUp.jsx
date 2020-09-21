@@ -38,16 +38,16 @@ class MenuClass extends React.Component {
           </Button>
           
         )}
-          { this.props.operation_type === "split" && (
+          
           <div>
             <Button
             style={{ textTransform: "none", width: "100%", justifyContent: "left" }}
             onClick={() =>
-               this.props.sentenceOp === "merge" ?this.props.handleDialog( "Merge sentence", "Do you want to merge the sentence ?"):this.props.handleDialog( "Split sentence", "Do you want to split the sentence ?")
+               this.props.operation_type === "Merge Sentence" ?this.props.handleDialog( "Merge sentence", "Do you want to merge the sentence ?"):this.props.handleDialog( "Split sentence", "Do you want to split the sentence ?")
             }
           >
             {" "}
-            {this.props.sentenceOp === "merge" ? "Merge Sentence" : "Split sentence"}
+            {this.props.operation_type === "Merge Sentence" ? "Merge Sentence" : "Split sentence"}
           </Button>
             {/* <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Create", "Do you want to add the sentence ?")}>
               {" "}
@@ -66,7 +66,7 @@ class MenuClass extends React.Component {
          </Button> */}
          <br />
        </div>
-        )}
+        
 
         </div>
       </Popover>

@@ -94,7 +94,7 @@ class PdfPreview extends React.Component {
               </Grid>
             )}
           </Grid>
-          <Grid item xs={3} sm={3} lg={3} xl={3} style={{textAlign: "right", display: "flex", flexDirection: "row", justifyContent: "right"}}>
+          {/* <Grid item xs={3} sm={3} lg={3} xl={3} style={{textAlign: "right", display: "flex", flexDirection: "row", justifyContent: "right"}}>
             {this.props.zoom ? (
               <Button
                 color="secondary"
@@ -118,11 +118,16 @@ class PdfPreview extends React.Component {
                   <ZoomInIcon size="Large" style={{color: '#233466'}}/>
                 </Button>
               )}
-          </Grid>
+          </Grid> */}
         </Toolbar>
         <div style={{ maxHeight: window.innerHeight - 240, overflowY: "auto", display: "flex", flexDirection: "row", justifyContent: "center" }} id="pdfDocument">
           <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess} style={{ align: "center",  display: "flex", flexDirection: "row", justifyContent: "center" }}>
-            <Page scale={!this.props.zoom ? this.state.scale : this.state.pageScaleWidth} pageNumber={Number(pageNo) } onLoadSuccess={this.onPageLoad} />
+                  
+          
+           <Page scale={this.state.pageScaleWidth} pageNumber={Number(pageNo) } onLoadSuccess={this.onPageLoad} />
+           {/* <Page scale={!this.props.zoom ? this.state.scale : this.state.pageScaleWidth} pageNumber={Number(this.props.pageNo +1) } onLoadSuccess={this.onPageLoad} /> */}
+        
+            
           </Document>
         </div>
       {/* </Paper> */}
