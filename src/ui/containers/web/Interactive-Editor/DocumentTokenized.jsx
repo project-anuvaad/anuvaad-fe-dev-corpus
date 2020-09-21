@@ -158,7 +158,7 @@ class Preview extends React.Component {
                 showLoader: true,
                 caretPos: caretPos
             })
-            this.props.handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue)
+            this.props.handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue, caretPos)
             // this.props.fecthNextSuggestion()
 
         } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
