@@ -1017,7 +1017,7 @@ class PdfFileEditor extends React.Component {
                         </p>
                       }
                       // style={{ overflowY: "hidden" }}
-                      // scrollableTarget="scrollableDiv"
+                      scrollableTarget={this.state.tokenized ? "scrollableDiv" : null}
                       onScroll={() => this.handleScroll()}
                     >
                       {this.state.sentences &&

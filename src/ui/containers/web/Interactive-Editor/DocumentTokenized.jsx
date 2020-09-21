@@ -158,7 +158,7 @@ class Preview extends React.Component {
                 showLoader: true,
                 caretPos: caretPos
             })
-            this.props.handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue)
+            this.props.handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue, caretPos)
             // this.props.fecthNextSuggestion()
 
         } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
@@ -178,6 +178,220 @@ class Preview extends React.Component {
         this.setState({
             previousKeyPressed: event.key,
             previousPressedKeyCode: event.keyCode
+        })
+    }
+
+    renderLinesWithTokenizedData(sentence, spanId) {
+        // let elems = []
+        // let tokenIndex = 0
+        // var sentence = Object.assign({}, sentenceOld)
+        // let tokenized_data = sentence.tokenized_sentences
+        // if (sentence.children) {
+        //     sentence.children.map((child) => {
+        //         console.log(tokenized_data)
+        //         tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
+        //         if (child.children) {
+        //             debugger
+        //             var text = ''
+        //             child.children.map((ch) => {
+        //                 if (ch.attrib !== 'SUPERSCRIPT')
+        //                     text += ch.text + ' '
+        //             })
+        //             text = text.trim()
+        //             if (text.length == tokenized_data[tokenIndex].src.length) {
+        //                 elems.push(<div style={{ textAlign: 'justify', textAlignLast: 'justify', width: child.text_width + "px" }}><span id={"test"} key={"test"} style={{
+        //                     fontSize: child.font_size + "px",
+        //                     textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //                 }}
+        //                 >
+        //                     {text}
+        //                 </span><br></br></div>)
+        //                 tokenIndex++
+        //             } else if (text.length > tokenized_data[tokenIndex].src.length) {
+        //                 let spans = []
+        //                 while (text.length > 0) {
+        //                     console.log(tokenIndex)
+        //                     console.log(tokenized_data)
+        //                     console.log(text)
+        //                     if (tokenIndex >= tokenized_data.length) {
+        //                         break
+        //                     }
+        //                     if (text.length > tokenized_data[tokenIndex].src.length) {
+        //                         spans.push(<span id={"test"} key={"test"} style={{
+        //                             fontSize: child.font_size + "px",
+        //                             textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //                         }}
+        //                         >
+        //                             {text.substring(0, tokenized_data[tokenIndex].src.length)}
+        //                         </span>)
+        //                         text = text.substring(tokenized_data[tokenIndex].src.length, text.length)
+        //                         tokenIndex++
+        //                     } else {
+        //                         spans.push(<span id={"test"} key={"test"} style={{
+        //                             fontSize: child.font_size + "px",
+        //                             textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //                         }}
+        //                         >
+        //                             {text}
+        //                         </span>)
+        //                         if (text.length == tokenized_data[tokenIndex].src.length) {
+        //                             tokenIndex++
+        //                         } else {
+        //                             tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
+        //                         }
+        //                         text = ''
+        //                     }
+        //                 }
+        //             }
+        //             else {
+        //                 elems.push(<div style={{ textAlign: 'justify', textAlignLast: 'justify', width: child.text_width + "px" }}><span id={"test"} key={"test"} style={{
+        //                     fontSize: child.font_size + "px",
+        //                     textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //                 }}
+        //                 >
+        //                     {text}
+        //                 </span></div>)
+        //                 tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
+        //             }
+        //         }
+        //         else {
+        //             var text = child.text
+        //             text = text.trim()
+        //             if (text.length == tokenized_data[tokenIndex].src.length) {
+        //                 elems.push(<div style={{ textAlign: 'justify', textAlignLast: 'justify', width: child.text_width + "px" }}><span id={"test"} key={"test"} style={{
+        //                     fontSize: child.font_size + "px",
+        //                     textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //                 }}
+        //                 >
+        //                     {text}
+        //                 </span><br></br></div>)
+        //                 tokenIndex++
+        //             } else if (text.length > tokenized_data[tokenIndex].src.length) {
+        //                 let spans = []
+        //                 while (text.length > 0) {
+        //                     if (tokenIndex >= tokenized_data.length) {
+        //                         break
+        //                     }
+        //                     if (text.length > tokenized_data[tokenIndex].src.length) {
+        //                         spans.push(<span id={"test"} key={"test"} style={{
+        //                             fontSize: child.font_size + "px",
+        //                             textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //                         }}
+        //                         >
+        //                             {text.substring(0, tokenized_data[tokenIndex].src.length)}
+        //                         </span>)
+        //                         text = text.substring(tokenized_data[tokenIndex].src.length, text.length)
+        //                         tokenIndex++
+        //                     } else {
+        //                         spans.push(<span id={"test"} key={"test"} style={{
+        //                             fontSize: child.font_size + "px",
+        //                             textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //                         }}
+        //                         >
+        //                             {text}
+        //                         </span>)
+        //                         if (text.length == tokenized_data[tokenIndex].src.length) {
+        //                             tokenIndex++
+        //                         } else {
+        //                             tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length - 1, tokenized_data[tokenIndex].src.length)
+        //                         }
+        //                         text = ''
+        //                     }
+        //                 }
+        //             }
+        //             else {
+        //                 elems.push(<div style={{ textAlign: 'justify', textAlignLast: 'justify', width: child.text_width + "px" }}><span id={"test"} key={"test"} style={{
+        //                     fontSize: child.font_size + "px",
+        //                     textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //                 }}
+        //                 >
+        //                     {text}
+        //                 </span></div>)
+        //                 tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
+        //             }
+
+        //             // elems.push(<div style={{ textAlign: 'justify', textAlignLast: 'justify', width: child.text_width + "px" }}><span id={"test"} key={"test"} style={{
+        //             //     width: child.text_width + "px", fontSize: child.font_size + "px",
+        //             //     textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //             // }}
+        //             // >
+        //             //     {}
+        //             // </span><br></br></div>)
+        //         }
+        //     })
+        // } else {
+        //     let text = sentence.text.trim()
+        //     if (text.length == tokenized_data[tokenIndex].src.length) {
+        //         elems.push(<div style={{ textAlign: 'justify', textAlignLast: 'justify', width: sentence.text_width + "px" }}><span id={"test"} key={"test"} style={{
+        //             fontSize: sentence.font_size + "px",
+        //             textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //         }}
+        //         >
+        //             {text}
+        //         </span><br></br></div>)
+        //         tokenIndex++
+        //     } else if (text.length > tokenized_data[tokenIndex].src.length) {
+        //         let spans = []
+        //         while (text.length > 0) {
+        //             console.log(tokenIndex)
+        //             console.log(tokenized_data)
+        //             console.log(text)
+        //             if (tokenIndex >= tokenized_data.length) {
+        //                 break
+        //             }
+        //             if (text.length > tokenized_data[tokenIndex].src.length) {
+        //                 spans.push(<span id={"test"} key={"test"} style={{
+        //                     fontSize: sentence.font_size + "px",
+        //                     textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //                 }}
+        //                 >
+        //                     {text.substring(0, tokenized_data[tokenIndex].src.length)}
+        //                 </span>)
+        //                 text = text.substring(tokenized_data[tokenIndex].src.length, text.length)
+        //                 tokenIndex++
+        //             } else {
+        //                 spans.push(<span id={"test"} key={"test"} style={{
+        //                     fontSize: sentence.font_size + "px",
+        //                     textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //                 }}
+        //                 >
+        //                     {text}
+        //                 </span>)
+        //                 if (text.length == tokenized_data[tokenIndex].src.length) {
+        //                     tokenIndex++
+        //                 } else {
+        //                     tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
+        //                 }
+        //                 text = ''
+        //             }
+        //         }
+        //     }
+        //     else {
+        //         elems.push(<div style={{ textAlign: 'justify', textAlignLast: 'justify', width: sentence.text_width + "px" }}><span id={"test"} key={"test"} style={{
+        //             fontSize: sentence.font_size + "px",
+        //             textJustify: "inter-word", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        //         }}
+        //         >
+        //             {text}
+        //         </span></div>)
+        //         tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
+        //     }
+
+
+        //     // elems.push(<span><span id={"test"} key={"test"} style={{ width: sentence.text_width + "px", textAlign: 'justify', borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? '#92a8d1' : '' }}
+        //     // >
+        //     //     {sentence.text}
+        //     // </span><span> </span></span>)
+        // }
+        // return elems
+
+        return sentence.tokenized_sentences.map((text, tokenIndex) => {
+
+
+            return <span><span id={text.sentence_id} key={text.sentence_id} style={{ borderRadius: '6px', background: (spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : '' }}
+            >
+                {this.props.paperType === "source" ? (text.src ? text.src : text.src_text) : (text.tgt ? text.tgt : text.tagged_tgt)}
+            </span><span> </span></span>
         })
     }
 

@@ -222,7 +222,7 @@ class Preview extends React.Component {
     this.setState({ callApi: false, showLoader: true })
   }
 
-  handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue) {
+  handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue, caretPos) {
     // var selObj = window.getSelection();
     // var range = selObj.getRangeAt(0)
     // var boundary = range.getBoundingClientRect();
@@ -256,6 +256,7 @@ class Preview extends React.Component {
       showLoader: true,
       // senIndex,
       suggestionSrc: tokenText.src,
+      caretPos: caretPos,
       // suggestionId: this.props.modelDetails
     })
     this.props.handleMenuPosition(topValue, leftValue)
@@ -334,20 +335,78 @@ class Preview extends React.Component {
 
         callApi: true,
         targetVal: data,
-        // caretPos: this.state.caretPos + selectedText.length
+        caretPos: this.state.caretPos + selectedText.length
       })
-      // document.activeElement.blur()
+      document.activeElement.blur()
     }, 50)
 
-    // setTimeout(() => {
-    //   this.setCaretPosition(selectedText)
+    setTimeout(() => {
+      this.setCaretPosition(selectedText)
 
-    // }, 100)
+    }, 100)
 
     setTimeout(() => {
       this.setState({ showLoader: true })
-      // this.fetchCursorPosition()
+      this.fetchCursorPosition()
     }, 250)
+  }
+
+  fetchCursorPosition() {
+    var selObj = window.getSelection();
+    var range = selObj.getRangeAt(0)
+    var boundary = range.getBoundingClientRect();
+    if (boundary) {
+      this.props.handleMenuPosition(boundary.y + 15, boundary.x + 5)
+      // this.setState({
+      //   topValue: boundary.y + 15,
+      //   leftValue: boundary.x + 5
+      // })
+    }
+  }
+
+  setCaretPosition(data) {
+    // var elem = this.refs[this.state.contentEditableId + "_target"]
+    // let elem = document.getElementById()
+    // console.log(this.state.contentEditableId)
+    // caretPos = this.state.caretPos
+    // if(elem != null) {
+    //     if(elem.createTextRange) {
+    //         var range = elem.createTextRange();
+    //         debugger
+    //         range.move('character', caretPos);
+    //         range.select();
+    //     }
+    //     else {
+    //         if(elem.selectionStart) {
+    //             elem.focus();
+    //             debugger
+    //             elem.setSelectionRange(caretPos, caretPos);
+    //         }
+    //         else
+    //            { elem.focus();
+    //             elem.selectionStart = caretPos 
+    //             elem.selectionEnd = caretPos+1
+    //             debugger
+    //           }
+    //     }
+    // } else {
+    //   debugger
+    // }
+
+    var el = document.getElementById("editable")
+    var range = document.createRange()
+    var sel = window.getSelection()
+
+    if (el.childNodes[0].textContent.length < this.state.caretPos + data.length) {
+      range.setStart(el.childNodes[0], el.childNodes[0].textContent.length - 1)
+    } else {
+      range.setStart(el.childNodes[0], this.state.caretPos + data.length)
+    }
+    range.collapse(true)
+
+    sel.removeAllRanges()
+    sel.addRange(range)
+    this.setState({ caretPos: this.state.caretPos + data.length })
   }
 
   getContent() {
