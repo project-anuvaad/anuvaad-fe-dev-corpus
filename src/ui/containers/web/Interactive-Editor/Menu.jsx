@@ -32,7 +32,7 @@ export default class Popovers extends React.Component {
             if (option && option.length > 0) {
                 let data = option.substring(targetVal.length)
                 if (data && data.length > 0 && data !== " ") {
-                    let arr = data.split(" ", 3)
+                    let arr = data.split(" ", 4)
                     if (arr && arr.length > 0) {
                         dataArr.push(arr.join(" "))
                     }

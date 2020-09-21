@@ -224,7 +224,7 @@ class Preview extends React.Component {
     this.setState({ callApi: false, showLoader: true })
   }
 
-  handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue, caretPos) {
+  handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue, caretPos, val) {
     // var selObj = window.getSelection();
     // var range = selObj.getRangeAt(0)
     // var boundary = range.getBoundingClientRect();
@@ -252,7 +252,7 @@ class Preview extends React.Component {
     this.setState({
       anchorEl: event.currentTarget,
       // caretPos: caretPos,
-      targetVal: targetVal,
+      targetVal: val,
       // targetVal: editableDiv.textContent.substring(0, caretPos),
       // tokenIndex,
       showLoader: true,

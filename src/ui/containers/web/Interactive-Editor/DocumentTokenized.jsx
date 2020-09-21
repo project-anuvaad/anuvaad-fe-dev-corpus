@@ -153,13 +153,12 @@ class Preview extends React.Component {
                 }
             }
             let targetVal = this.handleCalc(editableDiv.textContent.substring(0, caretPos), tokenText)
-
             this.setState({
                 anchorEl: event.currentTarget,
                 showLoader: true,
                 caretPos: caretPos
             })
-            this.props.handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue, caretPos)
+            this.props.handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex, targetVal, topValue, leftValue, caretPos, editableDiv.textContent.substring(0,caretPos))
             // this.props.fecthNextSuggestion()
 
         } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
@@ -470,14 +469,14 @@ class Preview extends React.Component {
                         this.textInput = textarea;
                     }}
                 >
-                    {/* <Textfit
+                    <Textfit
                     mode={!sentence.children ? "single" : "multiple"}
                     // onReady={this.handleCheck.bind(this)}
                     style={{ height: sentence.text_height + "px", width: parseInt(sentence.text_width) }}
                     forceSingleModeWidth={true}
                     min={1}
                     max={parseInt(sentence.font_size)}
-                > */}
+                >
                     {sentence.hasOwnProperty('tokenized_sentences') && sentence.tokenized_sentences.map((text, tokenIndex) => {
                         if (this.props.contentEditableId === text.sentence_id + "_" + this.props.page_no && this.state.editable) {
 
@@ -553,7 +552,7 @@ class Preview extends React.Component {
                             )
                         }
                     })}
-                    {/* </Textfit> */}
+                    </Textfit>
                     <Popover isOpen={this.props.showLoader} containerNode={this.state.anchorEl} placementStrategy={placeRight} >
                         <CircularProgress
                             // disableShrink
