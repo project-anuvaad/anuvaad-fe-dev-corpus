@@ -25,7 +25,12 @@ class Preview extends React.Component {
         }
     }
     handleBlur = () => {
-        this.setState({ toc: false, value: false })
+        this.props.handleBlur()
+        this.setState({
+           
+            selectedIndex: 0,
+            editable: false
+        })
     }
 
     handleDoubleClick(event, id, pageNo, ref, sId, blockId) {
@@ -39,6 +44,13 @@ class Preview extends React.Component {
             this.textInput.focus();
         }
     }
+
+    handleBlur = () => {
+        this.setState({
+                    selectedIndex: 0,
+                    editable: false
+                })
+      }
 
 
     handleCheck = event => {
@@ -398,7 +410,6 @@ class Preview extends React.Component {
     render() {
 
         const { sentence, paperType } = this.props;
-        console.log("hovered",this.props.hoveredSentence,)
         var styles = {
             position: "absolute",
             top: sentence.text_top + "px",
@@ -427,7 +438,7 @@ class Preview extends React.Component {
         console.log("",this.props.contentEditableId, this.state.editable)
         if (this.props.paperType === "source") {
             return (<span id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType} style={styles} key={sentence.block_id}
-                onBlur={event => this.props.handleBlur(event)}
+                
                 onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
                 onMouseLeave={() => { this.props.value !== true && !this.state.editable && this.props.handleOnMouseLeave() }}
                 onMouseEnter={() => { this.props.value !== true && !this.state.editable && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType) }}
@@ -436,11 +447,11 @@ class Preview extends React.Component {
                 }}
             >
                 <Textfit
-                mode={!sentence.children ? "single" : "multiple"}
+                mode={ "multiple"}
                 // onReady={this.handleCheck.bind(this)}
                 style={{ height: parseInt(sentence.text_height), width: parseInt(sentence.text_width) }}
                 forceSingleModeWidth={true}
-                min={1}
+                min={6}
                 max={parseInt(sentence.font_size)}
             >
                 {sentence.hasOwnProperty('tokenized_sentences') && sentence.tokenized_sentences.map((text, tokenIndex) => {
@@ -493,6 +504,7 @@ class Preview extends React.Component {
                                     <span>
                                         <span
                                             // id={text.sentence_id} key={text.sentence_id}
+                                            onBlur={event => this.handleBlur(event)}
                                             id={this.props.contentEditableId === text.sentence_id + "_" + this.props.page_no ? "editable" : text.sentence_id + "_" + this.props.page_no}
                                             key={this.props.contentEditableId ? id : text.sentence_id + "_" + this.props.page_no}
                                             ref={text.sentence_id + "_" + this.props.page_no}
