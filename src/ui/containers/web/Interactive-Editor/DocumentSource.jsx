@@ -195,7 +195,6 @@ class Preview extends React.Component {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
             const block_id = sentence.block_id;
             return (
-<<<<<<< HEAD
               <div
                 onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)}
                 onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)}
@@ -232,76 +231,6 @@ class Preview extends React.Component {
                   targetSelected={this.props.targetSelected}
                   targetText={this.props.targetText}
                 />
-=======
-              <div onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)} onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)}>
-                {this.props.tokenized ?
-
-                  <BlockView
-                    key={index + "_" + sentence.block_id}
-                    sentence={sentence}
-                    yAxis={yAxis}
-                    page_no={sourceSentence.page_no}
-                    handleOnMouseEnter={this.props.handleOnMouseEnter}
-                    hoveredSentence={this.props.hoveredSentence}
-                    handleDoubleClick={this.handleDoubleClick.bind(this)}
-                    selectedBlock={this.state.selectedBlock}
-                    handleBlockClick={this.handleBlockClick.bind(this)}
-                    handleSourceChange={this.props.handleSourceChange}
-
-                    isEditable={this.props.isEditable}
-                    handleEditor={this.props.handleEditor}
-                    handleCheck={this.handleCheck.bind(this)}
-                    selectedSourceText={this.props.selectedSourceText}
-                    heightValue={this.props.heightValue}
-                    value={this.state.value}
-                    handleBlur={this.handleBlur.bind(this)}
-                    handleEditClick={this.handleEditClick.bind(this)}
-                    selectedSentence={this.state.selectedSentence}
-                    handleOnMouseLeave={this.props.handleOnMouseLeave}
-                    handleRightClick={this.handleRightClick.bind(this)}
-                    checkbox={this.state.checkbox}
-                    handleTextChange={this.props.handleTextChange}
-                    paperType={this.props.paperType}
-                    mergeButton={this.props.mergeButton}
-                    updateContent={this.props.updateContent}
-                  /> :
-                  <div ref={block_id + "_" + sourceSentence.page_no + "_" + this.props.paperType}>
-                    <TokenizedView
-                      key={index + "_" + sentence.block_id}
-                      sentence={sentence}
-                      yAxis={yAxis}
-                      page_no={sourceSentence.page_no}
-                      handleOnMouseEnter={this.props.handleOnMouseEnter}
-                      hoveredSentence={this.props.hoveredSentence}
-                      handleDoubleClick={this.handleDoubleClick.bind(this)}
-                      selectedBlock={this.state.selectedBlock}
-                      handleBlockClick={this.handleBlockClick.bind(this)}
-                      handleSourceChange={this.props.handleSourceChange}
-                      scrollToId={this.props.scrollToId}
-                      isEditable={this.props.isEditable}
-                      handleEditor={this.props.handleEditor}
-                      handleCheck={this.handleCheck.bind(this)}
-                      selectedSourceText={this.props.selectedSourceText}
-                      heightValue={this.props.heightValue}
-                      value={this.state.value}
-                      handleBlur={this.handleBlur.bind(this)}
-                      handleEditClick={this.handleEditClick.bind(this)}
-                      selectedSentence={this.state.selectedSentence}
-                      handleOnMouseLeave={this.props.handleOnMouseLeave}
-                      paperType={this.props.paperType}
-                      fecthNextSuggestion={this.fecthNextSuggestion.bind(this)}
-                      handleTargetChange={this.handleTargetChange.bind(this)}
-                      handleOnClickTarget={this.handleOnClickTarget.bind(this)}
-                      handleOnDoubleClickTarget={this.handleOnDoubleClickTarget.bind(this)}
-                      contentEditableId={this.state.contentEditableId}
-                      editable={this.state.editable}
-                      showLoader={this.state.showLoader}
-                      editableId={this.props.editableId}
-                      handleAutoCompleteEditor={this.props.handleAutoCompleteEditor}
-                      handleClearData={this.handleClearData.bind(this)}
-                    /></div>}
-
->>>>>>> 2ceb81c19cddcac9cf1ce9c05ec23fb985acd398
               </div>
             );
           })}
@@ -343,7 +272,6 @@ class Preview extends React.Component {
     );
   }
 
-<<<<<<< HEAD
   handlePaperClick() {
     if (this.state.contentEditableId) {
       this.props.handleAutoCompleteEditor("", "");
@@ -351,10 +279,6 @@ class Preview extends React.Component {
         contentEditableId: null
       });
     }
-=======
-  handleClearData() {
-    this.setState({ contentEditableId: null })
->>>>>>> 2ceb81c19cddcac9cf1ce9c05ec23fb985acd398
   }
 
   render() {
