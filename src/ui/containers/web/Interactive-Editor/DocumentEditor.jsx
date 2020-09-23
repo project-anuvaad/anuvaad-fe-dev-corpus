@@ -85,6 +85,7 @@ class PdfFileEditor extends React.Component {
 
     /* Pagination api */
     if (prevProps.fetchContent !== this.props.fetchContent) {
+      console.log("result", this.props.fetchContent.result.data)
       let temp = this.props.fetchContent.result.data;
       // let sentenceObj = temp;
       // sentenceObj &&
@@ -260,7 +261,6 @@ class PdfFileEditor extends React.Component {
 
   handleSourceChange = (evt, blockValue) => {
     if (this.state.pageDetails == "target") {
-      console.log()
       let sentenceObj = this.state.targetText;
       sentenceObj.tgt = evt.target.value;
       this.setState({ targetText: sentenceObj });
@@ -273,7 +273,6 @@ class PdfFileEditor extends React.Component {
   };
 
   handleDoubleClickTarget(event, id, text, pageDetails) {
-    console.log(id);
     this.setState({ targetSelected: id, targetText: text, pageDetails });
   }
   handleCheck(block, evt, checkValue, diffValue) {
@@ -329,7 +328,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleChangeView() {
-    this.setState({ tokenized: !this.state.tokenized, hoveredSentence: "", selectedBlock: "", targetSelected: "", pageDetails: "", edited: false });
+    this.setState({ tokenized: !this.state.tokenized, hoveredSentence: "", selectedBlock: "", targetSelected: "", pageDetails: "", edited: false,mergeButton:"Merge" });
   }
 
   handleCompareDocClose() {
@@ -375,7 +374,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleBlur() {
-    this.setState({ hoveredSentence:'',targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "" });
+    this.setState({ hoveredSentence:'',targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false });
   }
 
   updateContent(val) {
