@@ -87,7 +87,6 @@ class PdfFileEditor extends React.Component {
 
     /* Pagination api */
     if (prevProps.fetchContent !== this.props.fetchContent) {
-      console.log("result", this.props.fetchContent.result.data)
       // let temp = Data.data;
       let temp = this.props.fetchContent.result.data;
       // let sentenceObj = temp;
@@ -139,8 +138,8 @@ class PdfFileEditor extends React.Component {
     this.setState({ buttonDisable: false, pdfPage: this.state.currentPage + 1 });
   }
 
-  handleOnMouseEnter(sentenceId, parent, yOffset, block_identifier) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent, scrollToId: sentenceId, yOffset: yOffset, block_identifier: block_identifier });
+  handleOnMouseEnter(sentenceId, parent, yOffset, block_identifier, has_sibling) {
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent, scrollToId: sentenceId, yOffset: yOffset, block_identifier: block_identifier, has_sibling: has_sibling });
   }
 
   handleOnMouseLeave() {
@@ -676,6 +675,7 @@ class PdfFileEditor extends React.Component {
                               <SourceView
                                 block_identifier={this.state.block_identifier}
                                 sentences={this.state.sentences}
+                                has_sibling={this.state.has_sibling}
                                 paperType="source"
                                 isPreview={true}
                                 parent={this.state.parent}
@@ -787,6 +787,7 @@ class PdfFileEditor extends React.Component {
                                     <SourceView
                                       block_identifier={this.state.block_identifier}
                                       sentences={this.state.sentences}
+                                      has_sibling={this.state.has_sibling}
                                       isPreview={true}
                                       paperType="target"
                                       parent={this.state.parent}
