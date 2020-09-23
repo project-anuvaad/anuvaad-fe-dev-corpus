@@ -268,6 +268,8 @@ class Preview extends React.Component {
                 {/* {this.props.tokenized ? */}
 
                 <BlockView
+                  block_identifier={this.props.block_identifier}
+                  sentences={this.props.sentences}
                   key={index + "_" + sentence.block_id}
                   pageDetail={this.props.pageDetail}
                   sentence={sentence}
