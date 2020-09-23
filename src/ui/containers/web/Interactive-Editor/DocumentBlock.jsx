@@ -261,6 +261,7 @@ class Preview extends React.Component {
   }
 
   makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, elems) {
+    text = text + ""
     text = text.replace(/\s{2,}/g, ' ');
     text = text.trim()
     const div_style = {
