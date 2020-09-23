@@ -82,7 +82,6 @@ class Preview extends React.Component {
     let sentenceStart = window.getSelection().anchorNode.parentNode.id.split("_");
     let sentenceEnd = window.getSelection().focusNode.parentNode.id.split("_");
     let senOp;
-    console.log("----", sentenceStart, sentenceEnd);
     if (sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]) {
       if (sentenceStart[2] === sentenceEnd[2]) {
         senOp = "split";
@@ -172,7 +171,6 @@ class Preview extends React.Component {
   };
 
   handleDoubleClick(selectedBlock, value, pageDetail) {
-    // console.log("------",selectedBlock)
     this.props.handleSource(selectedBlock, value, pageDetail);
     this.setState({ hoveredSentence: null, selectedSentence: selectedBlock, value: true });
   }
