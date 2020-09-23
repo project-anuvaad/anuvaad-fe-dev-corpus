@@ -60,7 +60,7 @@ class AutoComplete extends React.Component {
             this.props.handleBlur()
         }
 
-        if (event.key === 'Tab' || ((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed === 'Shift')) {
+        if (event.key === 'Tab') {
             this.setState({ showSuggestions: true })
             // this.props.fetchSuggestions(this.props.sourceText, this.props.value)
             this.props.fetchSuggestions(this.props.sourceText, caretVal, this.props.tokenObject)
