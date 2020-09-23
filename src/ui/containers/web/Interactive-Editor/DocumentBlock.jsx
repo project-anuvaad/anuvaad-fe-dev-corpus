@@ -153,9 +153,10 @@ class Preview extends React.Component {
                             aId={text.sentence_id + "_" + this.props.page_no}
                             refId={text.sentence_id + "_" + this.props.page_no}
                             style={{
-                              width: sentence.text_width + "px",
-                              height: sentence.text_height + 5 + "px",
-                              resize: "none",
+                              width: "600px",
+                              // height: sentence.text_height + 5 + "px",
+                              // resize: "none",
+                              // resize: "both", 
                               fontSize: sentence.font_size + "px",
                               fontFamily: sentence.font_family,
                               zIndex: 1111,
