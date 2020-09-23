@@ -20,9 +20,9 @@ class Preview extends React.Component {
     };
   }
 
-  handleMouseHover(id, block_identifier) {
+  handleMouseHover(id, block_identifier, has_sibling) {
     if (!this.props.selectedSentence) {
-      this.props.handleOnMouseEnter(id, this.props.parent);
+      this.props.handleOnMouseEnter(id, this.props.parent, 0, block_identifier, has_sibling);
     }
   }
 
@@ -44,7 +44,7 @@ class Preview extends React.Component {
           this.props.value !== true && this.props.handleOnMouseLeave();
         }}
         onMouseEnter={() => {
-          this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType);
+          this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
         }}
         style={{
           textAlign: "justify",
@@ -116,7 +116,7 @@ class Preview extends React.Component {
             this.props.value !== true && this.props.handleOnMouseLeave();
           }}
           onMouseEnter={() => {
-            this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType);
+            this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
           }}
           ref={textarea => {
             this.textInput = textarea;
@@ -255,7 +255,7 @@ class Preview extends React.Component {
       this.props.value !== true && this.props.handleOnMouseLeave();
     }}
       onMouseEnter={() => {
-        this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier);
+        this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
       }} style={div_style}>{spans}</div>)
 
   }
@@ -347,7 +347,7 @@ class Preview extends React.Component {
     var tokenized_sentences = []
     var spanId = this.props.hoveredSentence.split('_')[0]
     var sentence = JSON.parse(JSON.stringify(sen))
-    if (allPages) {
+    if (allPages && this.props.has_sibling) {
       allPages.map((page) => {
         page.text_blocks.map((block) => {
           if (block.block_id == spanId && sentence.block_id == spanId) {
@@ -482,7 +482,7 @@ class Preview extends React.Component {
             this.props.value !== true && this.props.handleOnMouseLeave();
           }}
           onMouseEnter={() => {
-            this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier);
+            this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
           }}
           ref={sentence.block_id + "_" + this.props.page_no}
         >
