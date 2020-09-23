@@ -20,7 +20,7 @@ class Preview extends React.Component {
     };
   }
 
-  handleMouseHover(id) {
+  handleMouseHover(id, block_identifier) {
     if (!this.props.selectedSentence) {
       this.props.handleOnMouseEnter(id, this.props.parent);
     }
@@ -47,20 +47,20 @@ class Preview extends React.Component {
           this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType);
         }}
         style={{
-          top: value.text_top + "px",
-          position: "absolute",
           textAlign: "justify",
+          position: "absolute",
+          top: value.text_top + "px",
           fontSize: value.font_size + "px",
           fontFamily: sentence.font_family,
           fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
           outline: "0px solid transparent",
           zIndex: 1,
           padding: "5px",
-          height: value.text_height + "px",
           lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
           backgroundColor: this.props.selectedSentence === value.block_id + "_" + this.props.page_no + "_source" && this.props.value ? "#F4FDFF" : "",
           border:
             this.props.selectedSentence === value.block_id + "_" + this.props.page_no + "_source" && this.props.value ? "1px solid #1C9AB7" : "",
+          height: value.text_height + "px",
           left: value.text_left + "px",
           textAlignLast: sentence.children.length > 1 && "justify",
           width: value.text_width + "px"
@@ -103,109 +103,113 @@ class Preview extends React.Component {
     }
   };
 
-  handleTargetUpdate = (sentence, styles) => {
+  handleTargetUpdate = (sentence, styles, not_tokenized) => {
     return (
-      <div
-        id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
-        style={styles}
-        key={sentence.block_id}
-        // onBlur={event => this.props.handleBlur(event)}
-        // onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
-        onMouseLeave={() => {
-          this.props.value !== true && this.props.handleOnMouseLeave();
-        }}
-        onMouseEnter={() => {
-          this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType);
-        }}
-        ref={textarea => {
-          this.textInput = textarea;
-        }}
-      >
-        <Textfit
-          mode={sentence.children.length == 1 ? "single" : "multiple"}
-          style={{ height: parseInt(sentence.text_height), width: parseInt(sentence.text_width) }}
-          min={1}
-          max={parseInt(sentence.font_size)}
+      sentence.tokenized_sentences && sentence.tokenized_sentences.length > 0 ?
+        <div
+          id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
+          style={styles}
+          key={sentence.block_id}
+          // onBlur={event => this.props.handleBlur(event)}
+          // onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
+          onMouseLeave={() => {
+            this.props.value !== true && this.props.handleOnMouseLeave();
+          }}
+          onMouseEnter={() => {
+            this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType);
+          }}
+          ref={textarea => {
+            this.textInput = textarea;
+          }}
         >
-          {sentence.hasOwnProperty("tokenized_sentences") &&
-            sentence.tokenized_sentences.map((text, tokenIndex) => {
-              if (this.props.targetSelected === text.sentence_id + "_" + this.props.page_no) {
-                return (
-                  <ClickAwayListener id={tokenIndex} onClickAway={this.handleClickAway}>
+          <Textfit
+            mode={sentence.children && sentence.children.length == 1 ? "single" : "multiple"}
+            style={{ height: parseInt(sentence.text_height), width: parseInt(sentence.text_width) }}
+            min={1}
+            max={parseInt(sentence.font_size)}
+          >
+            {sentence.hasOwnProperty("tokenized_sentences") &&
+              sentence.tokenized_sentences.map((text, tokenIndex) => {
+                if (this.props.targetSelected === text.sentence_id + "_" + this.props.page_no) {
+                  return (
+                    <ClickAwayListener id={tokenIndex} onClickAway={this.handleClickAway}>
 
-                    <div
-                    // onBlur={event => {
-                    //   this.props.handleBlur(event);
-                    // }}
-                    >
-                      <span
-                        onDoubleClick={event => {
-                          this.handleDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, text, "target");
-                        }}
+                      <div
+                      // onBlur={event => {
+                      //   this.props.handleBlur(event);
+                      // }}
                       >
                         <span
-                          ref={text.sentence_id + "_" + this.props.page_no}
-                          style={{
-                            outline: "none"
+                          onDoubleClick={event => {
+                            this.handleDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, text, "target");
                           }}
                         >
-                          <AutoComplete
-                            aId={text.sentence_id + "_" + this.props.page_no}
-                            refId={text.sentence_id + "_" + this.props.page_no}
+                          <span
+                            ref={text.sentence_id + "_" + this.props.page_no}
                             style={{
-                              width: "600px",
-                              // height: sentence.text_height + 5 + "px",
-                              // resize: "none",
-                              // resize: "both", 
-                              fontSize: sentence.font_size + "px",
-                              fontFamily: sentence.font_family,
-                              zIndex: 1111,
-                              borderRadius: "4px",
-                              backgroundColor: "#F4FDFF",
-                              border: '1px solid #1C9AB7',
+                              outline: "none"
                             }}
-                            value={this.props.targetText.tgt}
-                            sourceText={text.src}
-                            handleChangeEvent={this.handleChangeEvent.bind(this)}
-                            fetchSuggestions={this.props.fetchSuggestions}
-                            autoCompleteText={this.props.autoCompleteText}
-                            handleSuggestion={this.props.handleSuggestion}
-                            heightToBeIncreased={sentence.font_size}
-                            handleBlur={this.props.handleBlur}
-                            showSuggestions={this.props.showSuggestions}
-                            handleSuggestionClose={this.props.handleSuggestionClose}
-                            tokenObject={text}
-                          />
+                          >
+                            <AutoComplete
+                              aId={text.sentence_id + "_" + this.props.page_no}
+                              refId={text.sentence_id + "_" + this.props.page_no}
+                              style={{
+                                width: "600px",
+                                // height: sentence.text_height + 5 + "px",
+                                // resize: "none",
+                                // resize: "both", 
+                                fontSize: sentence.font_size + "px",
+                                fontFamily: sentence.font_family,
+                                zIndex: 1111,
+                                borderRadius: "4px",
+                                backgroundColor: "#F4FDFF",
+                                border: '1px solid #1C9AB7',
+                              }}
+                              value={this.props.targetText.tgt}
+                              sourceText={text.src}
+                              handleChangeEvent={this.handleChangeEvent.bind(this)}
+                              fetchSuggestions={this.props.fetchSuggestions}
+                              autoCompleteText={this.props.autoCompleteText}
+                              handleSuggestion={this.props.handleSuggestion}
+                              heightToBeIncreased={sentence.font_size}
+                              handleBlur={this.props.handleBlur}
+                              showSuggestions={this.props.showSuggestions}
+                              handleSuggestionClose={this.props.handleSuggestionClose}
+                              tokenObject={text}
+                            />
+                          </span>
+                          <span> </span>
+                        </span>
+                      </div>
+                    </ClickAwayListener>
+                  );
+                } else {
+                  return (
+                    <span>
+                      <span>
+                        <span
+                          ref={text.sentence_id + "_" + this.props.page_no}
+                          contentEditableId={true}
+                          style={{
+                            outline: "none",
+                            background: (!not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+                          }}
+                          onDoubleClick={event => {
+                            this.handleDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, text, "target");
+                          }}
+                        >
+                          {text.tgt ? text.tgt : text.tagged_tgt}
                         </span>
                         <span> </span>
                       </span>
-                    </div>
-                  </ClickAwayListener>
-                );
-              } else {
-                return (
-                  <span>
-                    <span>
-                      <span
-                        ref={text.sentence_id + "_" + this.props.page_no}
-                        contentEditableId={true}
-                        style={{
-                          outline: "none"
-                        }}
-                        onDoubleClick={event => {
-                          this.handleDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, text, "target");
-                        }}
-                      >
-                        {text.tgt ? text.tgt : text.tagged_tgt}
-                      </span>
-                      <span> </span>
                     </span>
-                  </span>
-                );
-              }
-            })}
-        </Textfit>
-      </div>
+                  );
+                }
+              })}
+          </Textfit>
+        </div>
+        :
+        <div></div>
     );
   };
 
@@ -234,6 +238,195 @@ class Preview extends React.Component {
     this.props.handleSourceChange(event, this.props.sentence);
   };
 
+  makeSpan(text, child, spanId, tokenIndex) {
+    return (<span style={{
+      fontSize: child.font_size + "px",
+      height: child.text_height + "px",
+      left: child.text_left + "px",
+      textJustify: "inter-word", textAlign: 'justify', background: (spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+    }}
+    >
+      {text}
+    </span>)
+  }
+
+  makeDiv(sentence, spans, div_style) {
+    return (<div onMouseLeave={() => {
+      this.props.value !== true && this.props.handleOnMouseLeave();
+    }}
+      onMouseEnter={() => {
+        this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier);
+      }} style={div_style}>{spans}</div>)
+
+  }
+
+  makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, elems) {
+    text = text.replace(/\s{2,}/g, ' ');
+    text = text.trim()
+    const div_style = {
+      textAlign: "justify",
+      position: "absolute",
+      top: child.text_top + "px",
+      fontSize: child.font_size + "px",
+      fontFamily: sentence.font_family,
+      fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
+      outline: "0px solid transparent",
+      zIndex: 1,
+      padding: "5px",
+      lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
+      height: child.text_height + "px",
+      left: child.text_left + "px",
+      textAlignLast: sentence.children && sentence.children.length > 1 && "justify",
+      width: child.text_width + "px"
+    }
+    if (text.length == tokenized_data[tokenIndex].src.length) {
+      if (!child.dont_show) {
+        elems.push(this.makeDiv(sentence, this.makeSpan(text, child, spanId, tokenIndex), div_style))
+      }
+      tokenIndex++
+    } else if (text.length > tokenized_data[tokenIndex].src.length) {
+      let spans = []
+      while (text.length > 0) {
+        if (tokenIndex >= tokenized_data.length) {
+          tokenIndex--
+          if (!child.dont_show) {
+            spans.push(this.makeSpan(text, child, spanId, tokenIndex))
+            spans.push(<span> </span>)
+          }
+          break
+        }
+        if (text.length > tokenized_data[tokenIndex].src.length) {
+          if (!child.dont_show) {
+            spans.push(this.makeSpan(text.substring(0, tokenized_data[tokenIndex].src.length), child, spanId, tokenIndex))
+          }
+          text = text.substring(tokenized_data[tokenIndex].src.length, text.length)
+          text = text.trim()
+          tokenIndex++
+          if (!(tokenIndex == tokenized_data.length && text.length > 0)) {
+            if (!child.dont_show) {
+              spans.push(<span> </span>)
+            }
+          }
+        } else {
+          if (!child.dont_show) {
+            spans.push(this.makeSpan(text, child, spanId, tokenIndex))
+            spans.push(<span> </span>)
+          }
+          if (text.length == tokenized_data[tokenIndex].src.length) {
+            tokenIndex++
+          } else {
+            tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
+          }
+          text = ''
+        }
+      }
+      if (!child.dont_show) {
+        elems.push(this.makeDiv(sentence, spans, div_style))
+      }
+    }
+    else {
+      if (!child.dont_show) {
+        let spans = this.makeSpan(text, child, spanId, tokenIndex)
+        let spans_array = []
+        spans_array.push(spans)
+        spans_array.push(<span> </span>)
+        elems.push(this.makeDiv(sentence, spans_array, div_style))
+      }
+      tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
+    }
+    return { text: text, tokenized_data: tokenized_data, tokenIndex: tokenIndex, spanId: spanId, child: child, elems: elems }
+  }
+
+  renderLinesWithTokenizedData(sentenceOld) {
+    let elems = []
+    let tokenIndex = 0
+    const sen = sentenceOld
+    var allPages = this.props.sentences
+    var childrens = []
+    var tokenized_sentences = []
+    var spanId = this.props.hoveredSentence.split('_')[0]
+    var sentence = JSON.parse(JSON.stringify(sen))
+    if (allPages) {
+      allPages.map((page) => {
+        page.text_blocks.map((block) => {
+          if (block.block_id == spanId && sentence.block_id == spanId) {
+            if (sentence.block_identifier != block.block_identifier) {
+              if (block.children) {
+                block.children.map((c) => {
+                  let child = JSON.parse(JSON.stringify(c))
+                  child.dont_show = true
+                  childrens.push(child)
+                })
+              }
+            } else {
+              if (block.children) {
+                block.children.map((child) => {
+                  childrens.push(JSON.parse(JSON.stringify(child)))
+                })
+              }
+            }
+            if (block.tokenized_sentences.length > 0) {
+              tokenized_sentences = block.tokenized_sentences
+            }
+          }
+        })
+      })
+      if (childrens.length > 0) {
+        sentence.children = JSON.parse(JSON.stringify(childrens))
+        sentence.tokenized_sentences = JSON.parse(JSON.stringify(tokenized_sentences))
+      }
+    }
+
+    var tokenized_data = sentence.tokenized_sentences
+    tokenized_data.map((t) => {
+      t.src = t.src.replace(/\s\s+/g, ' ')
+      t.src = t.src.trim()
+    })
+
+    if (sentence.children) {
+      sentence.children.map((child) => {
+        if (tokenIndex <= tokenized_data.length - 1) {
+          tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
+          tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.replace(/\s\s+/g, ' ');
+          if (child.children) {
+            var text = ''
+            child.children.map((ch) => {
+              if (ch.attrib !== 'SUPERSCRIPT')
+                text += ch.text + ' '
+            })
+            let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, elems)
+            text = obj.text
+            tokenized_data = obj.tokenized_data
+            tokenIndex = obj.tokenIndex
+            spanId = obj.spanId
+            child = obj.child
+            elems = obj.elems
+          }
+          else {
+            var text = child.text
+            let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, elems)
+            text = obj.text
+            tokenized_data = obj.tokenized_data
+            tokenIndex = obj.tokenIndex
+            spanId = obj.spanId
+            child = obj.child
+            elems = obj.elems
+          }
+        }
+      })
+    } else {
+      let text = sentence.text.trim()
+      let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, sentence, elems)
+      text = obj.text
+      tokenized_data = obj.tokenized_data
+      tokenIndex = obj.tokenIndex
+      spanId = obj.spanId
+      sentence = obj.child
+      elems = obj.elems
+    }
+    return elems
+  }
+
   render() {
     const { sentence } = this.props;
 
@@ -256,7 +449,7 @@ class Preview extends React.Component {
       padding: "5px",
       lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
       border:
-        this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType &&
+        this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id &&
           !this.props.selectedBlock &&
           !this.props.targetSelected &&
           this.props.value !== true
@@ -288,11 +481,13 @@ class Preview extends React.Component {
             this.props.value !== true && this.props.handleOnMouseLeave();
           }}
           onMouseEnter={() => {
-            this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType);
+            this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier);
           }}
           ref={sentence.block_id + "_" + this.props.page_no}
-        ></div>
-        {Array.isArray(sentence.children) &&
+        >
+        </div>
+        {!this.props.tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id && this.renderLinesWithTokenizedData(sentence)}
+        {(this.props.tokenized || this.props.hoveredSentence.split('_')[0] !== this.props.sentence.block_id) && Array.isArray(sentence.children) &&
           sentence.children &&
           sentence.children.map((textValue, tokenIndex) => {
             return (
@@ -308,7 +503,7 @@ class Preview extends React.Component {
         ( )
       </div>
     ) : (
-        <div>{this.handleTargetUpdate(sentence, styles)}</div>
+        <div>{this.handleTargetUpdate(sentence, styles, this.props.tokenized)}</div>
       );
   }
 }
