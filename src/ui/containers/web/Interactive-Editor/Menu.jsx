@@ -30,7 +30,7 @@ export default class Popovers extends React.Component {
     }
 
     render() {
-        const { id, isOpen, topValue, leftValue, options, targetVal } = this.props;
+        const { id, isOpen, topValue, leftValue, targetVal } = this.props;
         let dataArr = []
         if (this.props.options && this.props.options.length > 0) {
             this.props.options.map((option, i) => {

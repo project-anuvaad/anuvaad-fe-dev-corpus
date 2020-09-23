@@ -246,6 +246,11 @@ class Preview extends React.Component {
     this.props.APITransport(apiObj);
   }
 
+  handleDoubleClickTarget(event, id, text, pageDetails) {
+    this.setState({autoCompleteText: null})
+    this.props.handleDoubleClickTarget(event, id, text, pageDetails)
+  }
+
   getContent() {
     let yAxis = 0;
     let sourceSentence = this.props.sourceSentence;
@@ -288,7 +293,7 @@ class Preview extends React.Component {
                   paperType={this.props.paperType}
                   mergeButton={this.props.mergeButton}
                   updateContent={this.props.updateContent}
-                  handleDoubleClickTarget={this.props.handleDoubleClickTarget}
+                  handleDoubleClickTarget={this.handleDoubleClickTarget.bind(this)}
                   targetSelected={this.props.targetSelected}
                   targetText={this.props.targetText}
                   autoCompleteText={this.state.autoCompleteText}
