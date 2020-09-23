@@ -3,6 +3,7 @@ import Popover from 'react-text-selection-popover';
 import placeRight from '../../../containers/web/Interactive-Editor/placeRight'
 import Menu from '../../../containers/web/Interactive-Editor/Menu'
 import Button from '@material-ui/core/MenuItem';
+import TextareaAutosize from 'react-textarea-autosize';
 
 var getCaretCoordinates = require('textarea-caret');
 
@@ -107,7 +108,7 @@ class AutoComplete extends React.Component {
         return (
             
             <div>
-                <textarea
+                <TextareaAutosize
                     multiline={true}
                     autoFocus={true}
                     ref={refId}
@@ -117,7 +118,7 @@ class AutoComplete extends React.Component {
                     onChange={this.props.handleChangeEvent}
                     onKeyDown={this.handleEnter}
                 >
-                </textarea>
+                </TextareaAutosize>
                 {
                     this.props.showSuggestions && 
                     <Menu
