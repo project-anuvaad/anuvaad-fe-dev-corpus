@@ -24,11 +24,10 @@ class AutoComplete extends React.Component {
     }
 
     handleEnter = (event) => {
-        // console.log(this.refs["textarea"].getBoundingClientRect())
-        let divdata = this.refs["textarea"].getBoundingClientRect()
+        let divdata = this.refs[this.props.refId].getBoundingClientRect()
         let x = divdata.x
         let y = divdata.y
-        var elem = document.getElementById("123")
+        var elem = document.getElementById(this.props.aId)
 
         var coordinates = getCaretCoordinates(elem, elem.selectionEnd);
         console.log(coordinates)
@@ -46,7 +45,11 @@ class AutoComplete extends React.Component {
 
         }
 
-        if (((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed === 'Shift')) {
+        if (event.key === 'Tab') {
+            debugger
+        }
+
+        if (event.key === 'Tab' || ((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed === 'Shift')) {
             this.setState({ showLoader: true })
         }
         this.setState({
@@ -60,14 +63,17 @@ class AutoComplete extends React.Component {
     }
 
     render() {
-
         const { text, showLoader, suggesstion } = this.props
         return (
             <div>
-                <textarea value={text} multiline={true} autoFocus={true} variant="outlined"
-                    ref="textarea"
-                    id="123"
-                    onChange={this.handleChange}
+                <textarea
+                    multiline={true}
+                    autoFocus={true}
+                    ref={this.props.refId}
+                    id={this.props.aId}
+                    value={this.props.value}
+                    style={this.props.style}
+                    onChange={this.props.handleChangeEvent}
                     onKeyDown={this.handleEnter}
                 >
 
@@ -81,20 +87,20 @@ class AutoComplete extends React.Component {
                         handlePopOverClose={this.handlePopOverClose.bind(this)}
                     />
                         } */}
-                        
+
                 {
-                            this.state.showLoader &&
-                            <Menu
-                                isOpen={true}
-                                topValue={this.state.topValue}
-                                leftValue={this.state.leftValue}
-                                handleOnClick={this.handlePopOverClose.bind(this)}
-                                handlePopOverClose={this.handlePopOverClose.bind(this)}
-                                options={["z aaa", "z bbb", "zccc"]}
-                                targetVal="z"
-                            ></Menu>
-                        }
-                     
+                    this.state.showLoader &&
+                    <Menu
+                        isOpen={true}
+                        topValue={this.state.topValue}
+                        leftValue={this.state.leftValue}
+                        handleOnClick={this.handlePopOverClose.bind(this)}
+                        handlePopOverClose={this.handlePopOverClose.bind(this)}
+                        options={["z aaa", "z bbb", "zccc"]}
+                        targetVal="z"
+                    ></Menu>
+                }
+
             </div >
         );
     }
