@@ -4,6 +4,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { Textfit } from "react-textfit";
 import TextField from "@material-ui/core/TextField";
 import ScaleText from "react-scale-text";
+import AutoComplete from "../../../components/web/common/AutoComplete"
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 var arr = [];
 class Preview extends React.Component {
@@ -88,11 +90,17 @@ class Preview extends React.Component {
               }}
             />
           ) : (
-            value.text
-          )}
+              value.text
+            )}
         </Textfit>
       </div>
     );
+  };
+
+  handleClickAway = () => {
+    if (!this.props.showSuggestions) {
+      this.props.handleBlur();
+    }
   };
 
   handleTargetUpdate = (sentence, styles) => {
@@ -123,49 +131,55 @@ class Preview extends React.Component {
             sentence.tokenized_sentences.map((text, tokenIndex) => {
               if (this.props.targetSelected === text.sentence_id + "_" + this.props.page_no) {
                 return (
-                  <div
-                    onBlur={event => {
-                      this.props.handleBlur(event);
-                    }}
-                  >
-                    <span
-                      onDoubleClick={event => {
-                        this.handleDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, text, "target");
-                      }}
+                  <ClickAwayListener id={tokenIndex} onClickAway={this.handleClickAway}>
+
+                    <div
+                    // onBlur={event => {
+                    //   this.props.handleBlur(event);
+                    // }}
                     >
                       <span
-                        // id={text.sentence_id} key={text.sentence_id}
-
-                        ref={text.sentence_id + "_" + this.props.page_no}
-                        style={{
-                          outline: "none"
-                          // background: (!this.props.contentEditableId && spanId && spanId === this.props.sentence.block_id + "_" + this.props.page_no && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+                        onDoubleClick={event => {
+                          this.handleDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, text, "target");
                         }}
                       >
-                        <textarea
-                          autoFocus={true}
+                        <span
+                          ref={text.sentence_id + "_" + this.props.page_no}
                           style={{
-                            width: sentence.text_width + "px",
-                            // height: sentence.text_height + 5 + "px",
-                            resize: "none",
-                            fontSize: sentence.font_size + "px",
-                            fontFamily: sentence.font_family,
-                            zIndex: 1111,
-                            borderRadius: "4px",
-                            backgroundColor: "#F4FDFF",
-                            borderColor: "#1C9AB7",
-                            color: "#000000"
+                            outline: "none"
                           }}
-                          className="noter-text-area"
-                          value={this.props.targetText.tgt}
-                          onChange={event => {
-                            this.handleChangeEvent(event);
-                          }}
-                        />
+                        >
+                          <AutoComplete
+                            aId={text.sentence_id + "_" + this.props.page_no}
+                            refId={text.sentence_id + "_" + this.props.page_no}
+                            style={{
+                              width: sentence.text_width + "px",
+                              height: sentence.text_height + 5 + "px",
+                              resize: "none",
+                              fontSize: sentence.font_size + "px",
+                              fontFamily: sentence.font_family,
+                              zIndex: 1111,
+                              borderRadius: "4px",
+                              backgroundColor: "#F4FDFF",
+                              border: '1px solid #1C9AB7',
+                            }}
+                            value={this.props.targetText.tgt}
+                            sourceText={text.src}
+                            handleChangeEvent={this.handleChangeEvent.bind(this)}
+                            fetchSuggestions={this.props.fetchSuggestions}
+                            autoCompleteText={this.props.autoCompleteText}
+                            handleSuggestion={this.props.handleSuggestion}
+                            heightToBeIncreased={sentence.font_size}
+                            handleBlur={this.props.handleBlur}
+                            showSuggestions={this.props.showSuggestions}
+                            handleSuggestionClose={this.props.handleSuggestionClose}
+                            tokenObject={text}
+                          />
+                        </span>
+                        <span> </span>
                       </span>
-                      <span> </span>
-                    </span>
-                  </div>
+                    </div>
+                  </ClickAwayListener>
                 );
               } else {
                 return (
@@ -242,9 +256,9 @@ class Preview extends React.Component {
       lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
       border:
         this.props.hoveredSentence === this.props.sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType &&
-        !this.props.selectedBlock &&
-        !this.props.targetSelected &&
-        this.props.value !== true
+          !this.props.selectedBlock &&
+          !this.props.targetSelected &&
+          this.props.value !== true
           ? "2px dotted grey"
           : ""
     };
@@ -262,8 +276,8 @@ class Preview extends React.Component {
         ) : this.props.mergeButton === "Merge" && arr.length > 0 ? (
           this.updateContent(arr)
         ) : (
-          ""
-        )}
+              ""
+            )}
         <div
           id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
           style={styles}
@@ -284,8 +298,8 @@ class Preview extends React.Component {
               <div>
                 {textValue.children
                   ? textValue.children.map((value, i) => {
-                      return this.handleSentenceUpdate(value, sentence);
-                    })
+                    return this.handleSentenceUpdate(value, sentence);
+                  })
                   : this.handleSentenceUpdate(textValue, sentence)}
               </div>
             );
@@ -293,8 +307,8 @@ class Preview extends React.Component {
         ( )
       </div>
     ) : (
-      <div>{this.handleTargetUpdate(sentence, styles)}</div>
-    );
+        <div>{this.handleTargetUpdate(sentence, styles)}</div>
+      );
   }
 }
 

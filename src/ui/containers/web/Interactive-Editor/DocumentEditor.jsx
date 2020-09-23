@@ -57,7 +57,8 @@ class PdfFileEditor extends React.Component {
       fileDetails: {},
       scrollToTop: false,
       scrollToId: "",
-      editableId: ""
+      editableId: "",
+      showNextSuggestion: false
     };
   }
 
@@ -271,6 +272,12 @@ class PdfFileEditor extends React.Component {
       this.setState({ selectedSourceText: sentenceObj, height: evt.currentTarget.offsetHeight });
     }
   };
+
+  handleSuggestion(suggestion, targetValue){
+    let sentenceObj = this.state.targetText;
+    sentenceObj.tgt = targetValue + suggestion
+    this.setState({ targetText: sentenceObj, showNextSuggestion: true });
+  }
 
   handleDoubleClickTarget(event, id, text, pageDetails) {
     this.setState({ targetSelected: id, targetText: text, pageDetails });
@@ -813,6 +820,8 @@ class PdfFileEditor extends React.Component {
                                     handleDoubleClickTarget={this.handleDoubleClickTarget.bind(this)}
                                     handleBlur={this.handleBlur.bind(this)}
                                     targetText={this.state.targetText}
+                                    handleSuggestion={this.handleSuggestion.bind(this)}
+                                    showNextSuggestion={this.state.showNextSuggestion}
                                   />
                                 </div>
                               );

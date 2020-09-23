@@ -8,7 +8,7 @@ import MenuItems from "./PopUp";
 import Dialog from "../../../components/web/common/SimpleDialog";
 import Image from "./Image";
 import { withRouter } from "react-router-dom";
-
+import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 
 class Preview extends React.Component {
   constructor(props) {
@@ -19,7 +19,8 @@ class Preview extends React.Component {
       showLoader: false,
       autoCompleteText: null,
       openContextMenu: false,
-      targetVal: ""
+      targetVal: "",
+      showSuggestions: false
     };
   }
 
@@ -38,15 +39,10 @@ class Preview extends React.Component {
 
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       this.setState({
-        showLoader: false,
-        autoCompleteText: this.props.intractiveTrans[0].tgt,
-        openContextMenu: true
+        autoCompleteText: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt,
       });
     }
 
-    if (this.state.callApi) {
-      this.fecthNextSuggestion();
-    }
   }
 
   handleRightClick(event) {
@@ -153,7 +149,7 @@ class Preview extends React.Component {
     });
   };
   handleBlur = () => {
-    this.setState({ hoveredSentence: null,value: false, selectedSentence: ""});
+    this.setState({ hoveredSentence: null, value: false, selectedSentence: "" });
     this.props.handleBlur();
   };
   handleClose = () => {
@@ -180,8 +176,75 @@ class Preview extends React.Component {
     this.setState({ selectedBlock: null });
   }
 
- 
- 
+  handleCalc(value, tokenText) {
+    const temp = value.split(" ");
+    const tagged_tgt = tokenText.tagged_tgt.split(" ");
+    const tagged_src = tokenText.tagged_src.split(" ");
+    const tgt = tokenText.tgt && tokenText.tgt.split(" ");
+    const src = tokenText.src && tokenText.src.split(" ");
+    const resultArray = [];
+    let index;
+    temp.map(item => {
+      if (item !== " ") {
+        const ind = tgt.indexOf(item, resultArray.length);
+        const arr = [item, `${item},`, `${item}.`];
+        let src_ind = -1;
+        arr.map((el, i) => {
+          if (src_ind === -1) {
+            src_ind = src.indexOf(el);
+            index = i;
+          }
+          return true;
+        });
+        if (ind !== -1) {
+          resultArray.push(tagged_tgt[ind]);
+        } else if (src_ind !== -1) {
+          if (index > 0) {
+            if (src_ind > tagged_src.length - 1) {
+              src_ind = tagged_src.length - 1
+            }
+            const tem = tagged_src[src_ind];
+            resultArray.push(tem.slice(0, tem.length - 1));
+          } else {
+            resultArray.push(tagged_src[src_ind]);
+          }
+        } else {
+          resultArray.push(item);
+        }
+      } else {
+        resultArray.push(item);
+      }
+      return true;
+    });
+    return resultArray.join(" ");
+  }
+  
+  fetchSuggestions(srcText, targetTxt, tokenObject) {
+    let targetVal = targetTxt
+
+    this.setState({ showSuggestions: true })
+    const apiObj = new IntractiveApi(srcText, targetVal, { model_id: this.props.modelId }, true, true);
+    this.props.APITransport(apiObj);
+  }
+
+  handleSuggestionClose() {
+    this.setState({ showSuggestions: false })
+  }
+
+  handleSuggestion(suggestion, value, src, tokenObject) {
+    this.setState({showSuggestions: false})
+    this.props.handleSuggestion(suggestion, value)
+    this.setState({ autoCompleteText: null, tokenObject })
+
+    let targetVal = value + suggestion
+    setTimeout(()=>{
+      this.setState({ showSuggestions: true })
+
+    }, 50)
+
+    const apiObj = new IntractiveApi(src, targetVal, { model_id: this.props.modelId }, true, true);
+    this.props.APITransport(apiObj);
+  }
 
   getContent() {
     let yAxis = 0;
@@ -228,6 +291,11 @@ class Preview extends React.Component {
                   handleDoubleClickTarget={this.props.handleDoubleClickTarget}
                   targetSelected={this.props.targetSelected}
                   targetText={this.props.targetText}
+                  autoCompleteText={this.state.autoCompleteText}
+                  fetchSuggestions={this.fetchSuggestions.bind(this)}
+                  handleSuggestionClose={this.handleSuggestionClose.bind(this)}
+                  handleSuggestion={this.handleSuggestion.bind(this)}
+                  showSuggestions={this.state.showSuggestions}
                 />
               </div>
             );
@@ -308,15 +376,15 @@ class Preview extends React.Component {
             {this.getContent()}
           </Paper>
         ) : (
-          <div
-            style={style}
-            onMouseEnter={() => {
-              this.props.handlePreviewPageChange(sourceSentence.page_no, 1);
-            }}
-          >
-            {this.getContent()}
-          </div>
-        )}
+            <div
+              style={style}
+              onMouseEnter={() => {
+                this.props.handlePreviewPageChange(sourceSentence.page_no, 1);
+              }}
+            >
+              {this.getContent()}
+            </div>
+          )}
         {/* {this.state.openContextMenu && this.props.paperType === "target" && this.state.autoCompleteText && this.state.targetVal && (
           <Popover1
             isOpen={this.state.openContextMenu}
