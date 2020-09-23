@@ -39,7 +39,8 @@ class ViewDocument extends React.Component {
   }
 
   handleClick = rowData => {
-    history.push(`${process.env.PUBLIC_URL}/interactive-document/${rowData[2]}/${rowData[5]}`);
+    history.push(`${process.env.PUBLIC_URL}/interactive-document/${rowData[4]}/${rowData[5]}/${rowData[6]}`);
+    
     // history.push(`${process.env.PUBLIC_URL}/interactive-document/${rowData[4]}/${rowData[5]}`);
   };
 
@@ -63,7 +64,7 @@ class ViewDocument extends React.Component {
           b["name"] = value.input.jobName? value.input.jobName: value.input.files[0].name;
           b["id"] = value.output && (value.output[0].hasOwnProperty('outputFilePath') ? value.output[0].outputFilePath : value.output[0].outputFile);
           b["inputFile"] = value.taskDetails && value.taskDetails.length>0 && value.taskDetails[0].output && value.taskDetails[0].output.length>0 && value.taskDetails[0].output[0].outputFile;
-        
+          b["modelId"] = value && value.input && value.input.files && value.input.files.length>0 && value.input.files[0].model && value.input.files[0].model.model_id
         arr.push(b)
       })
      this.setState({ name: arr , showLoader: false});
@@ -118,10 +119,17 @@ class ViewDocument extends React.Component {
         label: "inputFile",
         options: {
           display: "excluded"
-        }
+        },
+        
       },
-
-    
+      {
+        name: "modelId",
+        label: "modelId",
+        options: {
+          display: "excluded"
+        },
+        
+      },
       {
         name: "status",
         label: translate('common.page.table.status'),

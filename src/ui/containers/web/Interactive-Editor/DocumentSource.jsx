@@ -1,27 +1,26 @@
 import React from "react";
 import BlockView from "./DocumentBlock";
-import FetchDoc from "../../../../flux/actions/apis/fetchdocsentence";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
-import SourceView from "./DocumentSource";
-import Data from "./JudgementNew.json";
-import Typography from "@material-ui/core/Typography";
-import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import MenuItems from "./PopUp";
-import KeyboardTabIcon from "@material-ui/icons/KeyboardTab";
 import Dialog from "../../../components/web/common/SimpleDialog";
-import Toolbar from "@material-ui/core/Toolbar";
-import EditorTable from "./EditorTable";
 import Image from "./Image";
+import { withRouter } from "react-router-dom";
+import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 
 class Preview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       openEl: false,
-      value : false
+      value: false,
+      showLoader: false,
+      autoCompleteText: null,
+      openContextMenu: false,
+      targetVal: "",
+      showSuggestions: false
     };
   }
 
@@ -29,34 +28,38 @@ class Preview extends React.Component {
     if (prevProps.scrollToPage !== this.props.scrollToPage || this.props.scrollToTop) {
       if (this.refs[this.props.scrollToPage]) {
         this.refs[this.props.scrollToPage].scrollIntoView({
-          behavior: "smooth"
-
-        })
+          behavior: "smooth",
+          inline: "end"
+        });
       }
-      
     }
     if (this.props.createBlockId && prevProps.createBlockId !== this.props.createBlockId) {
-      console.log("CDU-----", this.props.createBlockId)
-      this.setState({selectedSentence : this.props.createBlockId, value: true})
+      this.setState({ selectedSentence: this.props.createBlockId, value: true });
     }
-    
+
+    if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
+      this.setState({
+        autoCompleteText: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt,
+      });
+    }
+
+  }
+
+  handleRightClick(event) {
+    event.preventDefault();
+    this.popUp("merge", event);
+  }
+  handleCheckbox() {
+    this.setState({ checkbox: true, openDialog: false });
   }
   handleDialog() {
-
-    if (this.state.title === "Merge") {
-
-      this.props.handleDialogSave(this.state.selection, this.state.operation_type, this.props.sourceSentence);
-    } else if (this.state.title === "Delete") {
-      this.props.handleDeleteBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, '', this.props.sourceSentence)
-    } else if (this.state.title === "Duplicate") {
-      this.props.handleDuplicateBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, '', this.props.sourceSentence)
-    } else if (this.state.title === "Create") {
-      this.props.handleCreateBlock(window.getSelection().anchorNode.parentNode.parentNode.parentElement.id, this.props.sourceSentence)
-      this.setState({ openDialog: false });
-    }
-    else if(this.state.title === "Split sentence" ||this.state.title === "Merge sentence"){
-      this.props.handleSentenceOperation(window.getSelection().anchorNode.parentNode.id,window.getSelection().focusNode.parentNode.id, this.props.sourceSentence, this.state.title)
-      
+    if (this.state.title === "Split sentence" || this.state.title === "Merge sentence") {
+      this.props.handleSentenceOperation(
+        window.getSelection().anchorNode.parentNode.id,
+        window.getSelection().focusNode.parentNode.id,
+        this.props.sourceSentence,
+        this.state.title
+      );
     }
     this.setState({ openDialog: false });
   }
@@ -72,19 +75,19 @@ class Preview extends React.Component {
   }
 
   getSelectionText(event, id) {
-    let sentenceStart = window.getSelection().anchorNode.parentNode.id.split('_');
-    let sentenceEnd = window.getSelection().focusNode.parentNode.id.split('_');
+    let sentenceStart = window.getSelection().anchorNode.parentNode.id.split("_");
+    let sentenceEnd = window.getSelection().focusNode.parentNode.id.split("_");
     let senOp;
-    console.log(sentenceStart,sentenceEnd)
-    if(sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]){
-      if(sentenceStart[2] === sentenceEnd[2]){
+    if (sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]) {
+      if (sentenceStart[2] === sentenceEnd[2]) {
         senOp = "split";
-      }else{
+      } else {
         senOp = "merge";
       }
     }
-     window.getSelection().focusNode.parentNode.id;
-    if (!this.state.selectedSentence) {
+
+    window.getSelection().focusNode.parentNode.id;
+    if (!this.state.selectedSentence && !this.props.tokenized) {
       var text = "";
       let selection = {};
       var activeEl = document.activeElement;
@@ -106,25 +109,27 @@ class Preview extends React.Component {
       if (window.getSelection()) {
         sentences = window.getSelection().toString();
       }
+
       if (sentences) {
+        startNode = window.getSelection().anchorNode.parentNode.id;
+        endNode = window.getSelection().focusNode.parentNode.id;
+        // let parent = startNode ? startNode.split("_")[2] : null
 
-        startNode = window.getSelection().anchorNode.parentNode.parentNode.parentElement.id;
-        endNode = window.getSelection().focusNode.parentNode.parentNode.parentElement.id;
-
-        
-        selection.startNode = startNode;
-        selection.endNode = endNode;
-        if (startNode && endNode && window.getSelection().anchorNode.parentNode.parentNode && startNode === endNode) {
-          this.setState({ operation_type: "split" });
-          window.getSelection().toString() && this.popUp("split", event, senOp);
+        if (this.props.paperType === "source") {
           selection.startNode = startNode;
-        } else if (startNode && endNode && parseInt(startNode) !== parseInt(endNode)) {
-          this.setState({ operation_type: "merge" });
-          window.getSelection().toString() && this.popUp("merge", event);
-        }
+          selection.endNode = endNode;
+          if (startNode && endNode && window.getSelection().anchorNode.parentNode.parentNode && startNode === endNode) {
+            this.setState({ operation_type: "split" });
+            window.getSelection().toString() && this.popUp("split", event, senOp);
+            selection.startNode = startNode;
+          } else if (startNode && endNode && parseInt(startNode.split("_")[2]) !== parseInt(endNode.split("_")[2])) {
+            this.setState({ operation_type: "merge" });
+            window.getSelection().toString() && this.popUp("Merge Sentence", event);
+          }
 
-        this.setState({ selection, value: false });
-        return true;
+          this.setState({ selection, value: false });
+          return true;
+        }
       }
     }
   }
@@ -134,12 +139,19 @@ class Preview extends React.Component {
   }
 
   popUp = (operation_type, event, opType) => {
-    this.setState({ operation_type, openEl: true, topValue: event.clientY - 4, leftValue: event.clientX - 2, selectedBlock: null, sentenceOp: opType });
+    this.setState({
+      operation_type,
+      openEl: true,
+      topValue: event.clientY - 4,
+      leftValue: event.clientX - 2,
+      selectedBlock: null,
+      sentenceOp: opType
+    });
   };
-  handleBlur = ()=>{
-    this.setState({ value : false, selectedSentence : ''})
-    this.props.handleOnMouseLeave()
-}
+  handleBlur = () => {
+    this.setState({ hoveredSentence: null, value: false, selectedSentence: "" });
+    this.props.handleBlur();
+  };
   handleClose = () => {
     this.setState({
       openDialog: false,
@@ -154,61 +166,110 @@ class Preview extends React.Component {
     });
   };
 
-  handleEditClick(selectedBlock, event) {
-    
-    this.props.hoveredSentence && this.setState({ selectedSentence: selectedBlock, value : true })
-    
+  handleDoubleClick(selectedBlock, value, pageDetail) {
+    this.props.handleSource(selectedBlock, value, pageDetail);
+    this.setState({ hoveredSentence: null, selectedSentence: selectedBlock, value: true });
   }
 
-  handleDoubleClick(selectedBlock, event, sentence) {
-    this.props.handleSource(sentence)
-    this.setState({ selectedBlock: selectedBlock, openEl: false, value : true })
-    
+  handleCheck(block, evt, val) {
+    this.props.handleCheck(block, evt, val);
+    this.setState({ selectedBlock: null });
   }
 
-  handleCheck(block, evt, val){
-   
-    this.props.handleCheck(block, evt, val)
-    this.setState({ selectedBlock: null })
+  handleCalc(value, tokenText) {
+    const temp = value.split(" ");
+    const tagged_tgt = tokenText.tagged_tgt.split(" ");
+    const tagged_src = tokenText.tagged_src.split(" ");
+    const tgt = tokenText.tgt && tokenText.tgt.split(" ");
+    const src = tokenText.src && tokenText.src.split(" ");
+    const resultArray = [];
+    let index;
+    temp.map(item => {
+      if (item !== " ") {
+        const ind = tgt.indexOf(item, resultArray.length);
+        const arr = [item, `${item},`, `${item}.`];
+        let src_ind = -1;
+        arr.map((el, i) => {
+          if (src_ind === -1) {
+            src_ind = src.indexOf(el);
+            index = i;
+          }
+          return true;
+        });
+        if (ind !== -1) {
+          resultArray.push(tagged_tgt[ind]);
+        } else if (src_ind !== -1) {
+          if (index > 0) {
+            if (src_ind > tagged_src.length - 1) {
+              src_ind = tagged_src.length - 1
+            }
+            const tem = tagged_src[src_ind];
+            resultArray.push(tem.slice(0, tem.length - 1));
+          } else {
+            resultArray.push(tagged_src[src_ind]);
+          }
+        } else {
+          resultArray.push(item);
+        }
+      } else {
+        resultArray.push(item);
+      }
+      return true;
+    });
+    return resultArray.join(" ");
+  }
+  
+  fetchSuggestions(srcText, targetTxt, tokenObject) {
+    let targetVal = targetTxt
+
+    this.setState({ showSuggestions: true })
+    const apiObj = new IntractiveApi(srcText, targetVal, { model_id: this.props.modelId }, true, true);
+    this.props.APITransport(apiObj);
   }
 
-  handleBlockClick(clear, selectedSentence) {
+  handleSuggestionClose() {
+    this.setState({ showSuggestions: false })
+  }
 
+  handleSuggestion(suggestion, value, src, tokenObject) {
+    this.setState({showSuggestions: false})
+    this.props.handleSuggestion(suggestion, value)
+    this.setState({ autoCompleteText: null, tokenObject })
 
-    ((selectedSentence && this.state.selectedBlock !== selectedSentence) || clear) && this.setState({ selectedBlock: null, clear: false })
-    this.props.handleEditor(selectedSentence)
+    let targetVal = value + suggestion
+    setTimeout(()=>{
+      this.setState({ showSuggestions: true })
+
+    }, 50)
+
+    const apiObj = new IntractiveApi(src, targetVal, { model_id: this.props.modelId }, true, true);
+    this.props.APITransport(apiObj);
+  }
+
+  handleDoubleClickTarget(event, id, text, pageDetails) {
+    this.setState({autoCompleteText: null})
+    this.props.handleDoubleClickTarget(event, id, text, pageDetails)
   }
 
   getContent() {
     let yAxis = 0;
-    let sourceSentence = this.props.sourceSentence
+    let sourceSentence = this.props.sourceSentence;
     return (
-      <div>
-        {sourceSentence.tables &&
-          Array.isArray(sourceSentence.tables) &&
-          sourceSentence.tables.map((table, i) => {
-            return <EditorTable
-              key={i} table={table}
-              tableId={i}
-              pageNo={sourceSentence.page_no}
-              hoveredTableId={this.props.hoveredTableId}
-              popOver={this.props.popOver}
-              currentPage = {this.props.sourceSentence}
-              handleTableHover={this.props.handleTableHover}
-              handlePopUp={this.props.handlePopUp}
-              handleDeleteTable={this.props.handleDeleteTable}
-              handleDeleteBlock={this.props.handleDeleteBlock}
-            ></EditorTable>;
-          })}
-
+      <div ref={sourceSentence.page_no}>
         {sourceSentence.text_blocks &&
           sourceSentence.text_blocks.map((sentence, index) => {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
-
+            const block_id = sentence.block_id;
             return (
-              <div onMouseUp={this.getSelectionText.bind(this)} onKeyUp={this.getSelectionText.bind(this)} ref={sourceSentence.page_no}>
+              <div
+                onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)}
+                onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)}
+              >
+                {/* {this.props.tokenized ? */}
+
                 <BlockView
                   key={index + "_" + sentence.block_id}
+                  pageDetail={this.props.pageDetail}
                   sentence={sentence}
                   yAxis={yAxis}
                   page_no={sourceSentence.page_no}
@@ -216,19 +277,30 @@ class Preview extends React.Component {
                   hoveredSentence={this.props.hoveredSentence}
                   handleDoubleClick={this.handleDoubleClick.bind(this)}
                   selectedBlock={this.state.selectedBlock}
-                  handleBlockClick={this.handleBlockClick.bind(this)}
                   handleSourceChange={this.props.handleSourceChange}
-                  
+                  tokenized={this.props.tokenized}
                   isEditable={this.props.isEditable}
-                  handleEditor={this.props.handleEditor}
-                  handleCheck = {this.handleCheck.bind(this)}
-                  selectedSourceText = {this.props.selectedSourceText}
-                  heightValue  = {this.props.heightValue}
-                  value = {this.state.value}
-                  handleBlur = {this.handleBlur.bind(this)}
-                  handleEditClick = {this.handleEditClick.bind(this)}
-                  selectedSentence = {this.state.selectedSentence}
-                  handleOnMouseLeave = {this.props.handleOnMouseLeave}
+                  handleCheck={this.handleCheck.bind(this)}
+                  selectedSourceText={this.props.selectedSourceText}
+                  heightValue={this.props.heightValue}
+                  value={this.state.value}
+                  handleBlur={this.handleBlur.bind(this)}
+                  selectedSentence={this.state.selectedSentence}
+                  handleOnMouseLeave={this.props.handleOnMouseLeave}
+                  handleRightClick={this.handleRightClick.bind(this)}
+                  checkbox={this.state.checkbox}
+                  handleTextChange={this.props.handleTextChange}
+                  paperType={this.props.paperType}
+                  mergeButton={this.props.mergeButton}
+                  updateContent={this.props.updateContent}
+                  handleDoubleClickTarget={this.handleDoubleClickTarget.bind(this)}
+                  targetSelected={this.props.targetSelected}
+                  targetText={this.props.targetText}
+                  autoCompleteText={this.state.autoCompleteText}
+                  fetchSuggestions={this.fetchSuggestions.bind(this)}
+                  handleSuggestionClose={this.handleSuggestionClose.bind(this)}
+                  handleSuggestion={this.handleSuggestion.bind(this)}
+                  showSuggestions={this.state.showSuggestions}
                 />
               </div>
             );
@@ -257,7 +329,7 @@ class Preview extends React.Component {
             handleDeleteBlock={this.props.handleDeleteBlock}
             pageData={this.props.sourceSentence}
             handleCheck={this.handleCheck.bind(this)}
-            sentenceOp = {this.state.sentenceOp}
+            sentenceOp={this.state.sentenceOp}
           />
         )}
 
@@ -268,7 +340,16 @@ class Preview extends React.Component {
             return <Image imgObj={images}></Image>;
           })}
       </div>
-    )
+    );
+  }
+
+  handlePaperClick() {
+    if (this.state.contentEditableId) {
+      this.props.handleAutoCompleteEditor("", "");
+      this.setState({
+        contentEditableId: null
+      });
+    }
   }
 
   render() {
@@ -276,32 +357,75 @@ class Preview extends React.Component {
 
     let style = {
       maxWidth: sourceSentence.page_width + "px",
-      // width: this.state.sentences && rightPaddingValue-leftPaddingValue+20+ "px",
+      overflowX: "scroll",
+      overflowY: "hidden",
       position: "relative",
-      height: sourceSentence.page_height + "px",
+      minHeight: sourceSentence.page_height + "px",
       backgroundColor: "white",
       marginLeft: "auto",
-      marginRight: "auto"
-      // backgroundImage: this.state.backgroundImage && "url(" + this.state.backgroundImage + ")",
-      // backgroundRepeat: "no-repeat",
-      // backgroundSize: this.state.backgroundSize + "px"
+      marginRight: "auto",
+      borderTop: sourceSentence.page_no !== 1 ? "1px black solid" : "",
+      borderBottom: this.props.pageCount !== sourceSentence ? "1px black solid" : ""
     };
 
     return (
-      <div>
-        {
-          !this.props.isPreview ?
-            <Paper style={style} key = {sourceSentence.page_no}
-              onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
-            >{this.getContent()}</Paper> :
-            <div style={style}
-              onMouseEnter={() => { this.props.isPreview && this.props.handlePreviewPageChange(sourceSentence.page_no, 1) }}
-            >{this.getContent()}</div>
-        }
+      <div ref={el => (this.container = el)}>
+        {!this.props.isPreview ? (
+          <Paper
+            style={style}
+            key={sourceSentence.page_no}
+            onMouseEnter={() => {
+              this.props.handlePreviewPageChange(sourceSentence.page_no, 1);
+            }}
+          >
+            {this.getContent()}
+          </Paper>
+        ) : (
+            <div
+              style={style}
+              onMouseEnter={() => {
+                this.props.handlePreviewPageChange(sourceSentence.page_no, 1);
+              }}
+            >
+              {this.getContent()}
+            </div>
+          )}
+        {/* {this.state.openContextMenu && this.props.paperType === "target" && this.state.autoCompleteText && this.state.targetVal && (
+          <Popover1
+            isOpen={this.state.openContextMenu}
+            topValue={this.props.menuTopValue}
+            leftValue={this.props.menuLeftValue}
+            anchorEl={this.state.anchorEl}
+            handleOnClick={this.handleUpdateSentenceWithPrediction.bind(this)}
+            handlePopOverClose={this.handlePopOverClose.bind(this)}
+            tableItems={this.state.tableItems}
+            tableValues={this.state.tableTitles}
+            handlePopUp={this.props.handlePopUp}
+            caretPos={this.state.caretPos}
+            options={this.state.autoCompleteText}
+            paperType={this.props.paperType}
+            targetVal={this.state.targetVal}
+          ></Popover1>
+        )} */}
       </div>
-
     );
   }
 }
 
-export default Preview;
+const mapStateToProps = state => ({
+  apistatus: state.apistatus,
+  intractiveTrans: state.intractiveTrans
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      APITransport,
+      NMTApi: APITransport,
+      NMTSPApi: APITransport,
+      MODELApi: APITransport
+    },
+    dispatch
+  );
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Preview));
