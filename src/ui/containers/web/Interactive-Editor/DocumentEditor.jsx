@@ -412,11 +412,11 @@ class PdfFileEditor extends React.Component {
     this.setState({ mergeButton: value });
   }
 
-  handleBlur(event, id) {
-
+  handleBlur(id, wf_code) {
     let idDetails = id.split("_")
     let text = "";
     let blockItem;
+    console.log(wf_code)
     // console.log(idDetails,this.state.sentences, this.state.sentences[parseInt(idDetails[1])])
     this.state.sentences.map(page=>{
       if(page.page_no == idDetails[1]){
@@ -433,23 +433,29 @@ class PdfFileEditor extends React.Component {
               
               
             })
-            if(block.text!== text){
+            if (block.text !== text) {
               block.text = text;
               blockItem = block;
 
+            } else if (wf_code) {
+              blockItem = block;
             }
-            
-             
+
+
           }
         }
         )
-      }      
+      }
     })
     
-    blockItem && this.workFlowApi("DP_WFLOW_S_TTR", [blockItem], "update")
-   
-    this.setState({ hoveredSentence:'',targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false,endPage:parseInt(idDetails[1]) ,  startPage : parseInt(idDetails[1]) });
+    
+    if (blockItem && !wf_code)
+      this.workFlowApi("DP_WFLOW_S_TTR", blockItem)
+    else if(wf_code && blockItem)
+      this.workFlowApi(wf_code, blockItem, "update")
+    this.setState({ hoveredSentence: '', targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false, updatePage: parseInt(idDetails[1]) });
   }
+
 
   updateContent(selectedArray) {
     
@@ -461,6 +467,7 @@ class PdfFileEditor extends React.Component {
     }
     
   }
+   
 
   handleTextChange(event, id) {
     let idValue = id.split("-");

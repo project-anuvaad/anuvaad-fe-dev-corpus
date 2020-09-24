@@ -67,11 +67,11 @@ function get_concatenated_text(blocks) {
         if (a.page_no < b.page_no) {
             return -1
         }
-        if (a.text_top > b.text_top) {
-            return 1
-        }
         if (a.text_top < b.text_top) {
             return -1
+        }
+        if (a.text_top > b.text_top) {
+            return 1
         }
         if (a.text_left > b.text_left) {
             return 1
@@ -96,11 +96,11 @@ function get_merged_blocks(sentences, selected_block_ids) {
     let text                = get_concatenated_text(selected_blocks)
 
     let updated_blocks      = []
-    
+
     selected_blocks.forEach(element => {
         if (element.block_identifier == largest_block.block_identifier) {
             element.text    = text
-            
+
         } else {
             element.text                = null
             element.tokenized_sentences = []

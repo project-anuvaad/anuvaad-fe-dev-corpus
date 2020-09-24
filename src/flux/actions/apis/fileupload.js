@@ -4,20 +4,20 @@ import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
 
-  
-  constructor(workflow, file,fileName,source,target,path, model, timeout = 2000) {
-   
+
+  constructor(workflow, file, fileName, source, target, path, model, timeout = 2000) {
+
     super("POST", timeout, false);
     this.type = C.WORKFLOW;
     this.file = file;
     this.fileName = fileName;
     this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.workflow}`
-    this.source=source;
-    this.target=target;
+    this.source = source;
+    this.target = target;
     this.path = path;
     this.model = model;
     this.workflow = workflow;
-   
+
   }
 
   toString() {
@@ -26,10 +26,10 @@ export default class RunExperiment extends API {
 
   processResponse(res) {
     super.processResponse(res);
-   
+
     if (res) {
       this.sentences = res;
-      
+
     }
   }
 
@@ -38,33 +38,33 @@ export default class RunExperiment extends API {
   }
 
   getBody() {
-    if(this.workflow === "DP_WFLOW_FBTTR"){
+    if (this.workflow === "DP_WFLOW_FBTTR") {
       return {
-      
-        "workflowCode":this.workflow,
+
+        "workflowCode": this.workflow,
         "jobName": this.fileName,
         "files": [
           {
-            "path":this.file ,
-            "type":this.path,
-            "locale":this.source,
+            "path": this.file,
+            "type": this.path,
+            "locale": this.source,
             "model": this.model
           }
         ]
-      
-    };
+
+      };
     }
-    else if(this.workflow === "DP_WFLOW_S_TTR"){
-      return{
+    else if (this.workflow === "DP_WFLOW_S_TTR" || this.workflow === "DP_WFLOW_S_C") {
+      return {
         "workflowCode": this.workflow,
   "recordID":this.fileName,
   "locale":this.source, // Only when tokenisation and/or translation is needed
   "modelID":this.model, //Only when Translation is needed
   "textBlocks":this.file
       }
-       //List of text 
+      //List of text 
     }
-    
+
   }
 
   getHeaders() {

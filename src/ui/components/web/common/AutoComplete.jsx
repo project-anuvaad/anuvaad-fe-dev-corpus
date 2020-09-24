@@ -1,9 +1,9 @@
 import React from 'react';
 import Popover from 'react-text-selection-popover';
-import placeRight from '../../../containers/web/Interactive-Editor/placeRight'
 import Menu from '../../../containers/web/Interactive-Editor/Menu'
 import Button from '@material-ui/core/MenuItem';
 import TextareaAutosize from 'react-textarea-autosize';
+import wfcodes from '../../../../configs/workflowcodes'
 
 var getCaretCoordinates = require('textarea-caret');
 
@@ -58,7 +58,7 @@ class AutoComplete extends React.Component {
 
         if (event.key === 'Escape') {
             this.setState({ showSuggestions: false })
-            this.props.handleBlur()
+            this.props.handleBlur(this.props.block_identifier_with_page, wfcodes.DP_WFLOW_S_C)
         }
 
         if (event.key === 'Tab') {
@@ -104,7 +104,7 @@ class AutoComplete extends React.Component {
     }
 
     render() {
-        const { value, aId, refId, style, heightToBeIncreased } = this.props
+        const { value, aId, refId, style } = this.props
         return (
             
             <div>

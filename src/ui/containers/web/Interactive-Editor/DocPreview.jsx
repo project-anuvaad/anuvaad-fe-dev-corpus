@@ -2,17 +2,14 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import "../../../styles/web/InteractivePreview.css";
 import Button from "@material-ui/core/Button";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { Document, Page } from "react-pdf/dist/entry.webpack";
-import CloseIcon from "@material-ui/icons/Close";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Toolbar from "@material-ui/core/Toolbar";
 import { translate } from "../../../../assets/localisation";
-import ZoomInIcon from "@material-ui/icons/ZoomIn";
-import ZoomOutIcon from "@material-ui/icons/ZoomOut";
+
 class PdfPreview extends React.Component {
   constructor(props) {
     super(props);

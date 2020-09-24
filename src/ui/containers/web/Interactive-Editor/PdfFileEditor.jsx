@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import Paper from "@material-ui/core/Paper";
 import SourceView from "./SourceView";
-import Data from "./Data.json";
+// import Data from "./Data.json";
 import Typography from "@material-ui/core/Typography";
 import { blueGrey50, darkBlack } from "material-ui/styles/colors";
 
@@ -24,7 +24,7 @@ class PdfFileEditor extends React.Component {
       sourceSupScripts: "",
       targetSupScripts: "",
       header: "",
-      sentences: Data.data,
+      // sentences: Data.data,
       backgroundImage: "",
       pageArr: [],
       hoveredSentence: ""
