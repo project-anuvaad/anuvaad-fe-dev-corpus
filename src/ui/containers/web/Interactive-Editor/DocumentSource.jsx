@@ -148,9 +148,9 @@ class Preview extends React.Component {
       sentenceOp: opType
     });
   };
-  handleBlur = (event,id, workflowcode) => {
+  handleBlur = (id, workflowcode) => {
     this.setState({ hoveredSentence: null, value: false, selectedSentence: "" });
-    this.props.handleBlur(event,id, workflowcode);
+    this.props.handleBlur(id, workflowcode);
   };
   handleClose = () => {
     this.setState({
@@ -222,7 +222,7 @@ class Preview extends React.Component {
   fetchSuggestions(srcText, targetTxt, tokenObject) {
     let targetVal = targetTxt
 
-    this.setState({ showSuggestions: true })
+    this.setState({ showSuggestions: true,autoCompleteText: null })
     const apiObj = new IntractiveApi(srcText, targetVal, { model_id: this.props.modelId }, true, true);
     this.props.APITransport(apiObj);
   }

@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import ScaleText from "react-scale-text";
 import AutoComplete from "../../../components/web/common/AutoComplete"
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import wfcodes from '../../../../configs/workflowcodes'
 
 var arr = [];
 class Preview extends React.Component {
@@ -29,18 +30,18 @@ class Preview extends React.Component {
 
   updateContent(val) {
 
-    arr.map(arrValue=>{
-      this.setState({[arrValue]: false})
+    arr.map(arrValue => {
+      this.setState({ [arrValue]: false })
     })
     this.props.updateContent(val);
-    this.setState({selectedValueArray : []})
+    this.setState({ selectedValueArray: [] })
     arr = []
   }
 
   handleSentenceUpdate = (value, sentence) => {
     return (
       <div
-        onBlur={event => this.props.handleBlur(event,this.props.sentence.block_identifier + "_" + this.props.page_no + "_" + this.props.paperType)}
+        onBlur={event => this.props.handleBlur(this.props.sentence.block_identifier + "_" + this.props.page_no + "_" + this.props.paperType)}
         id={value.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
         ref={value.block_id + "_" + this.props.page_no}
         onDoubleClick={event => {
@@ -103,9 +104,9 @@ class Preview extends React.Component {
     );
   };
 
-  handleClickAway = () => {
+  handleClickAway = (id, wf_code) => {
     if (!this.props.showSuggestions) {
-      this.props.handleBlur();
+      this.props.handleBlur(id, wf_code);
     }
   };
 
@@ -138,9 +139,13 @@ class Preview extends React.Component {
               sentence.tokenized_sentences.map((text, tokenIndex) => {
                 if (this.props.targetSelected === text.sentence_id + "_" + this.props.page_no) {
                   return (
-                    <ClickAwayListener id={tokenIndex} onClickAway={this.handleClickAway}>
+                    <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, wfcodes.DP_WFLOW_S_C)}>
 
                       <div
+                        style={{
+                          position: 'relative',
+                          zIndex: 1
+                        }}
                       // onBlur={event => {
                       //   this.props.handleBlur(event);
                       // }}
@@ -159,6 +164,7 @@ class Preview extends React.Component {
                             <AutoComplete
                               aId={text.sentence_id + "_" + this.props.page_no}
                               refId={text.sentence_id + "_" + this.props.page_no}
+                              block_identifier_with_page={sentence.block_identifier + "_" + this.props.page_no}
                               style={{
                                 width: "600px",
                                 // height: sentence.text_height + 5 + "px",
@@ -345,7 +351,7 @@ class Preview extends React.Component {
         elems.push(this.makeDiv(sentence, spans_array, div_style))
       }
       tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
-      tokenized_data[tokenIndex].src =  tokenized_data[tokenIndex].src.trim()
+      tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
     }
     return { text: text, tokenized_data: tokenized_data, tokenIndex: tokenIndex, spanId: spanId, child: child, elems: elems }
   }
@@ -499,7 +505,7 @@ class Preview extends React.Component {
           id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
           style={styles}
           key={sentence.block_id}
-          onBlur={event => this.props.handleBlur(event,this.props.sentence.block_identifier + "_" + this.props.page_no + "_" + this.props.paperType)}
+          onBlur={event => this.props.handleBlur(this.props.sentence.block_identifier + "_" + this.props.page_no + "_" + this.props.paperType)}
           onMouseLeave={() => {
             this.props.value !== true && this.props.handleOnMouseLeave();
           }}

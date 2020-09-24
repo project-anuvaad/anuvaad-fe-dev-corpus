@@ -396,8 +396,7 @@ class PdfFileEditor extends React.Component {
     this.setState({ mergeButton: value });
   }
 
-  handleBlur(event, id) {
-
+  handleBlur(id) {
     let idDetails = id.split("_")
     let text = "";
     let blockItem;
