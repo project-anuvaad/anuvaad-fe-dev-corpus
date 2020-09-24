@@ -6,7 +6,6 @@ import { withRouter } from "react-router-dom";
 import SourceView from "./PdfFileEditor";
 import Grid from "@material-ui/core/Grid";
 import Editor from "./PdfEditor";
-import Data from "./Data.json";
 import MenuItems from "./PopUp";
 import Dialog from "../../../components/web/common/SimpleDialog";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
@@ -38,7 +37,7 @@ class Preview extends React.Component {
       hoveredTable: "",
       zoom: false,
       popOver: true,
-      sentences: Data.data
+      // sentences: Data.data
     };
   }
 
@@ -224,7 +223,7 @@ class Preview extends React.Component {
               hadleSentenceSave={this.handleDone.bind(this)}
               handleSave={this.handleSave.bind(this)}
               handleCellOnClick={this.handleCellOnClick.bind(this)}
-              sentences={Data}
+              // sentences={Data}
               handleSelectionClose={this.handleClose.bind(this)}
             />
           </Grid>

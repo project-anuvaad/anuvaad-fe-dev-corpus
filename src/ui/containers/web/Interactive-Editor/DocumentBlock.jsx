@@ -6,6 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import ScaleText from "react-scale-text";
 import AutoComplete from "../../../components/web/common/AutoComplete"
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import wfcodes from '../../../../configs/workflowcodes'
 
 var arr = [];
 class Preview extends React.Component {
@@ -16,7 +17,8 @@ class Preview extends React.Component {
       isEditable: false,
       value: false,
       selectedValueArray: [],
-      mergeButton: ""
+      mergeButton: "",
+      workflowcode: ""
     };
   }
 
@@ -26,15 +28,34 @@ class Preview extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.mergeButton !== this.props.mergeButton && this.props.mergeButton == "Merge" && arr.length>0) {
+      console.log("api fired----", this.props.mergeButton , arr.length)
+      this.sentenceClear(arr)
+      this.updateContent(arr)
+      
+      
+    }
+  }
+
+  sentenceClear(){
+    return arr.map(arrValue=>{
+      console.log(this.state[arrValue   ])
+      this.setState({[arrValue]: false})
+    })
+  }
   updateContent(val) {
+    
+    
     this.props.updateContent(val);
-    arr = [];
+    this.setState({ selectedValueArray: [] })
+    arr = []
   }
 
   handleSentenceUpdate = (value, sentence) => {
     return (
       <div
-        onBlur={event => this.props.handleBlur(event)}
+        onBlur={event => this.props.handleBlur(this.props.sentence.block_identifier + "_" + this.props.page_no + "_" + this.props.paperType)}
         id={value.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
         ref={value.block_id + "_" + this.props.page_no}
         onDoubleClick={event => {
@@ -97,9 +118,10 @@ class Preview extends React.Component {
     );
   };
 
-  handleClickAway = () => {
+  handleClickAway = (id, text, wf_code) => {
     if (!this.props.showSuggestions) {
-      this.props.handleBlur();
+      this.handleChangeEvent({ target: { value: text } })
+      this.props.handleBlur(id, wf_code);
     }
   };
 
@@ -132,9 +154,13 @@ class Preview extends React.Component {
               sentence.tokenized_sentences.map((text, tokenIndex) => {
                 if (this.props.targetSelected === text.sentence_id + "_" + this.props.page_no) {
                   return (
-                    <ClickAwayListener id={tokenIndex} onClickAway={this.handleClickAway}>
+                    // <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, wfcodes.DP_WFLOW_S_C)}>
 
                       <div
+                        style={{
+                          position: 'relative',
+                          zIndex: 1
+                        }}
                       // onBlur={event => {
                       //   this.props.handleBlur(event);
                       // }}
@@ -153,6 +179,7 @@ class Preview extends React.Component {
                             <AutoComplete
                               aId={text.sentence_id + "_" + this.props.page_no}
                               refId={text.sentence_id + "_" + this.props.page_no}
+                              block_identifier_with_page={sentence.block_identifier + "_" + this.props.page_no}
                               style={{
                                 width: "600px",
                                 // height: sentence.text_height + 5 + "px",
@@ -165,8 +192,11 @@ class Preview extends React.Component {
                                 backgroundColor: "#F4FDFF",
                                 border: '1px solid #1C9AB7',
                               }}
+                              tokenIndex={tokenIndex}
                               value={this.props.targetText.tgt}
+                              sentence={sentence}
                               sourceText={text.src}
+                              page_no={this.props.page_no}
                               handleChangeEvent={this.handleChangeEvent.bind(this)}
                               fetchSuggestions={this.props.fetchSuggestions}
                               autoCompleteText={this.props.autoCompleteText}
@@ -175,13 +205,14 @@ class Preview extends React.Component {
                               handleBlur={this.props.handleBlur}
                               showSuggestions={this.props.showSuggestions}
                               handleSuggestionClose={this.props.handleSuggestionClose}
+                              handleClickAway={this.handleClickAway.bind(this)}
                               tokenObject={text}
                             />
                           </span>
                           <span> </span>
                         </span>
                       </div>
-                    </ClickAwayListener>
+                    // </ClickAwayListener>
                   );
                 } else {
                   return (
@@ -225,9 +256,7 @@ class Preview extends React.Component {
 
     this.setState({ [name]: !this.state[name], selectedValueArray: arr });
   };
-  handleBlur = () => {
-    this.setState({ toc: false, value: false });
-  };
+
 
   handleDoubleClick = (event, val, text, pageDetail) => {
     event.preventDefault();
@@ -341,7 +370,7 @@ class Preview extends React.Component {
         elems.push(this.makeDiv(sentence, spans_array, div_style))
       }
       tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
-      tokenized_data[tokenIndex].src =  tokenized_data[tokenIndex].src.trim()
+      tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
     }
     return { text: text, tokenized_data: tokenized_data, tokenIndex: tokenIndex, spanId: spanId, child: child, elems: elems }
   }
@@ -478,7 +507,7 @@ class Preview extends React.Component {
 
     return this.props.paperType === "source" ? (
       <div>
-        {this.props.tokenized && this.props.mergeButton === "save" ? (
+        {this.props.tokenized && this.props.mergeButton === "save" && this.props.sentence.text && (
           <Checkbox
             style={{ top: sentence.text_top - 10 + "px", left: sentence.text_left - 50 + "px", position: "absolute", zIndex: 4 }}
             checked={this.state[sentence.block_id + "_" + this.props.page_no]}
@@ -486,16 +515,12 @@ class Preview extends React.Component {
             value={sentence.block_id + "_" + this.props.page_no}
             color="primary"
           />
-        ) : this.props.mergeButton === "Merge" && arr.length > 0 ? (
-          this.updateContent(arr)
-        ) : (
-              ""
-            )}
+        ) }
         <div
           id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
           style={styles}
           key={sentence.block_id}
-          onBlur={event => this.props.handleBlur(event)}
+          onBlur={event => this.props.handleBlur(this.props.sentence.block_identifier + "_" + this.props.page_no + "_" + this.props.paperType)}
           onMouseLeave={() => {
             this.props.value !== true && this.props.handleOnMouseLeave();
           }}

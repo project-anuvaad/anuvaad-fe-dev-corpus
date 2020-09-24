@@ -1,7 +1,6 @@
 import React from "react";
 import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
-import { translate } from "../../../../assets/localisation";
 
 class MenuClass extends React.Component {
   render() {

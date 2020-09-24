@@ -27,7 +27,9 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import DoneIcon from "@material-ui/icons/Done";
 import Typography from "@material-ui/core/Typography";
 import Snackbar from "../../../components/web/common/Snackbar";
-import Data from './Data.json'
+import WorkFlow from "../../../../flux/actions/apis/fileupload";
+
+const BLOCK_OPS = require('../../../../utils/block.operations')
 
 class PdfFileEditor extends React.Component {
   constructor(props) {
@@ -59,7 +61,8 @@ class PdfFileEditor extends React.Component {
       scrollToTop: false,
       scrollToId: "",
       editableId: "",
-      showNextSuggestion: false
+      showNextSuggestion: false,
+      workflow:"DP_WFLOW_S_TTR"
     };
   }
 
@@ -83,6 +86,12 @@ class PdfFileEditor extends React.Component {
         sentences: temp,
         showLoader: false
       });
+    }
+    if (prevProps.workflowStatus !== this.props.workflowStatus) {
+      const apiObj = new FileContent(this.props.match.params.jobid,this.state.startPage, this.state.endPage );
+      this.props.APITransport(apiObj);
+      this.setState({apiStatus: true})
+      
     }
 
     /* Pagination api */
@@ -118,6 +127,10 @@ class PdfFileEditor extends React.Component {
       } else {
         this.setState({
           sentences: temp,
+          open: this.state.apiStatus && true,
+          message : this.state.apiStatus && this.state.apiCall == "merge"?  "Sentence merged successfully!":"Sentence updated successfully...!",
+          apiStatus: false,
+          apiCall : false,
           showLoader: false,
           pageCount: this.props.fetchContent.result.count,
           // pageCount: Data.count,
@@ -127,6 +140,22 @@ class PdfFileEditor extends React.Component {
         });
       }
     }
+  }
+
+  getPageId(blocks) {
+    let page_ids = []
+    blocks.forEach(element => {
+        page_ids.push(parseInt(element.split('_')[1]))
+    });
+    console.log("page-ds",page_ids, Math.max(...page_ids), Math.max(...page_ids))
+    this.setState({startPage: Math.max(...page_ids), endPage: Math.max(...page_ids)})
+}
+
+  workFlowApi(workflow, blockDetails, update){
+
+    const apiObj = new WorkFlow(workflow, blockDetails,this.props.match.params.jobid,this.props.match.params.locale,"","", parseInt(this.props.match.params.modelId));
+    this.props.APITransport(apiObj);
+    this.setState({apiCall: update})
   }
 
   fetchData() {
@@ -383,36 +412,59 @@ class PdfFileEditor extends React.Component {
     this.setState({ mergeButton: value });
   }
 
-  handleBlur() {
-    this.setState({ hoveredSentence: '', targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false });
-  }
+  handleBlur(id, wf_code) {
+    let idDetails = id.split("_")
+    let text = "";
+    let blockItem;
 
-  updateContent(val) {
-    let ind, idV, text;
-    let value = val[0].split("_");
+    this.state.sentences.map(page=>{
+      if(page.page_no == idDetails[1]){
+        
+        page.text_blocks.map(block =>{
+          
+          if(block.block_identifier == idDetails[0]){
+            
+            block.children && Array.isArray(block.children) && block.children.length>0 && block.children.map(children=>{
+              !children.children ? text = text + " "+ children.text : children.map(grandChildren=>{
+                text = text + " "+ grandChildren.text
+              })
+              
+            })
+            if (block.text !== text) {
+              block.text = text;
+              blockItem = block;
 
-    let senteceObj = this.state.sentences;
-
-    senteceObj.map(sentence => {
-      parseInt(value[1]) == sentence.page_no &&
-        val.map(arrValue => {
-          sentence.text_blocks.map((children, index) => {
-            if (parseInt(arrValue.split("_")[0]) == children.block_id) {
-              text = text + " " + children.text;
-              children.block_id = idV;
+            } else if (wf_code) {
+              blockItem = block;
             }
 
-            // if(children.block_id == value[0]){
-            //   children.text = children.text
-            //   ind= index
-            //   idV = children.block_id
-            // }
-          });
-        });
 
-      this.setState({ sentences: senteceObj });
-    });
+          }
+        }
+        )
+      }
+    })
+    
+    
+    if (blockItem && !wf_code)
+      this.workFlowApi("DP_WFLOW_S_TTR", blockItem)
+    else if(wf_code && blockItem)
+      this.workFlowApi(wf_code, [blockItem], "update")
+    this.setState({ hoveredSentence: '', targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false, updatePage: parseInt(idDetails[1]) });
   }
+
+
+  updateContent(selectedArray) {
+    
+    if(selectedArray.length>0){
+      let updated_blocks = BLOCK_OPS.get_merged_blocks(this.state.sentences, selectedArray);
+      this.getPageId(selectedArray)
+      updated_blocks. length> 0 && this.workFlowApi(this.state.workflow, updated_blocks, "merge" )
+
+    }
+    
+  }
+   
 
   handleTextChange(event, id) {
     let idValue = id.split("-");
@@ -570,7 +622,7 @@ class PdfFileEditor extends React.Component {
                   }}
                 >
                   <div style={{ fontSize: "20px", fontWeight: "bold" }}>
-                    {this.state.tokenized ? "You are in validation mode" : "You are in Translation mode"}
+                    {!this.state.apiCall ? this.state.tokenized ? "You are in validation mode" : "You are in Translation mode" : "Loading ....."}
                   </div>
                 </Button>
               </Grid>
@@ -587,6 +639,7 @@ class PdfFileEditor extends React.Component {
                     whiteSpace: "nowrap",
                     borderRadius: "30px"
                   }}
+                  disabled = {this.state.apiCall ? true: false}
                   onClick={() => this.handleChangeView()}
                 >
                   {this.state.tokenized ? "Go to Translational mode" : "Go to Validation mode"}
@@ -619,7 +672,11 @@ class PdfFileEditor extends React.Component {
                     <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: "#1C9AB7" }}>
                       Extracted Document
                     </Typography>
-                    {this.state.tokenized && (
+
+                    
+                    {this.state.tokenized && !this.state.apiCall && (
+                      
+                    
                       <Toolbar
                         onClick={event => {
                           this.handleClick(this.state.mergeButton === "save" ? "Merge" : "save");
@@ -859,7 +916,8 @@ const mapStateToProps = state => ({
   fetchPdfSentence: state.fetchPdfSentence,
   fileUpload: state.fileUpload,
   documentDetails: state.documentDetails,
-  fetchContent: state.fetchContent
+  fetchContent: state.fetchContent,
+  workflowStatus: state.workflowStatus,
 });
 
 const mapDispatchToProps = dispatch =>

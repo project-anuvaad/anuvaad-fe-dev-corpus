@@ -9,7 +9,6 @@ import ContentEditable from "react-contenteditable";
 import CustomTable from "../../../components/web/common/CustomTable";
 // import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
-import { array } from "prop-types";
 import Popover from 'react-text-selection-popover';
 import placeBelow from './placeBelow'
 import placeRight from './placeRight'
