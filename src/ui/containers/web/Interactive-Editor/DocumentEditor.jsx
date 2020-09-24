@@ -798,7 +798,7 @@ class PdfFileEditor extends React.Component {
                       <div>
                         <Toolbar style={{ color: darkBlack, background: this.state.pageDetails === "target" ? "#989E9C" : blueGrey50 }}>
                           <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: "#1C9AB7" }}>
-                            Translated document
+                            Translated Document
                         </Typography>
                         </Toolbar>
                         <div
