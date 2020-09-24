@@ -48,7 +48,6 @@ class Preview extends React.Component {
 
   sentenceClear(){
     return arr.map(arrValue=>{
-      console.log("values of array",arrValue, this.state[arrValue])
       this.setState({[arrValue]: false})
     })
   }
@@ -263,7 +262,6 @@ class Preview extends React.Component {
       arr.push(name);
     }
 
-    console.log(arr)
     this.setState({selectedValueArray: arr });
   };
 
@@ -518,7 +516,6 @@ class Preview extends React.Component {
     return this.props.paperType === "source" ? (
       <div>
         {this.props.tokenized && this.props.mergeButton === "save" && this.props.sentence.text && (
-          console.log(this.state[sentence.block_id + "_" + this.props.page_no]),
           <Checkbox
           
             style={{ top: sentence.text_top - 10 + "px", left: sentence.text_left - 50 + "px", position: "absolute", zIndex: 4 }}
