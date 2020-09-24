@@ -416,8 +416,7 @@ class PdfFileEditor extends React.Component {
     let idDetails = id.split("_")
     let text = "";
     let blockItem;
-    console.log(wf_code)
-    // console.log(idDetails,this.state.sentences, this.state.sentences[parseInt(idDetails[1])])
+
     this.state.sentences.map(page=>{
       if(page.page_no == idDetails[1]){
         
@@ -425,12 +424,10 @@ class PdfFileEditor extends React.Component {
           
           if(block.block_identifier == idDetails[0]){
             
-             block.children.map(children=>{
+            block.children && Array.isArray(block.children) && block.children.length>0 && block.children.map(children=>{
               !children.children ? text = text + " "+ children.text : children.map(grandChildren=>{
                 text = text + " "+ grandChildren.text
               })
-             
-              
               
             })
             if (block.text !== text) {
@@ -452,7 +449,7 @@ class PdfFileEditor extends React.Component {
     if (blockItem && !wf_code)
       this.workFlowApi("DP_WFLOW_S_TTR", blockItem)
     else if(wf_code && blockItem)
-      this.workFlowApi(wf_code, blockItem, "update")
+      this.workFlowApi(wf_code, [blockItem], "update")
     this.setState({ hoveredSentence: '', targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false, updatePage: parseInt(idDetails[1]) });
   }
 
