@@ -19,7 +19,7 @@ function get_page_id(blocks) {
 function get_blocks(sentences, block_ids) {
     let blocks = []
     block_ids.forEach(element => {
-        let condition           = '$.data[*].text_blocks[?(@.block_id ==' + '\'' + element + '\'' + ')]'
+        let condition           = '$..[*].text_blocks[?(@.block_id ==' + '\'' + element + '\'' + ')]'
         let selected_blocks     = jp.query(sentences, condition)
 
         selected_blocks.forEach(element => {

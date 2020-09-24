@@ -29,6 +29,8 @@ import Typography from "@material-ui/core/Typography";
 import Snackbar from "../../../components/web/common/Snackbar";
 import Data from './Data.json'
 
+const BLOCK_OPS = require('../../../../utils/block.operations')
+
 class PdfFileEditor extends React.Component {
   constructor(props) {
     super(props);
@@ -388,30 +390,8 @@ class PdfFileEditor extends React.Component {
   }
 
   updateContent(val) {
-    let ind, idV, text;
-    let value = val[0].split("_");
-
-    let senteceObj = this.state.sentences;
-
-    senteceObj.map(sentence => {
-      parseInt(value[1]) == sentence.page_no &&
-        val.map(arrValue => {
-          sentence.text_blocks.map((children, index) => {
-            if (parseInt(arrValue.split("_")[0]) == children.block_id) {
-              text = text + " " + children.text;
-              children.block_id = idV;
-            }
-
-            // if(children.block_id == value[0]){
-            //   children.text = children.text
-            //   ind= index
-            //   idV = children.block_id
-            // }
-          });
-        });
-
-      this.setState({ sentences: senteceObj });
-    });
+    let updated_blocks = BLOCK_OPS.get_merged_blocks(this.state.sentences, val);
+    console.log(updated_blocks)
   }
 
   handleTextChange(event, id) {
