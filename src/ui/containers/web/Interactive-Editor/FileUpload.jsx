@@ -19,7 +19,7 @@ import WorkFlow from "../../../../flux/actions/apis/fileupload";
 import DocumentUpload from "../../../../flux/actions/apis/document_upload";
 import TextField from "@material-ui/core/TextField";
 import Select from "../../../components/web/common/Select";
-//import SimpleSelect from "../../../components/web/common/SimpleSelect";
+
 class PdfUpload extends Component {
   constructor() {
     super();
@@ -58,7 +58,6 @@ class PdfUpload extends Component {
       })
       e.preventDefault();
       this.setState({model})
-      const { APITransport } = this.props;
       if (this.state.files.length > 0  && source_lang_name && target_lang_name ) {
         const { APITransport } = this.props;
 
