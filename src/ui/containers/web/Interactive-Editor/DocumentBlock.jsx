@@ -16,7 +16,8 @@ class Preview extends React.Component {
       isEditable: false,
       value: false,
       selectedValueArray: [],
-      mergeButton: ""
+      mergeButton: "",
+      workflowcode: ""
     };
   }
 
@@ -27,14 +28,19 @@ class Preview extends React.Component {
   }
 
   updateContent(val) {
+
+    arr.map(arrValue=>{
+      this.setState({[arrValue]: false})
+    })
     this.props.updateContent(val);
-    arr = [];
+    this.setState({selectedValueArray : []})
+    arr = []
   }
 
   handleSentenceUpdate = (value, sentence) => {
     return (
       <div
-        onBlur={event => this.props.handleBlur(event)}
+        onBlur={event => this.props.handleBlur(event,this.props.sentence.block_identifier + "_" + this.props.page_no + "_" + this.props.paperType)}
         id={value.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
         ref={value.block_id + "_" + this.props.page_no}
         onDoubleClick={event => {
@@ -225,9 +231,7 @@ class Preview extends React.Component {
 
     this.setState({ [name]: !this.state[name], selectedValueArray: arr });
   };
-  handleBlur = () => {
-    this.setState({ toc: false, value: false });
-  };
+
 
   handleDoubleClick = (event, val, text, pageDetail) => {
     event.preventDefault();
@@ -478,7 +482,7 @@ class Preview extends React.Component {
 
     return this.props.paperType === "source" ? (
       <div>
-        {this.props.tokenized && this.props.mergeButton === "save" ? (
+        {this.props.tokenized && this.props.mergeButton === "save" && this.props.sentence.text ? (
           <Checkbox
             style={{ top: sentence.text_top - 10 + "px", left: sentence.text_left - 50 + "px", position: "absolute", zIndex: 4 }}
             checked={this.state[sentence.block_id + "_" + this.props.page_no]}
@@ -495,7 +499,7 @@ class Preview extends React.Component {
           id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
           style={styles}
           key={sentence.block_id}
-          onBlur={event => this.props.handleBlur(event)}
+          onBlur={event => this.props.handleBlur(event,this.props.sentence.block_identifier + "_" + this.props.page_no + "_" + this.props.paperType)}
           onMouseLeave={() => {
             this.props.value !== true && this.props.handleOnMouseLeave();
           }}

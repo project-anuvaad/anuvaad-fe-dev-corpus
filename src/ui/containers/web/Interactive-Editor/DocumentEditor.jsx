@@ -27,7 +27,7 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import DoneIcon from "@material-ui/icons/Done";
 import Typography from "@material-ui/core/Typography";
 import Snackbar from "../../../components/web/common/Snackbar";
-import Data from './Data.json'
+import WorkFlow from "../../../../flux/actions/apis/fileupload";
 
 const BLOCK_OPS = require('../../../../utils/block.operations')
 
@@ -86,6 +86,11 @@ class PdfFileEditor extends React.Component {
         showLoader: false
       });
     }
+    if (prevProps.workflowStatus !== this.props.workflowStatus) {
+      const apiObj = new FileContent(this.props.match.params.jobid,this.state.updatePage, this.state.updatePage );
+      this.props.APITransport(apiObj);
+      
+    }
 
     /* Pagination api */
     if (prevProps.fetchContent !== this.props.fetchContent) {
@@ -129,6 +134,12 @@ class PdfFileEditor extends React.Component {
         });
       }
     }
+  }
+
+  workFlowApi(workflow, blockDetails){
+
+    const apiObj = new WorkFlow(workflow, blockDetails,this.props.match.params.jobid,this.props.match.params.locale,"","", parseInt(this.props.match.params.modelId));
+    this.props.APITransport(apiObj);
   }
 
   fetchData() {
@@ -385,11 +396,47 @@ class PdfFileEditor extends React.Component {
     this.setState({ mergeButton: value });
   }
 
-  handleBlur() {
-    this.setState({ hoveredSentence: '', targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false });
+  handleBlur(event, id) {
+
+    let idDetails = id.split("_")
+    let text = "";
+    let blockItem;
+    // console.log(idDetails,this.state.sentences, this.state.sentences[parseInt(idDetails[1])])
+    this.state.sentences.map(page=>{
+      if(page.page_no == idDetails[1]){
+        
+        page.text_blocks.map(block =>{
+          
+          if(block.block_identifier == idDetails[0]){
+            
+             block.children.map(children=>{
+              children.children ? children.map(grandChildren=>{
+                text = text + " "+ grandChildren.text
+              })
+              : text = text + " "+ children.text
+              
+              
+            })
+            if(block.text!== text){
+              block.text = text;
+              blockItem = block;
+
+            }
+            
+             
+          }
+        }
+        )
+      }      
+    })
+    
+    blockItem && this.workFlowApi("DP_WFLOW_S_TTR", blockItem)
+   
+    this.setState({ hoveredSentence:'',targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false, updatePage : parseInt(idDetails[1]) });
   }
 
   updateContent(val) {
+    debugger
     let updated_blocks = BLOCK_OPS.get_merged_blocks(this.state.sentences, val);
     console.log(updated_blocks)
   }
@@ -839,7 +886,8 @@ const mapStateToProps = state => ({
   fetchPdfSentence: state.fetchPdfSentence,
   fileUpload: state.fileUpload,
   documentDetails: state.documentDetails,
-  fetchContent: state.fetchContent
+  fetchContent: state.fetchContent,
+  workflowStatus: state.workflowStatus,
 });
 
 const mapDispatchToProps = dispatch =>
