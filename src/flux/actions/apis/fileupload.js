@@ -60,7 +60,7 @@ export default class RunExperiment extends API {
   "recordID":this.fileName,
   "locale":this.source, // Only when tokenisation and/or translation is needed
   "modelID":this.model, //Only when Translation is needed
-  "textBlocks":[this.file]
+  "textBlocks":this.file
       }
        //List of text 
     }

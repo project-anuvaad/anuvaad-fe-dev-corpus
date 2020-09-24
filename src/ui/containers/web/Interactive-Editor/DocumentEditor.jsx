@@ -61,7 +61,8 @@ class PdfFileEditor extends React.Component {
       scrollToTop: false,
       scrollToId: "",
       editableId: "",
-      showNextSuggestion: false
+      showNextSuggestion: false,
+      workflow:"DP_WFLOW_S_TTR"
     };
   }
 
@@ -87,8 +88,9 @@ class PdfFileEditor extends React.Component {
       });
     }
     if (prevProps.workflowStatus !== this.props.workflowStatus) {
-      const apiObj = new FileContent(this.props.match.params.jobid,this.state.updatePage, this.state.updatePage );
+      const apiObj = new FileContent(this.props.match.params.jobid,this.state.startPage, this.state.endPage );
       this.props.APITransport(apiObj);
+      this.setState({apiStatus: true})
       
     }
 
@@ -125,6 +127,10 @@ class PdfFileEditor extends React.Component {
       } else {
         this.setState({
           sentences: temp,
+          open: this.state.apiStatus && true,
+          message : this.state.apiStatus && this.state.apiCall == "merge"?  "Sentence merged successfully!":"Sentence updated successfully...!",
+          apiStatus: false,
+          apiCall : false,
           showLoader: false,
           pageCount: this.props.fetchContent.result.count,
           // pageCount: Data.count,
@@ -136,10 +142,20 @@ class PdfFileEditor extends React.Component {
     }
   }
 
-  workFlowApi(workflow, blockDetails){
+  getPageId(blocks) {
+    let page_ids = []
+    blocks.forEach(element => {
+        page_ids.push(parseInt(element.split('_')[1]))
+    });
+    console.log("page-ds",page_ids, Math.max(...page_ids), Math.max(...page_ids))
+    this.setState({startPage: Math.max(...page_ids), endPage: Math.max(...page_ids)})
+}
+
+  workFlowApi(workflow, blockDetails, update){
 
     const apiObj = new WorkFlow(workflow, blockDetails,this.props.match.params.jobid,this.props.match.params.locale,"","", parseInt(this.props.match.params.modelId));
     this.props.APITransport(apiObj);
+    this.setState({apiCall: update})
   }
 
   fetchData() {
@@ -410,10 +426,10 @@ class PdfFileEditor extends React.Component {
           if(block.block_identifier == idDetails[0]){
             
              block.children.map(children=>{
-              children.children ? children.map(grandChildren=>{
+              !children.children ? text = text + " "+ children.text : children.map(grandChildren=>{
                 text = text + " "+ grandChildren.text
               })
-              : text = text + " "+ children.text
+             
               
               
             })
@@ -430,15 +446,20 @@ class PdfFileEditor extends React.Component {
       }      
     })
     
-    blockItem && this.workFlowApi("DP_WFLOW_S_TTR", blockItem)
+    blockItem && this.workFlowApi("DP_WFLOW_S_TTR", [blockItem], "update")
    
-    this.setState({ hoveredSentence:'',targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false, updatePage : parseInt(idDetails[1]) });
+    this.setState({ hoveredSentence:'',targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false,endPage:parseInt(idDetails[1]) ,  startPage : parseInt(idDetails[1]) });
   }
 
-  updateContent(val) {
-    debugger
-    let updated_blocks = BLOCK_OPS.get_merged_blocks(this.state.sentences, val);
-    console.log(updated_blocks)
+  updateContent(selectedArray) {
+    
+    if(selectedArray.length>0){
+      let updated_blocks = BLOCK_OPS.get_merged_blocks(this.state.sentences, selectedArray);
+      this.getPageId(selectedArray)
+      updated_blocks. length> 0 && this.workFlowApi(this.state.workflow, updated_blocks, "merge" )
+
+    }
+    
   }
 
   handleTextChange(event, id) {
@@ -597,7 +618,7 @@ class PdfFileEditor extends React.Component {
                   }}
                 >
                   <div style={{ fontSize: "20px", fontWeight: "bold" }}>
-                    {this.state.tokenized ? "You are in validation mode" : "You are in Translation mode"}
+                    {!this.state.apiCall ? this.state.tokenized ? "You are in validation mode" : "You are in Translation mode" : "Loading ....."}
                   </div>
                 </Button>
               </Grid>
@@ -614,6 +635,7 @@ class PdfFileEditor extends React.Component {
                     whiteSpace: "nowrap",
                     borderRadius: "30px"
                   }}
+                  disabled = {this.state.apiCall ? true: false}
                   onClick={() => this.handleChangeView()}
                 >
                   {this.state.tokenized ? "Go to Translational mode" : "Go to Validation mode"}
@@ -646,7 +668,11 @@ class PdfFileEditor extends React.Component {
                     <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: "#1C9AB7" }}>
                       Extracted Document
                     </Typography>
-                    {this.state.tokenized && (
+
+                    
+                    {this.state.tokenized && !this.state.apiCall && (
+                      
+                    
                       <Toolbar
                         onClick={event => {
                           this.handleClick(this.state.mergeButton === "save" ? "Merge" : "save");

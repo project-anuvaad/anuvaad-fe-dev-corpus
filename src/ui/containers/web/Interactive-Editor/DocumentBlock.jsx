@@ -27,11 +27,25 @@ class Preview extends React.Component {
     }
   }
 
-  updateContent(val) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.mergeButton !== this.props.mergeButton && this.props.mergeButton == "Merge" && arr.length>0) {
+      console.log("api fired----", this.props.mergeButton , arr.length)
+      this.sentenceClear(arr)
+      this.updateContent(arr)
+      
+      
+    }
+  }
 
-    arr.map(arrValue=>{
+  sentenceClear(){
+    return arr.map(arrValue=>{
+      console.log(this.state[arrValue   ])
       this.setState({[arrValue]: false})
     })
+  }
+  updateContent(val) {
+    
+    
     this.props.updateContent(val);
     this.setState({selectedValueArray : []})
     arr = []
@@ -482,7 +496,7 @@ class Preview extends React.Component {
 
     return this.props.paperType === "source" ? (
       <div>
-        {this.props.tokenized && this.props.mergeButton === "save" && this.props.sentence.text ? (
+        {this.props.tokenized && this.props.mergeButton === "save" && this.props.sentence.text && (
           <Checkbox
             style={{ top: sentence.text_top - 10 + "px", left: sentence.text_left - 50 + "px", position: "absolute", zIndex: 4 }}
             checked={this.state[sentence.block_id + "_" + this.props.page_no]}
@@ -490,11 +504,7 @@ class Preview extends React.Component {
             value={sentence.block_id + "_" + this.props.page_no}
             color="primary"
           />
-        ) : this.props.mergeButton === "Merge" && arr.length > 0 ? (
-          this.updateContent(arr)
-        ) : (
-              ""
-            )}
+        ) }
         <div
           id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
           style={styles}
