@@ -104,8 +104,9 @@ class Preview extends React.Component {
     );
   };
 
-  handleClickAway = (id, wf_code) => {
+  handleClickAway = (id, text, wf_code) => {
     if (!this.props.showSuggestions) {
+      this.handleChangeEvent({ target: { value: text } })
       this.props.handleBlur(id, wf_code);
     }
   };
@@ -139,7 +140,7 @@ class Preview extends React.Component {
               sentence.tokenized_sentences.map((text, tokenIndex) => {
                 if (this.props.targetSelected === text.sentence_id + "_" + this.props.page_no) {
                   return (
-                    <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, wfcodes.DP_WFLOW_S_C)}>
+                    // <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, wfcodes.DP_WFLOW_S_C)}>
 
                       <div
                         style={{
@@ -177,8 +178,11 @@ class Preview extends React.Component {
                                 backgroundColor: "#F4FDFF",
                                 border: '1px solid #1C9AB7',
                               }}
+                              tokenIndex={tokenIndex}
                               value={this.props.targetText.tgt}
+                              sentence={sentence}
                               sourceText={text.src}
+                              page_no={this.props.page_no}
                               handleChangeEvent={this.handleChangeEvent.bind(this)}
                               fetchSuggestions={this.props.fetchSuggestions}
                               autoCompleteText={this.props.autoCompleteText}
@@ -187,13 +191,14 @@ class Preview extends React.Component {
                               handleBlur={this.props.handleBlur}
                               showSuggestions={this.props.showSuggestions}
                               handleSuggestionClose={this.props.handleSuggestionClose}
+                              handleClickAway={this.handleClickAway.bind(this)}
                               tokenObject={text}
                             />
                           </span>
                           <span> </span>
                         </span>
                       </div>
-                    </ClickAwayListener>
+                    // </ClickAwayListener>
                   );
                 } else {
                   return (
