@@ -38,7 +38,7 @@ function get_blocks(sentences, block_ids) {
  * @description sorts the block based upon the largest area and return the largest area block
  * @param {*} selected blocks
  */
-function get_largest_area_block_id(blocks) {
+function get_largest_area_block(blocks) {
     let descending_areas = blocks.sort((a, b) => {
         if ((a.text_width * a.text_height) > (b.text_width * b.text_height)) {
             return -1
@@ -48,8 +48,8 @@ function get_largest_area_block_id(blocks) {
         }
         return 0
     })
-
-    return descending_areas[0]['block_id']
+    
+    return descending_areas[0]
 }
 
 /**
@@ -92,24 +92,25 @@ function get_concatenated_text(blocks) {
 
 function get_merged_blocks(sentences, selected_block_ids) {
     let selected_blocks     = get_blocks(sentences, get_block_id(selected_block_ids))
-    let largest_block_id    = get_largest_area_block_id(selected_blocks)
+    let largest_block    = get_largest_area_block(selected_blocks)
     let text                = get_concatenated_text(selected_blocks)
 
     let updated_blocks      = []
 
     selected_blocks.forEach(element => {
-        if (element.block_id == largest_block_id) {
+        if (element.block_identifier == largest_block.block_identifier) {
             element.text    = text
 
         } else {
             element.text                = null
             element.tokenized_sentences = []
         }
-        element.block_id = largest_block_id
+        element.block_id = largest_block.block_id
         element.has_sibling = true
         updated_blocks.push(element)
     })
 
+    console.log("blockkkk",updated_blocks)
     return updated_blocks;
 }
 
