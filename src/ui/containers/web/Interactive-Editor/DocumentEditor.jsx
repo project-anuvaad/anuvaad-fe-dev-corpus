@@ -147,7 +147,6 @@ class PdfFileEditor extends React.Component {
     blocks.forEach(element => {
         page_ids.push(parseInt(element.split('_')[1]))
     });
-    console.log("page-ds",page_ids, Math.max(...page_ids), Math.max(...page_ids))
     this.setState({startPage: Math.max(...page_ids), endPage: Math.max(...page_ids)})
 }
 

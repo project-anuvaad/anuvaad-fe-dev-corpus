@@ -137,6 +137,7 @@ class AutoComplete extends React.Component {
                         style={style}
                         onChange={this.handleChangeEvent.bind(this)}
                         onKeyDown={this.handleEnter}
+                        maxRows={4}
                     >
                     </TextareaAutosize>
                     {
