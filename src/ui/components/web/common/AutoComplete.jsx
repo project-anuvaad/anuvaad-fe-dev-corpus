@@ -4,6 +4,7 @@ import Menu from '../../../containers/web/Interactive-Editor/Menu'
 import Button from '@material-ui/core/MenuItem';
 import TextareaAutosize from 'react-textarea-autosize';
 import wfcodes from '../../../../configs/workflowcodes'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 var getCaretCoordinates = require('textarea-caret');
 
@@ -35,6 +36,17 @@ class AutoComplete extends React.Component {
                 this.setState({ topValue, leftValue })
             }
         }
+        if (prevProps.value !== this.props.value && this.props.value !== this.state.value) {
+            this.setState({
+                value: this.props.value
+            })
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            value: this.props.value
+        })
     }
 
     handleEnter = (event) => {
@@ -43,10 +55,10 @@ class AutoComplete extends React.Component {
         let y = divdata.y
 
         var elem = document.getElementById(this.props.aId)
-        let caretVal = this.props.value.substring(0, elem.selectionStart)
+        let caretVal = this.state.value.substring(0, elem.selectionStart)
 
         var coordinates = getCaretCoordinates(elem, elem.selectionEnd);
-      
+
         let topValue = 0
         let leftValue = 0
         if (coordinates) {
@@ -58,6 +70,7 @@ class AutoComplete extends React.Component {
 
         if (event.key === 'Escape') {
             this.setState({ showSuggestions: false })
+            this.props.handleChangeEvent({ target: { value: this.state.value } })
             this.props.handleBlur(this.props.block_identifier_with_page, wfcodes.DP_WFLOW_S_C)
         }
 
@@ -77,8 +90,15 @@ class AutoComplete extends React.Component {
     handleSuggetionCLick(suggestion) {
         var elem = document.getElementById(this.props.aId)
         let caretVal = this.props.value.substring(0, elem.selectionStart)
-        this.setState({ caretVal : caretVal + suggestion})
+        this.setState({ caretVal: caretVal + suggestion })
         this.props.handleSuggestion(suggestion, this.state.caretVal, this.props.sourceText, this.props.tokenObject)
+    }
+
+    handleChangeEvent(event) {
+        this.setState({
+            value: event.target.value
+        })
+        // this.props.handleChangeEvent(event)
     }
 
     getLoader() {
@@ -104,34 +124,35 @@ class AutoComplete extends React.Component {
     }
 
     render() {
-        const { value, aId, refId, style } = this.props
+        const { value, aId, refId, style, tokenIndex, sentence } = this.props
         return (
-            
-            <div>
-                <TextareaAutosize
-                    multiline={true}
-                    autoFocus={true}
-                    ref={refId}
-                    id={aId}
-                    value={value}
-                    style={style}
-                    onChange={this.props.handleChangeEvent}
-                    onKeyDown={this.handleEnter}
-                >
-                </TextareaAutosize>
-                {
-                    this.props.showSuggestions && 
-                    <Menu
-                        isOpen={true}
-                        topValue={this.state.topValue}
-                        leftValue={this.state.leftValue}
-                        handleSuggetionClick={this.handleSuggetionCLick.bind(this)}
-                        handlePopOverClose={this.props.handleSuggestionClose}
-                        targetVal={this.state.caretVal}
-                        options={this.props.autoCompleteText}
-                    ></Menu>}
+            <ClickAwayListener id={tokenIndex} onClickAway={() => this.props.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, this.state.value, wfcodes.DP_WFLOW_S_C)}>
+                <div>
+                    <TextareaAutosize
+                        multiline={true}
+                        autoFocus={true}
+                        ref={refId}
+                        id={aId}
+                        value={this.state.value}
+                        style={style}
+                        onChange={this.handleChangeEvent.bind(this)}
+                        onKeyDown={this.handleEnter}
+                    >
+                    </TextareaAutosize>
+                    {
+                        this.props.showSuggestions &&
+                        <Menu
+                            isOpen={true}
+                            topValue={this.state.topValue}
+                            leftValue={this.state.leftValue}
+                            handleSuggetionClick={this.handleSuggetionCLick.bind(this)}
+                            handlePopOverClose={this.props.handleSuggestionClose}
+                            targetVal={this.state.caretVal}
+                            options={this.props.autoCompleteText}
+                        ></Menu>}
 
-            </div >
+                </div >
+            </ClickAwayListener>
         );
     }
 }
