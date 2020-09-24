@@ -260,7 +260,7 @@ class Preview extends React.Component {
 
   }
 
-  makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, elems) {
+  makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, elems, is_super) {
     text = text + ""
     text = text.replace(/\s{2,}/g, ' ');
     text = text.trim()
@@ -279,6 +279,12 @@ class Preview extends React.Component {
       left: child.text_left + "px",
       textAlignLast: sentence.children && sentence.children.length > 1 && "justify",
       width: child.text_width + "px"
+    }
+    if (is_super) {
+      if (!child.dont_show) {
+        elems.push(this.makeDiv(sentence, this.makeSpan(text, child, spanId, tokenIndex), div_style))
+      }
+      return { text: text, tokenized_data: tokenized_data, tokenIndex: tokenIndex, spanId: spanId, child: child, elems: elems }
     }
     if (text.length == tokenized_data[tokenIndex].src.length) {
       if (!child.dont_show) {
@@ -317,6 +323,7 @@ class Preview extends React.Component {
             tokenIndex++
           } else {
             tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
+            tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
           }
           text = ''
         }
@@ -334,6 +341,7 @@ class Preview extends React.Component {
         elems.push(this.makeDiv(sentence, spans_array, div_style))
       }
       tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
+      tokenized_data[tokenIndex].src =  tokenized_data[tokenIndex].src.trim()
     }
     return { text: text, tokenized_data: tokenized_data, tokenIndex: tokenIndex, spanId: spanId, child: child, elems: elems }
   }
@@ -390,18 +398,28 @@ class Preview extends React.Component {
           tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
           tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.replace(/\s\s+/g, ' ');
           if (child.children) {
-            var text = ''
             child.children.map((ch) => {
-              if (ch.attrib !== 'SUPERSCRIPT')
-                text += ch.text + ' '
+              ch.dont_show = child.dont_show
+              var text = ''
+              if (ch.attrib !== 'SUPERSCRIPT') {
+                text += ch.text
+                let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, ch, elems)
+                text = obj.text
+                tokenized_data = obj.tokenized_data
+                tokenIndex = obj.tokenIndex
+                spanId = obj.spanId
+                child = obj.child
+                elems = obj.elems
+              } else {
+                let obj = this.makeSpanObjects(sentence, ch.text, tokenized_data, tokenIndex, spanId, ch, elems, true)
+                // text = obj.text
+                // tokenized_data = obj.tokenized_data
+                // tokenIndex = obj.tokenIndex
+                // spanId = obj.spanId
+                // child = obj.child
+                elems = obj.elems
+              }
             })
-            let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, elems)
-            text = obj.text
-            tokenized_data = obj.tokenized_data
-            tokenIndex = obj.tokenIndex
-            spanId = obj.spanId
-            child = obj.child
-            elems = obj.elems
           }
           else {
             var text = child.text
