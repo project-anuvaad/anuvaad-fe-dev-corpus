@@ -222,7 +222,7 @@ class Preview extends React.Component {
   fetchSuggestions(srcText, targetTxt, tokenObject) {
     let targetVal = targetTxt
 
-    this.setState({ showSuggestions: true })
+    this.setState({ showSuggestions: true, autoCompleteText:null })
     const apiObj = new IntractiveApi(srcText, targetVal, { model_id: this.props.modelId }, true, true);
     this.props.APITransport(apiObj);
   }
