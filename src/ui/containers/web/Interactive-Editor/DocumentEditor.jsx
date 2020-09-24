@@ -450,7 +450,7 @@ class PdfFileEditor extends React.Component {
     
     
     if (blockItem && !wf_code)
-      this.workFlowApi("DP_WFLOW_S_TTR", blockItem)
+      this.workFlowApi("DP_WFLOW_S_TTR", [blockItem], "update")
     else if(wf_code && blockItem)
       this.workFlowApi(wf_code, blockItem, "update")
     this.setState({ hoveredSentence: '', targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false, updatePage: parseInt(idDetails[1]) });

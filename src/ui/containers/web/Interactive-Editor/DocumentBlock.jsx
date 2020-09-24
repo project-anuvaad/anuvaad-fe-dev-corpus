@@ -29,18 +29,26 @@ class Preview extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.mergeButton !== this.props.mergeButton && this.props.mergeButton == "Merge" && arr.length>0) {
-      console.log("api fired----", this.props.mergeButton , arr.length)
-      this.sentenceClear(arr)
+    if (prevProps.mergeButton !== this.props.mergeButton) {
+      if(this.props.mergeButton == "Merge" && arr.length>0) {
+        this.sentenceClear(arr)
       this.updateContent(arr)
-      
+      }
+      else if(this.props.mergeButton == "Merge"){
+        this.sentenceClear(arr)
+      }
+     
       
     }
+    
+    // if(this.props.arrayClear!== prevProps.arrayClear){
+    //   this.sentenceClear(arr)
+    // }
   }
 
   sentenceClear(){
     return arr.map(arrValue=>{
-      console.log(this.state[arrValue   ])
+      console.log("values of array",arrValue, this.state[arrValue])
       this.setState({[arrValue]: false})
     })
   }
@@ -243,13 +251,15 @@ class Preview extends React.Component {
     this.props.handleDoubleClickTarget(evnt, id, text, pageDetails);
   };
   handleChange = name => event => {
-    if (this.state[name]) {
+    
+    if (arr.includes(name)) {
       arr = arr.filter(item => item !== name);
     } else {
       arr.push(name);
     }
 
-    this.setState({ [name]: !this.state[name], selectedValueArray: arr });
+    console.log(arr)
+    this.setState({selectedValueArray: arr });
   };
 
 
@@ -472,7 +482,7 @@ class Preview extends React.Component {
 
   render() {
     const { sentence } = this.props;
-
+   
     var styles = {
       position: "absolute",
       top: sentence.text_top + "px",
@@ -492,7 +502,7 @@ class Preview extends React.Component {
       padding: "5px",
       lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
       border:
-        this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id &&
+      arr.includes(sentence.block_id + "_" + this.props.page_no)?"2px solid rgb(28, 154, 183)" : this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id &&
           !this.props.selectedBlock &&
           !this.props.targetSelected &&
           this.props.value !== true
@@ -503,11 +513,13 @@ class Preview extends React.Component {
     return this.props.paperType === "source" ? (
       <div>
         {this.props.tokenized && this.props.mergeButton === "save" && this.props.sentence.text && (
+          console.log(this.state[sentence.block_id + "_" + this.props.page_no]),
           <Checkbox
+          
             style={{ top: sentence.text_top - 10 + "px", left: sentence.text_left - 50 + "px", position: "absolute", zIndex: 4 }}
-            checked={this.state[sentence.block_id + "_" + this.props.page_no]}
+            checked={arr.includes(sentence.block_id + "_" + this.props.page_no)? true: false }
             onChange={this.handleChange(sentence.block_id + "_" + this.props.page_no)}
-            value={sentence.block_id + "_" + this.props.page_no}
+            // value={this.state[sentence.block_id + "_" + this.props.page_no]}
             color="primary"
           />
         ) }
