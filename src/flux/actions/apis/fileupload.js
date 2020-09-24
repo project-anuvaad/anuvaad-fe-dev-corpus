@@ -3,8 +3,10 @@ import C from "../constants";
 import ENDPOINTS from "../../../configs/apiendpoints";
 
 export default class RunExperiment extends API {
-  constructor(file,fileName,source,target,path, model, timeout = 2000) {
-    console.log();
+
+  
+  constructor(workflow, file,fileName,source,target,path, model, timeout = 2000) {
+   
     super("POST", timeout, false);
     this.type = C.WORKFLOW;
     this.file = file;
@@ -14,6 +16,7 @@ export default class RunExperiment extends API {
     this.target=target;
     this.path = path;
     this.model = model;
+    this.workflow = workflow;
    
   }
 
@@ -35,9 +38,10 @@ export default class RunExperiment extends API {
   }
 
   getBody() {
-    return {
+    if(this.workflow === "DP_WFLOW_FBTTR"){
+      return {
       
-        "workflowCode":"DP_WFLOW_FBTTR",
+        "workflowCode":this.workflow,
         "jobName": this.fileName,
         "files": [
           {
@@ -49,6 +53,18 @@ export default class RunExperiment extends API {
         ]
       
     };
+    }
+    else if(this.workflow === "DP_WFLOW_S_TTR"){
+      return{
+        "workflowCode": this.workflow,
+  "recordID":this.fileName,
+  "locale":this.source, // Only when tokenisation and/or translation is needed
+  "modelID":this.model, //Only when Translation is needed
+  "textBlocks":[this.file]
+      }
+       //List of text 
+    }
+    
   }
 
   getHeaders() {

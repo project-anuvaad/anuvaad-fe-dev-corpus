@@ -34,7 +34,7 @@ class Preview extends React.Component {
   handleSentenceUpdate = (value, sentence) => {
     return (
       <div
-        onBlur={event => this.props.handleBlur(event)}
+        onBlur={event => this.props.handleBlur(event,this.props.sentence.block_identifier + "_" + this.props.page_no + "_" + this.props.paperType)}
         id={value.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
         ref={value.block_id + "_" + this.props.page_no}
         onDoubleClick={event => {
@@ -225,9 +225,7 @@ class Preview extends React.Component {
 
     this.setState({ [name]: !this.state[name], selectedValueArray: arr });
   };
-  handleBlur = () => {
-    this.setState({ toc: false, value: false });
-  };
+
 
   handleDoubleClick = (event, val, text, pageDetail) => {
     event.preventDefault();
@@ -495,7 +493,7 @@ class Preview extends React.Component {
           id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
           style={styles}
           key={sentence.block_id}
-          onBlur={event => this.props.handleBlur(event)}
+          onBlur={event => this.props.handleBlur(event,this.props.sentence.block_identifier + "_" + this.props.page_no + "_" + this.props.paperType)}
           onMouseLeave={() => {
             this.props.value !== true && this.props.handleOnMouseLeave();
           }}
