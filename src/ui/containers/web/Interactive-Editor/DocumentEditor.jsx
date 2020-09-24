@@ -137,7 +137,6 @@ class PdfFileEditor extends React.Component {
   }
 
   workFlowApi(workflow, blockDetails) {
-
     const apiObj = new WorkFlow(workflow, blockDetails, this.props.match.params.jobid, this.props.match.params.locale, "", "", parseInt(this.props.match.params.modelId));
     this.props.APITransport(apiObj);
   }
@@ -409,7 +408,7 @@ class PdfFileEditor extends React.Component {
 
           if (block.block_identifier == idDetails[0]) {
 
-            block.children.map(children => {
+            block && block.children && Array.isArray(block.children) && block.children.length>0 && block.children.map(children => {
               children.children ? children.map(grandChildren => {
                 text = text + " " + grandChildren.text
               })
@@ -435,14 +434,12 @@ class PdfFileEditor extends React.Component {
     if (blockItem && !wf_code)
       this.workFlowApi("DP_WFLOW_S_TTR", blockItem)
     else if(wf_code && blockItem)
-      this.workFlowApi(wf_code, blockItem)
+      this.workFlowApi(wf_code, blockItem, "update")
     this.setState({ hoveredSentence: '', targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false, updatePage: parseInt(idDetails[1]) });
   }
 
   updateContent(val) {
-    debugger
     let updated_blocks = BLOCK_OPS.get_merged_blocks(this.state.sentences, val);
-    console.log(updated_blocks)
   }
 
   handleTextChange(event, id) {
