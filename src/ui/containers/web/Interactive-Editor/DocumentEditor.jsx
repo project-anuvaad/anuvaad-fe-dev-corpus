@@ -436,6 +436,7 @@ class PdfFileEditor extends React.Component {
   }
 
   updateContent(val) {
+    debugger
     let updated_blocks = BLOCK_OPS.get_merged_blocks(this.state.sentences, val);
     console.log(updated_blocks)
   }

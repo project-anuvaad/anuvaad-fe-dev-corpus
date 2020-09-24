@@ -16,7 +16,8 @@ class Preview extends React.Component {
       isEditable: false,
       value: false,
       selectedValueArray: [],
-      mergeButton: ""
+      mergeButton: "",
+      workflowcode: ""
     };
   }
 
@@ -27,8 +28,13 @@ class Preview extends React.Component {
   }
 
   updateContent(val) {
+
+    arr.map(arrValue=>{
+      this.setState({[arrValue]: false})
+    })
     this.props.updateContent(val);
-    arr = [];
+    this.setState({selectedValueArray : []})
+    arr = []
   }
 
   handleSentenceUpdate = (value, sentence) => {
@@ -476,7 +482,7 @@ class Preview extends React.Component {
 
     return this.props.paperType === "source" ? (
       <div>
-        {this.props.tokenized && this.props.mergeButton === "save" ? (
+        {this.props.tokenized && this.props.mergeButton === "save" && this.props.sentence.text ? (
           <Checkbox
             style={{ top: sentence.text_top - 10 + "px", left: sentence.text_left - 50 + "px", position: "absolute", zIndex: 4 }}
             checked={this.state[sentence.block_id + "_" + this.props.page_no]}
