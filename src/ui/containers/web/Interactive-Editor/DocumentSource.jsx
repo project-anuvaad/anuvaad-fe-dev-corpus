@@ -75,8 +75,8 @@ class Preview extends React.Component {
   }
 
   getSelectionText(event, id) {
-    let sentenceStart = window.getSelection().anchorNode.parentNode.id.split("_");
-    let sentenceEnd = window.getSelection().focusNode.parentNode.id.split("_");
+    let sentenceStart = window.getSelection().anchorNode && window.getSelection().anchorNode.parentNode ?  window.getSelection().anchorNode.parentNode.id.split("_") : 0; 
+    let sentenceEnd = window.getSelection().focusNode && window.getSelection().focusNode.parentNode ? window.getSelection().focusNode.parentNode.id.split("_") : 0;
     let senOp;
     if (sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]) {
       if (sentenceStart[2] === sentenceEnd[2]) {
@@ -268,6 +268,9 @@ class Preview extends React.Component {
                 {/* {this.props.tokenized ? */}
 
                 <BlockView
+                  block_identifier={this.props.block_identifier}
+                  sentences={this.props.sentences}
+                  has_sibling={this.props.has_sibling}
                   key={index + "_" + sentence.block_id}
                   pageDetail={this.props.pageDetail}
                   sentence={sentence}

@@ -27,6 +27,9 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 import DoneIcon from "@material-ui/icons/Done";
 import Typography from "@material-ui/core/Typography";
 import Snackbar from "../../../components/web/common/Snackbar";
+import Data from './Data.json'
+
+const BLOCK_OPS = require('../../../../utils/block.operations')
 
 class PdfFileEditor extends React.Component {
   constructor(props) {
@@ -86,7 +89,7 @@ class PdfFileEditor extends React.Component {
 
     /* Pagination api */
     if (prevProps.fetchContent !== this.props.fetchContent) {
-      console.log("result", this.props.fetchContent.result.data)
+      // let temp = Data.data;
       let temp = this.props.fetchContent.result.data;
       // let sentenceObj = temp;
       // sentenceObj &&
@@ -119,8 +122,10 @@ class PdfFileEditor extends React.Component {
           sentences: temp,
           showLoader: false,
           pageCount: this.props.fetchContent.result.count,
+          // pageCount: Data.count,
           currentPage: this.state.currentPage + this.state.pagesToBeLoaded,
           hasMoreItems: this.props.fetchContent.result.count > this.state.currentPage + this.state.pagesToBeLoaded ? true : false
+          // hasMoreItems: Data.count > this.state.currentPage + this.state.pagesToBeLoaded ? true : false
         });
       }
     }
@@ -135,8 +140,8 @@ class PdfFileEditor extends React.Component {
     this.setState({ buttonDisable: false, pdfPage: this.state.currentPage + 1 });
   }
 
-  handleOnMouseEnter(sentenceId, parent, yOffset, pageNo) {
-    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent, scrollToId: sentenceId, yOffset: yOffset });
+  handleOnMouseEnter(sentenceId, parent, yOffset, block_identifier, has_sibling) {
+    this.setState({ hoveredSentence: sentenceId, hoveredTableId: "", parent: parent, scrollToId: sentenceId, yOffset: yOffset, block_identifier: block_identifier, has_sibling: has_sibling });
   }
 
   handleOnMouseLeave() {
@@ -273,7 +278,7 @@ class PdfFileEditor extends React.Component {
     }
   };
 
-  handleSuggestion(suggestion, targetValue){
+  handleSuggestion(suggestion, targetValue) {
     let sentenceObj = this.state.targetText;
     sentenceObj.tgt = targetValue + suggestion
     this.setState({ targetText: sentenceObj, showNextSuggestion: true });
@@ -335,7 +340,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleChangeView() {
-    this.setState({ tokenized: !this.state.tokenized, hoveredSentence: "", selectedBlock: "", targetSelected: "", pageDetails: "", edited: false,mergeButton:"Merge" });
+    this.setState({ tokenized: !this.state.tokenized, hoveredSentence: "", selectedBlock: "", targetSelected: "", pageDetails: "", edited: false, mergeButton: "Merge" });
   }
 
   handleCompareDocClose() {
@@ -381,34 +386,12 @@ class PdfFileEditor extends React.Component {
   }
 
   handleBlur() {
-    this.setState({ hoveredSentence:'',targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false });
+    this.setState({ hoveredSentence: '', targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false });
   }
 
   updateContent(val) {
-    let ind, idV, text;
-    let value = val[0].split("_");
-
-    let senteceObj = this.state.sentences;
-
-    senteceObj.map(sentence => {
-      parseInt(value[1]) == sentence.page_no &&
-        val.map(arrValue => {
-          sentence.text_blocks.map((children, index) => {
-            if (parseInt(arrValue.split("_")[0]) == children.block_id) {
-              text = text + " " + children.text;
-              children.block_id = idV;
-            }
-
-            // if(children.block_id == value[0]){
-            //   children.text = children.text
-            //   ind= index
-            //   idV = children.block_id
-            // }
-          });
-        });
-
-      this.setState({ sentences: senteceObj });
-    });
+    let updated_blocks = BLOCK_OPS.get_merged_blocks(this.state.sentences, val);
+    console.log(updated_blocks)
   }
 
   handleTextChange(event, id) {
@@ -634,9 +617,9 @@ class PdfFileEditor extends React.Component {
                     style={
                       this.state.tokenized
                         ? {
-                            maxHeight: window.innerHeight - 240,
-                            overflow: this.state.edited ? "hidden" : "scroll"
-                          }
+                          maxHeight: window.innerHeight - 240,
+                          overflow: this.state.edited ? "hidden" : "scroll"
+                        }
                         : {}
                     }
                   >
@@ -645,16 +628,14 @@ class PdfFileEditor extends React.Component {
                       hasMore={this.state.hasMoreItems}
                       dataLength={this.state.sentences ? this.state.sentences.length : 0}
                       loader={
-                        this.state.hasMoreItems.showLoader && (
-                          <p style={{ textAlign: "center" }}>
-                            <CircularProgress
-                              size={20}
-                              style={{
-                                zIndex: 1000
-                              }}
-                            />
-                          </p>
-                        )
+                        <p style={{ textAlign: "center" }}>
+                          <CircularProgress
+                            size={20}
+                            style={{
+                              zIndex: 1000
+                            }}
+                          />
+                        </p>
                       }
                       endMessage={
                         <p style={{ textAlign: "center" }}>
@@ -670,6 +651,9 @@ class PdfFileEditor extends React.Component {
                           return (
                             <div>
                               <SourceView
+                                block_identifier={this.state.block_identifier}
+                                sentences={this.state.sentences}
+                                has_sibling={this.state.has_sibling}
                                 paperType="source"
                                 isPreview={true}
                                 parent={this.state.parent}
@@ -734,27 +718,26 @@ class PdfFileEditor extends React.Component {
                       handleClick={this.handleCompareDocClose.bind(this)}
                     ></DocPreview>
                   ) : (
-                    <div>
-                      <Toolbar style={{ color: darkBlack, background: this.state.pageDetails === "target" ? "#989E9C" : blueGrey50 }}>
-                        <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: "#1C9AB7" }}>
-                          Translated document
+                      <div>
+                        <Toolbar style={{ color: darkBlack, background: this.state.pageDetails === "target" ? "#989E9C" : blueGrey50 }}>
+                          <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: "#1C9AB7" }}>
+                            Translated document
                         </Typography>
-                      </Toolbar>
-                      <div
-                        id="scrollableTargetDiv"
-                        style={
-                          {
-                            // maxHeight: window.innerHeight - 240,
-                            // overflow: this.state.edited ? "hidden" : "scroll"
+                        </Toolbar>
+                        <div
+                          id="scrollableTargetDiv"
+                          style={
+                            {
+                              // maxHeight: window.innerHeight - 240,
+                              // overflow: this.state.edited ? "hidden" : "scroll"
+                            }
                           }
-                        }
-                      >
-                        <InfiniteScroll
-                          next={this.fetchData.bind(this)}
-                          hasMore={this.state.hasMoreItems}
-                          dataLength={this.state.sentences ? this.state.sentences.length : 0}
-                          loader={
-                            this.state.hasMoreItems.showLoader && (
+                        >
+                          <InfiniteScroll
+                            next={this.fetchData.bind(this)}
+                            hasMore={this.state.hasMoreItems}
+                            dataLength={this.state.sentences ? this.state.sentences.length : 0}
+                            loader={
                               <p style={{ textAlign: "center" }}>
                                 <CircularProgress
                                   size={20}
@@ -763,73 +746,75 @@ class PdfFileEditor extends React.Component {
                                   }}
                                 />
                               </p>
-                            )
-                          }
-                          endMessage={
-                            <p style={{ textAlign: "center" }}>
-                              <b>You have seen it all</b>
-                            </p>
-                          }
-                          // style={{ overflowY: "hidden" }}
-                          // scrollableTarget="scrollableTargetDiv"
-                          onScroll={() => this.handleScroll()}
-                        >
-                          {this.state.sentences &&
-                            this.state.sentences.map((sentence, index) => {
-                              return (
-                                <div>
-                                  <SourceView
-                                    isPreview={true}
-                                    paperType="target"
-                                    parent={this.state.parent}
-                                    key={sentence.page_no + "_" + index}
-                                    pageNo={sentence.page_no}
-                                    sourceSentence={sentence}
-                                    selectedSourceText={this.state.selectedSourceText}
-                                    createBlockId={this.state.selectedBlockId}
-                                    isEditable={this.state.isEditable}
-                                    hoveredSentence={this.state.hoveredSentence}
-                                    hoveredTableId={this.state.hoveredTableId}
-                                    clear={this.state.clear}
-                                    heightValue={this.state.height}
-                                    popOver={this.state.popOver}
-                                    selectedCell={this.state.selectedCell}
-                                    scrollToPage={this.state.scrollToPage}
-                                    scrollToTop={this.state.scrollToTop}
-                                    scrollToId={this.state.scrollToId}
-                                    yOffset={this.state.yOffset}
-                                    modelId={this.props.match.params.modelId}
-                                    handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
-                                    handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
-                                    handleSourceChange={this.handleSourceChange.bind(this)}
-                                    handleEditor={this.handleEditor.bind(this)}
-                                    handleCheck={this.handleCheck.bind(this)}
-                                    handleSource={this.handleSource.bind(this)}
-                                    handleTableHover={this.handleTableHover.bind(this)}
-                                    handlePopUp={this.handlePopUp.bind(this)}
-                                    handleSentenceOperation={this.handleSentenceOperation.bind(this)}
-                                    tokenized={this.state.tokenized}
-                                    handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
-                                    menuTopValue={this.state.menuTopValue}
-                                    menuLeftValue={this.state.menuLeftValue}
-                                    handleMenuPosition={this.handleMenuPosition.bind(this)}
-                                    handleAutoCompleteText={this.handleAutoCompleteText.bind(this)}
-                                    editableId={this.state.editableId}
-                                    handleAutoCompleteEditor={this.handleAutoCompleteEditor.bind(this)}
-                                    targetSelected={this.state.targetSelected}
-                                    handleDoubleClickTarget={this.handleDoubleClickTarget.bind(this)}
-                                    handleBlur={this.handleBlur.bind(this)}
-                                    targetText={this.state.targetText}
-                                    handleSuggestion={this.handleSuggestion.bind(this)}
-                                    showNextSuggestion={this.state.showNextSuggestion}
-                                  />
-                                </div>
-                              );
-                            })}
-                        </InfiniteScroll>
+                            }
+                            endMessage={
+                              <p style={{ textAlign: "center" }}>
+                                <b>You have seen it all</b>
+                              </p>
+                            }
+                            // style={{ overflowY: "hidden" }}
+                            // scrollableTarget="scrollableTargetDiv"
+                            onScroll={() => this.handleScroll()}
+                          >
+                            {this.state.sentences &&
+                              this.state.sentences.map((sentence, index) => {
+                                return (
+                                  <div>
+                                    <SourceView
+                                      block_identifier={this.state.block_identifier}
+                                      sentences={this.state.sentences}
+                                      has_sibling={this.state.has_sibling}
+                                      isPreview={true}
+                                      paperType="target"
+                                      parent={this.state.parent}
+                                      key={sentence.page_no + "_" + index}
+                                      pageNo={sentence.page_no}
+                                      sourceSentence={sentence}
+                                      selectedSourceText={this.state.selectedSourceText}
+                                      createBlockId={this.state.selectedBlockId}
+                                      isEditable={this.state.isEditable}
+                                      hoveredSentence={this.state.hoveredSentence}
+                                      hoveredTableId={this.state.hoveredTableId}
+                                      clear={this.state.clear}
+                                      heightValue={this.state.height}
+                                      popOver={this.state.popOver}
+                                      selectedCell={this.state.selectedCell}
+                                      scrollToPage={this.state.scrollToPage}
+                                      scrollToTop={this.state.scrollToTop}
+                                      scrollToId={this.state.scrollToId}
+                                      yOffset={this.state.yOffset}
+                                      modelId={this.props.match.params.modelId}
+                                      handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
+                                      handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
+                                      handleSourceChange={this.handleSourceChange.bind(this)}
+                                      handleEditor={this.handleEditor.bind(this)}
+                                      handleCheck={this.handleCheck.bind(this)}
+                                      handleSource={this.handleSource.bind(this)}
+                                      handleTableHover={this.handleTableHover.bind(this)}
+                                      handlePopUp={this.handlePopUp.bind(this)}
+                                      handleSentenceOperation={this.handleSentenceOperation.bind(this)}
+                                      tokenized={this.state.tokenized}
+                                      handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
+                                      menuTopValue={this.state.menuTopValue}
+                                      menuLeftValue={this.state.menuLeftValue}
+                                      handleMenuPosition={this.handleMenuPosition.bind(this)}
+                                      handleAutoCompleteText={this.handleAutoCompleteText.bind(this)}
+                                      editableId={this.state.editableId}
+                                      handleAutoCompleteEditor={this.handleAutoCompleteEditor.bind(this)}
+                                      targetSelected={this.state.targetSelected}
+                                      handleDoubleClickTarget={this.handleDoubleClickTarget.bind(this)}
+                                      handleBlur={this.handleBlur.bind(this)}
+                                      targetText={this.state.targetText}
+                                      handleSuggestion={this.handleSuggestion.bind(this)}
+                                      showNextSuggestion={this.state.showNextSuggestion}
+                                    />
+                                  </div>
+                                );
+                              })}
+                          </InfiniteScroll>
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </Paper>
               </Grid>
             </Grid>
