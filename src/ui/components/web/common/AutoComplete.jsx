@@ -1,6 +1,5 @@
 import React from 'react';
 import Popover from 'react-text-selection-popover';
-import placeRight from '../../../containers/web/Interactive-Editor/placeRight'
 import Menu from '../../../containers/web/Interactive-Editor/Menu'
 import Button from '@material-ui/core/MenuItem';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -104,7 +103,7 @@ class AutoComplete extends React.Component {
     }
 
     render() {
-        const { value, aId, refId, style, heightToBeIncreased } = this.props
+        const { value, aId, refId, style } = this.props
         return (
             
             <div>

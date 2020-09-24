@@ -12,7 +12,6 @@ import history from "../../../web.history";
 import FetchDocument from "../../../flux/actions/apis/fetch_document";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import { translate } from "../../../assets/localisation";
-import Timer from "../../components/web/common/CountDown";
 import ProgressBar from "../../components/web/common/ProgressBar";
 import Spinner from "../../components/web/common/Spinner";
 
