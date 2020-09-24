@@ -424,12 +424,16 @@ class PdfFileEditor extends React.Component {
           
           if(block.block_identifier == idDetails[0]){
             
-            block.children && Array.isArray(block.children) && block.children.length>0 && block.children.map(children=>{
-              !children.children ? text = text + " "+ children.text : children.map(grandChildren=>{
-                text = text + " "+ grandChildren.text
+
+
+            block && block.children && Array.isArray(block.children) && block.children.length>0 && block.children.map(children => {
+              children.children ? children.map(grandChildren => {
+                text = text + " " + grandChildren.text
+              })
+                : text = text + " " + children.text
               })
               
-            })
+            
             if (block.text !== text) {
               block.text = text;
               blockItem = block;
@@ -447,7 +451,7 @@ class PdfFileEditor extends React.Component {
     
     
     if (blockItem && !wf_code)
-      this.workFlowApi("DP_WFLOW_S_TTR", blockItem)
+      this.workFlowApi("DP_WFLOW_S_TTR", [blockItem], "update")
     else if(wf_code && blockItem)
       this.workFlowApi(wf_code, [blockItem], "update")
     this.setState({ hoveredSentence: '', targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false, updatePage: parseInt(idDetails[1]) });
@@ -798,7 +802,7 @@ class PdfFileEditor extends React.Component {
                       <div>
                         <Toolbar style={{ color: darkBlack, background: this.state.pageDetails === "target" ? "#989E9C" : blueGrey50 }}>
                           <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: "#1C9AB7" }}>
-                            Translated document
+                            Translated Document
                         </Typography>
                         </Toolbar>
                         <div
