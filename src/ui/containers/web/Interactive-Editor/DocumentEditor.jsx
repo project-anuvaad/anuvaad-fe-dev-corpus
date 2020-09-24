@@ -424,12 +424,16 @@ class PdfFileEditor extends React.Component {
           
           if(block.block_identifier == idDetails[0]){
             
-            block.children && Array.isArray(block.children) && block.children.length>0 && block.children.map(children=>{
-              !children.children ? text = text + " "+ children.text : children.map(grandChildren=>{
-                text = text + " "+ grandChildren.text
+
+
+            block && block.children && Array.isArray(block.children) && block.children.length>0 && block.children.map(children => {
+              children.children ? children.map(grandChildren => {
+                text = text + " " + grandChildren.text
+              })
+                : text = text + " " + children.text
               })
               
-            })
+            
             if (block.text !== text) {
               block.text = text;
               blockItem = block;
