@@ -648,16 +648,14 @@ class PdfFileEditor extends React.Component {
                       hasMore={this.state.hasMoreItems}
                       dataLength={this.state.sentences ? this.state.sentences.length : 0}
                       loader={
-                        this.state.hasMoreItems.showLoader && (
-                          <p style={{ textAlign: "center" }}>
-                            <CircularProgress
-                              size={20}
-                              style={{
-                                zIndex: 1000
-                              }}
-                            />
-                          </p>
-                        )
+                        <p style={{ textAlign: "center" }}>
+                          <CircularProgress
+                            size={20}
+                            style={{
+                              zIndex: 1000
+                            }}
+                          />
+                        </p>
                       }
                       endMessage={
                         <p style={{ textAlign: "center" }}>
@@ -760,16 +758,14 @@ class PdfFileEditor extends React.Component {
                             hasMore={this.state.hasMoreItems}
                             dataLength={this.state.sentences ? this.state.sentences.length : 0}
                             loader={
-                              this.state.hasMoreItems.showLoader && (
-                                <p style={{ textAlign: "center" }}>
-                                  <CircularProgress
-                                    size={20}
-                                    style={{
-                                      zIndex: 1000
-                                    }}
-                                  />
-                                </p>
-                              )
+                              <p style={{ textAlign: "center" }}>
+                                <CircularProgress
+                                  size={20}
+                                  style={{
+                                    zIndex: 1000
+                                  }}
+                                />
+                              </p>
                             }
                             endMessage={
                               <p style={{ textAlign: "center" }}>
