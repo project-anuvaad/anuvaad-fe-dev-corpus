@@ -45,6 +45,11 @@ class Preview extends React.Component {
 
   }
 
+
+  updateContent(value){
+    this.setState({openDialog:true,selectedArray:value, title: "Merge Blocks",dialogMessage:"Do you want to merge the selected sentences ?"})
+  }
+
   handleRightClick(event) {
     event.preventDefault();
     this.popUp("merge", event);
@@ -53,6 +58,7 @@ class Preview extends React.Component {
     this.setState({ checkbox: true, openDialog: false });
   }
   handleDialog() {
+    debugger
     if (this.state.title === "Split sentence" || this.state.title === "Merge sentence") {
       this.props.handleSentenceOperation(
         window.getSelection().anchorNode.parentNode.id,
@@ -60,6 +66,11 @@ class Preview extends React.Component {
         this.props.sourceSentence,
         this.state.title
       );
+    }
+    
+    else if(this.state.title === "Merge Blocks"){
+
+      this.props.updateContent(this.state.selectedArray)
     }
     this.setState({ openDialog: false });
   }
@@ -153,11 +164,13 @@ class Preview extends React.Component {
     this.props.handleBlur(id, workflowcode);
   };
   handleClose = () => {
+    
     this.setState({
       openDialog: false,
 
       operation_type: "",
-
+      arrayClear: true,
+      selectedArray:[],
       endSentence: "",
       startSentence: "",
       addSentence: false,
@@ -295,7 +308,7 @@ class Preview extends React.Component {
                   handleTextChange={this.props.handleTextChange}
                   paperType={this.props.paperType}
                   mergeButton={this.props.mergeButton}
-                  updateContent={this.props.updateContent}
+                  updateContent={this.updateContent.bind(this)}
                   handleDoubleClickTarget={this.handleDoubleClickTarget.bind(this)}
                   targetSelected={this.props.targetSelected}
                   targetText={this.props.targetText}
