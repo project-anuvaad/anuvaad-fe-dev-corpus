@@ -59,8 +59,6 @@ class AutoComplete extends React.Component {
         let caretVal = this.state.value.substring(0, elem.selectionStart)
 
         var coordinates = getCaretCoordinates(elem, elem.selectionEnd);
-        console.log(caretVal)
-        console.log(this.state.value)
 
         let topValue = 0
         let leftValue = 0
@@ -141,7 +139,7 @@ class AutoComplete extends React.Component {
         this.setState({ modified: true })
         var elem = document.getElementById(this.props.aId)
         let caretVal = this.state.value.substring(0, elem.selectionStart)
-        this.setState({ caretVal: this.state.caretVal + suggestion, value: this.state.caretVal + suggestion })
+        this.setState({ caretVal: caretVal + suggestion, value: caretVal + suggestion })
         this.props.handleSuggestion(suggestion, this.state.caretVal, this.props.sourceText, this.props.tokenObject)
     }
 
