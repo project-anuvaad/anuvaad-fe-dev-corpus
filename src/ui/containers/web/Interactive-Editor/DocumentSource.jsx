@@ -159,9 +159,9 @@ class Preview extends React.Component {
       sentenceOp: opType
     });
   };
-  handleBlur = (id, workflowcode) => {
+  handleBlur = (id, workflowcode, saveData) => {
     this.setState({ hoveredSentence: null, value: false, selectedSentence: "" });
-    this.props.handleBlur(id, workflowcode);
+    this.props.handleBlur(id, workflowcode, saveData);
   };
   handleClose = () => {
 
