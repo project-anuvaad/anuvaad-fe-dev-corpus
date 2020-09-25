@@ -155,7 +155,7 @@ function get_sentence_id_index(tokenized_sentences, sentence_id) {
  * @param {*} sentence_id_2,  end selection index
  */
 function do_sentences_merging(sentences, block_id, sentence_id_1, sentence_id_2) {
-    let selected_block_ids         = []
+    let selected_block_ids          = []
     selected_block_ids.push(block_id)
 
     let selected_blocks             = get_blocks(sentences, get_block_id(selected_block_ids))
@@ -173,15 +173,39 @@ function do_sentences_merging(sentences, block_id, sentence_id_1, sentence_id_2)
         end     = index2
     }
 
-    let first_sentences_part  = tokenized_sentences_block.slice(0, start)
-    let second_sentences_part = tokenized_sentences_block.slice(start, end)
-    let third_sentences_part  = tokenized_sentences_block.slice(end, tokenized_sentences_block.length)
+    /**
+     * split tokenized sentences into three portion.
+     */
+    let first_sentences_obj_arr  = tokenized_sentences_block.slice(0, start)
+    let second_sentences_obj_arr = tokenized_sentences_block.slice(start, end)
+    let third_sentences_obj_arr  = tokenized_sentences_block.slice(end, tokenized_sentences_block.length)
 
+    /**
+     * copy each element from first portion into a local array
+     */
     let final_tokenized_sentences = []
-    first_sentences_part.forEach((e) => final_tokenized_sentences.push(e))
-    final_tokenized_sentences.push(second_sentences_part.join(''))
-    third_sentences_part.forEach((e) => final_tokenized_sentences.push(e))
+    first_sentences_obj_arr.forEach((e) => final_tokenized_sentences.push(e))
 
+    /**
+     * 1. merge the sentences first to create new sentence
+     * 2. move the merged sentence to first object of sencond array, keep all information same
+     * 3. push this object to local array
+     */
+    let merged_sentence = ""
+    second_sentences_obj_arr.forEach((e) => {
+        merged_sentence += e.src_text
+    })
+    second_sentences_obj_arr[0].src_text    = merged_sentence
+    final_tokenized_sentences.push(second_sentences_obj_arr[0])
+
+    /**
+     * copy third part of array into the local array
+     */
+    third_sentences_obj_arr.forEach((e) => final_tokenized_sentences.push(e))
+
+    /**
+     * replace the local array into the tokenized sentence block
+     */
     tokenized_sentences_block.tokenized_sentences = final_tokenized_sentences
     return tokenized_sentences_block
 }
