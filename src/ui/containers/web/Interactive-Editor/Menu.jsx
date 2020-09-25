@@ -2,8 +2,10 @@ import React from "react";
 import Typography from '@material-ui/core/Typography';
 import Popover from '@material-ui/core/Menu';
 import Button from '@material-ui/core/MenuItem';
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-export default class Popovers extends React.Component {
+class Popovers extends React.Component {
     constructor(props) {
         super(props);
         this.setState = {
@@ -45,7 +47,7 @@ export default class Popovers extends React.Component {
                 }
             })
         }
-        if (this.props.options && this.props.options.length > 0 && dataArr && Array.isArray(dataArr) && dataArr.length > 0) {
+        if (!this.props.apistatus.loading) {
             return (
                 <Popover
                     id={id}
@@ -96,3 +98,12 @@ export default class Popovers extends React.Component {
 
     }
 }
+
+
+
+const mapStateToProps = state => ({
+    apistatus: state.apistatus,
+});
+
+
+export default withRouter(connect(mapStateToProps, null)(Popovers));
