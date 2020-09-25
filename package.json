@@ -99,6 +99,7 @@
 		"redux-thunk": "^2.3.0",
 		"semantic-ui-react": "^0.88.1",
 		"textarea-caret": "^3.1.0",
+		"uuidv4": "^6.2.3",
 		"winwheel": "^1.0.1"
 	},
 	"devDependencies": {

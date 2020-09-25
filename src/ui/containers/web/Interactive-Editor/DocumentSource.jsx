@@ -9,6 +9,7 @@ import Dialog from "../../../components/web/common/SimpleDialog";
 import Image from "./Image";
 import { withRouter } from "react-router-dom";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
+import BLOCK_OPS from "../../../../utils/block.operations";
 
 class DocumentSource extends React.Component {
   constructor(props) {
@@ -55,9 +56,13 @@ class DocumentSource extends React.Component {
   }
   handleDialog() {
     debugger
-    if (this.state.title === "Split Sentence" || this.state.title === "Merge Sentence") {
-      console.log(this.state.start_block_id, this.state.start_sentence_id, this.state.end_sentence_id)
-      
+    if (this.state.title === "Merge sentence") {
+
+     let updatedBlocks =   BLOCK_OPS.do_sentences_merging(this.props.sentences,this.state.start_block_id, this.state.start_sentence_id, this.state.end_sentence_id);
+      console.log(updatedBlocks)
+    }
+    else if(this.state.title === "Split Sentence" ){
+      console.log("progress")
     }
     
     else if(this.state.title === "Merge Paragraphs"){

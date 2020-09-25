@@ -80,7 +80,7 @@ class DocumentBlock extends React.Component {
           fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
           outline: "0px solid transparent",
           zIndex: 1,
-          
+
           lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
           backgroundColor: this.props.selectedSentence === value.block_id + "_" + this.props.page_no + "_source" && this.props.value ? "#F4FDFF" : "",
           border:
@@ -124,7 +124,7 @@ class DocumentBlock extends React.Component {
 
   handleClickAway = (id, text, wf_code, saveData) => {
     if (!this.props.showSuggestions) {
-      if(saveData) {
+      if (saveData) {
         this.handleChangeEvent({ target: { value: text } })
       }
       this.props.handleBlur(id, wf_code, saveData);
@@ -293,8 +293,8 @@ class DocumentBlock extends React.Component {
     }
     //Merge
     else if (start_s_id !== end_s_id) {
-      let opeartion =  "Merge Sentence";
-      this.props.popUp(start_block_id, start_s_id, end_s_id,"", event,opeartion)
+      let opeartion = "Merge Sentence";
+      this.props.popUp(start_block_id, start_s_id, end_s_id, "", event, opeartion)
     }
     //Split
     else {
@@ -304,18 +304,18 @@ class DocumentBlock extends React.Component {
         // if (end_tokenized > 0) {
         //   end_tokenized = end_tokenized - 1
         // }
-        let opeartion =  "Split sentence";
+        let opeartion = "Split sentence";
         var split_index = parseInt(end_tokenized) + window.getSelection().focusOffset
         let sentence = this.props.sentence
         let actual_text = ''
-        sentence.tokenized_sentences.map((token)=>{
-          if(token.s_id == start_s_id){
-            actual_text  = token.src
+        sentence.tokenized_sentences.map((token) => {
+          if (token.s_id == start_s_id) {
+            actual_text = token.src
           }
         })
         actual_text = actual_text.replace(/\s{2,}/g, ' ')
         actual_text = actual_text.trim()
-        this.props.popUp(start_block_id, start_s_id, split_index, actual_text.substring(split_index), event,opeartion )
+        this.props.popUp(start_block_id, start_s_id, split_index, actual_text.substring(split_index), event, opeartion)
       }
     }
   }
@@ -357,7 +357,7 @@ class DocumentBlock extends React.Component {
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
       outline: "0px solid transparent",
       zIndex: 1,
-      padding :"5px",
+      padding: "5px",
       lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
       height: child.text_height + "px",
       left: child.text_left + "px",
@@ -540,11 +540,11 @@ class DocumentBlock extends React.Component {
 
     var styles = {
       position: "absolute",
-      top: sentence.text_top-7 + "px",
-      left: sentence.text_left-3 + "px",
+      top: sentence.text_top - 7 + "px",
+      left: sentence.text_left - 3 + "px",
       fontSize: sentence.font_size + "px",
       color: sentence.font_color,
-      width: sentence.text_width+ 5 + "px",
+      width: sentence.text_width + 5 + "px",
       height: sentence.text_height + 4 + "px",
       fontFamily: sentence.font_family,
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
@@ -569,7 +569,7 @@ class DocumentBlock extends React.Component {
       <div>
         {this.props.tokenized && this.props.mergeButton === "save" && this.props.sentence.text && (
           <Checkbox
-            size = "small"
+            size="small"
             style={{ top: sentence.text_top - 10 + "px", left: sentence.text_left - 50 + "px", position: "absolute", zIndex: 4 }}
             checked={arr.includes(sentence.block_id + "_" + this.props.page_no) ? true : false}
             onChange={this.handleChange(sentence.block_id + "_" + this.props.page_no)}

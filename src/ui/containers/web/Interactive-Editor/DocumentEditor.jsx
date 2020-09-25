@@ -450,7 +450,7 @@ class PdfFileEditor extends React.Component {
               block.children.length > 0 &&
               block.children.map(children => {
                 children.children
-                  ? children.map(grandChildren => {
+                  ? children.children.map(grandChildren => {
                       text = text + " " + grandChildren.text;
                     })
                   : (text = text + " " + children.text);
@@ -715,6 +715,7 @@ class PdfFileEditor extends React.Component {
                                 updateContent={this.updateContent.bind(this)}
                                 editableId={this.state.editableId}
                                 handleAutoCompleteEditor={this.handleAutoCompleteEditor.bind(this)}
+                                targetSelected={this.state.targetSelected}
                               />
                             </div>
                           );
