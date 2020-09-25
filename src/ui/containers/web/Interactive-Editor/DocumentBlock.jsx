@@ -122,10 +122,12 @@ class DocumentBlock extends React.Component {
     );
   };
 
-  handleClickAway = (id, text, wf_code) => {
+  handleClickAway = (id, text, wf_code, saveData) => {
     if (!this.props.showSuggestions) {
-      this.handleChangeEvent({ target: { value: text } })
-      this.props.handleBlur(id, wf_code);
+      if(saveData) {
+        this.handleChangeEvent({ target: { value: text } })
+      }
+      this.props.handleBlur(id, wf_code, saveData);
     }
   };
 

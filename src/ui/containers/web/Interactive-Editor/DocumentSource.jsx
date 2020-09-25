@@ -99,9 +99,9 @@ class DocumentSource extends React.Component {
 
     });
   };
-  handleBlur = (id, workflowcode) => {
+  handleBlur = (id, workflowcode, saveData) => {
     this.setState({ hoveredSentence: null, value: false, selectedSentence: "" });
-    this.props.handleBlur(id, workflowcode);
+    this.props.handleBlur(id, workflowcode, saveData);
   };
   handleClose = () => {
     

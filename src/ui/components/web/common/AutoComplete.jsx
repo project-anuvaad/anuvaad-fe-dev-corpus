@@ -13,7 +13,8 @@ class AutoComplete extends React.Component {
         super(props);
         this.state = {
             value: "",
-            showSuggestions: false
+            showSuggestions: false,
+            modified: false
         }
     }
 
@@ -70,8 +71,12 @@ class AutoComplete extends React.Component {
 
         if (event.key === 'Escape') {
             this.setState({ showSuggestions: false })
-            this.props.handleChangeEvent({ target: { value: this.state.value } })
-            this.props.handleBlur(this.props.block_identifier_with_page, wfcodes.DP_WFLOW_S_C)
+            let saveData = (this.state.value !== this.props.value || this.state.modified) ? true : false
+            debugger
+            if(saveData) {
+                this.props.handleChangeEvent({ target: { value: this.state.value } })
+            }
+            this.props.handleBlur(this.props.block_identifier_with_page, wfcodes.DP_WFLOW_S_C, saveData)
         }
 
         if (event.key === 'Tab') {
@@ -88,6 +93,7 @@ class AutoComplete extends React.Component {
     }
 
     handleSuggetionCLick(suggestion) {
+        this.setState({modified: true})
         var elem = document.getElementById(this.props.aId)
         let caretVal = this.props.value.substring(0, elem.selectionStart)
         this.setState({ caretVal: caretVal + suggestion })
@@ -99,6 +105,11 @@ class AutoComplete extends React.Component {
             value: event.target.value
         })
         // this.props.handleChangeEvent(event)
+    }
+
+    handleClickAway(id, value, wf_code) {
+        let saveData = (this.state.value !== this.props.value || this.state.modified) ? true : false
+        this.props.handleClickAway(id, value, wf_code, saveData)
     }
 
     getLoader() {
@@ -125,8 +136,9 @@ class AutoComplete extends React.Component {
 
     render() {
         const { value, aId, refId, style, tokenIndex, sentence } = this.props
+        console.log(this.props.value)
         return (
-            <ClickAwayListener id={tokenIndex} onClickAway={() => this.props.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, this.state.value, wfcodes.DP_WFLOW_S_C)}>
+            <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, this.state.value, wfcodes.DP_WFLOW_S_C)}>
                 <div>
                     <TextareaAutosize
                         multiline={true}

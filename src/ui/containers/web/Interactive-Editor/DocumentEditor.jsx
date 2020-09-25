@@ -52,7 +52,7 @@ class PdfFileEditor extends React.Component {
       scrollToPage: "",
       popOver: false,
       hoveredTableId: "",
-      // selectedCell: "",
+      textChange: false,
       pageCount: 0,
       hasMoreItems: true,
       currentPage: 0,
@@ -306,6 +306,7 @@ class PdfFileEditor extends React.Component {
   }
 
   handleSourceChange = (evt, blockValue) => {
+    
     if (this.state.pageDetails == "target") {
       let sentenceObj = this.state.targetText;
       sentenceObj.tgt = evt.target.value;
@@ -313,8 +314,8 @@ class PdfFileEditor extends React.Component {
     } else {
       let sentenceObj = this.state.selectedSourceText;
       sentenceObj.text = evt.target.value;
-
-      this.setState({ selectedSourceText: sentenceObj, height: evt.currentTarget.offsetHeight });
+      
+      this.setState({ selectedSourceText: sentenceObj, height: evt.currentTarget.offsetHeight, textChange: true  });
     }
   };
 
@@ -433,8 +434,9 @@ class PdfFileEditor extends React.Component {
     this.setState({ mergeButton: value });
   }
 
-  handleBlur(id, wf_code) {
-    let idDetails = id.split("_");
+  handleBlur(id, wf_code, saveData) {
+    let status = "update";
+    let idDetails = id.split("_")
     let text = "";
     let blockItem;
 
@@ -465,8 +467,8 @@ class PdfFileEditor extends React.Component {
       }
     });
 
-    if (blockItem && !wf_code) this.workFlowApi("DP_WFLOW_S_TTR", [blockItem], "update");
-    else if (wf_code && blockItem) this.workFlowApi(wf_code, [blockItem], "update");
+    if (blockItem && !wf_code && this.state.textChange) this.workFlowApi("DP_WFLOW_S_TTR", [blockItem], status);
+    else if (wf_code && blockItem && saveData) this.workFlowApi(wf_code, [blockItem], status);
     this.setState({
       hoveredSentence: "",
       targetSelected: "",
@@ -474,6 +476,7 @@ class PdfFileEditor extends React.Component {
       selectedBlockId: "",
       selectedSourceText: "",
       edited: false,
+      textChange: false,
       updatePage: parseInt(idDetails[1])
     });
   }
