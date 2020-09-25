@@ -426,11 +426,11 @@ class PdfFileEditor extends React.Component {
             
 
 
-            block && block.children && Array.isArray(block.children) && block.children.length>0 && block.children.map(children => {
-              children.children ? children.map(grandChildren => {
+            block && block.children && Array.isArray(block.children) && block.children.length>0 && block.children.map(childrens => {
+              childrens && childrens.children && Array.isArray(childrens.children) && childrens.children.length>0 ? childrens.children.map(grandChildren => {
                 text = text + " " + grandChildren.text
               })
-                : text = text + " " + children.text
+                : text = text + " " + childrens.text
               })
               
             
@@ -449,7 +449,7 @@ class PdfFileEditor extends React.Component {
       }
     })
     
-    
+    debugger
     if (blockItem && !wf_code)
       this.workFlowApi("DP_WFLOW_S_TTR", [blockItem], "update")
     else if(wf_code && blockItem)
