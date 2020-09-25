@@ -94,7 +94,6 @@ class AutoComplete extends React.Component {
     }
 
     handleCalc(value, tokenText) {
-        console.log(value)
         if (value.trim().length > 0) {
             const temp = value.split(" ");
             const tagged_tgt = tokenText.tagged_tgt.split(" ");
