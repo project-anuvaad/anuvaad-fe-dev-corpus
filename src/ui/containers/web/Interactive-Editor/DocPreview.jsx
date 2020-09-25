@@ -44,11 +44,11 @@ class PdfPreview extends React.Component {
       `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
       fileDetails.download_source_path ? fileDetails.download_source_path : ""
       }`;
-     
+
     return (
-        <div>
-    {/* //   <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}> */}
-        <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
+      <div>
+        {/* //   <Paper elevation={2} style={{ height: "98%", paddingBottom: "10px" }}> */}
+        {/* <Toolbar style={{ color: darkBlack, background: blueGrey50 }}>
           <Grid item xs={3} sm={3} lg={3} xl={3}>
             <Typography value="" variant="h6" gutterBottom style={{ width: "100%", flex: 1, color: '#1C9AB7' }}>
               {translate("intractive_translate.page.preview.originalPDF")}
@@ -116,18 +116,18 @@ class PdfPreview extends React.Component {
                 </Button>
               )}
           </Grid> */}
-        </Toolbar>
-        <div style={{ maxHeight: window.innerHeight - 240, overflowY: "auto", display: "flex", flexDirection: "row", justifyContent: "center" }} id="pdfDocument">
-          <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess} style={{ align: "center",  display: "flex", flexDirection: "row", justifyContent: "center" }}>
-                  
-          
-           <Page scale={this.state.pageScaleWidth} pageNumber={Number(pageNo) } onLoadSuccess={this.onPageLoad} />
-           {/* <Page scale={!this.props.zoom ? this.state.scale : this.state.pageScaleWidth} pageNumber={Number(this.props.pageNo +1) } onLoadSuccess={this.onPageLoad} /> */}
-        
-            
+        {/* </Toolbar> */}
+        <div style={{ maxHeight: window.innerHeight - 260, overflowY: "auto", display: "flex", flexDirection: "row", justifyContent: "center" }} id="pdfDocument">
+          <Document file={url} onLoadSuccess={this.props.onDocumentLoadSuccess} style={{ align: "center", display: "flex", flexDirection: "row", justifyContent: "center" }}>
+
+
+            <Page scale={this.state.pageScaleWidth} pageNumber={Number(pageNo)} onLoadSuccess={this.onPageLoad} />
+            {/* <Page scale={!this.props.zoom ? this.state.scale : this.state.pageScaleWidth} pageNumber={Number(this.props.pageNo +1) } onLoadSuccess={this.onPageLoad} /> */}
+
+
           </Document>
         </div>
-      {/* </Paper> */}
+        {/* </Paper> */}
       </div>
     );
   }
