@@ -46,8 +46,8 @@ class Preview extends React.Component {
   }
 
 
-  updateContent(value){
-    this.setState({openDialog:true,selectedArray:value, title: "Merge Blocks",dialogMessage:"Do you want to merge the selected sentences ?"})
+  updateContent(value) {
+    this.setState({ openDialog: true, selectedArray: value, title: "Merge Blocks", dialogMessage: "Do you want to merge the selected sentences ?" })
   }
 
   handleRightClick(event) {
@@ -67,8 +67,8 @@ class Preview extends React.Component {
         this.state.title
       );
     }
-    
-    else if(this.state.title === "Merge Blocks"){
+
+    else if (this.state.title === "Merge Blocks") {
 
       this.props.updateContent(this.state.selectedArray)
     }
@@ -86,7 +86,7 @@ class Preview extends React.Component {
   }
 
   getSelectionText(event, id) {
-    let sentenceStart = window.getSelection().anchorNode && window.getSelection().anchorNode.parentNode ?  window.getSelection().anchorNode.parentNode.id.split("_") : 0; 
+    let sentenceStart = window.getSelection().anchorNode && window.getSelection().anchorNode.parentNode ? window.getSelection().anchorNode.parentNode.id.split("_") : 0;
     let sentenceEnd = window.getSelection().focusNode && window.getSelection().focusNode.parentNode ? window.getSelection().focusNode.parentNode.id.split("_") : 0;
     let senOp;
     if (sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]) {
@@ -164,13 +164,13 @@ class Preview extends React.Component {
     this.props.handleBlur(id, workflowcode);
   };
   handleClose = () => {
-    
+
     this.setState({
       openDialog: false,
 
       operation_type: "",
       arrayClear: true,
-      selectedArray:[],
+      selectedArray: [],
       endSentence: "",
       startSentence: "",
       addSentence: false,
@@ -231,11 +231,11 @@ class Preview extends React.Component {
     });
     return resultArray.join(" ");
   }
-  
+
   fetchSuggestions(srcText, targetTxt, tokenObject) {
     let targetVal = targetTxt
 
-    this.setState({ showSuggestions: true, autoCompleteText:null })
+    this.setState({ showSuggestions: true, autoCompleteText: null })
     const apiObj = new IntractiveApi(srcText, targetVal, { model_id: this.props.modelId }, true, true);
     this.props.APITransport(apiObj);
   }
@@ -245,12 +245,12 @@ class Preview extends React.Component {
   }
 
   handleSuggestion(suggestion, value, src, tokenObject) {
-    this.setState({showSuggestions: false})
+    this.setState({ showSuggestions: false })
     this.props.handleSuggestion(suggestion, value)
     this.setState({ autoCompleteText: null, tokenObject })
 
     let targetVal = value + suggestion
-    setTimeout(()=>{
+    setTimeout(() => {
       this.setState({ showSuggestions: true })
 
     }, 50)
@@ -260,7 +260,7 @@ class Preview extends React.Component {
   }
 
   handleDoubleClickTarget(event, id, text, pageDetails) {
-    this.setState({autoCompleteText: null})
+    this.setState({ autoCompleteText: null })
     this.props.handleDoubleClickTarget(event, id, text, pageDetails)
   }
 
@@ -275,12 +275,13 @@ class Preview extends React.Component {
             const block_id = sentence.block_id;
             return (
               <div
-                onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)}
-                onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)}
+                // onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)}
+                // onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)}
               >
                 {/* {this.props.tokenized ? */}
 
                 <BlockView
+                  tokenized_view={!this.props.tokenized}
                   block_identifier={this.props.block_identifier}
                   sentences={this.props.sentences}
                   has_sibling={this.props.has_sibling}
