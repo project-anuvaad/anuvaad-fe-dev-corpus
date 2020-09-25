@@ -137,7 +137,7 @@ function get_tokenized_sentences_block(blocks) {
  */
 function get_sentence_id_index(tokenized_sentences, sentence_id) {
   for (var i = 0; i < tokenized_sentences.length; i++) {
-    if (tokenized_sentences[i].sentence_id == sentence_id || tokenized_sentences[i].s_id == sentence_id) {
+    if (tokenized_sentences[i].s_id == sentence_id) {
       return i;
     }
   }
@@ -248,7 +248,7 @@ function do_sentence_splitting(sentences, block_id, sentence_id, character_count
     final_tokenized_sentences.push(split_sentence_obj)
     final_tokenized_sentences.push({
         'src': second_portion,
-        'sentence_id': v4(),
+        's_id': v4(),
     })
 
     tokenized_sentences_block.tokenized_sentences.splice(index, 1, final_tokenized_sentences[0])

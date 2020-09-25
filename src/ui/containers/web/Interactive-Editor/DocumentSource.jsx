@@ -57,17 +57,13 @@ class DocumentSource extends React.Component {
   handleDialog() {
     let workflowCode = "DP_WFLOW_S_TR";
     if (this.state.title === "Merge sentence") {
-
      let updatedBlocks =   BLOCK_OPS.do_sentences_merging(this.props.sentences,this.state.start_block_id, this.state.start_sentence_id, this.state.end_sentence_id);
-      
-     console.log(updatedBlocks)
-    //  this.props.workFlowApi(workflowCode, [updatedBlocks], this.state.title);
+    this.props.workFlowApi(workflowCode, [updatedBlocks], this.state.title);
      
     }
     else if(this.state.title === "Split sentence" ){
       let updatedBlocks =   BLOCK_OPS.do_sentence_splitting(this.props.sentences,this.state.start_block_id, this.state.start_sentence_id, this.state.end_sentence_id);
-      console.log(updatedBlocks)
-      // this.props.workFlowApi(workflowCode, [updatedBlocks], this.state.title);
+      this.props.workFlowApi(workflowCode, [updatedBlocks], this.state.title);
     }
     
     else if(this.state.title === "Merge Paragraphs"){
@@ -211,9 +207,9 @@ class DocumentSource extends React.Component {
     this.props.APITransport(apiObj);
   }
 
-  handleDoubleClickTarget(event, id, text, pageDetails) {
+  handleDoubleClickTarget(event, id, text, pageDetails, block_id) {
     this.setState({autoCompleteText: null})
-    this.props.handleDoubleClickTarget(event, id, text, pageDetails)
+    this.props.handleDoubleClickTarget(event, id, text, pageDetails, block_id)
   }
 
   getContent() {
