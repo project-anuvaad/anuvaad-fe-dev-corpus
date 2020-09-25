@@ -352,5 +352,22 @@ class DocumentSource extends React.Component {
 }
 
 
+const mapStateToProps = state => ({
+  fetchPdfSentence: state.fetchPdfSentence,
+  fileUpload: state.fileUpload,
+  documentDetails: state.documentDetails,
+  fetchContent: state.fetchContent,
+  workflowStatus: state.workflowStatus,
+  intractiveTrans: state.intractiveTrans
+});
 
-export default DocumentSource;
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      APITransport
+    },
+    dispatch
+  );
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentSource));
+
