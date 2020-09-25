@@ -200,7 +200,7 @@ class PdfFileEditor extends React.Component {
       let selectedBlock = sentenceObj[startSentence[0]] && sentenceObj[startSentence[0]].text_blocks[startSentence[1]];
       if (sentenceObj[startSentence[0]] && type === "Merge sentence") {
         selectedBlock.tokenized_sentences.map((text, i) => {
-          if (text.sentence_id == start_id || token === true) {
+          if (text.s_id == start_id || token === true) {
             token = true;
             index = i;
 
@@ -208,7 +208,7 @@ class PdfFileEditor extends React.Component {
             text.src = null;
           }
 
-          if (text.sentence_id == end_id) {
+          if (text.s_id == end_id) {
             token = false;
             text.src = null;
           }
@@ -218,7 +218,7 @@ class PdfFileEditor extends React.Component {
         const selectedSplitEndIndex = window.getSelection() && window.getSelection().getRangeAt(0).endOffset;
         let selectedSplitValue, nextSplitValue, copySentence, ind;
         selectedBlock.tokenized_sentences.map((text, i) => {
-          if (text.sentence_id == start_id) {
+          if (text.s_id == start_id) {
             selectedSplitValue = text.src.substring(0, selectedSplitEndIndex);
             nextSplitValue = text.src.substring(selectedSplitEndIndex, text.src.length);
             text.src = selectedSplitValue;
@@ -227,11 +227,11 @@ class PdfFileEditor extends React.Component {
             ind = i;
           }
         });
-        let id = copySentence.sentence_id.split("_");
+        let id = copySentence.s_id.split("_");
         id[2] = selectedBlock.tokenized_sentences.length;
         let newId = id.join("_");
 
-        copySentence.sentence_id = newId;
+        copySentence.s_id = newId;
 
         selectedBlock.tokenized_sentences.splice(ind + 1, 0, copySentence);
         selectedBlock.tokenized_sentences = this.tokenizedIndex(selectedBlock.tokenized_sentences);
@@ -254,15 +254,15 @@ class PdfFileEditor extends React.Component {
 
   tokenizedIndex = (tokenizedArray, indexValue) => {
     let i = 0;
-    let indexes = tokenizedArray[0].sentence_id.split("_");
+    let indexes = tokenizedArray[0].s_id.split("_");
     let values;
 
     tokenizedArray.map(sentence => {
-      values = sentence.sentence_id.split("_");
+      values = sentence.s_id.split("_");
       i = i + 1;
       values[1] = indexValue ? indexValue : indexes[1];
       values[2] = i;
-      sentence.sentence_id = values.join("_");
+      sentence.s_id = values.join("_");
     });
     return tokenizedArray;
   };
