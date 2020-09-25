@@ -699,6 +699,7 @@ class PdfFileEditor extends React.Component {
                                 scrollToTop={this.state.scrollToTop}
                                 scrollToId={this.state.scrollToId}
                                 yOffset={this.state.yOffset}
+                                workFlowApi = {this.workFlowApi.bind(this)}
                                 handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                                 handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
                                 handleSourceChange={this.handleSourceChange.bind(this)}
