@@ -90,7 +90,7 @@ class Preview extends React.Component {
             this.props.selectedSentence === value.block_id + "_" + this.props.page_no + "_source" && this.props.value ? "1px solid #1C9AB7" : "",
           height: value.text_height + "px",
           left: value.text_left + "px",
-          textAlignLast: sentence.children.length > 1 && "justify",
+          textAlignLast: sentence.children.length > 1 && this.props.selectedSentence !== value.block_id + "_" + this.props.page_no && "justify",
           width: value.text_width + "px"
         }}
       >

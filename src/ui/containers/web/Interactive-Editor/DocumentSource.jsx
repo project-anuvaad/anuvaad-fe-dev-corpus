@@ -47,7 +47,7 @@ class Preview extends React.Component {
 
 
   updateContent(value){
-    this.setState({openDialog:true,selectedArray:value, title: "Merge Blocks",dialogMessage:"Do you want to merge the selected sentences ?"})
+    this.setState({openDialog:true,selectedArray:value, title: "Merge Paragraphs",dialogMessage:"Do you want to merge selected paragraphs ?"})
   }
 
   handleRightClick(event) {
@@ -68,7 +68,7 @@ class Preview extends React.Component {
       );
     }
     
-    else if(this.state.title === "Merge Blocks"){
+    else if(this.state.title === "Merge Paragraphs"){
 
       this.props.updateContent(this.state.selectedArray)
     }
