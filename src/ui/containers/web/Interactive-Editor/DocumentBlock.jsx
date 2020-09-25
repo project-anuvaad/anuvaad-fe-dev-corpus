@@ -327,9 +327,9 @@ class DocumentBlock extends React.Component {
     return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
-        fontSize: child.font_size + "px",
-        height: (child.text_height + 4) + "px",
-        left: (child.text_left-1) + "px",
+        fontSize: child.font_size - 1 + "px",
+        height: (child.text_height) + "px",
+        left: (child.text_left - 5) + "px",
         textJustify: "inter-word", textAlign: 'justify', background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
       }}
     >
@@ -355,17 +355,17 @@ class DocumentBlock extends React.Component {
       textAlign: "justify",
       position: "absolute",
       top: child.text_top - 2 + "px",
-      fontSize: child.font_size + "px",
+      fontSize: child.font_size - 1 + "px",
       fontFamily: sentence.font_family,
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
       outline: "0px solid transparent",
       zIndex: 1,
       padding: "5px",
       lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
-      height: (child.text_height + 4) + "px",
-      left: (child.text_left-1) + "px",
+      height: (child.text_height) + "px",
+      left: (child.text_left - 5) + "px",
       textAlignLast: sentence.children && sentence.children.length > 1 && "justify",
-      width: (child.text_width + 5) + "px"
+      width: (child.text_width) + "px"
     }
     if (is_super) {
       if (!child.dont_show) {
