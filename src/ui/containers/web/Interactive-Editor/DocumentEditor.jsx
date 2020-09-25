@@ -88,6 +88,7 @@ class PdfFileEditor extends React.Component {
       });
     }
     if (prevProps.workflowStatus !== this.props.workflowStatus) {
+      console.log(this.state.startPage, this.state.endPage)
       const apiObj = new FileContent(this.props.match.params.jobid, this.state.startPage, this.state.endPage);
       this.props.APITransport(apiObj);
       this.setState({ apiStatus: true });
@@ -127,7 +128,7 @@ class PdfFileEditor extends React.Component {
         this.setState({
           sentences: temp,
           open: this.state.apiStatus && true,
-          message: this.state.apiStatus && this.state.apiCall == "merge" ? "Sentence merged successfully!" : "Sentence updated successfully...!",
+          message: this.state.apiStatus && (this.state.apiCall == "Merge sentence" ? "Sentence merged successfully!" :this.state.apiCall == "merge" ? "Paragraph merged successfully":this.state.apiCall == "Split sentence"? "Sentence Splitted Sucessfully" : "Sentence updated successfully...!"),
           apiStatus: false,
           apiCall: false,
           showLoader: false,
@@ -142,14 +143,18 @@ class PdfFileEditor extends React.Component {
   }
 
   getPageId(blocks) {
+    debugger
     let page_ids = [];
     blocks.forEach(element => {
       page_ids.push(parseInt(element.split("_")[1]));
     });
-    this.setState({ startPage: Math.max(...page_ids), endPage: Math.max(...page_ids) });
+    this.setState({ startPage: Math.min(...page_ids), endPage: Math.max(...page_ids) });
   }
 
   workFlowApi(workflow, blockDetails, update) {
+    console.log("-----",update)
+    
+    let pageInfo;
     const apiObj = new WorkFlow(
       workflow,
       blockDetails,
@@ -159,8 +164,12 @@ class PdfFileEditor extends React.Component {
       "",
       parseInt(this.props.match.params.modelId)
     );
+    console.log(this.state.startPage, this.state.endPage)
+    debugger
+      pageInfo = update!== "merge" && blockDetails.length>0 && blockDetails[0].page_info.page_no;
+      
     this.props.APITransport(apiObj);
-    this.setState({ apiCall: update });
+    pageInfo ?  this.setState({ apiCall: update, startPage : pageInfo, endPage: pageInfo}):this.setState({ apiCall: update});
   }
 
   fetchData() {
