@@ -241,7 +241,6 @@ class DocumentSource extends React.Component {
                   selectedSentence={this.state.selectedSentence}
                   handleOnMouseLeave={this.props.handleOnMouseLeave}
                   checkbox={this.state.checkbox}
-                  handleTextChange={this.props.handleTextChange}
                   paperType={this.props.paperType}
                   mergeButton={this.props.mergeButton}
                   updateContent={this.updateContent.bind(this)}

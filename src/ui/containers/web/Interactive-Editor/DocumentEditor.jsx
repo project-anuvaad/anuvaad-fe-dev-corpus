@@ -214,7 +214,7 @@ class PdfFileEditor extends React.Component {
       let selectedBlock = sentenceObj[startSentence[0]] && sentenceObj[startSentence[0]].text_blocks[startSentence[1]];
       if (sentenceObj[startSentence[0]] && type === "Merge sentence") {
         selectedBlock.tokenized_sentences.map((text, i) => {
-          if (text.sentence_id == start_id || token === true) {
+          if (text.s_id == start_id || token === true) {
             token = true;
             index = i;
 
@@ -222,7 +222,7 @@ class PdfFileEditor extends React.Component {
             text.src = null;
           }
 
-          if (text.sentence_id == end_id) {
+          if (text.s_id == end_id) {
             token = false;
             text.src = null;
           }
@@ -232,7 +232,7 @@ class PdfFileEditor extends React.Component {
         const selectedSplitEndIndex = window.getSelection() && window.getSelection().getRangeAt(0).endOffset;
         let selectedSplitValue, nextSplitValue, copySentence, ind;
         selectedBlock.tokenized_sentences.map((text, i) => {
-          if (text.sentence_id == start_id) {
+          if (text.s_id == start_id) {
             selectedSplitValue = text.src.substring(0, selectedSplitEndIndex);
             nextSplitValue = text.src.substring(selectedSplitEndIndex, text.src.length);
             text.src = selectedSplitValue;
@@ -241,11 +241,11 @@ class PdfFileEditor extends React.Component {
             ind = i;
           }
         });
-        let id = copySentence.sentence_id.split("_");
+        let id = copySentence.s_id.split("_");
         id[2] = selectedBlock.tokenized_sentences.length;
         let newId = id.join("_");
 
-        copySentence.sentence_id = newId;
+        copySentence.s_id = newId;
 
         selectedBlock.tokenized_sentences.splice(ind + 1, 0, copySentence);
         selectedBlock.tokenized_sentences = this.tokenizedIndex(selectedBlock.tokenized_sentences);
@@ -268,15 +268,15 @@ class PdfFileEditor extends React.Component {
 
   tokenizedIndex = (tokenizedArray, indexValue) => {
     let i = 0;
-    let indexes = tokenizedArray[0].sentence_id.split("_");
+    let indexes = tokenizedArray[0].s_id.split("_");
     let values;
 
     tokenizedArray.map(sentence => {
-      values = sentence.sentence_id.split("_");
+      values = sentence.s_id.split("_");
       i = i + 1;
       values[1] = indexValue ? indexValue : indexes[1];
       values[2] = i;
-      sentence.sentence_id = values.join("_");
+      sentence.s_id = values.join("_");
     });
     return tokenizedArray;
   };
@@ -483,77 +483,6 @@ class PdfFileEditor extends React.Component {
       let updated_blocks = BLOCK_OPS.get_merged_blocks(this.state.sentences, selectedArray);
       this.getPageId(selectedArray);
       updated_blocks.length > 0 && this.workFlowApi(this.state.workflow, updated_blocks, "merge");
-    }
-  }
-
-  handleTextChange(event, id) {
-    let idValue = id.split("-");
-    let newVal = event.currentTarget.innerText;
-
-    var sentenceObj = [...this.state.sentences];
-    if (event.target.scrollHeight > event.currentTarget.offsetHeight) {
-      sentenceObj.map(sentence => {
-        if (idValue[1] == sentence.page_no) {
-          sentence.text_blocks.map(sentenceChildren => {
-            sentenceChildren.children &&
-              sentenceChildren.children.map(children => {
-                children.children &&
-                  children.children.map(value => {
-                    if (value.block_id == idValue[0]) {
-                      value.font_size = value.font_size - 1;
-                    }
-                  });
-                if (children.block_id == idValue[0]) {
-                  children.font_size = children.font_size - 1;
-
-                  // children.font_size = children.font_size -1;
-                }
-              });
-            if (sentenceChildren.block_id == idValue[0]) {
-              sentenceChildren.font_size = sentenceChildren.font_size - 1;
-            }
-          });
-        }
-      });
-
-      this.setState({ sentences: sentenceObj });
-    } else {
-      sentenceObj.map(sentence => {
-        if (idValue[1] == sentence.page_no) {
-          sentence.text_blocks.map(sentenceChildren => {
-            sentenceChildren.children &&
-              sentenceChildren.children.map(children => {
-                children.children &&
-                  children.children.map(value => {
-                    if (
-                      value.block_id == idValue[0] &&
-                      value.text.length > event.currentTarget.innerText.length &&
-                      value.max_font > value.font_size
-                    ) {
-                      value.font_size = value.font_size + 1;
-                    }
-                  });
-                if (
-                  children.block_id == idValue[0] &&
-                  children.text.length > event.currentTarget.innerText.length &&
-                  children.max_font > children.font_size
-                ) {
-                  children.font_size = children.font_size + 1;
-
-                  // children.font_size = children.font_size -1;
-                }
-              });
-            if (
-              sentenceChildren.block_id == idValue[0] &&
-              sentenceChildren.text.length > event.currentTarget.innerText.length &&
-              sentenceChildren.max_font > sentenceChildren.font_size
-            ) {
-              sentenceChildren.font_size = sentenceChildren.font_size + 1;
-            }
-          });
-        }
-        this.setState({ sentences: sentenceObj, str: newVal });
-      });
     }
   }
 
@@ -779,7 +708,6 @@ class PdfFileEditor extends React.Component {
                                 handleSentenceOperation={this.handleSentenceOperation.bind(this)}
                                 tokenized={this.state.tokenized}
                                 handlePreviewPageChange={this.handlePreviewPageChange.bind(this)}
-                                handleTextChange={this.handleTextChange.bind(this)}
                                 mergeButton={this.state.mergeButton}
                                 updateContent={this.updateContent.bind(this)}
                                 editableId={this.state.editableId}
