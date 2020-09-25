@@ -89,6 +89,7 @@
 		"react-textarea-autocomplete": "0.0.4",
 		"react-textarea-autosize": "^8.2.0",
 		"react-textfit": "^1.1.0",
+		"react-uuid": "^1.0.2",
 		"reactjs-popup": "^1.4.2",
 		"read-more-react": "^1.0.9",
 		"recharts": "^1.0.0-beta.10",
@@ -100,7 +101,6 @@
 		"redux-thunk": "^2.3.0",
 		"semantic-ui-react": "^0.88.1",
 		"textarea-caret": "^3.1.0",
-		"uuidv4": "^6.2.3",
 		"winwheel": "^1.0.1"
 	},
 	"devDependencies": {

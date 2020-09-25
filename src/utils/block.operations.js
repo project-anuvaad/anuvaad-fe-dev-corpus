@@ -1,5 +1,5 @@
 var jp                = require('jsonpath')
-const { uuid }        = require('uuidv4');
+const { uuid }        = require('react-uuid');
 
 function get_block_id(blocks) {
     let block_ids = []
