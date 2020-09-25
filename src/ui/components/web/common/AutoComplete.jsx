@@ -184,7 +184,7 @@ class AutoComplete extends React.Component {
                 <div>
                     <TextareaAutosize
                         multiline={true}
-                        autoFocus
+                        autoFocus={true}
                         ref={refId}
                         id={aId}
                         value={this.state.value}
