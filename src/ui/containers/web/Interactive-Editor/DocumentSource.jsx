@@ -353,11 +353,7 @@ class DocumentSource extends React.Component {
 
 
 const mapStateToProps = state => ({
-  fetchPdfSentence: state.fetchPdfSentence,
-  fileUpload: state.fileUpload,
-  documentDetails: state.documentDetails,
-  fetchContent: state.fetchContent,
-  workflowStatus: state.workflowStatus,
+  apistatus: state.apistatus,
   intractiveTrans: state.intractiveTrans
 });
 
