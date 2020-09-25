@@ -9,7 +9,6 @@ import ContentEditable from "react-contenteditable";
 import CustomTable from "../../../components/web/common/CustomTable";
 // import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
-import { array } from "prop-types";
 import Popover from 'react-text-selection-popover';
 import placeBelow from './placeBelow'
 import placeRight from './placeRight'
@@ -17,6 +16,7 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Popover1 from "./Menu"
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const styles = {
   paperHeader: {
@@ -35,9 +35,11 @@ class EditorPaper extends React.Component {
       selectedIndex: 0,
       openContextMenu: false,
       suggestionText: "",
-      suggestionSrc:"",
+      suggestionSrc: "",
       suggestionId: "",
-      callApi: false
+      callApi: false,
+      previousPressedKeyCode: "",
+      editable: false
     };
     this.handleTargetChange = this.handleTargetChange.bind(this)
   }
@@ -64,15 +66,20 @@ class EditorPaper extends React.Component {
     if (prevProps.scrollToId !== this.props.scrollToId) {
       let sid = this.props.scrollToId.split("_")[0];
       if (this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-        this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
+        if (!(this.state.contentEditableId || this.props.contentEditableId)) {
+          this.refs[sid + "_" + this.props.scrollToId.split("_")[1] + "_" + this.props.paperType].scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+        }
       } else if (this.refs[sid + "_" + this.props.paperType] && this.props.paperType !== this.props.parent) {
-        this.refs[sid + "_" + this.props.paperType].scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
+        if (!(this.state.contentEditableId || this.props.contentEditableId)) {
+
+          this.refs[sid + "_" + this.props.paperType].scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+        }
       }
     } else if (prevProps.scrollToPage !== this.props.scrollToPage) {
       if (this.refs[this.props.scrollToPage + "_" + this.props.paperType])
@@ -88,7 +95,7 @@ class EditorPaper extends React.Component {
       })
     }
 
-    if(this.state.callApi) {
+    if (this.state.callApi) {
       this.fecthNextSuggestion()
     }
   }
@@ -290,6 +297,7 @@ class EditorPaper extends React.Component {
           parent={this.props.parent}
           popOver={this.props.popOver}
           handlePopUp={this.props.handlePopUp}
+          contentEditableId={this.state.contentEditableId}
         ></CustomTable>
       );
     } else {
@@ -298,16 +306,28 @@ class EditorPaper extends React.Component {
   }
 
   handleTargetChange(refId, event, sentence, tokenText, tokenIndex, senIndex) {
+    var selObj = window.getSelection();
+    var range = selObj.getRangeAt(0)
+    var boundary = range.getBoundingClientRect();
+    if (boundary) {
+      this.setState({
+        topValue: boundary.y + 15,
+        leftValue: boundary.x + 5
+      })
+    }
     if (event.key === 'Escape') {
+      this.props.handleEditor(null, this.props.paperType)
       this.setState({
         contentEditableId: null,
-        selectedIndex: 0
+        selectedIndex: 0,
+        editable: false
       })
     }
     else if (event.key === 'Tab') {
       event.preventDefault()
     }
     if (((event.key === ' ' || event.key === 'Spacebar') && this.state.previousKeyPressed === 'Shift')) {
+      // if (((event.key === ' ' || event.key === 'Spacebar') && (this.state.previousKeyPressed === 'Control' || this.state.previousKeyPressed === "Command"))) {
       let editableDiv = this.refs[refId]
       var caretPos = 0,
         sel, range;
@@ -336,28 +356,28 @@ class EditorPaper extends React.Component {
       this.setState({
         anchorEl: event.currentTarget,
         caretPos: caretPos,
-        targetVal: targetVal,
+        targetVal: editableDiv.textContent.substring(0, caretPos),
         tokenIndex,
         showLoader: true,
         senIndex,
-        suggestionSrc:tokenText.src,
+        suggestionSrc: tokenText.src,
         suggestionId: this.props.modelDetails
       })
     } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown' || event.key === 'Enter') {
-      if (event.key === 'ArrowUp') {
-        if (this.state.selectedIndex !== 0) {
-          this.setState({
-            selectedIndex: this.state.selectedIndex - 1
-          })
-        }
-      }
-      else if (event.key === 'ArrowDown') {
-        if (this.state.selectedIndex !== this.state.autoCompleteText.length - 1)
-          this.setState({
-            selectedIndex: this.state.selectedIndex + 1
-          })
-      }
-      else {
+      // if (event.key === 'ArrowUp') {
+      //   if (this.state.selectedIndex !== 0) {
+      //     this.setState({
+      //       selectedIndex: this.state.selectedIndex - 1
+      //     })
+      //   }
+      // }
+      // else if (event.key === 'ArrowDown') {
+      //   if (this.state.selectedIndex !== this.state.autoCompleteText.length - 1)
+      //     this.setState({
+      //       selectedIndex: this.state.selectedIndex + 1
+      //     })
+      // }
+      if (event.key === 'Enter') {
         if (this.state.open) {
           this.handleUpdateSentenceWithPrediction()
         }
@@ -371,7 +391,8 @@ class EditorPaper extends React.Component {
       })
     }
     this.setState({
-      previousKeyPressed: event.key
+      previousKeyPressed: event.key,
+      previousPressedKeyCode: event.keyCode
     })
   }
 
@@ -380,13 +401,28 @@ class EditorPaper extends React.Component {
   }
 
   handlePopOverClose() {
-    this.setState({openContextMenu: false})
+    var el = document.getElementById("editable")
+    var range = document.createRange()
+    var sel = window.getSelection()
+
+    if (el.childNodes[0].textContent.length < this.state.caretPos) {
+      range.setStart(el.childNodes[0], el.childNodes[0].textContent.length - 1)
+    } else {
+      range.setStart(el.childNodes[0], this.state.caretPos)
+    }
+    range.collapse(true)
+
+    sel.removeAllRanges()
+    sel.addRange(range)
+    this.setState({ caretPos: this.state.caretPos })
+
+    this.setState({ openContextMenu: false })
   }
 
   fecthNextSuggestion() {
     const apiObj = new IntractiveApi(this.state.suggestionSrc, this.state.suggestionText, this.state.suggestionId, true, true);
     this.props.APITransport(apiObj);
-    this.setState({ callApi: false})
+    this.setState({ callApi: false })
   }
 
   handleUpdateSentenceWithPrediction(selectedText) {
@@ -395,6 +431,8 @@ class EditorPaper extends React.Component {
       showLoader: false,
       openContextMenu: false
     })
+
+
     var self = this
     setTimeout(() => {
       var sentences = Object.assign([], this.state.sentences ? this.state.sentences : this.props.sentences)
@@ -404,18 +442,34 @@ class EditorPaper extends React.Component {
         sentences: sentences,
         selectedIndex: 0,
         suggestionText: this.state.targetVal + selectedText,
-        showLoader: true,
         callApi: true,
-        targetVal: this.state.targetVal + selectedText
+        targetVal: this.state.targetVal + selectedText,
         // caretPos: this.state.caretPos + selectedText.length
       })
+      document.activeElement.blur()
+    }, 50)
+
+    setTimeout(() => {
+      this.setCaretPosition(selectedText)
+
     }, 100)
 
     setTimeout(() => {
-    this.setCaretPosition(selectedText)
+      this.setState({ showLoader: true })
+      this.fetchCursorPosition()
+    }, 250)
+  }
 
-    }, 200)
-
+  fetchCursorPosition() {
+    var selObj = window.getSelection();
+    var range = selObj.getRangeAt(0)
+    var boundary = range.getBoundingClientRect();
+    if (boundary) {
+      this.setState({
+        topValue: boundary.y + 15,
+        leftValue: boundary.x + 5
+      })
+    }
   }
 
   setCaretPosition(data) {
@@ -450,14 +504,18 @@ class EditorPaper extends React.Component {
     var el = document.getElementById("editable")
     var range = document.createRange()
     var sel = window.getSelection()
-    
-    range.setStart(el.childNodes[0], this.state.caretPos + data.length)
+
+    if (el.childNodes[0].textContent.length < this.state.caretPos + data.length) {
+      range.setStart(el.childNodes[0], el.childNodes[0].textContent.length - 1)
+    } else {
+      range.setStart(el.childNodes[0], this.state.caretPos + data.length)
+    }
     range.collapse(true)
-    
+
     sel.removeAllRanges()
     sel.addRange(range)
-    this.setState({caretPos: this.state.caretPos + data.length})
-}
+    this.setState({ caretPos: this.state.caretPos + data.length })
+  }
 
   handleCalc(value, tokenText) {
     const temp = value.split(" ");
@@ -506,6 +564,7 @@ class EditorPaper extends React.Component {
     if (sentence.tokenized_sentences && Array.isArray(sentence.tokenized_sentences) && sentence.tokenized_sentences.length > 0) {
       let sentenceArray = [];
       if (this.props.paperType === "source") {
+
         sentence.tokenized_sentences.map(tokenText => {
           if (tokenText.status !== "DELETED" && tokenText.src) {
             let color = "";
@@ -536,6 +595,8 @@ class EditorPaper extends React.Component {
               textColor = "black";
             }
             sentenceArray.push(
+              <div style={this.props.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? { border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF" } : {}}>
+
               <span key={sentence._id + "_" + tokenText.sentence_index}>
                 {" "}
                 <span
@@ -547,7 +608,7 @@ class EditorPaper extends React.Component {
                       : {
                         fontWeight: sentence.is_bold ? "bold" : "normal",
                         textDecorationLine: sentence.underline ? "underline" : "",
-                        backgroundColor: bgColor,
+                        backgroundColor: !this.props.contentEditableId ? bgColor : "",
                         color: textColor ? textColor : ""
                       }
                   }
@@ -578,7 +639,7 @@ class EditorPaper extends React.Component {
                     )}
                 </span>
                 {isSpaceRequired ? <span>&nbsp;</span> : <span></span>}
-              </span>
+              </span></div>
             );
             return true;
           } else {
@@ -592,23 +653,23 @@ class EditorPaper extends React.Component {
           if (tokenText.status !== "DELETED") {
             let id = sentence._id + "_" + tokenText.sentence_index + "_editable"
             sentenceArray.push(
-              <div style={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? { border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF" } : {}}>
+              <div style={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index && this.state.editable ? { border: '1px solid #1C9AB7', padding: '1%', backgroundColor: "#F4FDFF" } : {}}>
                 <span
                   id={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? "editable" : sentence._id + "_" + tokenText.sentence_index}
-                  
+
                   ref={sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType}
                   style={{
                     fontWeight: sentence.is_bold ? "bold" : "normal",
                     textDecorationLine: sentence.underline ? "underline" : "",
                     outline: 'none',
                     backgroundColor:
-                      (this.props.hoveredSentence === sentence._id + "_" + tokenText.sentence_index && this.state.contentEditableId !== sentence._id + "_" + tokenText.sentence_index)
+                      (this.props.hoveredSentence === sentence._id + "_" + tokenText.sentence_index && this.state.contentEditableId !== sentence._id + "_" + tokenText.sentence_index && !this.state.contentEditableId)
                         ? "yellow"
-                        : (this.props.selectedSentenceId === sentence._id + "_" + tokenText.sentence_index && this.state.contentEditableId !== sentence._id + "_" + tokenText.sentence_index)
+                        : (this.props.selectedSentenceId === sentence._id + "_" + tokenText.sentence_index && this.state.contentEditableId !== sentence._id + "_" + tokenText.sentence_index && !this.state.contentEditableId)
                           ? "#4dffcf"
                           : ""
                   }}
-                  contentEditable={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index ? true : false}
+                  contentEditable={this.state.contentEditableId === sentence._id + "_" + tokenText.sentence_index && this.state.editable ? true : false}
                   onKeyDown={(event) => this.handleTargetChange(sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType, event, sentence, tokenText, tokenIndex, senIndex)}
                   // onBlur={this.handleTargetChange.bind(this)}
                   onClick={(e) => {
@@ -617,9 +678,10 @@ class EditorPaper extends React.Component {
                   key={this.state.contentEditableId ? id : sentence._id + "_" + tokenText.sentence_index}
                   // onClick={() => this.handleOnClick(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
                   onMouseEnter={() => this.hoverOn(sentence._id + "_" + tokenText.sentence_index, sentence.page_no)}
-                  onDoubleClick={event => {this.setState({contentEditableId: sentence._id + "_" + tokenText.sentence_index}),
-                  this.handleOnClickTarget(event, sentence._id + "_" + tokenText.sentence_index, sentence.page_no, sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType)
-                  // this.props.handleonDoubleClick(sentence._id + "_" + tokenText.sentence_index, tokenText.target, event, null, 'target')
+                  onDoubleClick={event => {
+                    this.setState({ contentEditableId: sentence._id + "_" + tokenText.sentence_index, editable: true }),
+                      this.handleOnDoubleClickTarget(event, sentence._id + "_" + tokenText.sentence_index, sentence.page_no, sentence._id + "_" + tokenText.sentence_index + "_" + this.props.paperType)
+                    // this.props.handleonDoubleClick(sentence._id + "_" + tokenText.sentence_index, tokenText.target, event, null, 'target')
                   }}
                   onMouseLeave={() => this.hoverOff()}
                 >
@@ -627,6 +689,7 @@ class EditorPaper extends React.Component {
                 </span>
                 {isSpaceRequired ? <span>&nbsp;</span> : <span></span>}
               </div>
+              
             );
           }
           return true;
@@ -634,6 +697,10 @@ class EditorPaper extends React.Component {
         return sentenceArray;
       }
     }
+  }
+
+  handleClickAway() {
+    this.setState({ editable: false})
   }
 
   fetchSentence(sentence, prevSentence, index, noOfPage) {
@@ -821,6 +888,7 @@ class EditorPaper extends React.Component {
           parent={this.props.parent}
           popOver={this.props.popOver}
           handlePopUp={this.props.handlePopUp}
+          contentEditableId={this.state.contentEditableId}
         ></CustomTable>
       );
     } else {
@@ -861,6 +929,7 @@ class EditorPaper extends React.Component {
         this.props.handleSentenceClick(id, true, this.props.paperType, pageNo);
       }
     }
+    this.props.handleEditor(id, this.props.paperType)
     this.setState({
       contentEditableId: id,
       open: false,
@@ -881,7 +950,23 @@ class EditorPaper extends React.Component {
       topValue: e.clientY + 15,
       leftValue: e.clientX + 5
     })
+
     this.refs[ref].focus()
+  }
+
+  handleOnDoubleClickTarget(e, id, pageNo, ref) {
+    // if (!this.props.isPreview) {
+    //   if (id) {
+    //     this.props.handleSentenceClick(id, true, this.props.paperType, pageNo);
+    //   }
+    // }
+    this.props.handleEditor(id, this.props.paperType)
+    this.setState({
+      // contentEditableId: id,
+      open: false,
+      showLoader: false,
+    })
+    setTimeout(() => { this.refs[ref].focus() }, 100)
   }
 
   handleTableOnCLick(id, blockId, clisckedCell, value, parent, pageNo, next_previous) {
@@ -902,7 +987,7 @@ class EditorPaper extends React.Component {
       })}
         style={{
           maxHeight: window.innerHeight - 300,
-          overflowY: this.state.open ? 'hidden' : 'scroll',
+          overflowY: this.state.contentEditableId || this.props.contentEditableId ? 'hidden' : 'scroll',
           paddingRight: "24px"
         }}>
         {header ? (
@@ -967,7 +1052,7 @@ class EditorPaper extends React.Component {
             }
 
           </Popover>
-         { this.state.openContextMenu && this.props.paperType === "target" && <Popover1
+          {this.state.openContextMenu && this.props.paperType === "target" && this.state.autoCompleteText && <Popover1
             isOpen={this.state.openContextMenu}
             topValue={this.state.topValue}
             leftValue={this.state.leftValue}
@@ -980,14 +1065,16 @@ class EditorPaper extends React.Component {
             caretPos={this.state.caretPos}
             options={this.state.autoCompleteText}
             paperType={this.props.paperType}
+            targetVal={this.state.targetVal}
           >
 
           </Popover1>}
-          <Popover isOpen={this.state.showLoader} containerNode={this.state.anchorEl} placementStrategy={placeRight}>
+          <Popover isOpen={this.state.showLoader} containerNode={this.state.anchorEl} placementStrategy={placeRight} >
             <CircularProgress
               disableShrink
               size={18}
               thickness={8}
+              style={{ marginLeft: "15px" }}
             />
           </Popover>
         </div>
@@ -1029,5 +1116,3 @@ const mapDispatchToProps = dispatch =>
   );
 
 export default withRouter(withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(EditorPaper)));
-
-

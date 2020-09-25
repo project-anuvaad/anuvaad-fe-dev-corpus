@@ -1,13 +1,12 @@
 import React from "react";
 import Popover from "@material-ui/core/Popover";
 import Button from "@material-ui/core/Button";
-import { translate } from "../../../../assets/localisation";
 
 class MenuClass extends React.Component {
   render() {
 
     const { topValue, leftValue, isOpen } = this.props;
-    console.log(this.props.sentenceOp)
+    console.log(this.props.operation_type)
     return (
       <Popover
         id="menu-appbar"
@@ -38,18 +37,18 @@ class MenuClass extends React.Component {
           </Button>
           
         )}
-          { this.props.operation_type === "split" && (
+          
           <div>
             <Button
             style={{ textTransform: "none", width: "100%", justifyContent: "left" }}
             onClick={() =>
-               this.props.sentenceOp === "merge" ?this.props.handleDialog( "Merge sentence", "Do you want to merge the sentence ?"):this.props.handleDialog( "Split sentence", "Do you want to split the sentence ?")
+               this.props.operation_type === "Merge Sentence" ?this.props.handleDialog( "Merge sentence", "Do you want to merge the sentence ?"):this.props.handleDialog( "Split sentence", "Do you want to split the sentence ?")
             }
           >
             {" "}
-            {this.props.sentenceOp === "merge" ? "Merge Sentence" : "Split sentence"}
+            {this.props.operation_type === "Merge Sentence" ? "Merge Sentence" : "Split sentence"}
           </Button>
-            <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Create", "Do you want to add the sentence ?")}>
+            {/* <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Create", "Do you want to add the sentence ?")}>
               {" "}
               Create Block
             </Button>
@@ -63,10 +62,10 @@ class MenuClass extends React.Component {
          <Button style={{ textTransform: "none", width: "100%", justifyContent: "left" }} onClick={() => this.props.handleDialog( "Delete", "Do you want to delete the sentence ?")}>
            {" "}
            Delete Block
-         </Button>
+         </Button> */}
          <br />
        </div>
-        )}
+        
 
         </div>
       </Popover>

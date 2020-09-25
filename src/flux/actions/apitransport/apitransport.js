@@ -9,7 +9,7 @@ function dispatchAPIAsync(api) {
   };
 }
 
-function apiStatusAsync(progress, errors, message, res = null, unauthrized = false) {
+function apiStatusAsync(progress, errors, message, res = null, unauthrized = false, loading = false) {
   if (res === null || !(res.status && res.status.statusCode && res.status.statusCode !== 200 && res.status.statusCode !== 201)) {
     return {
       type: C.APISTATUS,
@@ -17,7 +17,8 @@ function apiStatusAsync(progress, errors, message, res = null, unauthrized = fal
         progress,
         error: errors,
         message: res && res.status && res.status.statusMessage ? res.status.statusMessage : message,
-        unauthrized: unauthrized
+        unauthrized: unauthrized,
+        loading: loading
       }
     };
   }
@@ -27,14 +28,15 @@ function apiStatusAsync(progress, errors, message, res = null, unauthrized = fal
       progress,
       error: res.status.statusCode === 200 || res.status.statusCode === 201,
       message: res.status.statusCode === 200 || res.status.statusCode === 201 ? message : res.status.errorMessage,
-      unauthrized: unauthrized
+      unauthrized: unauthrized,
+      loading: loading
     }
   };
 }
 
 function success(res, api, dispatch) {
   api.processResponse(res.data);
-  dispatch(apiStatusAsync(false, false, api.successMsg, res.data));
+  dispatch(apiStatusAsync(false, false, api.successMsg, res.data, null, false));
   if (api.type) {
     dispatch(dispatchAPIAsync(api));
   }
@@ -70,7 +72,7 @@ export default function dispatchAPI(api) {
     };
   } else if (api.method === "POST") {
     return dispatch => {
-      dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, ""));
+      dispatch(apiStatusAsync(api.dontShowApiLoader() ? false : true, false, "", null, null, true));
       axios
         .post(api.apiEndPoint(), api.getBody(), api.getHeaders())
         .then(res => {

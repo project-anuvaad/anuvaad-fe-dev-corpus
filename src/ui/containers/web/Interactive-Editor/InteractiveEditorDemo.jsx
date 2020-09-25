@@ -64,7 +64,8 @@ class IntractiveTrans extends React.Component {
       tablePosition: "",
       hoveredTable: "",
       zoom: false,
-      popOver: true
+      popOver: true,
+      contentEditableId: ""
     };
   }
 
@@ -744,6 +745,10 @@ class IntractiveTrans extends React.Component {
     this.setState({ popOver: true })
   }
 
+  handleEditor(id, paperType) {
+    this.setState({ contentEditableId: id })
+  }
+
   render() {
     const { gridValue } = this.state;
     return (
@@ -895,6 +900,8 @@ class IntractiveTrans extends React.Component {
                         popOver={this.state.popOver}
                         handleDialog={this.handleDialogTable.bind(this)}
                         handlePopUp={this.handlePopUp.bind(this)}
+                        handleEditor={this.handleEditor.bind(this)}
+                        contentEditableId={this.state.contentEditableId}
                       />
                     </div>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50, display: "flex", flexDirection: "row-reverse" }}>
@@ -964,6 +971,8 @@ class IntractiveTrans extends React.Component {
                         popOver={this.state.popOver}
                         handleDialog={this.handleDialogTable.bind(this)}
                         handlePopUp={this.handlePopUp.bind(this)}
+                        handleEditor={this.handleEditor.bind(this)}
+                        contentEditableId={this.state.contentEditableId}
                       />
                     </div>
                     <Toolbar style={{ color: darkBlack, background: blueGrey50, display: "flex", flexDirection: "row-reverse" }}>
@@ -1059,7 +1068,8 @@ class IntractiveTrans extends React.Component {
               this.state.endSentence &&
               this.state.topValue &&
               this.state.leftValue &&
-              this.state.openEl && (
+              this.state.openEl &&
+              !this.state.contentEditableId && (
                 <MenuItems
                   isOpen={this.state.openEl}
                   handleCopy={this.handleCopy.bind(this)}

@@ -19,7 +19,7 @@ import WorkFlow from "../../../../flux/actions/apis/fileupload";
 import DocumentUpload from "../../../../flux/actions/apis/document_upload";
 import TextField from "@material-ui/core/TextField";
 import Select from "../../../components/web/common/Select";
-//import SimpleSelect from "../../../components/web/common/SimpleSelect";
+
 class PdfUpload extends Component {
   constructor() {
     super();
@@ -31,7 +31,8 @@ class PdfUpload extends Component {
       modelLanguage: [],
       name: "",
       message: "File uplaoded successfully",
-      showComponent: false
+      showComponent: false,
+      workflow :"DP_WFLOW_FBTTR"
     };
   }
 
@@ -57,7 +58,6 @@ class PdfUpload extends Component {
       })
       e.preventDefault();
       this.setState({model})
-      const { APITransport } = this.props;
       if (this.state.files.length > 0  && source_lang_name && target_lang_name ) {
         const { APITransport } = this.props;
 
@@ -136,7 +136,7 @@ class PdfUpload extends Component {
     if (prevProps.documentUplaod !== this.props.documentUplaod) {
       
       const { APITransport } = this.props;
-      const apiObj = new WorkFlow(this.props.documentUplaod.data, this.state.fileName,this.state.source,
+      const apiObj = new WorkFlow(this.state.workflow, this.props.documentUplaod.data, this.state.fileName,this.state.source,
         this.state.target,this.state.path, this.state.model);
       APITransport(apiObj);
       // history.push(`${process.env.PUBLIC_URL}/interactive-document/${this.props.configUplaod.configUplaod}`);
