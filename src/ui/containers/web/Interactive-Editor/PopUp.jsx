@@ -6,7 +6,7 @@ class MenuClass extends React.Component {
   render() {
 
     const { topValue, leftValue, isOpen } = this.props;
-    console.log(this.props.sentenceOp)
+    console.log(this.props.operation_type)
     return (
       <Popover
         id="menu-appbar"

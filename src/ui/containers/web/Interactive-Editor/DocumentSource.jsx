@@ -10,7 +10,7 @@ import Image from "./Image";
 import { withRouter } from "react-router-dom";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 
-class Preview extends React.Component {
+class DocumentSource extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,22 +50,14 @@ class Preview extends React.Component {
     this.setState({openDialog:true,selectedArray:value, title: "Merge Paragraphs",dialogMessage:"Do you want to merge selected paragraphs ?"})
   }
 
-  handleRightClick(event) {
-    event.preventDefault();
-    this.popUp("merge", event);
-  }
   handleCheckbox() {
     this.setState({ checkbox: true, openDialog: false });
   }
   handleDialog() {
     debugger
-    if (this.state.title === "Split sentence" || this.state.title === "Merge sentence") {
-      this.props.handleSentenceOperation(
-        window.getSelection().anchorNode.parentNode.id,
-        window.getSelection().focusNode.parentNode.id,
-        this.props.sourceSentence,
-        this.state.title
-      );
+    if (this.state.title === "Split Sentence" || this.state.title === "Merge Sentence") {
+      console.log(this.state.start_block_id, this.state.start_sentence_id, this.state.end_sentence_id)
+      
     }
     
     else if(this.state.title === "Merge Paragraphs"){
@@ -85,78 +77,26 @@ class Preview extends React.Component {
     });
   }
 
-  getSelectionText(event, id) {
-    let sentenceStart = window.getSelection().anchorNode && window.getSelection().anchorNode.parentNode ?  window.getSelection().anchorNode.parentNode.id.split("_") : 0; 
-    let sentenceEnd = window.getSelection().focusNode && window.getSelection().focusNode.parentNode ? window.getSelection().focusNode.parentNode.id.split("_") : 0;
-    let senOp;
-    if (sentenceStart[0] === sentenceEnd[0] && sentenceStart[1] === sentenceEnd[1]) {
-      if (sentenceStart[2] === sentenceEnd[2]) {
-        senOp = "split";
-      } else {
-        senOp = "merge";
-      }
-    }
-
-    window.getSelection().focusNode.parentNode.id;
-    if (!this.state.selectedSentence && !this.props.tokenized) {
-      var text = "";
-      let selection = {};
-      var activeEl = document.activeElement;
-      var activeElTagName = activeEl ? activeEl.tagName.toLowerCase() : null;
-
-      if (
-        activeElTagName === "textarea" ||
-        (activeElTagName === "input" && /^(?:text|search|password|tel|url)$/i.test(activeEl.type) && typeof activeEl.selectionStart === "number")
-      ) {
-        text = activeEl.value.slice(activeEl.selectionStart, activeEl.selectionEnd);
-      } else if (window.getSelection) {
-        text = window.getSelection().toString();
-      }
-
-      let sentences = "";
-      let startNode = "";
-      let endNode = "";
-
-      if (window.getSelection()) {
-        sentences = window.getSelection().toString();
-      }
-
-      if (sentences) {
-        startNode = window.getSelection().anchorNode.parentNode.id;
-        endNode = window.getSelection().focusNode.parentNode.id;
-        // let parent = startNode ? startNode.split("_")[2] : null
-
-        if (this.props.paperType === "source") {
-          selection.startNode = startNode;
-          selection.endNode = endNode;
-          if (startNode && endNode && window.getSelection().anchorNode.parentNode.parentNode && startNode === endNode) {
-            this.setState({ operation_type: "split" });
-            window.getSelection().toString() && this.popUp("split", event, senOp);
-            selection.startNode = startNode;
-          } else if (startNode && endNode && parseInt(startNode.split("_")[2]) !== parseInt(endNode.split("_")[2])) {
-            this.setState({ operation_type: "merge" });
-            window.getSelection().toString() && this.popUp("Merge Sentence", event);
-          }
-
-          this.setState({ selection, value: false });
-          return true;
-        }
-      }
-    }
-  }
 
   handleDialogMessage(title, dialogMessage) {
+    
     this.setState({ openDialog: true, title, dialogMessage, openEl: false });
   }
 
-  popUp = (operation_type, event, opType) => {
+  popUp = (start_block_id, start_sentence_id, end_sentence_id,subString, event,operation) => {
+
     this.setState({
-      operation_type,
+      operation_type: operation,
       openEl: true,
       topValue: event.clientY - 4,
       leftValue: event.clientX - 2,
       selectedBlock: null,
-      sentenceOp: opType
+      start_block_id,
+      start_sentence_id,
+      end_sentence_id
+
+
+
     });
   };
   handleBlur = (id, workflowcode) => {
@@ -274,10 +214,7 @@ class Preview extends React.Component {
             yAxis = sentence.text_top + sourceSentence.page_no * sourceSentence.page_height;
             const block_id = sentence.block_id;
             return (
-              <div
-                onMouseUp={!this.props.tokenized && this.getSelectionText.bind(this)}
-                onKeyUp={!this.props.tokenized && this.getSelectionText.bind(this)}
-              >
+              <div>
                 {/* {this.props.tokenized ? */}
 
                 <BlockView
@@ -303,7 +240,6 @@ class Preview extends React.Component {
                   handleBlur={this.handleBlur.bind(this)}
                   selectedSentence={this.state.selectedSentence}
                   handleOnMouseLeave={this.props.handleOnMouseLeave}
-                  handleRightClick={this.handleRightClick.bind(this)}
                   checkbox={this.state.checkbox}
                   handleTextChange={this.props.handleTextChange}
                   paperType={this.props.paperType}
@@ -317,6 +253,7 @@ class Preview extends React.Component {
                   handleSuggestionClose={this.handleSuggestionClose.bind(this)}
                   handleSuggestion={this.handleSuggestion.bind(this)}
                   showSuggestions={this.state.showSuggestions}
+                  popUp = {this.popUp.bind(this)}
                 />
               </div>
             );
@@ -332,7 +269,7 @@ class Preview extends React.Component {
           />
         )}
 
-        {this.state.openEl && !this.state.selectedSentence && (
+        {this.state.openEl && (
           <MenuItems
             isOpen={this.state.openEl}
             topValue={this.state.topValue}
@@ -341,11 +278,10 @@ class Preview extends React.Component {
             operation_type={this.state.operation_type}
             handleClose={this.handleClose.bind(this)}
             handleDialog={this.handleDialogMessage.bind(this)}
-            handleDuplicateBlock={this.props.handleDuplicateBlock}
-            handleDeleteBlock={this.props.handleDeleteBlock}
-            pageData={this.props.sourceSentence}
+            
+            
             handleCheck={this.handleCheck.bind(this)}
-            sentenceOp={this.state.sentenceOp}
+            
           />
         )}
 
@@ -406,42 +342,11 @@ class Preview extends React.Component {
               {this.getContent()}
             </div>
           )}
-        {/* {this.state.openContextMenu && this.props.paperType === "target" && this.state.autoCompleteText && this.state.targetVal && (
-          <Popover1
-            isOpen={this.state.openContextMenu}
-            topValue={this.props.menuTopValue}
-            leftValue={this.props.menuLeftValue}
-            anchorEl={this.state.anchorEl}
-            handleOnClick={this.handleUpdateSentenceWithPrediction.bind(this)}
-            handlePopOverClose={this.handlePopOverClose.bind(this)}
-            tableItems={this.state.tableItems}
-            tableValues={this.state.tableTitles}
-            handlePopUp={this.props.handlePopUp}
-            caretPos={this.state.caretPos}
-            options={this.state.autoCompleteText}
-            paperType={this.props.paperType}
-            targetVal={this.state.targetVal}
-          ></Popover1>
-        )} */}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  apistatus: state.apistatus,
-  intractiveTrans: state.intractiveTrans
-});
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      APITransport,
-      NMTApi: APITransport,
-      NMTSPApi: APITransport,
-      MODELApi: APITransport
-    },
-    dispatch
-  );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Preview));
+export default DocumentSource;

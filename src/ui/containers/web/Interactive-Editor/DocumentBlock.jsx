@@ -1,15 +1,12 @@
 import React from "react";
-import ContentEditable from "react-contenteditable";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Textfit } from "react-textfit";
-import TextField from "@material-ui/core/TextField";
-import ScaleText from "react-scale-text";
+
 import AutoComplete from "../../../components/web/common/AutoComplete"
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import wfcodes from '../../../../configs/workflowcodes'
+
 
 var arr = [];
-class Preview extends React.Component {
+class DocumentBlock extends React.Component {
   constructor(props) {
     super(props);
     this.textInput = React.createRef();
@@ -30,30 +27,30 @@ class Preview extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.mergeButton !== this.props.mergeButton) {
-      if(this.props.mergeButton == "Merge" && arr.length>0) {
+      if (this.props.mergeButton == "Merge" && arr.length > 0) {
         this.sentenceClear(arr)
-      this.updateContent(arr)
+        this.updateContent(arr)
       }
-      else if(this.props.mergeButton == "Merge"){
+      else if (this.props.mergeButton == "Merge") {
         this.sentenceClear(arr)
       }
-     
-      
+
+
     }
-    
+
     // if(this.props.arrayClear!== prevProps.arrayClear){
     //   this.sentenceClear(arr)
     // }
   }
 
-  sentenceClear(){
-    return arr.map(arrValue=>{
-      this.setState({[arrValue]: false})
+  sentenceClear() {
+    return arr.map(arrValue => {
+      this.setState({ [arrValue]: false })
     })
   }
   updateContent(val) {
-    
-    
+
+
     this.props.updateContent(val);
     this.setState({ selectedValueArray: [] })
     arr = []
@@ -163,62 +160,62 @@ class Preview extends React.Component {
                   return (
                     // <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, wfcodes.DP_WFLOW_S_C)}>
 
-                      <div
-                        style={{
-                          position: 'relative',
-                          zIndex: 1
+                    <div
+                      style={{
+                        position: 'relative',
+                        zIndex: 1
+                      }}
+                    // onBlur={event => {
+                    //   this.props.handleBlur(event);
+                    // }}
+                    >
+                      <span
+                        onDoubleClick={event => {
+                          this.handleDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, text, "target");
                         }}
-                      // onBlur={event => {
-                      //   this.props.handleBlur(event);
-                      // }}
                       >
                         <span
-                          onDoubleClick={event => {
-                            this.handleDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, text, "target");
+                          ref={text.sentence_id + "_" + this.props.page_no}
+                          style={{
+                            outline: "none"
                           }}
                         >
-                          <span
-                            ref={text.sentence_id + "_" + this.props.page_no}
+                          <AutoComplete
+                            aId={text.sentence_id + "_" + this.props.page_no}
+                            refId={text.sentence_id + "_" + this.props.page_no}
+                            block_identifier_with_page={sentence.block_identifier + "_" + this.props.page_no}
                             style={{
-                              outline: "none"
+                              width: "600px",
+                              // height: sentence.text_height + 5 + "px",
+                              // resize: "none",
+                              // resize: "both", 
+                              fontSize: sentence.font_size + "px",
+                              fontFamily: sentence.font_family,
+                              zIndex: 1111,
+                              borderRadius: "4px",
+                              backgroundColor: "#F4FDFF",
+                              border: '1px solid #1C9AB7',
                             }}
-                          >
-                            <AutoComplete
-                              aId={text.sentence_id + "_" + this.props.page_no}
-                              refId={text.sentence_id + "_" + this.props.page_no}
-                              block_identifier_with_page={sentence.block_identifier + "_" + this.props.page_no}
-                              style={{
-                                width: "600px",
-                                // height: sentence.text_height + 5 + "px",
-                                // resize: "none",
-                                // resize: "both", 
-                                fontSize: sentence.font_size + "px",
-                                fontFamily: sentence.font_family,
-                                zIndex: 1111,
-                                borderRadius: "4px",
-                                backgroundColor: "#F4FDFF",
-                                border: '1px solid #1C9AB7',
-                              }}
-                              tokenIndex={tokenIndex}
-                              value={this.props.targetText.tgt}
-                              sentence={sentence}
-                              sourceText={text.src}
-                              page_no={this.props.page_no}
-                              handleChangeEvent={this.handleChangeEvent.bind(this)}
-                              fetchSuggestions={this.props.fetchSuggestions}
-                              autoCompleteText={this.props.autoCompleteText}
-                              handleSuggestion={this.props.handleSuggestion}
-                              heightToBeIncreased={sentence.font_size}
-                              handleBlur={this.props.handleBlur}
-                              showSuggestions={this.props.showSuggestions}
-                              handleSuggestionClose={this.props.handleSuggestionClose}
-                              handleClickAway={this.handleClickAway.bind(this)}
-                              tokenObject={text}
-                            />
-                          </span>
-                          <span> </span>
+                            tokenIndex={tokenIndex}
+                            value={this.props.targetText.tgt}
+                            sentence={sentence}
+                            sourceText={text.src}
+                            page_no={this.props.page_no}
+                            handleChangeEvent={this.handleChangeEvent.bind(this)}
+                            fetchSuggestions={this.props.fetchSuggestions}
+                            autoCompleteText={this.props.autoCompleteText}
+                            handleSuggestion={this.props.handleSuggestion}
+                            heightToBeIncreased={sentence.font_size}
+                            handleBlur={this.props.handleBlur}
+                            showSuggestions={this.props.showSuggestions}
+                            handleSuggestionClose={this.props.handleSuggestionClose}
+                            handleClickAway={this.handleClickAway.bind(this)}
+                            tokenObject={text}
+                          />
                         </span>
-                      </div>
+                        <span> </span>
+                      </span>
+                    </div>
                     // </ClickAwayListener>
                   );
                 } else {
@@ -255,14 +252,14 @@ class Preview extends React.Component {
     this.props.handleDoubleClickTarget(evnt, id, text, pageDetails);
   };
   handleChange = name => event => {
-    
+
     if (arr.includes(name)) {
       arr = arr.filter(item => item !== name);
     } else {
       arr.push(name);
     }
 
-    this.setState({selectedValueArray: arr });
+    this.setState({ selectedValueArray: arr });
   };
 
 
@@ -275,13 +272,61 @@ class Preview extends React.Component {
     this.props.handleSourceChange(event, this.props.sentence);
   };
 
-  makeSpan(text, child, spanId, tokenIndex) {
-    return (<span style={{
-      fontSize: child.font_size + "px",
-      height: child.text_height + "px",
-      left: child.text_left + "px",
-      textJustify: "inter-word", textAlign: 'justify', background: (spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
-    }}
+  getSelectionText(event) {
+    debugger
+    const sentenceStartId = window.getSelection().anchorNode.parentNode.id;
+    const sentenceEndId = window.getSelection().focusNode.parentNode.id;
+    const obj_start = sentenceStartId.split('##')
+    const start_block_id = obj_start[0]
+    const start_sentence_id = obj_start[1]
+    let offset_tokenized = obj_start[2]
+    const obj_end = sentenceEndId.split('##')
+    const end_block_id = obj_end[0]
+    const end_sentence_id = obj_end[1]
+    let end_tokenized = obj_end[2]
+
+    if (start_block_id !== end_block_id) {
+      //Wrong blocks selected
+      alert("Please select same block to merge the sentence.")
+    }
+    //Merge
+    else if (start_sentence_id !== end_sentence_id) {
+      let opeartion =  "Merge Sentence";
+      this.props.popUp(start_block_id, start_sentence_id, end_sentence_id,"", event,opeartion)
+    }
+    //Split
+    else {
+      if (window.getSelection().anchorOffset === window.getSelection().focusOffset) {
+        // "Nothing to do"
+      } else {
+        // if (end_tokenized > 0) {
+        //   end_tokenized = end_tokenized - 1
+        // }
+        let opeartion =  "Split sentence";
+        var split_index = parseInt(end_tokenized) + window.getSelection().focusOffset
+        let sentence = this.props.sentence
+        let actual_text = ''
+        sentence.tokenized_sentences.map((token)=>{
+          if(token.sentence_id == start_sentence_id){
+            actual_text  = token.src
+          }
+        })
+        actual_text = actual_text.replace(/\s{2,}/g, ' ')
+        actual_text = actual_text.trim()
+        this.props.popUp(start_block_id, start_sentence_id, split_index, actual_text.substring(split_index), event,opeartion )
+      }
+    }
+  }
+
+  makeSpan(text, child, spanId, tokenIndex, token_obj) {
+    return (<span id={this.props.sentence.block_id + '##' + token_obj.sentence_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
+      onMouseUp={this.getSelectionText.bind(this)}
+      onKeyUp={this.getSelectionText.bind(this)} style={{
+        fontSize: child.font_size + "px",
+        height: child.text_height + "px",
+        left: child.text_left + "px",
+        textJustify: "inter-word", textAlign: 'justify', background: (spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+      }}
     >
       {text}
     </span>)
@@ -319,13 +364,13 @@ class Preview extends React.Component {
     }
     if (is_super) {
       if (!child.dont_show) {
-        elems.push(this.makeDiv(sentence, this.makeSpan(text, child, spanId, tokenIndex), div_style))
+        elems.push(this.makeDiv(sentence, this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex]), div_style))
       }
       return { text: text, tokenized_data: tokenized_data, tokenIndex: tokenIndex, spanId: spanId, child: child, elems: elems }
     }
     if (text.length == tokenized_data[tokenIndex].src.length) {
       if (!child.dont_show) {
-        elems.push(this.makeDiv(sentence, this.makeSpan(text, child, spanId, tokenIndex), div_style))
+        elems.push(this.makeDiv(sentence, this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex]), div_style))
       }
       tokenIndex++
     } else if (text.length > tokenized_data[tokenIndex].src.length) {
@@ -334,27 +379,30 @@ class Preview extends React.Component {
         if (tokenIndex >= tokenized_data.length) {
           tokenIndex--
           if (!child.dont_show) {
-            spans.push(this.makeSpan(text, child, spanId, tokenIndex))
-            spans.push(<span> </span>)
+            spans.push(this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex]))
+            spans.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].sentence_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
+              onKeyUp={this.getSelectionText.bind(this)}> </span>)
           }
           break
         }
         if (text.length > tokenized_data[tokenIndex].src.length) {
           if (!child.dont_show) {
-            spans.push(this.makeSpan(text.substring(0, tokenized_data[tokenIndex].src.length), child, spanId, tokenIndex))
+            spans.push(this.makeSpan(text.substring(0, tokenized_data[tokenIndex].src.length), child, spanId, tokenIndex, tokenized_data[tokenIndex]))
           }
           text = text.substring(tokenized_data[tokenIndex].src.length, text.length)
           text = text.trim()
           tokenIndex++
           if (!(tokenIndex == tokenized_data.length && text.length > 0)) {
             if (!child.dont_show) {
-              spans.push(<span> </span>)
+              spans.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].sentence_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
+                onKeyUp={this.getSelectionText.bind(this)}> </span>)
             }
           }
         } else {
           if (!child.dont_show) {
-            spans.push(this.makeSpan(text, child, spanId, tokenIndex))
-            spans.push(<span> </span>)
+            spans.push(this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex]))
+            spans.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].sentence_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
+              onKeyUp={this.getSelectionText.bind(this)}> </span>)
           }
           if (text.length == tokenized_data[tokenIndex].src.length) {
             tokenIndex++
@@ -371,10 +419,11 @@ class Preview extends React.Component {
     }
     else {
       if (!child.dont_show) {
-        let spans = this.makeSpan(text, child, spanId, tokenIndex)
+        let spans = this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex])
         let spans_array = []
         spans_array.push(spans)
-        spans_array.push(<span> </span>)
+        spans_array.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].sentence_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
+          onKeyUp={this.getSelectionText.bind(this)}> </span>)
         elems.push(this.makeDiv(sentence, spans_array, div_style))
       }
       tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
@@ -427,6 +476,7 @@ class Preview extends React.Component {
     tokenized_data.map((t) => {
       t.src = t.src.replace(/\s\s+/g, ' ')
       t.src = t.src.trim()
+      t.actual_src = t.src
     })
 
     if (sentence.children) {
@@ -485,7 +535,7 @@ class Preview extends React.Component {
 
   render() {
     const { sentence } = this.props;
-   
+
     var styles = {
       position: "absolute",
       top: sentence.text_top + "px",
@@ -505,7 +555,7 @@ class Preview extends React.Component {
       padding: "5px",
       lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
       border:
-      arr.includes(sentence.block_id + "_" + this.props.page_no)?"2px solid rgb(28, 154, 183)" : this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id &&
+        arr.includes(sentence.block_id + "_" + this.props.page_no) ? "2px solid rgb(28, 154, 183)" : this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id &&
           !this.props.selectedBlock &&
           !this.props.targetSelected &&
           this.props.value !== true
@@ -517,14 +567,14 @@ class Preview extends React.Component {
       <div>
         {this.props.tokenized && this.props.mergeButton === "save" && this.props.sentence.text && (
           <Checkbox
-          
+
             style={{ top: sentence.text_top - 10 + "px", left: sentence.text_left - 50 + "px", position: "absolute", zIndex: 4 }}
-            checked={arr.includes(sentence.block_id + "_" + this.props.page_no)? true: false }
+            checked={arr.includes(sentence.block_id + "_" + this.props.page_no) ? true : false}
             onChange={this.handleChange(sentence.block_id + "_" + this.props.page_no)}
             // value={this.state[sentence.block_id + "_" + this.props.page_no]}
             color="primary"
           />
-        ) }
+        )}
         <div
           id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
           style={styles}
@@ -561,4 +611,4 @@ class Preview extends React.Component {
   }
 }
 
-export default Preview;
+export default DocumentBlock;
