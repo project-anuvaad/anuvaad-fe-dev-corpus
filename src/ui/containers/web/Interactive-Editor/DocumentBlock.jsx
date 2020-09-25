@@ -1,15 +1,12 @@
 import React from "react";
-import ContentEditable from "react-contenteditable";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Textfit } from "react-textfit";
-import TextField from "@material-ui/core/TextField";
-import ScaleText from "react-scale-text";
+
 import AutoComplete from "../../../components/web/common/AutoComplete"
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import wfcodes from '../../../../configs/workflowcodes'
+
 
 var arr = [];
-class Preview extends React.Component {
+class DocumentBlock extends React.Component {
   constructor(props) {
     super(props);
     this.textInput = React.createRef();
@@ -83,14 +80,14 @@ class Preview extends React.Component {
           fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
           outline: "0px solid transparent",
           zIndex: 1,
-          padding: "5px",
+          
           lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
           backgroundColor: this.props.selectedSentence === value.block_id + "_" + this.props.page_no + "_source" && this.props.value ? "#F4FDFF" : "",
           border:
             this.props.selectedSentence === value.block_id + "_" + this.props.page_no + "_source" && this.props.value ? "1px solid #1C9AB7" : "",
           height: value.text_height + "px",
           left: value.text_left + "px",
-          textAlignLast: sentence.children.length > 1 && "justify",
+          textAlignLast: sentence.children.length > 1 && this.props.selectedSentence !== value.block_id + "_" + this.props.page_no && "justify",
           width: value.text_width + "px"
         }}
       >
@@ -277,14 +274,14 @@ class Preview extends React.Component {
     this.props.handleSourceChange(event, this.props.sentence);
   };
 
-  getSelectionText() {
+  getSelectionText(event) {
+    debugger
     const sentenceStartId = window.getSelection().anchorNode.parentNode.id;
     const sentenceEndId = window.getSelection().focusNode.parentNode.id;
     const obj_start = sentenceStartId.split('##')
     const start_block_id = obj_start[0]
     const start_s_id = obj_start[1]
     let offset_tokenized = obj_start[2]
-
     const obj_end = sentenceEndId.split('##')
     const end_block_id = obj_end[0]
     const end_s_id = obj_end[1]
@@ -292,20 +289,22 @@ class Preview extends React.Component {
 
     if (start_block_id !== end_block_id) {
       //Wrong blocks selected
-      console.log("wrong block")
+      alert("Please select same block to merge the sentence.")
     }
     //Merge
     else if (start_s_id !== end_s_id) {
-      console.log(start_block_id, start_s_id, end_s_id)
+      let opeartion =  "Merge Sentence";
+      this.props.popUp(start_block_id, start_s_id, end_s_id,"", event,opeartion)
     }
     //Split
     else {
       if (window.getSelection().anchorOffset === window.getSelection().focusOffset) {
-        console.log("Nothing to do")
+        // "Nothing to do"
       } else {
         // if (end_tokenized > 0) {
         //   end_tokenized = end_tokenized - 1
         // }
+        let opeartion =  "Split sentence";
         var split_index = parseInt(end_tokenized) + window.getSelection().focusOffset
         let sentence = this.props.sentence
         let actual_text = ''
@@ -316,7 +315,7 @@ class Preview extends React.Component {
         })
         actual_text = actual_text.replace(/\s{2,}/g, ' ')
         actual_text = actual_text.trim()
-        console.log(start_block_id, start_s_id, split_index, actual_text.substring(split_index))
+        this.props.popUp(start_block_id, start_s_id, split_index, actual_text.substring(split_index), event,opeartion )
       }
     }
   }
@@ -358,7 +357,7 @@ class Preview extends React.Component {
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
       outline: "0px solid transparent",
       zIndex: 1,
-      padding: "5px",
+      padding :"5px",
       lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
       height: child.text_height + "px",
       left: child.text_left + "px",
@@ -541,12 +540,12 @@ class Preview extends React.Component {
 
     var styles = {
       position: "absolute",
-      top: sentence.text_top + "px",
-      left: sentence.text_left + "px",
+      top: sentence.text_top-7 + "px",
+      left: sentence.text_left-3 + "px",
       fontSize: sentence.font_size + "px",
       color: sentence.font_color,
-      width: sentence.text_width + "px",
-      height: sentence.text_height + "px",
+      width: sentence.text_width+ 5 + "px",
+      height: sentence.text_height + 4 + "px",
       fontFamily: sentence.font_family,
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
       fontFamily: sentence.font_family,
@@ -570,7 +569,7 @@ class Preview extends React.Component {
       <div>
         {this.props.tokenized && this.props.mergeButton === "save" && this.props.sentence.text && (
           <Checkbox
-
+            size = "small"
             style={{ top: sentence.text_top - 10 + "px", left: sentence.text_left - 50 + "px", position: "absolute", zIndex: 4 }}
             checked={arr.includes(sentence.block_id + "_" + this.props.page_no) ? true : false}
             onChange={this.handleChange(sentence.block_id + "_" + this.props.page_no)}
@@ -614,4 +613,4 @@ class Preview extends React.Component {
   }
 }
 
-export default Preview;
+export default DocumentBlock;

@@ -74,7 +74,6 @@ class AutoComplete extends React.Component {
         if (event.key === 'Escape') {
             this.setState({ showSuggestions: false })
             let saveData = (this.state.value !== this.props.value || this.state.modified) ? true : false
-            console.log(this.state.value, '=====================', this.props.value)
             debugger
             if (saveData) {
                 this.props.handleChangeEvent({ target: { value: this.state.value } })
