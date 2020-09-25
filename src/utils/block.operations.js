@@ -1,4 +1,5 @@
-var jp                  = require('jsonpath')
+var jp                = require('jsonpath')
+const { v4 }        = require('uuid');
 
 function get_block_id(blocks) {
     let block_ids = []
@@ -57,37 +58,38 @@ function get_largest_area_block(blocks) {
  * @param {*} blocks selected blocks
  */
 function get_concatenated_text(blocks) {
-    let condition   = '$..children[*]'
-    let children    = jp.query(blocks, condition)
+  let condition   = '$[*].children[*]'
+  let children    = jp.query(blocks, condition)
 
-    let sorted_blocks      = children.sort((a, b) => {
-        if (a.page_no > b.page_no) {
-            return 1
-        }
-        if (a.page_no < b.page_no) {
-            return -1
-        }
-        if (a.text_top < b.text_top) {
-            return -1
-        }
-        if (a.text_top > b.text_top) {
-            return 1
-        }
-        if (a.text_left > b.text_left) {
-            return 1
-        }
-        if (a.text_left < b.text_left) {
-            return -1
-        }
-        return 0
-    })
+  let sorted_blocks      = children.sort((a, b) => {
 
-    let texts       = []
-    sorted_blocks.forEach(element => {
-        texts.push(element.text)
-    })
+      if (a.page_no > b.page_no) {
+          return 1
+      }
+      if (a.page_no < b.page_no) {
+          return -1
+      }
+      if (a.text_top < b.text_top) {
+          return -1
+      }
+      if (a.text_top > b.text_top) {
+          return 1
+      }
+      if (a.text_left > b.text_left) {
+          return 1
+      }
+      if (a.text_left < b.text_left) {
+          return -1
+      }
+      return 0
+  })
 
-    return texts.join(' ')
+  let texts       = []
+  sorted_blocks.forEach(element => {
+      texts.push(element.text)
+  })
+
+  return texts.join(' ')
 }
 
 /**
@@ -123,12 +125,7 @@ function get_merged_blocks(sentences, selected_block_ids) {
  * @param {*} blocks, select list of blocks that have same block_id
  */
 function get_tokenized_sentences_block(blocks) {
-    blocks.forEach(element => {
-        if (element.tokenized_sentences && element.tokenized_sentences.length > 0) {
-            return element
-        }
-    })
-    return null
+  return blocks.filter(element => (element.tokenized_sentences && element.tokenized_sentences.length > 0))[0]
 }
 
 /**
@@ -139,11 +136,11 @@ function get_tokenized_sentences_block(blocks) {
  * @returns index of sentence_id
  */
 function get_sentence_id_index(tokenized_sentences, sentence_id) {
-    tokenized_sentences.forEach((element, index) => {
-        if (element.sentence_id == sentence_id) {
-            return index
-        }
-    })
+  for (var i = 0; i < tokenized_sentences.length; i++) {
+    if (tokenized_sentences[i].s_id == sentence_id) {
+      return i;
+    }
+  }
 }
 
 /**
@@ -153,12 +150,14 @@ function get_sentence_id_index(tokenized_sentences, sentence_id) {
  * @param {*} block_id, operation performed on specific block
  * @param {*} sentence_id_1, start selection index
  * @param {*} sentence_id_2,  end selection index
+ *
+ * @returns updated block
  */
 function do_sentences_merging(sentences, block_id, sentence_id_1, sentence_id_2) {
     let selected_block_ids          = []
     selected_block_ids.push(block_id)
 
-    let selected_blocks             = get_blocks(sentences, get_block_id(selected_block_ids))
+    let selected_blocks             = get_blocks(sentences, selected_block_ids)
     let tokenized_sentences_block   = get_tokenized_sentences_block(selected_blocks)
     let index1                      = get_sentence_id_index(tokenized_sentences_block.tokenized_sentences, sentence_id_1)
     let index2                      = get_sentence_id_index(tokenized_sentences_block.tokenized_sentences, sentence_id_2)
@@ -172,13 +171,12 @@ function do_sentences_merging(sentences, block_id, sentence_id_1, sentence_id_2)
         start   = index1
         end     = index2
     }
-
     /**
-     * split tokenized sentences into three portion.
+     * split tokenized sentences into three portion. Taking care of position
      */
-    let first_sentences_obj_arr  = tokenized_sentences_block.slice(0, start)
-    let second_sentences_obj_arr = tokenized_sentences_block.slice(start, end)
-    let third_sentences_obj_arr  = tokenized_sentences_block.slice(end, tokenized_sentences_block.length)
+    let first_sentences_obj_arr  = tokenized_sentences_block.tokenized_sentences.slice(0, start)
+    let second_sentences_obj_arr = tokenized_sentences_block.tokenized_sentences.slice(start, end+1)
+    let third_sentences_obj_arr  = tokenized_sentences_block.tokenized_sentences.slice(end+1)
 
     /**
      * copy each element from first portion into a local array
@@ -193,9 +191,9 @@ function do_sentences_merging(sentences, block_id, sentence_id_1, sentence_id_2)
      */
     let merged_sentence = ""
     second_sentences_obj_arr.forEach((e) => {
-        merged_sentence += e.src_text
+        merged_sentence += e.src
     })
-    second_sentences_obj_arr[0].src_text    = merged_sentence
+    second_sentences_obj_arr[0].src    = merged_sentence
     final_tokenized_sentences.push(second_sentences_obj_arr[0])
 
     /**
@@ -210,7 +208,57 @@ function do_sentences_merging(sentences, block_id, sentence_id_1, sentence_id_2)
     return tokenized_sentences_block
 }
 
+/**
+ *
+ * @param {*} sentences, list of all the sentences in which merge operation has to be performed
+ * @param {*} block_id, operation performed on specific block
+ * @param {*} sentence_id, id of sentence that should under splitting
+ * @param {*} character_count,  number of characters to skip before splitting
+ *
+ * @returns updated block
+ */
+function do_sentence_splitting(sentences, block_id, sentence_id, character_count) {
+    let selected_block_ids          = []
+    selected_block_ids.push(block_id)
+
+    let selected_blocks             = get_blocks(sentences, selected_block_ids)
+    let tokenized_sentences_block   = get_tokenized_sentences_block(selected_blocks)
+    let index                       = get_sentence_id_index(tokenized_sentences_block.tokenized_sentences, sentence_id)
+
+    /**
+     * get sentence from the index
+     */
+    let split_sentence_obj          = tokenized_sentences_block.tokenized_sentences[index]
+
+    /**
+     * 0. remove double spaces & trim before counting
+     * 1. split src sentence using character_count
+     * 2. create two arrays, shift first portion of slice to existing src field
+     * 3. create second sentence object with uuid and store both into new array
+     * 4. use splice to set the object at index and remove the original sentence & then set another at index + 1
+     */
+    let actual_text = split_sentence_obj.src.replace(/\s{2,}/g, ' ')
+    actual_text     = actual_text.trim()
+
+    let first_portion   = actual_text.slice(0, character_count)
+    let second_portion  = actual_text.slice(character_count)
+
+    let final_tokenized_sentences   = []
+    split_sentence_obj.src  = first_portion
+    final_tokenized_sentences.push(split_sentence_obj)
+    final_tokenized_sentences.push({
+        'src': second_portion,
+        's_id': v4(),
+    })
+
+    tokenized_sentences_block.tokenized_sentences.splice(index, 1, final_tokenized_sentences[0])
+    tokenized_sentences_block.tokenized_sentences.splice(index+1, 0, final_tokenized_sentences[1])
+
+    return tokenized_sentences_block
+}
+
 module.exports = {
     get_merged_blocks,
-    do_sentences_merging
+    do_sentences_merging,
+    do_sentence_splitting
 }

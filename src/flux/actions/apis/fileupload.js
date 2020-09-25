@@ -54,7 +54,7 @@ export default class RunExperiment extends API {
 
       };
     }
-    else if (this.workflow === "DP_WFLOW_S_TTR" || this.workflow === "DP_WFLOW_S_C") {
+    else if (this.workflow === "DP_WFLOW_S_TTR" || this.workflow === "DP_WFLOW_S_C" || this.workflow === "DP_WFLOW_S_TR") {
       return {
         "workflowCode": this.workflow,
   "recordID":this.fileName,

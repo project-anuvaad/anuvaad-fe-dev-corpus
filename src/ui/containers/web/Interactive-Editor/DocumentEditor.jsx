@@ -89,6 +89,7 @@ class PdfFileEditor extends React.Component {
       });
     }
     if (prevProps.workflowStatus !== this.props.workflowStatus) {
+      console.log(this.state.startPage, this.state.endPage)
       const apiObj = new FileContent(this.props.match.params.jobid, this.state.startPage, this.state.endPage);
       this.props.APITransport(apiObj);
       this.setState({ apiStatus: true });
@@ -128,7 +129,7 @@ class PdfFileEditor extends React.Component {
         this.setState({
           sentences: temp,
           open: this.state.apiStatus && true,
-          message: this.state.apiStatus && this.state.apiCall == "merge" ? "Sentence merged successfully!" : "Sentence updated successfully...!",
+          message: this.state.apiStatus && (this.state.apiCall == "Merge sentence" ? "Sentence merged successfully!" :this.state.apiCall == "merge" ? "Paragraph merged successfully":this.state.apiCall == "Split sentence"? "Sentence Splitted Sucessfully" : "Sentence updated successfully...!"),
           apiStatus: false,
           apiCall: false,
           showLoader: false,
@@ -143,14 +144,18 @@ class PdfFileEditor extends React.Component {
   }
 
   getPageId(blocks) {
+    debugger
     let page_ids = [];
     blocks.forEach(element => {
       page_ids.push(parseInt(element.split("_")[1]));
     });
-    this.setState({ startPage: Math.max(...page_ids), endPage: Math.max(...page_ids) });
+    this.setState({ startPage: Math.min(...page_ids), endPage: Math.max(...page_ids) });
   }
 
   workFlowApi(workflow, blockDetails, update) {
+    console.log("-----",update)
+    
+    let pageInfo;
     const apiObj = new WorkFlow(
       workflow,
       blockDetails,
@@ -160,8 +165,12 @@ class PdfFileEditor extends React.Component {
       "",
       parseInt(this.props.match.params.modelId)
     );
+    console.log(this.state.startPage, this.state.endPage)
+    debugger
+      pageInfo = update!== "merge" && blockDetails.length>0 && blockDetails[0].page_info.page_no;
+      
     this.props.APITransport(apiObj);
-    this.setState({ apiCall: update });
+    pageInfo ?  this.setState({ apiCall: update, startPage : pageInfo, endPage: pageInfo}):this.setState({ apiCall: update});
   }
 
   fetchData() {
@@ -326,8 +335,8 @@ class PdfFileEditor extends React.Component {
     this.setState({ targetText: sentenceObj, showNextSuggestion: true });
   }
 
-  handleDoubleClickTarget(event, id, text, pageDetails) {
-    this.setState({ targetSelected: id, targetText: text, pageDetails });
+  handleDoubleClickTarget(event, id, text, pageDetails, block_id) {
+    this.setState({ targetSelected: id, targetText: text, pageDetails, hoveredSentence: block_id });
   }
   handleCheck(block, evt, checkValue, diffValue) {
     let blockId = block.split("_")[0];
@@ -451,9 +460,9 @@ class PdfFileEditor extends React.Component {
               block.children.length > 0 &&
               block.children.map(children => {
                 children.children
-                  ? children.map(grandChildren => {
-                    text = text + " " + grandChildren.text;
-                  })
+                  ? children.children.map(grandChildren => {
+                      text = text + " " + grandChildren.text;
+                    })
                   : (text = text + " " + children.text);
               });
 
@@ -789,6 +798,7 @@ class PdfFileEditor extends React.Component {
                                 scrollToTop={this.state.scrollToTop}
                                 scrollToId={this.state.scrollToId}
                                 yOffset={this.state.yOffset}
+                                workFlowApi = {this.workFlowApi.bind(this)}
                                 handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                                 handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
                                 handleSourceChange={this.handleSourceChange.bind(this)}
@@ -805,6 +815,7 @@ class PdfFileEditor extends React.Component {
                                 updateContent={this.updateContent.bind(this)}
                                 editableId={this.state.editableId}
                                 handleAutoCompleteEditor={this.handleAutoCompleteEditor.bind(this)}
+                                targetSelected={this.state.targetSelected}
                               />
                             </div>
                           );
