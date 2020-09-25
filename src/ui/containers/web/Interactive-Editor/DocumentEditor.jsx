@@ -411,7 +411,7 @@ class PdfFileEditor extends React.Component {
     this.setState({ mergeButton: value });
   }
 
-  handleBlur(id, wf_code) {
+  handleBlur(id, wf_code, saveData) {
     let idDetails = id.split("_")
     let text = "";
     let blockItem;
@@ -448,11 +448,11 @@ class PdfFileEditor extends React.Component {
       }
     })
     
-    debugger
-    if (blockItem && !wf_code)
+    if (blockItem && !wf_code) {
       this.workFlowApi("DP_WFLOW_S_TTR", [blockItem], "update")
-    else if(wf_code && blockItem)
+    } else if(wf_code && blockItem && saveData) {
       this.workFlowApi(wf_code, [blockItem], "update")
+    }
     this.setState({ hoveredSentence: '', targetSelected: "", pageDetails: "", selectedBlockId: "", selectedSourceText: "", edited: false, updatePage: parseInt(idDetails[1]) });
   }
 
