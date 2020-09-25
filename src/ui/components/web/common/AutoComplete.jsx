@@ -80,6 +80,7 @@ class AutoComplete extends React.Component {
         }
 
         if (event.key === 'Tab') {
+            console.log(caretVal)
             this.setState({ showSuggestions: true })
             // this.props.fetchSuggestions(this.props.sourceText, this.props.value)
             this.props.fetchSuggestions(this.props.sourceText, this.handleCalc(caretVal, this.props.tokenObject), this.props.tokenObject)
@@ -93,46 +94,53 @@ class AutoComplete extends React.Component {
     }
 
     handleCalc(value, tokenText) {
-        const temp = value.split(" ");
-        const tagged_tgt = tokenText.tagged_tgt.split(" ");
-        const tagged_src = tokenText.tagged_src.split(" ");
-        const tgt = tokenText.tgt && tokenText.tgt.split(" ");
-        const src = tokenText.src && tokenText.src.split(" ");
-        const resultArray = [];
-        let index;
-        temp.map(item => {
-            if (item !== " " && !isNaN(item)) {
-                const ind = tgt.indexOf(item, resultArray.length);
-                const arr = [item, `${item},`, `${item}.`];
-                let src_ind = -1;
-                arr.map((el, i) => {
-                    if (src_ind === -1) {
-                        src_ind = src.indexOf(el);
-                        index = i;
-                    }
-                    return true;
-                });
-                if (ind !== -1) {
-                    resultArray.push(tagged_tgt[ind]);
-                } else if (src_ind !== -1) {
-                    if (index > 0) {
-                        if (src_ind > tagged_src.length - 1) {
-                            src_ind = tagged_src.length - 1
+        console.log(value)
+        if (value.trim().length > 0) {
+            const temp = value.split(" ");
+            const tagged_tgt = tokenText.tagged_tgt.split(" ");
+            const tagged_src = tokenText.tagged_src.split(" ");
+            const tgt = tokenText.tgt && tokenText.tgt.split(" ");
+            const src = tokenText.src && tokenText.src.split(" ");
+            const resultArray = [];
+            let index;
+            temp.map(item => {
+                if (item.length > 0) {
+                    if (item !== " ") {
+                        const ind = tgt.indexOf(item, resultArray.length);
+                        const arr = [item, `${item},`, `${item}.`];
+                        let src_ind = -1;
+                        arr.map((el, i) => {
+                            if (src_ind === -1) {
+                                src_ind = src.indexOf(el);
+                                index = i;
+                            }
+                            return true;
+                        });
+                        if (ind !== -1) {
+                            resultArray.push(tagged_tgt[ind]);
+                        } else if (src_ind !== -1) {
+                            if (index > 0) {
+                                if (src_ind > tagged_src.length - 1) {
+                                    src_ind = tagged_src.length - 1
+                                }
+                                const tem = tagged_src[src_ind];
+                                resultArray.push(tem.slice(0, tem.length - 1));
+                            } else {
+                                resultArray.push(tagged_src[src_ind]);
+                            }
+                        } else {
+                            resultArray.push(item);
                         }
-                        const tem = tagged_src[src_ind];
-                        resultArray.push(tem.slice(0, tem.length - 1));
                     } else {
-                        resultArray.push(tagged_src[src_ind]);
+                        resultArray.push(item);
                     }
-                } else {
-                    resultArray.push(item);
                 }
-            } else {
-                resultArray.push(item);
-            }
-            return true;
-        });
-        return resultArray.join(" ");
+                return true;
+            });
+            return resultArray.join(" ");
+        } else {
+            return ""
+        }
     }
 
     handleSuggetionCLick(suggestion) {
