@@ -159,7 +159,7 @@ class Preview extends React.Component {
           >
             {sentence.hasOwnProperty("tokenized_sentences") &&
               sentence.tokenized_sentences.map((text, tokenIndex) => {
-                if (this.props.targetSelected === text.sentence_id + "_" + this.props.page_no) {
+                if (this.props.targetSelected === text.s_id + "_" + this.props.page_no) {
                   return (
                     // <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, wfcodes.DP_WFLOW_S_C)}>
 
@@ -174,18 +174,18 @@ class Preview extends React.Component {
                     >
                       <span
                         onDoubleClick={event => {
-                          this.handleDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, text, "target");
+                          this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target");
                         }}
                       >
                         <span
-                          ref={text.sentence_id + "_" + this.props.page_no}
+                          ref={text.s_id + "_" + this.props.page_no}
                           style={{
                             outline: "none"
                           }}
                         >
                           <AutoComplete
-                            aId={text.sentence_id + "_" + this.props.page_no}
-                            refId={text.sentence_id + "_" + this.props.page_no}
+                            aId={text.s_id + "_" + this.props.page_no}
+                            refId={text.s_id + "_" + this.props.page_no}
                             block_identifier_with_page={sentence.block_identifier + "_" + this.props.page_no}
                             style={{
                               width: "600px",
@@ -226,14 +226,14 @@ class Preview extends React.Component {
                     <span>
                       <span>
                         <span
-                          ref={text.sentence_id + "_" + this.props.page_no}
+                          ref={text.s_id + "_" + this.props.page_no}
                           contentEditableId={true}
                           style={{
                             outline: "none",
                             background: (!not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
                           }}
                           onDoubleClick={event => {
-                            this.handleDoubleClickTarget(event, text.sentence_id + "_" + this.props.page_no, text, "target");
+                            this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target");
                           }}
                         >
                           {text.tgt ? text.tgt : text.tagged_tgt}
@@ -280,12 +280,12 @@ class Preview extends React.Component {
     const sentenceEndId = window.getSelection().focusNode.parentNode.id;
     const obj_start = sentenceStartId.split('##')
     const start_block_id = obj_start[0]
-    const start_sentence_id = obj_start[1]
+    const start_s_id = obj_start[1]
     let offset_tokenized = obj_start[2]
 
     const obj_end = sentenceEndId.split('##')
     const end_block_id = obj_end[0]
-    const end_sentence_id = obj_end[1]
+    const end_s_id = obj_end[1]
     let end_tokenized = obj_end[2]
 
     if (start_block_id !== end_block_id) {
@@ -293,8 +293,8 @@ class Preview extends React.Component {
       console.log("wrong block")
     }
     //Merge
-    else if (start_sentence_id !== end_sentence_id) {
-      console.log(start_block_id, start_sentence_id, end_sentence_id)
+    else if (start_s_id !== end_s_id) {
+      console.log(start_block_id, start_s_id, end_s_id)
     }
     //Split
     else {
@@ -308,19 +308,19 @@ class Preview extends React.Component {
         let sentence = this.props.sentence
         let actual_text = ''
         sentence.tokenized_sentences.map((token)=>{
-          if(token.sentence_id == start_sentence_id){
+          if(token.s_id == start_s_id){
             actual_text  = token.src
           }
         })
         actual_text = actual_text.replace(/\s{2,}/g, ' ')
         actual_text = actual_text.trim()
-        console.log(start_block_id, start_sentence_id, split_index, actual_text.substring(split_index))
+        console.log(start_block_id, start_s_id, split_index, actual_text.substring(split_index))
       }
     }
   }
 
   makeSpan(text, child, spanId, tokenIndex, token_obj) {
-    return (<span id={this.props.sentence.block_id + '##' + token_obj.sentence_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
+    return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
         fontSize: child.font_size + "px",
@@ -381,7 +381,7 @@ class Preview extends React.Component {
           tokenIndex--
           if (!child.dont_show) {
             spans.push(this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex]))
-            spans.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].sentence_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
+            spans.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].s_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
               onKeyUp={this.getSelectionText.bind(this)}> </span>)
           }
           break
@@ -395,14 +395,14 @@ class Preview extends React.Component {
           tokenIndex++
           if (!(tokenIndex == tokenized_data.length && text.length > 0)) {
             if (!child.dont_show) {
-              spans.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].sentence_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
+              spans.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].s_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
                 onKeyUp={this.getSelectionText.bind(this)}> </span>)
             }
           }
         } else {
           if (!child.dont_show) {
             spans.push(this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex]))
-            spans.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].sentence_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
+            spans.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].s_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
               onKeyUp={this.getSelectionText.bind(this)}> </span>)
           }
           if (text.length == tokenized_data[tokenIndex].src.length) {
@@ -423,7 +423,7 @@ class Preview extends React.Component {
         let spans = this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex])
         let spans_array = []
         spans_array.push(spans)
-        spans_array.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].sentence_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
+        spans_array.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].s_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
           onKeyUp={this.getSelectionText.bind(this)}> </span>)
         elems.push(this.makeDiv(sentence, spans_array, div_style))
       }
