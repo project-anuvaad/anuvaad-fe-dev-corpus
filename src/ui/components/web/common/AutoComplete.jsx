@@ -141,7 +141,7 @@ class AutoComplete extends React.Component {
         this.setState({ modified: true })
         var elem = document.getElementById(this.props.aId)
         let caretVal = this.state.value.substring(0, elem.selectionStart)
-        this.setState({ caretVal: caretVal + suggestion, value: caretVal + suggestion })
+        this.setState({ caretVal: this.state.caretVal + suggestion, value: this.state.caretVal + suggestion })
         this.props.handleSuggestion(suggestion, this.state.caretVal, this.props.sourceText, this.props.tokenObject)
     }
 
@@ -181,13 +181,13 @@ class AutoComplete extends React.Component {
 
     render() {
         const { value, aId, refId, style, tokenIndex, sentence } = this.props
-        console.log(this.props.value)
+        console.log(this.props.autoCompleteText)
         return (
             <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, this.state.value, wfcodes.DP_WFLOW_S_C)}>
                 <div>
-                    <TextareaAutosize
+                    <textarea
                         multiline={true}
-                        autoFocus={true}
+                        autoFocus
                         ref={refId}
                         id={aId}
                         value={this.state.value}
@@ -196,7 +196,7 @@ class AutoComplete extends React.Component {
                         onKeyDown={this.handleEnter}
                         maxRows={4}
                     >
-                    </TextareaAutosize>
+                    </textarea>
                     {
                         this.props.showSuggestions &&
                         <Menu
@@ -205,7 +205,7 @@ class AutoComplete extends React.Component {
                             leftValue={this.state.leftValue}
                             handleSuggetionClick={this.handleSuggetionCLick.bind(this)}
                             handlePopOverClose={this.props.handleSuggestionClose}
-                            targetVal={this.state.value}
+                            targetVal={this.state.caretVal}
                             options={this.props.autoCompleteText}
                         ></Menu>}
 

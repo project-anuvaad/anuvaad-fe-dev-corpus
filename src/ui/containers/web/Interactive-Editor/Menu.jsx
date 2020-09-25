@@ -46,6 +46,7 @@ export default class Popovers extends React.Component {
                 }
             })
         }
+        console.log(dataArr)
 
         if (this.props.options && this.props.options.length > 0 && dataArr && Array.isArray(dataArr) && dataArr.length > 0) {
             return (
