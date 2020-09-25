@@ -55,14 +55,19 @@ class DocumentSource extends React.Component {
     this.setState({ checkbox: true, openDialog: false });
   }
   handleDialog() {
-    debugger
+    let workflowCode = "DP_WFLOW_S_TR";
     if (this.state.title === "Merge sentence") {
 
      let updatedBlocks =   BLOCK_OPS.do_sentences_merging(this.props.sentences,this.state.start_block_id, this.state.start_sentence_id, this.state.end_sentence_id);
-      console.log(updatedBlocks)
+      
+     console.log(updatedBlocks)
+    //  this.props.workFlowApi(workflowCode, [updatedBlocks], this.state.title);
+     
     }
-    else if(this.state.title === "Split Sentence" ){
-      console.log("progress")
+    else if(this.state.title === "Split sentence" ){
+      let updatedBlocks =   BLOCK_OPS.do_sentence_splitting(this.props.sentences,this.state.start_block_id, this.state.start_sentence_id, this.state.end_sentence_id);
+      console.log(updatedBlocks)
+      // this.props.workFlowApi(workflowCode, [updatedBlocks], this.state.title);
     }
     
     else if(this.state.title === "Merge Paragraphs"){
@@ -112,7 +117,9 @@ class DocumentSource extends React.Component {
     
     this.setState({
       openDialog: false,
-
+      start_block_id:"",
+      start_sentence_id:'',
+      end_sentence_id:'',
       operation_type: "",
       arrayClear: true,
       selectedArray:[],
