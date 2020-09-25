@@ -1,5 +1,5 @@
 var jp                = require('jsonpath')
-const { uuid }        = require('react-uuid');
+const { v4 }        = require('uuid');
 
 function get_block_id(blocks) {
     let block_ids = []
@@ -264,7 +264,7 @@ function do_sentence_splitting(sentences, block_id, sentence_id, character_count
     final_tokenized_sentences.push(split_sentence_obj)
     final_tokenized_sentences.push({
         'src': actual_text.slice(character_count),
-        'sentence_id': uuid(),
+        'sentence_id': v4(),
     })
 
     /**
