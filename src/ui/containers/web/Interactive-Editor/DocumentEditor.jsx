@@ -715,6 +715,7 @@ class PdfFileEditor extends React.Component {
                                 updateContent={this.updateContent.bind(this)}
                                 editableId={this.state.editableId}
                                 handleAutoCompleteEditor={this.handleAutoCompleteEditor.bind(this)}
+                                targetSelected={this.state.targetSelected}
                               />
                             </div>
                           );
