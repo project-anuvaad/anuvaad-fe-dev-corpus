@@ -37,7 +37,7 @@ class DocumentBlock extends React.Component {
 
 
     }
-    if(this.props.targetSelected !== prevProps.targetSelected){
+    if (this.props.targetSelected !== prevProps.targetSelected) {
       // this.props.handleOnMouseLeave()
     }
 
@@ -175,9 +175,9 @@ class DocumentBlock extends React.Component {
                     // }}
                     >
                       <span
-                        // onDoubleClick={event => {
-                        //   this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target");
-                        // }}
+                      // onDoubleClick={event => {
+                      //   this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target");
+                      // }}
                       >
                         <span
                           ref={text.s_id + "_" + this.props.page_no}
@@ -253,7 +253,7 @@ class DocumentBlock extends React.Component {
     );
   };
 
-  handleDoubleClickTarget = (evnt, id, text, pageDetails,block_id) => {
+  handleDoubleClickTarget = (evnt, id, text, pageDetails, block_id) => {
     this.props.handleDoubleClickTarget(evnt, id, text, pageDetails, block_id);
   };
   handleChange = name => event => {
@@ -328,8 +328,8 @@ class DocumentBlock extends React.Component {
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
         fontSize: child.font_size + "px",
-        height: child.text_height + "px",
-        left: child.text_left + "px",
+        height: (child.text_height + 4) + "px",
+        left: (child.text_left-1) + "px",
         textJustify: "inter-word", textAlign: 'justify', background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
       }}
     >
@@ -354,7 +354,7 @@ class DocumentBlock extends React.Component {
     const div_style = {
       textAlign: "justify",
       position: "absolute",
-      top: child.text_top + "px",
+      top: child.text_top - 2 + "px",
       fontSize: child.font_size + "px",
       fontFamily: sentence.font_family,
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
@@ -362,10 +362,10 @@ class DocumentBlock extends React.Component {
       zIndex: 1,
       padding: "5px",
       lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
-      height: child.text_height + "px",
-      left: child.text_left + "px",
+      height: (child.text_height + 4) + "px",
+      left: (child.text_left-1) + "px",
       textAlignLast: sentence.children && sentence.children.length > 1 && "justify",
-      width: child.text_width + "px"
+      width: (child.text_width + 5) + "px"
     }
     if (is_super) {
       if (!child.dont_show) {
@@ -487,8 +487,8 @@ class DocumentBlock extends React.Component {
     if (sentence.children) {
       sentence.children.map((child) => {
         if (tokenIndex <= tokenized_data.length - 1) {
-          tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
           tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.replace(/\s\s+/g, ' ');
+          tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
           if (child.children) {
             child.children.map((ch) => {
               ch.dont_show = child.dont_show

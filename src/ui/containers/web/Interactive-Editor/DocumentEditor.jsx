@@ -826,11 +826,11 @@ class PdfFileEditor extends React.Component {
               </Grid>
               <Grid item xs={12} sm={6} lg={6} xl={6}>
                 <Paper
-                  style={{
-                    // paddingBottom: "12px",
-                    // paddingTop: "12px",
+                  style={this.state.tokenized ? {
+                    paddingBottom: "12px",
+                    paddingTop: "12px",
                     // height: "98%"
-                  }}
+                  }: {}}
                 >
                   {this.state.tokenized ? (
                     <DocPreview
