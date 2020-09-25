@@ -171,13 +171,12 @@ function do_sentences_merging(sentences, block_id, sentence_id_1, sentence_id_2)
         start   = index1
         end     = index2
     }
-
     /**
-     * split tokenized sentences into three portion.
+     * split tokenized sentences into three portion. Taking care of position
      */
     let first_sentences_obj_arr  = tokenized_sentences_block.tokenized_sentences.slice(0, start)
-    let second_sentences_obj_arr = tokenized_sentences_block.tokenized_sentences.slice(start, end)
-    let third_sentences_obj_arr  = tokenized_sentences_block.tokenized_sentences.slice(end, tokenized_sentences_block.tokenized_sentences.length)
+    let second_sentences_obj_arr = tokenized_sentences_block.tokenized_sentences.slice(start, end+1)
+    let third_sentences_obj_arr  = tokenized_sentences_block.tokenized_sentences.slice(end+1)
 
     /**
      * copy each element from first portion into a local array
