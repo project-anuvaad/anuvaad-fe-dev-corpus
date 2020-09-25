@@ -179,11 +179,10 @@ class AutoComplete extends React.Component {
 
     render() {
         const { value, aId, refId, style, tokenIndex, sentence } = this.props
-        console.log(this.props.autoCompleteText)
         return (
             <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, this.state.value, wfcodes.DP_WFLOW_S_C)}>
                 <div>
-                    <textarea
+                    <TextareaAutosize
                         multiline={true}
                         autoFocus
                         ref={refId}
@@ -194,7 +193,7 @@ class AutoComplete extends React.Component {
                         onKeyDown={this.handleEnter}
                         maxRows={4}
                     >
-                    </textarea>
+                    </TextareaAutosize>
                     {
                         this.props.showSuggestions &&
                         <Menu
