@@ -125,12 +125,7 @@ function get_merged_blocks(sentences, selected_block_ids) {
  * @param {*} blocks, select list of blocks that have same block_id
  */
 function get_tokenized_sentences_block(blocks) {
-    blocks.forEach(element => {
-        if (element.tokenized_sentences && element.tokenized_sentences.length > 0) {
-            return element
-        }
-    })
-    return null
+  return blocks.filter(element => (element.tokenized_sentences && element.tokenized_sentences.length > 0))[0]
 }
 
 /**
@@ -141,11 +136,11 @@ function get_tokenized_sentences_block(blocks) {
  * @returns index of sentence_id
  */
 function get_sentence_id_index(tokenized_sentences, sentence_id) {
-    tokenized_sentences.forEach((element, index) => {
-        if (element.sentence_id == sentence_id) {
-            return index
-        }
-    })
+  for (var i = 0; i < tokenized_sentences.length; i++) {
+    if (tokenized_sentences[i].sentence_id == sentence_id || tokenized_sentences[i].s_id == sentence_id) {
+      return i;
+    }
+  }
 }
 
 /**
@@ -162,7 +157,7 @@ function do_sentences_merging(sentences, block_id, sentence_id_1, sentence_id_2)
     let selected_block_ids          = []
     selected_block_ids.push(block_id)
 
-    let selected_blocks             = get_blocks(sentences, get_block_id(selected_block_ids))
+    let selected_blocks             = get_blocks(sentences, selected_block_ids)
     let tokenized_sentences_block   = get_tokenized_sentences_block(selected_blocks)
     let index1                      = get_sentence_id_index(tokenized_sentences_block.tokenized_sentences, sentence_id_1)
     let index2                      = get_sentence_id_index(tokenized_sentences_block.tokenized_sentences, sentence_id_2)
@@ -176,13 +171,12 @@ function do_sentences_merging(sentences, block_id, sentence_id_1, sentence_id_2)
         start   = index1
         end     = index2
     }
-
     /**
-     * split tokenized sentences into three portion.
+     * split tokenized sentences into three portion. Taking care of position
      */
     let first_sentences_obj_arr  = tokenized_sentences_block.tokenized_sentences.slice(0, start)
-    let second_sentences_obj_arr = tokenized_sentences_block.tokenized_sentences.slice(start, end)
-    let third_sentences_obj_arr  = tokenized_sentences_block.tokenized_sentences.slice(end, tokenized_sentences_block.tokenized_sentences.length)
+    let second_sentences_obj_arr = tokenized_sentences_block.tokenized_sentences.slice(start, end+1)
+    let third_sentences_obj_arr  = tokenized_sentences_block.tokenized_sentences.slice(end+1)
 
     /**
      * copy each element from first portion into a local array
@@ -197,9 +191,9 @@ function do_sentences_merging(sentences, block_id, sentence_id_1, sentence_id_2)
      */
     let merged_sentence = ""
     second_sentences_obj_arr.forEach((e) => {
-        merged_sentence += e.src_text
+        merged_sentence += e.src
     })
-    second_sentences_obj_arr[0].src_text    = merged_sentence
+    second_sentences_obj_arr[0].src    = merged_sentence
     final_tokenized_sentences.push(second_sentences_obj_arr[0])
 
     /**
@@ -227,7 +221,7 @@ function do_sentence_splitting(sentences, block_id, sentence_id, character_count
     let selected_block_ids          = []
     selected_block_ids.push(block_id)
 
-    let selected_blocks             = get_blocks(sentences, get_block_id(selected_block_ids))
+    let selected_blocks             = get_blocks(sentences, selected_block_ids)
     let tokenized_sentences_block   = get_tokenized_sentences_block(selected_blocks)
     let index                       = get_sentence_id_index(tokenized_sentences_block.tokenized_sentences, sentence_id)
     if (index == 0) {
