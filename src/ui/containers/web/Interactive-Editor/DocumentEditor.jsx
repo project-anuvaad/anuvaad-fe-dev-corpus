@@ -325,8 +325,8 @@ class PdfFileEditor extends React.Component {
     this.setState({ targetText: sentenceObj, showNextSuggestion: true });
   }
 
-  handleDoubleClickTarget(event, id, text, pageDetails) {
-    this.setState({ targetSelected: id, targetText: text, pageDetails });
+  handleDoubleClickTarget(event, id, text, pageDetails, block_id) {
+    this.setState({ targetSelected: id, targetText: text, pageDetails, hoveredSentence: block_id });
   }
   handleCheck(block, evt, checkValue, diffValue) {
     let blockId = block.split("_")[0];
