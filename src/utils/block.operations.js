@@ -224,52 +224,36 @@ function do_sentence_splitting(sentences, block_id, sentence_id, character_count
     let selected_blocks             = get_blocks(sentences, selected_block_ids)
     let tokenized_sentences_block   = get_tokenized_sentences_block(selected_blocks)
     let index                       = get_sentence_id_index(tokenized_sentences_block.tokenized_sentences, sentence_id)
-    if (index == 0) {
-        index = 0
-    } else {
-        index = index - 1
-    }
 
     /**
-     * split tokenized sentences into two portion.
+     * get sentence from the index
      */
-    let first_sentences_obj_arr     = tokenized_sentences_block.tokenized_sentences.slice(0, index-1)
-    let second_sentences_obj_arr    = tokenized_sentences_block.tokenized_sentences.slice(index, tokenized_sentences_block.tokenized_sentences.length)
     let split_sentence_obj          = tokenized_sentences_block.tokenized_sentences[index]
 
     /**
-     * copy each element from first portion into a local array
-     */
-    let final_tokenized_sentences = []
-    first_sentences_obj_arr.forEach((e) => final_tokenized_sentences.push(e))
-
-    /**
      * 0. remove double spaces & trim before counting
-     * 1. split src_text sentence using character_count
-     * 2. create two arrays, shift first portion of slice to existing src_text
-     * 3. create new tokenized_sentence object and put second portion of slice into newly created one
-     * 4. push both the sentence in the tokenized sentences
+     * 1. split src sentence using character_count
+     * 2. create two arrays, shift first portion of slice to existing src field
+     * 3. create second sentence object with uuid and store both into new array
+     * 4. use splice to set the object at index and remove the original sentence & then set another at index + 1
      */
-    let actual_text = split_sentence_obj.src_text.replace(/\s{2,}/g, ' ')
-    actual_text = actual_text.trim()
+    let actual_text = split_sentence_obj.src.replace(/\s{2,}/g, ' ')
+    actual_text     = actual_text.trim()
 
-    split_sentence_obj.src = actual_text.slice(0, character_count)
+    let first_portion   = actual_text.slice(0, character_count)
+    let second_portion  = actual_text.slice(character_count)
 
+    let final_tokenized_sentences   = []
+    split_sentence_obj.src  = first_portion
     final_tokenized_sentences.push(split_sentence_obj)
     final_tokenized_sentences.push({
-        'src': actual_text.slice(character_count),
+        'src': second_portion,
         'sentence_id': v4(),
     })
 
-    /**
-     * copy second part of array into the local array
-     */
-    second_sentences_obj_arr.forEach((e) => final_tokenized_sentences.push(e))
+    tokenized_sentences_block.tokenized_sentences.splice(index, 1, final_tokenized_sentences[0])
+    tokenized_sentences_block.tokenized_sentences.splice(index+1, 0, final_tokenized_sentences[1])
 
-    /**
-     * replace the local array into the tokenized sentence block
-     */
-    tokenized_sentences_block.tokenized_sentences = final_tokenized_sentences
     return tokenized_sentences_block
 }
 

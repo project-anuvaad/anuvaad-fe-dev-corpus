@@ -59,8 +59,6 @@ class AutoComplete extends React.Component {
         let caretVal = this.state.value.substring(0, elem.selectionStart)
 
         var coordinates = getCaretCoordinates(elem, elem.selectionEnd);
-        console.log(caretVal)
-        console.log(this.state.value)
 
         let topValue = 0
         let leftValue = 0
@@ -181,7 +179,6 @@ class AutoComplete extends React.Component {
 
     render() {
         const { value, aId, refId, style, tokenIndex, sentence } = this.props
-        console.log(this.props.value)
         return (
             <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, this.state.value, wfcodes.DP_WFLOW_S_C)}>
                 <div>
@@ -205,7 +202,7 @@ class AutoComplete extends React.Component {
                             leftValue={this.state.leftValue}
                             handleSuggetionClick={this.handleSuggetionCLick.bind(this)}
                             handlePopOverClose={this.props.handleSuggestionClose}
-                            targetVal={this.state.value}
+                            targetVal={this.state.caretVal}
                             options={this.props.autoCompleteText}
                         ></Menu>}
 
