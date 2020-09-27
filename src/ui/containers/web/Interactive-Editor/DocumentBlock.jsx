@@ -84,7 +84,7 @@ class DocumentBlock extends React.Component {
           outline: "0px solid transparent",
           zIndex: 1,
 
-          lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
+          // lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
           backgroundColor: this.props.selectedSentence === value.block_id + "_" + this.props.page_no + "_source" && this.props.value ? "#F4FDFF" : "",
           border:
             this.props.selectedSentence === value.block_id + "_" + this.props.page_no + "_source" && this.props.value ? "1px solid #1C9AB7" : "",
@@ -361,7 +361,7 @@ class DocumentBlock extends React.Component {
       outline: "0px solid transparent",
       zIndex: 1,
       padding: "5px",
-      lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
+      // lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
       height: (child.text_height) + "px",
       left: (child.text_left - 5) + "px",
       textAlignLast: sentence.children && sentence.children.length > 1 && "justify",
