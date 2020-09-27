@@ -37,6 +37,9 @@ class DocumentBlock extends React.Component {
 
 
     }
+    if (this.props.targetSelected !== prevProps.targetSelected) {
+      // this.props.handleOnMouseLeave()
+    }
 
     // if(this.props.arrayClear!== prevProps.arrayClear){
     //   this.sentenceClear(arr)
@@ -66,10 +69,10 @@ class DocumentBlock extends React.Component {
           this.props.tokenized && this.handleDoubleClick(event, value.block_id + "_" + this.props.page_no, value);
         }}
         onMouseLeave={() => {
-          this.props.value !== true && this.props.handleOnMouseLeave();
+          !this.props.targetSelected && this.props.value !== true && this.props.handleOnMouseLeave();
         }}
         onMouseEnter={() => {
-          this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
+          !this.props.targetSelected && this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
         }}
         style={{
           textAlign: "justify",
@@ -141,10 +144,10 @@ class DocumentBlock extends React.Component {
           // onBlur={event => this.props.handleBlur(event)}
           // onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
           onMouseLeave={() => {
-            this.props.value !== true && this.props.handleOnMouseLeave();
+            !this.props.targetSelected && this.props.value !== true && this.props.handleOnMouseLeave();
           }}
           onMouseEnter={() => {
-            this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
+            !this.props.targetSelected && this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
           }}
           ref={textarea => {
             this.textInput = textarea;
@@ -172,9 +175,9 @@ class DocumentBlock extends React.Component {
                     // }}
                     >
                       <span
-                        onDoubleClick={event => {
-                          this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target");
-                        }}
+                      // onDoubleClick={event => {
+                      //   this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target");
+                      // }}
                       >
                         <span
                           ref={text.s_id + "_" + this.props.page_no}
@@ -229,10 +232,10 @@ class DocumentBlock extends React.Component {
                           contentEditableId={true}
                           style={{
                             outline: "none",
-                            background: (!not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+                            background: (!this.props.targetSelected && !not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
                           }}
                           onDoubleClick={event => {
-                            this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target");
+                            this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target", sentence.block_id + "_" + this.props.page_no);
                           }}
                         >
                           {text.tgt ? text.tgt : text.tagged_tgt}
@@ -250,8 +253,8 @@ class DocumentBlock extends React.Component {
     );
   };
 
-  handleDoubleClickTarget = (evnt, id, text, pageDetails) => {
-    this.props.handleDoubleClickTarget(evnt, id, text, pageDetails);
+  handleDoubleClickTarget = (evnt, id, text, pageDetails, block_id) => {
+    this.props.handleDoubleClickTarget(evnt, id, text, pageDetails, block_id);
   };
   handleChange = name => event => {
 
@@ -324,10 +327,10 @@ class DocumentBlock extends React.Component {
     return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
-        fontSize: child.font_size + "px",
-        height: child.text_height + "px",
-        left: child.text_left + "px",
-        textJustify: "inter-word", textAlign: 'justify', background: (spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        fontSize: child.font_size - 1 + "px",
+        height: (child.text_height) + "px",
+        left: (child.text_left - 5) + "px",
+        textJustify: "inter-word", textAlign: 'justify', background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
       }}
     >
       {text}
@@ -336,10 +339,10 @@ class DocumentBlock extends React.Component {
 
   makeDiv(sentence, spans, div_style) {
     return (<div onMouseLeave={() => {
-      this.props.value !== true && this.props.handleOnMouseLeave();
+      !this.props.targetSelected && this.props.value !== true && this.props.handleOnMouseLeave();
     }}
       onMouseEnter={() => {
-        this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
+        !this.props.targetSelected && this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
       }} style={div_style}>{spans}</div>)
 
   }
@@ -351,18 +354,18 @@ class DocumentBlock extends React.Component {
     const div_style = {
       textAlign: "justify",
       position: "absolute",
-      top: child.text_top + "px",
-      fontSize: child.font_size + "px",
+      top: child.text_top - 2 + "px",
+      fontSize: child.font_size - 1 + "px",
       fontFamily: sentence.font_family,
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
       outline: "0px solid transparent",
       zIndex: 1,
       padding: "5px",
       // lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
-      height: child.text_height + "px",
-      left: child.text_left + "px",
+      height: (child.text_height) + "px",
+      left: (child.text_left - 5) + "px",
       textAlignLast: sentence.children && sentence.children.length > 1 && "justify",
-      width: child.text_width + "px"
+      width: (child.text_width) + "px"
     }
     if (is_super) {
       if (!child.dont_show) {
@@ -484,8 +487,8 @@ class DocumentBlock extends React.Component {
     if (sentence.children) {
       sentence.children.map((child) => {
         if (tokenIndex <= tokenized_data.length - 1) {
-          tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
           tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.replace(/\s\s+/g, ' ');
+          tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
           if (child.children) {
             child.children.map((ch) => {
               ch.dont_show = child.dont_show
@@ -583,10 +586,10 @@ class DocumentBlock extends React.Component {
           key={sentence.block_id}
           onBlur={event => this.props.handleBlur(this.props.sentence.block_identifier + "_" + this.props.page_no + "_" + this.props.paperType)}
           onMouseLeave={() => {
-            this.props.value !== true && this.props.handleOnMouseLeave();
+            !this.props.targetSelected && this.props.value !== true && this.props.handleOnMouseLeave();
           }}
           onMouseEnter={() => {
-            this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
+            !this.props.targetSelected && this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
           }}
           ref={sentence.block_id + "_" + this.props.page_no}
         >

@@ -207,9 +207,9 @@ class DocumentSource extends React.Component {
     this.props.APITransport(apiObj);
   }
 
-  handleDoubleClickTarget(event, id, text, pageDetails) {
+  handleDoubleClickTarget(event, id, text, pageDetails, block_id) {
     this.setState({autoCompleteText: null})
-    this.props.handleDoubleClickTarget(event, id, text, pageDetails)
+    this.props.handleDoubleClickTarget(event, id, text, pageDetails, block_id)
   }
 
   getContent() {
