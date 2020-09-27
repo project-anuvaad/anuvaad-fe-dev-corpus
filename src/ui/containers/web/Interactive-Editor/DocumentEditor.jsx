@@ -129,7 +129,7 @@ class PdfFileEditor extends React.Component {
         this.setState({
           sentences: temp,
           open: this.state.apiStatus && true,
-          message: this.state.apiStatus && (this.state.apiCall == "Merge sentence" ? "Sentence merged successfully!" :this.state.apiCall == "merge" ? "Paragraph merged successfully":this.state.apiCall == "Split sentence"? "Sentence Splitted Sucessfully" : "Sentence updated successfully...!"),
+          message: this.state.apiStatus && (this.state.apiCall == "Merge sentence" ? "Sentence merged successfully!" : this.state.apiCall == "merge" ? "Paragraph merged successfully" : this.state.apiCall == "Split sentence" ? "Sentence Splitted Sucessfully" : "Sentence updated successfully...!"),
           apiStatus: false,
           apiCall: false,
           showLoader: false,
@@ -153,8 +153,8 @@ class PdfFileEditor extends React.Component {
   }
 
   workFlowApi(workflow, blockDetails, update) {
-    console.log("-----",update)
-    
+    console.log("-----", update)
+
     let pageInfo;
     const apiObj = new WorkFlow(
       workflow,
@@ -167,10 +167,10 @@ class PdfFileEditor extends React.Component {
     );
     console.log(this.state.startPage, this.state.endPage)
     debugger
-      pageInfo = update!== "merge" && blockDetails.length>0 && blockDetails[0].page_info.page_no;
-      
+    pageInfo = update !== "merge" && blockDetails.length > 0 && blockDetails[0].page_info.page_no;
+
     this.props.APITransport(apiObj);
-    pageInfo ?  this.setState({ apiCall: update, startPage : pageInfo, endPage: pageInfo}):this.setState({ apiCall: update});
+    pageInfo ? this.setState({ apiCall: update, startPage: pageInfo, endPage: pageInfo }) : this.setState({ apiCall: update });
   }
 
   fetchData() {
@@ -461,8 +461,8 @@ class PdfFileEditor extends React.Component {
               block.children.map(children => {
                 children.children
                   ? children.children.map(grandChildren => {
-                      text = text + " " + grandChildren.text;
-                    })
+                    text = text + " " + grandChildren.text;
+                  })
                   : (text = text + " " + children.text);
               });
 
@@ -625,7 +625,7 @@ class PdfFileEditor extends React.Component {
                 <Paper>
                   {this.state.tokenized ?
                     <Toolbar style={{ color: darkBlack, background: this.state.edited ? "#989E9C" : blueGrey50 }}>
-                      <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: "#1C9AB7" }}>
+                      <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: this.state.edited ? "white" : "#1C9AB7" }}>
                         Extracted Document
                      </Typography>
 
@@ -643,9 +643,9 @@ class PdfFileEditor extends React.Component {
                       )}
                     </Toolbar> :
 
-                    <Toolbar style={{ color: darkBlack, background: this.state.pageDetails === "target" ? "#989E9C" : blueGrey50 }}>
+                    <Toolbar style={{ color: darkBlack }}>
                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: "#1C9AB7" }}>
-                        Translated Document
+                        Extracted Document
                     </Typography>
                     </Toolbar>
                   }
@@ -655,8 +655,8 @@ class PdfFileEditor extends React.Component {
                 <Paper elevation={2}>
                   {!this.state.tokenized ?
                     <Toolbar style={{ color: darkBlack, background: this.state.pageDetails === "target" ? "#989E9C" : blueGrey50 }}>
-                      <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: "#1C9AB7" }}>
-                        Extracted Document
+                      <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: this.state.pageDetails === "target" ? "white" :"#1C9AB7" }}>
+                        Translated Document
                       </Typography>
                     </Toolbar>
 
@@ -798,7 +798,7 @@ class PdfFileEditor extends React.Component {
                                 scrollToTop={this.state.scrollToTop}
                                 scrollToId={this.state.scrollToId}
                                 yOffset={this.state.yOffset}
-                                workFlowApi = {this.workFlowApi.bind(this)}
+                                workFlowApi={this.workFlowApi.bind(this)}
                                 handleOnMouseEnter={this.handleOnMouseEnter.bind(this)}
                                 handleOnMouseLeave={this.handleOnMouseLeave.bind(this)}
                                 handleSourceChange={this.handleSourceChange.bind(this)}
