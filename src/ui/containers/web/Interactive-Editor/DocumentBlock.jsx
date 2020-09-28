@@ -135,6 +135,18 @@ class DocumentBlock extends React.Component {
   };
 
   handleTargetUpdate = (sentence, styles, not_tokenized) => {
+    let childrens = sentence.children ? sentence.children.length : 1
+    let words_count = 0
+    let words_in_line = -1
+    let current_line_words = 0
+    if (sentence.tokenized_sentences) {
+      sentence.tokenized_sentences.map((text) => {
+        words_count += text.tgt.split(" ").length
+      })
+    }
+    if (words_count > 0 && childrens > 1) {
+      // words_in_line = Math.round(words_count / childrens)
+    }
     return (
       sentence.tokenized_sentences && sentence.tokenized_sentences.length > 0 ?
         <div
@@ -159,93 +171,157 @@ class DocumentBlock extends React.Component {
             min={1}
             max={parseInt(sentence.font_size)}
           >
-            {sentence.hasOwnProperty("tokenized_sentences") &&
-              sentence.tokenized_sentences.map((text, tokenIndex) => {
-                if (this.props.targetSelected === text.s_id + "_" + this.props.page_no) {
-                  return (
-                    // <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, wfcodes.DP_WFLOW_S_C)}>
+            <div style={words_in_line !== -1 ? {
+              textAlign: 'justify',
+              textAlignLast: 'justify'
+            } : {}}>
+              {sentence.hasOwnProperty("tokenized_sentences") &&
+                sentence.tokenized_sentences.map((text, tokenIndex) => {
+                  if (this.props.targetSelected === text.s_id + "_" + this.props.page_no) {
+                    return (
+                      // <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, wfcodes.DP_WFLOW_S_C)}>
 
-                    <div
-                      style={{
-                        position: 'relative',
-                        zIndex: 1
-                      }}
-                    // onBlur={event => {
-                    //   this.props.handleBlur(event);
-                    // }}
-                    >
-                      <span
-                      // onDoubleClick={event => {
-                      //   this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target");
+                      <div
+                        style={{
+                          position: 'relative',
+                          zIndex: 1
+                        }}
+                      // onBlur={event => {
+                      //   this.props.handleBlur(event);
                       // }}
                       >
                         <span
-                          ref={text.s_id + "_" + this.props.page_no}
-                          style={{
-                            outline: "none"
-                          }}
+                        // onDoubleClick={event => {
+                        //   this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target");
+                        // }}
                         >
-                          <AutoComplete
-                            aId={text.s_id + "_" + this.props.page_no}
-                            refId={text.s_id + "_" + this.props.page_no}
-                            block_identifier_with_page={sentence.block_identifier + "_" + this.props.page_no}
+                          <span
+                            ref={text.s_id + "_" + this.props.page_no}
                             style={{
-                              width: "600px",
-                              // height: sentence.text_height + 5 + "px",
-                              // resize: "none",
-                              // resize: "both", 
-                              fontSize: sentence.font_size + "px",
-                              fontFamily: sentence.font_family,
-                              zIndex: 1111,
-                              borderRadius: "4px",
-                              backgroundColor: "#F4FDFF",
-                              border: '1px solid #1C9AB7',
+                              outline: "none"
                             }}
-                            tokenIndex={tokenIndex}
-                            value={this.props.targetText.tgt}
-                            sentence={sentence}
-                            sourceText={text.src}
-                            page_no={this.props.page_no}
-                            handleChangeEvent={this.handleChangeEvent.bind(this)}
-                            fetchSuggestions={this.props.fetchSuggestions}
-                            autoCompleteText={this.props.autoCompleteText}
-                            handleSuggestion={this.props.handleSuggestion}
-                            heightToBeIncreased={sentence.font_size}
-                            handleBlur={this.props.handleBlur}
-                            showSuggestions={this.props.showSuggestions}
-                            handleSuggestionClose={this.props.handleSuggestionClose}
-                            handleClickAway={this.handleClickAway.bind(this)}
-                            tokenObject={text}
-                          />
+                          >
+                            <AutoComplete
+                              aId={text.s_id + "_" + this.props.page_no}
+                              refId={text.s_id + "_" + this.props.page_no}
+                              block_identifier_with_page={sentence.block_identifier + "_" + this.props.page_no}
+                              style={{
+                                width: "600px",
+                                // height: sentence.text_height + 5 + "px",
+                                // resize: "none",
+                                // resize: "both", 
+                                fontSize: sentence.font_size + "px",
+                                fontFamily: sentence.font_family,
+                                zIndex: 1111,
+                                borderRadius: "4px",
+                                backgroundColor: "#F4FDFF",
+                                border: '1px solid #1C9AB7',
+                              }}
+                              tokenIndex={tokenIndex}
+                              value={this.props.targetText.tgt}
+                              sentence={sentence}
+                              sourceText={text.src}
+                              page_no={this.props.page_no}
+                              handleChangeEvent={this.handleChangeEvent.bind(this)}
+                              fetchSuggestions={this.props.fetchSuggestions}
+                              autoCompleteText={this.props.autoCompleteText}
+                              autoCompleteTextTaggetTgt={this.props.autoCompleteTextTaggetTgt}
+                              handleSuggestion={this.props.handleSuggestion}
+                              heightToBeIncreased={sentence.font_size}
+                              handleBlur={this.props.handleBlur}
+                              showSuggestions={this.props.showSuggestions}
+                              handleSuggestionClose={this.props.handleSuggestionClose}
+                              handleClickAway={this.handleClickAway.bind(this)}
+                              tokenObject={text}
+                            />
+                          </span>
+                          <span> </span>
                         </span>
-                        <span> </span>
-                      </span>
-                    </div>
-                    // </ClickAwayListener>
-                  );
-                } else {
-                  return (
-                    <span>
-                      <span>
-                        <span
-                          ref={text.s_id + "_" + this.props.page_no}
-                          contentEditableId={true}
-                          style={{
-                            outline: "none",
-                            background: (!this.props.targetSelected && !not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
-                          }}
-                          onDoubleClick={event => {
-                            this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target", sentence.block_id + "_" + this.props.page_no);
-                          }}
-                        >
-                          {text.tgt ? text.tgt : text.tagged_tgt}
+                      </div>
+                      // </ClickAwayListener>
+                    );
+                  } else {
+                    let words = text.tgt.split(" ")
+                    if (words_in_line != -1) {
+                      let spans = []
+                      let words_length = words.length + current_line_words
+                      if (words_length > words_in_line) {
+                        var i, j, temparray, chunk = words_in_line;
+                        i = 0, j = words_length;
+                        while (i < j) {
+                          if (i == 0)
+                            temparray = words.slice(i, i - current_line_words + chunk);
+                          else
+                            temparray = words.slice(i, i + chunk);
+                          spans.push(<span>
+                            <span
+                              ref={text.s_id + "_" + this.props.page_no}
+                              contentEditableId={true}
+                              style={{
+                                outline: "none",
+                                textAlign: 'justify',
+                                background: (!this.props.targetSelected && !not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+                              }}
+                              onDoubleClick={event => {
+                                this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target", sentence.block_id + "_" + this.props.page_no);
+                              }}
+                            >
+                              {temparray.join(" ")}
+                            </span>
+                            <span> </span>
+                            {(temparray.length !== chunk && i !== 0) ? '' : <br></br>}
+                          </span>)
+
+                          i == 0 ? i += chunk - current_line_words : i += chunk
+                          current_line_words = temparray.length > 0 ? temparray.length : current_line_words
+                        }
+                      } else {
+                        spans.push(<span>
+                          <span
+                            ref={text.s_id + "_" + this.props.page_no}
+                            contentEditableId={true}
+                            style={{
+                              outline: "none",
+                              textAlign: 'justify',
+                              background: (!this.props.targetSelected && !not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+                            }}
+                            onDoubleClick={event => {
+                              this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target", sentence.block_id + "_" + this.props.page_no);
+                            }}
+                          >
+                            {words.join(" ")}
+                          </span>
+                          <span> </span>
+                          {<br></br>}
+                        </span>)
+                        current_line_words = 0
+                      }
+                      return spans
+                    } else {
+                      return (
+                        <span>
+                          <span>
+                            <span
+                              ref={text.s_id + "_" + this.props.page_no}
+                              contentEditableId={true}
+                              style={{
+                                outline: "none",
+                                background: (!this.props.targetSelected && !not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+                              }}
+                              onDoubleClick={event => {
+                                this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target", sentence.block_id + "_" + this.props.page_no);
+                              }}
+                            >
+                              {words.join(" ")}
+                            </span>
+                            <span> </span>
+                          </span>
                         </span>
-                        <span> </span>
-                      </span>
-                    </span>
-                  );
-                }
-              })}
+                      );
+                    }
+                  }
+                })}
+            </div>
           </Textfit>
         </div>
         :
@@ -330,7 +406,7 @@ class DocumentBlock extends React.Component {
         fontSize: (child.font_size > 25 ? child.font_size - 4 : child.font_size) + "px",
         height: (child.text_height) + "px",
         left: (child.text_left - 5) + "px",
-        textJustify: "inter-word", textAlign: 'justify', background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        textAlign: 'justify', background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
       }}
     >
       {text}
@@ -600,17 +676,14 @@ class DocumentBlock extends React.Component {
         {(this.props.tokenized || this.props.hoveredSentence.split('_')[0] !== this.props.sentence.block_id) && Array.isArray(sentence.children) &&
           sentence.children &&
           sentence.children.map((textValue, tokenIndex) => {
-            return (
-              <div>
-                {textValue.children
-                  ? textValue.children.map((value, i) => {
-                    return this.handleSentenceUpdate(value, sentence);
-                  })
-                  : this.handleSentenceUpdate(textValue, sentence)}
-              </div>
-            );
+            return (<div>
+              {textValue.children
+                ? textValue.children.map((value, i) => {
+                  return this.handleSentenceUpdate(value, sentence);
+                })
+                : this.handleSentenceUpdate(textValue, sentence)}
+            </div>)
           })}
-        ( )
       </div>
     ) : (
         <div>{this.handleTargetUpdate(sentence, styles, this.props.tokenized)}</div>

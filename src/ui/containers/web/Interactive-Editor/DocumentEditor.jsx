@@ -331,7 +331,7 @@ class PdfFileEditor extends React.Component {
 
   handleSuggestion(suggestion, targetValue) {
     let sentenceObj = this.state.targetText;
-    sentenceObj.tgt = targetValue + suggestion;
+    sentenceObj.tgt = targetValue.trim() + suggestion;
     this.setState({ targetText: sentenceObj, showNextSuggestion: true });
   }
 
