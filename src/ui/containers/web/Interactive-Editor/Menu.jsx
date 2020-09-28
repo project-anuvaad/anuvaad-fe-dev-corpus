@@ -18,7 +18,7 @@ class Popovers extends React.Component {
         if (dataArr && Array.isArray(dataArr) && dataArr.length > 0) {
             return (dataArr.map((option, i) => {
                 if (option && option.length > 0 && option !== " ") {
-                    return <Button style={{ textTransform: 'none', width: '100%', justifyContent: 'left' }} onClick={() => this.props.handleSuggetionClick(option)}>{option}</Button>
+                    return <Button style={{ textTransform: 'none', width: '100%', justifyContent: 'left' }} onClick={() => this.props.handleSuggetionClick(option, i)}>{option}</Button>
                 }
             })
             )
