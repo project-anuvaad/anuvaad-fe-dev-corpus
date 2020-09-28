@@ -40,7 +40,9 @@ class Callback extends React.Component {
           history.push(`${process.env.PUBLIC_URL}/translate`);
         }
         else {
-          history.push(`${process.env.PUBLIC_URL}/dashboard`);
+          // history.push(`${process.env.PUBLIC_URL}/dashboard`);
+        history.push(`${process.env.PUBLIC_URL}/view-document`);
+
         }
       }
     }else if(this.state.loading && this.props.userProfile && this.props.userProfile.id && !localStorage.getItem("lang" + this.props.userProfile.id)){
@@ -87,7 +89,8 @@ class Callback extends React.Component {
         history.push(`${process.env.PUBLIC_URL}/translate`);
       }
       else {
-        history.push(`${process.env.PUBLIC_URL}/dashboard`);
+        // history.push(`${process.env.PUBLIC_URL}/dashboard`);
+        history.push(`${process.env.PUBLIC_URL}/view-document`);
       }
     }
   }
