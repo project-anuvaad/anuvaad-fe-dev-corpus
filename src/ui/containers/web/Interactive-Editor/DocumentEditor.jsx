@@ -567,7 +567,7 @@ class PdfFileEditor extends React.Component {
                   {translate("common.page.title.document")}
                 </Button>
               </Grid>
-              <Grid item xs={false} sm={6} lg={7} xl={7} className="GridFileDetails">
+              <Grid item xs={12} sm={6} lg={8} xl={8} className="GridFileDetails">
                 <Button
                   color="primary"
                   variant="outlined"
@@ -608,7 +608,7 @@ class PdfFileEditor extends React.Component {
                   <ChevronRightIcon fontSize="large" />
                 </Button>
               </Grid>
-              <Grid item xs={12} sm={6} lg={1} xl={1}>
+              {/* <Grid item xs={12} sm={6} lg={1} xl={1}>
                 <Button
                   onClick={event => {
                     alert("In progress");
@@ -619,7 +619,7 @@ class PdfFileEditor extends React.Component {
                   <DoneIcon fontSize="large" style={{ color: "#233466" }} />
                   &nbsp;&nbsp;{translate("common.page.label.done")}
                 </Button>
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={12} sm={6} lg={6} xl={6}>
                 <Paper>
