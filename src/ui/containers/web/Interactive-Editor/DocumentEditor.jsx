@@ -643,7 +643,7 @@ class PdfFileEditor extends React.Component {
                       )}
                     </Toolbar> :
 
-                    <Toolbar style={{ color: darkBlack }}>
+                    <Toolbar style={{ color: darkBlack, backgroundColor: blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: "#1C9AB7" }}>
                         Extracted Document
                     </Typography>
