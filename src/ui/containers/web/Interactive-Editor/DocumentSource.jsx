@@ -198,7 +198,7 @@ class DocumentSource extends React.Component {
     this.props.handleSuggestion(suggestion, value)
     this.setState({ autoCompleteText: null, tokenObject })
 
-    let targetVal = value + suggestion
+    let targetVal = value.trim() + suggestion
     setTimeout(()=>{
       this.setState({ showSuggestions: true })
 
