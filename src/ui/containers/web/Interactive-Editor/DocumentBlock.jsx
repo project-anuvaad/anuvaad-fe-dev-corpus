@@ -327,7 +327,7 @@ class DocumentBlock extends React.Component {
     return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
-        fontSize: child.font_size - 1 + "px",
+        fontSize: (child.font_size > 25 ? child.font_size - 4 : child.font_size) + "px",
         height: (child.text_height) + "px",
         left: (child.text_left - 5) + "px",
         textJustify: "inter-word", textAlign: 'justify', background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
@@ -448,28 +448,30 @@ class DocumentBlock extends React.Component {
     var sentence = JSON.parse(JSON.stringify(sen))
     if (allPages && this.props.has_sibling) {
       allPages.map((page) => {
-        page.text_blocks.map((block) => {
-          if (block.block_id == spanId && sentence.block_id == spanId) {
-            if (sentence.block_identifier != block.block_identifier) {
-              if (block.children) {
-                block.children.map((c) => {
-                  let child = JSON.parse(JSON.stringify(c))
-                  child.dont_show = true
-                  childrens.push(child)
-                })
+        if (page.text_blocks) {
+          page.text_blocks.map((block) => {
+            if (block.block_id == spanId && sentence.block_id == spanId) {
+              if (sentence.block_identifier != block.block_identifier) {
+                if (block.children) {
+                  block.children.map((c) => {
+                    let child = JSON.parse(JSON.stringify(c))
+                    child.dont_show = true
+                    childrens.push(child)
+                  })
+                }
+              } else {
+                if (block.children) {
+                  block.children.map((child) => {
+                    childrens.push(JSON.parse(JSON.stringify(child)))
+                  })
+                }
               }
-            } else {
-              if (block.children) {
-                block.children.map((child) => {
-                  childrens.push(JSON.parse(JSON.stringify(child)))
-                })
+              if (block.tokenized_sentences.length > 0) {
+                tokenized_sentences = block.tokenized_sentences
               }
             }
-            if (block.tokenized_sentences.length > 0) {
-              tokenized_sentences = block.tokenized_sentences
-            }
-          }
-        })
+          })
+        }
       })
       if (childrens.length > 0) {
         sentence.children = JSON.parse(JSON.stringify(childrens))
