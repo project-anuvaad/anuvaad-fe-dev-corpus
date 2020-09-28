@@ -42,11 +42,17 @@ class AutoComplete extends React.Component {
                 value: this.props.value
             })
         }
+        if(prevProps.tokenObject !== this.props.tokenObject){
+            this.setState({
+                tokenObject: this.props.tokenObject
+            })
+        }
     }
 
     componentDidMount() {
         this.setState({
-            value: this.props.value
+            value: this.props.value,
+            tokenObject: this.props.tokenObject
         })
     }
 
@@ -83,7 +89,7 @@ class AutoComplete extends React.Component {
             console.log(caretVal)
             this.setState({ showSuggestions: true })
             // this.props.fetchSuggestions(this.props.sourceText, this.props.value)
-            this.props.fetchSuggestions(this.props.sourceText, this.handleCalc(caretVal, this.props.tokenObject), this.props.tokenObject)
+            this.props.fetchSuggestions(this.props.sourceText, this.handleCalc(caretVal, this.state.tokenObject), this.state.tokenObject)
 
         }
 
@@ -94,6 +100,7 @@ class AutoComplete extends React.Component {
     }
 
     handleCalc(value, tokenText) {
+        console.log(value)
         if (value.trim().length > 0) {
             const temp = value.split(" ");
             const tagged_tgt = tokenText.tagged_tgt.split(" ");
@@ -142,12 +149,15 @@ class AutoComplete extends React.Component {
         }
     }
 
-    handleSuggetionCLick(suggestion) {
+    handleSuggetionCLick(suggestion, index) {
+        var tokenObj = this.props.tokenObject
+        tokenObj.tagged_tgt = this.props.autoCompleteTextTaggetTgt[index]
         this.setState({ modified: true })
         var elem = document.getElementById(this.props.aId)
         let caretVal = this.state.value.substring(0, elem.selectionStart)
-        this.setState({ caretVal: caretVal + suggestion, value: caretVal + suggestion })
-        this.props.handleSuggestion(suggestion, this.state.caretVal, this.props.sourceText, this.props.tokenObject)
+        caretVal = caretVal.trim()
+        this.setState({ caretVal: caretVal + suggestion, value: caretVal + suggestion, tokenObject: tokenObj })
+        this.props.handleSuggestion(suggestion, this.state.caretVal, this.props.sourceText, tokenObj)
     }
 
     handleChangeEvent(event) {
