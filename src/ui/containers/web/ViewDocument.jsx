@@ -18,6 +18,8 @@ import LanguageCodes from "../../components/web/common/Languages.json"
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlinedIcon from '@material-ui/icons/VerticalAlignBottom';
+import InfoIcon from '@material-ui/icons/Info';
+import Dialog from "../../components/web/common/SimpleDialog";
 
 class ViewDocument extends React.Component {
   constructor(props) {
@@ -33,7 +35,8 @@ class ViewDocument extends React.Component {
       corpus_type: "single",
       hindiFile: {},
       englishFile: {},
-      role: JSON.parse(localStorage.getItem("roles"))
+      role: JSON.parse(localStorage.getItem("roles")),
+      showInfo: false
     };
   }
 
@@ -60,12 +63,28 @@ class ViewDocument extends React.Component {
     if (prevProps.fetchDocument !== this.props.fetchDocument) {
       var arr = []
       this.props.fetchDocument.map(value => {
+        let taskData = {}
+        taskData.status = value.status
+        taskData.jobId = value.jobID
+        let tasks = []
+
+        value && value.taskDetails && Array.isArray(value.taskDetails) && value.taskDetails.length > 0 && value.taskDetails.map((task, i) => {
+          let subTask = {}
+          subTask.state = task.state
+          subTask.status = task.status
+          tasks.push(subTask)
+        })
+        taskData.subTasks = tasks
+
         let date = value.startTime.toString()
         let timestamp = date.substring(0, 13)
         var d = new Date(parseInt(timestamp))
         let dateStr = d.toISOString()
         var myDate = new Date(dateStr);
         let createdAt = (myDate.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }))
+        let currentDate = new Date()
+
+        let timeDiff = Math.floor((currentDate.getTime() - myDate.getTime()) / 60000)
 
         let sourceLangCode, targetLangCode, sourceLang, targetLang
         if (value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.source_language_code && value.input.files[0].model.target_language_code) {
@@ -87,7 +106,7 @@ class ViewDocument extends React.Component {
 
         var b = {}
 
-        b["status"] = value.status;
+        b["status"] = (value.status === "INPROGRESS" && timeDiff > 300) ? "FAILED" : value.status;
         b["job"] = value.jobID;
         b["name"] = value.input.jobName ? value.input.jobName : value.input.files[0].name;
         b["id"] = value.output && (value.output[0].hasOwnProperty('outputFilePath') ? value.output[0].outputFilePath : value.output[0].outputFile);
@@ -97,6 +116,7 @@ class ViewDocument extends React.Component {
         b["timestamp"] = createdAt
         b["source"] = sourceLang
         b["target"] = targetLang
+        b["tasks"] = taskData
 
         arr.push(b)
       })
@@ -111,8 +131,15 @@ class ViewDocument extends React.Component {
     window.open(url, "_self")
   }
 
+  handleDialog(rowData) {
+    this.setState({ showInfo: true, message: rowData })
+  }
+
+  handleDialogClose() {
+    this.setState({ showInfo: false })
+  }
+
   render() {
-    console.log(this.state.name)
     const columns = [
       {
         name: "jobID",
@@ -286,13 +313,21 @@ class ViewDocument extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div >
-                  {tableMeta.rowData[1] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadSource')}><IconButton style={{ color: '#233466' }} component="a" onClick={() => { this.setState({ fileDownload: true }), this.handleFileDownload(tableMeta.rowData[5]) }}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
+                  <Tooltip title="info" placement="left"><IconButton style={{ color: '#233466' }} component="a" onClick={() => this.handleDialog(tableMeta.rowData[13])}><InfoIcon style={{ color: "#C6C6C6" }} /></IconButton></Tooltip>
+                  {tableMeta.rowData[1] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadSource')} placement="right"><IconButton style={{ color: '#233466' }} component="a" onClick={() => { this.setState({ fileDownload: true }), this.handleFileDownload(tableMeta.rowData[5]) }}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
                 </div>
               );
             }
 
           }
         }
+      },
+      {
+        name: "tasks",
+        label: "tasks",
+        options: {
+          display: "excluded"
+        },
       }
 
     ];
@@ -353,6 +388,13 @@ class ViewDocument extends React.Component {
         <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
           {!this.state.showLoader && <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />}
         </div>
+        {this.state.showInfo &&
+          <Dialog message={this.state.message}
+            type="info"
+            handleClose={this.handleDialogClose.bind(this)}
+            open
+            title="File Process Information" />
+        }
         {this.state.showLoader && < Spinner />}
       </div>
 
