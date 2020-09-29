@@ -1,7 +1,7 @@
 import React from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Textfit } from "react-textfit";
-
+import TextareaAutosize from 'react-textarea-autosize';
 import AutoComplete from "../../../components/web/common/AutoComplete"
 
 
@@ -75,14 +75,14 @@ class DocumentBlock extends React.Component {
           !this.props.targetSelected && this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
         }}
         style={{
-          textAlign: "justify",
+
           position: "absolute",
-          top: value.text_top + "px",
+          top: value.text_top - 2 + "px",
           fontSize: value.font_size + "px",
           fontFamily: sentence.font_family,
-          fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
+          fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold" || sentence.attrib && sentence.attrib.toLowerCase().includes("bold"),
           outline: "0px solid transparent",
-          zIndex: 1,
+          zIndex: this.props.selectedSentence === value.block_id + "_" + this.props.page_no ? 2 : 1,
 
           // lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
           backgroundColor: this.props.selectedSentence === value.block_id + "_" + this.props.page_no + "_source" && this.props.value ? "#F4FDFF" : "",
@@ -96,27 +96,35 @@ class DocumentBlock extends React.Component {
       >
         <Textfit mode="single" style={{ width: parseInt(value.text_width) }} forceSingleModeWidth={true} min={1} max={parseInt(value.font_size)}>
           {this.props.selectedSentence === value.block_id + "_" + this.props.page_no ? (
-            <textarea
+
+            <TextareaAutosize
+              multiline={true}
+
               autoFocus={true}
+              value={this.state.value}
               style={{
                 width: value.text_width + "px",
                 resize: "none",
+                position: "relative",
                 fontSize: value.font_size + "px",
                 height: value.text_height + 10 + "px",
                 fontFamily: value.font_family,
-                zIndex: 1111,
+
                 borderRadius: "4px",
                 backgroundColor: "#F4FDFF",
                 borderColor: "#1C9AB7",
-                color: "#000000"
-              }}
-              // className="noter-text-area"
+                color: "#000000",
+                fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold" || sentence.attrib && sentence.attrib.toLowerCase().includes("bold"),
 
-              value={this.props.selectedSourceText.text}
+
+              }}
               onChange={event => {
                 this.handleChangeEvent(event);
               }}
-            />
+              value={this.props.selectedSourceText.text}
+              maxRows={4}
+            >
+            </TextareaAutosize>
           ) : (
               value.text
             )}
@@ -141,7 +149,7 @@ class DocumentBlock extends React.Component {
     let current_line_words = 0
     let editable = false
     sentence.tokenized_sentences.map((text, tokenIndex) => {
-      if(this.props.targetSelected === text.s_id + "_" + this.props.page_no){
+      if (this.props.targetSelected === text.s_id + "_" + this.props.page_no) {
         editable = true
       }
     })
@@ -158,6 +166,7 @@ class DocumentBlock extends React.Component {
         <div
           id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
           style={styles}
+
           key={sentence.block_id}
           // onBlur={event => this.props.handleBlur(event)}
           // onInput={event => this.handleChangeEvent(event, sentence.block_id + "_" + this.props.page_no)}
@@ -172,12 +181,12 @@ class DocumentBlock extends React.Component {
           }}
         >
           <Textfit
-            mode={sentence.children && sentence.children.length == 1 ? "single" : "multiple"}
+            mode={sentence.children && sentence.children.length == 1 ? "single" : "multi"}
             style={{ height: parseInt(sentence.text_height), width: parseInt(sentence.text_width) }}
             min={1}
             max={parseInt(sentence.font_size)}
           >
-            <div style={words_in_line !== -1  && !editable ? {
+            <div style={words_in_line !== -1 && !editable ? {
               textAlign: 'justify',
               textAlignLast: 'justify'
             } : {}}>
@@ -365,7 +374,6 @@ class DocumentBlock extends React.Component {
   };
 
   getSelectionText(event) {
-    debugger
     const sentenceStartId = window.getSelection().anchorNode.parentNode.id;
     const sentenceEndId = window.getSelection().focusNode.parentNode.id;
     const obj_start = sentenceStartId.split('##')
@@ -405,7 +413,7 @@ class DocumentBlock extends React.Component {
         })
         actual_text = actual_text.replace(/\s{2,}/g, ' ')
         actual_text = actual_text.trim()
-        this.props.popUp(start_block_id, start_s_id, split_index, actual_text.substring(split_index), event, opeartion)
+        this.props.popUp(start_block_id, start_s_id, split_index, actual_text.substring(0, split_index), event, opeartion)
       }
     }
   }
@@ -414,11 +422,11 @@ class DocumentBlock extends React.Component {
     return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
-        fontSize: (child.font_size > 25 ? child.font_size - 4 : child.font_size) + "px",
+        fontSize: (child.font_size > 25 ? (child.font_size > 30 ? child.font_size - 6 : child.font_size - 3) : child.font_size) + "px",
         height: (child.text_height) + "px",
         left: (child.text_left) + "px",
-        textAlignLast: 'justify',
-        textAlign: 'justify', background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+        top: child.text_top - 2 + "px",
+        background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
       }}
     >
       {text}
@@ -442,13 +450,14 @@ class DocumentBlock extends React.Component {
     const div_style = {
       textAlign: "justify",
       position: "absolute",
-      top: child.text_top + "px",
+      top: child.text_top - 2 + "px",
       fontSize: child.font_size + "px",
       fontFamily: sentence.font_family,
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
       outline: "0px solid transparent",
       zIndex: 1,
       padding: "5px",
+
       // lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
       height: (child.text_height) + "px",
       left: (child.text_left) + "px",
