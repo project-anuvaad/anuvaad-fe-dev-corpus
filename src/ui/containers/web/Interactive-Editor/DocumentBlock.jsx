@@ -414,7 +414,7 @@ class DocumentBlock extends React.Component {
     return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
-        fontSize: (child.font_size > 25 ? child.font_size - 4 : child.font_size) + "px",
+        fontSize: (child.font_size > 25 ? child.font_size - 6 : child.font_size) + "px",
         height: (child.text_height) + "px",
         left: (child.text_left) + "px",
         textAlignLast: 'justify',
