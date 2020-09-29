@@ -18,6 +18,7 @@ import LanguageCodes from "../../components/web/common/Languages.json"
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlinedIcon from '@material-ui/icons/VerticalAlignBottom';
+const TELEMETRY = require('../../../utils/TelemetryManager')
 
 class ViewDocument extends React.Component {
   constructor(props) {
@@ -37,8 +38,13 @@ class ViewDocument extends React.Component {
     };
   }
 
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    TELEMETRY.pageLoadStarted('view-document', null, null)
+  }
+
   componentDidMount() {
     this.handleRefresh(true)
+    TELEMETRY.pageLoadCompleted('view-document', null, null)
   }
 
   handleClick = rowData => {

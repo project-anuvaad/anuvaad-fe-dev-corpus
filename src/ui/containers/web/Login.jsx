@@ -18,6 +18,7 @@ import LoginStyles from "../../styles/web/LoginStyles";
 import LoginAPI from "../../../flux/actions/apis/login";
 import APITransport from "../../../flux/actions/apitransport/apitransport";
 import history from "../../../web.history";
+const TELEMETRY = require('../../../utils/TelemetryManager')
 
 class Login extends React.Component {
   constructor(props) {
@@ -28,8 +29,15 @@ class Login extends React.Component {
     };
   }
 
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    TELEMETRY.pageLoadStarted('login', null, null)
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+  }
+
   componentDidMount() {
     localStorage.removeItem("token");
+    TELEMETRY.pageLoadCompleted('login', null, null)
   }
 
   /**
