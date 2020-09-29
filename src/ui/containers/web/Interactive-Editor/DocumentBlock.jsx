@@ -155,7 +155,7 @@ maxRows={4}
       }
     })
 
-    editable && editBlockId === sentence.block_id && console.log(editBlockId, sentence.block_id)
+    
     if (sentence.tokenized_sentences) {
       sentence.tokenized_sentences.map((text) => {
         words_count += text.tgt.split(" ").length
@@ -423,7 +423,7 @@ maxRows={4}
 
   makeSpan(text, child, spanId, tokenIndex, token_obj) {
     return (<Textfit
-      mode={child.children && child.children.length == 1 ? "single" : "multi"}
+      mode={"single"}
       style={{ height: parseInt(child.text_height), width: parseInt(child.text_width) }}
       min={1}
       max={parseInt(child.font_size)}
@@ -431,9 +431,9 @@ maxRows={4}
       <span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
-        fontSize: (child.font_size > 25 ? (child.font_size > 30 ? child.font_size - 6 : child.font_size - 3) : child.font_size) + "px",
-        height: (child.text_height) + "px",
-        left: (child.text_left - 5) + "px",
+        // fontSize: (child.font_size > 25 ? (child.font_size > 30 ? child.font_size - 6 : child.font_size - 3) : child.font_size) + "px",
+        // height: (child.text_height) + "px",
+        // left: (child.text_left - 5) + "px",
         background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
       }}
     >
@@ -460,7 +460,7 @@ maxRows={4}
       textAlign: "justify",
       position: "absolute",
       top: child.text_top-6 + "px",
-      fontSize: child.font_size + "px",
+      // fontSize: child.font_size + "px",
       fontFamily: sentence.font_family,
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
       outline: "0px solid transparent",
@@ -643,6 +643,7 @@ maxRows={4}
       sentence = obj.child
       elems = obj.elems
     }
+
     return elems
   }
 
