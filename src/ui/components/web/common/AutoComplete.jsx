@@ -78,7 +78,7 @@ class AutoComplete extends React.Component {
         if (event.key === 'Escape') {
             this.setState({ showSuggestions: false })
             let saveData = (this.state.value !== this.props.value || this.state.modified) ? true : false
-            debugger
+
             if (saveData) {
                 this.props.handleChangeEvent({ target: { value: this.state.value } })
             }
@@ -100,7 +100,6 @@ class AutoComplete extends React.Component {
     }
 
     handleCalc(value, tokenText) {
-        console.log(value)
         if (value.trim().length > 0) {
             const temp = value.split(" ");
             const tagged_tgt = tokenText.tagged_tgt.split(" ");

@@ -89,7 +89,6 @@ class PdfFileEditor extends React.Component {
       });
     }
     if (prevProps.workflowStatus !== this.props.workflowStatus) {
-      console.log(this.state.startPage, this.state.endPage)
       const apiObj = new FileContent(this.props.match.params.jobid, this.state.startPage, this.state.endPage);
       this.props.APITransport(apiObj);
       this.setState({ apiStatus: true });
@@ -153,7 +152,6 @@ class PdfFileEditor extends React.Component {
   }
 
   workFlowApi(workflow, blockDetails, update) {
-    console.log("-----", update)
 
     let pageInfo;
     const apiObj = new WorkFlow(
@@ -165,8 +163,6 @@ class PdfFileEditor extends React.Component {
       "",
       parseInt(this.props.match.params.modelId)
     );
-    console.log(this.state.startPage, this.state.endPage)
-    debugger
     pageInfo = update !== "merge" && blockDetails.length > 0 && blockDetails[0].page_info.page_no;
 
     this.props.APITransport(apiObj);
@@ -552,7 +548,7 @@ class PdfFileEditor extends React.Component {
           <div>
             <Grid
               container
-              spacing={8}
+              spacing={16}
               style={{ marginTop: "-10px", padding: "10px 24px 12px 24px", position: "fixed", zIndex: 1000, background: "#F5F9FA" }}
             >
               <Grid item xs={12} sm={6} lg={2} xl={2} className="GridFileDetails">
@@ -567,7 +563,7 @@ class PdfFileEditor extends React.Component {
                   {translate("common.page.title.document")}
                 </Button>
               </Grid>
-              <Grid item xs={false} sm={6} lg={7} xl={7} className="GridFileDetails">
+              <Grid item xs={12} sm={6} lg={8} xl={8} className="GridFileDetails">
                 <Button
                   color="primary"
                   variant="outlined"
@@ -608,7 +604,7 @@ class PdfFileEditor extends React.Component {
                   <ChevronRightIcon fontSize="large" />
                 </Button>
               </Grid>
-              <Grid item xs={12} sm={6} lg={1} xl={1}>
+              {/* <Grid item xs={12} sm={6} lg={1} xl={1}>
                 <Button
                   onClick={event => {
                     alert("In progress");
@@ -619,10 +615,10 @@ class PdfFileEditor extends React.Component {
                   <DoneIcon fontSize="large" style={{ color: "#233466" }} />
                   &nbsp;&nbsp;{translate("common.page.label.done")}
                 </Button>
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={12} sm={6} lg={6} xl={6}>
-                <Paper>
+                <Paper elevation={2}>
                   {this.state.tokenized ?
                     <Toolbar style={{ color: darkBlack, background: this.state.edited ? "#989E9C" : blueGrey50 }}>
                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: this.state.edited ? "white" : "#1C9AB7" }}>
@@ -743,7 +739,8 @@ class PdfFileEditor extends React.Component {
                       this.state.tokenized
                         ? {
                           maxHeight: window.innerHeight - 240,
-                          overflow: this.state.edited ? "hidden" : "scroll"
+                          overflowY: this.state.edited ? "hidden" : "scroll",
+                          overflowX: "auto"
                         }
                         : {}
                     }
