@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 class MenuClass extends React.Component {
   render() {
 
-    const { topValue, leftValue, isOpen } = this.props;
+    const { topValue, leftValue, isOpen, splitValue } = this.props;
     console.log(this.props.operation_type)
     return (
       <Popover
@@ -23,6 +23,7 @@ class MenuClass extends React.Component {
           vertical: "top",
           horizontal: "left"
         }}
+        
       >
         <div>
         { this.props.operation_type === "merge" && (
@@ -40,7 +41,7 @@ class MenuClass extends React.Component {
           
           <div>
             <Button
-            style={{ textTransform: "none", width: "100%", justifyContent: "left" }}
+            style={{ fontWeight: "bold", width: "100%", justifyContent: "left" }}
             onClick={() =>
                this.props.operation_type === "Merge Sentence" ?this.props.handleDialog( "Merge sentence", "Do you want to merge the sentence ?"):this.props.handleDialog( "Split sentence", "Do you want to split the sentence ?")
             }
@@ -68,6 +69,7 @@ class MenuClass extends React.Component {
         
 
         </div>
+        {splitValue}
       </Popover>
     );
   }

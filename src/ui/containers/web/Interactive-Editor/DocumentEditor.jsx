@@ -89,7 +89,6 @@ class PdfFileEditor extends React.Component {
       });
     }
     if (prevProps.workflowStatus !== this.props.workflowStatus) {
-      console.log(this.state.startPage, this.state.endPage)
       const apiObj = new FileContent(this.props.match.params.jobid, this.state.startPage, this.state.endPage);
       this.props.APITransport(apiObj);
       this.setState({ apiStatus: true });
@@ -153,7 +152,6 @@ class PdfFileEditor extends React.Component {
   }
 
   workFlowApi(workflow, blockDetails, update) {
-    console.log("-----", update)
 
     let pageInfo;
     const apiObj = new WorkFlow(
@@ -165,8 +163,6 @@ class PdfFileEditor extends React.Component {
       "",
       parseInt(this.props.match.params.modelId)
     );
-    console.log(this.state.startPage, this.state.endPage)
-    debugger
     pageInfo = update !== "merge" && blockDetails.length > 0 && blockDetails[0].page_info.page_no;
 
     this.props.APITransport(apiObj);
@@ -743,7 +739,8 @@ class PdfFileEditor extends React.Component {
                       this.state.tokenized
                         ? {
                           maxHeight: window.innerHeight - 240,
-                          overflow: this.state.edited ? "hidden" : "scroll"
+                          overflowY: this.state.edited ? "hidden" : "scroll",
+                          overflowX: "auto"
                         }
                         : {}
                     }
