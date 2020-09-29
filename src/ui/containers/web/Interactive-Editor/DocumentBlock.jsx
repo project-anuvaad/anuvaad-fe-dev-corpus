@@ -424,13 +424,7 @@ maxRows={4}
   }
 
   makeSpan(text, child, spanId, tokenIndex, token_obj) {
-    return (<Textfit
-      mode={child.children && child.children.length == 1 ? "single" : "multi"}
-      style={{ height: parseInt(child.text_height), width: parseInt(child.text_width) }}
-      min={1}
-      max={parseInt(child.font_size)}
-    >
-      <span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
+    return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
         // fontSize: (child.font_size) + "px",
@@ -440,8 +434,7 @@ maxRows={4}
       }}
     >
       {text}
-    </span>
-    </Textfit>)
+    </span>)
   }
 
   makeDiv(sentence, spans, div_style, child) {
