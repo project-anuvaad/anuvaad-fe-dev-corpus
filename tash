@@ -1,0 +1,234 @@
+[1mdiff --git a/src/ui/containers/web/Interactive-Editor/DocumentBlock.jsx b/src/ui/containers/web/Interactive-Editor/DocumentBlock.jsx[m
+[1mindex 6dce2af..4e3ea56 100644[m
+[1m--- a/src/ui/containers/web/Interactive-Editor/DocumentBlock.jsx[m
+[1m+++ b/src/ui/containers/web/Interactive-Editor/DocumentBlock.jsx[m
+[36m@@ -143,6 +143,7 @@[m [mmaxRows={4}[m
+   };[m
+ [m
+   handleTargetUpdate = (sentence, styles, not_tokenized) => {[m
+[32m+[m[41m    [m
+     let childrens = sentence.children ? sentence.children.length : 1[m
+     let words_count = 0[m
+     let words_in_line = -1[m
+[36m@@ -153,6 +154,8 @@[m [mmaxRows={4}[m
+         editable = true[m
+       }[m
+     })[m
+[32m+[m
+[32m+[m[41m    [m
+     if (sentence.tokenized_sentences) {[m
+       sentence.tokenized_sentences.map((text) => {[m
+         words_count += text.tgt.split(" ").length[m
+[36m@@ -166,6 +169,7 @@[m [mmaxRows={4}[m
+         <div[m
+           id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}[m
+           style={styles}[m
+[32m+[m[41m          [m
+         [m
+           key={sentence.block_id}[m
+           // onBlur={event => this.props.handleBlur(event)}[m
+[36m@@ -188,8 +192,9 @@[m [mmaxRows={4}[m
+           >[m
+             <div style={words_in_line !== -1  && !editable ? {[m
+               textAlign: 'justify',[m
+[31m-              textAlignLast: 'justify'[m
+[31m-            } : {}}>[m
+[32m+[m[32m              textAlignLast: 'justify',[m
+[32m+[m[41m              [m
+[32m+[m[32m            } : {zIndex: 2}}>[m
+               {sentence.hasOwnProperty("tokenized_sentences") &&[m
+                 sentence.tokenized_sentences.map((text, tokenIndex) => {[m
+                   if (this.props.targetSelected === text.s_id + "_" + this.props.page_no) {[m
+[36m@@ -199,11 +204,8 @@[m [mmaxRows={4}[m
+                       <div[m
+                         style={{[m
+                           position: 'relative',[m
+[31m-                          zIndex: 1[m
+[32m+[m[32m                          zIndex: 3[m
+                         }}[m
+[31m-                      // onBlur={event => {[m
+[31m-                      //   this.props.handleBlur(event);[m
+[31m-                      // }}[m
+                       >[m
+                         <span[m
+                         // onDoubleClick={event => {[m
+[36m@@ -224,7 +226,8 @@[m [mmaxRows={4}[m
+                                 width: "600px",[m
+                                 // height: sentence.text_height + 5 + "px",[m
+                                 // resize: "none",[m
+[31m-                                // resize: "both", [m
+[32m+[m[32m                                // resize: "both",[m
+[32m+[m[32m                                resize: "none",[m[41m [m
+                                 fontSize: sentence.font_size + "px",[m
+                                 fontFamily: sentence.font_family,[m
+                                 zIndex: 1111,[m
+[36m@@ -419,7 +422,13 @@[m [mmaxRows={4}[m
+   }[m
+ [m
+   makeSpan(text, child, spanId, tokenIndex, token_obj) {[m
+[31m-    return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}[m
+[32m+[m[32m    return (<Textfit[m
+[32m+[m[32m      mode={child.children && child.children.length == 1 ? "single" : "multi"}[m
+[32m+[m[32m      style={{ height: parseInt(child.text_height), width: parseInt(child.text_width) }}[m
+[32m+[m[32m      min={1}[m
+[32m+[m[32m      max={parseInt(child.font_size)}[m
+[32m+[m[32m    >[m
+[32m+[m[32m      <span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}[m
+       onMouseUp={this.getSelectionText.bind(this)}[m
+       onKeyUp={this.getSelectionText.bind(this)} style={{[m
+         fontSize: (child.font_size > 25 ? (child.font_size > 30 ? child.font_size - 6 : child.font_size - 3) : child.font_size) + "px",[m
+[36m@@ -429,7 +438,8 @@[m [mmaxRows={4}[m
+       }}[m
+     >[m
+       {text}[m
+[31m-    </span>)[m
+[32m+[m[32m    </span>[m
+[32m+[m[32m    </Textfit>)[m
+   }[m
+ [m
+   makeDiv(sentence, spans, div_style) {[m
+[36m@@ -449,7 +459,7 @@[m [mmaxRows={4}[m
+     const div_style = {[m
+       textAlign: "justify",[m
+       position: "absolute",[m
+[31m-      top: child.text_top + "px",[m
+[32m+[m[32m      top: child.text_top-6 + "px",[m
+       fontSize: child.font_size + "px",[m
+       fontFamily: sentence.font_family,[m
+       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",[m
+[36m@@ -651,7 +661,7 @@[m [mmaxRows={4}[m
+       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",[m
+       fontFamily: sentence.font_family,[m
+       textAlign: "justify",[m
+[31m-      zIndex: 1,[m
+[32m+[m[32m      zIndex: this.props.paperType === "target" && this.props.hoveredSentence.split("_")[0] === sentence.block_id ? 2: 1,[m
+       display: "block",[m
+       outline: "0px solid transparent",[m
+       cursor: !this.state.isEditable && "pointer",[m
+[1mdiff --git a/src/ui/containers/web/Interactive-Editor/DocumentEditor.jsx b/src/ui/containers/web/Interactive-Editor/DocumentEditor.jsx[m
+[1mindex a3ee7bd..0414939 100644[m
+[1m--- a/src/ui/containers/web/Interactive-Editor/DocumentEditor.jsx[m
+[1m+++ b/src/ui/containers/web/Interactive-Editor/DocumentEditor.jsx[m
+[36m@@ -89,6 +89,7 @@[m [mclass PdfFileEditor extends React.Component {[m
+       });[m
+     }[m
+     if (prevProps.workflowStatus !== this.props.workflowStatus) {[m
+[32m+[m[32m      console.log(this.state.startPage, this.state.endPage)[m
+       const apiObj = new FileContent(this.props.match.params.jobid, this.state.startPage, this.state.endPage);[m
+       this.props.APITransport(apiObj);[m
+       this.setState({ apiStatus: true });[m
+[36m@@ -98,26 +99,6 @@[m [mclass PdfFileEditor extends React.Component {[m
+     if (prevProps.fetchContent !== this.props.fetchContent) {[m
+       // let temp = Data.data;[m
+       let temp = this.props.fetchContent.result.data;[m
+[31m-      // let sentenceObj = temp;[m
+[31m-      // sentenceObj &&[m
+[31m-      //   sentenceObj.map(sentence => {[m
+[31m-      //     sentence.text_blocks &&[m
+[31m-      //       sentence.text_blocks.map(sentenceChildren => {[m
+[31m-      //         sentenceChildren.children[m
+[31m-      //           ? sentenceChildren.children.map(children => {[m
+[31m-      //               children.children[m
+[31m-      //                 ? children.children.map(value => {[m
+[31m-      //                     value.max_font = value.font_size;[m
+[31m-      //                   })[m
+[31m-      //                 : (children.max_font = children.font_size);[m
+[31m-[m
+[31m-      //               // children.font_size = children.font_size -1;[m
+[31m-      //             })[m
+[31m-      //           : (sentenceChildren.max_font = sentenceChildren.font_size);[m
+[31m-      //       });[m
+[31m-      //   });[m
+[31m-      // temp = sentenceObj;[m
+[31m-[m
+       if (!temp) {[m
+         this.setState({[m
+           hasMoreItems: true,[m
+[36m@@ -152,6 +133,7 @@[m [mclass PdfFileEditor extends React.Component {[m
+   }[m
+ [m
+   workFlowApi(workflow, blockDetails, update) {[m
+[32m+[m[32m    console.log("-----", update)[m
+ [m
+     let pageInfo;[m
+     const apiObj = new WorkFlow([m
+[36m@@ -163,6 +145,8 @@[m [mclass PdfFileEditor extends React.Component {[m
+       "",[m
+       parseInt(this.props.match.params.modelId)[m
+     );[m
+[32m+[m[32m    console.log(this.state.startPage, this.state.endPage)[m
+[32m+[m[32m    debugger[m
+     pageInfo = update !== "merge" && blockDetails.length > 0 && blockDetails[0].page_info.page_no;[m
+ [m
+     this.props.APITransport(apiObj);[m
+[36m@@ -327,7 +311,7 @@[m [mclass PdfFileEditor extends React.Component {[m
+ [m
+   handleSuggestion(suggestion, targetValue) {[m
+     let sentenceObj = this.state.targetText;[m
+[31m-    sentenceObj.tgt = targetValue.trim() + suggestion;[m
+[32m+[m[32m    sentenceObj.tgt = targetValue + suggestion;[m
+     this.setState({ targetText: sentenceObj, showNextSuggestion: true });[m
+   }[m
+ [m
+[36m@@ -548,7 +532,7 @@[m [mclass PdfFileEditor extends React.Component {[m
+           <div>[m
+             <Grid[m
+               container[m
+[31m-              spacing={16}[m
+[32m+[m[32m              spacing={8}[m
+               style={{ marginTop: "-10px", padding: "10px 24px 12px 24px", position: "fixed", zIndex: 1000, background: "#F5F9FA" }}[m
+             >[m
+               <Grid item xs={12} sm={6} lg={2} xl={2} className="GridFileDetails">[m
+[36m@@ -563,7 +547,7 @@[m [mclass PdfFileEditor extends React.Component {[m
+                   {translate("common.page.title.document")}[m
+                 </Button>[m
+               </Grid>[m
+[31m-              <Grid item xs={12} sm={6} lg={8} xl={8} className="GridFileDetails">[m
+[32m+[m[32m              <Grid item xs={false} sm={6} lg={7} xl={7} className="GridFileDetails">[m
+                 <Button[m
+                   color="primary"[m
+                   variant="outlined"[m
+[36m@@ -604,7 +588,7 @@[m [mclass PdfFileEditor extends React.Component {[m
+                   <ChevronRightIcon fontSize="large" />[m
+                 </Button>[m
+               </Grid>[m
+[31m-              {/* <Grid item xs={12} sm={6} lg={1} xl={1}>[m
+[32m+[m[32m              <Grid item xs={12} sm={6} lg={1} xl={1}>[m
+                 <Button[m
+                   onClick={event => {[m
+                     alert("In progress");[m
+[36m@@ -615,10 +599,10 @@[m [mclass PdfFileEditor extends React.Component {[m
+                   <DoneIcon fontSize="large" style={{ color: "#233466" }} />[m
+                   &nbsp;&nbsp;{translate("common.page.label.done")}[m
+                 </Button>[m
+[31m-              </Grid> */}[m
+[32m+[m[32m              </Grid>[m
+ [m
+               <Grid item xs={12} sm={6} lg={6} xl={6}>[m
+[31m-                <Paper elevation={2}>[m
+[32m+[m[32m                <Paper>[m
+                   {this.state.tokenized ?[m
+                     <Toolbar style={{ color: darkBlack, background: this.state.edited ? "#989E9C" : blueGrey50 }}>[m
+                       <Typography value="" variant="h6" gutterBottom style={{ flex: 1, color: this.state.edited ? "white" : "#1C9AB7" }}>[m
+[1mdiff --git a/src/ui/containers/web/ViewDocument.jsx b/src/ui/containers/web/ViewDocument.jsx[m
+[1mindex 4c074ce..11ac256 100644[m
+[1m--- a/src/ui/containers/web/ViewDocument.jsx[m
+[1m+++ b/src/ui/containers/web/ViewDocument.jsx[m
+[36m@@ -200,7 +200,7 @@[m [mclass ViewDocument extends React.Component {[m
+             if (tableMeta.rowData) {[m
+               return ([m
+                 <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>[m
+[31m-                  {tableMeta.rowData[9]}[m
+[32m+[m[32m                  {tableMeta.rowData[8]}[m
+                 </div>[m
+               );[m
+             }[m
+[36m@@ -219,7 +219,7 @@[m [mclass ViewDocument extends React.Component {[m
+             if (tableMeta.rowData) {[m
+               return ([m
+                 <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>[m
+[31m-                  {tableMeta.rowData[10]}[m
+[32m+[m[32m                  {tableMeta.rowData[9]}[m
+                 </div>[m
+               );[m
+             }[m
