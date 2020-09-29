@@ -31,6 +31,8 @@ import WorkFlow from "../../../../flux/actions/apis/fileupload";
 import TextButton from '@material-ui/core/Button';
 
 const BLOCK_OPS = require("../../../../utils/block.operations");
+const TELEMETRY = require('../../../../utils/TelemetryManager')
+
 
 class PdfFileEditor extends React.Component {
   constructor(props) {
@@ -66,8 +68,13 @@ class PdfFileEditor extends React.Component {
       workflow: "DP_WFLOW_S_TTR"
     };
   }
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    TELEMETRY.pageLoadStarted('document-editor')
+  }
 
   componentDidMount() {
+    TELEMETRY.pageLoadCompleted('document-editor')
+
     this.props.ClearContent(null);
     this.setState({ showLoader: true });
     /* Pagination api */
