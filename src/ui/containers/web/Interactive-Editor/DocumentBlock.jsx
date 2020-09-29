@@ -155,7 +155,7 @@ class DocumentBlock extends React.Component {
     })
     if (sentence.tokenized_sentences) {
       sentence.tokenized_sentences.map((text) => {
-        words_count += text.tgt.split(" ").length
+        words_count += text && text.tgt ? text.tgt.split(" ").length : 0
       })
     }
     if (words_count > 0 && childrens > 1) {
@@ -256,21 +256,48 @@ class DocumentBlock extends React.Component {
                       // </ClickAwayListener>
                     );
                   } else {
-                    let words = text.tgt.split(" ")
-                    if (words_in_line != -1) {
-                      let spans = []
-                      let words_length = words.length + current_line_words
-                      if (words_length >= words_in_line) {
-                        var i, j, temparray, chunk = words_in_line;
-                        i = 0, j = words_length;
-                        while (i < j) {
-                          if (current_line_words >= chunk) {
-                            current_line_words = 0
+                    if (text.tgt) {
+                      let words = text.tgt ? text.tgt.split(" ") : []
+                      if (words_in_line != -1) {
+                        let spans = []
+                        let words_length = words.length + current_line_words
+                        if (words_length >= words_in_line) {
+                          var i, j, temparray, chunk = words_in_line;
+                          i = 0, j = words_length;
+                          while (i < j) {
+                            if (current_line_words >= chunk) {
+                              current_line_words = 0
+                            }
+                            if (i == 0)
+                              temparray = words.slice(i, i - current_line_words + chunk);
+                            else
+                              temparray = words.slice(i, i + chunk);
+                            spans.push(<span>
+                              <span
+                                ref={text.s_id + "_" + this.props.page_no}
+                                contentEditableId={true}
+                                style={{
+                                  outline: "none",
+                                  textAlign: 'justify',
+                                  background: (!this.props.targetSelected && !not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+                                }}
+                                onDoubleClick={event => {
+                                  this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target", sentence.block_id + "_" + this.props.page_no);
+                                }}
+                              >
+                                {temparray.join(" ")}
+                              </span>
+                              <span> </span>
+                              {(temparray.length + current_line_words < chunk) ? '' : <br></br>}
+                            </span>)
+
+                            i == 0 ? i += chunk - current_line_words : i += chunk
+                            if (current_line_words == chunk) {
+                              current_line_words = 0
+                            } else
+                              current_line_words = temparray.length > 0 ? (temparray.length + current_line_words) : current_line_words
                           }
-                          if (i == 0)
-                            temparray = words.slice(i, i - current_line_words + chunk);
-                          else
-                            temparray = words.slice(i, i + chunk);
+                        } else {
                           spans.push(<span>
                             <span
                               ref={text.s_id + "_" + this.props.page_no}
@@ -284,63 +311,39 @@ class DocumentBlock extends React.Component {
                                 this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target", sentence.block_id + "_" + this.props.page_no);
                               }}
                             >
-                              {temparray.join(" ")}
-                            </span>
-                            <span> </span>
-                            {(temparray.length + current_line_words < chunk) ? '' : <br></br>}
-                          </span>)
-
-                          i == 0 ? i += chunk - current_line_words : i += chunk
-                          if (current_line_words == chunk) {
-                            current_line_words = 0
-                          } else
-                            current_line_words = temparray.length > 0 ? (temparray.length + current_line_words) : current_line_words
-                        }
-                      } else {
-                        spans.push(<span>
-                          <span
-                            ref={text.s_id + "_" + this.props.page_no}
-                            contentEditableId={true}
-                            style={{
-                              outline: "none",
-                              textAlign: 'justify',
-                              background: (!this.props.targetSelected && !not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
-                            }}
-                            onDoubleClick={event => {
-                              this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target", sentence.block_id + "_" + this.props.page_no);
-                            }}
-                          >
-                            {words.join(" ")}
-                          </span>
-                          <span> </span>
-                        </span>)
-                        current_line_words = words.length
-                      }
-                      return spans
-                    } else {
-                      return (
-                        <span>
-                          <span>
-                            <span
-                              ref={text.s_id + "_" + this.props.page_no}
-                              contentEditableId={true}
-                              style={{
-                                outline: "none",
-                                background: (!this.props.targetSelected && !not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
-                              }}
-                              onDoubleClick={event => {
-                                this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target", sentence.block_id + "_" + this.props.page_no);
-                              }}
-                            >
                               {words.join(" ")}
                             </span>
                             <span> </span>
+                          </span>)
+                          current_line_words = words.length
+                        }
+                        return spans
+                      } else {
+                        return (
+                          <span>
+                            <span>
+                              <span
+                                ref={text.s_id + "_" + this.props.page_no}
+                                contentEditableId={true}
+                                style={{
+                                  outline: "none",
+                                  background: (!this.props.targetSelected && !not_tokenized && this.props.hoveredSentence.split('_')[0] === this.props.sentence.block_id) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
+                                }}
+                                onDoubleClick={event => {
+                                  this.handleDoubleClickTarget(event, text.s_id + "_" + this.props.page_no, text, "target", sentence.block_id + "_" + this.props.page_no);
+                                }}
+                              >
+                                {words.join(" ")}
+                              </span>
+                              <span> </span>
+                            </span>
                           </span>
-                        </span>
-                      );
+                        );
+                      }
                     }
                   }
                 })}
+
             </div>
           </Textfit>
         </div>

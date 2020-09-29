@@ -20,6 +20,7 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlinedIcon from '@material-ui/icons/VerticalAlignBottom';
 import InfoIcon from '@material-ui/icons/Info';
 import Dialog from "../../components/web/common/SimpleDialog";
+const TELEMETRY = require('../../../utils/TelemetryManager')
 
 class ViewDocument extends React.Component {
   constructor(props) {
@@ -40,8 +41,13 @@ class ViewDocument extends React.Component {
     };
   }
 
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    TELEMETRY.pageLoadStarted('view-document')
+  }
+
   componentDidMount() {
     this.handleRefresh(true)
+    TELEMETRY.pageLoadCompleted('view-document')
   }
 
   handleClick = rowData => {
