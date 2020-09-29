@@ -63,6 +63,10 @@ class ViewDocument extends React.Component {
         let date = value.startTime.toString()
         let timestamp = date.substring(0, 13)
         var d = new Date(parseInt(timestamp))
+        // let dateStr = d.toISOString()
+        // var myDate = new Date(t.createdAt);
+        // t.createdAt = (myDate.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }))
+
 
         let sourceLangCode, targetLangCode, sourceLang, targetLang
         if (value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.source_language_code && value.input.files[0].model.target_language_code) {
@@ -188,7 +192,7 @@ class ViewDocument extends React.Component {
           display: "excluded"
         }
       },
-     
+
       {
         name: "source",
         label: translate("common.page.label.source"),
@@ -200,7 +204,7 @@ class ViewDocument extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
-                  {tableMeta.rowData[9]}
+                  {tableMeta.rowData[8]}
                 </div>
               );
             }
@@ -219,7 +223,7 @@ class ViewDocument extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
-                  {tableMeta.rowData[10]}
+                  {tableMeta.rowData[9]}
                 </div>
               );
             }
