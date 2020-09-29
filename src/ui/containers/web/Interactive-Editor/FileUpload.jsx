@@ -99,6 +99,7 @@ class PdfUpload extends Component {
     }
     const value = new Set(result);
     const target_language = [...value];
+    
     return target_language;
   }
   handleSelectChange = event => {

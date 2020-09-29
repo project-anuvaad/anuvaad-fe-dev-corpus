@@ -83,6 +83,20 @@ class DocumentSource extends React.Component {
     });
   }
 
+  handleSplitSentence(substring){
+    let substringValue;
+    let substringArray = substring.split(' ')
+    if(substringArray.length<5){
+      return substring;
+    }
+    else{
+      substringValue = substringArray[0] + " " + substringArray[1] + " " + substringArray[2] + " ... "+ substringArray[substringArray.length-2]+" "+substringArray[substringArray.length-1];
+      return substringValue;
+    }
+     
+    
+  }
+
 
   handleDialogMessage(title, dialogMessage) {
     
@@ -90,10 +104,13 @@ class DocumentSource extends React.Component {
   }
 
   popUp = (start_block_id, start_sentence_id, end_sentence_id,subString, event,operation) => {
+    // let splitValue = this.handleSplitSentence(subString)
+    
 
     this.setState({
       operation_type: operation,
       openEl: true,
+      
       topValue: event.clientY - 4,
       leftValue: event.clientX - 2,
       selectedBlock: null,
@@ -279,6 +296,7 @@ class DocumentSource extends React.Component {
         {this.state.openEl && (
           <MenuItems
             isOpen={this.state.openEl}
+            splitValue= {this.state.splitValue}
             topValue={this.state.topValue}
             leftValue={this.state.leftValue}
             anchorEl={this.state.anchorEl}

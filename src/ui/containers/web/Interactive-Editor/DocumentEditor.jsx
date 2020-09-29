@@ -743,7 +743,8 @@ class PdfFileEditor extends React.Component {
                       this.state.tokenized
                         ? {
                           maxHeight: window.innerHeight - 240,
-                          overflow: this.state.edited ? "hidden" : "scroll"
+                          overflowY: this.state.edited ? "hidden" : "scroll",
+                          overflowX: "auto"
                         }
                         : {}
                     }
