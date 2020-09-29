@@ -139,13 +139,19 @@ class DocumentBlock extends React.Component {
     let words_count = 0
     let words_in_line = -1
     let current_line_words = 0
+    let editable = false
+    sentence.tokenized_sentences.map((text, tokenIndex) => {
+      if(this.props.targetSelected === text.s_id + "_" + this.props.page_no){
+        editable = true
+      }
+    })
     if (sentence.tokenized_sentences) {
       sentence.tokenized_sentences.map((text) => {
         words_count += text.tgt.split(" ").length
       })
     }
     if (words_count > 0 && childrens > 1) {
-      // words_in_line = Math.round(words_count / childrens)
+      // words_in_line = Math.round(words_count / childrens) + 1
     }
     return (
       sentence.tokenized_sentences && sentence.tokenized_sentences.length > 0 ?
@@ -171,7 +177,7 @@ class DocumentBlock extends React.Component {
             min={1}
             max={parseInt(sentence.font_size)}
           >
-            <div style={words_in_line !== -1 ? {
+            <div style={words_in_line !== -1  && !editable ? {
               textAlign: 'justify',
               textAlignLast: 'justify'
             } : {}}>
@@ -245,10 +251,13 @@ class DocumentBlock extends React.Component {
                     if (words_in_line != -1) {
                       let spans = []
                       let words_length = words.length + current_line_words
-                      if (words_length > words_in_line) {
+                      if (words_length >= words_in_line) {
                         var i, j, temparray, chunk = words_in_line;
                         i = 0, j = words_length;
                         while (i < j) {
+                          if (current_line_words >= chunk) {
+                            current_line_words = 0
+                          }
                           if (i == 0)
                             temparray = words.slice(i, i - current_line_words + chunk);
                           else
@@ -269,11 +278,14 @@ class DocumentBlock extends React.Component {
                               {temparray.join(" ")}
                             </span>
                             <span> </span>
-                            {(temparray.length !== chunk && i !== 0) ? '' : <br></br>}
+                            {(temparray.length + current_line_words < chunk) ? '' : <br></br>}
                           </span>)
 
                           i == 0 ? i += chunk - current_line_words : i += chunk
-                          current_line_words = temparray.length > 0 ? temparray.length : current_line_words
+                          if (current_line_words == chunk) {
+                            current_line_words = 0
+                          } else
+                            current_line_words = temparray.length > 0 ? (temparray.length + current_line_words) : current_line_words
                         }
                       } else {
                         spans.push(<span>
@@ -292,9 +304,8 @@ class DocumentBlock extends React.Component {
                             {words.join(" ")}
                           </span>
                           <span> </span>
-                          {<br></br>}
                         </span>)
-                        current_line_words = 0
+                        current_line_words = words.length
                       }
                       return spans
                     } else {
@@ -405,7 +416,8 @@ class DocumentBlock extends React.Component {
       onKeyUp={this.getSelectionText.bind(this)} style={{
         fontSize: (child.font_size > 25 ? child.font_size - 4 : child.font_size) + "px",
         height: (child.text_height) + "px",
-        left: (child.text_left - 5) + "px",
+        left: (child.text_left) + "px",
+        textAlignLast: 'justify',
         textAlign: 'justify', background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
       }}
     >
@@ -430,8 +442,8 @@ class DocumentBlock extends React.Component {
     const div_style = {
       textAlign: "justify",
       position: "absolute",
-      top: child.text_top - 2 + "px",
-      fontSize: child.font_size - 1 + "px",
+      top: child.text_top + "px",
+      fontSize: child.font_size + "px",
       fontFamily: sentence.font_family,
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
       outline: "0px solid transparent",
@@ -439,7 +451,7 @@ class DocumentBlock extends React.Component {
       padding: "5px",
       // lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
       height: (child.text_height) + "px",
-      left: (child.text_left - 5) + "px",
+      left: (child.text_left) + "px",
       textAlignLast: sentence.children && sentence.children.length > 1 && "justify",
       width: (child.text_width) + "px"
     }
