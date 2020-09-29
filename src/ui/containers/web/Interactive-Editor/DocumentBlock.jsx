@@ -422,7 +422,7 @@ maxRows={4}
     return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
-        fontSize: (child.font_size > 25 ? child.font_size - 6 : child.font_size) + "px",
+        fontSize: (child.font_size > 25 ? (child.font_size > 30 ? child.font_size - 6 : child.font_size - 3) : child.font_size) + "px",
         height: (child.text_height) + "px",
         left: (child.text_left - 5) + "px",
         background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
