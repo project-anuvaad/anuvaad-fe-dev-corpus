@@ -69,18 +69,7 @@ class ViewDocument extends React.Component {
     if (prevProps.fetchDocument !== this.props.fetchDocument) {
       var arr = []
       this.props.fetchDocument.map(value => {
-        let taskData = {}
-        taskData.status = value.status
-        taskData.jobId = value.jobID
-        let tasks = []
 
-        value && value.taskDetails && Array.isArray(value.taskDetails) && value.taskDetails.length > 0 && value.taskDetails.map((task, i) => {
-          let subTask = {}
-          subTask.state = task.state
-          subTask.status = task.status
-          tasks.push(subTask)
-        })
-        taskData.subTasks = tasks
 
         let date = value.startTime.toString()
         let timestamp = date.substring(0, 13)
@@ -91,6 +80,19 @@ class ViewDocument extends React.Component {
         let currentDate = new Date()
 
         let timeDiff = Math.floor((currentDate.getTime() - myDate.getTime()) / 60000)
+
+        let taskData = {}
+        taskData.status = (value.status === "INPROGRESS" && timeDiff > 300) ? "FAILED" : value.status;
+        taskData.jobId = value.jobID
+        let tasks = []
+
+        value && value.taskDetails && Array.isArray(value.taskDetails) && value.taskDetails.length > 0 && value.taskDetails.map((task, i) => {
+          let subTask = {}
+          subTask.state = task.state
+          subTask.status = task.status
+          tasks.push(subTask)
+        })
+        taskData.subTasks = tasks
 
         let sourceLangCode, targetLangCode, sourceLang, targetLang
         if (value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.source_language_code && value.input.files[0].model.target_language_code) {
