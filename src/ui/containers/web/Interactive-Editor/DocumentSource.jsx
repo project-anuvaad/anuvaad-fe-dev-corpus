@@ -41,6 +41,7 @@ class DocumentSource extends React.Component {
     if (prevProps.intractiveTrans !== this.props.intractiveTrans) {
       this.setState({
         autoCompleteText: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tgt,
+        autoCompleteTextTaggetTgt: this.props.intractiveTrans && this.props.intractiveTrans.length > 0 && this.props.intractiveTrans[0].tagged_tgt,
       });
     }
 
@@ -200,7 +201,7 @@ class DocumentSource extends React.Component {
   fetchSuggestions(srcText, targetTxt, tokenObject) {
     let targetVal = targetTxt
 
-    this.setState({ showSuggestions: true, autoCompleteText:null })
+    this.setState({ showSuggestions: true, autoCompleteText:null})
     const apiObj = new IntractiveApi(srcText, targetVal, { model_id: this.props.modelId }, true, true);
     this.props.APITransport(apiObj);
   }
@@ -214,7 +215,7 @@ class DocumentSource extends React.Component {
     this.props.handleSuggestion(suggestion, value)
     this.setState({ autoCompleteText: null, tokenObject })
 
-    let targetVal = value + suggestion
+    let targetVal = value.trim() + suggestion
     setTimeout(()=>{
       this.setState({ showSuggestions: true })
 
@@ -273,6 +274,7 @@ class DocumentSource extends React.Component {
                   targetSelected={this.props.targetSelected}
                   targetText={this.props.targetText}
                   autoCompleteText={this.state.autoCompleteText}
+                  autoCompleteTextTaggetTgt={this.state.autoCompleteTextTaggetTgt}
                   fetchSuggestions={this.fetchSuggestions.bind(this)}
                   handleSuggestionClose={this.handleSuggestionClose.bind(this)}
                   handleSuggestion={this.handleSuggestion.bind(this)}

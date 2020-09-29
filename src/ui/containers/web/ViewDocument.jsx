@@ -14,6 +14,10 @@ import APITransport from "../../../flux/actions/apitransport/apitransport";
 import { translate } from "../../../assets/localisation";
 import ProgressBar from "../../components/web/common/ProgressBar";
 import Spinner from "../../components/web/common/Spinner";
+import LanguageCodes from "../../components/web/common/Languages.json"
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteOutlinedIcon from '@material-ui/icons/VerticalAlignBottom';
 
 class ViewDocument extends React.Component {
   constructor(props) {
@@ -39,7 +43,7 @@ class ViewDocument extends React.Component {
 
   handleClick = rowData => {
     history.push(`${process.env.PUBLIC_URL}/interactive-document/${rowData[7]}/${rowData[4]}/${rowData[5]}/${rowData[6]}`);
-    
+
     // history.push(`${process.env.PUBLIC_URL}/interactive-document/${rowData[4]}/${rowData[5]}`);
   };
 
@@ -54,26 +58,58 @@ class ViewDocument extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.fetchDocument !== this.props.fetchDocument) {
-      var arr=[]
+      var arr = []
+      this.props.fetchDocument.map(value => {
+        let date = value.startTime.toString()
+        let timestamp = date.substring(0, 13)
+        var d = new Date(parseInt(timestamp))
 
-      this.props.fetchDocument.map(value=>{
+        let sourceLangCode, targetLangCode, sourceLang, targetLang
+        if (value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.source_language_code && value.input.files[0].model.target_language_code) {
+          sourceLangCode = value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.source_language_code
+          targetLangCode = value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.target_language_code
+
+          let langCodes = LanguageCodes
+          if (langCodes && Array.isArray(langCodes) && langCodes.length > 0) {
+            langCodes.map(lang => {
+              if (lang.language_code === sourceLangCode) {
+                sourceLang = lang.language_name
+              }
+              if (lang.language_code === targetLangCode) {
+                targetLang = lang.language_name
+              }
+            })
+          }
+        }
+
         var b = {}
-       
+
         b["status"] = value.status;
-          b["job"] = value.jobID;
-          b["name"] = value.input.jobName? value.input.jobName: value.input.files[0].name;
-          b["id"] = value.output && (value.output[0].hasOwnProperty('outputFilePath') ? value.output[0].outputFilePath : value.output[0].outputFile);
-          b["inputFile"] = value.taskDetails && value.taskDetails.length>0 && value.taskDetails[0].output && value.taskDetails[0].output.length>0 && value.taskDetails[0].output[0].outputFile;
-          b["modelId"] = value && value.input && value.input.files && value.input.files.length>0 && value.input.files[0].model && value.input.files[0].model.model_id
-          b["locale"] = value && value.input && value.input.files && value.input.files.length>0 && value.input.files[0].model && value.input.files[0].model.source_language_code
-       
+        b["job"] = value.jobID;
+        b["name"] = value.input.jobName ? value.input.jobName : value.input.files[0].name;
+        b["id"] = value.output && (value.output[0].hasOwnProperty('outputFilePath') ? value.output[0].outputFilePath : value.output[0].outputFile);
+        b["inputFile"] = value.taskDetails && value.taskDetails.length > 0 && value.taskDetails[0].output && value.taskDetails[0].output.length > 0 && value.taskDetails[0].output[0].outputFile;
+        b["modelId"] = value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.model_id
+        b["locale"] = value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.source_language_code
+        b["timestamp"] = d.toISOString()
+        b["source"] = sourceLang
+        b["target"] = targetLang
+
         arr.push(b)
       })
-     this.setState({ name: arr , showLoader: false});
+      this.setState({ name: arr, showLoader: false });
     }
   }
 
+  handleFileDownload(file) {
+    let url = `${process.env.REACT_APP_BASE_URL ? process.env.REACT_APP_BASE_URL : "https://auth.anuvaad.org"}/anuvaad/v1/download?file=${
+      file ? file : ""
+      }`
+    window.open(url, "_self")
+  }
+
   render() {
+    console.log(this.state.name)
     const columns = [
       {
         name: "jobID",
@@ -86,7 +122,7 @@ class ViewDocument extends React.Component {
         name: "status",
         label: translate("viewCorpus.page.label.fileName"),
         options: {
-          
+
           display: "excluded"
         }
       },
@@ -96,8 +132,9 @@ class ViewDocument extends React.Component {
         options: {
           filter: true,
           sort: true,
-          sortDirection: "desc"
-          
+          sortDirection: "desc",
+          display: "excluded"
+
         }
       },
 
@@ -105,7 +142,17 @@ class ViewDocument extends React.Component {
         name: "name",
         label: "Filename",
         options: {
-          filter: true
+          filter: true,
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (tableMeta.rowData) {
+              return (
+                <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
+                  {tableMeta.rowData[3]}
+                </div>
+              );
+            }
+
+          }
         }
       },
 
@@ -122,7 +169,7 @@ class ViewDocument extends React.Component {
         options: {
           display: "excluded"
         },
-        
+
       },
       {
         name: "modelId",
@@ -130,15 +177,54 @@ class ViewDocument extends React.Component {
         options: {
           display: "excluded"
         },
-        
-        
+
+
       },
       {
         name: "locale",
         label: "locale",
         options: {
-          
+
           display: "excluded"
+        }
+      },
+     
+      {
+        name: "source",
+        label: translate("common.page.label.source"),
+        options: {
+          filter: false,
+          sort: false,
+          // sortDirection: "desc",
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (tableMeta.rowData) {
+              return (
+                <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
+                  {tableMeta.rowData[9]}
+                </div>
+              );
+            }
+
+          }
+        }
+      },
+      {
+        name: "target",
+        label: translate("common.page.label.target"),
+        options: {
+          filter: false,
+          sort: false,
+          // sortDirection: "desc",
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (tableMeta.rowData) {
+              return (
+                <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
+                  {tableMeta.rowData[10]}
+                </div>
+              );
+            }
+
+          }
         }
       },
       {
@@ -152,12 +238,12 @@ class ViewDocument extends React.Component {
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
 
-              
+
               return (
 
                 <div style={{ width: '120px' }}>
 
-                  {(tableMeta.rowData[1] !== 'COMPLETED' && tableMeta.rowData[1] !== 'FAILED') ? <ProgressBar token={true} val={1000} eta={2000 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> : tableMeta.rowData[1]}
+                  {(tableMeta.rowData[1] !== 'COMPLETED' && tableMeta.rowData[1] !== 'FAILED') ? <ProgressBar token={true} val={1000} eta={2000 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> : <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>{tableMeta.rowData[1]}</div>}
 
                 </div>
               );
@@ -165,9 +251,47 @@ class ViewDocument extends React.Component {
 
           }
         }
+      },
+      {
+        name: "timestamp",
+        label: translate("common.page.label.timeStamp"),
+        options: {
+          filter: true,
+          sort: true,
+          sortDirection: "desc",
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (tableMeta.rowData) {
+              return (
+                <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
+                  {tableMeta.rowData[11]}
+                </div>
+              );
+            }
+
+          }
+        }
+      },
+      {
+        name: "Action",
+        label: translate('common.page.label.action'),
+        options: {
+          filter: true,
+          sort: false,
+          empty: true,
+
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (tableMeta.rowData) {
+              return (
+                <div >
+                  {tableMeta.rowData[1] === 'COMPLETED' ? <Tooltip title={translate('viewTranslate.page.title.downloadSource')}><IconButton style={{ color: '#233466' }} component="a" onClick={() => { this.setState({ fileDownload: true }), this.handleFileDownload(tableMeta.rowData[5]) }}><DeleteOutlinedIcon /></IconButton></Tooltip> : ''}
+                </div>
+              );
+            }
+
+          }
+        }
       }
-      
-      
+
     ];
 
     const options = {
@@ -184,7 +308,7 @@ class ViewDocument extends React.Component {
         }
       },
       filterType: "checkbox",
-      onRowClick: rowData => (rowData[1] === "COMPLETED" ) && this.handleClick(rowData),
+      // onRowClick: rowData => (rowData[1] === "COMPLETED") && this.handleClick(rowData),
       download: false,
       expandableRowsOnClick: true,
       print: false,
@@ -199,7 +323,7 @@ class ViewDocument extends React.Component {
           <Typography variant="title" color="inherit" style={{ flex: 1 }} />
           {this.state.role.includes("dev") || this.state.role.includes("grader") || this.state.role.includes("user") || this.state.role.includes("interactive-editor") ? (
             <Button
-            color="primary"
+              color="primary"
               variant="extendedFab"
 
               style={{
@@ -224,15 +348,15 @@ class ViewDocument extends React.Component {
             )}
         </Toolbar>
         <div style={{ marginLeft: "3%", marginRight: "3%", marginTop: "2%", marginBottom: '5%' }}>
-        {!this.state.showLoader && <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />}
+          {!this.state.showLoader && <MUIDataTable title={translate("common.page.title.document")} data={this.state.name} columns={columns} options={options} />}
         </div>
-        {this.state.showLoader && < Spinner/>}
+        {this.state.showLoader && < Spinner />}
       </div>
-      
+
     );
-    
+
   }
-  
+
 }
 
 const mapStateToProps = state => ({
