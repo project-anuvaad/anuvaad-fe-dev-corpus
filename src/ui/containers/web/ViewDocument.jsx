@@ -18,6 +18,7 @@ import LanguageCodes from "../../components/web/common/Languages.json"
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteOutlinedIcon from '@material-ui/icons/VerticalAlignBottom';
+const TELEMETRY = require('../../../utils/TelemetryManager')
 
 class ViewDocument extends React.Component {
   constructor(props) {
@@ -37,8 +38,13 @@ class ViewDocument extends React.Component {
     };
   }
 
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    TELEMETRY.pageLoadStarted('view-document')
+  }
+
   componentDidMount() {
     this.handleRefresh(true)
+    TELEMETRY.pageLoadCompleted('view-document')
   }
 
   handleClick = rowData => {
@@ -63,6 +69,9 @@ class ViewDocument extends React.Component {
         let date = value.startTime.toString()
         let timestamp = date.substring(0, 13)
         var d = new Date(parseInt(timestamp))
+        let dateStr = d.toISOString()
+        var myDate = new Date(dateStr);
+        let createdAt = (myDate.toLocaleString('en-US', { day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false }))
 
         let sourceLangCode, targetLangCode, sourceLang, targetLang
         if (value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.source_language_code && value.input.files[0].model.target_language_code) {
@@ -91,7 +100,7 @@ class ViewDocument extends React.Component {
         b["inputFile"] = value.taskDetails && value.taskDetails.length > 0 && value.taskDetails[0].output && value.taskDetails[0].output.length > 0 && value.taskDetails[0].output[0].outputFile;
         b["modelId"] = value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.model_id
         b["locale"] = value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.source_language_code
-        b["timestamp"] = d.toISOString()
+        b["timestamp"] = createdAt
         b["source"] = sourceLang
         b["target"] = targetLang
 
@@ -188,7 +197,7 @@ class ViewDocument extends React.Component {
           display: "excluded"
         }
       },
-     
+
       {
         name: "source",
         label: translate("common.page.label.source"),
