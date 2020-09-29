@@ -19,6 +19,8 @@ import WorkFlow from "../../../../flux/actions/apis/fileupload";
 import DocumentUpload from "../../../../flux/actions/apis/document_upload";
 import TextField from "@material-ui/core/TextField";
 import Select from "../../../components/web/common/Select";
+const TELEMETRY = require('../../../../utils/TelemetryManager')
+
 
 class PdfUpload extends Component {
   constructor() {
@@ -64,7 +66,7 @@ class PdfUpload extends Component {
         const apiObj = new DocumentUpload(
           this.state.files, "docUplaod",
           model,
-          
+
         );
         APITransport(apiObj);
       } else {
@@ -99,20 +101,24 @@ class PdfUpload extends Component {
     }
     const value = new Set(result);
     const target_language = [...value];
-    
+
     return target_language;
   }
   handleSelectChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+
   handleBack = () => {
-
     history.push(`${process.env.PUBLIC_URL}/view-document`)
-
-
-
   }
+
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    TELEMETRY.pageLoadStarted('document-upload')
+  }
+
   componentDidMount() {
+    TELEMETRY.pageLoadCompleted('document-upload')
+
     const { APITransport } = this.props;
     const apiObj = new FetchLanguage();
     APITransport(apiObj);
@@ -135,7 +141,7 @@ class PdfUpload extends Component {
       });
     }
     if (prevProps.documentUplaod !== this.props.documentUplaod) {
-      
+
       const { APITransport } = this.props;
       const apiObj = new WorkFlow(this.state.workflow, this.props.documentUplaod.data, this.state.fileName,this.state.source,
         this.state.target,this.state.path, this.state.model);
@@ -143,6 +149,7 @@ class PdfUpload extends Component {
       // history.push(`${process.env.PUBLIC_URL}/interactive-document/${this.props.configUplaod.configUplaod}`);
     }
     if (prevProps.workflowStatus !== this.props.workflowStatus) {
+      TELEMETRY.startWorkflow(this.state.source, this.state.target, this.props.workflowStatus.input.jobName, this.props.workflowStatus.jobID)
       history.push(`${process.env.PUBLIC_URL}/view-document`);
     }
   }
@@ -175,10 +182,10 @@ class PdfUpload extends Component {
   }
 
   handleChange = files => {
-    
+
     if (files.length > 0) {
       let path = files[0].name.split('.')
-      let fileType = path[path.length-1] 
+      let fileType = path[path.length-1]
       let fileName = path.splice(0,path.length-1).join('.')
       this.setState({
         files,
@@ -234,7 +241,7 @@ class PdfUpload extends Component {
                     // MenuItemValues={["English"]}
                     handleChange={this.handleSelectChange}
                     value={this.state.source}
-        
+
                     name="source"
                     className={classes.Select}
                   />

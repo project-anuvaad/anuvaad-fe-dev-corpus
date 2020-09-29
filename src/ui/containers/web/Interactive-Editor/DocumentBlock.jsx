@@ -425,7 +425,7 @@ class DocumentBlock extends React.Component {
     return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
-        fontSize: (child.font_size > 25 ? (child.font_size > 30 ? child.font_size - 6 : child.font_size - 3) : child.font_size) + "px",
+        // fontSize: (child.font_size) + "px",
         height: (child.text_height) + "px",
         left: (child.text_left) + "px",
         top: child.text_top - 2 + "px",
@@ -436,17 +436,22 @@ class DocumentBlock extends React.Component {
     </span>)
   }
 
-  makeDiv(sentence, spans, div_style) {
+  makeDiv(sentence, spans, div_style, child) {
     return (<div onMouseLeave={() => {
       !this.props.targetSelected && this.props.value !== true && this.props.handleOnMouseLeave();
     }}
       onMouseEnter={() => {
         !this.props.targetSelected && this.props.value !== true && this.handleMouseHover(sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType, sentence.block_identifier, sentence.has_sibling);
-      }} style={div_style}>{spans}</div>)
+      }} style={div_style}><Textfit
+        mode={"single"}
+        style={{ height: parseInt(child.text_height), width: parseInt(child.text_width) }}
+        min={1}
+        max={parseInt(child.font_size)}
+      >{spans}</Textfit></div>)
 
   }
 
-  makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, elems, is_super) {
+  makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, elems, child, is_super) {
     text = text + ""
     text = text.replace(/\s{2,}/g, ' ');
     text = text.trim()
@@ -454,12 +459,12 @@ class DocumentBlock extends React.Component {
       textAlign: "justify",
       position: "absolute",
       top: child.text_top - 2 + "px",
-      fontSize: child.font_size + "px",
+      // fontSize: child.font_size + "px",
       fontFamily: sentence.font_family,
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
       outline: "0px solid transparent",
       zIndex: 1,
-      padding: "5px",
+      // padding: "5px",
 
       // lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
       height: (child.text_height) + "px",
@@ -469,13 +474,13 @@ class DocumentBlock extends React.Component {
     }
     if (is_super) {
       if (!child.dont_show) {
-        elems.push(this.makeDiv(sentence, this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex]), div_style))
+        elems.push(this.makeDiv(sentence, this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex]), div_style, child))
       }
       return { text: text, tokenized_data: tokenized_data, tokenIndex: tokenIndex, spanId: spanId, child: child, elems: elems }
     }
     if (text.length == tokenized_data[tokenIndex].src.length) {
       if (!child.dont_show) {
-        elems.push(this.makeDiv(sentence, this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex]), div_style))
+        elems.push(this.makeDiv(sentence, this.makeSpan(text, child, spanId, tokenIndex, tokenized_data[tokenIndex]), div_style, child))
       }
       tokenIndex++
     } else if (text.length > tokenized_data[tokenIndex].src.length) {
@@ -519,7 +524,7 @@ class DocumentBlock extends React.Component {
         }
       }
       if (!child.dont_show) {
-        elems.push(this.makeDiv(sentence, spans, div_style))
+        elems.push(this.makeDiv(sentence, spans, div_style, child))
       }
     }
     else {
@@ -529,12 +534,19 @@ class DocumentBlock extends React.Component {
         spans_array.push(spans)
         spans_array.push(<span id={this.props.sentence.block_id + '##' + tokenized_data[tokenIndex].s_id + '##' + (tokenized_data[tokenIndex].actual_src.length - tokenized_data[tokenIndex].src.length)} onMouseUp={this.getSelectionText.bind(this)}
           onKeyUp={this.getSelectionText.bind(this)}> </span>)
-        elems.push(this.makeDiv(sentence, spans_array, div_style))
+        elems.push(this.makeDiv(sentence, spans_array, div_style, child))
       }
       tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.substring(text.length, tokenized_data[tokenIndex].src.length)
       tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
     }
     return { text: text, tokenized_data: tokenized_data, tokenIndex: tokenIndex, spanId: spanId, child: child, elems: elems }
+  }
+
+  makeSpanWithDiv(sen, spans) {
+    return <div
+    >
+      {spans}
+    </div>
   }
 
   renderLinesWithTokenizedData(sentenceOld) {
@@ -592,12 +604,13 @@ class DocumentBlock extends React.Component {
           tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.replace(/\s\s+/g, ' ');
           tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
           if (child.children) {
+            let child_elems = []
             child.children.map((ch) => {
               ch.dont_show = child.dont_show
               var text = ''
               if (ch.attrib !== 'SUPERSCRIPT') {
                 text += ch.text
-                let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, ch, elems)
+                let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, elems, ch)
                 text = obj.text
                 tokenized_data = obj.tokenized_data
                 tokenIndex = obj.tokenIndex
@@ -605,7 +618,7 @@ class DocumentBlock extends React.Component {
                 child = obj.child
                 elems = obj.elems
               } else {
-                let obj = this.makeSpanObjects(sentence, ch.text, tokenized_data, tokenIndex, spanId, ch, elems, true)
+                let obj = this.makeSpanObjects(sentence, ch.text, tokenized_data, tokenIndex, spanId, elems, ch, true)
                 // text = obj.text
                 // tokenized_data = obj.tokenized_data
                 // tokenIndex = obj.tokenIndex
@@ -614,10 +627,11 @@ class DocumentBlock extends React.Component {
                 elems = obj.elems
               }
             })
+            // elems.push(this.makeSpanWithDiv(child, child_elems))
           }
           else {
             var text = child.text
-            let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, elems)
+            let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, elems, child)
             text = obj.text
             tokenized_data = obj.tokenized_data
             tokenIndex = obj.tokenIndex
@@ -629,12 +643,13 @@ class DocumentBlock extends React.Component {
       })
     } else {
       let text = sentence.text.trim()
-      let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, sentence, elems)
+      let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, elems, sentence)
       text = obj.text
       tokenized_data = obj.tokenized_data
       tokenIndex = obj.tokenIndex
       spanId = obj.spanId
       sentence = obj.child
+      // elems = obj.elems
       elems = obj.elems
     }
     return elems

@@ -1,5 +1,7 @@
 import React from "react";
 import CONFIG from "../../../configs/apigw";
+const TELEMETRY = require('../../../utils/TelemetryManager')
+
 class Home extends React.Component {
   state = {
     showLoader: false
@@ -20,6 +22,10 @@ class Home extends React.Component {
   }
 
   render() {
+    /**
+     * loading the telemetry sdk
+     */
+    TELEMETRY.init()
     return <div>{'Redirecting Please wait..'}</div>;
   }
 }
