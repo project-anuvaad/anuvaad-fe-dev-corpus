@@ -259,7 +259,8 @@ maxRows={4}
                       // </ClickAwayListener>
                     );
                   } else {
-                    let words = text.tgt.split(" ")
+                    if (text.tgt) {
+                      let words = text.tgt ? text.tgt.split(" ") : []
                     if (words_in_line != -1) {
                       let spans = []
                       let words_length = words.length + current_line_words
@@ -343,6 +344,7 @@ maxRows={4}
                       );
                     }
                   }
+                }
                 })}
             </div>
           </Textfit>
@@ -433,7 +435,7 @@ maxRows={4}
       onKeyUp={this.getSelectionText.bind(this)} style={{
         // fontSize: (child.font_size) + "px",
         height: (child.text_height) + "px",
-        left: (child.text_left - 5) + "px",
+        left: (child.text_left - 2) + "px",
         background: ((!this.props.targetSelected && !(this.props.targetSelected && this.props.targetSelected.length > 0) && spanId && spanId === this.props.sentence.block_id && !this.props.selectedBlock) || (token_obj && token_obj.s_id + '_' + this.props.page_no === this.props.targetSelected)) ? tokenIndex % 2 == 0 ? '#92a8d1' : "coral" : ''
       }}
     >
