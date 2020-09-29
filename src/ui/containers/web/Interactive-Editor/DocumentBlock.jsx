@@ -143,6 +143,7 @@ maxRows={4}
   };
 
   handleTargetUpdate = (sentence, styles, not_tokenized) => {
+    
     let childrens = sentence.children ? sentence.children.length : 1
     let words_count = 0
     let words_in_line = -1
@@ -153,6 +154,8 @@ maxRows={4}
         editable = true
       }
     })
+
+    editable && editBlockId === sentence.block_id && console.log(editBlockId, sentence.block_id)
     if (sentence.tokenized_sentences) {
       sentence.tokenized_sentences.map((text) => {
         words_count += text.tgt.split(" ").length
@@ -166,6 +169,7 @@ maxRows={4}
         <div
           id={sentence.block_id + "_" + this.props.page_no + "_" + this.props.paperType}
           style={styles}
+          
         
           key={sentence.block_id}
           // onBlur={event => this.props.handleBlur(event)}
@@ -188,8 +192,9 @@ maxRows={4}
           >
             <div style={words_in_line !== -1  && !editable ? {
               textAlign: 'justify',
-              textAlignLast: 'justify'
-            } : {}}>
+              textAlignLast: 'justify',
+              
+            } : {zIndex: 2}}>
               {sentence.hasOwnProperty("tokenized_sentences") &&
                 sentence.tokenized_sentences.map((text, tokenIndex) => {
                   if (this.props.targetSelected === text.s_id + "_" + this.props.page_no) {
@@ -199,11 +204,8 @@ maxRows={4}
                       <div
                         style={{
                           position: 'relative',
-                          zIndex: 1
+                          zIndex: 3
                         }}
-                      // onBlur={event => {
-                      //   this.props.handleBlur(event);
-                      // }}
                       >
                         <span
                         // onDoubleClick={event => {
@@ -224,7 +226,8 @@ maxRows={4}
                                 width: "600px",
                                 // height: sentence.text_height + 5 + "px",
                                 // resize: "none",
-                                // resize: "both", 
+                                // resize: "both",
+                                resize: "none", 
                                 fontSize: sentence.font_size + "px",
                                 fontFamily: sentence.font_family,
                                 zIndex: 1111,
@@ -419,7 +422,13 @@ maxRows={4}
   }
 
   makeSpan(text, child, spanId, tokenIndex, token_obj) {
-    return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
+    return (<Textfit
+      mode={child.children && child.children.length == 1 ? "single" : "multi"}
+      style={{ height: parseInt(child.text_height), width: parseInt(child.text_width) }}
+      min={1}
+      max={parseInt(child.font_size)}
+    >
+      <span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
         fontSize: (child.font_size > 25 ? (child.font_size > 30 ? child.font_size - 6 : child.font_size - 3) : child.font_size) + "px",
@@ -429,7 +438,8 @@ maxRows={4}
       }}
     >
       {text}
-    </span>)
+    </span>
+    </Textfit>)
   }
 
   makeDiv(sentence, spans, div_style) {
@@ -449,7 +459,7 @@ maxRows={4}
     const div_style = {
       textAlign: "justify",
       position: "absolute",
-      top: child.text_top + "px",
+      top: child.text_top-6 + "px",
       fontSize: child.font_size + "px",
       fontFamily: sentence.font_family,
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
@@ -651,7 +661,7 @@ maxRows={4}
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
       fontFamily: sentence.font_family,
       textAlign: "justify",
-      zIndex: 1,
+      zIndex: this.props.paperType === "target" && this.props.hoveredSentence.split("_")[0] === sentence.block_id ? 2: 1,
       display: "block",
       outline: "0px solid transparent",
       cursor: !this.state.isEditable && "pointer",

@@ -200,7 +200,7 @@ class ViewDocument extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
-                  {tableMeta.rowData[9]}
+                  {tableMeta.rowData[8]}
                 </div>
               );
             }
@@ -219,7 +219,7 @@ class ViewDocument extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
-                  {tableMeta.rowData[10]}
+                  {tableMeta.rowData[9]}
                 </div>
               );
             }
