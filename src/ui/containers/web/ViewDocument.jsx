@@ -39,12 +39,12 @@ class ViewDocument extends React.Component {
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    TELEMETRY.pageLoadStarted('view-document', null, null)
+    TELEMETRY.pageLoadStarted('view-document')
   }
 
   componentDidMount() {
     this.handleRefresh(true)
-    TELEMETRY.pageLoadCompleted('view-document', null, null)
+    TELEMETRY.pageLoadCompleted('view-document')
   }
 
   handleClick = rowData => {

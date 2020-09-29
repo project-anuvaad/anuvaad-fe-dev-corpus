@@ -26,31 +26,38 @@ export const init = () => {
 /**
  * @description when page is about to start loading. e.g. componentWillMount
  * @param {*} page_id , which page_id
- * @param {*} user_id , if user_id is available
- * @param {*} session_id , if session_id is available
  */
-export const pageLoadStarted = (page_id, user_id, session_id) => {
+export const pageLoadStarted = (page_id) => {
   if ($t.isInitialized() === false) {
     init()
   }
+  let user_id       = null;
+  let session_id    = null
+  let user_profile  = JSON.parse(localStorage.getItem('userProfile'))
+  let token         = localStorage.getItem('token')
+
+  if (user_profile != null && token != null) {
+    user_id     = user_profile.id
+    session_id  = token
+  } else {
+    user_id     = 'anonymous'
+    session_id  = 'anonymous'
+  }
+
   let data = {
     type: 'view',
     subtype: 'pageLoadStarted',
-    pageid: page_id
+    pageid: page_id,
   }
 
   let options = {
     ets: Date.now(),
     actor: {
-      uid: 'anonymous'
+      uid: user_id,
     },
     context: {
-      sid: 'anonymous'
+      sid: session_id
     }
-  }
-  if (user_id != null && session_id != null) {
-    options.actor.uid     = user_id
-    options.context.sid   = session_id
   }
 
   $t.impression(data, options)
@@ -59,12 +66,23 @@ export const pageLoadStarted = (page_id, user_id, session_id) => {
 /**
  * @description when page loading is completed. e.g. componentDidMount
  * @param {*} page_id , which page_id
- * @param {*} user_id , if user_id is available
- * @param {*} session_id , if session_id is available
  */
-export const pageLoadCompleted = (page_id, user_id, session_id) => {
+export const pageLoadCompleted = (page_id) => {
   if ($t.isInitialized() === false) {
     init()
+  }
+debugger
+  let user_id       = null;
+  let session_id    = null
+  let user_profile  = JSON.parse(localStorage.getItem('userProfile'))
+  let token         = localStorage.getItem('token')
+
+  if (user_profile != null && token != null) {
+    user_id     = user_profile.id
+    session_id  = token
+  } else {
+    user_id     = 'anonymous'
+    session_id  = 'anonymous'
   }
 
   let data = {
@@ -76,15 +94,12 @@ export const pageLoadCompleted = (page_id, user_id, session_id) => {
   let options = {
     ets: Date.now(),
     actor: {
-      uid: 'anonymous'
+      uid: user_id,
     },
     context: {
-      sid: 'anonymous'
-    }
-  }
-  if (user_id != null && session_id != null) {
-    options.actor.uid     = user_id
-    options.context.sid   = session_id
+      sid: session_id
+    },
+
   }
 
   $t.impression(data, options)

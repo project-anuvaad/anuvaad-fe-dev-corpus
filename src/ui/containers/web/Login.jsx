@@ -30,14 +30,14 @@ class Login extends React.Component {
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    TELEMETRY.pageLoadStarted('login', null, null)
+    TELEMETRY.pageLoadStarted('login')
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
   }
 
   componentDidMount() {
     localStorage.removeItem("token");
-    TELEMETRY.pageLoadCompleted('login', null, null)
+    TELEMETRY.pageLoadCompleted('login')
   }
 
   /**
