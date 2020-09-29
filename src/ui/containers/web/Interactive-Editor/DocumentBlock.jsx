@@ -425,7 +425,7 @@ class DocumentBlock extends React.Component {
     return (<span id={this.props.sentence.block_id + '##' + token_obj.s_id + '##' + (token_obj.actual_src.length - token_obj.src.length)}
       onMouseUp={this.getSelectionText.bind(this)}
       onKeyUp={this.getSelectionText.bind(this)} style={{
-        fontSize: (child.font_size > 25 ? (child.font_size > 30 ? child.font_size - 6 : child.font_size - 3) : child.font_size) + "px",
+        fontSize: (child.font_size) + "px",
         height: (child.text_height) + "px",
         left: (child.text_left) + "px",
         top: child.text_top - 2 + "px",
@@ -446,7 +446,8 @@ class DocumentBlock extends React.Component {
 
   }
 
-  makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, elems, is_super) {
+  makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, is_super) {
+    let elems = []
     text = text + ""
     text = text.replace(/\s{2,}/g, ' ');
     text = text.trim()
@@ -459,7 +460,7 @@ class DocumentBlock extends React.Component {
       fontWeight: sentence.font_family && sentence.font_family.includes("Bold") && "bold",
       outline: "0px solid transparent",
       zIndex: 1,
-      padding: "5px",
+      // padding: "5px",
 
       // lineHeight: sentence.children ? parseInt(sentence.text_height / sentence.children.length) + "px" : "20px",
       height: (child.text_height) + "px",
@@ -537,6 +538,17 @@ class DocumentBlock extends React.Component {
     return { text: text, tokenized_data: tokenized_data, tokenIndex: tokenIndex, spanId: spanId, child: child, elems: elems }
   }
 
+  makeSpanWithTextFit(sen, spans) {
+    return <Textfit
+      mode={"single"}
+      style={{ height: parseInt(sen.text_height), width: parseInt(sen.text_width) }}
+      min={1}
+      max={parseInt(sen.font_size)}
+    >
+      {spans}
+    </Textfit>
+  }
+
   renderLinesWithTokenizedData(sentenceOld) {
     let elems = []
     let tokenIndex = 0
@@ -592,50 +604,53 @@ class DocumentBlock extends React.Component {
           tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.replace(/\s\s+/g, ' ');
           tokenized_data[tokenIndex].src = tokenized_data[tokenIndex].src.trim()
           if (child.children) {
+            let child_elems = []
             child.children.map((ch) => {
               ch.dont_show = child.dont_show
               var text = ''
               if (ch.attrib !== 'SUPERSCRIPT') {
                 text += ch.text
-                let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, ch, elems)
+                let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, ch)
                 text = obj.text
                 tokenized_data = obj.tokenized_data
                 tokenIndex = obj.tokenIndex
                 spanId = obj.spanId
                 child = obj.child
-                elems = obj.elems
+                child_elems = child_elems.concat(obj.elems)
               } else {
-                let obj = this.makeSpanObjects(sentence, ch.text, tokenized_data, tokenIndex, spanId, ch, elems, true)
+                let obj = this.makeSpanObjects(sentence, ch.text, tokenized_data, tokenIndex, spanId, ch, true)
                 // text = obj.text
                 // tokenized_data = obj.tokenized_data
                 // tokenIndex = obj.tokenIndex
                 // spanId = obj.spanId
                 // child = obj.child
-                elems = obj.elems
+                child_elems = child_elems.concat(obj.elems)
               }
             })
+            elems.push(this.makeSpanWithTextFit(child, child_elems))
           }
           else {
             var text = child.text
-            let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child, elems)
+            let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, child)
             text = obj.text
             tokenized_data = obj.tokenized_data
             tokenIndex = obj.tokenIndex
             spanId = obj.spanId
             child = obj.child
-            elems = obj.elems
+            elems.push(this.makeSpanWithTextFit(child, obj.elems))
           }
         }
       })
     } else {
       let text = sentence.text.trim()
-      let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, sentence, elems)
+      let obj = this.makeSpanObjects(sentence, text, tokenized_data, tokenIndex, spanId, sentence)
       text = obj.text
       tokenized_data = obj.tokenized_data
       tokenIndex = obj.tokenIndex
       spanId = obj.spanId
       sentence = obj.child
-      elems = obj.elems
+      // elems = obj.elems
+      elems.push(this.makeSpanWithTextFit(sentence, obj.elems))
     }
     return elems
   }
