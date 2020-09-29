@@ -91,9 +91,9 @@ class ViewDocument extends React.Component {
         b["inputFile"] = value.taskDetails && value.taskDetails.length > 0 && value.taskDetails[0].output && value.taskDetails[0].output.length > 0 && value.taskDetails[0].output[0].outputFile;
         b["modelId"] = value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.model_id
         b["locale"] = value && value.input && value.input.files && value.input.files.length > 0 && value.input.files[0].model && value.input.files[0].model.source_language_code
+        b["timestamp"] = d.toISOString()
         b["source"] = sourceLang
         b["target"] = targetLang
-        b["timestamp"] = d.toISOString()
 
         arr.push(b)
       })
@@ -109,6 +109,7 @@ class ViewDocument extends React.Component {
   }
 
   render() {
+    console.log(this.state.name)
     const columns = [
       {
         name: "jobID",
@@ -145,7 +146,7 @@ class ViewDocument extends React.Component {
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
               return (
-                <div onClick={() => this.handleClick(tableMeta.rowData)}>
+                <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
                   {tableMeta.rowData[3]}
                 </div>
               );
@@ -187,31 +188,7 @@ class ViewDocument extends React.Component {
           display: "excluded"
         }
       },
-      {
-        name: "status",
-        label: translate('common.page.table.status'),
-        options: {
-          filter: true,
-          sort: false,
-          empty: true,
-
-          customBodyRender: (value, tableMeta, updateValue) => {
-            if (tableMeta.rowData) {
-
-
-              return (
-
-                <div style={{ width: '120px' }}>
-
-                  {(tableMeta.rowData[1] !== 'COMPLETED' && tableMeta.rowData[1] !== 'FAILED') ? <ProgressBar token={true} val={1000} eta={2000 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> : <div onClick={() => this.handleClick(tableMeta.rowData)}>{tableMeta.rowData[1]}</div>}
-
-                </div>
-              );
-            }
-
-          }
-        }
-      },
+     
       {
         name: "source",
         label: translate("common.page.label.source"),
@@ -222,7 +199,7 @@ class ViewDocument extends React.Component {
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
               return (
-                <div onClick={() => this.handleClick(tableMeta.rowData)}>
+                <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
                   {tableMeta.rowData[9]}
                 </div>
               );
@@ -241,8 +218,33 @@ class ViewDocument extends React.Component {
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
               return (
-                <div onClick={() => this.handleClick(tableMeta.rowData)}>
+                <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
                   {tableMeta.rowData[10]}
+                </div>
+              );
+            }
+
+          }
+        }
+      },
+      {
+        name: "status",
+        label: translate('common.page.table.status'),
+        options: {
+          filter: true,
+          sort: false,
+          empty: true,
+
+          customBodyRender: (value, tableMeta, updateValue) => {
+            if (tableMeta.rowData) {
+
+
+              return (
+
+                <div style={{ width: '120px' }}>
+
+                  {(tableMeta.rowData[1] !== 'COMPLETED' && tableMeta.rowData[1] !== 'FAILED') ? <ProgressBar token={true} val={1000} eta={2000 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> : <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>{tableMeta.rowData[1]}</div>}
+
                 </div>
               );
             }
@@ -260,7 +262,7 @@ class ViewDocument extends React.Component {
           customBodyRender: (value, tableMeta, updateValue) => {
             if (tableMeta.rowData) {
               return (
-                <div onClick={() => this.handleClick(tableMeta.rowData)}>
+                <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
                   {tableMeta.rowData[11]}
                 </div>
               );
