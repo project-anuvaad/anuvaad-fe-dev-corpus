@@ -185,7 +185,7 @@ class ViewDocument extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
-                  <div style={tableMeta.rowData[1] === 'COMPLETED' ? {cursor: "pointer", width: "fit-content"} : {}}>{tableMeta.rowData[3]}</div>
+                  <div style={tableMeta.rowData[1] === 'COMPLETED' ? {cursor: "pointer"} : {}}>{tableMeta.rowData[3]}</div>
                 </div>
               );
             }
@@ -238,7 +238,7 @@ class ViewDocument extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
-                  <div style={tableMeta.rowData[1] === 'COMPLETED' ? {cursor: "pointer", width: "fit-content"} : {}}>{tableMeta.rowData[8]}</div>
+                  <div style={tableMeta.rowData[1] === 'COMPLETED' ? {cursor: "pointer"} : {}}>{tableMeta.rowData[8]}</div>
                 </div>
               );
             }
@@ -257,7 +257,7 @@ class ViewDocument extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
-                  <div style={tableMeta.rowData[1] === 'COMPLETED' ? {cursor: "pointer", width: "fit-content"} : {}}>{tableMeta.rowData[9]}</div>
+                  <div style={tableMeta.rowData[1] === 'COMPLETED' ? {cursor: "pointer"} : {}}>{tableMeta.rowData[9]}</div>
                 </div>
               );
             }
@@ -282,7 +282,7 @@ class ViewDocument extends React.Component {
                 <div style={{ width: '120px' }}>
 
                   {(tableMeta.rowData[1] !== 'COMPLETED' && tableMeta.rowData[1] !== 'FAILED') ? <ProgressBar token={true} val={1000} eta={2000 * 1000} handleRefresh={this.handleRefresh.bind(this)}></ProgressBar> : <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
-                  <div style={tableMeta.rowData[1] === 'COMPLETED' ? {cursor: "pointer", width: "fit-content"} : {}}>{tableMeta.rowData[1]}</div></div>}
+                  <div style={tableMeta.rowData[1] === 'COMPLETED' ? {cursor: "pointer"} : {}}>{tableMeta.rowData[1]}</div></div>}
 
                 </div>
               );
@@ -302,7 +302,7 @@ class ViewDocument extends React.Component {
             if (tableMeta.rowData) {
               return (
                 <div onClick={() => tableMeta.rowData[1] === 'COMPLETED' && this.handleClick(tableMeta.rowData)}>
-                  <div style={tableMeta.rowData[1] === 'COMPLETED' ? {cursor: "pointer", width: "fit-content"} : {}}>{tableMeta.rowData[11]}</div>
+                  <div style={tableMeta.rowData[1] === 'COMPLETED' ? {cursor: "pointer"} : {}}>{tableMeta.rowData[11]}</div>
                 </div>
               );
             }
