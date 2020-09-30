@@ -5,7 +5,7 @@ import API from "./api";
 import C from "../constants";
 import ENDPOINTS from "../../../configs/apiendpoints";
 export default class RunExperiment extends API {
-  constructor(selectedworkspace, workspaceName, language,filepath, timeout = 2000) {
+  constructor(selectedworkspace, workspaceName, language, filepath, timeout = 2000) {
     console.log();
     super("POST", timeout, false);
     this.type = C.CREATEWORKSPACE;
@@ -13,7 +13,7 @@ export default class RunExperiment extends API {
     this.target_lang = language;
     this.selected_workspaces = selectedworkspace;
     this.filepath = filepath;
-    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.savesearchreplaceworkspace}`
+    this.endpoint = `${super.apiEndPointAuto()}${ENDPOINTS.savesearchreplaceworkspace}`;
   }
 
   toString() {
@@ -28,7 +28,7 @@ export default class RunExperiment extends API {
   }
 
   apiEndPoint() {
-    return `${super.apiEndPointAuto()}/save-search-replace-workspace`;
+    return this.endpoint;
   }
 
   getBody() {
@@ -45,7 +45,7 @@ export default class RunExperiment extends API {
   getHeaders() {
     this.headers = {
       headers: {
-        Authorization: `Bearer ${  decodeURI(localStorage.getItem("token"))}`,
+        Authorization: `Bearer ${decodeURI(localStorage.getItem("token"))}`,
         "Content-Type": "application/json"
       }
     };
