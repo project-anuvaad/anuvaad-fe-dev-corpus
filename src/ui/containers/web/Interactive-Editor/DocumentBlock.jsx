@@ -158,7 +158,7 @@ maxRows={4}
     
     if (sentence.tokenized_sentences) {
       sentence.tokenized_sentences.map((text) => {
-        words_count += text.tgt.split(" ").length
+        words_count += text && text.tgt ? text.tgt.split(" ").length : 0
       })
     }
     if (words_count > 0 && childrens > 1) {
