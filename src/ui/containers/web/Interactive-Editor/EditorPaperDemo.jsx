@@ -477,7 +477,6 @@ class EditorPaper extends React.Component {
   setCaretPosition(data) {
     // var elem = this.refs[this.state.contentEditableId + "_target"]
     // let elem = document.getElementById()
-    // console.log(this.state.contentEditableId)
     // caretPos = this.state.caretPos
     // if(elem != null) {
     //     if(elem.createTextRange) {

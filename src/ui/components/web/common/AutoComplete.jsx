@@ -86,7 +86,6 @@ class AutoComplete extends React.Component {
         }
 
         if (event.key === 'Tab') {
-            console.log(caretVal)
             this.setState({ showSuggestions: true })
             // this.props.fetchSuggestions(this.props.sourceText, this.props.value)
             this.props.fetchSuggestions(this.props.sourceText, this.handleCalc(caretVal, this.state.tokenObject), this.state.tokenObject)
