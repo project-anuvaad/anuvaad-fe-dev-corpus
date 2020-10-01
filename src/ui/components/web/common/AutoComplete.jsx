@@ -193,7 +193,7 @@ class AutoComplete extends React.Component {
     }
 
     render() {
-        const { value, aId, refId, style, tokenIndex, sentence } = this.props
+        const { aId, refId, style, tokenIndex, sentence } = this.props
         return (
             <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, this.state.value, wfcodes.DP_WFLOW_S_C)}>
                 <div>

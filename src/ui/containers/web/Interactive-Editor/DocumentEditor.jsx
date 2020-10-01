@@ -209,7 +209,7 @@ class PdfFileEditor extends React.Component {
       block_identifier: block_identifier,
       has_sibling: has_sibling,
       scrollPageNo: pageNo,
-      scrollToPage: this.state.scrollToPage !== pageNo && pageNo,
+      scrollToPage: this.state.scrollToPage !== pageNo ? pageNo : this.state.pageNo
       // pageNo: this.state.pageNo !== pageNo && pageNo
     });
   }
@@ -356,7 +356,6 @@ handleSuggestion(suggestion, targetValue) {
 }
 
 handleDoubleClickTarget(event, id, text, pageDetails, block_id, pageNo) {
-  debugger
   this.setState({ targetSelected: id, targetText: text, pageDetails, hoveredSentence: block_id });
 }
 handleCheck(block, evt, checkValue, diffValue) {
@@ -448,7 +447,7 @@ handleZoomChange = value => {
 
 handlePreviewPageChange(pageNo, value) {
   if (this.state.pageNo !== pageNo) {
-    this.setState({ pageNo: parseInt(pageNo) });
+    this.setState({ pageNo: parseInt(pageNo), scrollPageNo: pageNo });
   }
 }
 
