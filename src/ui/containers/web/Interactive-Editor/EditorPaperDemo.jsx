@@ -16,7 +16,6 @@ import APITransport from "../../../../flux/actions/apitransport/apitransport";
 import IntractiveApi from "../../../../flux/actions/apis/intractive_translate";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Popover1 from "./Menu"
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const styles = {
   paperHeader: {
