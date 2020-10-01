@@ -86,7 +86,6 @@ class AutoComplete extends React.Component {
         }
 
         if (event.key === 'Tab') {
-            console.log(caretVal)
             this.setState({ showSuggestions: true })
             // this.props.fetchSuggestions(this.props.sourceText, this.props.value)
             this.props.fetchSuggestions(this.props.sourceText, this.handleCalc(caretVal, this.state.tokenObject), this.state.tokenObject)
@@ -194,7 +193,7 @@ class AutoComplete extends React.Component {
     }
 
     render() {
-        const { value, aId, refId, style, tokenIndex, sentence } = this.props
+        const { aId, refId, style, tokenIndex, sentence } = this.props
         return (
             <ClickAwayListener id={tokenIndex} onClickAway={() => this.handleClickAway(sentence.block_identifier + "_" + this.props.page_no, this.state.value, wfcodes.DP_WFLOW_S_C)}>
                 <div>

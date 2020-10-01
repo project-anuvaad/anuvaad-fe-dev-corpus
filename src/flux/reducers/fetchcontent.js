@@ -17,10 +17,8 @@ export default function(state = initialUserState, action) {
               status = true;
               i=  index;
               pageD = payloadData;
-              console.log(pageDetails)
             }
           });
-          console.log(result.data)
           if (status) {
             result.data[i] = pageD
             status = false;
