@@ -98,7 +98,7 @@ class PdfFileEditor extends React.Component {
       this.setState({ apiStatus: true });
     }
     /* Pagination api */
-    if ( prevProps.fetchContent !== this.props.fetchContent) {
+    if ( prevProps.fetchContent !== this.props.fetchContent && this.props.fetchContent.result.data) {
 
       // let temp = Data.data;
       let temp = this.props.fetchContent.result.data.pages;
