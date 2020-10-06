@@ -97,11 +97,11 @@ class PdfFileEditor extends React.Component {
       this.props.APITransport(apiObj);
       this.setState({ apiStatus: true });
     }
-
     /* Pagination api */
-    if (prevProps.fetchContent !== this.props.fetchContent) {
+    if ( prevProps.fetchContent !== this.props.fetchContent) {
+
       // let temp = Data.data;
-      let temp = this.props.fetchContent.result.data;
+      let temp = this.props.fetchContent.result.data.pages;
       // let sentenceObj = temp;
       // sentenceObj &&
       //   sentenceObj.map(sentence => {
