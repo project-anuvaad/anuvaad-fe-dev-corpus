@@ -742,7 +742,7 @@ render() {
               <Paper
                 elevation={this.state.edited ? 12 : 2}
                 style={{
-                  // paddingBottom: "12px"
+                  
                 }}
               >
                 {/* <Toolbar style={{ color: darkBlack, background: this.state.edited ? "#989E9C" : blueGrey50 }}>
